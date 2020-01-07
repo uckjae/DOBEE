@@ -305,9 +305,9 @@ ALTER TABLE `MEMBER`
 
 -- 공지사항
 CREATE TABLE `NOTICE` (
-	`SEQ`     INT          NOT NULL COMMENT '글번호', -- 글번호
+	`NSEQ`    INT          NOT NULL COMMENT '글번호', -- 글번호
 	`TITLE`   VARCHAR(255) NOT NULL COMMENT '글제목', -- 글제목
-	`CONTENT` BLOB         NOT NULL COMMENT '글내용', -- 글내용
+	`CONTENT` MEDIUMBLOB         NOT NULL COMMENT '글내용', -- 글내용
 	`REGDATE` DATETIME     NOT NULL COMMENT '작성시간', -- 작성시간
 	`COUNT`   INT          NOT NULL COMMENT '조회수' -- 조회수
 )
@@ -317,11 +317,11 @@ COMMENT '공지사항';
 ALTER TABLE `NOTICE`
 	ADD CONSTRAINT `PK_NOTICE` -- 공지사항 기본키
 		PRIMARY KEY (
-			`SEQ` -- 글번호
+			`NSEQ` -- 글번호
 		);
 
 ALTER TABLE `NOTICE`
-	MODIFY COLUMN `SEQ` INT NOT NULL AUTO_INCREMENT COMMENT '글번호';
+	MODIFY COLUMN `NSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '글번호';
 
 -- 프로젝트
 CREATE TABLE `PROJECT` (
@@ -345,7 +345,7 @@ ALTER TABLE `PROJECT`
 
 -- 업무
 CREATE TABLE `TASK` (
-	`SEQ`      INT          NOT NULL COMMENT '업무번호', -- 업무번호
+	`TSEQ`     INT          NOT NULL COMMENT '업무번호', -- 업무번호
 	`TITLE`    VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
 	`PROGRESS` VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
 	`IMPORT`   INT          NOT NULL COMMENT '중요도', -- 중요도
@@ -360,17 +360,17 @@ COMMENT '업무';
 ALTER TABLE `TASK`
 	ADD CONSTRAINT `PK_TASK` -- 업무 기본키
 		PRIMARY KEY (
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		);
 
 ALTER TABLE `TASK`
-	MODIFY COLUMN `SEQ` INT NOT NULL AUTO_INCREMENT COMMENT '업무번호';
+	MODIFY COLUMN `TSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '업무번호';
 
 -- 상세업무
 CREATE TABLE `TASKDETAIL` (
 	`TDSEQ`     INT          NOT NULL COMMENT '상세업무번호', -- 상세업무번호
 	`TDCONTENT` VARCHAR(100) NOT NULL COMMENT '상세업무내용', -- 상세업무내용
-	`SEQ`       INT          NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSEQ`      INT          NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '상세업무';
 
@@ -407,7 +407,7 @@ CREATE TABLE `CHECKLIST` (
 	`CHKSEQ`  INT          NOT NULL COMMENT '체크리스트번호', -- 체크리스트번호
 	`CONTENT` VARCHAR(100) NOT NULL COMMENT '항목', -- 항목
 	`ISCHECK` BOOLEAN      NOT NULL COMMENT '체크여부', -- 체크여부
-	`SEQ`     INT          NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSEQ`    INT          NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '체크리스트';
 
@@ -441,7 +441,7 @@ ALTER TABLE `PROJSCHEDULE`
 
 -- 근태
 CREATE TABLE `ATTEND` (
-	`SEQ`     INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
+	`ASEQ`    INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
 	`ATTTIME` DATE        NOT NULL COMMENT '출퇴근시간', -- 출퇴근시간
 	`MAIL`    VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
 	`ATTSEQ`  INT         NOT NULL COMMENT '근태코드' -- 근태코드
@@ -452,11 +452,11 @@ COMMENT '근태';
 ALTER TABLE `ATTEND`
 	ADD CONSTRAINT `PK_ATTEND` -- 근태 기본키
 		PRIMARY KEY (
-			`SEQ` -- 근태목록번호
+			`ASEQ` -- 근태목록번호
 		);
 
 ALTER TABLE `ATTEND`
-	MODIFY COLUMN `SEQ` INT NOT NULL AUTO_INCREMENT COMMENT '근태목록번호';
+	MODIFY COLUMN `ASEQ` INT NOT NULL AUTO_INCREMENT COMMENT '근태목록번호';
 
 -- 근태코드
 CREATE TABLE `ATTENDCODE` (
@@ -474,7 +474,7 @@ ALTER TABLE `ATTENDCODE`
 
 -- 비용처리목록
 CREATE TABLE `COSTLIST` (
-	`SEQ`     INT          NOT NULL COMMENT '비용처리번호', -- 비용처리번호
+	`CSEQ`    INT          NOT NULL COMMENT '비용처리번호', -- 비용처리번호
 	`REGDATE` DATE         NOT NULL COMMENT '작성일', -- 작성일
 	`USEDATE` DATETIME     NULL     COMMENT '사용일', -- 사용일
 	`USEAT`   VARCHAR(60)  NOT NULL COMMENT '사용처', -- 사용처
@@ -490,11 +490,11 @@ COMMENT '비용처리목록';
 ALTER TABLE `COSTLIST`
 	ADD CONSTRAINT `PK_COSTLIST` -- 비용처리목록 기본키
 		PRIMARY KEY (
-			`SEQ` -- 비용처리번호
+			`CSEQ` -- 비용처리번호
 		);
 
 ALTER TABLE `COSTLIST`
-	MODIFY COLUMN `SEQ` INT NOT NULL AUTO_INCREMENT COMMENT '비용처리번호';
+	MODIFY COLUMN `CSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '비용처리번호';
 
 -- 비용처리코드
 CREATE TABLE `COSTCODE` (
@@ -533,7 +533,7 @@ CREATE TABLE `NOTSCHEDULE` (
 	`NSSEQ`     INT         NOT NULL COMMENT '공지관련일정번호', -- 공지관련일정번호
 	`NSCONTENT` VARCHAR(60) NOT NULL COMMENT '공지사항일정내용', -- 공지사항일정내용
 	`SSEQ`      INT         NOT NULL COMMENT '일정번호', -- 일정번호
-	`SEQ`       INT         NOT NULL COMMENT '글번호' -- 글번호
+	`NSEQ`      INT         NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '공지사항일정';
 
@@ -552,7 +552,7 @@ CREATE TABLE `NOTICEFILE` (
 	`NFSEQ`    INT          NOT NULL COMMENT '공지사항첨부파일번호', -- 공지사항첨부파일번호
 	`ORGNAME`  VARCHAR(255) NOT NULL COMMENT '원본이름', -- 원본이름
 	`SAVENAME` VARCHAR(255) NOT NULL COMMENT '저장이름', -- 저장이름
-	`SEQ`      INT          NOT NULL COMMENT '글번호' -- 글번호
+	`NSEQ`     INT          NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '공지사항파일';
 
@@ -571,7 +571,7 @@ CREATE TABLE `TASKSCHEDULE` (
 	`TSSEQ` INT NOT NULL COMMENT '업무일정번호', -- 업무일정번호
 	`PSEQ`  INT NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
 	`SSEQ`  INT NOT NULL COMMENT '일정번호', -- 일정번호
-	`SEQ`   INT NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSEQ`  INT NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '업무일정';
 
@@ -588,7 +588,7 @@ ALTER TABLE `TASKSCHEDULE`
 -- 신청목록
 CREATE TABLE `APPLYCODE` (
 	`ACODE` INT         NOT NULL COMMENT '신청항목코드', -- 신청항목코드
-	`ENTRY` VARCHAR(60) NOT NULL COMMENT '항목' -- 항목
+	`ENTRY` VARCHAR(60) NOT NULL COMMENT '신청항목' -- 신청항목
 )
 COMMENT '신청목록';
 
@@ -627,7 +627,7 @@ ALTER TABLE `APPLY`
 -- 회사일정
 CREATE TABLE `CORPSCHEDULE` (
 	`CSSEQ`     INT         NOT NULL COMMENT '회사일정번호', -- 회사일정번호
-	`SCCONTENT` VARCHAR(60) NOT NULL COMMENT '회사일정내용', -- 회사일정내용
+	`CSCONTENT` VARCHAR(60) NOT NULL COMMENT '회사일정내용', -- 회사일정내용
 	`SSEQ`      INT         NOT NULL COMMENT '일정번호' -- 일정번호
 )
 COMMENT '회사일정';
@@ -702,7 +702,7 @@ ALTER TABLE `BREAK`
 
 -- 휴가목록
 CREATE TABLE `BREAKLIST` (
-	`SEQ`        INT         NOT NULL COMMENT '연차사용목록시퀀스', -- 연차사용목록시퀀스
+	`BSEQ`       INT         NOT NULL COMMENT '연차사용목록시퀀스', -- 연차사용목록시퀀스
 	`ASEQ`       INT         NOT NULL COMMENT '신청번호', -- 신청번호
 	`MAIL`       VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
 	`USINGBREAK` INT         NOT NULL COMMENT '연차사용일수' -- 연차사용일수
@@ -713,11 +713,11 @@ COMMENT '휴가목록';
 ALTER TABLE `BREAKLIST`
 	ADD CONSTRAINT `PK_BREAKLIST` -- 휴가목록 기본키
 		PRIMARY KEY (
-			`SEQ` -- 연차사용목록시퀀스
+			`BSEQ` -- 연차사용목록시퀀스
 		);
 
 ALTER TABLE `BREAKLIST`
-	MODIFY COLUMN `SEQ` INT NOT NULL AUTO_INCREMENT COMMENT '연차사용목록시퀀스';
+	MODIFY COLUMN `BSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '연차사용목록시퀀스';
 
 -- 사원정보
 CREATE TABLE `MEMBERINFO` (
@@ -773,20 +773,20 @@ ALTER TABLE `TASK`
 ALTER TABLE `TASKDETAIL`
 	ADD CONSTRAINT `FK_TASK_TO_TASKDETAIL` -- 업무 -> 상세업무
 		FOREIGN KEY (
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		);
 
 -- 체크리스트
 ALTER TABLE `CHECKLIST`
 	ADD CONSTRAINT `FK_TASK_TO_CHECKLIST` -- 업무 -> 체크리스트
 		FOREIGN KEY (
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		);
 
 -- 프로젝트일정
@@ -873,20 +873,20 @@ ALTER TABLE `NOTSCHEDULE`
 ALTER TABLE `NOTSCHEDULE`
 	ADD CONSTRAINT `FK_NOTICE_TO_NOTSCHEDULE` -- 공지사항 -> 공지사항일정
 		FOREIGN KEY (
-			`SEQ` -- 글번호
+			`NSEQ` -- 글번호
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
-			`SEQ` -- 글번호
+			`NSEQ` -- 글번호
 		);
 
 -- 공지사항파일
 ALTER TABLE `NOTICEFILE`
 	ADD CONSTRAINT `FK_NOTICE_TO_NOTICEFILE` -- 공지사항 -> 공지사항파일
 		FOREIGN KEY (
-			`SEQ` -- 글번호
+			`NSEQ` -- 글번호
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
-			`SEQ` -- 글번호
+			`NSEQ` -- 글번호
 		);
 
 -- 업무일정
@@ -913,10 +913,10 @@ ALTER TABLE `TASKSCHEDULE`
 ALTER TABLE `TASKSCHEDULE`
 	ADD CONSTRAINT `FK_TASK_TO_TASKSCHEDULE` -- 업무 -> 업무일정
 		FOREIGN KEY (
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`SEQ` -- 업무번호
+			`TSEQ` -- 업무번호
 		);
 
 -- 신청
@@ -1018,9 +1018,6 @@ ALTER TABLE `MEMBERINFO`
 		REFERENCES `MEMBER` ( -- 사원
 			`MAIL` -- 사원메일
 		);
-
-
-
 
 INSERT INTO ATTENDCODE (ATTSEQ, ATTDIV) VALUES(1, 'ROLE_ADMIN');
 INSERT INTO ATTENDCODE (ATTSEQ, ATTDIV) VALUES(2, 'ROLE_USER');
