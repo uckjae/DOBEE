@@ -8,20 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("*.do")
 public class DoController {
-
+	
+	public DoController() {
+		System.out.println("일단 컨트롤 오나 보자");
+	}
+	
     @Autowired
     private SqlSession sqlSession;
 
 
     //로그인
-    @RequestMapping
+    //@RequestMapping
     public String login(){
         return null;
     }
 
-    //아이디찾기
+  //아이디찾기
     public String fidId(){
         return null;
     }
@@ -43,14 +46,14 @@ public class DoController {
 
 
     //메인페이지(로그인후)
-    @RequestMapping(value="", method = RequestMethod.GET)
+    //@RequestMapping(value="", method = RequestMethod.GET)
     public String main(){
         return null;
     }
 
 
     //회사 일정등록
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    //@RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){
         return null;
     }
@@ -63,13 +66,13 @@ public class DoController {
 
 
     //마이페이지
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    //@RequestMapping(value = "", method = RequestMethod.GET)
     public String mypage(){
         return null;
     }
 
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    //@RequestMapping(value = "", method = RequestMethod.POST)
     public String mypageModi(){
         return null;
     }
@@ -166,63 +169,131 @@ public class DoController {
 
 
     //비용현황
+    @RequestMapping("debitList.do")
     public String paymentChart(){
-    	return null;
+    	System.out.println("debitlist.do 까지 왔음");
+        return "payment/debitList";
+    }
+    
+
+    //비용정산신청1
+    public String receiptReg(){
+        return null;
     }
 
 
-    //비용정산신청
-    public String receipt() {
-    	return null;
+    //비용정산신청2
+    public String receiptConfirm(){
+        return null;
+    }
+
+
+    //비용처리
+    public String paymentSignList(){
+        return null;
+    }
+
+
+    //비용처리승인
+    public String paymentSignApprov(){
+        return null;
     }
 
 
     //프로젝트메인
+    public String projectMain(){
+        return null;
+    }
 
 
     //프로젝트생성
+    public String addProject(){
+        return null;
+    }
 
 
     //칸반보드
+    public String kanban(){
+        return null;
+    }
 
 
     //업무생성
+    public String addTaskPM(){
+        return null;
+    }
 
 
     //업무삭제
+    public String delTask(){
+        return null;
+    }
 
 
     //업무상세정보입력
+    public String addTask(){
+        return null;
+    }
 
 
     //상세업무조회
+    public String taskDetail(){
+        return null;
+    }
 
 
     //상세업무 입력
+    public String addTaskDetail(){
+        return null;
+    }
 
 
     //상세업무수정
+    public String modiTaskDetail(){
+        return null;
+    }
 
 
     //상세업무 삭제
+    public String delTaskDetail(){
+        return null;
+    }
 
 
     //체크리스트조회
+    public String checkList(){
+        return null;
+    }
 
 
     //체크리스트 입력
+    public String addCheckList(){
+        return null;
+    }
 
 
     //체크리스트 수정정
+    public String modiCheckList(){
+        return null;
+    }
 
 
-    //체크리스트삭
+    //체크리스트삭제
+    public String delCheckList(){
+        return null;
+    }
 
 
     //프로젝트 캘린더
+    public String projectCalendar(){
+        return null;
+    }
 
 
     //프로젝트 분석
+    public String projectChart(){
+        return null;
+    }
 
 
     //채팅
