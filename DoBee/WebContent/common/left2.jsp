@@ -10,7 +10,7 @@
 			</div>
 			<!-- Small Brand information, appears on minimized sidebar-->
 			<div class="sidenav-header-logo">
-				<a href="index.html" class="brand-small text-center" style="font-color:#343a40"> <strong>B</strong><strong 
+				<a href="index.html" class="brand-small text-center"> <strong>B</strong><strong
 					class="text-primary">D</strong></a>
 			</div>
 		</div>
