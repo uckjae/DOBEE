@@ -1,4 +1,4 @@
-package com.dobee.vo;
+package com.dobee.vo.notice;
 
 import lombok.Getter;
 import lombok.Setter;

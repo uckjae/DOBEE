@@ -1,6 +1,6 @@
 package com.dobee.dao;
 
-import com.dobee.vo.Notice;
+import com.dobee.vo.notice.Notice;
 
 import java.util.List;
 
