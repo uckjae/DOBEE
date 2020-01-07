@@ -9,7 +9,7 @@
 		<div class="sidenav-header d-flex align-items-center justify-content-center">
 			<!-- User Info-->
 			<div class="sidenav-header-inner text-center">
-				<img src="img/dobeelogo.png" alt="person"
+				<img src="img/dobeemain.png" alt="person"
 					class="img-fluid rounded-circle" width="300px" height=200px">
 				
 			</div>
