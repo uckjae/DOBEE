@@ -8,15 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("*.do")
 public class DoController {
-
+	
+	public DoController() {
+		System.out.println("일단 컨트롤 오나 보자");
+	}
+	
     @Autowired
     private SqlSession sqlSession;
 
 
     //로그인
-    @RequestMapping
+    //@RequestMapping
     public String login(){
         return null;
     }
@@ -50,7 +53,7 @@ public class DoController {
 
 
     //회사 일정등록
-   // @RequestMapping(value = "", method = RequestMethod.POST)
+    //@RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){
         return null;
     }
@@ -166,10 +169,12 @@ public class DoController {
 
 
     //비용현황
+    @RequestMapping("debitList.do")
     public String paymentChart(){
-        return null;
+    	System.out.println("debitlist.do 까지 왔음");
+        return "payment/debitList";
     }
-
+    
 
     //비용정산신청1
     public String receiptReg(){

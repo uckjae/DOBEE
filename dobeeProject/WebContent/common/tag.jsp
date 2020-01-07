@@ -27,12 +27,9 @@
     <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
-  <!--   portal vue -->
+  	<!-- portal vue -->
     <script src="http://unpkg.com/portal-vue"></script>
 
-
- <!--   google chart-vue -->
-      <script src="vue-google-charts/dist/vue-google-charts.browser.js"></script>
 
 	<!--  vue chart js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
