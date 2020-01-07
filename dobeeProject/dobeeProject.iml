@@ -19,6 +19,8 @@
       <configuration>
         <fileset id="fileset" name="Security Context" removed="false">
           <file>file://$MODULE_DIR$/webapp/WEB-INF/security-context.xml</file>
+          <file>file://$MODULE_DIR$/webapp/WEB-INF/dispatcher-servlet.xml</file>
+          <file>file://$MODULE_DIR$/webapp/WEB-INF/applicationContext.xml</file>
         </fileset>
       </configuration>
     </facet>

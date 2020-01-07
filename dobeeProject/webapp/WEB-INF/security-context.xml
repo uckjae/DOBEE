@@ -5,10 +5,22 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   					 http://www.springframework.org/schema/beans/spring-beans.xsd
  					 http://www.springframework.org/schema/security
- 					 http://www.springframework.org/schema/security/spring-security.xsd
-http://www.springframework.org/schema/security ">
+ 					 http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <security:http>
+    <security:http auto-config="true">
+        <security:csrf disabled="true" />
+        <security:intercept-url pattern="/customer/noticeDetail.htm" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/customer/noticeReg.htm"    access="hasRole('ROLE_ADMIN')" />
+    </security:http>
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="kglim" password="1004"  authorities="ROLE_USER"/>
+                <security:user name="admin" password="1004"  authorities="ROLE_ADMIN,ROLE_USER"  />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+    <!--<security:http>
         <security:csrf disabled="true"/>
         <security:form-login default-target-url="/index.htm"
                              login-page="/joinus/login.htm"
@@ -19,15 +31,15 @@ http://www.springframework.org/schema/security ">
     </security:http>
     <security:authentication-manager>
         <security:authentication-provider>
-            <security:jdbc-user-service data-source-ref="driverManagerDataSource"
+            &lt;!&ndash;<security:jdbc-user-service data-source-ref="driverManagerDataSource"
                                         users-by-username-query="SELECT USERID, pwd AS PASSWORD, 1 enabled FROM member where userid=?"
 
                                         authorities-by-username-query="select m.USERID , r.ROLE_NAME
            								                                from member m join roll r
           								                                on m.userid = r.userid
-           								                                where m.userid=?"/>
+           								                                where m.userid=?"/>&ndash;&gt;
             <security:password-encoder ref="bCryptPasswordEncoder"/>
         </security:authentication-provider>
-    </security:authentication-manager>
+    </security:authentication-manager>-->
 
 </beans>
