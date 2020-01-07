@@ -317,8 +317,8 @@ nav.navbar a.menu-btn {
   width: 40px;
   height: 40px;
   line-height: 40px;
-  background: #453d3d;
-  color: #fff;
+  background: #fff;
+  color: #453d3d;
   text-align: center;
   padding: 0 !important;
 }
@@ -329,7 +329,8 @@ nav.navbar a.menu-btn i[class*='icon-'] {
 }
 
 nav.navbar a.menu-btn:hover {
-  background: #888888;
+	background: #453d3d;
+  	color: #fff;
 }
 
 /*  NAVBAR MEDIAQUERIES ---------------------------------- */
@@ -2525,7 +2526,7 @@ mark,
 }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #288b46 !important;
+  color: #343a40 !important;
 }
 
 /*

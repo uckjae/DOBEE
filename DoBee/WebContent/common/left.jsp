@@ -10,7 +10,7 @@
 			</div>
 			<!-- Small Brand information, appears on minimized sidebar-->
 			<div class="sidenav-header-logo">
-				<a href="index.html" class="brand-small text-center" style="font-color:#343a40"> <strong>B</strong><strong 
+				<a href="index.html" class="brand-small text-center"> <strong class="text-primary">B</strong><strong 
 					class="text-primary">D</strong></a>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 				</li>
 										
 				<li><a href="#"> <i class="fas fa-tasks fa-2x" style="color:#888888;"></i>프로젝트</a></li>
-				<li><a href="#"> <i class="fas fa-comments fa-2x" style="color:#888888;"></i>채팅</a></li>
+				<li><a href="chat.jsp"> <i class="fas fa-comments fa-2x" style="color:#888888;"></i>채팅</a></li>
 			</ul>
 		</div>
 
