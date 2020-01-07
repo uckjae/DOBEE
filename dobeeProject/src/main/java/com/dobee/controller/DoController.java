@@ -135,27 +135,44 @@ public class DoController {
     }
 
 
-    //연장근무관리
-    public String overtiemSign(){
+    //연장근무관리 리스트
+    public String overtiemSignList(){
         return null;
     }
 
 
-    //카드관리
+    //연장근무관리 승인
+    public String overtimeSingApprov(){
+        return null;
+    }
+
+
+    //연장근무관리 거절
+    public String overtimeSignReject(){
+        return null;
+    }
+
+
+    //카드관리 리스트
     public String debitList(){
         return null;
     }
 
 
+    //카드관리 카드추가
     public String addDebit(){
         return null;
     }
 
 
     //비용현황
+    public String paymentChart(){
+
+    }
 
 
     //비용정산신청
+    public Sring receipt
 
 
     //프로젝트메인
