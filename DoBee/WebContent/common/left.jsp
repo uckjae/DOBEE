@@ -25,26 +25,31 @@
 		<div class="main-menu">
 			<h5 class="sidenav-heading">Main</h5>
 			<ul id="side-main-menu" class="side-menu list-unstyled">
-				<li><a href="index.html"> <i class="fas fa-home fa-2x" style="color:#888888;"></i>Home
+				<li><a href="#"> <i class="fas fa-home fa-2x" style="color:#888888;"></i>Home
 				</a></li>
-				<li><a href="forms.html"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;"></i>Board
-				</a></li>
-				<li><a href="charts.html"> <i class="fas fa-briefcase fa-2x" style="color:#888888;"></i>Work</a></li>
-				<li><a href="tables.html"> <i class="fas fa-receipt fa-2x"  style="color:#888888;"></i>Bills
-				</a></li>
+				<li><a href="#"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;"></i>공지사항
+				</a></li>				
 				<li><a href="#exampledropdownDropdown" aria-expanded="false"
-					data-toggle="collapse"> <i class="icon-interface-windows"></i>Example	dropdown
-				</a>
+					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;"></i>근무</a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-						<li><a href="#">Page</a></li>
-						<li><a href="#">Page</a></li>
-						<li><a href="#">Page</a></li>
-					</ul></li>
-				<li><a href="login.html"> <i class="icon-interface-windows"></i>Login
-						page
-				</a></li>
-				<li><a href="#"> <i class="icon-mail"></i>Demo
-						<div class="badge badge-warning">6 New</div></a></li>
+						<li><a href="#">부재일정 신청</a></li>
+						<li><a href="#">연장근무 신청</a></li>
+						<li><a href="#">부재일정 관리</a></li>
+						<li><a href="#">근무내역 확인</a></li>
+					</ul>
+				</li>
+				
+				<li><a href="#exampledropdownDropdown2" aria-expanded="false"
+					data-toggle="collapse"> <i class="fas fa-receipt fa-2x" style="color:#888888;"></i>비용</a>
+					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+						<li><a href="#">카드 관리</a></li>
+						<li><a href="#">정산 신청</a></li>
+						<li><a href="#">비용 현황</a></li>
+					</ul>
+				</li>
+										
+				<li><a href="#"> <i class="fas fa-tasks fa-2x" style="color:#888888;"></i>프로젝트</a></li>
+				<li><a href="#"> <i class="fas fa-comments fa-2x" style="color:#888888;"></i>채팅</a></li>
 			</ul>
 		</div>
 
