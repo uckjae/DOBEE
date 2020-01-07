@@ -43,14 +43,14 @@ public class DoController {
 
 
     //메인페이지(로그인후)
-    @RequestMapping(value="", method = RequestMethod.GET)
+    //@RequestMapping(value="", method = RequestMethod.GET)
     public String main(){
         return null;
     }
 
 
     //회사 일정등록
-    @RequestMapping(value = "", method = RequestMethod.POST)
+   // @RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){
         return null;
     }
@@ -63,13 +63,13 @@ public class DoController {
 
 
     //마이페이지
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    //@RequestMapping(value = "", method = RequestMethod.GET)
     public String mypage(){
         return null;
     }
 
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    //@RequestMapping(value = "", method = RequestMethod.POST)
     public String mypageModi(){
         return null;
     }
