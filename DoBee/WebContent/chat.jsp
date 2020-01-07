@@ -8,11 +8,12 @@
   <head>
     <c:import url="/common/tag.jsp"/>
   </head>
+  <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
 
 <body>
 		
 	<br>
-	<c:import url="/common/left.jsp" />
+	<c:import url="/common/left_mini.jsp" />
 	
 	<!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
@@ -26,7 +27,6 @@
     <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
     <!-- Main File-->
     <script src="/js/front.js"></script>
-    <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
    
 </body>

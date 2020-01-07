@@ -85,7 +85,7 @@ table {
   -webkit-transition: width 0.3s linear;
   transition: width 0.3s linear;
   width: calc(100% - 200px);
-  background-color: #F4F7FA;
+  background-color: #fff;
   min-height: 100vh;
   padding-bottom: 50px;
 }
@@ -190,7 +190,7 @@ section header {
 * ==========================================================
 */
 nav.navbar {
-  background: #393836;
+  background-color: none;
   padding: .8rem 0;
   /* Navbar Brand --------- */
   /*  Dropdowns ------------ */
@@ -373,7 +373,7 @@ nav.navbar a.menu-btn:hover {
   height: 100%;
   width: 200px;
   text-align: left;
-  background: #393836;
+  background: #fafafa;
   color: #fff;
   z-index: 999;
   overflow-y: auto;
@@ -413,14 +413,14 @@ nav.navbar a.menu-btn:hover {
   position: relative;
   font-size: .9rem;
   font-weight: 300;
-  color: #fff;
+  color: #453d3d;
   text-decoration: none;
   width: 100%;
   padding: 12px;
 }
 
 .side-navbar li a:focus, .side-navbar li a:hover, .side-navbar li a[aria-expanded="true"] {
-  background: #33b35a;
+  background: #453d3d;
   color: #fff;
   text-decoration: none;
 }
@@ -471,15 +471,15 @@ nav.navbar a.menu-btn:hover {
 }
 
 .side-navbar .sidenav-header {
-  background: #292929;
+  background: #fafafa;
   padding: 14px;
   margin-bottom: 10px;
 }
 
-.side-navbar .sidenav-header img {
-  width: 50px;
-  height: 50px;
-}
+/* .side-navbar .sidenav-header img {
+  width: 200px;
+  height: 200px;
+} */
 
 .side-navbar .sidenav-header span {
   font-size: 0.8em;
@@ -1903,14 +1903,14 @@ STYLE SWITCHER FOR DEMO
 }
 
 .btn-success {
-  color: color-yiq(#28a745);
-  background-color: #28a745;
+  color: color-yiq(#888888);
+  background-color: #888888;
   border-color: #28a745;
 }
 
 .btn-success:hover {
-  color: color-yiq(#218838);
-  background-color: #218838;
+  color: color-yiq(#888888);
+  background-color: #888888;
   border-color: #1e7e34;
 }
 
