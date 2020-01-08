@@ -39,7 +39,7 @@
 </head>
 <body>
 	
-	  <img src="img/dobeelogo.png" alt="dobeelogo" style="float: left; width:10%; height: 14%">
+	  <img src="img/dobeelogo.png" alt="AVATAR" style="float: left; width:15%; height: 26%">
 	
 	<div class="limiter" style="height: 20%">
 	  
@@ -61,48 +61,40 @@
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 					
-					
 					<div class="form-group">
-				
-					<div class ="col-md-12"> 
-					 <div class="row">
-						<div class="col-md-6" style="float: left">
-							<div class="custom-control custom-checkbox" >
+							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline" >ID 저장</label>
-							</div>
-							</div>
-						<div class="col-md-6" style="float: right">
-							<div class="custom-control custom-checkbox" >
-								<input type="checkbox" class="custom-control-input" id="customControl">
-								<label class="custom-control-label" for="customControl" >로그인 유지</label>
-							</div>
+								<label class="custom-control-label" for="customControlInline">ID 저장</label>
 							</div>
 						</div>
-					</div>
-					</div>
+						
+					<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="customControl">
+								<label class="custom-control-label" for="customControl">ID 유지</label>
+							</div>
+						</div>
 					
-					
-					<div class="container-login100-form-btn">
+					<div class="container-login100-form-btn" style="height: 20%">
 						<button class="login100-form-btn">
 							Login
 						</button>
-						</div>
 						
-						<hr>
+							<ul class="login-more p-t-190">
+						<li class="m-b-8">
+							<span class="txt1">
+								아이디 및 찾기
+							</span>
+							<a href="#" class="txt2">
+								Username 
+							</a>
 							
-							<div class="container">
-							<dl>
-							<dt class="m-b-8" style="text-align: center;">
-							
-							<a href="#" class="txt2" style="float: inherit; color: darkgray;" > 아이디 찾기 </a>
-							<span class="bar" aria-hidden="true" style="color: darkgray;">|</span>
-							
-							<a href="#" class="txt2" style="color: darkgray;"> 비밀번호 찾기 </a>
-							</dt>
-		    				</dl>
-		    				</div>
-					
+							<a href="#" class="txt2">
+								Password?
+							</a>
+						</li>
+    				</ul>
+					</div>
 				</form>
 			</div>
 		</div>

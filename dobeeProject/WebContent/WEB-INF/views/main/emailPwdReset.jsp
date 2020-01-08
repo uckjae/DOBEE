@@ -57,8 +57,7 @@
 					<h6> DoBee 입사를 축하드립니다 ^^ ! </h6> 
 					<br>
 					<h6> 사이트 이용을 위해 비밀 번호를 설정 해주세요. </h6>
-					<hr>
-					
+									
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
 						<input class="input100" type="text" name="username">
 						<span class="focus-input100" data-placeholder="새로운 비밀번호 입력"></span>

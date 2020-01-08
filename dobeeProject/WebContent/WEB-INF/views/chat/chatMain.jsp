@@ -80,7 +80,6 @@
 						           	</select>
 						          </div>
 						          
-						          
 						        </form>
 						      </div>
 						      <div class="modal-footer">
@@ -111,7 +110,7 @@
             	</div>
             </li><br>
             <li>
-           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;갓경균</span></a>
+           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;갓경균</span></a>
            		</div>
             </li>
              <li>

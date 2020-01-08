@@ -81,10 +81,11 @@ public class DoController {
         return null;
     }
 
-
-    //공지사항리스트
+    
+  //공지사항리스트
+    @RequestMapping("noticeList.do")
     public String noticeList(){
-        return null;
+        return "notice/noticeList";
     }
 
 
@@ -308,5 +309,12 @@ public class DoController {
     }
 
 
-    //채팅
+    //채팅 메인
+    @RequestMapping("chat.do")
+    public String chatMain() {
+    	return "chat/chatMain";
+    }
+    
+    //1:1 대화 하기
+    
 }

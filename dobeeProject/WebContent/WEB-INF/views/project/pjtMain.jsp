@@ -34,21 +34,30 @@
     </style>
     <script type="text/javascript">
 		$(function(){
+			/* 프로젝트 멤버추가 */
 			$('#memberList').change(function(){
 				var memberList = $('#pjtMember').val();
 				var selectedMember = $('#memberList').val();
-				console.log(memberList);
 				if(memberList==null || memberList==""){
-					console.log("true");
 					memberList += selectedMember;
 				}
 				else{
-					console.log("false");
 					memberList += ","+selectedMember;
 				}
 				
 				$('#pjtMember').val(memberList);
-				$('#memberList').val().empty();
+				$('#memberList').val(null);
+			});
+
+
+			/* 취소 클릭시 form value 제거 */
+			$('#deletebtn').click(function(){
+				console.log("deletebtn click!!");
+				$('#addProjetForm').find("input").each(function(){
+					if(this.id != "modalBtn"){
+						$(this).val(null);
+					}
+				});
 			});
 			
 		});
@@ -101,7 +110,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form id="frm" method ="post">
+        <form id="addProjetForm" method ="post">
         <div class="modal-body" id="innerModal">   		
         	<label for="pjtName">프로젝트 이름</label>
         	<input type="text" name="pjtName" id="pjtName"/>
@@ -115,7 +124,7 @@
         	<label for="pjtMember">프로젝트 멤버</label>
         	<input id="pjtMember" readonly="readonly" value=""></input>
         	<select id="memberList" name="memberList">
-        		<option hidden="true">선택하시오</option>
+        		<option>선택하시오</option>
         		<option>이혜리</option>
         		<option>박성호</option>
         		<option>이욱재</option>

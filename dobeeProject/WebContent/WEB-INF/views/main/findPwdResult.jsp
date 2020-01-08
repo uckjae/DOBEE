@@ -43,7 +43,7 @@
 </head>
 <body>
 	
-	  <img src="img/dobeelogo.png" alt="AVATAR" style="float: left; width:15%; height: 26%">
+	   <img src="img/dobeelogo.png" alt="dobeelogo" style="float: left; width:10%; height: 14%">
 
 	<div class="limiter" style="height: 20%">
 	  
