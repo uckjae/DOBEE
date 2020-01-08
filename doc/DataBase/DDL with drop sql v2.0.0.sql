@@ -110,6 +110,26 @@ ALTER TABLE `BREAKLIST`
 ALTER TABLE `MEMBERINFO`
 	DROP FOREIGN KEY `FK_MEMBER_TO_MEMBERINFO`; -- 사원 -> 사원정보
 
+-- 채팅방
+ALTER TABLE `CHATROOM`
+	DROP FOREIGN KEY `FK_CHATTYPE_TO_CHATROOM`; -- 채팅타입 -> 채팅방
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	DROP FOREIGN KEY `FK_CHATROOM_TO_CHATCONTENT`; -- 채팅방 -> 대화 내용
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	DROP FOREIGN KEY `FK_MEMBER_TO_CHATCONTENT`; -- 사원 -> 대화 내용
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	DROP FOREIGN KEY `FK_CHATROOM_TO_CHATUSERS`; -- 채팅방 -> 채팅방 참여자
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	DROP FOREIGN KEY `FK_MEMBER_TO_CHATUSERS`; -- 사원 -> 채팅방 참여자
+
 -- 사원
 ALTER TABLE `MEMBER`
 	DROP PRIMARY KEY; -- 사원 기본키
@@ -210,6 +230,22 @@ ALTER TABLE `BREAKLIST`
 ALTER TABLE `MEMBERINFO`
 	DROP PRIMARY KEY; -- 사원정보 기본키
 
+-- 채팅타입
+ALTER TABLE `CHATTYPE`
+	DROP PRIMARY KEY; -- 채팅타입 기본키
+
+-- 채팅방
+ALTER TABLE `CHATROOM`
+	DROP PRIMARY KEY; -- 채팅방 기본키
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	DROP PRIMARY KEY; -- 대화 내용 기본키
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	DROP PRIMARY KEY; -- 채팅방 참여자 기본키
+
 -- 사원
 DROP TABLE IF EXISTS `MEMBER` RESTRICT;
 
@@ -285,6 +321,18 @@ DROP TABLE IF EXISTS `BREAKLIST` RESTRICT;
 -- 사원정보
 DROP TABLE IF EXISTS `MEMBERINFO` RESTRICT;
 
+-- 채팅타입
+DROP TABLE IF EXISTS `CHATTYPE` RESTRICT;
+
+-- 채팅방
+DROP TABLE IF EXISTS `CHATROOM` RESTRICT;
+
+-- 대화 내용
+DROP TABLE IF EXISTS `CHATCONTENT` RESTRICT;
+
+-- 채팅방 참여자
+DROP TABLE IF EXISTS `CHATUSERS` RESTRICT;
+
 -- 사원
 CREATE TABLE `MEMBER` (
 	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
@@ -292,7 +340,7 @@ CREATE TABLE `MEMBER` (
 	`NAME`     VARCHAR(20)  NOT NULL COMMENT '사원이름', -- 사원이름
 	`MYPIC`    VARCHAR(255) NOT NULL COMMENT '사원사진', -- 사원사진
 	`AUTHCODE` INT          NOT NULL COMMENT '권한코드', -- 권한코드
-	`TCODE`    INT          NOT NULL COMMENT '팀코드' -- 팀코드
+	`TEAMCODE` INT          NOT NULL COMMENT '팀코드' -- 팀코드
 )
 COMMENT '사원';
 
@@ -305,9 +353,9 @@ ALTER TABLE `MEMBER`
 
 -- 공지사항
 CREATE TABLE `NOTICE` (
-	`NSEQ`    INT          NOT NULL COMMENT '글번호', -- 글번호
+	`NOTSEQ`  INT          NOT NULL COMMENT '글번호', -- 글번호
 	`TITLE`   VARCHAR(255) NOT NULL COMMENT '글제목', -- 글제목
-	`CONTENT` MEDIUMBLOB         NOT NULL COMMENT '글내용', -- 글내용
+	`CONTENT` MEDIUMBLOB   NOT NULL COMMENT '글내용', -- 글내용
 	`REGDATE` DATETIME     NOT NULL COMMENT '작성시간', -- 작성시간
 	`COUNT`   INT          NOT NULL COMMENT '조회수' -- 조회수
 )
@@ -317,19 +365,19 @@ COMMENT '공지사항';
 ALTER TABLE `NOTICE`
 	ADD CONSTRAINT `PK_NOTICE` -- 공지사항 기본키
 		PRIMARY KEY (
-			`NSEQ` -- 글번호
+			`NOTSEQ` -- 글번호
 		);
 
 ALTER TABLE `NOTICE`
-	MODIFY COLUMN `NSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '글번호';
+	MODIFY COLUMN `NOTSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '글번호';
 
 -- 프로젝트
 CREATE TABLE `PROJECT` (
-	`PSEQ`      INT         NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
-	`PNAME`     VARCHAR(60) NOT NULL COMMENT '이름', -- 이름
-	`PSTARTAT`  DATE        NOT NULL COMMENT '시작일', -- 시작일
-	`PENDAT`    DATE        NOT NULL COMMENT '종료일', -- 종료일
-	`PPROGRESS` VARCHAR(30) NOT NULL COMMENT '진행상황' -- 진행상황
+	`PJTSEQ`      INT         NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`PJTNAME`     VARCHAR(60) NOT NULL COMMENT '이름', -- 이름
+	`PJTSTARTAT`  DATE        NOT NULL COMMENT '시작일', -- 시작일
+	`PJTENDAT`    DATE        NOT NULL COMMENT '종료일', -- 종료일
+	`PJTPROGRESS` VARCHAR(30) NOT NULL COMMENT '진행상황' -- 진행상황
 )
 COMMENT '프로젝트';
 
@@ -337,22 +385,22 @@ COMMENT '프로젝트';
 ALTER TABLE `PROJECT`
 	ADD CONSTRAINT `PK_PROJECT` -- 프로젝트 기본키
 		PRIMARY KEY (
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		);
 
 ALTER TABLE `PROJECT`
-	MODIFY COLUMN `PSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '프로젝트번호';
+	MODIFY COLUMN `PJTSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '프로젝트번호';
 
 -- 업무
 CREATE TABLE `TASK` (
-	`TSEQ`     INT          NOT NULL COMMENT '업무번호', -- 업무번호
+	`TSKSEQ`   INT          NOT NULL COMMENT '업무번호', -- 업무번호
 	`TITLE`    VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
 	`PROGRESS` VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
 	`IMPORT`   INT          NOT NULL COMMENT '중요도', -- 중요도
 	`STARTAT`  DATE         NOT NULL COMMENT '시작일', -- 시작일
 	`ENDAT`    DATE         NOT NULL COMMENT '완료일', -- 완료일
 	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
-	`PSEQ`     INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
+	`PJTSEQ`   INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
 COMMENT '업무';
 
@@ -360,17 +408,17 @@ COMMENT '업무';
 ALTER TABLE `TASK`
 	ADD CONSTRAINT `PK_TASK` -- 업무 기본키
 		PRIMARY KEY (
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		);
 
 ALTER TABLE `TASK`
-	MODIFY COLUMN `TSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '업무번호';
+	MODIFY COLUMN `TSKSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '업무번호';
 
 -- 상세업무
 CREATE TABLE `TASKDETAIL` (
 	`TDSEQ`     INT          NOT NULL COMMENT '상세업무번호', -- 상세업무번호
 	`TDCONTENT` VARCHAR(100) NOT NULL COMMENT '상세업무내용', -- 상세업무내용
-	`TSEQ`      INT          NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSKSEQ`    INT          NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '상세업무';
 
@@ -407,7 +455,7 @@ CREATE TABLE `CHECKLIST` (
 	`CHKSEQ`  INT          NOT NULL COMMENT '체크리스트번호', -- 체크리스트번호
 	`CONTENT` VARCHAR(100) NOT NULL COMMENT '항목', -- 항목
 	`ISCHECK` BOOLEAN      NOT NULL COMMENT '체크여부', -- 체크여부
-	`TSEQ`    INT          NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSKSEQ`  INT          NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '체크리스트';
 
@@ -423,9 +471,9 @@ ALTER TABLE `CHECKLIST`
 
 -- 프로젝트일정
 CREATE TABLE `PROJSCHEDULE` (
-	`PSSEQ` INT NOT NULL COMMENT '프로젝트일정번호', -- 프로젝트일정번호
-	`PSEQ`  INT NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
-	`SSEQ`  INT NOT NULL COMMENT '일정번호' -- 일정번호
+	`PSSEQ`  INT NOT NULL COMMENT '프로젝트일정번호', -- 프로젝트일정번호
+	`PJTSEQ` INT NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`SCHSEQ` INT NOT NULL COMMENT '일정번호' -- 일정번호
 )
 COMMENT '프로젝트일정';
 
@@ -441,10 +489,10 @@ ALTER TABLE `PROJSCHEDULE`
 
 -- 근태
 CREATE TABLE `ATTEND` (
-	`ASEQ`    INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
+	`ATTSEQ`  INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
 	`ATTTIME` DATE        NOT NULL COMMENT '출퇴근시간', -- 출퇴근시간
 	`MAIL`    VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
-	`ATTSEQ`  INT         NOT NULL COMMENT '근태코드' -- 근태코드
+	`ATTCODE` INT         NOT NULL COMMENT '근태코드' -- 근태코드
 )
 COMMENT '근태';
 
@@ -452,16 +500,16 @@ COMMENT '근태';
 ALTER TABLE `ATTEND`
 	ADD CONSTRAINT `PK_ATTEND` -- 근태 기본키
 		PRIMARY KEY (
-			`ASEQ` -- 근태목록번호
+			`ATTSEQ` -- 근태목록번호
 		);
 
 ALTER TABLE `ATTEND`
-	MODIFY COLUMN `ASEQ` INT NOT NULL AUTO_INCREMENT COMMENT '근태목록번호';
+	MODIFY COLUMN `ATTSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '근태목록번호';
 
 -- 근태코드
 CREATE TABLE `ATTENDCODE` (
-	`ATTSEQ` INT         NOT NULL COMMENT '근태코드', -- 근태코드
-	`ATTDIV` VARCHAR(60) NOT NULL COMMENT '근태구분' -- 근태구분
+	`ATTCODE` INT         NOT NULL COMMENT '근태코드', -- 근태코드
+	`ATTDIV`  VARCHAR(60) NOT NULL COMMENT '근태구분' -- 근태구분
 )
 COMMENT '근태코드';
 
@@ -469,20 +517,20 @@ COMMENT '근태코드';
 ALTER TABLE `ATTENDCODE`
 	ADD CONSTRAINT `PK_ATTENDCODE` -- 근태코드 기본키
 		PRIMARY KEY (
-			`ATTSEQ` -- 근태코드
+			`ATTCODE` -- 근태코드
 		);
 
 -- 비용처리목록
 CREATE TABLE `COSTLIST` (
-	`CSEQ`    INT          NOT NULL COMMENT '비용처리번호', -- 비용처리번호
-	`REGDATE` DATE         NOT NULL COMMENT '작성일', -- 작성일
-	`USEDATE` DATETIME     NULL     COMMENT '사용일', -- 사용일
-	`USEAT`   VARCHAR(60)  NOT NULL COMMENT '사용처', -- 사용처
-	`COST`    INT          NOT NULL COMMENT '사용금액', -- 사용금액
-	`DETAIL`  VARCHAR(100) NULL     COMMENT '상세내용', -- 상세내용
-	`CODE`    INT          NOT NULL COMMENT '비용처리코드', -- 비용처리코드
-	`CARDNUM` INT          NOT NULL COMMENT '카드번호', -- 카드번호
-	`MAIL`    VARCHAR(60)  NOT NULL COMMENT '사원메일' -- 사원메일
+	`COSTSEQ`  INT          NOT NULL COMMENT '비용처리번호', -- 비용처리번호
+	`REGDATE`  DATE         NOT NULL COMMENT '작성일', -- 작성일
+	`USEDATE`  DATETIME     NULL     COMMENT '사용일', -- 사용일
+	`USEAT`    VARCHAR(60)  NOT NULL COMMENT '사용처', -- 사용처
+	`COST`     INT          NOT NULL COMMENT '사용금액', -- 사용금액
+	`DETAIL`   VARCHAR(100) NULL     COMMENT '상세내용', -- 상세내용
+	`COSTCODE` INT          NOT NULL COMMENT '비용처리코드', -- 비용처리코드
+	`CARDNUM`  INT          NOT NULL COMMENT '카드번호', -- 카드번호
+	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일' -- 사원메일
 )
 COMMENT '비용처리목록';
 
@@ -490,16 +538,16 @@ COMMENT '비용처리목록';
 ALTER TABLE `COSTLIST`
 	ADD CONSTRAINT `PK_COSTLIST` -- 비용처리목록 기본키
 		PRIMARY KEY (
-			`CSEQ` -- 비용처리번호
+			`COSTSEQ` -- 비용처리번호
 		);
 
 ALTER TABLE `COSTLIST`
-	MODIFY COLUMN `CSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '비용처리번호';
+	MODIFY COLUMN `COSTSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '비용처리번호';
 
 -- 비용처리코드
 CREATE TABLE `COSTCODE` (
-	`CODE`  INT         NOT NULL COMMENT '비용처리코드', -- 비용처리코드
-	`ENTRY` VARCHAR(60) NOT NULL COMMENT '비용항목' -- 비용항목
+	`COSTCODE` INT         NOT NULL COMMENT '비용처리코드', -- 비용처리코드
+	`ENTRY`    VARCHAR(60) NOT NULL COMMENT '비용항목' -- 비용항목
 )
 COMMENT '비용처리코드';
 
@@ -507,12 +555,12 @@ COMMENT '비용처리코드';
 ALTER TABLE `COSTCODE`
 	ADD CONSTRAINT `PK_COSTCODE` -- 비용처리코드 기본키
 		PRIMARY KEY (
-			`CODE` -- 비용처리코드
+			`COSTCODE` -- 비용처리코드
 		);
 
 -- 일정
 CREATE TABLE `SCHEDULE` (
-	`SSEQ`      INT      NOT NULL COMMENT '일정번호', -- 일정번호
+	`SCHSEQ`    INT      NOT NULL COMMENT '일정번호', -- 일정번호
 	`STARTTIME` DATETIME NOT NULL COMMENT '시작시간', -- 시작시간
 	`ENDTIME`   DATETIME NOT NULL COMMENT '종료시간' -- 종료시간
 )
@@ -522,18 +570,18 @@ COMMENT '일정';
 ALTER TABLE `SCHEDULE`
 	ADD CONSTRAINT `PK_SCHEDULE` -- 일정 기본키
 		PRIMARY KEY (
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		);
 
 ALTER TABLE `SCHEDULE`
-	MODIFY COLUMN `SSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '일정번호';
+	MODIFY COLUMN `SCHSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '일정번호';
 
 -- 공지사항일정
 CREATE TABLE `NOTSCHEDULE` (
 	`NSSEQ`     INT         NOT NULL COMMENT '공지관련일정번호', -- 공지관련일정번호
 	`NSCONTENT` VARCHAR(60) NOT NULL COMMENT '공지사항일정내용', -- 공지사항일정내용
-	`SSEQ`      INT         NOT NULL COMMENT '일정번호', -- 일정번호
-	`NSEQ`      INT         NOT NULL COMMENT '글번호' -- 글번호
+	`SCHSEQ`    INT         NOT NULL COMMENT '일정번호', -- 일정번호
+	`NOTSEQ`    INT         NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '공지사항일정';
 
@@ -552,7 +600,7 @@ CREATE TABLE `NOTICEFILE` (
 	`NFSEQ`    INT          NOT NULL COMMENT '공지사항첨부파일번호', -- 공지사항첨부파일번호
 	`ORGNAME`  VARCHAR(255) NOT NULL COMMENT '원본이름', -- 원본이름
 	`SAVENAME` VARCHAR(255) NOT NULL COMMENT '저장이름', -- 저장이름
-	`NSEQ`     INT          NOT NULL COMMENT '글번호' -- 글번호
+	`NOTSEQ`   INT          NOT NULL COMMENT '글번호' -- 글번호
 )
 COMMENT '공지사항파일';
 
@@ -568,10 +616,10 @@ ALTER TABLE `NOTICEFILE`
 
 -- 업무일정
 CREATE TABLE `TASKSCHEDULE` (
-	`TSSEQ` INT NOT NULL COMMENT '업무일정번호', -- 업무일정번호
-	`PSEQ`  INT NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
-	`SSEQ`  INT NOT NULL COMMENT '일정번호', -- 일정번호
-	`TSEQ`  INT NOT NULL COMMENT '업무번호' -- 업무번호
+	`TSSEQ`  INT NOT NULL COMMENT '업무일정번호', -- 업무일정번호
+	`PJTSEQ` INT NOT NULL COMMENT '프로젝트번호', -- 프로젝트번호
+	`SCHSEQ` INT NOT NULL COMMENT '일정번호', -- 일정번호
+	`TSKSEQ` INT NOT NULL COMMENT '업무번호' -- 업무번호
 )
 COMMENT '업무일정';
 
@@ -587,8 +635,8 @@ ALTER TABLE `TASKSCHEDULE`
 
 -- 신청목록
 CREATE TABLE `APPLYCODE` (
-	`ACODE` INT         NOT NULL COMMENT '신청항목코드', -- 신청항목코드
-	`ENTRY` VARCHAR(60) NOT NULL COMMENT '신청항목' -- 신청항목
+	`ENTRY`   VARCHAR(60) NOT NULL COMMENT '신청항목', -- 신청항목
+	`APYCODE` INT         NOT NULL COMMENT '신청항목코드' -- 신청항목코드
 )
 COMMENT '신청목록';
 
@@ -596,12 +644,12 @@ COMMENT '신청목록';
 ALTER TABLE `APPLYCODE`
 	ADD CONSTRAINT `PK_APPLYCODE` -- 신청목록 기본키
 		PRIMARY KEY (
-			`ACODE` -- 신청항목코드
+			`APYCODE` -- 신청항목코드
 		);
 
 -- 신청
 CREATE TABLE `APPLY` (
-	`ASEQ`      INT          NOT NULL COMMENT '신청번호', -- 신청번호
+	`APLSEQ`    INT          NOT NULL COMMENT '신청번호', -- 신청번호
 	`REQDATE`   DATE         NOT NULL COMMENT '신청일', -- 신청일
 	`REASON`    VARCHAR(150) NOT NULL COMMENT '사유', -- 사유
 	`STARTAT`   DATETIME     NOT NULL COMMENT '시작일', -- 시작일
@@ -610,7 +658,7 @@ CREATE TABLE `APPLY` (
 	`REJREASON` VARCHAR(150) NULL     COMMENT '반려사유', -- 반려사유
 	`DRAFTER`   VARCHAR(60)  NOT NULL COMMENT '신청자', -- 신청자
 	`APPROVAL`  VARCHAR(60)  NOT NULL COMMENT '결재자', -- 결재자
-	`ACODE`     INT          NOT NULL COMMENT '신청항목코드' -- 신청항목코드
+	`APYCODE`   INT          NOT NULL COMMENT '신청항목코드' -- 신청항목코드
 )
 COMMENT '신청';
 
@@ -618,17 +666,17 @@ COMMENT '신청';
 ALTER TABLE `APPLY`
 	ADD CONSTRAINT `PK_APPLY` -- 신청 기본키
 		PRIMARY KEY (
-			`ASEQ` -- 신청번호
+			`APLSEQ` -- 신청번호
 		);
 
 ALTER TABLE `APPLY`
-	MODIFY COLUMN `ASEQ` INT NOT NULL AUTO_INCREMENT COMMENT '신청번호';
+	MODIFY COLUMN `APLSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '신청번호';
 
 -- 회사일정
 CREATE TABLE `CORPSCHEDULE` (
 	`CSSEQ`     INT         NOT NULL COMMENT '회사일정번호', -- 회사일정번호
 	`CSCONTENT` VARCHAR(60) NOT NULL COMMENT '회사일정내용', -- 회사일정내용
-	`SSEQ`      INT         NOT NULL COMMENT '일정번호' -- 일정번호
+	`SCHSEQ`    INT         NOT NULL COMMENT '일정번호' -- 일정번호
 )
 COMMENT '회사일정';
 
@@ -658,8 +706,8 @@ ALTER TABLE `AUTHORITY`
 
 -- 팀목록
 CREATE TABLE `TEAMLIST` (
-	`TCODE` INT         NOT NULL COMMENT '팀코드', -- 팀코드
-	`TNAME` VARCHAR(60) NOT NULL COMMENT '팀이름' -- 팀이름
+	`TEAMCODE` INT         NOT NULL COMMENT '팀코드', -- 팀코드
+	`TEAMNAME` VARCHAR(60) NOT NULL COMMENT '팀이름' -- 팀이름
 )
 COMMENT '팀목록';
 
@@ -667,13 +715,13 @@ COMMENT '팀목록';
 ALTER TABLE `TEAMLIST`
 	ADD CONSTRAINT `PK_TEAMLIST` -- 팀목록 기본키
 		PRIMARY KEY (
-			`TCODE` -- 팀코드
+			`TEAMCODE` -- 팀코드
 		);
 
 -- 프로젝트그룹
 CREATE TABLE `PROJECTMEMBER` (
-	`MAIL` VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
-	`PSEQ` INT         NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
+	`MAIL`   VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
+	`PJTSEQ` INT         NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
 COMMENT '프로젝트그룹';
 
@@ -681,8 +729,8 @@ COMMENT '프로젝트그룹';
 ALTER TABLE `PROJECTMEMBER`
 	ADD CONSTRAINT `PK_PROJECTMEMBER` -- 프로젝트그룹 기본키
 		PRIMARY KEY (
-			`MAIL`, -- 사원메일
-			`PSEQ`  -- 프로젝트번호
+			`MAIL`,   -- 사원메일
+			`PJTSEQ`  -- 프로젝트번호
 		);
 
 -- 휴가
@@ -702,8 +750,8 @@ ALTER TABLE `BREAK`
 
 -- 휴가목록
 CREATE TABLE `BREAKLIST` (
-	`BSEQ`       INT         NOT NULL COMMENT '연차사용목록시퀀스', -- 연차사용목록시퀀스
-	`ASEQ`       INT         NOT NULL COMMENT '신청번호', -- 신청번호
+	`BRKSEQ`     INT         NOT NULL COMMENT '연차사용목록시퀀스', -- 연차사용목록시퀀스
+	`APLSEQ`     INT         NOT NULL COMMENT '신청번호', -- 신청번호
 	`MAIL`       VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
 	`USINGBREAK` INT         NOT NULL COMMENT '연차사용일수' -- 연차사용일수
 )
@@ -713,11 +761,11 @@ COMMENT '휴가목록';
 ALTER TABLE `BREAKLIST`
 	ADD CONSTRAINT `PK_BREAKLIST` -- 휴가목록 기본키
 		PRIMARY KEY (
-			`BSEQ` -- 연차사용목록시퀀스
+			`BRKSEQ` -- 연차사용목록시퀀스
 		);
 
 ALTER TABLE `BREAKLIST`
-	MODIFY COLUMN `BSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '연차사용목록시퀀스';
+	MODIFY COLUMN `BRKSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '연차사용목록시퀀스';
 
 -- 사원정보
 CREATE TABLE `MEMBERINFO` (
@@ -737,6 +785,85 @@ ALTER TABLE `MEMBERINFO`
 			`MAIL` -- 사원메일
 		);
 
+-- 채팅타입
+CREATE TABLE `CHATTYPE` (
+	`CHATCODE` INT         NOT NULL COMMENT '타입코드', -- 타입코드
+	`CHATTYPE` VARCHAR(20) NULL     COMMENT '타입명' -- 타입명
+)
+COMMENT '채팅타입';
+
+-- 채팅타입
+ALTER TABLE `CHATTYPE`
+	ADD CONSTRAINT `PK_CHATTYPE` -- 채팅타입 기본키
+		PRIMARY KEY (
+			`CHATCODE` -- 타입코드
+		);
+
+-- 채팅방
+CREATE TABLE `CHATROOM` (
+	`CHATSEQ`      INT          NOT NULL COMMENT '채팅방 식별번호', -- 채팅방 식별번호
+	`CHATROOMNAME` VARCHAR(100) NOT NULL COMMENT '채팅방명', -- 채팅방명
+	`CHATCODE`     INT          NOT NULL COMMENT '타입코드' -- 타입코드
+)
+COMMENT '채팅방';
+
+-- 채팅방
+ALTER TABLE `CHATROOM`
+	ADD CONSTRAINT `PK_CHATROOM` -- 채팅방 기본키
+		PRIMARY KEY (
+			`CHATSEQ` -- 채팅방 식별번호
+		);
+
+ALTER TABLE `CHATROOM`
+	MODIFY COLUMN `CHATSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '채팅방 식별번호';
+
+ALTER TABLE `CHATROOM`
+	AUTO_INCREMENT = 1;
+
+-- 대화 내용
+CREATE TABLE `CHATCONTENT` (
+	`CHATMSGSEQ`  BIGINT      NOT NULL COMMENT '메시지 식별번호', -- 메시지 식별번호
+	`CHATCONTENT` TEXT        NOT NULL COMMENT '채팅내용', -- 채팅내용
+	`CHATTIME`    DATETIME    NOT NULL COMMENT '작성시간', -- 작성시간
+	`CHATSEQ`     INT         NOT NULL COMMENT '채팅방 식별번호', -- 채팅방 식별번호
+	`MAIL`        VARCHAR(60) NOT NULL COMMENT '사원메일' -- 사원메일
+)
+COMMENT '대화 내용';
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	ADD CONSTRAINT `PK_CHATCONTENT` -- 대화 내용 기본키
+		PRIMARY KEY (
+			`CHATMSGSEQ` -- 메시지 식별번호
+		);
+
+ALTER TABLE `CHATCONTENT`
+	MODIFY COLUMN `CHATMSGSEQ` BIGINT NOT NULL AUTO_INCREMENT COMMENT '메시지 식별번호';
+
+ALTER TABLE `CHATCONTENT`
+	AUTO_INCREMENT = 1;
+
+-- 채팅방 참여자
+CREATE TABLE `CHATUSERS` (
+	`CHATUSERSEQ` INT         NOT NULL COMMENT '채팅참여자 식별번호', -- 채팅참여자 식별번호
+	`CHATSEQ`     INT         NOT NULL COMMENT '채팅방 식별번호', -- 채팅방 식별번호
+	`MAIL`        VARCHAR(60) NOT NULL COMMENT '사원메일' -- 사원메일
+)
+COMMENT '채팅방 참여자';
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	ADD CONSTRAINT `PK_CHATUSERS` -- 채팅방 참여자 기본키
+		PRIMARY KEY (
+			`CHATUSERSEQ` -- 채팅참여자 식별번호
+		);
+
+ALTER TABLE `CHATUSERS`
+	MODIFY COLUMN `CHATUSERSEQ` INT NOT NULL AUTO_INCREMENT COMMENT '채팅참여자 식별번호';
+
+ALTER TABLE `CHATUSERS`
+	AUTO_INCREMENT = 1;
+
 -- 사원
 ALTER TABLE `MEMBER`
 	ADD CONSTRAINT `FK_AUTHORITY_TO_MEMBER` -- 권한 -> 사원
@@ -751,72 +878,72 @@ ALTER TABLE `MEMBER`
 ALTER TABLE `MEMBER`
 	ADD CONSTRAINT `FK_TEAMLIST_TO_MEMBER` -- 팀목록 -> 사원
 		FOREIGN KEY (
-			`TCODE` -- 팀코드
+			`TEAMCODE` -- 팀코드
 		)
 		REFERENCES `TEAMLIST` ( -- 팀목록
-			`TCODE` -- 팀코드
+			`TEAMCODE` -- 팀코드
 		);
 
 -- 업무
 ALTER TABLE `TASK`
 	ADD CONSTRAINT `FK_PROJECTMEMBER_TO_TASK` -- 프로젝트그룹 -> 업무
 		FOREIGN KEY (
-			`MAIL`, -- 사원메일
-			`PSEQ`  -- 프로젝트번호
+			`MAIL`,   -- 사원메일
+			`PJTSEQ`  -- 프로젝트번호
 		)
 		REFERENCES `PROJECTMEMBER` ( -- 프로젝트그룹
-			`MAIL`, -- 사원메일
-			`PSEQ`  -- 프로젝트번호
+			`MAIL`,   -- 사원메일
+			`PJTSEQ`  -- 프로젝트번호
 		);
 
 -- 상세업무
 ALTER TABLE `TASKDETAIL`
 	ADD CONSTRAINT `FK_TASK_TO_TASKDETAIL` -- 업무 -> 상세업무
 		FOREIGN KEY (
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		);
 
 -- 체크리스트
 ALTER TABLE `CHECKLIST`
 	ADD CONSTRAINT `FK_TASK_TO_CHECKLIST` -- 업무 -> 체크리스트
 		FOREIGN KEY (
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		);
 
 -- 프로젝트일정
 ALTER TABLE `PROJSCHEDULE`
 	ADD CONSTRAINT `FK_PROJECT_TO_PROJSCHEDULE` -- 프로젝트 -> 프로젝트일정
 		FOREIGN KEY (
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		);
 
 -- 프로젝트일정
 ALTER TABLE `PROJSCHEDULE`
 	ADD CONSTRAINT `FK_SCHEDULE_TO_PROJSCHEDULE` -- 일정 -> 프로젝트일정
 		FOREIGN KEY (
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		);
 
 -- 근태
 ALTER TABLE `ATTEND`
 	ADD CONSTRAINT `FK_ATTENDCODE_TO_ATTEND` -- 근태코드 -> 근태
 		FOREIGN KEY (
-			`ATTSEQ` -- 근태코드
+			`ATTCODE` -- 근태코드
 		)
 		REFERENCES `ATTENDCODE` ( -- 근태코드
-			`ATTSEQ` -- 근태코드
+			`ATTCODE` -- 근태코드
 		);
 
 -- 근태
@@ -833,10 +960,10 @@ ALTER TABLE `ATTEND`
 ALTER TABLE `COSTLIST`
 	ADD CONSTRAINT `FK_COSTCODE_TO_COSTLIST` -- 비용처리코드 -> 비용처리목록
 		FOREIGN KEY (
-			`CODE` -- 비용처리코드
+			`COSTCODE` -- 비용처리코드
 		)
 		REFERENCES `COSTCODE` ( -- 비용처리코드
-			`CODE` -- 비용처리코드
+			`COSTCODE` -- 비용처리코드
 		);
 
 -- 비용처리목록
@@ -863,75 +990,75 @@ ALTER TABLE `COSTLIST`
 ALTER TABLE `NOTSCHEDULE`
 	ADD CONSTRAINT `FK_SCHEDULE_TO_NOTSCHEDULE` -- 일정 -> 공지사항일정
 		FOREIGN KEY (
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		);
 
 -- 공지사항일정
 ALTER TABLE `NOTSCHEDULE`
 	ADD CONSTRAINT `FK_NOTICE_TO_NOTSCHEDULE` -- 공지사항 -> 공지사항일정
 		FOREIGN KEY (
-			`NSEQ` -- 글번호
+			`NOTSEQ` -- 글번호
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
-			`NSEQ` -- 글번호
+			`NOTSEQ` -- 글번호
 		);
 
 -- 공지사항파일
 ALTER TABLE `NOTICEFILE`
 	ADD CONSTRAINT `FK_NOTICE_TO_NOTICEFILE` -- 공지사항 -> 공지사항파일
 		FOREIGN KEY (
-			`NSEQ` -- 글번호
+			`NOTSEQ` -- 글번호
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
-			`NSEQ` -- 글번호
+			`NOTSEQ` -- 글번호
 		);
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
 	ADD CONSTRAINT `FK_PROJECT_TO_TASKSCHEDULE` -- 프로젝트 -> 업무일정
 		FOREIGN KEY (
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		);
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
 	ADD CONSTRAINT `FK_SCHEDULE_TO_TASKSCHEDULE` -- 일정 -> 업무일정
 		FOREIGN KEY (
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		);
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
 	ADD CONSTRAINT `FK_TASK_TO_TASKSCHEDULE` -- 업무 -> 업무일정
 		FOREIGN KEY (
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		)
 		REFERENCES `TASK` ( -- 업무
-			`TSEQ` -- 업무번호
+			`TSKSEQ` -- 업무번호
 		);
 
 -- 신청
 ALTER TABLE `APPLY`
 	ADD CONSTRAINT `FK_APPLYCODE_TO_APPLY` -- 신청목록 -> 신청
 		FOREIGN KEY (
-			`ACODE` -- 신청항목코드
+			`APYCODE` -- 신청항목코드
 		)
 		REFERENCES `APPLYCODE` ( -- 신청목록
-			`ACODE` -- 신청항목코드
+			`APYCODE` -- 신청항목코드
 		);
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_MEMBER_TO_DRAFTER` -- 사원 -> 신청
+	ADD CONSTRAINT `FK_MEMBER_TO_DRAFTEr` -- 사원 -> 신청
 		FOREIGN KEY (
 			`DRAFTER` -- 신청자
 		)
@@ -953,10 +1080,10 @@ ALTER TABLE `APPLY`
 ALTER TABLE `CORPSCHEDULE`
 	ADD CONSTRAINT `FK_SCHEDULE_TO_CORPSCHEDULE` -- 일정 -> 회사일정
 		FOREIGN KEY (
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
-			`SSEQ` -- 일정번호
+			`SCHSEQ` -- 일정번호
 		);
 
 -- 프로젝트그룹
@@ -973,10 +1100,10 @@ ALTER TABLE `PROJECTMEMBER`
 ALTER TABLE `PROJECTMEMBER`
 	ADD CONSTRAINT `FK_PROJECT_TO_PROJECTMEMBER` -- 프로젝트 -> 프로젝트그룹
 		FOREIGN KEY (
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
-			`PSEQ` -- 프로젝트번호
+			`PJTSEQ` -- 프로젝트번호
 		);
 
 -- 휴가
@@ -993,10 +1120,10 @@ ALTER TABLE `BREAK`
 ALTER TABLE `BREAKLIST`
 	ADD CONSTRAINT `FK_APPLY_TO_BREAKLIST` -- 신청 -> 휴가목록
 		FOREIGN KEY (
-			`ASEQ` -- 신청번호
+			`APLSEQ` -- 신청번호
 		)
 		REFERENCES `APPLY` ( -- 신청
-			`ASEQ` -- 신청번호
+			`APLSEQ` -- 신청번호
 		);
 
 -- 휴가목록
@@ -1018,6 +1145,57 @@ ALTER TABLE `MEMBERINFO`
 		REFERENCES `MEMBER` ( -- 사원
 			`MAIL` -- 사원메일
 		);
+
+-- 채팅방
+ALTER TABLE `CHATROOM`
+	ADD CONSTRAINT `FK_CHATTYPE_TO_CHATROOM` -- 채팅타입 -> 채팅방
+		FOREIGN KEY (
+			`CHATCODE` -- 타입코드
+		)
+		REFERENCES `CHATTYPE` ( -- 채팅타입
+			`CHATCODE` -- 타입코드
+		);
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	ADD CONSTRAINT `FK_CHATROOM_TO_CHATCONTENT` -- 채팅방 -> 대화 내용
+		FOREIGN KEY (
+			`CHATSEQ` -- 채팅방 식별번호
+		)
+		REFERENCES `CHATROOM` ( -- 채팅방
+			`CHATSEQ` -- 채팅방 식별번호
+		);
+
+-- 대화 내용
+ALTER TABLE `CHATCONTENT`
+	ADD CONSTRAINT `FK_MEMBER_TO_CHATCONTENT` -- 사원 -> 대화 내용
+		FOREIGN KEY (
+			`MAIL` -- 사원메일
+		)
+		REFERENCES `MEMBER` ( -- 사원
+			`MAIL` -- 사원메일
+		);
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	ADD CONSTRAINT `FK_CHATROOM_TO_CHATUSERS` -- 채팅방 -> 채팅방 참여자
+		FOREIGN KEY (
+			`CHATSEQ` -- 채팅방 식별번호
+		)
+		REFERENCES `CHATROOM` ( -- 채팅방
+			`CHATSEQ` -- 채팅방 식별번호
+		);
+
+-- 채팅방 참여자
+ALTER TABLE `CHATUSERS`
+	ADD CONSTRAINT `FK_MEMBER_TO_CHATUSERS` -- 사원 -> 채팅방 참여자
+		FOREIGN KEY (
+			`MAIL` -- 사원메일
+		)
+		REFERENCES `MEMBER` ( -- 사원
+			`MAIL` -- 사원메일
+		);
+
 
 INSERT INTO AUTHORITY (AUTHCODE, AUTH) VALUES(1, 'ROLE_ADMIN');
 INSERT INTO AUTHORITY (AUTHCODE, AUTH) VALUES(2, 'ROLE_USER');
