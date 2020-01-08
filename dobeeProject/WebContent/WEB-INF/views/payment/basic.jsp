@@ -7,19 +7,8 @@
 
 <c:import url="/common/tag.jsp" />
 
-<script>
-	window.onload = function() {
-		var app = new Vue({
-			el : "#nav",
-			data : {
-
-			}
-		})
-	}
-</script>
 
 </head>
-
 
 
 
@@ -30,50 +19,20 @@
 		<c:import url="/common/left.jsp" />
 	</nav>
 
-	<div class="page">
+	 <div class="page">
 		<c:import url="/common/top.jsp" />
 
+	
 
 
-		<div id="nav">
-			<b-card title="Card Title" no-body> <b-card-header
-				header-tag="nav"> <b-nav card-header pills>
-			<b-nav-item active>Active</b-nav-item> <b-nav-item>Inactive</b-nav-item>
-			<b-nav-item disabled>Disabled</b-nav-item> </b-nav> </b-card-header> <b-card-body
-				class="text-center"> 
-				<b-card-text> 
-					<div>
-							안녕 여기 내용물이야
-							
+
+					<!--  content -->
+
+
+
+
 					
-					
-					</div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			</b-card-text> 
-			<b-button
-				variant="primary">Go somewhere</b-button> 
-				</b-card-body> 
-				</b-card>
-		</div>
-
-
-
-
-
-
-
-
-
-
-
+	
 		<c:import url="/common/bottom.jsp" />
 	</div>
 
@@ -95,10 +54,9 @@
 	<script
 		src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 	<script src="./js/charts-home.js"></script>
-	<!— Main File—>
-	<script src="./js/front.js"></script>
-	<script src="https://kit.fontawesome.com/5d4e7bbd25.js"
-		crossorigin="anonymous"></script>
+	 <!— Main File—>
+    <script src="./js/front.js"></script>
+    <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
 </body>
 
 
