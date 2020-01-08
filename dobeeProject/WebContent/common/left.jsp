@@ -1,14 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <head>
-    <html>
-    <style>
-    .text-primary {
-  color: black !important;
-}
-    </style>
-    </html>
 <div class="side-navbar-wrapper">
 
 		<!-- Sidebar Header    -->
@@ -57,10 +48,7 @@
 				<li><a href="chat.jsp"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
 			</ul>
 		</div>
-<<<<<<< HEAD
 	</div>
-=======
 
 	</div>
 	</head>
->>>>>>> 5a62e98170997afbe910d4fd4a3dd05510da471e

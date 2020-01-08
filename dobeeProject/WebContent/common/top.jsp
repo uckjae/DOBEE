@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8"%>
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
->>>>>>> 5a62e98170997afbe910d4fd4a3dd05510da471e
 <header class="header">
         <nav class="navbar">
           <div class="container-fluid">
@@ -46,33 +37,24 @@
                 <!-- Messages dropdown-->
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fas fa-user fa-2x" style="color:#888888;"></i></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-<<<<<<< HEAD
                     <li><a rel="nofollow" href="#" style="text-align:center"> 
                         <span class="d-none d-sm-inline-block" style="color:#888888;">출근/퇴근</span>
-=======
                     <li><a rel="nofollow" href="#"> 
                         <span class="d-none d-sm-inline-block" style="color:#888888;">ì¶ê·¼/í´ê·¼</span>
->>>>>>> 5a62e98170997afbe910d4fd4a3dd05510da471e
                         <i class="fas fa-power-off" style="color:#888888;"></i></a>
                         </li>
                     </li>
                     <hr>
                     <li><a rel="nofollow" href="#"> 
-<<<<<<< HEAD
                         <span class="d-none d-sm-inline-block" style="color:#888888;">정보 수정</span>
-=======
                         <span class="d-none d-sm-inline-block" style="color:#888888;">ë§ì´íì´ì§Â</span>
->>>>>>> 5a62e98170997afbe910d4fd4a3dd05510da471e
                         <i class="fas fa-cog" style="color:#888888;"></i></a>
                         </li>
                     </li>
                     <hr>
                     <li><a rel="nofollow" href="#"> 
-<<<<<<< HEAD
                          <span class="d-none d-sm-inline-block" style="color:#888888;">로그아웃</span>
-=======
                         <span class="d-none d-sm-inline-block" style="color:#888888;">ë¡ê·¸ìì</span>
->>>>>>> 5a62e98170997afbe910d4fd4a3dd05510da471e
                         <i class="fa fa-sign-out" style="color:#888888;"></i></a>
                         </li>
                     </li>
