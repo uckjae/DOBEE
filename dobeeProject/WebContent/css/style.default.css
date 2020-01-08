@@ -463,10 +463,6 @@ nav.navbar a.menu-btn:hover {
   font-size: .85rem;
 }
 
-.side-navbar li ul.collapse a {
-  border-left: 2px solid #33b35a;
-}
-
 .side-navbar li ul.collapse a:hover {
   background: #121212;
 }
