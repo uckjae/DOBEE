@@ -48,8 +48,8 @@
 				<li><a href="#exampledropdownDropdown2" aria-expanded="false"
 					data-toggle="collapse"> <i class="fas fa-receipt fa-2x" style="color:#888888;">&nbsp;비용</i></a>
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+						<li><a href="reciptRegit.do">정산 신청</a></li>
 						<li><a href="#">카드 관리</a></li>
-						<li><a href="#">정산 신청</a></li>
 						<li><a href="debitList.do">비용 현황</a></li>
 					</ul>
 				</li>
