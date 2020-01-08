@@ -50,15 +50,15 @@
 				</div>
 				
 				<br>
-			<hr style=" width: 30%; display: block; margin: 0px auto;">
+			<hr style=" width: 25%; display: block; margin: 0px auto;">
 			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
 				<form class="login100-form validate-form" style=" height: 50%; text-align: center; ">
 				<h2> HELLO, 노비1 님 </h2>	<br>
 					<h5> DoBee를 이용하시려면 메일 인증 버튼을 클릭하여 다음 단계를 진행하세요</h5>
 					<hr>
-					<h4> YOUR URL : 192,............. </h4>
+					<h6> YOUR URL : 192,............. </h6>
 					<br>
-					<h4> LOGIN ID : 2017545 </h4>
+					<h6> LOGIN ID : 2017545 </h6>
 					<br>
 					<div class="container-login100-form-btn" style="height: 20%">
 						<button class="login100-form-btn">
