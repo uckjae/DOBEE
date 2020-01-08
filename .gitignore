@@ -9,3 +9,6 @@ Servers/
 =======
 .metadata/
 >>>>>>> .merge_file_a08848
+.class
+*.class
+dobeeProject/target/m2e-wtp/web-resources/META-INF/maven/com.dobee/dobeeProject/pom.properties

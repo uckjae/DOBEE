@@ -1,11 +1,15 @@
 package com.dobee.controller;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.dobee.services.ProjectService;
+import com.dobee.vo.project.Project;
 
 @Controller
 public class DoController {
@@ -201,8 +205,11 @@ public class DoController {
 
 
     //프로젝트메인
+    @RequestMapping("project.do")
     public String projectMain(){
-        return null;
+    	ProjectService projectService = new ProjectService();
+    	List<Project> projectList = projectService.projectList();
+        return "project/pjtMain";
     }
 
 
