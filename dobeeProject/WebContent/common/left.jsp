@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
 <div class="side-navbar-wrapper">
 
@@ -20,8 +20,7 @@
 
 		<!-- Sidebar Navigation Menus-->
 		<div class="main-menu">
-<!-- 			<h5 class="sidenav-heading">Main</h5>
- -->			<ul id="side-main-menu" class="side-menu list-unstyled">
+			<ul id="side-main-menu" class="side-menu list-unstyled">
 				<li><a href="#"> <i class="fas fa-home fa-2x" style="color:#888888;">&nbsp;메인</i>
 				</a></li>
 				<li><a href="#"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;공지사항</i>
@@ -45,9 +44,8 @@
 					</ul>
 				</li>
 										
-				<li><a href="project.do"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
+				<li><a href="#"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
 				<li><a href="chat.jsp"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
 			</ul>
 		</div>
-
 	</div>

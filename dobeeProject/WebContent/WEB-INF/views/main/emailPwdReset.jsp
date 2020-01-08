@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>MainPage</title>
+	<title>EMAILCERTIFICATION</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,65 +39,45 @@
 </head>
 <body>
 	
-	  <img src="img/dobeelogo.png" alt="AVATAR" style="float: left; width:15%; height: 26%">
-	
-	<div class="limiter" style="height: 20%">
+
+
+	<div class="limiter" >
 	  
-		<div class="container-login100" style="width: 65%">
-						
-              <img src="img/workplace.PNG" alt="AVATAR" style="width:40%; height: 400px">
-				
 		
-			<div class="wrap-login100 p-t-85 p-b-20">
-				<form class="login100-form validate-form" style="height: 30%">
+			<div class ="container">	
+			
+              <img src="img/workplace.PNG" alt="AVATAR" style="width:20%; height: 165px; display: block; margin: 0px auto; ">
+				</div>
+				
+				<br>
+			<hr style=" width: 30%; display: block; margin: 0px auto;">
+			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
+				<form class="login100-form validate-form" style=" height: 40%; text-align: center; ">
+				<h3> HELLO, 노비1 님 </h3>	<br>
+					<h6> DoBee 입사를 축하드립니다 ^^ ! </h6> 
+					<br>
+					<h6> 사이트 이용을 위해 비밀 번호를 설정 해주세요. </h6>
+					<hr>
 					
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
 						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="E-mail"></span>
+						<span class="focus-input100" data-placeholder="새로운 비밀번호 입력"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="password" name="pass">
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<input class="input100" type="text" name="pass">
+						<span class="focus-input100" data-placeholder="비밀번호 재입력"></span>
 					</div>
 					
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline">ID 저장</label>
-							</div>
-						</div>
-						
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControl">
-								<label class="custom-control-label" for="customControl">ID 유지</label>
-							</div>
-						</div>
-					
+					<br>
 					<div class="container-login100-form-btn" style="height: 20%">
 						<button class="login100-form-btn">
-							Login
+							비밀 번호 설정 완료
 						</button>
-						
-							<ul class="login-more p-t-190">
-						<li class="m-b-8">
-							<span class="txt1">
-								아이디 및 찾기
-							</span>
-							<a href="#" class="txt2">
-								Username 
-							</a>
-							
-							<a href="#" class="txt2">
-								Password?
-							</a>
-						</li>
-    				</ul>
-					</div>
+						</div>
 				</form>
 			</div>
-		</div>
+		
 	</div>
 	
 

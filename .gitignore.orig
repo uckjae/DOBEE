@@ -11,7 +11,10 @@ Servers/
 >>>>>>> .merge_file_a08848
 .class
 *.class
+<<<<<<< HEAD
 dobeeProject/.sts4-cache/
+=======
 dobeeProject/target/m2e-wtp/web-resources/META-INF/maven/com.dobee/dobeeProject/pom.properties
 dobeeProject/target/
 DoBee/bin/
+>>>>>>> a8cb19d91c5236c2913e0e629e0397ca04975480

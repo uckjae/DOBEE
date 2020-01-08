@@ -2,11 +2,10 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>MainPage</title>
+	<title>IdFind</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -36,65 +35,46 @@
 
 </style>
 
+
+    
+    <script> function btn(){ alert('아이디 또는 전화번호가 맞지 않습니다.'); } </script>
+
+    
+
 </head>
 <body>
 	
 	  <img src="img/dobeelogo.png" alt="AVATAR" style="float: left; width:15%; height: 26%">
-	
+
 	<div class="limiter" style="height: 20%">
 	  
 		<div class="container-login100" style="width: 65%">
 						
               <img src="img/workplace.PNG" alt="AVATAR" style="width:40%; height: 400px">
 				
+				
+				<br>
 		
 			<div class="wrap-login100 p-t-85 p-b-20">
 				<form class="login100-form validate-form" style="height: 30%">
-					
+				<h2> 비밀번호 재설정 </h2>			
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
 						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="E-mail"></span>
+						<span class="focus-input100" data-placeholder="아이디 입력"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="password" name="pass">
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<input class="input100" type="text" name="pass">
+						<span class="focus-input100" data-placeholder="전화번호 입력"></span>
 					</div>
 					
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline">ID 저장</label>
-							</div>
-						</div>
-						
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControl">
-								<label class="custom-control-label" for="customControl">ID 유지</label>
-							</div>
-						</div>
 					
 					<div class="container-login100-form-btn" style="height: 20%">
-						<button class="login100-form-btn">
-							Login
+						<button class="login100-form-btn" onclick="javascript:btn()"> 
+					
+							다음
 						</button>
-						
-							<ul class="login-more p-t-190">
-						<li class="m-b-8">
-							<span class="txt1">
-								아이디 및 찾기
-							</span>
-							<a href="#" class="txt2">
-								Username 
-							</a>
-							
-							<a href="#" class="txt2">
-								Password?
-							</a>
-						</li>
-    				</ul>
-					</div>
+						</div>
 				</form>
 			</div>
 		</div>

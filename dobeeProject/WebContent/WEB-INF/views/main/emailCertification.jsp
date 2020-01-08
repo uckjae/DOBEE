@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>MainPage</title>
+	<title>EMAILCERTIFICATION</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,65 +39,35 @@
 </head>
 <body>
 	
-	  <img src="img/dobeelogo.png" alt="AVATAR" style="float: left; width:15%; height: 26%">
-	
-	<div class="limiter" style="height: 20%">
-	  
-		<div class="container-login100" style="width: 65%">
-						
-              <img src="img/workplace.PNG" alt="AVATAR" style="width:40%; height: 400px">
-				
-		
-			<div class="wrap-login100 p-t-85 p-b-20">
-				<form class="login100-form validate-form" style="height: 30%">
-					
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
-						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="E-mail"></span>
-					</div>
 
-					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="password" name="pass">
-						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
-					
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline">ID 저장</label>
-							</div>
-						</div>
-						
-					<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControl">
-								<label class="custom-control-label" for="customControl">ID 유지</label>
-							</div>
-						</div>
-					
+
+	<div class="limiter" >
+	  
+		
+			<div class ="container">	
+			
+              <img src="img/workplace.PNG" alt="AVATAR" style="width:20%; height: 200px; display: block; margin: 0px auto; ">
+				</div>
+				
+				<br>
+			<hr style=" width: 30%; display: block; margin: 0px auto;">
+			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
+				<form class="login100-form validate-form" style=" height: 50%; text-align: center; ">
+				<h2> HELLO, 노비1 님 </h2>	<br>
+					<h5> DoBee를 이용하시려면 메일 인증 버튼을 클릭하여 다음 단계를 진행하세요</h5>
+					<hr>
+					<h4> YOUR URL : 192,............. </h4>
+					<br>
+					<h4> LOGIN ID : 2017545 </h4>
+					<br>
 					<div class="container-login100-form-btn" style="height: 20%">
 						<button class="login100-form-btn">
-							Login
+							Email Authentication / 메일 인증
 						</button>
-						
-							<ul class="login-more p-t-190">
-						<li class="m-b-8">
-							<span class="txt1">
-								아이디 및 찾기
-							</span>
-							<a href="#" class="txt2">
-								Username 
-							</a>
-							
-							<a href="#" class="txt2">
-								Password?
-							</a>
-						</li>
-    				</ul>
-					</div>
+						</div>
 				</form>
 			</div>
-		</div>
+		
 	</div>
 	
 
