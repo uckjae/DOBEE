@@ -1,9 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="UTF-8"%>
 <header class="header">
         <nav class="navbar">
           <div class="container-fluid">
@@ -40,21 +36,21 @@
                 
                 <!-- Messages dropdown-->
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fas fa-user fa-2x" style="color:#888888;"></i></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#"> 
-                        <span class="d-none d-sm-inline-block" style="color:#888888;">ì¶ê·¼/í´ê·¼</span>
+                  <ul aria-labelledby="notifications" class="dropdown-menu" style="text-align:center">
+                    <li><a rel="nofollow" href="#" > 
+                        <span class="d-none d-sm-inline-block" style="color:#888888; ">출근/퇴근</span>
                         <i class="fas fa-power-off" style="color:#888888;"></i></a>
                         </li>
                     </li>
                     <hr>
-                    <li><a rel="nofollow" href="#"> 
-                        <span class="d-none d-sm-inline-block" style="color:#888888;">ë§ì´íì´ì§Â</span>
+                    <li><a rel="nofollow" href="#" > 
+                        <span class="d-none d-sm-inline-block" style="color:#888888;">정보 수정</span>
                         <i class="fas fa-cog" style="color:#888888;"></i></a>
                         </li>
                     </li>
                     <hr>
-                    <li><a rel="nofollow" href="#"> 
-                        <span class="d-none d-sm-inline-block" style="color:#888888;">ë¡ê·¸ìì</span>
+                    <li><a rel="nofollow" href="#" > 
+                         <span class="d-none d-sm-inline-block" style="color:#888888;">로그아웃</span>
                         <i class="fa fa-sign-out" style="color:#888888;"></i></a>
                         </li>
                     </li>

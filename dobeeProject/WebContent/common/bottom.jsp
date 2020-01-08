@@ -1,6 +1,4 @@
 <!-- copyright -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 	  <footer class="main-footer">
         <div class="container-fluid">
           <div class="row">
@@ -8,7 +6,7 @@
               <p>Bootstrapious All rights reserved.  &copy; 2017-2019</p>
             </div>
             <div class="col-sm-6 text-right">
-              More Templates <a href="http://www.cssmoban.com/" target="_blank" title="æ¨¡æ¿ä¹å®¶">æ¨¡æ¿ä¹å®¶</a> - Collect from <a href="http://www.cssmoban.com/" title="ç½é¡µæ¨¡æ¿" target="_blank"></a>
+              More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank"></a>
             </div>
           </div>
         </div>

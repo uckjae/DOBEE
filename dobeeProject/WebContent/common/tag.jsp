@@ -1,9 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
  <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Dobee</title>
@@ -28,7 +22,8 @@
     <link rel="stylesheet" href="./css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.ico">
-    
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
     <!-- vueJS and vueBootstrap -->
     <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>

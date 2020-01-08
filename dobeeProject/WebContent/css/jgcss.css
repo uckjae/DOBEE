@@ -1,0 +1,48 @@
+
+#absenseTable {
+	margin-top : 50px;
+	align-content: center;
+	align-items: center;
+}
+
+.pagineinit .pagingprev. .paging .pagingnext .paginglast {
+	background-color: lightgray;
+	width : 30px;
+	height: 15px;
+}
+
+#absenseTable thead tr td{
+	background-color: gray;
+	height : 3px;
+}
+
+#absenseTable thead tr th {
+	background-color: lightgray;
+	height: 15px;
+}
+
+#absenseTable tfoot tr{
+	background-color: gray;
+	height: 3px
+}
+
+#absenseTable tr th{
+	height : 30px;
+	text-align : center;
+}
+
+#absenseTable tbody tr td{
+	height: 30px;
+	text-align : center;
+}
+
+#absenseTable tr td {
+	border-bottom : 1px solid #ccc;
+}
+
+#inputTerm {
+	width : 25%;
+	height: 25px;
+}
+
+

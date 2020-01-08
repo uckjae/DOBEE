@@ -11,10 +11,7 @@ Servers/
 >>>>>>> .merge_file_a08848
 .class
 *.class
+dobeeProject/.sts4-cache/
 dobeeProject/target/m2e-wtp/web-resources/META-INF/maven/com.dobee/dobeeProject/pom.properties
-dobeeProject/target/classes/com/dobee/mapper/MemberDao.xml
-dobeeProject/target/classes/com/dobee/mapper/NoticeDao.xml
-dobeeProject/target/classes/com/dobee/mapper/PaymentDao.xml
-dobeeProject/target/classes/com/dobee/mapper/ProjectDao.xml
-dobeeProject/target/classes/com/dobee/mapper/ScheduleDao.xml
-dobeeProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+dobeeProject/target/
+DoBee/bin/
