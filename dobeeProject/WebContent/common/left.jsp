@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
+    
+    <head>
+    <html>
+    <style>
+    .text-primary {
+  color: black !important;
+}
+    </style>
+    </html>
 <div class="side-navbar-wrapper">
 
 		<!-- Sidebar Header    -->
@@ -11,9 +20,9 @@
 				
 			</div>
 			<!-- Small Brand information, appears on minimized sidebar-->
-			<div class="sidenav-header-logo">
-				<a href="index.html" class="brand-small text-center"> <strong class="text-primary">B</strong><strong 
-					class="text-primary">D</strong></a>
+			<div class="sidenav-header-logo" >
+				<a href="index.html" class="brand-small text-center"> <strong class="text-primary" style="color: black">B</strong><strong 
+					class="text-primary" style="color: black">D</strong></a>
 			</div>
 		</div>
 
@@ -51,3 +60,4 @@
 		</div>
 
 	</div>
+	</head>

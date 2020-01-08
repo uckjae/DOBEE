@@ -2518,11 +2518,11 @@ mark,
 }
 
 .text-primary {
-  color: #33b35a !important;
+  color: black !important;
 }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #343a40 !important;
+  color: black !important;
 }
 
 /*
@@ -2738,11 +2738,11 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 .text-primary {
-  color: #33b35a !important;
+  color: black !important;
 }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #288b46 !important;
+  color: black !important;
 }
 
 .text-secondary {
