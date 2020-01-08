@@ -71,6 +71,7 @@
 	        <b-nav-item active>공지사항</b-nav-item>
 	       </b-nav>
          </b-card-header>
+         </div>
       
       <div class="content" style="margin-right: 50px">
 		<div class="comment-form-wrap pt-xl-2">
@@ -167,6 +168,37 @@
 				<td>2020-01-01</td>
 				<td>1222</td>
 			</tr>
+			<tr>
+				<td>no 3</td>
+				<td>필독바랍니다.</td>
+				<td>2020-01-01</td>
+				<td>1222</td>
+			</tr>
+			<tr>
+				<td>no 3</td>
+				<td>필독바랍니다.</td>
+				<td>2020-01-01</td>
+				<td>1222</td>
+			</tr>
+			<tr>
+				<td>no 3</td>
+				<td>필독바랍니다.</td>
+				<td>2020-01-01</td>
+				<td>1222</td>
+			</tr>
+			<tr>
+				<td>no 3</td>
+				<td>필독바랍니다.</td>
+				<td>2020-01-01</td>
+				<td>1222</td>
+			</tr>
+			<tr>
+				<td>no 3</td>
+				<td>필독바랍니다.</td>
+				<td>2020-01-01</td>
+				<td>1222</td>
+			</tr>
+			
 
 		</tbody>
 	</table>
@@ -175,7 +207,7 @@
 		</div>
 	  </div>
 	</div>
-	</div>
+	
 	<c:import url="/common/bottom.jsp"/>
 	
 	<!-- JavaScript files-->
