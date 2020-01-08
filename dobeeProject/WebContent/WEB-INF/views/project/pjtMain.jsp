@@ -32,6 +32,27 @@
     		background-color: #acacac;
     	}
     </style>
+    <script type="text/javascript">
+		$(function(){
+			$('#memberList').change(function(){
+				var memberList = $('#pjtMember').val();
+				var selectedMember = $('#memberList').val();
+				console.log(memberList);
+				if(memberList==null || memberList==""){
+					console.log("true");
+					memberList += selectedMember;
+				}
+				else{
+					console.log("false");
+					memberList += ","+selectedMember;
+				}
+				
+				$('#pjtMember').val(memberList);
+				$('#memberList').val().empty();
+			});
+			
+		});
+    </script>
 </head>
 <body>
 	<!-- Side Navbar -->
@@ -42,29 +63,31 @@
     	<!-- 상단 Navbar -->
     	<c:import url="/common/top.jsp"/>
     	<!-- 프로젝트목록표시 -->
-    	<div class="row">
-    		<!-- 프로젝트 -->
-    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-    			<h5 class="title">프로젝트이름</h5><br/>
-    			<span class="bg-lgiht">진행상황</span><br/>
-    			<p>날짜</p>
-    		</div>
-    		<!-- 프로젝트 -->
-    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-    			<h5 class="title">프로젝트이름</h5><br/>
-    			<span class="bg-lgiht">진행상황</span><br/>
-    			<p>날짜</p>
-    		</div>
-    		<!-- 프로젝트 -->
-    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-    			<h5 class="title">프로젝트이름</h5><br/>
-    			<span class="bg-lgiht">진행상황</span><br/>
-    			<p>날짜</p>
-    		</div>
-    		<!-- 프로젝트 -->
-    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-    			<h5 class="title">프로젝트 추가</h5><br/>
-    			<a data-toggle="modal" href="#addProjectModal"><button class="add">+</button></a>
+    	<div class="container">
+    		<div class="row">
+	    		<!-- 프로젝트 -->
+	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+	    			<h5 class="title">프로젝트이름</h5><br/>
+	    			<span class="bg-lgiht">진행상황</span><br/>
+	    			<p>날짜</p>
+	    		</div>
+	    		<!-- 프로젝트 -->
+	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+	    			<h5 class="title">프로젝트이름</h5><br/>
+	    			<span class="bg-lgiht">진행상황</span><br/>
+	    			<p>날짜</p>
+	    		</div>
+	    		<!-- 프로젝트 -->
+	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+	    			<h5 class="title">프로젝트이름</h5><br/>
+	    			<span class="bg-lgiht">진행상황</span><br/>
+	    			<p>날짜</p>
+	    		</div>
+	    		<!-- 프로젝트 -->
+	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+	    			<h5 class="title">프로젝트 추가</h5><br/>
+	    			<a class="add" data-toggle="modal" href="#addProjectModal"><button class="add">+</button></a>
+	    		</div>
     		</div>
     	</div>
     </div>
@@ -73,19 +96,39 @@
     <div class="modal-dialog" role="form">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="project">새 프로젝트</h5>
+          <h5 class="modal-title" id="project">프로젝트 생성</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form id="frm" method = "post">
+        <form id="frm" method ="post">
         <div class="modal-body" id="innerModal">   		
-        	<input type="text" name="editFolder" id="inputInnerModal"> 
+        	<label for="pjtName">프로젝트 이름</label>
+        	<input type="text" name="pjtName" id="pjtName"/>
+        	<br/>
+        	<label for="pjtStartDate">시작일</label>
+        	<input type="date" name="pjtStartDate" id="pjtStratName">
+        	<br/>
+        	<label for="pjtEndDate">마감일</label>
+        	<input type="date" name="pjtEndDate" id="pjtEndDate">
+        	<br/>
+        	<label for="pjtMember">프로젝트 멤버</label>
+        	<input id="pjtMember" readonly="readonly" value=""></input>
+        	<select id="memberList" name="memberList">
+        		<option hidden="true">선택하시오</option>
+        		<option>이혜리</option>
+        		<option>박성호</option>
+        		<option>이욱재</option>
+        		<option>김정균</option>
+        		<option>김광민</option>
+        		<option>최경열</option>
+        	</select>
+        	
         </div>
         <div class="modal-footer">
           <input type="submit" class="btn btn-primary" id="modalBtn">
           
-       <button id="deletebtn" class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+        <button id="deletebtn" class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
         </div>
         </form>
       </div>
