@@ -9,17 +9,24 @@
 
     <security:http auto-config="true">
         <security:csrf disabled="true" />
-        <security:intercept-url pattern="/customer/noticeDetail.htm" access="hasRole('ROLE_USER')" />
-        <security:intercept-url pattern="/customer/noticeReg.htm"    access="hasRole('ROLE_ADMIN')" />
+        <security:form-login login-page="/WEB-INF/views/main/login.jsp"/>
+        <security:intercept-url pattern="/WEB-INF/views/main/login" access="permitAll" />
+        <security:intercept-url pattern="/WEB-INF/views/main" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/WEB-INF/views/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <security:logout logout-success-url="/WEB-INF/views/main/login.jsp" invalidate-session="true"/>
+        <security:session-management invalid-session-url="/WEB-INF/views/main/login.jsp" session-fixation-protection="migrateSession">
+        	<security:concurrency-control max-sessions="1" expired-url="/WEB-INF/views/main/login.jsp"/>
+        </security:session-management>
     </security:http>
     <security:authentication-manager>
         <security:authentication-provider>
             <security:user-service>
-                <security:user name="kglim" password="1004"  authorities="ROLE_USER"/>
-                <security:user name="admin" password="1004"  authorities="ROLE_ADMIN,ROLE_USER"  />
+                <security:user name="manager@dobee.com" password="1004"  authorities="ROLE_USER"/>
+                <security:user name="admin@dobee.com" password="1004"  authorities="ROLE_ADMIN,ROLE_USER"  />
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
+   
     <!--<security:http>
         <security:csrf disabled="true"/>
         <security:form-login default-target-url="/index.htm"
