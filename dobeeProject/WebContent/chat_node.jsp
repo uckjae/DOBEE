@@ -47,7 +47,6 @@
                   <h4 style="display:inline;">Channels</h4>
                 </div>
                 <div class="col-md-2">
-				  <template>
 					  <div>
 					    <b-button @click="show=true" variant="dark"><strong>+</strong></b-button>
 					    <!-- <i class="fas fa-plus-circle"></i> -->
@@ -92,13 +91,10 @@
 					          </b-button>
 					        </b-col>
 					        </b-row>
-					          
 					        </div>
 					      </template>
 					    </b-modal>
 					  </div>
-				</template>
-                  
                 </div>
             	</div>
             </li> <br>
@@ -116,61 +112,9 @@
             	<div class="col-md-10">
                   <h4 style="display:inline;">Direct Messages</h4>
                 </div>
-                <div class="col-md-2">
-                    <template>
-					  <div>
-					    <b-button @click="show=true" variant="dark"><strong>+</strong></b-button>
-					    <!-- <i class="fas fa-plus-circle"></i> -->
-					    <b-modal
-					      v-model="show"
-					      title="새 대화 채널 만들기"
-					      :header-bg-variant="headerBgVariant"
-					      :header-text-variant="headerTextVariant"
-					      :body-bg-variant="bodyBgVariant"
-					      :body-text-variant="bodyTextVariant"
-					      :footer-bg-variant="footerBgVariant"
-					      :footer-text-variant="footerTextVariant"
-					    >
-					      <b-container fluid>
-					       <b-row class="mb-1">
-					          <b-col cols="3">채널명</b-col>
-					          <b-col>
-					          <b-form-input id="input-default" placeholder="채널명을 입력해주세요"></b-form-input>
-					          </b-col>
-					        </b-row>
-					        <b-row class="mb-1">
-					          <b-col cols="3">멤버 초대</b-col>
-					          <b-col>
-					            <b-form-select
-					              v-model="bodyBgVariant"
-					              :options="variants"
-					            ></b-form-select>
-					          </b-col>
-					        </b-row>
-					      </b-container>
-					      <template v-slot:modal-footer>
-					        <div class="w-100">
-					        <b-row class="mb-1">
-					        <b-col cols="7">
-					        <b-button
-					            variant="dark"
-					            size="lg"
-					            class="float-right"
-					            @click="show=false"
-					          >
-					            만들기
-					          </b-button>
-					        </b-col>
-					        </b-row>
-					          
-					        </div>
-					      </template>
-					    </b-modal>
-					  </div>
-				</template>
-                </div>
+                <div class="col-md-2"><div>
             	</div>
-            </li> <br>
+            </li><br>
             <li>
                  <i class="fas fa-user"></i>
                   	<span>갓경균</span>
@@ -179,18 +123,16 @@
                 <i class="fas fa-user"></i>
                   	<span>게다죽</span>
             </li>
-            
-         
           </ul>
         </div>
-
       </div>
       <!-- Grid column -->
 
       <!-- Grid column -->
+     
       <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0">
         <div class="chat-message">
-
+		<form id="sendMessage">
           <ul class="list-unstyled chat">
             <li class="d-flex justify-content-between mb-4">
             	<div class="row">
@@ -217,23 +159,24 @@
             		<hr width="70%">
             	</div>
             </div>
-			<div style="margin-top:250px;">        
-            <li class="white">
-              <div class="form-group basic-textarea">
-                <textarea class="form-control pl-2 my-0" id="exampleFormControlTextarea2" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-              </div>
-            </li>
-            </div>    
-	            <template>
-	            	<b-button variant="dark"
+            
+				<div style="margin-top:250px;">        
+		            <li class="white">
+		              <div class="form-group basic-textarea">
+		                <textarea class="form-control pl-2 my-0" id="message" name="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+		              </div>
+		            </li>
+	            </div>
+	            <b-button type="submit"
+	            			variant="dark"
 						      size="lg"
 						      class="float-right"
 						      @click="show=false">
 						            send
 					</b-button>
-				</template>
-             </ul>
-
+	             </ul>
+			</form>
+		
         </div>
 
       </div>
@@ -266,8 +209,18 @@
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
+    <!-- socket 연결 -->
+    <script src="http://localhost:82/socket.io/socket.io.js"></script>
+
   <script>
   window.onload = function() {
+
+	  var socket = io("http://localhost:82");
+	  
+	  //socket.emit('makeRoom')
+	  console.log('소켓 연결 성공');
+
+	  
       var app = new Vue({
           el: "#app",
           data() {
@@ -279,11 +232,33 @@
                   bodyBgVariant: 'light',
                   bodyTextVariant: 'dark',
                   footerBgVariant: 'light',
-                  footerTextVariant: 'light'
+                  footerTextVariant: 'light',
                 }
-          }
-      })
+          },
+          methods : {
+			makeRoom : function(){
+					var channelName = $("#channelName").val();
+				  	console.log('채널 명' + channelName);
+				  	
+				}
+				
+              }
+      });
+
+	      $("#sendMessage").on('submit', function(e){
+	    	  var msg = $('#message').val();
+	          console.log(msg);
+	          socket.emit('send message', msg);
+	          $('#message').val("");
+	          $("#message").focus();
+	          e.preventDefault();
+	       });
+
+     
+      
   }
+
+  
   </script>
     </body>
 </html>

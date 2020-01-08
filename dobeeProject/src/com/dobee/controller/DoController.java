@@ -181,8 +181,11 @@ public class DoController {
     
 
     //비용정산신청1
+    @RequestMapping("reciptRegit.do")
     public String receiptReg(){
-        return null;
+    	
+    	
+        return "payment/reciptRegit";
     }
 
 
@@ -207,8 +210,10 @@ public class DoController {
     //프로젝트메인
     @RequestMapping("project.do")
     public String projectMain(){
-    	ProjectService projectService = new ProjectService();
-    	List<Project> projectList = projectService.projectList();
+		/*
+		 * ProjectService projectService = new ProjectService(); List<Project>
+		 * projectList = projectService.projectList();
+		 */
         return "project/pjtMain";
     }
 
