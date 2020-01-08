@@ -4,8 +4,9 @@
 <html>
 <head>
 <c:import url="/common/tag.jsp"/>
+<!-- notice DataTables css-->
 <link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
-<!-- DataTables-->
+<!-- notice DataTables css-->
 <link rel="stylesheet" href="./css/notice.datatables.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -13,12 +14,14 @@
 
 
 <body>
+    <!-- notice DataTables js-->
 	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript">
 	</script>
 
 	<script>
      $(document).ready(function(){
 		$('#myTable').DataTable({
+			/*language option*/
 			"language": {
     	        "emptyTable": "데이터가 없습니다.",
     	        "lengthMenu": "페이지당 _MENU_ 개씩 보기",
@@ -34,6 +37,11 @@
     	            "previous": "이전"
     	        }
     	    },
+    	    "columnDefs": [
+    	        {
+        	      className: "dt-center", "targets": [1],
+      	        }
+    	      ]
 			});	
 	});
 
@@ -49,14 +57,28 @@
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
       
+      <script> /*view 객체 생성*/
+		window.onload = function(){
+			var app = new Vue ({
+				el : '#navbar',
+				data : []
+			})
+		}		
+  	</script>
+  	   <div id="navbar">
+  	     <b-card-header header-tag="nav">
+  	       <b-nav card-header pills>
+	        <b-nav-item active>공지사항</b-nav-item>
+	       </b-nav>
+         </b-card-header>
+      
       <div class="content" style="margin-right: 50px">
 		<div class="comment-form-wrap pt-xl-2">
-			<h1 class="text-center mb-3 bread">공지사항</h1>
+			<h1 class="text-center mb-3 bread">공지사항 리스트</h1>
 			<div class="table-responsive">
     
-	<!-- 테이블 go -->
-	<!-- 옵션 
-	     hover:마우스 오버시 행 강조 표시  -->
+	<!-- table-->
+	<!-- option display  -->
 	<table id="myTable" class="dataTable display">
 		<thead>
 			<tr>
@@ -151,6 +173,7 @@
 	
 		</div>
 		</div>
+	  </div>
 	</div>
 	</div>
 	<c:import url="/common/bottom.jsp"/>
