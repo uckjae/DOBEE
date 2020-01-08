@@ -135,7 +135,7 @@
 					       <b-row class="mb-1">
 					          <b-col cols="3">채널명</b-col>
 					          <b-col>
-					          <b-form-input id="input-default" placeholder="채널명을 입력해주세요"></b-form-input>
+					          <b-form-input id="channelName" placeholder="채널명을 입력해주세요"></b-form-input>
 					          </b-col>
 					        </b-row>
 					        <b-row class="mb-1">
@@ -157,6 +157,7 @@
 					            size="lg"
 					            class="float-right"
 					            @click="show=false"
+					            v-on:click="makeRoom"
 					          >
 					            만들기
 					          </b-button>
@@ -217,23 +218,24 @@
             		<hr width="70%">
             	</div>
             </div>
-			<div style="margin-top:250px;">        
-            <li class="white">
-              <div class="form-group basic-textarea">
-                <textarea class="form-control pl-2 my-0" id="exampleFormControlTextarea2" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-              </div>
-            </li>
-            </div>    
-	            <template>
-	            	<b-button variant="dark"
-						      size="lg"
-						      class="float-right"
-						      @click="show=false">
-						            send
-					</b-button>
-				</template>
-             </ul>
-
+            <form id="chat">
+				<div style="margin-top:250px;">        
+		            <li class="white">
+		              <div class="form-group basic-textarea">
+		                <textarea class="form-control pl-2 my-0" id="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+		              </div>
+		            </li>
+	            </div>    
+		            <template>
+		            	<b-button variant="dark"
+							      size="lg"
+							      class="float-right"
+							      @click="show=false">
+							            send
+						</b-button>
+					</template>
+	             </ul>
+			</form>
         </div>
 
       </div>
@@ -266,8 +268,18 @@
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
+    <!-- socket 연결 -->
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
   <script>
   window.onload = function() {
+
+	  var socket = io("http://localhost:3000");
+	  
+	  //socket.emit('makeRoom')
+	  console.log('소켓 연결 성공');
+
+	  
       var app = new Vue({
           el: "#app",
           data() {
@@ -281,9 +293,26 @@
                   footerBgVariant: 'light',
                   footerTextVariant: 'light'
                 }
-          }
-      })
+          },
+          methods : {
+			makeRoom : function(){
+					var channelName = $("#channelName").val();
+				  	console.log('채널 명' + channelName);
+				  	
+				}
+              }
+      });
+
+      $('#chat').on('submit', function(e){
+          socket.emit('send message', $('#message').val());
+          $('#message').val("");
+          $("#message").focus();
+          e.preventDefault();
+      });
+      
   }
+
+  
   </script>
     </body>
 </html>
