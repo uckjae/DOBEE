@@ -1838,9 +1838,9 @@ STYLE SWITCHER FOR DEMO
 }
 
 .btn-primary {
-  color: color-yiq(#33b35a);
-  background-color: #33b35a;
-  border-color: #33b35a;
+  color: color-yiq(#FFC107);
+  background-color: #FFC107;
+  border-color: #FFC107;
 }
 
 .btn-primary:hover {
@@ -2399,7 +2399,7 @@ body {
 }
 
 a {
-  color: #33b35a;
+  color: #FFC107;
   text-decoration: none;
 }
 
@@ -2952,7 +2952,7 @@ a > code {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #33b35a;
+  background-color: #FFC107;
 }
 
 /*
