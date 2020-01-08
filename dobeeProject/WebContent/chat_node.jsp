@@ -16,6 +16,9 @@
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
 	}
+	a {
+		color: #222222;
+	}
 
   </style>
  
@@ -108,12 +111,12 @@
             	</div>
             </li><br>
             <li>
-                 <i class="fas fa-user"></i>
-                  	<span>갓경균</span>
+           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;갓경균</span></a>
+           		</div>
             </li>
              <li>
-                <i class="fas fa-user"></i>
-                  	<span>게다죽</span>
+                <div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;게다죽</span></a>
+           		</div>
             </li>
           </ul>
         </div>
@@ -124,7 +127,6 @@
      
       <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0">
         <div class="chat-message">
-		
           <ul class="list-unstyled chat">
             <li class="d-flex justify-content-between mb-4">
             	<div class="row">

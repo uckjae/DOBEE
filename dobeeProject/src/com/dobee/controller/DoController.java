@@ -308,5 +308,12 @@ public class DoController {
     }
 
 
-    //채팅
+    //채팅 메인
+    @RequestMapping("chat.do")
+    public String chatMain() {
+    	return "chat/chatMain";
+    }
+    
+    //1:1 대화 하기
+    
 }
