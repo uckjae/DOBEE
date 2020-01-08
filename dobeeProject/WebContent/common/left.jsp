@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
 <div class="side-navbar-wrapper">
 
@@ -11,9 +11,9 @@
 				
 			</div>
 			<!-- Small Brand information, appears on minimized sidebar-->
-			<div class="sidenav-header-logo" >
-				<a href="index.html" class="brand-small text-center"> <strong class="text-primary" style="color: black">B</strong><strong 
-					class="text-primary" style="color: black">D</strong></a>
+			<div class="sidenav-header-logo">
+				<a href="index.html" class="brand-small text-center"> <strong class="text-primary">B</strong><strong 
+					class="text-primary">D</strong></a>
 			</div>
 		</div>
 
@@ -44,11 +44,8 @@
 					</ul>
 				</li>
 										
-				<li><a href="project.do"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
+				<li><a href="#"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
 				<li><a href="chat.jsp"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
 			</ul>
 		</div>
 	</div>
-
-	</div>
-	</head>

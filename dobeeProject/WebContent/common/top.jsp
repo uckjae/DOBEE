@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="UTF-8"%>
 <header class="header">
         <nav class="navbar">
           <div class="container-fluid">
@@ -37,8 +37,7 @@
                 <!-- Messages dropdown-->
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fas fa-user fa-2x" style="color:#888888;"></i></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-                 
-                    <li><a rel="nofollow" href="#"> 
+                    <li><a rel="nofollow" href="#" style="text-align:center"> 
                         <span class="d-none d-sm-inline-block" style="color:#888888;">출근/퇴근</span>
                         <i class="fas fa-power-off" style="color:#888888;"></i></a>
                         </li>
