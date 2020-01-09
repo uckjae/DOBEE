@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.dobee.dao.MemberDao;
-import com.dobee.vo.member.Member;
+import com.dobee.vo.member.User;
 
 public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
 		implements AuthenticationSuccessHandler {
@@ -43,7 +43,7 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
 		     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		     
 		     HttpSession session = request.getSession();
-		     Member member = memberDao.login(email);
+		     User member = memberDao.login(email);
 		     
 		    
 		  session.setAttribute("Member", member);

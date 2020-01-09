@@ -1,17 +1,16 @@
 package com.dobee.vo.project;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.Date;
 
+import lombok.Data;
+import lombok.ToString;
+
 @ToString
-@Getter @Setter
+@Data
 public class Project {
-    private int pSeq;
-    private String pName;
-    private Date pStartDate;
-    private Date pEndDate;
-    private String pProgress;
+    private int pjtSeq;
+    private String pjtName;
+    private Date pjtStartDate;
+    private Date pjtEndDate;
+    private String pjtProgress;
 }

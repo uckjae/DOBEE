@@ -2,14 +2,14 @@ package com.dobee.dao;
 
 import com.dobee.vo.Apply;
 import com.dobee.vo.member.Attend;
-import com.dobee.vo.member.Member;
+import com.dobee.vo.member.User;
 
 import java.util.List;
 
 public interface MemberDao {
 
     //로그인
-    public Member login(String mail);
+    public User login(String mail);
 
 
     //아이디찾기
@@ -21,15 +21,15 @@ public interface MemberDao {
 
 
     //출근
-    public void onWork(Member member);
+    public void onWork(User member);
 
 
     //퇴근
-    public void offWork(Member member);
+    public void offWork(User member);
 
 
     //부재
-    public void restWork(Member member);
+    public void restWork(User member);
 
 
     //파이페이지 정보수정

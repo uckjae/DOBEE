@@ -1,16 +1,14 @@
 package com.dobee.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.Date;
 
+import lombok.Data;
+import lombok.ToString;
+
 @ToString
-@Getter
-@Setter
+@Data
 public class Apply {
-    private int aSeq;
+    private int aplSeq;
     private Date reqDate;
     private String reason;
     private Date startAt;
@@ -19,5 +17,5 @@ public class Apply {
     private String rejReason;
     private String Drafter;
     private String Approval;
-    private int aCode;
+    private int apyCode;
 }
