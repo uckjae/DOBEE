@@ -67,41 +67,55 @@
 		    </b-card-body>
 		  </b-card>
 		</div>
-	
-		<h3>사용 연차</h3> $ { usedVacation } 일
-		<h3>남은 연차</h3> $ { remainingVacation } 일
-		<br>
-		
 		
 		<form action="" method="post">
-			<select name="year">
-				<option value="">년도별</option>
-				<option value="2019">2019</option>
-				<option value="2020">2020</option>
-				
-			</select>
-			
-			<select name="month">
-				<option value="">월별</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>		
-			</select>
-			
-			<select name="category">
-				<option value="">항목별</option>
-				<option value="연차">연차</option>
-				<option value="외근">외근</option>
-				<option value="출장">출장</option>
-			</select>
-			
-			<input type="submit" class="submit" value="검색하기 ">
-			아마도 아이콘으로 바꿔야 할듯? ㅎㅎ
+			<table style="width: 100%">
+				<tr>
+					<td style="width: 9%"><h1>사용 연차</h1></td>
+					<td style="width: 12%"> $ { usedVacation }</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><h1>남은 연차</h1></td>
+					<td> $ { remaingVacation }</td>
+					<td></td>					
+					<td style="width: 10%">
+						<select name="year">
+							<option value="">년도별</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+						</select>
+					</td>
+					<td style="width: 7%">
+						<select name="month">
+							<option value="">월별</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>		
+						</select>
+					</td>
+					<td style="width: 7%">
+						<select name="category">
+							<option value="">항목별</option>
+							<option value="연차">연차</option>
+							<option value="외근">외근</option>
+							<option value="출장">출장</option>
+						</select>
+					</td>
+					<td style="width: 7%">
+						<input type="submit" class="submit" value="검색하기 ">
+					</td>
+					
+				</tr>
+			</table>
 		</form>
-
-			
+				
 		<section>
 			<div class="col-md-12">
 			
