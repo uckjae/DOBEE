@@ -36,6 +36,9 @@
     	</security:authentication-provider>
  	</security:authentication-manager>
 	
+	<!-- 로그인 처리 핸들러 빈 -->
+	 <bean id="loginSuccessHandler" class="com.dobee.handler.LoginHandler"/>
+	 <bean id="loginFailureHandler" class="com.dobee.handler.LoginHandler"/>
    
     <!--<security:http>
         <security:csrf disabled="true"/>
