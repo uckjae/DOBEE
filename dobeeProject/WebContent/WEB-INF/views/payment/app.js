@@ -10,7 +10,7 @@ $(function(){
 		router : router,
 	
 		beforeCreate : function(){
-            console.log("119119119119")
+            console.log("1191191191232342419")
 		},
 	
 	})

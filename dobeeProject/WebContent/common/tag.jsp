@@ -1,9 +1,13 @@
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
  <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Dobee</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <!-- VueJs 프로젝트안에 다운받아 그냥 넣어버렸음 CDN 방식이 느린거 같아서   -->
+    <script src="js/vue.js"> </script>
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
@@ -25,7 +29,7 @@
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
     <!-- vueJS and vueBootstrap -->
-    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.js"></script> -->
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
   	<!-- portal vue -->

@@ -5,6 +5,14 @@
 	<groupId>com.dobee</groupId>
 	<artifactId>dobeeProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java-version>1.8</java-version>
+		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
+	</properties>
+
+
+
 	<dependencies>
 		<!-- spring context 묶음 -->
 		<dependency>
@@ -159,7 +167,7 @@
 			<version>4.0.1.RELEASE</version>
 		</dependency>
 
-		<!--  google cloud  -->
+		<!-- google cloud -->
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-storage</artifactId>
