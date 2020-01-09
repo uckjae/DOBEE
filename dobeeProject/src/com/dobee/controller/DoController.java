@@ -23,12 +23,20 @@ public class DoController {
 
 
     //로그인
-    //@RequestMapping
+    @RequestMapping("login.do")
     public String login(){
-        return null;
+        return "main/login";
     }
-
-  //아이디찾기
+    
+    
+    //권한없음 페이지
+    @RequestMapping("noAuth.do")
+    public String noAuth() {
+    	return "main/noAuthority";
+    }
+    
+    
+    //아이디찾기
     public String fidId(){
         return null;
     }
@@ -50,9 +58,10 @@ public class DoController {
 
 
     //메인페이지(로그인후)
-    //@RequestMapping(value="", method = RequestMethod.GET)
+    @RequestMapping("main.do")
     public String main(){
-        return null;
+    	System.out.println("컨트롤러 main.do");
+        return "main/main";
     }
 
 

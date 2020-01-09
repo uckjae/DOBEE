@@ -5,30 +5,38 @@
 	<groupId>com.dobee</groupId>
 	<artifactId>dobeeProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java-version>1.8</java-version>
+		<org.springframework-version>4.3.14.RELEASE</org.springframework-version>
+	</properties>
+
+
+
 	<dependencies>
 		<!-- spring context 묶음 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- databind for json -->
@@ -54,13 +62,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<dependency>
@@ -94,7 +102,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.18</version>
+			<version>1.18.8</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -140,7 +148,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.3.14.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		<!-- Security설정하기 -->
 		<dependency>
@@ -159,7 +167,7 @@
 			<version>4.0.1.RELEASE</version>
 		</dependency>
 
-		<!--  google cloud  -->
+		<!-- google cloud -->
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-storage</artifactId>
@@ -168,6 +176,11 @@
 
 
 	</dependencies>
+	
+	
+	
+	
+	
 	<packaging>war</packaging>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
