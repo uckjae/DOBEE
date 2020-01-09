@@ -32,6 +32,7 @@
 						<li><a href="extendApply.do">연장 근무 신청</a></li>
 						<li><a href="breakManage.do">부재 일정 관리</a></li>
 						<li><a href="workManage.do">근무 내역 확인</a></li>
+						<li><a href="absManage.do">근무 내역 확인</a></li>
 					</ul>
 				</li>
 				
@@ -39,8 +40,8 @@
 					data-toggle="collapse"> <i class="fas fa-receipt fa-2x" style="color:#888888;">&nbsp;비용</i></a>
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
 						<li><a href="reciptRegit.do">정산 신청</a></li>
-						<li><a href="#">카드 관리</a></li>
-						<li><a href="debitList.do">비용 현황</a></li>
+						<li><a href="reciptRegit.do">카드 관리</a></li>
+						<li><a href="reciptRegit.do">비용 현황</a></li>
 					</ul>
 				</li>
 										

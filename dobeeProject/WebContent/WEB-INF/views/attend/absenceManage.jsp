@@ -77,7 +77,7 @@
 	    <b-card-header header-tag="nav">
 	      <b-nav card-header pills>
 	        <b-nav-item active>부재일정 신청</b-nav-item>
-	        <b-nav-item>연장근무 신청</b-nav-item>
+	        <b-nav-item><a href="extendApply.do">연장근무 신청</a></b-nav-item>
 	        <b-nav-item>부재일정 관리</b-nav-item>
 	        <b-nav-item disabled>근무내역 확인</b-nav-item>
 	        <b-nav-item disabled>부재 관리</b-nav-item>
