@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.31</version>
+			<version>8.0.13</version>
 		</dependency>
 
 		<dependency>
@@ -173,8 +173,32 @@
 			<artifactId>google-cloud-storage</artifactId>
 			<version>1.37.1</version>
 		</dependency>
-
-
+		
+		<!-- jackson  lib -->
+    	<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-core</artifactId>
+    		<version>2.7.3</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.codehaus.jackson</groupId>
+    		<artifactId>jackson-core-asl</artifactId>
+    		<version>1.9.13</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.7.3</version>
+		</dependency>
+		<!-- json 사용 -->
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jettison/jettison -->
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		
+		
 	</dependencies>
 	
 	

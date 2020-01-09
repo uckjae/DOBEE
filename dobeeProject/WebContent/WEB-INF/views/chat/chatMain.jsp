@@ -269,7 +269,10 @@
                 <div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;게다죽</span></a>
            		</div>
             </li>
-            
+            <li>
+                <div><button type="button" id="btn">컨트롤러 버튼</button>
+           		</div>
+            </li>
           </ul>
         </div>
       </div>
@@ -344,7 +347,7 @@
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
     <!-- socket 연결 -->
-    <script src="http://localhost:82/socket.io/socket.io.js"></script>
+    <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
 
   <script>
   $.noConflict();
@@ -354,16 +357,31 @@
 	  var username = $("#username").text();
 	  var memberList = [];
 
-	  //멤버리스트 ajax로 가져와서 오토컴플릿에 넣어주기
-	  $.ajax({
-		  url : '',
-		  type : 'post',
-		  dataType : 'json',
-		  success : function(data){
-			  console.log(data);
-			  }
+	  $("#btn").click(function(){
 
-		 });
+		//멤버리스트 ajax로 가져와서 오토컴플릿에 넣어주기
+		
+		  $.ajax({
+	    		url:"getUserList.do",
+	    		dataType:"json",
+	    		type:"post",
+	    		success:function(data){
+		    		console.log(data);
+	    			/* $.each(data, function(index, element){
+	    				let option = $("<option></option>");
+	    				$(option).text(element.empno+" : "+element.ename);
+	    				$(option).val(element.empno);
+	    				$("#mgrSelect").append(option);
+	    			}) */
+	    			
+	    		}
+	    	});
+
+
+
+			 
+		  });
+	  
 	  var autocomplete_text = ["apple","b","c","d"];
 
 
@@ -379,7 +397,7 @@
 		  })
 
 		
-	  var socket = io("http://localhost:82");
+	  /* var socket = io("http://localhost:82");
 	  
 	      $("#sendMessage").on('submit', function(e){
 	    	  var msg = $('#message').val();
@@ -400,7 +418,7 @@
 		               +'</div></div></li></div><br>');
 	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
-	       });
+	       }); */
   });
 
   </script>
