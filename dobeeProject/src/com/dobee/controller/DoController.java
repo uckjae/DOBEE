@@ -186,7 +186,7 @@ public class DoController {
     public String receiptReg(){
     	
     	
-        return "payment/reciptRegit";
+        return "payment/payment";
     }
 
 
