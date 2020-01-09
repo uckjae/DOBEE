@@ -28,10 +28,10 @@
 				<li><a href="#exampledropdownDropdown" aria-expanded="false"
 					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;근무</i></a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-						<li><a href="#">부재 일정 신청</a></li>
-						<li><a href="#">연장 근무 신청</a></li>
-						<li><a href="#">부재 일정 관리</a></li>
-						<li><a href="#">근무 내역 확인</a></li>
+						<li><a href="breakApply.do">부재 일정 신청</a></li>
+						<li><a href="extendApply.do">연장 근무 신청</a></li>
+						<li><a href="breakManage.do">부재 일정 관리</a></li>
+						<li><a href="workManage.do">근무 내역 확인</a></li>
 					</ul>
 				</li>
 				
