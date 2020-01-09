@@ -9,7 +9,6 @@
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="./css/jgcss.css">
     
-    <!-- Modal -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -79,8 +78,8 @@
 	      <b-nav card-header pills>
 	        <b-nav-item active>부재일정 신청</b-nav-item>
 	        <b-nav-item><a href="extendApply.do">연장근무 신청</a></b-nav-item>
-	        <b-nav-item><a href="breakManage.do">부재 일정 관리</a></b-nav-item>
-	        <b-nav-item disabled><a href="workManage.do">근무 내역 확인</a></b-nav-item>
+	        <b-nav-item>부재일정 관리</b-nav-item>
+	        <b-nav-item disabled>근무내역 확인</b-nav-item>
 	        <b-nav-item disabled>부재 관리</b-nav-item>
 	        <b-nav-item disabled>연장근무 관리</b-nav-item>
 	      </b-nav>

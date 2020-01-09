@@ -37,105 +37,118 @@
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
 	
-	<!-- subnav -->
-		<div class="col-sm-12" style="height: 50px">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-2"><a href="#">부재일정 신청</a></div>
-			<div class="col-sm-2"><a href="#">연장근무 신청</a></div>
-			<div class="col-sm-2"><a href="#">부재일정 관리</a></div>
-			<div class="col-sm-2"><a href="#">근무내역 확인</a></div>
-			<div class="col-sm-2"></div>
-		</div>
+
+	<script>
+		window.onload = function(){
+			var app = new Vue ({
+				el : '#navbar',
+				data : []
+			});
+
+			var app = new Vue({
+				el : '#dropdown',
+				data : {
+					val : ''
+				}
+			})			
+
+			$( "#datepicker" ).datepicker();
+			
+			$('#spinner').spinner();
+				$('#spinner').slider({
+					range : true,
+					values : [0, 23]
+				});
+
+			$('#spinner2').spinner();
+				$('#spinner2').slider({
+					range : true,
+					values : [0,59]
+				});
+		}
+		
+  	</script>
+     
+    <div id="navbar">
+	  <b-card title="Card Title" no-body>
+	    <b-card-header header-tag="nav">
+	      <b-nav card-header pills>
+	        <b-nav-item active>부재일정 신청</b-nav-item>
+	        <b-nav-item><a href="extendApply.do">연장근무 신청</a></b-nav-item>
+	        <b-nav-item><a href="breakManage.do">부재 일정 관리</a></b-nav-item>
+	        <b-nav-item disabled><a href="workManage.do">근무 내역 확인</a></b-nav-item>
+	        <b-nav-item disabled>부재 관리</b-nav-item>
+	        <b-nav-item disabled>연장근무 관리</b-nav-item>
+	      </b-nav>
+	    </b-card-header>
+	
+	    <b-card-body class="text-center">
+	      <b-card-text>
+	     	<h1 style="text-align: left">부재 신청</h1>
+	     	<br>
+	     	<div class="col-sm-3" style="background-color: yellow"></div>
+	     	
+	     	<div class="col-sm-6" id="jgContainer">
+				<div class="formDiv">
+					<form action="" method="post">					 
+						<!-- 
+						<label for="from">From</label>
+						<input type="text" id="from" name="from">
+						<label for="to">to</label>
+						<input type="text" id="to" name="to">
+						 -->
+						
+						 
+						<div id="datepicker"></div>
+						
+						시간
+						<input id="spinner" type="text"/>
+						분
+						<input id="spinner2" type="text"/>
+						<br>
+						부재항목			
+						<select id="category">
+							<option value="">항목별</option>
+							<option value="연차">연차</option>
+							<option value="반일연차">반일연차</option>
+							<option value="외근">외근</option>
+							<option value="출장">출장</option>
+							<option value="경조휴가">경조휴가</option>
+						</select>
+						<br>
+						결재자
+						<select id="approval">
+							<option value = "">결재자 선택</option>
+							<option value  = "김일번">김일번</option>
+							<option value = " 김이번">김이번</option>
+						</select>
+						<br>
+						사유
+						<textarea rows="5" cols="500" placeholder="1000 btye 이내 내용을 입력하십시오."></textarea>
+						
+						<input type="submit" value="확인">
+						<input type="reset" value="초기화">
+						
+					</form>
+				</div>
+			</div>
+
+	      </b-card-text>
+	
+	    </b-card-body>
+	  </b-card>
+	</div>
+     
+     
      
 	<!-- Section -->
 	<section class="mt-30px mb-30px">
 	
-		<h1>부재신청</h1>
-		<hr>
-		<br>
-		
-		<h3>사용 연차</h3> $ { usedVacation } 일
-		<h3>남은 연차</h3> $ { remainingVacation } 일
-		
-		
 		왜 안나옴?
 		<div class="calendarArea" style="width:100%">
 			<div id="loading">loading...</div>
 			<div id="calendar"></div>
 		</div>
-		
-		<from action="" method="post">
-			<select name="year">
-				<option value="">년도별</option>
-				<option value="2019">2019</option>
-				<option value="2020">2020</option>
-				
-			</select>
-			
-			<select name="month">
-				<option value="">월별</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>		
-			</select>
-			
-			<select name="category">
-				<option value="">항목별</option>
-				<option value="연차">연차</option>
-				<option value="외근">외근</option>
-				<option value="출장">출장</option>
-			</select>
-			
-			<input type="submit" class="submit">
-		</from>
-		
-		<div class="col-md-10">
-			<table id="breakTable" style="width :100%">
-						<colgroup>
-							<col style="width: 20">
-							<col style="width: 40%">
-							<col style="width: 20%">
-							<col style="width: 20%">
-						</colgroup>
-						<thead>
-							<tr>
-								<td colspan="4"></td>
-							</tr>
-		
-							<tr>
-								<td>부재 항목</td>
-								<td>기간</td>
-								<td>일수</td>
-								<td>승인 여부</td>
-							</tr>
-						</thead>
-			
-						<tbody id="tbody">
-							<!-- 여기서 뿌려줄겨 -->
-							<tr>
-								<td class="tcategory">연차 - 모달~</td>
-								<td class="tterm">2019.01.01 ~ 2020.01.03</td>
-								<td class="tcount">3</td>
-								<td class="tauth">승인</td>
-							</tr>
-							<tr>
-								<td class="tcategory">연차 - 모달~</td>
-								<td class="tterm">2019.01.01 ~ 2020.01.03</td>
-								<td class="tcount">3</td>
-								<td class="tauth">승인</td>
-							</tr>
-						</tbody>
-						
-						<tfoot>
-							<tr>
-								<td colspan="4"></td>
-							</tr>
-						</tfoot>
-						
-					</table>
-				</div>
 	
 	</section>
 
@@ -178,17 +191,7 @@
   
 	<script>
 	$( function() {
-		$('#spinner').spinner();
-			$('#spinner').slider({
-				range : true,
-				values : [0, 23]
-			});
-
-		$('#spinner2').spinner();
-			$('#spinner2').slider({
-				range : true,
-				values : [0,59]
-			});
+		
 	})
 	  
 	  document.addEventListener('DOMContentLoaded', function() {

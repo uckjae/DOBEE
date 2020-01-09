@@ -264,10 +264,13 @@
             </div> -->
             <div class="container content">
         			<ul class="chat-list">
-        				<li class="out">
+        				<li class="in">
+        					<div class="chat-img">
+        						<img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+        					</div>
         					<div class="chat-body">
         						<div class="chat-message">
-        							<h5>게다죽</h5>
+        							<h5>Jimmy Willams</h5>
         							<p>Raw denim heard of them tofu master cleanse</p>
         						</div>
         					</div>
@@ -283,7 +286,7 @@
         						</div>
         					</div>
         				</li>
-        				<li class="out">
+        				<li class="in">
         					<div class="chat-img">
         						<img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
         					</div>

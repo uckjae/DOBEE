@@ -114,38 +114,46 @@ public class DoController {
 
 
     //부재일정신청
+    @RequestMapping("breakApply.do")
     public String absApply(){
-        return null;
+        return "attend/breakApply";
     }
 
 
     //연장근무신청
+    @RequestMapping("extendApply.do")
     public String overTiemApply(){
-        return null;
+        return "attend/extendApply";
     }
 
 
     //부재일정관리
+    @RequestMapping("breakManage.do")
     public String absMg(){
-        return null;
+        return "attend/breakManage";
     }
 
 
     //근무내역확인
+    @RequestMapping("workManage.do")
     public String workChart(){
-        return null;
+        return "attend/workManage";
     }
 
 
     //부재관리
+    @RequestMapping("absManage.do")
     public String absSign(){
-        return null;
+    	System.out.println("absenceManagement gogogo 해해해");
+        return "attend/absenceManage";
     }
 
 
+
     //연장근무관리 리스트
+    @RequestMapping("extendManage.do")
     public String overtiemSignList(){
-        return null;
+        return "attend/extendManage";
     }
 
 
@@ -177,16 +185,15 @@ public class DoController {
     @RequestMapping("debitList.do")
     public String paymentChart(){
     	System.out.println("debitlist.do 까지 왔음");
-        return "payment/debitList";
+        return "payment/payment";
     }
     
 
     //비용정산신청1
     @RequestMapping("reciptRegit.do")
     public String receiptReg(){
-    	
-    	
-        return "payment/reciptRegit";
+    	System.out.println("reciptRegit.do 요청했음");
+        return "payment/payment";
     }
 
 
