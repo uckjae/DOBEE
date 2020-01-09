@@ -6,10 +6,10 @@ import com.dobee.vo.member.User;
 
 import java.util.List;
 
-public interface MemberDao {
+public interface UserDao {
 
     //로그인
-    public User login(String mail);
+    public User getUser(String mail);
 
 
     //아이디찾기

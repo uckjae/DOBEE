@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-import com.dobee.dao.MemberDao;
+import com.dobee.dao.UserDao;
 import com.dobee.vo.member.User;
 
 public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
@@ -40,10 +40,10 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
 		  
 		     request.getSession().removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");
 		     
-		     MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+		     UserDao memberDao = sqlSession.getMapper(UserDao.class);
 		     
 		     HttpSession session = request.getSession();
-		     User member = memberDao.login(email);
+		     User member = memberDao.getUser(email);
 		     
 		    
 		  session.setAttribute("Member", member);
