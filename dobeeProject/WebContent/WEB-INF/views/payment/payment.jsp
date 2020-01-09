@@ -6,7 +6,17 @@
 <head>
 
 <c:import url="/common/tag.jsp" />
-<script src='app.js'></script>
+
+
+
+<!-- 루트 컴포넌트 연결 -->
+
+<script type="text/javascript" charset="utf-8"> <c:import url="/WEB-INF/views/payment/app.js" /></script>
+<script src="https://cdn.jsdelivr.net/npm/http-vue-loader@1.4.1/src/httpVueLoader.min.js"></script>
+<script>  <c:import url="/WEB-INF/views/payment/route/vue-router.js" />  </script>
+<script>  <c:import url="/WEB-INF/views/payment/route/router.js" /> </script>
+
+
 
 </head>
 
@@ -28,7 +38,7 @@
 
 
 				<div id='app'>
-					{{test}}
+					<router-view></router-view>
 				</div>
 
 
