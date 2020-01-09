@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data @ToString
-public class Member {
+public class User {
 
     private String mail;
     private String password;
     private String name;
     private String myPic;
     private int authCode;
-    private int tCode;
+    private int teamCode;
 }

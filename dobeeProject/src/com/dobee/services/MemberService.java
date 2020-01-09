@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dobee.vo.member.Member;
+import com.dobee.vo.member.User;
 
 @Service
 public class MemberService {
@@ -15,7 +15,7 @@ public class MemberService {
 
 
     //로그인
-    public Member getMember(){
+    public User getMember(){
         return null;
     }
 

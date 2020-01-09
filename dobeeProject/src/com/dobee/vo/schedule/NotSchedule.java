@@ -1,15 +1,12 @@
 package com.dobee.vo.schedule;
 
-import com.dobee.vo.schedule.Schedule;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 @ToString
-@Getter
-@Setter
+@Data
 public class NotSchedule extends Schedule {
-    private int nSSeq;
-    private String nSContent;
-    private int nSeq;
+    private int nsSeq;
+    private String nsContent;
+    private int notSeq;
 }
