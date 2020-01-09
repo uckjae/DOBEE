@@ -29,24 +29,24 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
   
 			System.out.println(authentication.getName() +"     "+authentication.getAuthorities().toString());
   
-			String email = "";
+			String mail = "";
 		  Enumeration params = request.getSession().getAttributeNames();
 		  while(params.hasMoreElements()){
-		     email = (String)params.nextElement();
-		     System.out.println(email + " : " + request.getParameter(email) + "<br>");
+		     mail = (String)params.nextElement();
+		     System.out.println(mail + " : " + request.getParameter(mail) + "<br>");
 		    }
 		  
 		  System.out.println("INFO : Skein-U202 - 로그인에 성공하였습니다.");
 		  
 		     request.getSession().removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");
 		     
-		     UserDao memberDao = sqlSession.getMapper(UserDao.class);
+		     UserDao userDao = sqlSession.getMapper(UserDao.class);
 		     
 		     HttpSession session = request.getSession();
-		     User member = memberDao.getUser(email);
+		     User user = userDao.getUser(mail);
 		     
 		    
-		  session.setAttribute("Member", member);
+		  session.setAttribute("User", user);
 		  
 		  
 		        if (session != null) {
