@@ -25,6 +25,15 @@
 		  margin: 0 auto;
 		}	  	
     </style>
+    
+    <link rel="stylesheet" href="./css/jgcss.css">
+    
+    <!-- Modal -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
   </head>
  
   <body>
@@ -37,34 +46,34 @@
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
 	
-	<!-- subnav -->
-		<div class="col-sm-12" style="height: 50px">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-2"><a href="#">부재일정 신청</a></div>
-			<div class="col-sm-2"><a href="#">연장근무 신청</a></div>
-			<div class="col-sm-2"><a href="#">부재일정 관리</a></div>
-			<div class="col-sm-2"><a href="#">근무내역 확인</a></div>
-			<div class="col-sm-2"></div>
-		</div>
-     
-	<!-- Section -->
-	<section class="mt-30px mb-30px">
-	
-		<h1>부재신청</h1>
-		<hr>
-		<br>
+		<div id="navbar">
+		  <b-card title="Card Title" no-body>
+		    <b-card-header header-tag="nav">
+		      <b-nav card-header pills>
+		        <b-nav-item>부재일정 신청</b-nav-item>
+		        <b-nav-item><a href="extendApply.do">연장근무 신청</a></b-nav-item>
+		        <b-nav-item active >부재 일정 관리</b-nav-item>
+		        <b-nav-item><a href="workManage.do">근무 내역 확인</a></b-nav-item>
+		        <b-nav-item>부재 관리</b-nav-item>
+		        <b-nav-item>연장근무 관리</b-nav-item>
+		      </b-nav>
+		    </b-card-header>
 		
+		    <b-card-body class="text-center">
+		      <b-card-text>
+		     	<h1 style="text-align: left">부재일정 관리</h1>
+	
+		      </b-card-text>
+		    </b-card-body>
+		  </b-card>
+		</div>
+	
 		<h3>사용 연차</h3> $ { usedVacation } 일
 		<h3>남은 연차</h3> $ { remainingVacation } 일
+		<br>
 		
 		
-		왜 안나옴?
-		<div class="calendarArea" style="width:100%">
-			<div id="loading">loading...</div>
-			<div id="calendar"></div>
-		</div>
-		
-		<from action="" method="post">
+		<form action="" method="post">
 			<select name="year">
 				<option value="">년도별</option>
 				<option value="2019">2019</option>
@@ -88,55 +97,77 @@
 				<option value="출장">출장</option>
 			</select>
 			
-			<input type="submit" class="submit">
-		</from>
-		
-		<div class="col-md-10">
-			<table id="breakTable" style="width :100%">
-						<colgroup>
-							<col style="width: 20">
-							<col style="width: 40%">
-							<col style="width: 20%">
-							<col style="width: 20%">
-						</colgroup>
-						<thead>
-							<tr>
-								<td colspan="4"></td>
-							</tr>
-		
-							<tr>
-								<td>부재 항목</td>
-								<td>기간</td>
-								<td>일수</td>
-								<td>승인 여부</td>
-							</tr>
-						</thead>
+			<input type="submit" class="submit" value="검색하기 ">
+			아마도 아이콘으로 바꿔야 할듯? ㅎㅎ
+		</form>
+
 			
-						<tbody id="tbody">
-							<!-- 여기서 뿌려줄겨 -->
-							<tr>
-								<td class="tcategory">연차 - 모달~</td>
-								<td class="tterm">2019.01.01 ~ 2020.01.03</td>
-								<td class="tcount">3</td>
-								<td class="tauth">승인</td>
-							</tr>
-							<tr>
-								<td class="tcategory">연차 - 모달~</td>
-								<td class="tterm">2019.01.01 ~ 2020.01.03</td>
-								<td class="tcount">3</td>
-								<td class="tauth">승인</td>
-							</tr>
-						</tbody>
+		<section>
+			<div class="col-md-12">
+			
+				<table id="breakTable" class="dataTable display hover" style="width :100%">
+					<thead id="thead">
+						<tr>
+							<th width="13%">부재항목</th>
+							<th>기간</th>
+							<th width="13%">사용 일수</th>
+							<th width="20%">승인여부</th>
+						</tr>
+					</thead>
+			
+					<tbody id="tbody">
+						<!-- 여기서 뿌려줄겨 -->
+						<tr>
+							<td class="bcategory">연차</td>
+							<td class="tterm">2020.01.03. ~ 2020.01.05</td>
+							<td class="tused">3</td>
+							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">미승인</button></td>
+						</tr>
+						<tr>
+							<td class="bcategory">반차</td>
+							<td class="tterm">2020.01.05. ~ 2020.01.05</td>
+							<td class="tused">0.5</td>
+							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">승인</button></td>
+						</tr>
+						<tr>
+							<td class="bcategory">외근</td>
+							<td class="tterm">2020.01.03. ~ 2020.01.05</td>
+							<td class="tused">0</td>
+							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">반려</button></td>
+						</tr>
+					</tbody>
+					
+					<tfoot>	
+					</tfoot>
 						
-						<tfoot>
-							<tr>
-								<td colspan="4"></td>
-							</tr>
-						</tfoot>
-						
-					</table>
-				</div>
+				</table>
+			</div>
+		</section>
 	
+	</div>
+	
+	<section id="modal_breakReason">
+		<div class="container">
+		  <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-lg">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">상세 사유</h4>
+		        </div>
+		        <div class="modal-body">
+		           <h3>부재 사유</h3>
+			      <h4>사유</h4>
+			      <h5>이러이러하옵니다...</h5>
+		        </div>
+		        <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>		
 	</section>
 
 	<c:import url="/common/bottom.jsp"/>   
@@ -176,63 +207,16 @@
   <script src="/resources/demos/external/globalize/globalize.culture.de-DE.js"></script>
   <script src="/resources/demos/external/jquery-mousewheel/jquery.mousewheel.js"></script>
   
-	<script>
-	$( function() {
-		$('#spinner').spinner();
-			$('#spinner').slider({
-				range : true,
-				values : [0, 23]
+  	<script>
+		window.onload = function(){
+			var app = new Vue ({
+				el : '#navbar',
+				data : []
 			});
-
-		$('#spinner2').spinner();
-			$('#spinner2').slider({
-				range : true,
-				values : [0,59]
-			});
-	})
-	  
-	  document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-	
-	      plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
-	
-	      header: {
-	        left: 'prev,next today',
-	        center: 'title',
-	        right: 'dayGridMonth,listYear'
-	      },
-	
-	      displayEventTime: false, // don't show the time column in list view
-	
-	      // THIS KEY WON'T WORK IN PRODUCTION!!!
-	      // To make your own Google API key, follow the directions here:
-	      // http://fullcalendar.io/docs/google_calendar/
-	      googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-	
-	      // US Holidays
-	      events: 'en.usa#holiday@group.v.calendar.google.com',
-	
-	      eventClick: function(arg) {
-	        // opens events in a popup window
-	        window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
-	
-	        arg.jsEvent.preventDefault() // don't navigate in main tab
-	      },
-	
-	      loading: function(bool) {
-	        document.getElementById('loading').style.display =
-	          bool ? 'block' : 'none';
-	      }
-	
-	    });
-	
-	    calendar.render();
-	  });
-	
-	</script>
-
+		}
+		
+  	</script>
+   
     
   </body>
 </html>

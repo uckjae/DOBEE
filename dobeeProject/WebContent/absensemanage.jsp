@@ -8,6 +8,13 @@
   <head>
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="./css/jgcss.css">
+    
+    <!-- Modal -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <c:import url="/common/tag.jsp"/>
     <style>
 		body {
@@ -46,20 +53,34 @@
 			var app = new Vue ({
 				el : '#navbar',
 				data : []
-			})
-		}		
+			});
+
+			var app = new Vue({
+				el : '#modal',
+				data : {
+					title : '두번째 요소'
+				}
+			});
+
+			var app = new Vue({
+				el : '#dropdown',
+				data : {
+					val : ''
+				}
+			})			
+		}
+		
   	</script>
-  	
-
-
+   
+ 
 	<div id="navbar">
 	  <b-card title="Card Title" no-body>
 	    <b-card-header header-tag="nav">
 	      <b-nav card-header pills>
 	        <b-nav-item active>부재일정 신청</b-nav-item>
-	        <b-nav-item>연장근무 신청</b-nav-item>
-	        <b-nav-item>부재일정 관리</b-nav-item>
-	        <b-nav-item disabled>근무내역 확인</b-nav-item>
+	        <b-nav-item><a href="extendApply.do">연장근무 신청</a></b-nav-item>
+	        <b-nav-item><a href="breakManage.do">부재 일정 관리</a></b-nav-item>
+	        <b-nav-item disabled><a href="workManage.do">근무 내역 확인</a></b-nav-item>
 	        <b-nav-item disabled>부재 관리</b-nav-item>
 	        <b-nav-item disabled>연장근무 관리</b-nav-item>
 	      </b-nav>
@@ -68,13 +89,23 @@
 	    <b-card-body class="text-center">
 	      <b-card-text>
 	     	<h1 style="text-align: left">부재일정 신청</h1>
-	     	<div class="container" style="width:100%; height:70px; background-color: lightgray ">
+	     	<br>
+	     	<div class="col-sm-3" style="background-color: yellow"></div>
+	     	
+	     	<div class="col-sm-6" id="jgContainer">
 				<div class="formDiv">
-					<form action="" method="post">
+					<form action="" method="post">					 
+						<!-- 
+						<label for="from">From</label>
+						<input type="text" id="from" name="from">
+						<label for="to">to</label>
+						<input type="text" id="to" name="to">
+						 -->
+						
 						<input type="text" value="옆 아이콘을 눌러 기간을 선택하세요" class="inputTerm" id="inputTerm">
 						<button value="날짜선택" id="selTerm">캘린더ICON</button>
-						
-						<select name="category">
+												
+						<select id="category">
 							<option value="">항목별</option>
 							<option value="연차">연차</option>
 							<option value="반일연차">반일연차</option>
@@ -87,63 +118,70 @@
 					</form>
 				</div>
 			</div>
-			
-			<div class="col-md-12">
-			<table id="absenseTable" style="width :100%">
-						<colgroup>
-							<col style="width: 15">
-							<col style="width: 15%">
-							<col style="width: 30%">
-							<col style="width: 15%">
-							<col style="width: 15%">
-						</colgroup>
-						<thead id="absHead">
-							<tr>
-								<td colspan="5"></td>
-							</tr>
 
-							<tr>
-								<th>성함</th>
-								<th>부재항목</th>
-								<th>기간</th>
-								<th>일수</th>
-								<th>승인여부</th>
-							</tr>
-						</thead>
-
-						<tbody id="tbody">
-							<!-- 여기서 뿌려줄겨 -->
-							<tr>
-								<td class="tname">김일번</td>
-								<td class="tcategory">연차-MODAL</td>
-								<td class="tterm">2019.01.01 ~ 2020.01.03</td>
-								<td class="tcount">3</td>
-								<td class="tauth"><button id="tauth" value="미승인" style="background-color:orange">미승인</button></td>
-							</tr>
-							<tr>
-								<td class="tname">김이번</td>
-								<td class="tcategory">반일연차-MODAL</td>
-								<td class="tterm">2019.01.03 ~ 2020.01.03</td>
-								<td class="tcount">0.5</td>
-								<td class="tauth"><button value="승인" style="background-color:blue">승인</button></td>
-							</tr>
-						</tbody>
-						
-						<tfoot>
-							<tr>
-								<td colspan="5"></td>
-							</tr>
-						</tfoot>
-						
-					</table>
-				</div>
-	     	
 	      </b-card-text>
 	
-	      <b-button variant="primary">Go somewhere</b-button>
 	    </b-card-body>
 	  </b-card>
 	</div>
+	
+	<section>
+		<div class="col-md-12">
+		
+			<table id="absenseTable" class="dataTable display hover" style="width :100%">
+				<colgroup>
+					<col style="width: 5%">
+					<col style="width: 15%">
+					<col style="width: 10%">
+					<col style="width: 30%">
+					<col style="width: 15%">
+					<col style="width: 15%">
+				</colgroup>
+				<thead id="absHead">
+					<tr>
+						<th>번호</th>
+						<th>성함</th>
+						<th>부재항목</th>
+						<th>기간</th>
+						<th>사용 일수</th>
+						<th>승인여부</th>
+					</tr>
+				</thead>
+		
+				<tbody id="tbody">
+					<!-- 여기서 뿌려줄겨 -->
+					<tr>
+						<td class="num">1</td>
+						<td class="tname">김일번</td>
+						<td class="tcategory"> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">연차</button> </td>
+						<td class="tterm">2019.01.01 ~ 2020.01.03</td>
+						<td class="tcount">3</td>
+						<td class="notauth">미승인</td>
+					</tr>
+					<tr>
+						<td class="num">2</td>
+						<td class="tname">김이번</td>
+						<td class="tcategory"> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">반차</button></td>
+						<td class="tterm">2019.01.03 ~ 2020.01.03</td>
+						<td class="tcount">0.5</td>
+						<td class="tauth">승인</td>
+					</tr>
+					<tr>
+						<td class="num">3</td>
+						<td class="tname">김삼번</td>
+						<td class="tcategory"> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">외근</button></td>
+						<td class="tterm">2019.01.03 ~ 2020.01.03</td>
+						<td class="tcount">0</td>
+						<td class="tdeny">반려</td>
+					</tr>
+				</tbody>
+				
+				<tfoot>	
+				</tfoot>
+					
+			</table>
+		</div>
+	</section>
 	
      
 	<!-- Section -->
@@ -153,28 +191,34 @@
 	</section>
 		
 		
-	<section>
-		<!-- <div>
-		  <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-		    <b-dropdown-item>First Action</b-dropdown-item>
-		    <b-dropdown-item>Second Action</b-dropdown-item>
-		    <b-dropdown-item>Third Action</b-dropdown-item>
-		    <b-dropdown-divider></b-dropdown-divider>
-		    <b-dropdown-item active>Active action</b-dropdown-item>
-		    <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-		  </b-dropdown>
-		</div>
-		
-		<script>
-			var app = new Vue({
-				el : '#dropdown-1',
-				data : {
-					val : ''
-				}
-			})
-		</script>
-		 -->
+	<section id="modal_breakreason">
+		<div class="container">
+		  <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-lg">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">상세 사유</h4>
+		        </div>
+		        <div class="modal-body">
+		           <h3>부재항목</h3>
+			      <h4>사유</h4>
+			      <h5>이러이러하옵니다...</h5>
+		        </div>
+		        <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Deny</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>		
 	</section>
+	
+	
+	</div>
 
 	<c:import url="/common/bottom.jsp"/>   
    
