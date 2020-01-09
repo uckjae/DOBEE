@@ -20,7 +20,7 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://192.168.6.55:3306/test?characterEncoding=UTF-8" />
         <property name="username" value="root" />
-        <property name="password" value="1004" />
+        <property name="password" value="root1004" />
     </bean>
 
     <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

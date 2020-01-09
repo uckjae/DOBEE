@@ -1,11 +1,10 @@
 package com.dobee.vo.member;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
-@ToString @Setter @Getter
+@Data @ToString
 public class Member {
 
     private String mail;

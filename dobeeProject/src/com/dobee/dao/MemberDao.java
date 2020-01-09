@@ -9,7 +9,7 @@ import java.util.List;
 public interface MemberDao {
 
     //로그인
-    public String login(String mail);
+    public Member login(String mail);
 
 
     //아이디찾기
