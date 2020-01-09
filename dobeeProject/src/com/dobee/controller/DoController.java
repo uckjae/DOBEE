@@ -314,6 +314,6 @@ public class DoController {
     	return "chat/chatMain";
     }
     
-    //1:1 대화 하기
+    
     
 }
