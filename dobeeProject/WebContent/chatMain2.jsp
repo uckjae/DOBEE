@@ -19,115 +19,6 @@
 	a {
 		color: #222222;
 	}
-	
-	body{
-    background:#eee;    
-	}
-	.chat-list {
-	    padding: 0;
-	    font-size: .8rem;
-	}
-	
-	.chat-list li {
-	    margin-bottom: 10px;
-	    overflow: auto;
-	    color: #ffffff;
-	}
-	
-	.chat-list .chat-img {
-	    float: left;
-	    width: 48px;
-	}
-	
-	.chat-list .chat-img img {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    width: 100%;
-	}
-	
-	.chat-list .chat-message {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    background: #888888;
-	    display: inline-block;
-	    padding: 10px 20px;
-	    position: relative;
-	}
-	
-	.chat-list .chat-message:before {
-	    content: "";
-	    position: absolute;
-	    top: 15px;
-	    width: 0;
-	    height: 0;
-	}
-	
-	.chat-list .chat-message h5 {
-	    margin: 0 0 5px 0;
-	    font-weight: 600;
-	    line-height: 100%;
-	    font-size: .9rem;
-	}
-	
-	.chat-list .chat-message p {
-	    line-height: 18px;
-	    margin: 0;
-	    padding: 0;
-	    font-color:#453d3d;
-	}
-	
-	.chat-list .chat-body {
-	    margin-left: 20px;
-	    float: left;
-	    width: 70%;
-	}
-	
-	.chat-list .in .chat-message:before {
-	    left: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-right: 20px solid #888888;
-	}
-	
-	.chat-list .out .chat-img {
-	    float: right;
-	}
-	
-	.chat-list .out .chat-body {
-	    float: right;
-	    margin-right: 20px;
-	    text-align: right;
-	}
-	
-	.chat-list .out .chat-message {
-	    background: #888888;
-	}
-	
-	.chat-list .out .chat-message:before {
-	    right: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-left: 20px solid #fc6d4c;
-	}
-	
-	.card .card-header:first-child {
-	    -webkit-border-radius: 0.3rem 0.3rem 0 0;
-	    -moz-border-radius: 0.3rem 0.3rem 0 0;
-	    border-radius: 0.3rem 0.3rem 0 0;
-	}
-	.card .card-header {
-	    background: #17202b;
-	    border: 0;
-	    font-size: 1rem;
-	    padding: .65rem 1rem;
-	    position: relative;
-	    font-weight: 600;
-	    color: #ffffff;
-	}
-	
-	.content{
-	    margin-top:40px;    
-	}
 
   </style>
  
@@ -139,15 +30,14 @@
   	
 
     <div class="page">
-   
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
- 
+
 <div class="card grey lighten-3 chat-room">
   <div class="card-body">
 
     <!-- Grid row -->
-    <div class="row px-lg-2 px-2" style="height:100%">
+    <div class="row px-lg-2 px-2">
 
       <!-- Grid column -->
       <div class="col-md-6 col-xl-3 px-0">
@@ -232,7 +122,7 @@
       <!-- Grid column -->
 
      
-      <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0" >
+      <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0">
         <div class="chat-message">
           <ul class="list-unstyled chat">
             <li class="d-flex justify-content-between mb-4">
@@ -240,8 +130,9 @@
             		<div class="col-md-6">
             			<img src="./img/alpaca.jpg" alt="avatar" class="rounded-circle" width="100px;" heigt="100px;">
             		</div>
+            		
         			<div class="col-md-6" style="margin-top:20px;">
-               			<b style="font-size:40px; text-align:center;" id="username">알파카</b>
+               			<b style="font-size:40px; text-align:center;" id="username">게다죽</b>
             		</div>
             	</div>
             </li>
@@ -258,16 +149,18 @@
             		<hr width="70%">
             	</div>
             </div>
-            <div class="container content">
-            <div class="col-md-12">
-	            <ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">
-	        	</ul>
-			</div>
-			</div>
-			<br>
+            
+            
+            <!-- 채팅 대화창 -->
+            <!-- <div class="col-md-12 scrollable" id="scroll">
+	            <div class="col-md-12 card-text" id="chatLog" readonly>
+	            </div>
+            </div> -->
+            
+            
             <!-- 채팅 보내기창 -->
             <form id="sendMessage">
-				<div>        
+				<div style="margin-top:250px;">        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
 		                <textarea class="form-control pl-2 my-0" id="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
@@ -277,7 +170,6 @@
 		            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
 	             </ul>
 			</form>
-			
         </div>
       </div>
       <!-- Grid column -->
@@ -287,9 +179,12 @@
 
   </div>
 </div>
-     <c:import url="/common/bottom.jsp"/>
+      
+      
+       <c:import url="/common/bottom.jsp"/>
     
    	</div>
+
 
     <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
@@ -312,7 +207,6 @@
   window.onload = function() {
 
 	  var username = $("#username").text();
-	  console.log(username);
 
 	  $('#exampleModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget) // Button that triggered the modal
@@ -327,6 +221,7 @@
 		
 	  var socket = io("http://localhost:82");
 	  
+	  //socket.emit('makeRoom')
 	  console.log('소켓 연결 성공');
 	      $("#sendMessage").on('submit', function(e){
 	    	  var msg = $('#message').val();
@@ -338,16 +233,14 @@
 	       });
 	       
 	       socket.on('receive message', function(msg, time){
-		       console.log('time'+time);
-	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-	    	    	   +'<div class="chat-body"><div class="chat-message">'
-		               +'<h3>'+username+'</h3>'
-		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
-		               +'</div></div></li></div><br>');
-	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-
+	           
+	          $('#chatLog').append('<div class="row">'
+	               +'<div class="col-sm-9" style="text-align:left;">'+msg+'</div>'
+	               +'<div class="col-sm-3" style="text-align:right;">'+time+'</div>'
+	               +'</div><br>');
+	           $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 	       });
+      
   }
 
   

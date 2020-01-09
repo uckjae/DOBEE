@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
 <div class="side-navbar-wrapper">
-
 		<!-- Sidebar Header    -->
 		<div class="sidenav-header d-flex align-items-center justify-content-center">
 			<!-- User Info-->
