@@ -44,7 +44,7 @@
 					</ul>
 				</li>
 										
-				<li><a href="#"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
+				<li><a href="project.do"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
 				<li><a href="chat.do"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
 			</ul>
 		</div>

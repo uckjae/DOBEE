@@ -6,26 +6,36 @@
   					 http://www.springframework.org/schema/beans/spring-beans.xsd
  					 http://www.springframework.org/schema/security
  					 http://www.springframework.org/schema/security/spring-security.xsd">
-
-    <security:http auto-config="true">
-        <security:csrf disabled="true" />
-        <security:form-login login-page="/WEB-INF/views/main/login.jsp"/>
-        <security:intercept-url pattern="/WEB-INF/views/main/login" access="permitAll" />
-        <security:intercept-url pattern="/WEB-INF/views/main" access="hasRole('ROLE_USER')" />
-        <security:intercept-url pattern="/WEB-INF/views/admin/**" access="hasRole('ROLE_ADMIN')" />
-        <security:logout logout-success-url="/WEB-INF/views/main/login.jsp" invalidate-session="true"/>
-        <security:session-management invalid-session-url="/WEB-INF/views/main/login.jsp" session-fixation-protection="migrateSession">
-        	<security:concurrency-control max-sessions="1" expired-url="/WEB-INF/views/main/login.jsp"/>
+	
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled="true"/>
+		<security:form-login login-page="/login.do"
+							default-target-url="/main.do"
+							username-parameter="email"
+							authentication-failure-url="/login.do?error"/>
+							
+  		<security:intercept-url pattern="/main.do" access="hasRole('ROLE_USER')"/>
+  		<security:intercept-url pattern="/admin/admin*.do" access="ROLE_ADMIN"/>
+  		
+  		<security:logout logout-success-url="/login.do" invalidate-session="true"/>
+  		
+  		 <security:session-management invalid-session-url="/login.do" session-fixation-protection="migrateSession">
+        	<security:concurrency-control max-sessions="1" expired-url="/login.do"/>
         </security:session-management>
-    </security:http>
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="manager@dobee.com" password="1004"  authorities="ROLE_USER"/>
-                <security:user name="admin@dobee.com" password="1004"  authorities="ROLE_ADMIN,ROLE_USER"  />
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
+	</security:http>
+	
+	<!-- <bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
+	
+	<security:authentication-manager>
+    	<security:authentication-provider>
+	      	<security:user-service>
+	      		<security:user name="manager@dobee.com" password="1004" authorities="ROLE_USER"/>
+	       		<security:user name="admin@dobee.com" password="1004" authorities="ROLE_ADMIN,ROLE_USER"/>
+	      	</security:user-service>
+	      	<!-- <security:password-encoder ref="bycryptPasswordEncoder"/> -->
+    	</security:authentication-provider>
+ 	</security:authentication-manager>
+	
    
     <!--<security:http>
         <security:csrf disabled="true"/>
