@@ -92,32 +92,38 @@
 	    <b-card-body class="text-center">
 	      <b-card-text>
 	     	<h1 style="text-align: left">근무 내역 확인</h1>
-	     	<br>
-	     	<div class="col-sm-3" style="background-color: yellow"></div>
-	     	
-	     	<div class="col-sm-6" id="jgContainer">
-				<div class="formDiv">
-					<form action="" method="post">					 
-						<select name="year">
-							<option value="">년도별</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-							
-						</select>
-						
-						<select name="month">
-							<option value="">월별</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>		
-						</select>
-						
-						<input type="submit" class="submit" value="검색"> 버튼에 돋보기 아이콘~ 응~
-					</form>
-				</div>
+ 	
+			<div class="formDiv">
+				<form action="" method="post">
+					<table style="width: 100%">
+						<tr>
+							<td></td>
+							<td style="width: 7%">
+								<select name="year">
+									<option value="">년도별</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+								</select>
+							</td>
+							<td style="width: 7%">
+								<select name="month">
+									<option value="">월별</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>		
+								</select>
+							</td>
+							<td style="width: 8%">
+								<input type="submit" class="submit" value="검색">
+							</td>
+						</tr>
+					</table>
+					버튼에 돋보기 아이콘~ 응~
+				</form>
 			</div>
+	
 			
 	      </b-card-text>
 	    </b-card-body>
