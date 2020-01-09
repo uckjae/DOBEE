@@ -1,15 +1,13 @@
 package com.dobee.vo.notice;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 @ToString
-@Getter
-@Setter
+@Data
 public class NoticeFile {
-    private int nFSeq;
+    private int nfSeq;
     private String orgName;
     private String saveName;
-    private int seq;
+    private int notSeq;
 }

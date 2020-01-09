@@ -1,14 +1,12 @@
 package com.dobee.vo.project;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.Date;
 
+import lombok.Data;
+import lombok.ToString;
+
 @ToString
-@Getter
-@Setter
+@Data
 public class Task {
     private int tSeq;
     private String title;
