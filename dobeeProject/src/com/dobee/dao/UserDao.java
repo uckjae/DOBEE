@@ -59,8 +59,10 @@ public interface UserDao {
     //연장근무관리
     public List<Apply> overTimeSign();
 
-
-
+    
+    //유저 리스트 가져오기
+    /* 01.09 알파카 */
+    public List<User> getUserList();
 
 
 }

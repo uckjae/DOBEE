@@ -4,23 +4,7 @@
 
 <html>
   <head>
-  
-    <!-- Jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="./vendor/font-awesome/css/font-awesome.min.css">
-    
-    <!-- Google fonts - Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <!-- theme stylesheet-->
-    <link rel="stylesheet" href="./css/style.default.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="./css/custom.css">
-    
+    <c:import url="/common/tag.jsp"/>
   </head>
   <style>
 	@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -144,15 +128,6 @@
 	.content{
 	    margin-top:40px;    
 	}
-	
-	
-
-#autocomplete {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-
 
   </style>
  
@@ -184,59 +159,45 @@
                   <h4 style="display:inline;">Channels</h4>
                 </div>
                 <div class="col-md-2">
-                <div class="text-center">
-
-				    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalContactForm"><strong>+</strong></button>
-				</div>
-			
-						
-						
+					  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><strong>+</strong></button>
 						<!-- modal -->
-						<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog cascading-modal" role="document">
-						    <!--Content-->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
 						    <div class="modal-content">
-						
-						      <!--Header-->
-						      <div class="modal-header light-blue darken-3 white-text">
-						        <h4 class="title"><i class="fas fa-pencil-alt"></i> 새 대화 채널 만들기</h4>
-						        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
-						          <span aria-hidden="true">×</span>
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">새 대화 채널 만들기</h5>
+						       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
 						        </button>
 						      </div>
-						      <!--Body-->
-						      <div class="modal-body mb-0">
-						      <form>
-						      
-						      	<div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="channelName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="channelName">
-							       </div>
-							   </div>
-						        <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="member" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 초대</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="member">
-							       </div>
-							   </div>
-							   <br>
-							      <div class="text-center mt-1-half">
-							        <button class="btn btn-info mb-2 waves-effect waves-light" >Send <i class="fas fa-send ml-1"></i></button>
-							      </div>
+						      <div class="modal-body">
+						        <form>
+						          <div class="form-group">
+							          <div class="row">
+							          	<div class="col-sm-2">
+							          		<label for="channelName" class="col-form-label">채널 이름</label>
+							          	</div>
+							          	<div class="col-sm-8">
+							            	<input type="text" class="form-control" id="channelName">
+							            </div>
+							          </div>
+						          </div>						          
+						          <div class="form-group">
+						            <label for="message-text" class="col-form-label">대화 상대</label>
+						           	<select id="member" name="memeber">
+						           		<option>멤버 선택</option>
+						           	</select>
+						          </div>
+						          
 						        </form>
 						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary">Send message</button>
+						      </div>
 						    </div>
-						    <!--/.Content-->
 						  </div>
-						</div>						
-						<!-- end of modal -->
-						
-						
+						</div> 
                 </div>
             	</div>
             </li> <br>
@@ -262,15 +223,11 @@
            		</div>
             </li>
             <li>
-           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;김태형</span></a>
+           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;갓경균</span></a>
            		</div>
             </li>
              <li>
                 <div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;게다죽</span></a>
-           		</div>
-            </li>
-            <li>
-                <div><button type="button" id="btn">컨트롤러 버튼</button>
            		</div>
             </li>
           </ul>
@@ -339,66 +296,42 @@
    	</div>
 
     <!-- JavaScript files-->
-    
+    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./vendor/popper.js/umd/popper.min.js"> </script>
     <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
     <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
-   
+    <script src="./vendor/chart.js/Chart.min.js"></script>
+    <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="./js/charts-home.js"></script>
+    <!-- Main File-->
+    <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
     <!-- socket 연결 -->
-    <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
+    <script src="http://localhost:82/socket.io/socket.io.js"></script>
 
   <script>
-  $.noConflict();
-  jQuery(document).ready(function($) {
-
+  window.onload = function() {
 
 	  var username = $("#username").text();
-	  var memberList = [];
+	  console.log(username);
 
-	  $("#btn").click(function(){
-
-		//멤버리스트 ajax로 가져와서 오토컴플릿에 넣어주기
+	  $('#exampleModal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget) // Button that triggered the modal
+		  var recipient = button.data('whatever') // Extract info from data-* attributes
+		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		  var modal = $(this)
+		  modal.find('.modal-title').text('New message to ' + recipient)
+		  modal.find('.modal-body input').val()
+		})
 		
-		  $.ajax({
-	    		url:"getUserList.do",
-	    		dataType:"json",
-	    		type:"post",
-	    		success:function(data){
-		    		console.log(data);
-	    			/* $.each(data, function(index, element){
-	    				let option = $("<option></option>");
-	    				$(option).text(element.empno+" : "+element.ename);
-	    				$(option).val(element.empno);
-	    				$("#mgrSelect").append(option);
-	    			}) */
-	    			
-	    		}
-	    	});
-
-
-
-			 
-		  });
-	  
-	  var autocomplete_text = ["apple","b","c","d"];
-
-
-	  $("#member").autocomplete({
-		     source: autocomplete_text
-
-				});
-
-	  $("#modalContactForm").on("shown.bs.modal", function() { 
-		 
-		  $("#member").autocomplete("option", "appendTo", "#modalContactForm") 
-
-		  })
-
 		
-	  /* var socket = io("http://localhost:82");
+	  var socket = io("http://localhost:82");
 	  
+	  console.log('소켓 연결 성공');
 	      $("#sendMessage").on('submit', function(e){
 	    	  var msg = $('#message').val();
 	          console.log(msg);
@@ -418,8 +351,8 @@
 		               +'</div></div></li></div><br>');
 	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
-	       }); */
-  });
+	       });
+  }
 
   </script>
     </body>

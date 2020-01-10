@@ -36,6 +36,21 @@
     	</security:authentication-provider>
  	</security:authentication-manager>
 	
+	<security:authentication-manager>
+        <security:authentication-provider>
+            <!-- &lt;!&ndash; -->
+            <security:jdbc-user-service data-source-ref="driverManagerDataSource"
+                                        users-by-username-query="SELECT MAIL, PASSWORD, 1 enabled FROM member where MAIL=?"
+
+                                        authorities-by-username-query="SELECT U.MAIL , A.AUTH AS ROLL_NAME
+           								                                FROM USER U join AUTH A
+          								                                ON U.AUTHCODE = A.AUTHCODE
+           								                                WHERE U.MAIL=?"/>
+           								                                <!-- &ndash;&gt; -->
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+	
 	<!-- 로그인 처리 핸들러 빈 -->
 	 <bean id="loginSuccessHandler" class="com.dobee.handler.LoginHandler"/>
 	 <bean id="loginFailureHandler" class="com.dobee.handler.LoginHandler"/>
