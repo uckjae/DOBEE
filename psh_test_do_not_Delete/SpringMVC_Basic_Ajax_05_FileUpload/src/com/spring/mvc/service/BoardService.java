@@ -12,13 +12,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class BoardService {
 	
 	/**
-	 * ÆÄÀÏ ¾÷·Îµå
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 	 */
 	public boolean fileUpload(MultipartHttpServletRequest mRequest) {
 
 		boolean isSuccess = false;
 		
-		String uploadPath = "/file/";
+		String uploadPath = "/users/psh/file/";
 		
 		File dir = new File(uploadPath);
 
