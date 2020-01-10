@@ -8,7 +8,7 @@ public interface NoticeDao {
 
 
     //공지사항목록
-    public List<Notice> noticeList();
+    public List<Notice> noticeList(Notice notice);
 
 
     //공지사항작성

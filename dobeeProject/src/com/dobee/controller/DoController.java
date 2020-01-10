@@ -1,13 +1,27 @@
 package com.dobee.controller;
 
 
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import com.dobee.dao.NoticeDao;
+import com.dobee.services.ProjectService;
+import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
+
 import com.dobee.services.GoogleVisionApi;
+
 
 @Controller
 public class DoController {
@@ -16,9 +30,13 @@ public class DoController {
 		System.out.println("일단 컨트롤 오나 보자");
 	}
 	
+	
     @Autowired
-    private SqlSession sqlSession;
-
+    private SqlSession sqlsession;
+    
+    public void setSqlsession(SqlSession sqlsession) {
+    	this.sqlsession = sqlsession;
+    }
 
     //로그인
     @RequestMapping("login.do")
@@ -104,7 +122,15 @@ public class DoController {
     
   //공지사항리스트
     @RequestMapping("noticeList.do")
-    public String noticeList(){
+    public String noticeList(Notice notice,Model model){
+    	
+    			List<Notice>list=null;
+    	
+    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+    		list=noticedao.noticeList(notice);
+    		System.out.println(list);
+    		model.addAttribute("list",list);
+    
         return "notice/noticeList";
     }
 
