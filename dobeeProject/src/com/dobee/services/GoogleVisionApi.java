@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class GoogleVisionApi {
 
 	public GoogleVisionApi() {
-		System.out.println("컨트롤단/visionController : 구글 비전 API  생성자 실행");
+		System.out.println("서비스단/GoogleVisionApi : 구글 비전 API  생성자 실행");
 		
 		
 		
@@ -53,12 +53,12 @@ public class GoogleVisionApi {
 
 			    }
 			}catch (Exception e) {
-				System.out.println("컨트롤/visionController : 내부 try구문 에러 :" + e);
+				System.out.println("서비스단/GoogleVisionApi : 내부 try구문 에러 :" + e);
 			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("컨트롤/visionController : try 구문에러 : " + e);
+			System.out.println("서비스단/GoogleVisionApi : try 구문에러 : " + e);
 		}
 		
 		
