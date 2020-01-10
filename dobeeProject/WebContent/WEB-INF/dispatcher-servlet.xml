@@ -26,6 +26,9 @@
     <context:annotation-config/>
     <!-- 컴포넌트 스캔 -->
     <context:component-scan base-package="com.dobee.controller" />
+    <context:component-scan base-package="com.dobee.handler" />
+    <context:component-scan base-package="com.dobee.services" />
+    <context:component-scan base-package="com.dobee.dao" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -68,7 +68,7 @@ public class DoController {
     //관리자 메인
     @RequestMapping("adminMain.do")
     public String adminMain() {
-    	return "admin/main";
+    	return "admin/AdminMain";
     }
     
     
