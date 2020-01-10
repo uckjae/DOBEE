@@ -354,5 +354,11 @@ public class DoController {
     }
     
     
+    //채팅 채팅방 가져오기
+    @RequestMapping("groupChat.do")
+    public String groupChatMain() {
+    	return "chat/chatMain_Group_main";
+    }
+    
     
 }

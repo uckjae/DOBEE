@@ -148,71 +148,6 @@
 
 
   </style>
-  <script>
-  $(function(){
-
-
-	  var username = $("#username").text();
-
-	  
-	  $.ajax({
-  		url:"getUserList.do",
-  		dataType:"json",
-  		type:"post",
-  		success:function(data){
-  			$.each(data, function(index, element){
-  	  			//채팅방 만드는 곳에 넣어주기
-  	  			let option = $("<option></option>");
-  	  			$(option).text(element.name + "(" + element.mail + ")");
-  	  			$("#memberSelect").append(option);
-
-  	  			//유저 리스트 뿌리기
-  	  			
-  	  			let li = "<li><div><a href='#'><i class='fas fa-user'></i>"
-  	  				   +"<span>&nbsp;&nbsp;"+element.name+"</span></a>"
-  	  				   +"</div></li>";
-  	  			$("#dmList").append(li);
-  	  			/*
-  	  			
-  	  			<li>
-	           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;알파카</span></a>
-	           		</div>
-	            </li>
-  	  			*/
-  	  			
-  			});
-  			
-  		}
-		
-  	});
-	  	
-	 
-		 
-	  /* var socket = io("http://localhost:82");
-	  
-	      $("#sendMessage").on('submit', function(e){
-	    	  var msg = $('#message').val();
-	          console.log(msg);
-	          socket.emit('send message to self', username, msg);
-	          $('#message').val("");
-	          $("#message").focus();
-	          e.preventDefault();
-	       });
-	       
-	       socket.on('receive message', function(msg, time){
-		       console.log('time'+time);
-	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-	    	    	   +'<div class="chat-body"><div class="chat-message">'
-		               +'<h3>'+username+'</h3>'
-		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
-		               +'</div></div></li></div><br>');
-	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-
-	       }); */
-  });
-
-  </script>
   <body>
     <!-- Side Navbar -->
     <nav class="side-navbar">
@@ -295,8 +230,9 @@
             	</div>
             </li> <br>
             <li>
-                <div><a href="#"><i class="fab fa-slack-hash"></i><span class="chat-room">Design</span></a>
+                <div><a style="cursor:pointer" id="groupChatBtn"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
            		</div>
+           		
             </li>
              <li>
 	             <div><a href="#"><i class="fab fa-slack-hash"></i><span class="chat-room">IT</span></a>
@@ -321,7 +257,7 @@
       </div>
       <!-- Grid column -->
      
-      <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0" >
+      <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0">
         <div class="chat-message">
           <ul class="list-unstyled chat">
             <li class="d-flex justify-content-between mb-4">
@@ -340,14 +276,14 @@
             	<div class="col-md-4">
             		<hr width="70%">
             	</div>
-       			<div class="col-md-4">
+       			<div class="col-md-4" id="currentDate">
             		<h3 style="text-align:center;font-size:25px;">오늘 </h3>
             	</div>     
             	<div class="col-md-4">
             		<hr width="70%">
             	</div>
             </div>
-            <div class="container content">
+            <div class="container content" id="chatMsgMain">
             <div class="col-md-12">
 	            <ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">
 	        	</ul>
@@ -355,11 +291,11 @@
 			</div>
 			<br>
             <!-- 채팅 보내기창 -->
-            <form id="sendMessage">
+            <form id="sendMessage" method="post" action='http://localhost:5000/selfchat'>
 				<div>        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
-		                <textarea class="form-control pl-2 my-0" id="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+		                <textarea class="form-control pl-2 my-0" id="message" name="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
 		              </div>
 		            </li>
 	            </div>
@@ -388,9 +324,76 @@
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
     <!-- socket 연결 -->
-    <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <script>
+  $(function(){
 
-  
+
+	  var username = $("#username").text();
+
+
+	  var socket = io.connect("http://localhost:5000/selfchat",{
+		  path: '/socket.io'
+		  });
+
+	  
+	      $("#sendMessage").on('submit', function(e){
+	    	  var msg = $('#message').val();
+	    	  /* socket.emit('send message to self', username, msg);
+	          $('#message').val("");
+	          $("#message").focus();
+	          e.preventDefault(); */
+	       });
+	       
+	       socket.on('receive message', function(msg, time){
+		       console.log('time'+time);
+	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
+	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+	    	    	   +'<div class="chat-body"><div class="chat-message">'
+		               +'<h3>'+username+'</h3>'
+		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
+		               +'</div></div></li></div><br>');
+	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+
+	       });
+
+
+	       $.ajax({
+	     		url:"getUserList.do",
+	     		dataType:"json",
+	     		type:"post",
+	     		success:function(data){
+	     			$.each(data, function(index, element){
+	     	  			//채팅방 만드는 곳에 넣어주기
+	     	  			let option = $("<option></option>");
+	     	  			$(option).text(element.name + "(" + element.mail + ")");
+	     	  			$("#memberSelect").append(option);
+
+	     	  			//유저 리스트 뿌리기
+	     	  			let li = "<li><div><a href='#'><i class='fas fa-user'></i>"
+	     	  				   +"<span>&nbsp;&nbsp;"+element.name+"</span></a>"
+	     	  				   +"</div></li>";
+	     	  			$("#dmList").append(li);
+	     	  			
+	     			});
+	     			
+	     		}
+	   		
+	     	});
+
+	   	  //전체 채팅방으로 이동하기
+	   	  $("#groupChatBtn").click(function(){
+
+	   		 
+	   		  	$("#chatMsgMain").remove();
+	   		  	
+
+
+
+	   		});
+  });
+
+  </script>
     </body>
 </html>
 
