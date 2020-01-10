@@ -201,6 +201,23 @@
       
 	<script>
 	$(function() {
+
+		$.ajax({
+			url : "getApyCode.do",
+			dataType : "json",
+			sucess : (data) => {
+				console.log(data.apyCode);
+				var dArray = [];
+				dArray = data.apyCode;
+				console.log("확인해봐여 : " + apyCode);
+				for (var i = 0; i< apyCode.length; i++) {
+					var option = document.creatElements("option");
+					$(option).text(apyCode[i]);
+					$("#category").append(option);
+				}
+			} 
+		});
+		
 		
 		$('input[name="datetimes"]').daterangepicker({
 		    timePicker: true,

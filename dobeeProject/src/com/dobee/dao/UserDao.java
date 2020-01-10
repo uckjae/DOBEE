@@ -38,6 +38,10 @@ public interface UserDao {
 
     //부재일정신청
     public void absApply();
+    
+    //부재 항목 가져오기
+    /* 01.10 게다죽 */
+    public List<String> getApyCode();
 
 
     //연장근무신청

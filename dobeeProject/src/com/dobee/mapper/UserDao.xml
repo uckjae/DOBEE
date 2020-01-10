@@ -2,9 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="java.com.dobee.dao.UserDao">
-	<select id="getUserList" resultType="com.dobee.vo.memeber.User">
+<mapper namespace="com.dobee.dao.UserDao">
+	<select id="getUserList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
 		FROM USER
 	</select>
+	
+	<select id="getApyCode" resultType="String">
+		SELECT ENTRY FROM APPLYCODE
+	</select>
+
 </mapper>
