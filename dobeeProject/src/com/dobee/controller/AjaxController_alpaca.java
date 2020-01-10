@@ -34,4 +34,7 @@ public class AjaxController_alpaca {
     	return result;
     }
     
+    //전체 채팅방 가져오기
+    
+    
 }

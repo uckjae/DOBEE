@@ -72,7 +72,8 @@
 	        
 	      </b-card-text>
 	
-	      <b-button variant="primary"> 영수증 등록 </b-button>
+	      <b-button variant="primary" onclick="location.href='goVision.do'" > 영수증 업로드 </b-button>
+	      <b-button variant="primary" onclick="location.href='goVision.do'" > 영수증 글자 추출</b-button>
 	    </b-card-body>
 	  </b-card>
 	</div>
