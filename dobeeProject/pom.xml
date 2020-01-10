@@ -5,13 +5,11 @@
 	<groupId>com.dobee</groupId>
 	<artifactId>dobeeProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	<packaging>war</packaging>
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.3.14.RELEASE</org.springframework-version>
 	</properties>
-
-
 
 	<dependencies>
 		<!-- spring context 묶음 -->
@@ -77,7 +75,7 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<!-- JSP UI JSTL LIB -->
 		<dependency>
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>jstl-api</artifactId>
@@ -126,13 +124,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.13</version>
 		</dependency>
-
+		<!-- Spring Mybatis 사용 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.2.7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
@@ -190,22 +187,16 @@
     		<artifactId>jackson-databind</artifactId>
     		<version>2.7.3</version>
 		</dependency>
-		<!-- json 사용 -->
-		<!-- https://mvnrepository.com/artifact/org.codehaus.jettison/jettison -->
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
-			<groupId>org.codehaus.jettison</groupId>
-			<artifactId>jettison</artifactId>
-			<version>1.4.0</version>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
 		</dependency>
 		
-		
 	</dependencies>
+
 	
-	
-	
-	
-	
-	<packaging>war</packaging>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>

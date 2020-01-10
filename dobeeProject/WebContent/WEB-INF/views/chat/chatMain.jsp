@@ -145,17 +145,74 @@
 	    margin-top:40px;    
 	}
 	
-	
-
-#autocomplete {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
 
 
   </style>
- 
+  <script>
+  $(function(){
+
+
+	  var username = $("#username").text();
+
+	  
+	  $.ajax({
+  		url:"getUserList.do",
+  		dataType:"json",
+  		type:"post",
+  		success:function(data){
+  			$.each(data, function(index, element){
+  	  			//채팅방 만드는 곳에 넣어주기
+  	  			let option = $("<option></option>");
+  	  			$(option).text(element.name + "(" + element.mail + ")");
+  	  			$("#memberSelect").append(option);
+
+  	  			//유저 리스트 뿌리기
+  	  			
+  	  			let li = "<li><div><a href='#'><i class='fas fa-user'></i>"
+  	  				   +"<span>&nbsp;&nbsp;"+element.name+"</span></a>"
+  	  				   +"</div></li>";
+  	  			$("#dmList").append(li);
+  	  			/*
+  	  			
+  	  			<li>
+	           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;알파카</span></a>
+	           		</div>
+	            </li>
+  	  			*/
+  	  			
+  			});
+  			
+  		}
+		
+  	});
+	  	
+	 
+		 
+	  /* var socket = io("http://localhost:82");
+	  
+	      $("#sendMessage").on('submit', function(e){
+	    	  var msg = $('#message').val();
+	          console.log(msg);
+	          socket.emit('send message to self', username, msg);
+	          $('#message').val("");
+	          $("#message").focus();
+	          e.preventDefault();
+	       });
+	       
+	       socket.on('receive message', function(msg, time){
+		       console.log('time'+time);
+	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
+	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+	    	    	   +'<div class="chat-body"><div class="chat-message">'
+		               +'<h3>'+username+'</h3>'
+		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
+		               +'</div></div></li></div><br>');
+	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+
+	       }); */
+  });
+
+  </script>
   <body>
     <!-- Side Navbar -->
     <nav class="side-navbar">
@@ -184,13 +241,9 @@
                   <h4 style="display:inline;">Channels</h4>
                 </div>
                 <div class="col-md-2">
-                <div class="text-center">
-
-				    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalContactForm"><strong>+</strong></button>
-				</div>
-			
-						
-						
+	                <div class="text-center">
+					    <button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalContactForm"><strong>+</strong></button>
+					</div>
 						<!-- modal -->
 						<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog cascading-modal" role="document">
@@ -221,8 +274,11 @@
 						      			<label for="member" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 초대</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="member">
-							       </div>
+		                                    <select class="form-control" id="memberSelect" name="member" style="height : 43px">
+		                                    	<option hidden></option>
+		                                    </select>
+						      		</div>
+							       
 							   </div>
 							   <br>
 							      <div class="text-center mt-1-half">
@@ -235,49 +291,35 @@
 						  </div>
 						</div>						
 						<!-- end of modal -->
-						
-						
-                </div>
+                	</div>
             	</div>
             </li> <br>
             <li>
-                 <i class="fab fa-slack-hash"></i>
-                  	<span class="chat-room">Design</span>
+                <div><a href="#"><i class="fab fa-slack-hash"></i><span class="chat-room">Design</span></a>
+           		</div>
             </li>
              <li>
-                 <i class="fab fa-slack-hash"></i>
-                  	<span class="chat-room">IT</span>
+	             <div><a href="#"><i class="fab fa-slack-hash"></i><span class="chat-room">IT</span></a>
+	           	 </div>
             </li>
+            
             <hr>
-            <li>
-            	<div class="row">
-            	<div class="col-md-10">
-                  <h4 style="display:inline;">Direct Messages</h4>
-                </div>
-                <div class="col-md-2"><div>
-            	</div>
-            </li><br>
-            <li>
-           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;알파카</span></a>
-           		</div>
-            </li>
-            <li>
-           		<div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;김태형</span></a>
-           		</div>
-            </li>
-             <li>
-                <div><a href="#"><i class="fas fa-user"></i><span>&nbsp;&nbsp;게다죽</span></a>
-           		</div>
-            </li>
-            <li>
-                <div><button type="button" id="btn">컨트롤러 버튼</button>
-           		</div>
-            </li>
-          </ul>
+            </ul>
+            <ul class="list-unstyled friend-list">
+	            <li>
+	            	<div class="row">
+	            	<div class="col-md-10">
+	                  <h4 style="display:inline;">Direct Messages</h4>
+	                </div>
+	                <div class="col-md-2"><div>
+	            	</div>
+	            </li><br>
+	            </ul>
+	           <ul class="list-unstyled friend-list" id="dmList">
+	           </ul>
         </div>
       </div>
       <!-- Grid column -->
-
      
       <div class="col-md-6 col-xl-9 pl-md-3 px-lg-auto px-0" >
         <div class="chat-message">
@@ -331,7 +373,6 @@
 
     </div>
     <!-- Grid row -->
-
   </div>
 </div>
      <c:import url="/common/bottom.jsp"/>
@@ -349,79 +390,7 @@
     <!-- socket 연결 -->
     <!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
 
-  <script>
-  $.noConflict();
-  jQuery(document).ready(function($) {
-
-
-	  var username = $("#username").text();
-	  var memberList = [];
-
-	  $("#btn").click(function(){
-
-		//멤버리스트 ajax로 가져와서 오토컴플릿에 넣어주기
-		
-		  $.ajax({
-	    		url:"getUserList.do",
-	    		dataType:"json",
-	    		type:"post",
-	    		success:function(data){
-		    		console.log(data);
-	    			/* $.each(data, function(index, element){
-	    				let option = $("<option></option>");
-	    				$(option).text(element.empno+" : "+element.ename);
-	    				$(option).val(element.empno);
-	    				$("#mgrSelect").append(option);
-	    			}) */
-	    			
-	    		}
-	    	});
-
-
-
-			 
-		  });
-	  
-	  var autocomplete_text = ["apple","b","c","d"];
-
-
-	  $("#member").autocomplete({
-		     source: autocomplete_text
-
-				});
-
-	  $("#modalContactForm").on("shown.bs.modal", function() { 
-		 
-		  $("#member").autocomplete("option", "appendTo", "#modalContactForm") 
-
-		  })
-
-		
-	  /* var socket = io("http://localhost:82");
-	  
-	      $("#sendMessage").on('submit', function(e){
-	    	  var msg = $('#message').val();
-	          console.log(msg);
-	          socket.emit('send message to self', username, msg);
-	          $('#message').val("");
-	          $("#message").focus();
-	          e.preventDefault();
-	       });
-	       
-	       socket.on('receive message', function(msg, time){
-		       console.log('time'+time);
-	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-	    	    	   +'<div class="chat-body"><div class="chat-message">'
-		               +'<h3>'+username+'</h3>'
-		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
-		               +'</div></div></li></div><br>');
-	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-
-	       }); */
-  });
-
-  </script>
+  
     </body>
 </html>
 
