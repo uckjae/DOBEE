@@ -7,4 +7,13 @@
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
 		FROM USER
 	</select>
+	
+	<select id="getApyCode" resultType="String">
+		SELECT ENTRY FROM APPLYCODE
+	</select>
+	
+	<select id="getApprovalList" resultType="String">
+		SELECT NAME FROM USER WHERE AUTHCODE='2' 
+	</select>
+
 </mapper>

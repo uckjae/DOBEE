@@ -11,11 +11,13 @@
 
 
 <!-- 루트 컴포넌트 연결 -->
-
-<script type="text/javascript" charset="utf-8"> <c:import url="/WEB-INF/views/payment/app.js" /></script>
+<script type="text/javascript" charset="utf-8" src="vuejs/app.js"></script>
+<script src="vuejs/route/vue-router.js"></script>
+<script src="vuejs/route/router.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/http-vue-loader@1.4.1/src/httpVueLoader.min.js"></script>
-<script>  <c:import url="/WEB-INF/views/payment/route/vue-router.js" />  </script>
-<script>  <c:import url="/WEB-INF/views/payment/route/router.js" /> </script>
+
+
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
