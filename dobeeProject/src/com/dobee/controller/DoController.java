@@ -1,13 +1,17 @@
 package com.dobee.controller;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dobee.dao.UserDao;
 import com.dobee.services.GoogleVisionApi;
+import com.dobee.vo.member.User;
 
 @Controller
 public class DoController {
@@ -71,7 +75,10 @@ public class DoController {
     
     //관리자 메인
     @RequestMapping("adminMain.do")
-    public String adminMain() {
+    public String adminMain(Model model) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	List<User> userList = userDao.getUserList();
+    	model.addAttribute("userList", userList);
     	return "admin/AdminMain";
     }
     
