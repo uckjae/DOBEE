@@ -1,4 +1,4 @@
-
+//import router from "route/router.js"
 
 
 
@@ -6,7 +6,7 @@ $(function(){
 	var app = new Vue({
 		
 		el : '#app',
-		router : router,
+		routes : router,
 	
 		beforeCreate : function(){
            
