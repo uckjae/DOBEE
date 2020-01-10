@@ -1,15 +1,12 @@
 package com.dobee.controller;
 
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dobee.services.ProjectService;
-import com.dobee.vo.project.Project;
+import com.dobee.services.GoogleVisionApi;
 
 @Controller
 public class DoController {
@@ -198,7 +195,7 @@ public class DoController {
     }
     
 
-    //비용정산신청1
+    //비용정산신청 뷰단 화면 이동
     @RequestMapping("reciptRegit.do")
     public String receiptReg(){
     	System.out.println("reciptRegit.do 요청했음");
@@ -206,7 +203,25 @@ public class DoController {
     }
 
 
-    //비용정산신청2
+    //비용정산신청 영수증사진으로  google Vision API 요청
+    @RequestMapping("goVision.do")
+    public String goGoogleApi(){
+    	System.out.println("goGoogleApi 함수요청");
+    	GoogleVisionApi vision = new GoogleVisionApi();
+    	
+    	System.out.println(" vision 서비스단 통과");
+    	
+    	
+    	
+        return null;
+    }
+    
+    
+    
+    
+    
+    
+    //비용정산신청 vision 으로 부터 읽어온 text수정까지 하고 최종 확인
     public String receiptConfirm(){
         return null;
     }
