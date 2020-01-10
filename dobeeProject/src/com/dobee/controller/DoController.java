@@ -61,7 +61,14 @@ public class DoController {
         return "main/main";
     }
 
-
+    
+    //관리자 메인
+    @RequestMapping("adminMain.do")
+    public String adminMain() {
+    	return "admin/AdminMain";
+    }
+    
+    
     //회사 일정등록
     //@RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){
