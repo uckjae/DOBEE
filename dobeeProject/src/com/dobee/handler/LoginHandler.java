@@ -45,10 +45,11 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
         String mail = request.getParameter("mail");
 
         User user = userDao.getUser(mail);
+        request.getSession().setAttribute("user", user);
         System.out.println(user.toString());
         if(user.getAuthCode() == 1){// ADMIN
         	System.out.println("1번째 if");
-            response.sendRedirect("adminMain.do");
+            response.sendRedirect("adminWarnig.do");
         	//response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/admin/");
         }else if(user.getAuthCode() == 2 || user.getAuthCode() == 3){//USER, PM
             System.out.println("2번째 if");

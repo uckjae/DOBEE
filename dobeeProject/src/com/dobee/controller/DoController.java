@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dobee.services.ProjectService;
@@ -64,6 +65,12 @@ public class DoController {
         return "main/main";
     }
 
+    //관리자 메인전 경고화면
+    @RequestMapping("adminWarnig.do")
+    public String adminWarning() {
+    	return "admin/AdminWarning";
+    }
+    
     
     //관리자 메인
     @RequestMapping("adminMain.do")
