@@ -80,7 +80,7 @@
 					<div class="form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="customControl">
-								<label class="custom-control-label" for="customControl">ID 유지</label>
+								<label class="custom-control-label" for="customControl">로그인 유지</label>
 							</div>
 						</div>
 					
