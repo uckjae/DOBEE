@@ -33,4 +33,17 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
+	// 부재신청 결재자 불러오기
+	@RequestMapping("getApprovalList.do")
+	public View getApprovalList (Model map) {
+		
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<String> results = userDao.getApprovalList();
+		System.out.println("사람 목록들 한번 보시오 : " + results);
+		
+		map.addAttribute("approvalList", results);
+		
+		return jsonview;
+	}
+	
 }
