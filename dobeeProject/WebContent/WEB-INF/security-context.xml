@@ -26,19 +26,19 @@
 	
 	<!-- <bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
 	
-	<security:authentication-manager>
+	<!-- <security:authentication-manager>
     	<security:authentication-provider>
 	      	<security:user-service>
 	      		<security:user name="manager@dobee.com" password="1004" authorities="ROLE_USER"/>
 	       		<security:user name="admin@dobee.com" password="1004" authorities="ROLE_ADMIN,ROLE_USER"/>
 	      	</security:user-service>
-	      	<!-- <security:password-encoder ref="bycryptPasswordEncoder"/> -->
+	      	<security:password-encoder ref="bycryptPasswordEncoder"/>
     	</security:authentication-provider>
- 	</security:authentication-manager>
+ 	</security:authentication-manager> -->
 	
-	<!-- <security:authentication-manager>
+	<security:authentication-manager>
         <security:authentication-provider>
-            &lt;!&ndash;
+            <!-- &lt;!&ndash; -->
             <security:jdbc-user-service data-source-ref="driverManagerDataSource"
                                         users-by-username-query="SELECT MAIL, PASSWORD, 1 enabled FROM member where MAIL=?"
 
@@ -46,7 +46,7 @@
            								                                FROM USER U join AUTH A
           								                                ON U.AUTHCODE = A.AUTHCODE
            								                                WHERE U.MAIL=?"/>
-           								                                &ndash;&gt;
+           								                                <!-- &ndash;&gt; -->
             <security:password-encoder ref="bCryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
