@@ -7,20 +7,9 @@
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
 		FROM USER
 	</select>
-
-	<insert id="overTimeApply" parameterType="com.dobee.vo.Apply">
-		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
-			VALUES (#{regdate), #{reason}, #{startat}, #{endat}, '0', #{email], #{approval}, #{apycode})
-	</insert>
 	
-	<!-- 연장근무 관리 -->
-	<select id="overTimeSign" resultType="com.dobee.vo.Apply">
-		SELECT REQDATE, STARTAT, ENDAT FROM APPLY WHERE APYCODE = 6 AND DRAFTER = #{EMAIL}
-	</select>
-	
-	<!-- 부재 항목 가져오기 -->
 	<select id="getApyCode" resultType="String">
-		SELECT ENTRY FROM APPLYCODE;
+		SELECT ENTRY FROM APPLYCODE
 	</select>
 
 </mapper>
