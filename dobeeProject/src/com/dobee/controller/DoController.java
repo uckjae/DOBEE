@@ -2,10 +2,15 @@ package com.dobee.controller;
 
 
 
+
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
+
+
+import java.util.List;
 
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,12 +20,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+
 import com.dobee.dao.NoticeDao;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.project.Project;
 
+
+import com.dobee.dao.UserDao;
+
 import com.dobee.services.GoogleVisionApi;
+import com.dobee.vo.member.User;
 
 
 @Controller
@@ -89,7 +99,10 @@ public class DoController {
     
     //관리자 메인
     @RequestMapping("adminMain.do")
-    public String adminMain() {
+    public String adminMain(Model model) {
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	List<User> userList = userDao.getUserList();
+    	model.addAttribute("userList", userList);
     	return "admin/AdminMain";
     }
     
