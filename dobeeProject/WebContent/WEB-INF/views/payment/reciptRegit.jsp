@@ -72,7 +72,7 @@
 	        
 	      </b-card-text>
 	
-	      <b-button variant="primary" onclick="location.href='goGoogleApi'" > 영수증 등록 </b-button>
+	      <b-button variant="primary" onclick="location.href='goVision.do'" > 영수증 등록 </b-button>
 	    </b-card-body>
 	  </b-card>
 	</div>

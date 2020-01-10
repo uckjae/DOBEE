@@ -13,15 +13,19 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+
+
+@Service
 public class GoogleVisionApi {
 
 	public GoogleVisionApi() {
-		System.out.println("구글 비전 API  생성자 실행");
+		System.out.println("컨트롤단/visionController : 구글 비전 API  생성자 실행");
 		
 		
 		
 		try {
-			System.out.println("try 구문 첫 번  째 줄 ");
 			String imageFilePath = "/users/psh/image/1.jpeg";
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -49,12 +53,12 @@ public class GoogleVisionApi {
 
 			    }
 			}catch (Exception e) {
-				System.out.println("내부 try구문 에러 :" + e);
+				System.out.println("컨트롤/visionController : 내부 try구문 에러 :" + e);
 			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("try 구문에러 : " + e);
+			System.out.println("컨트롤/visionController : try 구문에러 : " + e);
 		}
 		
 		
