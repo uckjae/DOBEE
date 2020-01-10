@@ -13,4 +13,7 @@ public class User {
     private String myPic;
     private int authCode;
     private int teamCode;
+    
+   
+        
 }

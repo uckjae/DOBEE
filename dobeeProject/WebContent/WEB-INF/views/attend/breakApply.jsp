@@ -70,6 +70,9 @@
 	<!-- datetime picker -->
 	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
 	<script src="./js/bootstrap-datetimepicker.min.js"></script>
+	
+	
+	
   </head>
  
   <body>
@@ -83,12 +86,47 @@
       <c:import url="/common/top.jsp"/>
 	
 
-	<script>
+	<script type="text/javascript"> 
 		window.onload = function(){
 			var app = new Vue ({
 				el : '#navbar',
 				data : []
 			});
+
+
+			$.ajax({
+				url : "getApyCode.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.apyCode);
+					var dArray = [];
+					dArray = data.apyCode;
+					console.log(dArray.length + "길이 뭐임?")
+					for (var i = 0; i<dArray.length; i++) {
+						console.log(dArray[i]);
+						var option = document.createElement("option");
+						$(option).text(dArray[i]);
+						$("#category").append(option);
+					}
+				}				
+			});
+
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.approvalList);
+					var dArray = [];
+					dArray = data.approvalList;
+					for (var i = 0; i<dArray.length; i++) {
+						console.log(dArray[i]);
+						var option = document.createElement("option");
+						$(option).text(dArray[i]);
+						$("#approval").append(option);
+					}
+				}				
+			});
+			
 		}
 		
   	</script>
@@ -143,13 +181,9 @@
 							<tr>
 								<td>부재항목</td>
 								<td>
-									<select id="category">
-										<option value="">항목별</option>
-										<option value="연차">연차</option>
-										<option value="반일연차">반일연차</option>
-										<option value="외근">외근</option>
-										<option value="출장">출장</option>
-										<option value="경조휴가">경조휴가</option>
+									<select id="category" class="category">
+										<option hidden>category 선택</option>
+										<!-- ajax -->
 									</select>
 								</td>
 							</tr>
@@ -158,9 +192,7 @@
 								<td>결재자</td>
 								<td>
 									<select id="approval">
-										<option value = "">결재자 선택</option>
-										<option value = "김일번">김일번</option>
-										<option value = "김이번">김이번</option>
+										<option hidden = "">결재자 선택</option>
 									</select>
 								</td>
 					
@@ -199,8 +231,12 @@
 
 	<c:import url="/common/bottom.jsp"/>   
       
-	<script>
+
+	<input type='text' class="form-control" id='datetimepicker1' />
+    
+    <script>
 	$(function() {
+		
 		
 		$('input[name="datetimes"]').daterangepicker({
 		    timePicker: true,
@@ -262,52 +298,7 @@
 		});
 	
 	</script>
-	<input type='text' class="form-control" id='datetimepicker1' />
     
   </body>
 </html>
 
-
-<!-- 
-뺄거임
-
-시작 일자 - 종료 일자 선택
-<input type="text" name="datetimes" style="width:250px"/>
-<br>
-							
-시간
-<input id="spinner" type="text"/>
-
-분
-<input id="spinner2" type="text"/>
-<br>
-
- 
-부재항목			
-<select id="category">
-	<option value="">항목별</option>
-	<option value="연차">연차</option>
-	<option value="반일연차">반일연차</option>
-	<option value="외근">외근</option>
-	<option value="출장">출장</option>
-	<option value="경조휴가">경조휴가</option>
-</select>
-<br>
-
-결재자
-<select id="approval">
-	<option value = "">결재자 선택</option>
-	<option value = "김일번">김일번</option>
-	<option value = "김이번">김이번</option>
-</select>
-<br>
-사유
-<br>
-<textarea rows="5" cols="270" placeholder="1000 btye 이내 내용을 입력하십시오."></textarea>
-<br>
-
-
-<input type="submit" value="확인">
-<input type="reset" value="초기화">
-
- -->
