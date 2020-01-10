@@ -194,7 +194,7 @@ public class DoController {
     @RequestMapping("debitList.do")
     public String paymentChart(){
     	System.out.println("debitlist.do 까지 왔음");
-        return "payment/payment";
+        return "payment/test";
     }
     
 
@@ -202,7 +202,7 @@ public class DoController {
     @RequestMapping("reciptRegit.do")
     public String receiptReg(){
     	System.out.println("reciptRegit.do 요청했음");
-        return "payment/payment";
+        return "payment/reciptRegit";
     }
 
 

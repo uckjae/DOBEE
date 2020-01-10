@@ -9,7 +9,7 @@ $(function(){
 		routes : router,
 	
 		beforeCreate : function(){
-           
+           console.log("뷰 작동 되나요?");
 		},
 	
 	})
