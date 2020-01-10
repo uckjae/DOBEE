@@ -77,6 +77,21 @@
 				el : '#navbar',
 				data : []
 			});
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.approvalList);
+					var dArray = [];
+					dArray = data.approvalList;
+					for (var i = 0; i<dArray.length; i++) {
+						console.log(dArray[i]);
+						var option = document.createElement("option");
+						$(option).text(dArray[i]);
+						$("#approval").append(option);
+					}
+				}				
+			});
 		}
   	</script>
   	
@@ -110,7 +125,7 @@
 	     	<div class="col-sm-6" id="jgContainer">
 				<div class="formDiv">
 					
-					<form action="" method="post">					 
+					<form action="extendApply.do" method="post">					 
 						<table style="width: 100%; height: 500px;" style="margin:10px; align-self: center;" >
 							<tr>
 								<td rowspan="4" width="50%"> <div class="calendarArea" style="width:100%">
@@ -118,27 +133,29 @@
 									<div id="calendar"></div>
 									</div>
 								</td>
-								<td>이거 그냥 데이터 피커로 바꿔야함... 아니면 뿌려주던가</td>
-								<td></td>
-							</tr>
-								
-							<tr>
 								<td>기간 선택</td>
 								<td><input type="text" name="datetimes" style="width:250px"/></td>
 							</tr>
-							
+								
 							<tr>
 								<td>시작 시간</td>
-								<td><input type="text" name="startTime" id="startTime"/></td>
+								<td><input type="text" name="startat" id="startat"/></td>
 							</tr>
 							
 							<tr>
 								<td>종료 시간</td>
-								<td><input type="text" name="endTime" id="endTime"/></td>
+								<td><input type="text" name="endat" id="endat"/></td>
+							</tr>
+							
+							<tr>
+								<td>결재자</td>
+								<td>
+									<select id="approval" name="approval">
+										<option hidden = "">결재자 선택</option>
+									</select>
+								</td>
 							</tr>
 											
-							
-						
 							<tr>
 								<td colspan="3">사유</td>
 							</tr>
@@ -146,13 +163,13 @@
 								<td colspan="3">
 <!-- 									<input type=text style="width:100%; height:100%"placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason" >
  -->
-									<textarea style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason2"></textarea>
+									<textarea style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오." name="reason" id="reason"></textarea>
 								</td>
 							</tr>
 						</table>
 						
 						<br>
-						
+						<input type="text" id="drafeter" name="drafter" value="나요">
 						<input type="submit" value="확인">
 						<input type="reset" value="초기화">
 						

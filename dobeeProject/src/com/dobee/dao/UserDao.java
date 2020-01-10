@@ -4,6 +4,7 @@ import com.dobee.vo.Apply;
 import com.dobee.vo.member.Attend;
 import com.dobee.vo.member.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserDao {
@@ -44,7 +45,12 @@ public interface UserDao {
     public List<String> getApyCode();
     
     //부재 결재자 불러오기
+    /* 01.10 게다죽 */
     public List<String> getApprovalList();
+    
+    //부재 결재자 불러오기
+    /* 01.10 게다죽 */
+    public ArrayList<User> getApprovalList2();
 
 
     //연장근무신청
@@ -66,6 +72,13 @@ public interface UserDao {
     //연장근무관리
     public List<Apply> overTimeSign();
 
+    //연장근무 년도 불러오기
+    /* 01.10 게다죽 */
+    public List<Integer> overTimeYearList();
+    	
+    //연장근무 월 불러오기
+    /* 01.10 게다죽 */
+    public List<Integer> overTimeMonthList();
     
     //유저 리스트 가져오기
     /* 01.09 알파카 */

@@ -3,14 +3,18 @@ package com.dobee.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.GoogleVisionApi;
+import com.dobee.vo.Apply;
 import com.dobee.vo.member.User;
 
 @Controller
@@ -148,9 +152,20 @@ public class DoController {
 
 
     //연장근무신청
-    @RequestMapping("extendApply.do")
+    @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
+    }
+    
+    
+    // 연장근무 신청 POST
+	/* 01.10 by 게다죽 */
+    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
+    public String extendApplyPost(Apply apply, HttpServletRequest req) {
+    	UserDao userdao = sqlSession.getMapper(UserDao.class);
+    	userdao.overTimeApply();
+    	
+    	return "redicect:extendApply.do";
     }
 
 
