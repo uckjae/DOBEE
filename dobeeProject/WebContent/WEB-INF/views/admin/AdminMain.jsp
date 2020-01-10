@@ -24,14 +24,31 @@
         	<table id="myTable" class="dataTable display">
 				<thead>
 					<tr>
-						<th style="width: 10%">번호</th>
-						<th style="width: 60%">사원메일</th>
-						<th style="width: 20%"></th>
-						<th style="width: 10%">조회수</th>
+						<th style="width: auto">번호</th>
+						<th style="width: auto">사원메일</th>
+						<th style="width: auto">사원이름</th>
+						<th style="width: auto">권한코드</th>
+						<th style="width: auto">팀코드</th>
+						<th style="width: auto">입사일</th>
+						<th style="width: auto">퇴사일</th>
+						<th style="width: auto">재직상태</th>
+						<th style="width: auto">고용형태</th>
+						<th style="width: auto">직책</th>
+						<th style="width: auto">휴대폰번호</th>
 					</tr>
 				</thead>
 				<tbody>
-					
+					<c:forEach items="${userList}" var="user" varStatus="status">
+						<tr>
+							<td>${status.index}</td>
+							<td>${user.mail}</td>
+							<td>${user.name}</td>
+							<td>${user.authCode}</td>
+							<td>${user.teamCode}</td>
+							<td>${user.teamCode}</td>
+							<td></td>
+						</tr>
+					</c:forEach>
 					
 		
 				</tbody>
