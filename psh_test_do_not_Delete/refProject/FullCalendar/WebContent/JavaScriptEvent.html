@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>eventTest.html</title>
+<script type="text/javascript">
+	window.onload = function() {
+		var form1 = document.f1
+		var form2 = document.f2
+		var eventObj; // 이벤트 객체 저장 변수
+
+		// document.onmousemove=function(e) // 마우스가 움직일때 이벤트 발생
+		document.onclick = function(e) { // 마우스 클릭할때 이벤트 발생
+		// alert("rise event");
+
+			//브라우저 마다 이벤트 객체를 운영하는 것이 다르다.
+			//어떤 브라우저는 function(e)라고 쓰면 e라는 변수에 이벤트 객체를 넘겨주는 브라우저가 있고
+			//어떤 브라우저는 e라는 변수로 넘겨주지 않고 window.event로 넘겨주는 브라우저가 있다.
+			//그래서 삼항연산자를 사용하여 e가 null이 아니면 e를 사용하고 null이면 window.event를 사용 한다.
+			eventObj = e ? e : window.event;
+			//이벤트가 일어 난 마우스 x좌표
+			var cx = eventObj.clientX;
+			var cy = eventObj.clientY;
+
+			//name이 f1인 form태그안에 name이 client_x인 태그의 value값에 cx를 저장
+			form1.client_x.value = cx;
+			form1.client_y.value = cy;
+		}//document.onclick function | document.onmousemove function
+
+		form2.key.onkeydown = function(e) {
+			//브라우저 마다 이벤트 객체를 운영하는 것이 다르다.
+			//어떤 브라우저는 function(e)라고 쓰면 e라는 변수에 이벤트 객체를 넘겨주는 브라우저가 있고
+			//어떤 브라우저는 e라는 변수로 넘겨주지 않고 window.event로 넘겨주는 브라우저가 있다.
+			//그래서 삼항연산자를 사용하여 e가 null이 아니면 e를 사용하고 null이면 window.event를 사용 한다.
+			eventObj = e ? e : window.event;
+			form2.code.value = eventObj.keyCode;
+			if (eventObj.ctrlKey && !eventObj.altKey && eventObj.keyCode == 71) {
+				alert("ctrl_G");
+			}//if
+
+			if (eventObj.shiftKey && eventObj.keyCode == 71) {
+				alert("shift_G");
+			}//if
+
+			if (eventObj.altKey && !eventObj.ctrlKey && eventObj.keyCode == 71) {
+				alert("alt_G");
+			}//if
+
+			if (eventObj.ctrlKey && eventObj.altKey && eventObj.keyCode == 71) {
+				alert("ctrl_alt_G");
+			}//if
+		}//key.onkeydown
+
+		form2.numkey.onkeydown = function(e) {
+			eventObj = e ? e : window.event;
+			var code = eventObj.keyCode;
+			if (!((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) {
+				// alert("숫자만 입력 가능 합니다.");
+				return false;
+			}//if
+		}//numkey.onkeydown
+
+	}//onload function
+</script>
+</head>
+<body>
+	<div id="wrap">
+		<h1>마우스 이벤트 객체 속성</h1>
+		<form action="#" name="f1">
+			<fieldset>
+				<legend>커서 위치 추적</legend>
+				<input type="text" name="client_x"> <input type="text"
+					name="client_y">
+			</fieldset>
+
+		</form>
+		<h1>키보드 이벤트 객체 속성</h1>
+		<form action="#" name="f2">
+			<fieldset>
+				<legend>키 코드값</legend>
+				<input type="text" name="key" placeholder="키보드 입력"> <input
+					type="text" name="code" readonly="readonly"><br /> <input
+					type="text" name="numkey" placeholder="키보드 입력"> <input
+					type="text" name="numcode" readonly="readonly"><br />
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>

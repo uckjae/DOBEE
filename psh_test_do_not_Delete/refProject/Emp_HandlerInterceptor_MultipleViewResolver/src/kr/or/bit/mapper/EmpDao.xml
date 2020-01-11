@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bit.dao.EmpdaoInterface">
+<!-- 
+  
+   
+   public List<Emp> getEmpByDeptno(int deptno);
+   
+   public ArrayList<AvgSal> getAvgList();
+ -->
+<!-- 
+//로그인 확인
+ public int adminLogin(String userid, String pwd);
+ -->
+<select id="adminLogin" resultType="int">
+   select userid , pwd 
+   from adminlist 
+   where userid = #{userid}
+</select>
+
+<!-- 
+//전제 조회하기
+ public List<Emp> getEmpList();
+ -->
+<select id="getEmpList" resultType="kr.or.bit.dto.Emp">
+   select empno,ename, job, mgr, hiredate, sal, nvl(comm, 0) comm, deptno  
+   from Emp
+</select>
+
+<!-- 
+//사원 수정 화면출력
+public Emp editEmp(int empno);
+ -->
+ <select id="editEmp" resultType="kr.or.bit.dto.Emp">
+    select empno,ename, job, mgr, hiredate, sal, deptno , file_path 
+    from Emp 
+    where empno=#{empno}
+ </select>
+ 
+<!-- 
+//사원 수정 완료
+ public int editEmpOk(Emp emp);
+ -->
+<update id="editEmpOk" parameterType="kr.or.bit.dto.Emp">
+   update emp set deptno=#{deptno}, ename=#{ename},job=#{job},mgr=#{mgr},sal=#{sal},empno=#{empno}, file_path=#{file_path} where empno=#{empno}
+</update>
+
+<!-- 
+// 사원 삭제 
+ public int deleteEmp(int empno);
+-->
+<delete id="deleteEmp">
+   delete from emp where empno=#{empno}
+</delete>
+<!-- 
+//사원추가
+public boolean insertEmp(int insertEmpno, String insertEname,String insertJob , int insertMgr, Date insertHiredate, int insertSal, int insertComm, int insertDeptno);
+-->
+<insert id="insertEmp" parameterType="kr.or.bit.dto.Emp">
+   INSERT INTO EMP(empno,ename,job,mgr,hiredate,sal,comm,deptno) VALUES (#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+</insert>
+<!-- 
+//사원번호 조회 
+public List<Emp> getEmpByEmpno(int empno);
+ -->
+ <select id="getEmpByEmpno" resultType="kr.or.bit.dto.Emp">
+    select empno, ename, job, mgr, hiredate, sal, comm, deptno, file_path from emp where empno=#{empno}
+ </select>
+ 
+ <!-- 
+ //부서번호 조회   
+  public List<Emp> getEmpByEmpno(int empno);
+  -->
+  <select id="getEmpByDeptno" resultType="kr.or.bit.dto.Emp">
+     select empno, ename, job, mgr, hiredate, sal, comm, deptno from emp where deptno=#{deptno}
+  </select>
+  
+  
+
+ 
+</mapper>
