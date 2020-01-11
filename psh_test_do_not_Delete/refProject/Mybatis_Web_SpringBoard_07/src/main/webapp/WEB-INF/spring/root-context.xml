@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- DB연결 설정 -->
+<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+ 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+ 	<property name="username" value="springuser" />
+ 	<property name="password" value="1004" />
+ </bean>
+ 
+<!-- Mybatis 설정
+기본 자바코드 : SqlMapConfig.xml 에서 설정했던 작업 (DB연결 ,mapper 설정)
+파일 없어지고 설명파일안에서   > SqlSessionFactoryBean
+기존 java 코드 : builder 사용 > Factory 객체 > sqlsession 생성 > 사용 
+
+두개의 클래스가 위 작업 처리 
+SqlSessionFactoryBean
+SqlSessionTemplate
+ -->
+<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="driverManagerDataSource"></property>
+    <property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
+</bean> 
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+</bean>
+<!-- Mybatis 설정  -->
+		
+</beans>

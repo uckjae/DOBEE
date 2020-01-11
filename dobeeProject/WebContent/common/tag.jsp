@@ -8,8 +8,6 @@
     <meta name="robots" content="all,follow">
 	
 
-    <!-- VueJs 프로젝트안에 다운받아 그냥 넣어버렸음 CDN 방식이 느린거 같아서   -->
-    <script src="js/vue.js"> </script>
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -34,17 +32,8 @@
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.ico">
     
-    
-    <!-- vueJS and vueBootstrap -->
-    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.js"></script> -->
-    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
-  	<!-- portal vue -->
-    <script src="http://unpkg.com/portal-vue"></script>
-
-
-	<!--  vue chart js -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-	<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+	<!--  chart js -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script> -->
 	
 	

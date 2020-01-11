@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GUEST">
+	<select id="getAllList" resultType="guest">
+		select * from guest order by no desc
+	</select>
+	<!-- parameter 1개 생략 or 명시 하셔도 됩니다 -->
+	<select id="getDetailByno" parameterType="int" resultType="guest">
+		select *  from guest where no=#{no}
+	</select>
+	<insert id="insertGuest" parameterType="guest">
+		insert into guest(no,name,pwd,email,home,content,regdate)
+		values(guest_seq.nextval,#{name},#{pwd},#{email},#{home},#{content},sysdate)
+	</insert>
+	<update id="updateGuest" parameterType="guest">
+		update guest
+		set name=#{name} , email=#{email} , home=#{home} , content=#{content}
+		where no = #{no}
+	</update>
+	<delete id="deleteGuest" parameterType="int">
+		delete from guest where no=#{no}
+	</delete>
+	
+	<!-- 동적쿼리 
+		parameterType="hashMap"
+		{key:value}
+		
+		검색하기 
+		이름 선택
+		검색어 : 홍길동
+		
+		>where name= '홍길동'
+		>where home= 'naver'
+		
+		자바코드
+		Map<String, String> map = new HashMap<>(); // collection
+  		map.put("column", column); // column : name or email or home
+  		map.put("search", keyvalue); // keyvalue : 홍길동
+		
+		session.selectList("GUEST.selectSearch" ,map);
+		
+		
+		{"column" , name}
+		{"search" , 홍길동}
+		
+		where name like '%홍길동%'
+		where title like '%스프링%'
+		
+		<select id="getGuestSearch" resultMap="guestResult">
+	  	   select * from guest where name like '%${value}%' 
+	    </select>
+	-->
+	<select id="selectSearch" parameterType="hashMap" resultType="guest">
+		select * from guest
+		<if test="column != null">
+			where ${column} like '%' || #{search} || '%' 
+		</if>
+	</select>	
+	
+	<select id="selectSearch2" parameterType="hashMap" resultType="guest">
+		select * from guest
+		<where>
+			<if test="name != null">
+				name = #{search}
+			</if>
+			<if test="email != null">
+				 or email = #{search}
+			</if>
+			<if test="home != null">
+			     or home = #{search}
+			</if>
+		</where>
+	</select>
+	<!-- where name=kglim or eamil=kglim or home=kglim -->
+</mapper>
+
+
+
+
+
+
+

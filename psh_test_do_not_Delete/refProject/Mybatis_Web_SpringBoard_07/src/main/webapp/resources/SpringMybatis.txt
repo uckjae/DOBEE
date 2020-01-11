@@ -1,0 +1,139 @@
+CREATE TABLE board
+  (
+  num NUMBER, 
+  NAME VARCHAR2(50), 
+  email  VARCHAR2(50), 
+  pwd  VARCHAR2(50), 
+  subject  VARCHAR2(50), 
+  content  VARCHAR2(50), 
+  regdate  date,
+  hit  NUMBER, 
+  parent  NUMBER, 
+  SORT  NUMBER, 
+  tab  NUMBER
+  )
+------------------------------------
+*Spring 에서 Mybatis 사용하기
+ (기본 전제 Maven 적용 > pom.xml)
+
+1.Mybatis lib 사용하기
+  -dependency 검색
+  -아래 pom.xml 기술
+  <dependency>
+  <groupId>org.mybatis</groupId>
+  <artifactId>mybatis</artifactId>
+  <version>3.1.1</version>
+  </dependency>
+  
+  <dependency>
+  <groupId>org.mybatis</groupId>
+  <artifactId>mybatis-spring</artifactId>
+  <version>1.2.2</version>
+  </dependency>
+
+2. Mybatis  환경구성하기
+   -SqlMapConfig.xml 구성  >> Spring  설정 (컨테이너 안)
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    <environments default="development">
+   <environment id="development">
+    <transactionManager type="JDBC" />   
+    <dataSource type="POOLED">
+         <property name="driver" value="${driver}"/>
+           <property name="url" value="${url}"/>
+           <property name="username" value="${username}"/>
+           <property name="password" value="${password}"/>
+    </dataSource>
+   </environment>
+  </environments>
+   <mappers>
+   <mapper resource="sqlMapper/Guest.xml" />
+  </mappers>
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    - SqlMapConfig.xml 의 설정을 대체하는 코드
+   
+ import org.mybatis.spring.SqlSessionFactoryBean;
+ import org.mybatis.spring.SqlSessionTemplate;
+   
+   
+   
+<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"></property>
+    <property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
+</bean>
+
+3. DTO 객체 생성 후   
+   -board.xml (mapper  구성) > 전제) DTO객체 생성이후
+  
+  
+4. 결론 Spring  Mybatis 설정
+   
+   <!-- mybatis START -->
+ <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+  <property name="dataSource" ref="dataSource"></property>
+  <property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
+ </bean>
+ 
+ <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+ </bean>
+ <!-- mybatis  END-->
+    
+
+5. 컨테이너안에
+   bean 객체 : SqlSessionFactoryBean (DB연결 주입 , mapper location  주입)
+              SqlSessionTemplate    (Factory를 생성자 주입)
+              
+6. DTO 생성 .... Mapper.xml 파일 구성 (<select> <insert> ...)
+
+
+7. BoardDao.xml > Mapper.xml 생성
+
+
+8. 기존에 사용하던 BoardDAO 인터페이스를 구현하는
+   BoardDAOImpl 의 의미가 없어진다
+   
+============================================
+스코프(Scope) 와 생명주기(Lifecycle)
+이제부터 다룰 스코프와 생명주기에 대해서 이해하는 것은 매우 중요하다. 스코프와 생명주기를 잘못 사용하는 것은 다양한
+동시성 문제를 야기할 수 있다.. 
+SqlSessionFactoryBuilder
+이 클래스는 인스턴스회되어 사용되고 던져질 수 있다. SqlSessionFactory 를 생성한 후 유지할 필요는 없다. 그러므로
+SqlSessionFactoryBuilder 인스턴스의 가장 좋은 스코프는 메서드 스코프(예를 들면, 메서드 지역변수)이다. 여러 개의
+SqlSessionFactory 인스턴스를 빌드하기 위해 SqlSessionFactoryBuilder 를 재사용할 수도 있지만 유지하지 않는 것이 가장
+좋다..
+SqlSessionFactory
+한번 만든뒤, SqlSessionFactory 는 애플리케이션을 실행하는 동안 존재해야만 한다. 그래서 삭제하거나 재생성할 필요가
+없다. 애플리케이션이 실행되는 동안 여러 차례 SqlSessionFactory 를 다시 빌드하지 않는 것이 가장 좋은 형태이다. 
+재빌드하는 형태는 결과적으로 “나쁜 냄새” 가 나도록 한다. 그러므로 SqlSessionFactory 의 가장 좋은 스코프는
+애플리케이션 스코프이다. 애플리케이션 스코프로 유지하기 위한 다양한 방법이 존재한다. 가장 간단한 방법은 싱글턴
+패턴이나 static 싱글턴 패턴을 사용하는 것이다. 또는 구글 Guice 나 Spring 과 같은 의존성 삽입 컨테이너를 선호할 수 도
+있다. 이러한 프레임워크는 SqlSessionFactory 의 생명주기를 싱글턴으로 관리할 것이다. 
+SqlSession
+각각의 쓰레드는 자체적으로 SqlSession 인스턴스를 가져야 한다. SqlSession 인스턴스는 공유되지 않고 쓰레드에
+안전하지도 않다. 그러므로 가장 좋은 스코프는 요청 또는 메서드 스코프이다. SqlSession 을 static 필드나 클래스의
+인스턴스 필드로 지정해서는 안된다. 그리고 서블릿 프레임워크의 HttpSession 과 같은 관리 스코프에 둬서도 안된다. 
+어떠한 종류의 웹 프레임워크를 사용한다면, HTTP 요청과 유사한 스코프에 두는 것으로 고려해야 한다. 달리 말해서, HTTP 
+요청을 받을?때마다 만들고, 응답을 리턴할때마다 SqlSession 을 닫을 수 있다. SqlSession 을 닫는 것은 중요하다. 언제나
+finally 블록에서 닫아야만 한다. 다음은 SqlSession 을 닫는 것을 확인하는 표준적인 형태다. 
+SqlSession session = sqlSessionFactory.openSession();
+try {
+// do work
+} finally {
+session.close();
+}
+
+
+Mapper 인스턴스
+Mapper 는 매핑된 구문을 바인딩 하기 위해 만들어야 할 인터페이스이다. mapper 인터페이스의 인스턴스는
+SqlSession 에서 생성한다. 그래서 mapper 인스턴스의 가장 좋은 스코프는 SqlSession 과 동일하다. 어쨌든 mapper 
+인스턴스의 가장 좋은 스코프는 메서드 스코프이다. 사용할 메서드가 호출되면 생성되고 끝난다. 명시적으로 닫을 필요는
+없다. 
+
+SqlSession session = sqlSessionFactory.openSession();
+try {
+BlogMapper mapper = session.getMapper(BlogMapper.class);
+// do work
+} finally {
+session.close();
+}    
+   
