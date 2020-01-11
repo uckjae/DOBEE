@@ -29,8 +29,7 @@ public class AjaxController_alpaca {
     	UserDao userdao = sqlsession.getMapper(UserDao.class);
     	System.out.println("여기도 타??");
     	List<User> result = userdao.getUserList();
-    	System.out.println("유저리스트"+result.toString());
-    	System.out.println("유저리스트 갯수"+result.size());
+    	
     	return result;
     }
     

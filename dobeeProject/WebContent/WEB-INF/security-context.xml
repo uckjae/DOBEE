@@ -19,7 +19,8 @@
 							username-parameter="mail"
 							authentication-success-handler-ref="loginHandler"
 							authentication-failure-url="/login.do?error"/>
-							
+		
+		<security:intercept-url pattern="/login.do" access="permitAll"/>					
   		<security:intercept-url pattern="/main.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/admin/*" access="ROLE_ADMIN"/>
   		

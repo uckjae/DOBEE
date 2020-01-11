@@ -101,8 +101,7 @@
 					console.log(data.apyCode);
 					var dArray = [];
 					dArray = data.apyCode;
-					console.log(dArray.length + "길이 뭐임?")
-					for (var i = 0; i<dArray.length; i++) {
+					for (var i = 0; i<dArray.length-1; i++) {
 						console.log(dArray[i]);
 						var option = document.createElement("option");
 						$(option).text(dArray[i]);
@@ -126,7 +125,25 @@
 					}
 				}				
 			});
-			
+		
+			/*
+			$.ajax({
+				url : "getApprovalList2.do",
+				dataType : "json",
+				success : function(data) {
+					console.log("1234");
+					var dArray = {};
+					dArray = data.approvalList2;
+					console.log("확인 한번 해보쇼d : " +dArray.);
+					for (var i = 0; i<dArray.length; i++) {
+						console.log("아 :" + dArray[i].name);
+						var option = document.createElement("option");
+						$(option).text(dArray[i]);
+						$("#approval").append("<option value='" + data[i]['mail'] + "'>" + data[i]['name'] + "</option>");
+					}
+				}				
+			}); 
+			*/
 		}
 		
   	</script>

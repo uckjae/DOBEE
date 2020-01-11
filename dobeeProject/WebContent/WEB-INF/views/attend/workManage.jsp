@@ -17,14 +17,45 @@
     <c:import url="/common/tag.jsp"/>
   </head>
   
-   	<script>
+   	<script type="text/javascript">	
 		window.onload = function(){
 			var app = new Vue ({
 				el : '#navbar',
 				data : []
 			});
 
-			var ctx = document.getElementById('myChart').getContext('2d');
+			$.ajax({
+				url : "overTimeYearList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.OTYList);
+					var yArray = [];
+					yArray = data.OTYList;
+					for (var i = 0; i<yArray.length; i++) {
+						var option = document.createElement("option");
+						$(option).text(yArray[i]+'년');
+						$("#yearSelector").append(option);
+					}
+				}				
+			});	
+
+			$.ajax({
+				url : "overTimeMonthList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.OTMList);
+					var mArray = [];
+					mArray = data.OTMList;
+					for (var i = 0; i<mArray.length; i++) {
+						var option = document.createElement("option");
+						$(option).text(mArray[i]+'월');
+						$("#monthSelector").append(option);
+					}
+				}			
+			})
+
+
+ 			var ctx = document.getElementById('myChart').getContext('2d');
 			var myChart = new Chart(ctx, {
 			    type: 'bar',
 			    data: {
@@ -62,6 +93,26 @@
 			    }
 			});
 		}
+
+/* 
+		#("#yearSelector").change(function() {
+			alert("뭐시여~");
+			$.ajax({
+				url : "overTimeMonthList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.OTMList);
+					var mArray = [];
+					mArray = data.OTMList;
+					for (var i = 0; i<mArray.length; i++) {
+						var option = document.createElement("option");
+						$(option).text(mArray[i]+'월');
+						$("#monthSelector").append(option);
+					}
+				}			
+			})		
+		});
+*/
 	</script>
  
   <body>
@@ -99,20 +150,13 @@
 						<tr>
 							<td></td>
 							<td style="width: 7%">
-								<select name="year">
-									<option value="">년도별</option>
-									<option value="2019">2019</option>
-									<option value="2020">2020</option>
+								<select id="yearSelector">
+									<option hidden="">년도별</option>
 								</select>
 							</td>
 							<td style="width: 7%">
-								<select name="month">
-									<option value="">월별</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>		
+								<select id="monthSelector">
+									<option hidden="">월별</option>
 								</select>
 							</td>
 							<td style="width: 8%">

@@ -1,12 +1,37 @@
 package com.dobee.controller;
 
 
+
+
+import java.sql.SQLException;
+import java.util.List;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.dobee.dao.NoticeDao;
+import com.dobee.services.ProjectService;
+import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
+
+
+import com.dobee.dao.UserDao;
 
 import com.dobee.services.GoogleVisionApi;
+import com.dobee.services.MemberService;
+import com.dobee.vo.Apply;
+import com.dobee.vo.member.User;
+
 
 @Controller
 public class DoController {
@@ -15,9 +40,17 @@ public class DoController {
 		System.out.println("일단 컨트롤 오나 보자");
 	}
 	
+	
     @Autowired
-    private SqlSession sqlSession;
-
+    private SqlSession sqlsession;
+    
+    public void setSqlsession(SqlSession sqlsession) {
+    	this.sqlsession = sqlsession;
+    }
+    
+    @Autowired
+    private MemberService memberService;
+    
 
     //로그인
     @RequestMapping("login.do")
@@ -61,10 +94,19 @@ public class DoController {
         return "main/main";
     }
 
+    //관리자 메인전 경고화면
+    @RequestMapping("adminWarnig.do")
+    public String adminWarning() {
+    	return "admin/AdminWarning";
+    }
+    
     
     //관리자 메인
     @RequestMapping("adminMain.do")
-    public String adminMain() {
+    public String adminMain(Model model) {
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	List<User> userList = userDao.getUserList();
+    	model.addAttribute("userList", userList);
     	return "admin/AdminMain";
     }
     
@@ -97,7 +139,15 @@ public class DoController {
     
   //공지사항리스트
     @RequestMapping("noticeList.do")
-    public String noticeList(){
+    public String noticeList(Notice notice,Model model){
+    	
+    			List<Notice>list=null;
+    	
+    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+    		list=noticedao.noticeList(notice);
+    		System.out.println(list);
+    		model.addAttribute("list",list);
+    
         return "notice/noticeList";
     }
 
@@ -134,9 +184,20 @@ public class DoController {
 
 
     //연장근무신청
-    @RequestMapping("extendApply.do")
+    @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
+    }
+    
+    
+    // 연장근무 신청 POST
+	/* 01.10 by 게다죽 */
+    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
+    public String extendApplyPost(Apply apply, HttpServletRequest req) {
+    	UserDao userdao = sqlsession.getMapper(UserDao.class);
+    	userdao.overTimeApply();
+    	
+    	return "redicect:extendApply.do";
     }
 
 
@@ -349,15 +410,28 @@ public class DoController {
 
     //채팅 메인
     @RequestMapping("chat.do")
-    public String chatMain() {
+    public String chatMain(Model model) {
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	System.out.println("유저 리스트 가져오니?"+userList.toString());
+    	model.addAttribute("userList", userList);
+    	
     	return "chat/chatMain";
     }
     
     
-    //채팅 채팅방 가져오기
-    @RequestMapping("groupChat.do")
-    public String groupChatMain() {
-    	return "chat/chatMain_Group_main";
+//    //전체 채팅 채팅방 가져오기
+//    @RequestMapping("groupChat.do")
+//    public String groupChatMain() {
+//    	return "chat/chatMain_group";
+//    }
+    
+    //채팅방 만들기
+    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
+    public String makeChatRoom() {
+    	
+    	System.out.println("넘어와?? ");
+    	return null;
     }
     
     

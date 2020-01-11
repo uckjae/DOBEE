@@ -83,121 +83,23 @@
 	<table id="myTable" class="dataTable display">
 		<thead>
 			<tr>
-				<th style="width: 10%">No</th>
-				<th style="width: 60%">제목</th>
-				<th style="width: 20%">작성일</th>
-				<th style="width: 10%">조회수</th>
+				<th class="notSeq" style="width: 10%">No</th>
+				<th class="title" style="width: 60%">제목</th>
+				<th class="regdate" style="width: 20%">작성일</th>
+				<th class="count" style="width: 10%">조회수</th>
 			</tr>
 		</thead>
 		<tbody>
+		
+		<c:forEach items="${list}" var="n" >
 			<tr>
-				<td>no 1</td>
-				<td>안녕하세요</td>
-				<td>2019-09-09</td>
-				<td>632</td>
+				<td class="notSeq">${n.notSeq}</td>
+				<td class="title">${n.title}</td>
+				<td class="regdate">${n.regDate}</td>
+				<td class="count">${n.count}</td>
 			</tr>
-			<tr>
-				<td>no 2</td>
-				<td>배부르다</td>
-				<td>2019-08-08</td>
-				<td>522</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필ssd.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필rewrewr다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필erw다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필twte니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>wtuuu니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필hhhhhh니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
-			<tr>
-				<td>no 3</td>
-				<td>필독바랍니다.</td>
-				<td>2020-01-01</td>
-				<td>1222</td>
-			</tr>
+		</c:forEach>
+			
 			
 
 		</tbody>

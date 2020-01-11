@@ -130,9 +130,9 @@ body {
   background-color: #3b5998;
 }
 .radio-display {
-	display:inline-block;
-	width: 2em;
-	height: 2em;
+   display:inline-block;
+   width: 2em;
+   height: 2em;
 
 }
 
@@ -160,90 +160,90 @@ body {
     color: #777;
   }
 }
-    	.pjt{
-    		border : 2px;
-    		border-style: groove;
-    		padding-top : 1em;
-    		/*padding-left : 5em; */
-    		margin-top : 1em;
-    		margin-left : auto;
-    		margin-right: auto;
-    	}
-    	.pjt .title{
-    		text-align: center;
-    	}
-    	.pjt .add{
-    		/* margin-left: 3em; */
-    		width: 4%;
-    		margin-left: 48%;
-    		margin-right: 48%;
-    		border: none;
-    		background-color: #d3d3d3;
-    		padding: auto;
-    		cursor: pointer;
-    	}
-    	.pjt .add:hover{
-    		background-color: #acacac;
-    	}
-    	.modal-content {
-    	
-    	width: 100%;
-    	background-color: darkgray;
-    	}
-    	.card-body{
-    	width: 100%;
-    	}
+       .pjt{
+          border : 2px;
+          border-style: groove;
+          padding-top : 1em;
+          /*padding-left : 5em; */
+          margin-top : 1em;
+          margin-left : auto;
+          margin-right: auto;
+       }
+       .pjt .title{
+          text-align: center;
+       }
+       .pjt .add{
+          /* margin-left: 3em; */
+          width: 4%;
+          margin-left: 48%;
+          margin-right: 48%;
+          border: none;
+          background-color: #d3d3d3;
+          padding: auto;
+          cursor: pointer;
+       }
+       .pjt .add:hover{
+          background-color: #acacac;
+       }
+       .modal-content {
+       
+       width: 100%;
+       background-color: darkgray;
+       }
+       .card-body{
+       width: 100%;
+       }
     </style>
     <script type="text/javascript">
-		$(function(){
-			/* 프로젝트 멤버추가 */
-			$('#memberList').change(function(){
-				var memberList = $('#pjtMember').val();
-				var selectedMember = $('#memberList').val();
+      $(function(){
+         /* 프로젝트 멤버추가 */
+         $('#memberList').change(function(){
+            var memberList = $('#pjtMember').val();
+            var selectedMember = $('#memberList').val();
 
-				if(memberList.indexOf(selectedMember) == -1){
-					console.log(memberList.indexOf(selectedMember))
-					if(memberList==null || memberList==""){
-						
-						memberList += selectedMember;
-					}
-					else{
-						memberList += ","+selectedMember;
-					}
-				}
-				$('#pjtMember').val(memberList);
-				$('#memberList').val(null);
-			});
+            if(memberList.indexOf(selectedMember) == -1){
+               console.log(memberList.indexOf(selectedMember))
+               if(memberList==null || memberList==""){
+                  
+                  memberList += selectedMember;
+               }
+               else{
+                  memberList += ","+selectedMember;
+               }
+            }
+            $('#pjtMember').val(memberList);
+            $('#memberList').val(null);
+         });
 
 
-			/* 취소 클릭시 form value 제거 */
-			$('#deletebtn').click(function(){
-				console.log("deletebtn click!!");
-				$('#addProjetForm').find("input").each(function(){
-					if(this.id != "modalBtn"){
-						$(this).val(null);
-					}
-				});
-			});
+         /* 취소 클릭시 form value 제거 */
+         $('#deletebtn').click(function(){
+            console.log("deletebtn click!!");
+            $('#addProjetForm').find("input").each(function(){
+               if(this.id != "modalBtn"){
+                  $(this).val(null);
+               }
+            });
+         });
 
-			var usedNames = {}; 
-			$("select[name='memberList'] > option").each(function() { 
-			    if(usedNames[this.text]) { 
-			     $(this).remove(); 
-			    } else { 
-			     usedNames[this.text] = this.value; 
-			    } 
-			}); 
+         var usedNames = {}; 
+         $("select[name='memberList'] > option").each(function() { 
+             if(usedNames[this.text]) { 
+              $(this).remove(); 
+             } else { 
+              usedNames[this.text] = this.value; 
+             } 
+         }); 
 
-			$(document).on('hidden.bs.modal', function (event) {
-				if ($('.modal:visible').length) {
-					$('body').addClass('modal-open');
-				}
-			});
+         $(document).on('hidden.bs.modal', function (event) {
+            if ($('.modal:visible').length) {
+               $('body').addClass('modal-open');
+            }
+         });
 
-			
-					
-		});
+         
+               
+      });
     </script>
 </head>
 <body>
@@ -269,18 +269,18 @@ body {
                 <h4 class="title"> 설명 ( 선택사항 ) </h4>
               <div class="form-label-group">
                 <input type="text" id="nickname" name="nickname" class="form-control" placeholder="" autofocus>
-     	          
+                  
               </div>
               
               <h4 class="title"> 시작일 </h4>
-        	<input type="date" name="pjtStartDate" id="pjtStratName" style="width: 35%">
-        	<br><br>
-        	 <h4 class="title"> 마감일 </h4>
-        	<input type="date" name="pjtEndDate" id="pjtEndDate" style="width: 35%">
-        	<br><br>
-        	
-        	
-        	<div class="line">
+           <input type="date" name="pjtStartDate" id="pjtStratName" style="width: 35%">
+           <br><br>
+            <h4 class="title"> 마감일 </h4>
+           <input type="date" name="pjtEndDate" id="pjtEndDate" style="width: 35%">
+           <br><br>
+           
+           
+           <div class="line">
                     <div class="form-group row">
                       <label class="col-sm-2 form-control-label" style="font-size: 16px"> 프로젝트 멤버  </label>
                       </div>
@@ -290,83 +290,83 @@ body {
                       <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-plus-circle" style="font-size: 50px; color : black; text-align: center;"></i> </a>
                      
                           <select id="memberList" name="memberList" class="form-control" style="width: 55%">
-                        <option value="" selected disabled hiddens > ==멤버를 선택해==</option>
+                        <option value="" selected disabled hidden > ==멤버를 선택해==</option>
                         <option>이혜리</option>
-        				<option>박성호</option>
-        				<option>이욱재</option>
-        				<option>김정균</option>
-        				<option>김광민</option>
-        				<option>최경열</option>
+                    <option>박성호</option>
+                    <option>이욱재</option>
+                    <option>김정균</option>
+                    <option>김광민</option>
+                    <option>최경열</option>
                         </select>
                          <input id="pjtMember" value="" style="width: 55%"></input>
                       
                  
                     </div>
                     </div>
-        	
-        	
-			  <hr class="my-4">
+           
+           
+           <hr class="my-4">
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style=" width: 40%; font-size: 18px; margin : auto;
      background: linear-gradient(90deg, rgba(255,0,0,0.6783088235294117) 0%, rgba(58,67,180,1) 50%, rgba(255,0,241,0.7259278711484594) 100%); border-color: #ffffff;">
      프로젝트 추가</button>
-								
-				<button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" style="  width: 40%; font-size: 18px; margin : auto;
+                        
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" style="  width: 40%; font-size: 18px; margin : auto;
      background: linear-gradient(90deg, rgba(98,98,98,0.6783088235294117) 0%, rgba(0,0,0,1) 50%, rgba(133,133,133,0.7259278711484594) 100%); border-color: #ffffff;" data-dismiss="modal"; > 취소 </button>
             </form>
           </div>
         </div>
       </div>
- 		</div>      
+       </div>      
     </div>
-  </div>	
-        		
-        	
+  </div>   
+              
+           
   
 
 
-	<!-- Side Navbar -->
+   <!-- Side Navbar -->
     <nav class="side-navbar">
-    	<c:import url="/common/left.jsp" />
+       <c:import url="/common/left.jsp" />
     </nav>
     <div class="page">
-    	<!-- 상단 Navbar -->
-    	<c:import url="/common/top.jsp"/>
-    	
-    	<select name="job">
+       <!-- 상단 Navbar -->
+       <c:import url="/common/top.jsp"/>
+       
+       <select name="job">
     <option value="">전체 프로젝트 관리</option>
     <option value="2019-1분기">2019-1분기</option>
     <option value="2019-2분기">2019-2분기</option>
     <option value="2019-3분기">2019-3분기</option>
     <option value="2019-4분기">2019-4분기</option>
 </select>
-    	<!-- 프로젝트목록표시 -->
-    	<div class="container">
-    		<div class="row">
-	    		<!-- 프로젝트 -->
-	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-	    			<h5 class="title">프로젝트이름</h5><br/>
-	    			<span class="bg-lgiht">진행상황</span><br/>
-	    			<p>날짜</p>
-	    		</div>
-	    		<!-- 프로젝트 -->
-	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-	    			<h5 class="title">프로젝트이름</h5><br/>
-	    			<span class="bg-lgiht">진행상황</span><br/>
-	    			<p>날짜</p>
-	    		</div>
-	    		<!-- 프로젝트 -->
-	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-	    			<h5 class="title">프로젝트이름</h5><br/>
-	    			<span class="bg-lgiht">진행상황</span><br/>
-	    			<p>날짜</p>
-	    		</div>
-	    		<!-- 프로젝트 -->
-	    		<div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-	    			<h5 class="title">프로젝트 추가</h5><br/>
-	    			 <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-folder-plus" style="font-size: 50px; color : black; text-align: center;"></i> </a>
-	    		</div>
-    		</div>
-    	</div>
+       <!-- 프로젝트목록표시 -->
+       <div class="container">
+          <div class="row">
+             <!-- 프로젝트 -->
+             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt" >
+                <h5 class="title">프로젝트이름</h5><br/>
+                <span class="bg-lgiht">진행상황</span><br/>
+                <p>날짜</p>
+             </div>
+             <!-- 프로젝트 -->
+             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+                <h5 class="title">프로젝트이름</h5><br/>
+                <span class="bg-lgiht">진행상황</span><br/>
+                <p>날짜</p>
+             </div>
+             <!-- 프로젝트 -->
+             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+                <h5 class="title">프로젝트이름</h5><br/>
+                <span class="bg-lgiht">진행상황</span><br/>
+                <p>날짜</p>
+             </div>
+             <!-- 프로젝트 -->
+             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+                <h5 class="title">프로젝트 추가</h5><br/>
+                 <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-folder-plus" style="font-size: 50px; color : black; text-align: center;"></i> </a>
+             </div>
+          </div>
+       </div>
     </div>
     <!-- Modal  -->
    
@@ -401,8 +401,8 @@ body {
         <!-- Modal body -->
        <form action="team.do" method="post"> 
         <div class="modal-body">
-        <p style="font-size: 12px">협업공간은 함께 일하는 멤버들끼리만 자료를 공유하고 협업할 수 있는 공간입니다.<br>
-             협업공간을 만들고 함께 일할 멤버들을 초대해보세요.</p>
+        <p style="font-size: 12px">협업공간은 함께 일하는 멤버들끼리만 자료를 공유하고 
+        협업할 수 있는 공간입니다.<br> 협업공간을 만들고 함께 일할 멤버들을 초대해보세요.</p>
           <label for="pname">협업공간 이름</label>
           <input class="form-control createmodal" type="text" id="pname" name="pname" style="width: 100%">
           <br>
@@ -431,7 +431,7 @@ body {
   
   
   
-	<!-- JavaScript files-->
+   <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
     <script src="./vendor/popper.js/umd/popper.min.js"> </script>
     <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
