@@ -6,9 +6,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
+import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,7 +36,14 @@ public class AjaxController_alpaca {
     	return result;
     }
     
-    //전체 채팅방 가져오기
+    //채팅방 만들기
+    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
+    public String makeChatRoom(ChatRoom chatroom) {
+    	
+    	System.out.println("채팅방"+chatroom.toString());
+
+    	return null;
+    }
     
     
 }

@@ -30,6 +30,8 @@ import com.dobee.dao.UserDao;
 import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
 
 
@@ -413,7 +415,6 @@ public class DoController {
     public String chatMain(Model model) {
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
-    	System.out.println("유저 리스트 가져오니?"+userList.toString());
     	model.addAttribute("userList", userList);
     	
     	return "chat/chatMain";
@@ -426,13 +427,6 @@ public class DoController {
 //    	return "chat/chatMain_group";
 //    }
     
-    //채팅방 만들기
-    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
-    public String makeChatRoom() {
-    	
-    	System.out.println("넘어와?? ");
-    	return null;
-    }
     
     
 }
