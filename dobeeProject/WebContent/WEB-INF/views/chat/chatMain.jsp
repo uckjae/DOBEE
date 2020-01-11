@@ -194,14 +194,14 @@
 						      </div>
 						      <!--Body-->
 						      <div class="modal-body mb-0">
-						      <form>
+						      <form id="newChannel">
 						      
 						      	<div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="channelName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="channelName">
+							          <input type="text" class="form-control" id="channelName" name="channelName">
 							       </div>
 							   </div>
 						        <div class="row">
@@ -213,7 +213,6 @@
 		                                    	<option hidden></option>
 		                                    </select>
 						      		</div>
-							       
 							   </div>
 							   <br>
 							      <div class="text-center mt-1-half">
@@ -230,7 +229,7 @@
             	</div>
             </li> <br>
             <li>
-                <div><a style="cursor:pointer" id="groupChatBtn"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
+                <div><a style="cursor:pointer" id="groupChatBtn" href="groupChat.do"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
            		</div>
            		
             </li>
@@ -251,7 +250,14 @@
 	            	</div>
 	            </li><br>
 	            </ul>
-	           <ul class="list-unstyled friend-list" id="dmList">
+	           <ul class="list-unstyled friend-list">
+	           <c:set var="userList" value="${requestScope.userList}"/>
+	           <c:forEach var="user" items="${userList }">
+		            <li>
+			           	<div><a href='#'><i class='fas fa-user'></i><span>&nbsp;&nbsp;${user.name }</span></a>
+			     	  	</div>
+		     	  	</li>
+	           </c:forEach>
 	           </ul>
         </div>
       </div>
@@ -266,7 +272,7 @@
             			<img src="./img/alpaca.jpg" alt="avatar" class="rounded-circle" width="100px;" heigt="100px;">
             		</div>
         			<div class="col-md-6" style="margin-top:20px;">
-               			<b style="font-size:40px; text-align:center;" id="username">알파카</b>
+               			<b style="font-size:40px; text-align:center;">알파카</b>
             		</div>
             	</div>
             </li>
@@ -291,11 +297,12 @@
 			</div>
 			<br>
             <!-- 채팅 보내기창 -->
-            <form id="sendMessage" method="post" action='http://localhost:5000/selfchat'>
+            <form id="sendMessage" method="post">
 				<div>        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
 		                <textarea class="form-control pl-2 my-0" id="message" name="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+		                <input type="hidden" id="username" name="username" value="알파카">
 		              </div>
 		            </li>
 	            </div>
@@ -327,62 +334,36 @@
     <script src="http://localhost:5000/socket.io/socket.io.js"></script>
     <script>
   $(function(){
+	  
+	  var username = $("#username").val();
 
-
-	  var username = $("#username").text();
-
-
-	  var socket = io.connect("http://localhost:5000/selfchat",{
+	  
+	  var socket = io.connect("http://localhost:5000/groupchat",{
 		  path: '/socket.io'
 		  });
 
 	  
 	      $("#sendMessage").on('submit', function(e){
 	    	  var msg = $('#message').val();
-	    	  /* socket.emit('send message to self', username, msg);
+	    	  socket.emit('send message to self', username, msg);
 	          $('#message').val("");
 	          $("#message").focus();
-	          e.preventDefault(); */
+	          e.preventDefault();
 	       });
 	       
-	       socket.on('receive message', function(msg, time){
-		       console.log('time'+time);
+	       socket.on('receive message', function(msg,currentDate){
 	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
 	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
 	    	    	   +'<div class="chat-body"><div class="chat-message">'
 		               +'<h3>'+username+'</h3>'
-		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
+		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 		               +'</div></div></li></div><br>');
 	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
 	       });
 
-
-	       $.ajax({
-	     		url:"getUserList.do",
-	     		dataType:"json",
-	     		type:"post",
-	     		success:function(data){
-	     			$.each(data, function(index, element){
-	     	  			//채팅방 만드는 곳에 넣어주기
-	     	  			let option = $("<option></option>");
-	     	  			$(option).text(element.name + "(" + element.mail + ")");
-	     	  			$("#memberSelect").append(option);
-
-	     	  			//유저 리스트 뿌리기
-	     	  			let li = "<li><div><a href='#'><i class='fas fa-user'></i>"
-	     	  				   +"<span>&nbsp;&nbsp;"+element.name+"</span></a>"
-	     	  				   +"</div></li>";
-	     	  			$("#dmList").append(li);
-	     	  			
-	     			});
-	     			
-	     		}
-	   		
-	     	});
-
 	   	  //전체 채팅방으로 이동하기
-	   	  $("#groupChatBtn").click(function(){
+	   	/*   $("#groupChatBtn").click(function(){
 
 	   		 
 	   		  	$("#chatMsgMain").remove();
@@ -390,7 +371,7 @@
 
 
 
-	   		});
+	   		}); */
   });
 
   </script>

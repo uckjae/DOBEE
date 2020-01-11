@@ -29,6 +29,7 @@ import com.dobee.vo.project.Project;
 import com.dobee.dao.UserDao;
 
 import com.dobee.services.GoogleVisionApi;
+import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.member.User;
 
@@ -47,6 +48,10 @@ public class DoController {
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
     }
+    
+    @Autowired
+    private MemberService memberService;
+    
 
     //로그인
     @RequestMapping("login.do")
@@ -406,16 +411,22 @@ public class DoController {
 
     //채팅 메인
     @RequestMapping("chat.do")
-    public String chatMain() {
+    public String chatMain(Model model) {
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	System.out.println("유저 리스트 가져오니?"+userList.toString());
+    	model.addAttribute("userList", userList);
+    	
     	return "chat/chatMain";
     }
     
     
-    //채팅 채팅방 가져오기
+    //전체 채팅 채팅방 가져오기
     @RequestMapping("groupChat.do")
     public String groupChatMain() {
-    	return "chat/chatMain_Group_main";
+    	return "chat/chatMain_group";
     }
+    
     
     
 }
