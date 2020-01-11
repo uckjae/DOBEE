@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  
+[key point]
+Mybatis 사용 프로젝트 진행시
+
+1. mapper namespace 이름 : DAO 가지는 interface 이름을 그대로
+2. <select id="" 이름을  interface 가지는 함수명과 동일
+result : interface 와 mapper 있으면 실행
+
+ int insertBoard(BoardDTO dto);
+ int updateBoard(BoardDTO dto);
+ int deleteBoard(BoardDTO dto);
+ 
+ List<BoardDTO> getBoardList(HashMap map);
+ BoardDTO getBoard(int num);
+ 
+ void updateHit(int num); //조회수 증가
+ int getBoardCount(); //전체 글 수
+ 
+ void insertReply(BoardDTO dto); //답변처리
+ void updateSort(BoardDTO dto);  //답변 처리(step(sort) 값 변경)
+-->
+
+<mapper namespace="kr.co.mycom.model.BoardDAO">
+ <!-- insertBoard(글 입력하기) -->
+ <insert id="insertBoard" parameterType="kr.co.mycom.model.BoardDTO">
+    insert into board(num,
+                      name,
+                      email,
+                      pwd,
+                      subject,
+                      content,
+                      regdate,
+                      hit,
+                      parent,
+                      sort,
+                      tab)
+      values(
+         (select nvl(max(num),0)+1 from board),
+             #{name},
+             #{email},
+             #{pwd},
+             #{subject},
+             #{content},
+             sysdate,
+             0,
+             (select nvl(max(num),0)+1 from board),
+             0,
+             0
+            )
+ </insert>
+ <!-- updateBoard(글수정하기)  -->
+ <update id="updateBoard" parameterType="kr.co.mycom.model.BoardDTO">
+  update board set name=#{name} , email=#{email} , subject=#{subject} ,
+                   content=#{content} , regdate=sysdate
+  where num=#{num} and pwd=#{pwd} 
+ </update>
+ <!-- deleteBoard(글삭제하기) -->
+ <delete id="deleteBoard" parameterType="kr.co.mycom.model.BoardDTO">
+  delete from board where num=#{num} and pwd=#{pwd}
+ </delete>
+ <!-- getBoardList(전체조회) -->
+ <select id="getBoardList" parameterType="hashmap" 
+                           resultType="kr.co.mycom.model.BoardDTO">
+       select * from 
+        (
+         select A.* ,ROWNUM r from (
+                   select * from board order by parent desc , sort 
+                                   ) A
+            
+        ) where r >= #{start} and r &lt;= #{end}   <!-- where sal <= 1000 [CDATA]-->                
+   
+ </select>
+ <!-- getBoard (글상세보기) -->
+ <select id="getBoard" parameterType="Integer" resultType="kr.co.mycom.model.BoardDTO">
+  select * from board where num=#{num}
+ </select>
+ <!-- updateHit(글 조회수 증가) -->
+ <update id="updateHit" parameterType="int">
+  update board
+  set hit = hit+1
+  where num=#{num}
+ </update>
+ <!-- getBoardCount(글 전체 건수) -->
+ <select id="getBoardCount" resultType="Integer">
+  select count(*) from board
+ </select>
+ <!-- insertReply(답글처리) -->
+ <insert id="insertReply" parameterType="kr.co.mycom.model.BoardDTO">
+   insert into board( num,
+                      name,
+                      email,
+                      pwd,
+                      subject,
+                      content,
+                      regdate,
+                      hit,
+                            parent,
+                            sort,
+                            tab)
+      values(
+         (select nvl(max(num),0)+1 from board),
+             #{name},
+             #{email},
+             #{pwd},
+             #{subject},
+             #{content},
+             sysdate,
+             0,
+             #{parent},
+             #{sort},
+             #{tab}
+            )
+ </insert>
+ <!-- updateSort(답글시 순번 처리하기) -->
+ <update id="updateSort" parameterType="kr.co.mycom.model.BoardDTO">
+  update board 
+  set sort = sort+1
+  where parent = #{parent} and sort > #{sort}
+ </update>
+ 
+ <update id="createTable" parameterType="kr.co.mycom.model.BoardDTO">
+  <!-- create table ${tname} (id int) -->
+    alter table ttt
+    add ${tname} varchar(20)
+ 
+ </update>
+ <!-- <![CDATA[varchar2(20)]]>  -->
+ 
+<!--  
+List sUserTP = new ArrayList();
+sUserTP.add("SP");
+sUserTP.add("BX");
+ 
+HashMap hm = new HashMap();
+hm.put("sUser_age", 23) ;
+hm.put("sUser_type", sUserTP) ;
+
+--> 
+ <!-- <select id="getTList" resultType="hashmap" parameterType="hashmap">
+    SELECT
+        name, age
+    FROM
+        TB_user
+    WHERE
+        age = #{sUser_age} AND
+        <foreach collection="sUser_type" item="type"  open="(" close=")" separator="or">
+            user_type = #{type.value}
+        </foreach>
+</select>
+<select id="getTList" resultType="hashmap" parameterType="hashmap">
+    SELECT
+        name, age
+    FROM
+        TB_user
+    WHERE
+        age = #{sUser_age} AND
+        user_type IN
+        <foreach collection="sUser_type" item="type"  open="(" close=")" separator=",">
+            #{type.value}
+        </foreach>
+</select> -->
+
+<!--  
+String[] sUserTP = {"SP", "BX"} ;
+ 
+HashMap hm = new HashMap();
+hm.put("sUser_age", 23) ;
+hm.put("sUser_type", sUserTP) ;
+-->
+
+<!-- <select id="getTList" resultType="hashmap" parameterType="hashmap">
+    SELECT
+        name, age
+    FROM
+        TB_user
+    WHERE
+        age = #{sUser_age} AND
+        user_type IN
+        <foreach collection="sUser_type" item="type" index="index"  open="(" close=")" separator=",">
+            #{type[index]}
+        </foreach>
+</select> -->
+
+ 
+<!--  
+
+collection = 전달받은 인자값
+
+item   = 전달받은 인자값을 다른이름으로 대체 
+
+open 해당 구문이 시작할떄 (
+
+close 해당구문이 끝날떄
+
+separator  한번 이상 반복할때 반복되는 사이에  해당 문을 넣어줌
+
+
+note: "collection"파라미터 객체로 MyBatis 에 List 인스턴스나 배열을 전달 할 수 있다. 그렇게 하면 MyBatis는 Map으로
+      자동으로 감싸고 이름을 키로 사용한다. List 인스턴스는 'LIST' 를 키로 사용하고, 배열 인스턴스는 'array'
+      를 키로 사용한다.
+
+-->
+<insert id="insertUserDto" parameterType="java.util.Map">
+INSERT ALL
+<foreach collection="insertlist" item="item">
+    INTO usert(username, age) VALUES
+    (#{item.username},#{item.age})
+</foreach> 
+SELECT * FROM DUAL
+</insert>
+
+
+
+<!-- <insert id="resultDetail parameter="com.app.ResultEnity">
+INSERT ALL
+<foreach collection="detail" 리스트명(Bean에서의 List명) item="detail"(each문에서 사용할 명)>
+    INTO RESULT_DETAIL(SEQ,TYPE,NAME) VALUES
+   (#{resultSeq},#{detail.type},#{detail.name})
+</foreach> 
+SELECT * FROM DUAL
+</insert> -->
+
+
+
+
+</mapper>

@@ -495,8 +495,10 @@ ul.tabs li.current{
             <!--sütun başlangıç-->
             <div class="panel panel-primary kanban-col">
                 <div class="panel-heading">
-                    	예정단계
-                    <i class="fa fa-2x fa-plus-circle pull-right"></i>
+                
+                <h5>예정단계<a href="#aboutModal" data-toggle="modal" data-target="#myModal" style="float: right;"><i class="fa fas fa-folder-plus pull-right" style="font-size: 25px; color : #fff; text-align: center; "></i> </a>
+                </h5>	
+               
                 </div>
                 <div class="panel-body">
                     <div id="TODO" class="kanban-centered">
@@ -538,22 +540,25 @@ ul.tabs li.current{
             
             
             
-                 <div class="panel panel-primary kanban-col">
+            
+          <div class="panel panel-primary kanban-col">
                 <div class="panel-heading">
-                    	진행단계 
-                    <i class="fa fa-2x fa-plus-circle pull-right"></i>
+                
+                <h5> 진행단계 <a href="#aboutModal" data-toggle="modal" data-target="#myModal" style="float: right;"><i class="fa fas fa-folder-plus pull-right" style="font-size: 25px; color : #fff; text-align: center; "></i> </a>
+                </h5>	
+               
                 </div>
                 <div class="panel-body">
                     <div id="TODO" class="kanban-centered">
 
-                        <article class="kanban-entry grab" id="item1" draggable="true">
+                          <a href="#" class="button alt"  data-toggle="modal" data-target="#NewPro"> <article class="kanban-entry grab" id="item1" draggable="true">
                             <div class="kanban-entry-inner">
                                 <div class="kanban-label">
-                                    <h2><a href="#">로그인 페이지 만들기</a> <span> 2019.12.20~2020.01.20</span></h2>
+                     <h2> 로그인 페이지 만들기 <span> 2019.12.20~2020.01.20</span></h2>
                                     <p>ㅇㅇㅇㅇ </p>
                                 </div>
                             </div>
-                        </article>
+                        </article></a> 
 
                         <article class="kanban-entry grab" id="item2" draggable="true">
                             <div class="kanban-entry-inner">
@@ -581,67 +586,25 @@ ul.tabs li.current{
                 </div>
             </div>
             
-            
-            
-                 <div class="panel panel-primary kanban-col">
-                <div class="panel-heading">
-                    	테스트 단계 
-                    <i class="fa fa-2x fa-plus-circle pull-right"></i>
-                </div>
-                <div class="panel-body">
-                    <div id="TODO" class="kanban-centered">
-
-                        <article class="kanban-entry grab" id="item1" draggable="true">
-                            <div class="kanban-entry-inner">
-                                <div class="kanban-label">
-                                    <h2><a href="#">로그인 페이지 만들기</a> <span> 2019.12.20~2020.01.20</span></h2>
-                                    <p>ㅇㅇㅇㅇ </p>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="kanban-entry grab" id="item2" draggable="true">
-                            <div class="kanban-entry-inner">
-                                <div class="kanban-label">
-                                    <h2><a href="#">로그아웃 페이지 만들기 </a></h2>
-                                    <p> <strong>2019.12.20~2020.01.20</strong> </p>
-                                </div>
-                            </div>
-                        </article>
-
-                      <article class="kanban-entry grab" id="item2" draggable="true">
-                            <div class="kanban-entry-inner">
-                                <div class="kanban-label">
-                                    <h2><a href="#">채팅방 만들기 </a></h2>
-                                    <p> <strong>2019.12.20~2020.01.20</strong> </p>
-                                </div>
-                            </div>
-                        </article>
-
-                    
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <a href="#"> 잔여 업무수 </a>
-                </div>
-            </div>
            
-			       <div class="panel panel-primary kanban-col">
+			 <div class="panel panel-primary kanban-col">
                 <div class="panel-heading">
-                    	완료
-                    <i class="fa fa-2x fa-plus-circle pull-right"></i>
+                
+                <h5>테스트 단계 <a href="#aboutModal" data-toggle="modal" data-target="#myModal" style="float: right;"><i class="fa fas fa-folder-plus pull-right" style="font-size: 25px; color : #fff; text-align: center; "></i> </a>
+                </h5>	
+               
                 </div>
                 <div class="panel-body">
                     <div id="TODO" class="kanban-centered">
 
-                        <article class="kanban-entry grab" id="item1" draggable="true">
+                          <a href="#" class="button alt"  data-toggle="modal" data-target="#NewPro"> <article class="kanban-entry grab" id="item1" draggable="true">
                             <div class="kanban-entry-inner">
                                 <div class="kanban-label">
-                                    <h2><a href="#">로그인 페이지 만들기</a> <span> 2019.12.20~2020.01.20</span></h2>
+                     <h2> 로그인 페이지 만들기 <span> 2019.12.20~2020.01.20</span></h2>
                                     <p>ㅇㅇㅇㅇ </p>
                                 </div>
                             </div>
-                        </article>
+                        </article></a> 
 
                         <article class="kanban-entry grab" id="item2" draggable="true">
                             <div class="kanban-entry-inner">
@@ -668,6 +631,53 @@ ul.tabs li.current{
                     <a href="#"> 잔여 업무수 </a>
                 </div>
             </div>
+            
+             <div class="panel panel-primary kanban-col">
+                <div class="panel-heading">
+                
+                <h5> 완료 <a href="#aboutModal" data-toggle="modal" data-target="#myModal" style="float: right;"><i class="fa fas fa-folder-plus pull-right" style="font-size: 25px; color : #fff; text-align: center; "></i> </a>
+                </h5>	
+               
+                </div>
+                <div class="panel-body">
+                    <div id="TODO" class="kanban-centered">
+
+                          <a href="#" class="button alt"  data-toggle="modal" data-target="#NewPro"> <article class="kanban-entry grab" id="item1" draggable="true">
+                            <div class="kanban-entry-inner">
+                                <div class="kanban-label">
+                     <h2> 로그인 페이지 만들기 <span> 2019.12.20~2020.01.20</span></h2>
+                                    <p>ㅇㅇㅇㅇ </p>
+                                </div>
+                            </div>
+                        </article></a> 
+
+                        <article class="kanban-entry grab" id="item2" draggable="true">
+                            <div class="kanban-entry-inner">
+                                <div class="kanban-label">
+                                    <h2><a href="#">로그아웃 페이지 만들기 </a></h2>
+                                    <p> <strong>2019.12.20~2020.01.20</strong> </p>
+                                </div>
+                            </div>
+                        </article>
+
+                      <article class="kanban-entry grab" id="item2" draggable="true">
+                            <div class="kanban-entry-inner">
+                                <div class="kanban-label">
+                                    <h2><a href="#">채팅방 만들기 </a></h2>
+                                    <p> <strong>2019.12.20~2020.01.20</strong> </p>
+                                </div>
+                            </div>
+                        </article>
+
+                    
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="#"> 잔여 업무수 </a>
+                </div>
+            </div>
+            
+            
         </div>
     </div>
 
@@ -785,6 +795,42 @@ ul.tabs li.current{
        </div>      
     </div>
   </div>   
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+   
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"  style="margin: auto">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel"> 예정 단계 </h4>
+                    </div>
+                <div class="modal-body" style="margin:auto">
+                  
+                  <ins>
+                   <textarea rows="5" cols="5" style="width: 400px; height: 400px; "> dd </textarea>
+
+                    <br>
+                    </ins>
+                </div>
+                <div class="modal-footer">
+                    <ins>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 취소 </button>
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 만들기</button>
+                    </ins>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
     <!-- Static Modal -->
     <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">

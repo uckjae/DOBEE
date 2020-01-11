@@ -15,7 +15,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	/* ÆÄÀÏ ¾÷·Îµå È­¸é ÀÌµ¿ */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ È­ï¿½ï¿½ ï¿½Ìµï¿½ */
 	@RequestMapping(value="/fileUpload.do", method=RequestMethod.GET)
 	public ModelAndView fileUploadForm() {
 		
@@ -26,7 +26,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	/* ÆÄÀÏ ¾÷·Îµå Ã³¸® */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ Ã³ï¿½ï¿½ */
 	@RequestMapping(value="/fileUpload.do", method=RequestMethod.POST)
 	public ModelAndView fileUpload(MultipartHttpServletRequest mRequest) {
 		
@@ -43,7 +43,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	/* ÆÄÀÏ ¾÷·Îµå È­¸é ÀÌµ¿ */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ È­ï¿½ï¿½ ï¿½Ìµï¿½ */
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.GET)
 	public ModelAndView fileUploadAjaxForm() {
 		
@@ -54,7 +54,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	/* ÆÄÀÏ ¾÷·Îµå Ã³¸® */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ Ã³ï¿½ï¿½ */
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {
 		//System.out.println("dd");
@@ -64,7 +64,7 @@ public class BoardController {
 		} else {
 			mav.addObject("result", "fail");
 		}
-		mav.setViewName("JSON"); //view ÀÌ¸§ : json »ç¿ë
+		mav.setViewName("JSON"); //view ï¿½Ì¸ï¿½ : json ï¿½ï¿½ï¿½
 		return mav;
 	}
 	

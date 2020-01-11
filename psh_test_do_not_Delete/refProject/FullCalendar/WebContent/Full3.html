@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<title>풀캘린더</title>
+<style type="text/css">
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .fc-day-number.fc-sat.fc-past { color:#0000FF; }
+    .fc-day-number.fc-sun.fc-past { color:#FF0000; }
+</style>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>
+<link href="./fullcalendar-2.9.1/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<script type="text/javascript" src="./fullcalendar-2.9.1/lib/moment.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-2.9.1/lib/jquery.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-2.9.1/fullcalendar.js" charset="euc-kr"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery("#calendar").fullCalendar({
+              defaultDate : "2016-05-12"
+            , editable : true
+            , eventLimit : true
+            , events: [
+                {
+                      title : "빨강색 배경 & 글자색 노랑색"
+                    , color : "#FF0000"
+                    , textColor : "#FFFF00"
+                    , start : "2016-05-02"
+                    , end : "2016-05-06T10:00:00"
+                }
+                ,{
+                      title : "파랑색 배경 & 글자색 검정색"
+                    , color : "#0000FF"
+                    , textColor : "#000000"
+                    , start : "2016-05-09"
+                    , end : "2016-05-13T10:00:00"
+                }
+                ,{
+                      title : "초록색 배경 & 주황색 테두리"
+                    , backgroundColor : "#008000"
+                    , borderColor : "#FF4500"
+                    , start : "2016-05-16"
+                    , end : "2016-05-20T10:00:00"
+                }
+                ,{
+                      backgroundColor : "#99CCFF"
+                    , start : "2016-05-23"
+                    , end : "2016-05-28"
+                    , rendering : "background"
+                }
+                ,{
+                      color : "#FFCCE5"
+                    , start : "2016-05-30"
+                    , end : "2016-06-04"
+                    , rendering : "background"
+                }
+                ,{
+                      title : "빨강색 배경 & 글자색 노랑색"
+                    , color : "#FF0000"
+                    , textColor : "#FFFF00"
+                    , start : "2016-05-30"
+                    , end : "2016-06-04"
+                }
+            ]
+        });
+    });
+</script>
+<body>
+    <div id="calendar"></div>
+</body>
+</html>

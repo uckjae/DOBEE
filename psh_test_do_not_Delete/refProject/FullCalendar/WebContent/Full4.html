@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<title>풀캘린더</title>
+<style type="text/css">
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .fc-day-number.fc-sat.fc-past { color:#0000FF; }
+    .fc-day-number.fc-sun.fc-past { color:#FF0000; }
+</style>
+<link href="./fullcalendar-2.9.1/fullcalendar.css" rel="stylesheet"/>
+<link href="./fullcalendar-2.9.1/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<script type="text/javascript" src="./fullcalendar-2.9.1/lib/moment.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-2.9.1/lib/jquery.min.js"></script>
+<script type="text/javascript" src="./fullcalendar-2.9.1/fullcalendar.js" charset="euc-kr"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery("#calendar").fullCalendar({
+              defaultDate : "2016-05-12"
+            , editable : true
+            , eventLimit : true
+            , eventSources : [
+                {
+                    // 배경색이 빨간색인 이벤트
+                    events : [
+                        {
+                              title : "All Day Event"
+                            , start : "2016-05-03"
+                        },
+                        {
+                              title : "Long Event"
+                            , start : "2016-05-07"
+                            , end : "2016-05-10"
+                        }
+                    ]
+                    , color : "#FF0000"
+                    , textColor : "#FFFF00"
+                }
+                , {
+                    // 배경색이 파랑색인 이벤트
+                    events : [
+                        {
+                              title : "All Day Event"
+                            , start : "2016-05-27"
+                        },
+                        {
+                              title : "Long Event"
+                            , start : "2016-05-17"
+                            , end : "2016-05-19"
+                        }
+                    ]
+                    , color : "#0000FF"
+                    , textColor : "#FFFFFF"
+                }
+                , {
+                    // 배경색이 초록색인 이벤트
+                    events : [
+                        {
+                              title : "All Day Event"
+                            , start : "2016-05-21"
+                        },
+                        {
+                              title : "Long Event"
+                            , start : "2016-05-23"
+                            , end : "2016-05-26"
+                        }
+                    ]
+                    , color : "#00CC00"
+                    , textColor : "#000000"
+                }
+            ]
+        });
+    });
+</script>
+<body>
+    <div id="calendar"></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                  http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Component(Controller / Service / Repository) auto scan -->
+	<context:component-scan base-package="com.spring.mvc" />
+
+	<!-- JSP View Resolver -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/view/" p:suffix=".jsp" p:order="2" />
+
+	<!-- Bean Name View Resolver -->
+	<bean id="beanNameViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
+
+	<!-- JSON View -->
+	<bean name="JSON"
+		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+
+	<!-- File Upload Resolver -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- maximum file size in bytes 50MB -->
+		<property name="maxUploadSize" value="52428800" />
+	</bean>
+
+
+
+	<!-- BeanNameViewResolver는 
+	  주로 커스텀 뷰로 사용하며 컨드롤러에서 [리턴 받은 뷰의 이름]과 
+	  빈에 등록되어 있는 [ id의 값이 같은]것을 찾아 실행 시킨다. 
+	  아무것도 주지 않고 리턴만 myTestDao로 주고 
+	  @RequestMapping(value="/testpage.do") 
+	  public String testpage(HttpServletRequest request, HttpServletResponse response)
+	  { return "myTestDao"; } 
+	  빈객체가 myTestDao와 같은 것을 찾는다. 
+	  <beans:bean id="myTestDao" class="com.myproject.jmi.testView">
+	  </beans:bean> 
+	  그리하여 testView클래스가 실행됨 
+	  
+	  BeanNameResolver와 기존의 viewResolver가 한꺼번에 돌 수는 없다. 
+	  이 때, 우리가 해줘야 하는 것은 우선순위의 부여이다.
+	  BeanNameResolver 의 우선순위는 0.
+      ViewResolver 의 우선순위는 그 다음이다. 
+       이 전에 다른 resolver가 있다면 1이 아닌 2로 내려간다.
+       default의 우선순위가 가장 나중에 오는 이유는 
+       그 전에 다른 resolver를 거치고 걸리지 않는다면 
+       default에 걸리도록 하기 위해서이다.
+	  -->
+	  
+	  
+
+
+
+</beans>
+
+
+
+
+
