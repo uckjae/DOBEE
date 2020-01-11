@@ -266,7 +266,7 @@
             			<img src="./img/alpaca.jpg" alt="avatar" class="rounded-circle" width="100px;" heigt="100px;">
             		</div>
         			<div class="col-md-6" style="margin-top:20px;">
-               			<b style="font-size:40px; text-align:center;" id="username">알파카</b>
+               			<b style="font-size:40px; text-align:center;">알파카</b>
             		</div>
             	</div>
             </li>
@@ -291,11 +291,12 @@
 			</div>
 			<br>
             <!-- 채팅 보내기창 -->
-            <form id="sendMessage" method="post" action='http://localhost:5000/selfchat'>
+            <form id="sendMessage" method="post">
 				<div>        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
 		                <textarea class="form-control pl-2 my-0" id="message" name="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+		                <input type="hidden" id="username" name="username" value="알파카">
 		              </div>
 		            </li>
 	            </div>
@@ -327,11 +328,10 @@
     <script src="http://localhost:5000/socket.io/socket.io.js"></script>
     <script>
   $(function(){
+	  
+	  var username = $("#username").val();
 
-
-	  var username = $("#username").text();
-
-
+	  
 	  var socket = io.connect("http://localhost:5000/selfchat",{
 		  path: '/socket.io'
 		  });
@@ -339,19 +339,18 @@
 	  
 	      $("#sendMessage").on('submit', function(e){
 	    	  var msg = $('#message').val();
-	    	  /* socket.emit('send message to self', username, msg);
+	    	  socket.emit('send message to self', username, msg);
 	          $('#message').val("");
 	          $("#message").focus();
-	          e.preventDefault(); */
+	          e.preventDefault();
 	       });
 	       
-	       socket.on('receive message', function(msg, time){
-		       console.log('time'+time);
+	       socket.on('receive message', function(msg,currentDate){
 	    	   $('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
 	    	    	   +'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
 	    	    	   +'<div class="chat-body"><div class="chat-message">'
 		               +'<h3>'+username+'</h3>'
-		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+time+'</span>'
+		               +'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 		               +'</div></div></li></div><br>');
 	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
