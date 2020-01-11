@@ -194,14 +194,14 @@
 						      </div>
 						      <!--Body-->
 						      <div class="modal-body mb-0">
-						      <form>
+						      <form id="newChannel">
 						      
 						      	<div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="channelName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="channelName">
+							          <input type="text" class="form-control" id="channelName" name="channelName">
 							       </div>
 							   </div>
 						        <div class="row">
@@ -213,7 +213,6 @@
 		                                    	<option hidden></option>
 		                                    </select>
 						      		</div>
-							       
 							   </div>
 							   <br>
 							      <div class="text-center mt-1-half">
@@ -230,7 +229,7 @@
             	</div>
             </li> <br>
             <li>
-                <div><a style="cursor:pointer" id="groupChatBtn"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
+                <div><a style="cursor:pointer" id="groupChatBtn" href="groupChat.do"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
            		</div>
            		
             </li>
@@ -251,7 +250,14 @@
 	            	</div>
 	            </li><br>
 	            </ul>
-	           <ul class="list-unstyled friend-list" id="dmList">
+	           <ul class="list-unstyled friend-list">
+	           <c:set var="userList" value="${requestScope.userList}"/>
+	           <c:forEach var="user" items="${userList }">
+		            <li>
+			           	<div><a href='#'><i class='fas fa-user'></i><span>&nbsp;&nbsp;${user.name }</span></a>
+			     	  	</div>
+		     	  	</li>
+	           </c:forEach>
 	           </ul>
         </div>
       </div>
@@ -332,7 +338,7 @@
 	  var username = $("#username").val();
 
 	  
-	  var socket = io.connect("http://localhost:5000/selfchat",{
+	  var socket = io.connect("http://localhost:5000/groupchat",{
 		  path: '/socket.io'
 		  });
 
@@ -356,32 +362,8 @@
 
 	       });
 
-
-	       $.ajax({
-	     		url:"getUserList.do",
-	     		dataType:"json",
-	     		type:"post",
-	     		success:function(data){
-	     			$.each(data, function(index, element){
-	     	  			//채팅방 만드는 곳에 넣어주기
-	     	  			let option = $("<option></option>");
-	     	  			$(option).text(element.name + "(" + element.mail + ")");
-	     	  			$("#memberSelect").append(option);
-
-	     	  			//유저 리스트 뿌리기
-	     	  			let li = "<li><div><a href='#'><i class='fas fa-user'></i>"
-	     	  				   +"<span>&nbsp;&nbsp;"+element.name+"</span></a>"
-	     	  				   +"</div></li>";
-	     	  			$("#dmList").append(li);
-	     	  			
-	     			});
-	     			
-	     		}
-	   		
-	     	});
-
 	   	  //전체 채팅방으로 이동하기
-	   	  $("#groupChatBtn").click(function(){
+	   	/*   $("#groupChatBtn").click(function(){
 
 	   		 
 	   		  	$("#chatMsgMain").remove();
@@ -389,7 +371,7 @@
 
 
 
-	   		});
+	   		}); */
   });
 
   </script>
