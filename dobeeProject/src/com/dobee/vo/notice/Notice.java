@@ -13,5 +13,5 @@ public class Notice {
     private String content;
     private Date regDate;
     private int count;
-
+    
 }
