@@ -65,8 +65,6 @@ public class MemberService {
     public List<User> getUserList() {
     	UserDao userdao = sqlSession.getMapper(UserDao.class);
     	List<User> result = userdao.getUserList();
-    	System.out.println("유저리스트"+result.toString());
-    	System.out.println("유저리스트 갯수"+result.size());
     	return result;
     }
     

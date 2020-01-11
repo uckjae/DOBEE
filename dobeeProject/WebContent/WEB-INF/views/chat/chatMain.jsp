@@ -194,8 +194,7 @@
 						      </div>
 						      <!--Body-->
 						      <div class="modal-body mb-0">
-						      <form id="newChannel">
-						      
+						      <form id="newChannel" action="makeChatRoom.do" method="post">
 						      	<div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="channelName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
@@ -206,17 +205,26 @@
 							   </div>
 						        <div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="member" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 초대</span></label>
+						      			<label for="userList" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 초대</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="memberSelect" name="member" style="height : 43px">
-		                                    	<option hidden></option>
+		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
+		                                    <option hidden>멤버</option>
 		                                    </select>
 						      		</div>
 							   </div>
+							   <div>
+							   <br>
+							   <div class="row">
+								   <div class="col-sm-3">
+							       </div>
+							       <div class="col-sm-9" id="chatUserList" style="display:none">
+								   </div>
+								</div>
+							   </div>
 							   <br>
 							      <div class="text-center mt-1-half">
-							        <button class="btn btn-info mb-2 waves-effect waves-light" >Send <i class="fas fa-send ml-1"></i></button>
+							        <button type="button" class="btn btn-info mb-2 waves-effect waves-light" >만들기<i class="fas fa-send ml-1"></i></button>
 							      </div>
 						        </form>
 						      </div>
@@ -331,14 +339,40 @@
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
     <!-- socket 연결 -->
-    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+  <!--   <script src="http://localhost:5000/socket.io/socket.io.js"></script> -->
     <script>
   $(function(){
-	  
-	  var username = $("#username").val();
 
 	  
-	  var socket = io.connect("http://localhost:5000/groupchat",{
+	  $.ajax({
+	  		url:"getUserList.do",
+	  		dataType:"json",
+	  		type:"post",
+	  		success:function(data){
+	  			$.each(data, function(index, element){
+					let option = $("<option></option>");
+					$(option).text(element.name+"("+element.mail+")");
+					$(option).val(element.name);
+					$("#userSelect").append(option);
+				})
+	  		}
+	  	});
+
+	  	$("#userSelect").change(function(){
+
+	  		var value = $("select[name='userSelect'] option:selected").val();
+			console.log(value);
+			$("#chatUserList").css("display","block");
+
+			$("#chatUserList").append("<div style='display:inline'><i class='fas fa-user'></i></div>"
+					+"<span id='chatUser' name='chatUser'>"+value+"</span>&nbsp;&nbsp;")
+		  	});
+		
+	  
+	 /*  var username = $("#username").val();
+
+	  
+	  var socket = io.connect("http://localhost:5000/selfchat",{
 		  path: '/socket.io'
 		  });
 
@@ -360,18 +394,7 @@
 		               +'</div></div></li></div><br>');
 	    	   $('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
-	       });
-
-	   	  //전체 채팅방으로 이동하기
-	   	/*   $("#groupChatBtn").click(function(){
-
-	   		 
-	   		  	$("#chatMsgMain").remove();
-	   		  	
-
-
-
-	   		}); */
+	       }); */
   });
 
   </script>

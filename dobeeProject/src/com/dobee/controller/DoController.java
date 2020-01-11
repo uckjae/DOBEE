@@ -17,8 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.services.ProjectService;
@@ -421,12 +420,19 @@ public class DoController {
     }
     
     
-    //전체 채팅 채팅방 가져오기
-    @RequestMapping("groupChat.do")
-    public String groupChatMain() {
-    	return "chat/chatMain_group";
-    }
+//    //전체 채팅 채팅방 가져오기
+//    @RequestMapping("groupChat.do")
+//    public String groupChatMain() {
+//    	return "chat/chatMain_group";
+//    }
     
+    //채팅방 만들기
+    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
+    public String makeChatRoom() {
+    	
+    	System.out.println("넘어와?? ");
+    	return null;
+    }
     
     
 }
