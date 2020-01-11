@@ -14,8 +14,12 @@ import com.dobee.vo.notice.Notice;
 public class NoticeService {
 
 
-    @Autowired
-    private SqlSession sqlSession;
+	 @Autowired
+	    private SqlSession sqlsession;
+	    
+	    public void setSqlsession(SqlSession sqlsession) {
+	    	this.sqlsession = sqlsession;
+	    }
 
 
     //공지사항리스트

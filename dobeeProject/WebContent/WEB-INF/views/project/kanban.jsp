@@ -501,14 +501,14 @@ ul.tabs li.current{
                 <div class="panel-body">
                     <div id="TODO" class="kanban-centered">
 
-                        <article class="kanban-entry grab" id="item1" draggable="true">
+                          <a href="#" class="button alt"  data-toggle="modal" data-target="#NewPro"> <article class="kanban-entry grab" id="item1" draggable="true">
                             <div class="kanban-entry-inner">
                                 <div class="kanban-label">
-                     <h2> <a href="#" class="button alt"  data-toggle="modal" data-target="#NewPro"> 로그인 페이지 만들기</a> <span> 2019.12.20~2020.01.20</span></h2>
+                     <h2> 로그인 페이지 만들기 <span> 2019.12.20~2020.01.20</span></h2>
                                     <p>ㅇㅇㅇㅇ </p>
                                 </div>
                             </div>
-                        </article>
+                        </article></a> 
 
                         <article class="kanban-entry grab" id="item2" draggable="true">
                             <div class="kanban-entry-inner">
