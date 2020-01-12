@@ -23,4 +23,13 @@
 		SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{chatRoomName}
 	</select>
 	
+	<!-- //특정 회원이 속한 그룹 채팅방 리스트 가져오기
+	public String getGroupChatRoomList(String mail);  -->
+	<select id="getGroupChatRoomList" parameterType="String" resultType="com.dobee.vo.chat.ChatRoom">
+		SELECT CHATSEQ, CHATROOMNAME, CHATCODE
+		FROM CHATROOM
+		WHERE CHATSEQ=ANY (SELECT CHATSEQ FROM CHATUSERS WHERE MAIL=#{mail})
+		AND CHATCODE=3
+	</select>
+	
 </mapper>

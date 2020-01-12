@@ -22,4 +22,8 @@ public interface ChatDao {
 	
 	//채팅방 seq 가져오기
 	public int getChatSeq(String chatRoomName);
+	
+	//특정 회원이 속한 그룹 채팅방 리스트 가져오기
+	public List<ChatRoom> getGroupChatRoomList(String mail); 
+	
 }

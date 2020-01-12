@@ -239,13 +239,16 @@
                 	</div>
             	</div>
             </li> <br>
-            <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
-	           <c:forEach var="roomName" items="${roomNameList}">
-		            <li>
-			           	<div><a href='#'><i class='fas fa-user'></i><span>&nbsp;&nbsp;${roomName}</span></a>
-			     	  	</div>
-		     	  	</li>
-	           </c:forEach>
+            <li>
+                <div><a style="cursor:pointer" id="groupChatBtn" href="groupChat.do"><i class="fab fa-slack-hash"></i><span class="chat-room">전체</span></a>
+           		</div>
+           		
+            </li>
+             <li>
+	             <div><a href="#"><i class="fab fa-slack-hash"></i><span class="chat-room">IT</span></a>
+	           	 </div>
+            </li>
+            
             <hr>
             </ul>
             <ul class="list-unstyled friend-list">

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.dobee.dao.ChatDao;
 import com.dobee.dao.UserDao;
+import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.chat.ChatUsers;
 
 @Service
@@ -50,11 +51,18 @@ public class ChatService {
 	//채팅방 seq 가져오기
 	public int getChatSeq(String chatRoomName) {
 		ChatDao chatdao = sqlSession.getMapper(ChatDao.class);
-		int chatSeq = chatdao.getChatSeq(chatRoomName);
-			
-			
+		int chatSeq = chatdao.getChatSeq(chatRoomName);			
 		return chatSeq;
 			
+	}
+	
+	//회원이 속한 그룹 채팅방 리스트 가져오기
+	public List<ChatRoom> getGroupChatRoomList(String mail) {
+		ChatDao chatdao = sqlSession.getMapper(ChatDao.class);
+		System.out.println("메일 가져오니??"+mail);
+		List<ChatRoom> groupChatRoomList = chatdao.getGroupChatRoomList(mail);
+		System.out.println("서비스에서 가져와??"+groupChatRoomList.toString());
+		return groupChatRoomList;
 	}
 	
 }
