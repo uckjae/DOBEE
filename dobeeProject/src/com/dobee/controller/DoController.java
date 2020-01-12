@@ -206,7 +206,7 @@ public class DoController {
     }
 
 
-  //연장근무신청
+    //연장근무신청
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -225,8 +225,13 @@ public class DoController {
 
 
     //부재일정관리
-    @RequestMapping("breakManage.do")
-    public String absMg(){
+    /* 01.12 by 게다죽 ing */
+    @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+    public String absMg(Apply apply, Model model){
+        List<Apply> results = applyService.absMg(apply);
+        System.out.println("results: " + results );
+        model.addAttribute("brkList", results);
+        
         return "attend/breakManage";
     }
 
@@ -300,15 +305,9 @@ public class DoController {
     	GoogleVisionApi vision = new GoogleVisionApi();
     	
     	System.out.println(" vision 서비스단 통과");
-    	
-    	
-    	
+    	    	
         return null;
     }
-    
-    
-    
-    
     
     
     //비용정산신청 vision 으로 부터 읽어온 text수정까지 하고 최종 확인
