@@ -22,9 +22,9 @@ public class GoogleVisionApi {
 
 	public GoogleVisionApi() {
 		System.out.println("서비스단/GoogleVisionApi : 구글 비전 API  생성자 실행");
-		
-		
-		
+	}	
+	private void goGoogle() {
+
 		try {
 			String imageFilePath = "/users/psh/image/1.jpeg";
 			
@@ -60,8 +60,10 @@ public class GoogleVisionApi {
 			e.printStackTrace();
 			System.out.println("서비스단/GoogleVisionApi : try 구문에러 : " + e);
 		}
-		
-		
 	}
+		
+		
+		
+	
 	
 }

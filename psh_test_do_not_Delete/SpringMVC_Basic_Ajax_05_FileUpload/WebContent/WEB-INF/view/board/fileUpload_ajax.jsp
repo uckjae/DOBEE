@@ -13,7 +13,7 @@
 			$("form").ajaxSubmit({
 //				dataType : "json",
 				success : function(data) {
-					//alert(data.result);
+					alert(data.result);
 					$("#fileupload").html("<h2>"+data.result+"</h2>");
 				},
 				error : function(error) {

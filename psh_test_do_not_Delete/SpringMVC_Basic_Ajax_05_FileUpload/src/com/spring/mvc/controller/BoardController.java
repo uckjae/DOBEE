@@ -15,33 +15,33 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	/* ���� ���ε� ȭ�� �̵� */
-	@RequestMapping(value="/fileUpload.do", method=RequestMethod.GET)
-	public ModelAndView fileUploadForm() {
-		
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("board/fileUpload_submit");
-		
-		return mav;
-	}
-	
-	/* ���� ���ε� ó�� */
-	@RequestMapping(value="/fileUpload.do", method=RequestMethod.POST)
-	public ModelAndView fileUpload(MultipartHttpServletRequest mRequest) {
-		
-		ModelAndView mav = new ModelAndView();
-		
-		if(boardService.fileUpload(mRequest)) {
-			mav.addObject("result", "SUCCESS");
-		} else {
-			mav.addObject("result", "FAIL");
-		}
-		
-		mav.setViewName("board/fileUpload_result");
-		
-		return mav;
-	}
+//	/* ���� ���ε� ȭ�� �̵� */
+//	@RequestMapping(value="/fileUpload.do", method=RequestMethod.GET)
+//	public ModelAndView fileUploadForm() {
+//		
+//		ModelAndView mav = new ModelAndView();
+//		
+//		mav.setViewName("board/fileUpload_submit");
+//		
+//		return mav;
+//	}
+//	
+//	/* ���� ���ε� ó�� */
+//	@RequestMapping(value="/fileUpload.do", method=RequestMethod.POST)
+//	public ModelAndView fileUpload(MultipartHttpServletRequest mRequest) {
+//		
+//		ModelAndView mav = new ModelAndView();
+//		
+//		if(boardService.fileUpload(mRequest)) {
+//			mav.addObject("result", "SUCCESS");
+//		} else {
+//			mav.addObject("result", "FAIL");
+//		}
+//		
+//		mav.setViewName("board/fileUpload_result");
+//		
+//		return mav;
+//	}
 	
 	/* ���� ���ε� ȭ�� �̵� */
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.GET)
