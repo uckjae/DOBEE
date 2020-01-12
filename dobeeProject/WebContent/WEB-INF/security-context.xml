@@ -24,7 +24,11 @@
   		<security:intercept-url pattern="/main.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/admin/*" access="ROLE_ADMIN"/>
   		
-  		<security:logout logout-success-url="/login.do" invalidate-session="true"/>
+  		<security:logout 
+  			
+  			logout-success-url="/login.do" 
+  			delete-cookies="true"
+  			invalidate-session="true"/>
   		
   		 <security:session-management invalid-session-url="/login.do" session-fixation-protection="migrateSession">
         	<security:concurrency-control max-sessions="1" expired-url="/login.do"/>

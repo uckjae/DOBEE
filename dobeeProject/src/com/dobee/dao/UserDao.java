@@ -1,11 +1,12 @@
 package com.dobee.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dobee.vo.Apply;
 import com.dobee.vo.member.Attend;
 import com.dobee.vo.member.User;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dobee.vo.member.UserInfo;
 
 public interface UserDao {
 
@@ -83,6 +84,10 @@ public interface UserDao {
     //유저 리스트 가져오기
     /* 01.09 알파카 */
     public List<User> getUserList();
+    
+    
+    //UserInfoList 가져오기
+    public List<UserInfo> getUserInfoList();
 
 
 }
