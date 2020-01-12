@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <header class="header">
         <nav class="navbar">
           <div class="container-fluid">
@@ -49,9 +50,12 @@
                         </li>
                     </li>
                     <hr>
-                    <li><a rel="nofollow" href="#" > 
+                    <li><a rel="nofollow" href="#" onclick="document.getElementById('logout-form').submit();">
                          <span class="d-none d-sm-inline-block" style="color:#888888;">로그아웃</span>
                         <i class="fa fa-sign-out" style="color:#888888;"></i></a>
+                        <form id="logout-form" action='<c:url value='/logout'/>' method="POST">
+   							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+						</form>
                         </li>
                     </li>
                  

@@ -1,5 +1,6 @@
 package com.dobee.services;
 
+import com.dobee.dao.UserDao;
 import com.dobee.vo.Apply;
 import com.dobee.vo.member.Attend;
 import org.apache.ibatis.session.SqlSession;
@@ -16,14 +17,19 @@ public class ApplyService {
 
 
     //부재일정신청
-    public void absApply(){
-
+    public String absApply(Apply apply){
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	userDao.absApply(apply);
+    	return "병신새끼야!";
     }
 
 
     //연장근무신청
-    public void overtimeApply(){
-
+    public String overtimeApply(Apply apply){
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	int results = userDao.overTimeApply(apply);
+    	
+    	return "병신아!";
     }
 
 

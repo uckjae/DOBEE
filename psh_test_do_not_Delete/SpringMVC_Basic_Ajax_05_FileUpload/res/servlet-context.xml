@@ -27,6 +27,13 @@
 	<bean name="JSON"
 		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 
+
+<bean id="jsonView" name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+   
+    </bean>
+
+
+
 	<!-- File Upload Resolver -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

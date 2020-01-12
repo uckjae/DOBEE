@@ -183,6 +183,14 @@
     		<artifactId>jackson-core-asl</artifactId>
     		<version>1.9.13</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-asl</artifactId>
+		    <version>1.9.13</version>
+		</dependency>
+		
+		
 		<dependency>
     		<groupId>com.fasterxml.jackson.core</groupId>
     		<artifactId>jackson-databind</artifactId>
@@ -233,16 +241,31 @@
    			<version>1.1.1</version>
 		</dependency>
 		
-		<!-- jackson-mapper-asl -->
-		<dependency>
-   			 <groupId>org.codehaus.jackson</groupId>
-   			 <artifactId>jackson-mapper-asl</artifactId>
-   			 <version>1.7.7</version>
+		
+		
+<!-- https://mvnrepository.com/artifact/org.webjars/jquery-form -->
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>jquery-form</artifactId>
+    <version>3.51</version>
+</dependency>
+
+     <dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
-		
-		
-		
-		
+        <dependency>
+		<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+        <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+
 		
 		
 	</dependencies>
