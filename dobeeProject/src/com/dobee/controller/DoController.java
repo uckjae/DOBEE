@@ -3,13 +3,9 @@ package com.dobee.controller;
 
 
 
-import java.sql.SQLException;
 import java.util.List;
-
 
 import javax.servlet.http.HttpServletRequest;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dobee.dao.NoticeDao;
-import com.dobee.services.ProjectService;
-import com.dobee.vo.notice.Notice;
-import com.dobee.vo.project.Project;
-
-
 import com.dobee.dao.UserDao;
-
 import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
-import com.dobee.vo.chat.ChatRoom;
-import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
+import com.dobee.vo.member.UserInfo;
+import com.dobee.vo.notice.Notice;
 
 
 @Controller
@@ -108,7 +97,9 @@ public class DoController {
     public String adminMain(Model model) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	List<User> userList = userDao.getUserList();
+    	List<UserInfo> userInfoList = userDao.getUserInfoList();
     	model.addAttribute("userList", userList);
+    	model.addAttribute("userInfoList", userInfoList);
     	return "admin/AdminMain";
     }
     
@@ -427,6 +418,19 @@ public class DoController {
 //    	return "chat/chatMain_group";
 //    }
     
+    
+    //관리자_사원추가 페이지
+    @RequestMapping(value = "addUser.do", method = RequestMethod.GET)
+    public String addUser() {
+    	return "admin/AddMember";
+    }
+    
+    
+    //관리자_사원추가 서비스
+    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
+    public String addUser(User user, UserInfo userInfo) {
+    	return "admin/AdminMain";
+    }
     
     
 }
