@@ -13,7 +13,11 @@
 //				dataType : "json",
 				success : function(data) {
 					//alert(data.result);
-					$("#fileupload").html("<h2>"+data.result+"</h2>");
+					console.log(data);
+					var uploadPath =  data[0];
+					var fileName = data[1];
+					
+					$("#fileupload").html("<img src=" + data.uploadPath + ">");
 				},
 				error : function(error) {
 					alert("요청 처리 중 오류가 발생하였습니다.");
@@ -22,6 +26,16 @@
 			return false;
 		});
 	});
+
+
+
+/* window.onload=function(){
+	// Add the following code if you want the name of the file appear on select
+	$(".custom-file-input").on("change", function() {
+	  var fileName = $(this).val().split("\\").pop();
+	  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+}	 */
 </script>
 
 
@@ -109,17 +123,13 @@
 	       			
 		<!-- 파일 업로드  부분 -->
 		<form action="fileUploadAjax.do" method="post" enctype="multipart/form-data">
-				<div class="input-group">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text" id="inputGroupFileAddon01"><input type="submit" value="영수증 사진 등록" /></span>
-				  </div>
-				  <div class="custom-file">
-				    <input type="file" class="custom-file-input" id="inputGroupFile01"
-				      aria-describedby="inputGroupFileAddon01">
-				    <label class="custom-file-label" for="inputGroupFile01"> 영수증 사진 선택</label>
-				  </div>
-				</div>
+		  <div class="custom-file">
+		    <input type="file" class="custom-file-input" id="customFile">
+		    <label class="custom-file-label" for="customFile">Choose file</label>
+		  </div>
+		  <input type="submit" class="btn btn-primary" >
 		</form>
+		
 		<!-- 파일 업로드 부분 끝 -->
 	        
 	        

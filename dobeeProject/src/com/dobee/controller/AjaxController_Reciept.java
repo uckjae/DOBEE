@@ -1,5 +1,7 @@
 package com.dobee.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,18 +31,27 @@ public class AjaxController_Reciept {
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {
 		System.out.println("컨트롤단/boardControlelr.java :  fileUploadAjax.do 요청들어왔다 ");
+		ArrayList<String> arrayList = new ArrayList<>();
 		
 		ModelAndView mav = new ModelAndView();
-		
+		arrayList = receiptService.fileUpload(mRequest);
 		try {
-			if(receiptService.fileUpload(mRequest)) {
+			System.out.println("컨트롤단/boardControlelr.java :try 구문 시작");
+			if(arrayList.get(0).equals("true")) {
+				System.out.println("try 구문 if 시작 ");
 				mav.addObject("result", "success");
+				mav.addObject("uploadPath", arrayList.get(1));
+				mav.addObject("saveFileName", arrayList.get(2));
+				System.out.println("try 구문 if 끝 ");
 			} else {
+				System.out.println("try 구문 else 에 빠짐 ");
 				mav.addObject("result", "fail");
+				
 			}
 			mav.setViewName("JSON");
 			
 		}catch (Exception e) {
+			System.out.println(e);
 			System.out.println("컨트롤단/boardControlelr.java :  try 문에서 예외발생");
 		}
 		

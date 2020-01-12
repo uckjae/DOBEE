@@ -18,4 +18,5 @@ public class Apply {
     private String Drafter;
     private String Approval;
     private int apyCode;
+    
 }
