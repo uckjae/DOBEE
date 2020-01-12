@@ -9,14 +9,14 @@ import lombok.ToString;
 @Data
 public class Apply {
     private int aplSeq;
-    private Date reqDate;
+    private String reqDate;
     private String reason;
-    private Date startAt;
-    private Date endAt;
+    private String startAt;
+    private String endAt;
     private String isAuth;
     private String rejReason;
-    private String Drafter;
-    private String Approval;
-    private int apyCode;
+    private String drafter;
+    private String approval;
+    private int apyCode; 
     
 }
