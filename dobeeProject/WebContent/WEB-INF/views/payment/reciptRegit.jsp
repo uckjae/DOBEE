@@ -27,7 +27,7 @@ function uploadFile(){
                     var saveFileName = result.saveFileName;
                     var allPath = uploadPath + saveFileName;
                     var forder = "/Users/";
-					$("#file111").append('<img id="imgtag" width="auto">');
+					$("#uploadImg").append('<img id="imgtag" width="100">');
 					$("#imgtag").attr("src", forder + saveFileName);
 				
 
@@ -104,23 +104,15 @@ function uploadFile(){
   		<div class="row">
     		<div class="col-md-6 imgshow">
      			 One of three columns
-     			 <div id="file111"></div>
-     			 <br>
-     			 <br>
-     			 <br>
-     			 <br>
-     			 <br>
+     			 <div id="uploadImg"></div>
+     			 
     		</div>
    			<div class="col-md-6 textshow">
       			 One of two columns
       			 <!-- 좌측에 영수증사진에 대한 텍스트  --> 
       			 <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
       			 
-      			 <br>
-      			 <br>
-      			 <br>
-      			 <br>
-      			 <br>
+      			
       			 
       			 
       			 
