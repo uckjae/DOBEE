@@ -194,13 +194,13 @@
 						      </div>
 						      <!--Body-->
 						      <div class="modal-body mb-0">
-						      <form id="newChannel" action="makeChatRoom.do" method="post">
+						      <form id="makeChatRoom" name="makeChatRoom" method="post">
 						      	<div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="channelName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
+						      			<label for="chatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="channelName" name="channelName">
+							          <input type="text" class="form-control" id="chatRoomName" name="chatRoomName">
 							       </div>
 							   </div>
 						        <div class="row">
@@ -224,7 +224,7 @@
 							   </div>
 							   <br>
 							      <div class="text-center mt-1-half">
-							        <button type="button" class="btn btn-info mb-2 waves-effect waves-light" >만들기<i class="fas fa-send ml-1"></i></button>
+							        <button type="button" id="makeChatRoomBtn" class="btn btn-info mb-2 waves-effect waves-light" >만들기<i class="fas fa-send ml-1"></i></button>
 							      </div>
 						        </form>
 						      </div>
@@ -357,17 +357,36 @@
 				})
 	  		}
 	  	});
-
+	
+	
+		  	var count = 0;
+		  	var chatUserList = new Array();
 	  	$("#userSelect").change(function(){
+			var value = $("select[name='userSelect'] option:selected").val();
 
-	  		var value = $("select[name='userSelect'] option:selected").val();
-			console.log(value);
+			console.log(count);
+			$("#chatUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name' id='name"+(count++)+"'>"+value+"</span>&nbsp;&nbsp;</i></div>");
+			
+			chatUserList.push(value);
+			
 			$("#chatUserList").css("display","block");
 
-			$("#chatUserList").append("<div style='display:inline'><i class='fas fa-user'></i></div>"
-					+"<span id='chatUser' name='chatUser'>"+value+"</span>&nbsp;&nbsp;")
-		  	});
-		
+			});
+		/*					+"<div style='display:inline' id='chatUser"+count+++"'>"+value+"</div>&nbsp;&nbsp;"*/
+		$("#makeChatRoomBtn").on('click', function(e){
+
+			if($("#chatRoomName").val() == "" || $("#chatRoomName").val() == null){
+    			alert("채널 명을 입력하세요");
+    			$("#chatRoomName").focus();
+    		}else{
+        		console.log('이거 됨?????'+chatUserList);
+        		console.log(typeof(chatUserList));
+        		
+    		}
+
+    		
+			
+			});
 	  
 	 /*  var username = $("#username").val();
 

@@ -155,6 +155,32 @@ ul.tabs li.current{
 	display: inherit;
 }
 
+   .pjt{
+          border : 2px;
+          border-style: groove;
+          padding-top : 1em;
+          /*padding-left : 5em; */
+          margin-top : 1em;
+          margin-left : auto;
+          margin-right: auto;
+       }
+       .pjt .title{
+          text-align: center;
+       }
+       .pjt .add{
+          /* margin-left: 3em; */
+          width: 4%;
+          margin-left: 48%;
+          margin-right: 48%;
+          border: none;
+          background-color: #d3d3d3;
+          padding: auto;
+          cursor: pointer;
+       }
+       .pjt .add:hover{
+          background-color: #acacac;
+       }
+
 </style>
 
 
@@ -206,15 +232,27 @@ ul.tabs li.current{
 
 
 <div class="col-lg-6" style="float: left">
-<p> 나의 개인 업무 <p>
-<p> 5<p>
-<p> 전체업무 </p>
 
 
-
-<p> 나의 팀 업무 <p>
-<p> 3 <p>
-<p> 전체업무 </p>
+  <div class="container">
+          <div class="row">
+             <!-- 프로젝트 -->
+             <div class="col-lg-12 pjt">
+                <h5 class="title">프로젝트이름</h5><br/>
+                <span class="bg-lgiht">진행상황</span><br/>
+                <p>날짜</p>
+             </div>
+             
+             <!-- 프로젝트 -->
+              <div class="col-lg-12 pjt">
+                <h5 class="title">프로젝트이름</h5><br/>
+                <span class="bg-lgiht">진행상황</span><br/>
+                <p>날짜</p>
+             </div>
+            
+</div>
+</div>
+</div>
 
 
 </div> 
