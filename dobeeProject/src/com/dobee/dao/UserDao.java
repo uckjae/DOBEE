@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dobee.vo.Apply;
+import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -38,24 +39,23 @@ public interface UserDao {
     public void myPage();
 
 
-    //부재일정신청
-    public void absApply();
+  //부재일정신청
+    /* 01.12 게다죽 */
+    public int absApply(Apply apply);
     
     //부재 항목 불러오기
     /* 01.10 게다죽 */
-    public List<String> getApyCode();
-    
+    public List<ApplyCode> getApyCode();
+      
+
     //부재 결재자 불러오기
     /* 01.10 게다죽 */
-    public List<String> getApprovalList();
+    public ArrayList<User> getApprovalList();
+
     
-    //부재 결재자 불러오기
-    /* 01.10 게다죽 */
-    public ArrayList<User> getApprovalList2();
-
-
     //연장근무신청
-    public void overTimeApply();
+    /* 01.12 게다죽 */
+    public int overTimeApply(Apply apply);
 
 
     //개인부재일정관리

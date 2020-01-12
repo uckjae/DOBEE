@@ -20,26 +20,23 @@
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.UserInfo">
 		SELECT MAIL, REGDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
+	
+	
 	<!-- 신청코드 불러오기 -->
-	<select id="getApyCode" resultType="String">
-		SELECT ENTRY FROM APPLYCODE
+	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
+		SELECT APYCODE, ENTRY FROM APPLYCODE
 	</select>
 	
-	
+		
 	<!-- 결재자 불러오귀 // AUTHCODE=1 팀장 -->
-	<select id="getApprovalList" resultType="String">
-		SELECT NAME FROM USER WHERE AUTHCODE=1
-	</select>
-	
-	<!-- 결재자 불러오기2 -->
-	<select id="getApprovalList2" resultType="com.dobee.vo.member.User">
+	<select id="getApprovalList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME FROM USER WHERE AUTHCODE=1
 	</select>
 	
 	
 	<!-- 연장근무 년도 불러오기 -->
 	<select id="overTimeYearList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND;
+		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND
 	</select>
 	
 	
@@ -49,10 +46,17 @@
 	</select>
 	
 	
-	<!-- 연장근무 신청하기 -->
+	<!-- 연장근무 신청하기 0112 -->
 	<insert id="overTimeApply" parameterType="com.dobee.vo.Apply">
 		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
-			VALUES (CURDATE(), '1', '20200101000000', '20200101110000', '미승인', 'JG@KIM.COM', 'admin@gmail.com', 6)
+			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, 6)
+	</insert>
+		
+	
+	<!-- 부재 신청하기 0112 -->
+	<insert id="absApply" parameterType="com.dobee.vo.Apply">
+		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
+			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, #{apyCode})
 	</insert>
 	
 </mapper>

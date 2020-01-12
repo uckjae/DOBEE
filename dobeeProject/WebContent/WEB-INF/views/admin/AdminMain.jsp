@@ -6,7 +6,41 @@
   <head>
     <c:import url="/common/tag.jsp"/>
   </head>
- 
+  <!-- DataTables js-->
+		<link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
+		<link rel="stylesheet" href="./css/notice.datatables.css">
+		<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
+  <!-- /DataTables js-->
+  <script type="text/javascript">
+  $(document).ready(function(){
+		$('#myTable').DataTable({
+			/*language option*/
+			"language": {
+ 	        "emptyTable": "데이터가 없습니다.",
+ 	        "lengthMenu": "페이지당 _MENU_ 개씩 보기",
+ 	        "info": "현재 _START_ - _END_ / _TOTAL_건",
+ 	        "infoEmpty": "데이터 없음",
+ 	        "infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
+ 	        "search": "검색: ",
+ 	        "zeroRecords": "일치하는 데이터가 없습니다.",
+ 	        "loadingRecords": "로딩중...",
+ 	        "processing": "잠시만 기다려 주세요",
+ 	        "paginate": {
+ 	            "next": "다음",
+ 	            "previous": "이전"
+ 	        }
+ 	    },
+ 	    "columnDefs": [
+ 	        {
+     	      className: "dt-center", "targets": [1],
+   	        }
+ 	      ]
+			});	
+	});
+
+
+	
+  </script>
   <body>
     <!-- Side Navbar -->
     <nav class="side-navbar">
@@ -30,7 +64,6 @@
 						<th style="width: auto">권한코드</th>
 						<th style="width: auto">팀코드</th>
 						<th style="width: auto">입사일</th>
-						<th style="width: auto">퇴사일</th>
 						<th style="width: auto">재직상태</th>
 						<th style="width: auto">고용형태</th>
 						<th style="width: auto">직책</th>
@@ -40,12 +73,16 @@
 				<tbody>
 					<c:forEach items="${userList}" var="user" varStatus="status">
 						<tr>
-							<td>${status.index}</td>
+							<td>${status.index+1}</td>
 							<td>${user.mail}</td>
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
 							<td>${user.teamCode}</td>
-							<td>${user.teamCode}</td>
+							<td>${userInfoList[status.index].regDate}</td>
+							<td>${userInfoList[status.index].serve}</td>
+							<td>${userInfoList[status.index].emp}</td>
+							<td>${userInfoList[status.index].position}</td>
+							<td>${userInfoList[status.index].phone}</td>
 							<td></td>
 						</tr>
 					</c:forEach>
@@ -55,7 +92,7 @@
 	</table>
         </div>
       </section>
-      <div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
+      <%-- <div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
       <!-- Header Section-->
       <section class="dashboard-header section-padding">
         <div class="container-fluid">
@@ -394,7 +431,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> --%>
        <c:import url="/common/bottom.jsp"/>
     </div>
     <!-- JavaScript files-->

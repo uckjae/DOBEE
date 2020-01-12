@@ -77,21 +77,23 @@
 				el : '#navbar',
 				data : []
 			});
+
 			$.ajax({
 				url : "getApprovalList.do",
 				dataType : "json",
-				success : function(data) {
-					console.log(data.approvalList);
+				success : function(data) {			
 					var dArray = [];
-					dArray = data.approvalList;
-					for (var i = 0; i<dArray.length; i++) {
-						console.log(dArray[i]);
-						var option = document.createElement("option");
-						$(option).text(dArray[i]);
-						$("#approval").append(option);
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
 					}
-				}				
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+				}
 			});
+			
 		}
   	</script>
   	
@@ -124,6 +126,20 @@
 	     	
 	     	<div class="col-sm-6" id="jgContainer">
 				<div class="formDiv">
+				
+					<form action="extendApply.do" method="post">
+						시작 시간 	<input type="text" name="startAt" value="20200202"><br>
+						종료 시간 	<input type="text" name="endAt" value="20200203"><br>
+						- 신청자 : 	<input type="text" name="drafter" value="JG@KIM.COM"><br>
+						결재자	<select name="approval" id="approval">
+									<option hidden = "">결재자 선택</option>
+								</select><br>
+						사유		<textarea name="reason">
+						내가 굳이 써야하오?</textarea>
+						
+						<input type="submit" value="전! 송!">
+						<input type="reset" value="reset">
+					</form>
 					
 					<form action="extendApply.do" method="post">					 
 						<table style="width: 100%; height: 500px;" style="margin:10px; align-self: center;" >
@@ -134,17 +150,17 @@
 									</div>
 								</td>
 								<td>기간 선택</td>
-								<td><input type="text" name="datetimes" style="width:250px"/></td>
+								<!-- <td><input type="text" name="datetimes" style="width:250px"/></td> -->
 							</tr>
 								
 							<tr>
 								<td>시작 시간</td>
-								<td><input type="text" name="startat" id="startat"/></td>
+								<td><input type="text" name="startAt" id="startat"/></td>
 							</tr>
 							
 							<tr>
 								<td>종료 시간</td>
-								<td><input type="text" name="endat" id="endat"/></td>
+								<td><input type="text" name="endAt" id="endat"/></td>
 							</tr>
 							
 							<tr>
@@ -161,15 +177,14 @@
 							</tr>
 							<tr>
 								<td colspan="3">
-<!-- 									<input type=text style="width:100%; height:100%"placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason" >
- -->
-									<textarea style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오." name="reason" id="reason"></textarea>
+
+									<textarea name="reason" id="reason" placeholder="1000 btye 이내 내용을 입력하십시오." style="width: 100%; height: 100%"></textarea>
 								</td>
 							</tr>
 						</table>
 						
 						<br>
-						<input type="text" id="drafeter" name="drafter" value="나요">
+						
 						<input type="submit" value="확인">
 						<input type="reset" value="초기화">
 						
