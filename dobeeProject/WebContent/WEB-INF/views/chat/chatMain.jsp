@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="./css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="./css/custom.css">
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
   </head>
   <style>
@@ -148,6 +150,7 @@
 
 
   </style>
+  
   <body>
     <!-- Side Navbar -->
     <nav class="side-navbar">
@@ -352,36 +355,87 @@
 	  			$.each(data, function(index, element){
 					let option = $("<option></option>");
 					$(option).text(element.name+"("+element.mail+")");
-					$(option).val(element.name);
+					$(option).val(element.name+":"+element.mail);
 					$("#userSelect").append(option);
 				})
 	  		}
 	  	});
 	
 	
-		  	var count = 0;
-		  	var chatUserList = new Array();
+		var count = 0;
 	  	$("#userSelect").change(function(){
-			var value = $("select[name='userSelect'] option:selected").val();
+			var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
+			var userName = userInfo[0]			
+			var userMail = userInfo[1];
+			console.log('메일은??'+userMail[1]);
 
-			console.log(count);
-			$("#chatUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name' id='name"+(count++)+"'>"+value+"</span>&nbsp;&nbsp;</i></div>");
-			
-			chatUserList.push(value);
-			
+			$("#chatUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name' id='name"+(count++)+"'>"
+					+userName+"</span><input type='hidden' name='userMail' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
+						
 			$("#chatUserList").css("display","block");
 
+			console.log('몇개임??'+$(".list").length);
+
 			});
-		/*					+"<div style='display:inline' id='chatUser"+count+++"'>"+value+"</div>&nbsp;&nbsp;"*/
-		$("#makeChatRoomBtn").on('click', function(e){
+
+	  	$("#makeChatRoomBtn").on('click', function(e){
 
 			if($("#chatRoomName").val() == "" || $("#chatRoomName").val() == null){
-    			alert("채널 명을 입력하세요");
+				swal({
+					   title: "채널명",
+					   text: "채널명을 입력하세요",
+					   icon: "warning" //"info,success,warning,error" 중 택1
+					}).then((YES) => {
+						if (YES) {
+							$("#chatRoomName").focus();
+						     }
+						})
+				
     			$("#chatRoomName").focus();
     		}else{
-        		console.log('이거 됨?????'+chatUserList);
-        		console.log(typeof(chatUserList));
-        		
+
+    			var chatUserList = new Array();
+ 			   $("input[name=userMail]").each(function(index, item){
+ 				   chatUserList.push($(item).val());
+ 			   });
+ 			console.log('배열?????'+chatUserList);
+ 			var chatRoom = {
+ 	    			"chatRoomName" : $("#chatRoomName").val(),
+ 	    			"chatUserList" : chatUserList
+ 	    			};
+ 			console.log('어케 나옴??'+chatRoom.chatRoomName);
+ 			console.log('어케 나옴22222??'+chatRoom.chatUserList);
+ 			
+ 			$.ajax({
+ 				url:"makeChatRoom.do",
+ 				data: chatRoom ,
+ 				dataType: "text",
+ 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+ 				type:"post",
+ 				success:function(responsedata){
+ 					console.log(responsedata);
+ 					if(responsedata == "success"){ //채팅방 생성 완료
+ 	 					console.log('채팅방 만듦')
+ 	 					swal({
+ 						   title: "채널 생성 완료",
+ 						   text: "채널이 만들어졌습니다.",
+ 						   icon: "success" //"info,success,warning,error" 중 택1
+ 						}).then((YES) => {
+ 							if (YES) {
+ 								location.reload(true); 
+ 							     }
+ 							})
+ 					
+ 	 					}
+ 				},
+ 				error:function(){
+ 					
+ 				}
+ 			});
+
+ 			
+
+    			
     		}
 
     		
