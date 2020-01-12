@@ -28,13 +28,11 @@ public class ReceiptService {
 		if (!dir.isDirectory()) {
 			dir.mkdirs();
 		}
-		System.out.println("서비스단 와일문 전 : "  + mRequest.getFileNames());
 		Iterator<String> iter = mRequest.getFileNames();
-		System.out.println("여기 iter " + iter);
 		
 		while(iter.hasNext()) {
+			System.out.println("서비스단 / ReceiptService:  와일문 시작 ");
 			String uploadFileName = iter.next();
-			System.out.println("uploadFileName :  " + uploadFileName);
 			MultipartFile mFile = mRequest.getFile(uploadFileName);
 			String originalFileName = mFile.getOriginalFilename();
 			String saveFileName = originalFileName;
@@ -56,24 +54,20 @@ public class ReceiptService {
 					System.out.println("서비스단 / boardService.java: try 구문 예외 발생222");
 					isSuccess = "false";
 				}
-				System.out.println(uploadPath);
-				System.out.println(saveFileName);
-				System.out.println(isSuccess);
 				
 			} // if end
 			else {
-				System.out.println("form 태그로 부터 온 데이타가 없습니다.");
-				System.out.println(uploadPath);
-				System.out.println(saveFileName);
-				System.out.println(isSuccess);
+				System.out.println("서비스단 / ReceiptService: form 태그로 부터 온 데이타가 없습니다.");
+		
 			}
 		
 			arrayList.add(isSuccess);
 			arrayList.add(uploadPath);
 			arrayList.add(saveFileName);
+			System.out.println(uploadPath);
+			System.out.println(saveFileName);
+			System.out.println(isSuccess);
 		} // while end
-		System.out.println(uploadPath);
-		System.out.println(isSuccess);
 		return arrayList;
 	} // fileUpload end
 

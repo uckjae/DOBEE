@@ -98,52 +98,33 @@
 				url : "getApyCode.do",
 				dataType : "json",
 				success : function(data) {
-					console.log(data.apyCode);
+					// console.log(data.apyCode);
 					var dArray = [];
 					dArray = data.apyCode;
 					for (var i = 0; i<dArray.length-1; i++) {
-						console.log(dArray[i]);
 						var option = document.createElement("option");
-						$(option).text(dArray[i]);
-						$("#category").append(option);
+						$("#apycodelist").append("<option value=" + dArray[i].apyCode + ">" + dArray[i].entry + "</option>");
 					}
 				}				
 			});
 
+			
 			$.ajax({
 				url : "getApprovalList.do",
 				dataType : "json",
-				success : function(data) {
-					console.log(data.approvalList);
+				success : function(data) {			
 					var dArray = [];
-					dArray = data.approvalList;
-					for (var i = 0; i<dArray.length; i++) {
-						console.log(dArray[i]);
-						var option = document.createElement("option");
-						$(option).text(dArray[i]);
-						$("#approval").append(option);
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
 					}
-				}				
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+				}
 			});
-		
-			/*
-			$.ajax({
-				url : "getApprovalList2.do",
-				dataType : "json",
-				success : function(data) {
-					console.log("1234");
-					var dArray = {};
-					dArray = data.approvalList2;
-					console.log("확인 한번 해보쇼d : " +dArray.);
-					for (var i = 0; i<dArray.length; i++) {
-						console.log("아 :" + dArray[i].name);
-						var option = document.createElement("option");
-						$(option).text(dArray[i]);
-						$("#approval").append("<option value='" + data[i]['mail'] + "'>" + data[i]['name'] + "</option>");
-					}
-				}				
-			}); 
-			*/
+			
 		}
 		
   	</script>
@@ -160,95 +141,130 @@
 	        <b-nav-item disabled>연장근무 관리</b-nav-item>
 	      </b-nav>
 	    </b-card-header>
-	
+
 	    <b-card-body class="text-center">
 	          
 	      <b-card-text>
 	     	<h1 style="text-align: left">부재 신청</h1>
 	     	<br>
-	     	<div class="col-sm-2" style="background-color: yellow; width:20%"></div>
 	     	
+	     	<form action="breakApply.do" method="post">
+	     	<div class="row">
+	     			 <div class="col-md-1" style="background-color: lightgray"></div>
+					 <div class="col-md-5" >
+					 	<div class="calendarArea" style="width:100%">
+							<div id="loading">loading...</div>
+							<div id="calendar"></div>
+						</div>
+					 </div>
+					 <div class="col-md-5" >
+					 	
+					      	<!--
+					      	d 번호 : 		<input type="text" name="aplSeq" value="10000"><br>
+					      	d 신청일 : 	<input type="text" name="reqDate" value="20200202"><br> -->
+					      	- 사유 : 		<input type="text" name="reason" value="사유인데요?2"><br>
+					      	- 시작일 : 	<input type="text" name="startAt" value="20200202"><br>
+					      	- 종료일 :		<input type="text" name="endAt" value="20200203"><br>
+					      	<!--
+					      	d 승인여부 : 	<input type="text" name="isAuth" value="미승인"><br>
+					      	d 반려사유 : 	<input type="text" name="rejReason" value="아니?"><br> -->
+					      	- 신청자 : 	<input type="text" name="drafter" value="JG@KIM.COM"><br>
+					      	- 결재자 : 	<select name="approval" id="approval">
+											<option hidden = "">결재자 선택</option>
+										</select><br>
+					      	- 부재항목코드 : 
+					      		<select name="apyCode" id="apycodelist">
+									<option hidden>category 선택</option>
+									<!-- ajax -->
+								</select><br>
+				      		
+					    
+					 </div>
+					 <div class="col-md-1" style="background-color: lightgray"></div>
+					 
+					 <input type="submit" value="확인 값 넘김"> &nbsp;&nbsp;
+		      		 <input type="reset" value="리셋하시오 망함의 지름길ㅋ">
+     			</div>
+			</form>
+			 
+			  
+			</div>
+	     
 	     	<div class="col-sm-6" id="jgContainer">
 				<div class="formDiv">
 					<!-- 
-						<label for="from">From</label>
-						<input type="text" id="from" name="from">
-						<label for="to">to</label>
-						<input type="text" id="to" name="to">
-						 -->
-					
-					<form action="" method="post">					 
-						<table style="width: 100%; height: 500px;" style="margin:10px; align-self: center;" >
+					<label for="from">From</label>
+					<input type="text" id="from" name="from">
+					<label for="to">to</label>
+					<input type="text" id="to" name="to">
+					-->
+							    
+<!-- 
+					<form action="breakApply21.do" method="post">					 
+						<table style="width: 100%; height: 500px;" style="margin:10px; align-self:center;">
 							<tr>
-								<td rowspan="4" width="50%"> <div class="calendarArea" style="width:100%">
-									<div id="loading">loading...</div>
-									<div id="calendar"></div>
+								<td rowspan="4" width="50%">
+									<div class="calendarArea" style="width:100%">
+										<div id="loading">loading...</div>
+										<div id="calendar"></div>
 									</div>
 								</td>
 								<td></td>
 								<td></td>
-							</tr>
-								
+							</tr>		
 							<tr>
 								<td>기간 선택</td>
-								<td><input type="text" name="datetimes" style="width:250px"/></td>
+								<td>
+									<input type="text" id="datetimes" style="width:250px"/><br>
+									시작일 : 	<input type="text" name="startAt" value="202002020900"><br>
+				      				종료일 :	<input type="text" name="endAt" value="202002031800"><br>	
+				      				신청자 : 	<input type="text" name="drafter" value="JG@KIM.COM"><br>
+								</td>
 							</tr>
-							
-							
 							<tr>
 								<td>부재항목</td>
 								<td>
-									<select id="category" class="category">
+									<select name="apyCode" id="category" class="category">
 										<option hidden>category 선택</option>
-										<!-- ajax -->
+										ajax
 									</select>
 								</td>
-							</tr>
-							
+							</tr>	
 							<tr>
 								<td>결재자</td>
 								<td>
-									<select id="approval">
+									<select name="approval" id="approval">
 										<option hidden = "">결재자 선택</option>
 									</select>
 								</td>
 					
 							</tr>
-						
 							<tr>
 								<td colspan="3">사유</td>
 							</tr>
 							<tr>
 								<td colspan="3">
-<!-- 									<input type=text style="width:100%; height:100%"placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason" >
- -->
-									<textarea style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason2"></textarea>
+								<input type=text style="width:100%; height:100%"placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason" >
+									<textarea name="reason" style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오."></textarea>
 								</td>
 							</tr>
 						</table>
-						
-						<br>
-						
 						<input type="submit" value="확인">
 						<input type="reset" value="초기화">
-						
 					</form>
+					<br>
+						 -->
 				</div>
 			</div>
 
-	      </b-card-text>
-	      
-	      
-	      
-	      
+	      </b-card-text>   
 	    </b-card-body>
 	  </b-card>
 	</div>
      
 
 	<c:import url="/common/bottom.jsp"/>   
-      
-
+     
 	<input type='text' class="form-control" id='datetimepicker1' />
     
     <script>

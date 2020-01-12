@@ -3,9 +3,12 @@ package com.dobee.controller;
 
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +16,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dobee.dao.NoticeDao;
+import com.dobee.services.ProjectService;
+import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
+
+
 import com.dobee.dao.UserDao;
+import com.dobee.services.ApplyService;
 import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -34,6 +46,9 @@ public class DoController {
 	
     @Autowired
     private SqlSession sqlsession;
+    
+    @Autowired
+    private ApplyService applyService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -169,14 +184,23 @@ public class DoController {
     }
 
 
-    //부재일정신청
-    @RequestMapping("breakApply.do")
+    // 부재일정신청 GET 0110
+    @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
+        return "attend/breakApply";
+    }
+    
+    // 부재일정신청 POST 0112
+    @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
+    public String absApplyPost(Apply apply, HttpServletRequest req){
+    	String result = applyService.absApply(apply);
+    	// System.out.println("봐봐  : " + result);
+    	
         return "attend/breakApply";
     }
 
 
-    //연장근무신청
+  //연장근무신청
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -184,14 +208,14 @@ public class DoController {
     
     
     // 연장근무 신청 POST
-	/* 01.10 by 게다죽 */
-    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
-    public String extendApplyPost(Apply apply, HttpServletRequest req) {
-    	UserDao userdao = sqlsession.getMapper(UserDao.class);
-    	userdao.overTimeApply();
-    	
-    	return "redicect:extendApply.do";
-    }
+ 	/* 01.10 by 게다죽 */
+     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
+     public String extendApplyPost(Apply apply, HttpServletRequest req) {
+    	String result = applyService.overtimeApply(apply);
+    	// System.out.println("봐봐 이," + result);
+
+     	return "attend/extendApply";
+     }
 
 
     //부재일정관리
@@ -211,7 +235,6 @@ public class DoController {
     //부재관리
     @RequestMapping("absManage.do")
     public String absSign(){
-    	System.out.println("absenceManagement gogogo 해해해");
         return "attend/absenceManage";
     }
 

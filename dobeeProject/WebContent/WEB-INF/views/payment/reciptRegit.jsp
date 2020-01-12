@@ -1,41 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 
 <c:import url="/common/tag.jsp" />
+
 <script>
 	$(document).ready(function() {
+		
+	
+
+
+
+
+
 		$("input[type=submit]").bind("click", function() {
+			alert("이거 뭐야 ... ")
+			
 			$("form").ajaxSubmit({
 //				dataType : "json",
+				beforeSubmit : 
+					alert(" 아작스 섬밋 함수 작동 하냐 "),
+			
 				success : function(data) {
-					//alert(data.result);
+					alert("아작스 성공");
+					//$("#fileupload").html("<h2>"+data.result+"</h2>");
+				},
+				afterSubmit:
+					alert("아작스 서밋 후 작동하냐 "),
+				error : function(error) {
+					alert("요청 처리 중 오류가 발생하였습니다.");
+					
+				}
+			});
+			return false;
+		});
+
+		$(".custom-file-input").on("change", function() {
+			  var fileName = $(this).val().split("\\").pop();
+			  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			});
+		
+		/* $("input[type=submit]").bind("click", function() {
+			alert("아작스 시작 전");
+			$("form").ajaxSubmit({
+			//	dataType : "json",
+				success : function(data) {
+					alert("아작스 시작 전2222");
+					alert(data.result);
 					console.log(data);
 					var uploadPath =  data[0];
-					var fileName = data[1];
+					var fileName1 = data[1];
 					
-					$("#fileupload").html("<img src=" + data.uploadPath + ">");
+					$("#haha").html("<img src=" +uploadPath+fileName1+ ">");
 				},
 				error : function(error) {
 					alert("요청 처리 중 오류가 발생하였습니다.");
 				}
 			});
 			return false;
-		});
+		}); */
 	});
 
 
 
-/* window.onload=function(){
-	// Add the following code if you want the name of the file appear on select
-	$(".custom-file-input").on("change", function() {
-	  var fileName = $(this).val().split("\\").pop();
-	  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-	});
-}	 */
+	
 </script>
 
 
@@ -124,10 +157,13 @@
 		<!-- 파일 업로드  부분 -->
 		<form action="fileUploadAjax.do" method="post" enctype="multipart/form-data">
 		  <div class="custom-file">
-		    <input type="file" class="custom-file-input" id="customFile">
-		    <label class="custom-file-label" for="customFile">Choose file</label>
+		 	<input type="file" class="custom-file-input" name="file1" />
+		    <!-- <input type="file" class="custom-file-input" id="customFile"> -->
+		    <label class="custom-file-label" for="customFile">영수증 사진을 등록하세요.</label>
 		  </div>
-		  <input type="submit" class="btn btn-primary" >
+		  <input type="submit" class="btn btn-primary" value="이미지 등록">
+		  
+		  <div id="haha"></div>
 		</form>
 		
 		<!-- 파일 업로드 부분 끝 -->

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
 import com.dobee.dao.UserDao;
+import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.User;
 
 @Controller
@@ -26,7 +27,7 @@ public class AjaxController_DABC {
 	@RequestMapping("getApyCode.do")
 	public View brkApyCat (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<String> results = userDao.getApyCode();
+		List<ApplyCode> results = userDao.getApyCode();
 		map.addAttribute("apyCode", results);
 		
 		return jsonview;
@@ -35,23 +36,10 @@ public class AjaxController_DABC {
 	
 	// 부재신청 결재자 불러오기
 	@RequestMapping("getApprovalList.do")
-	public View getApprovalList (Model map) {	
+	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<String> results = userDao.getApprovalList();
-		map.addAttribute("approvalList", results);
-		
-		return jsonview;
-	}
-	
-	// 부재신청 결재자 불러오기
-	@RequestMapping("getApprovalList2.do")
-	public View getApprovalList2 (Model map) {	
-		System.out.println("고고고고");
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		System.out.println("고고고2");
-		ArrayList<User> results = userDao.getApprovalList2();
-		System.out.println("결과 :" + results );
-		map.addAttribute("approvalList2", results);
+		ArrayList<User> results = userDao.getApprovalList();
+		map.addAttribute("renewedList", results);
 		
 		return jsonview;
 	}
