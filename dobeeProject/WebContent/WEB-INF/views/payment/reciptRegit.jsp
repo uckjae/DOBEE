@@ -8,7 +8,35 @@
 <head>
 
 <c:import url="/common/tag.jsp" />
-<script src="js/jquery.form.min.js"></script>
+<script>
+function uploadFile(){
+    var form = $('#FILE_FORM')[0];
+    var formData = new FormData(form);
+    formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
+
+    $.ajax({
+        url: 'fileUploadAjax.do',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                success: function(result){
+                    console.log(result);
+                    alert("업로드 성공!!");
+                    var uploadPath  = result.uploadPath;
+                    var saveFileName = result.saveFileName;
+                    var allPath = uploadPath + saveFileName;
+                    var forder = "/Users/";
+					$("#file111").append('<img id="imgtag" width="auto">');
+					$("#imgtag").attr("src", forder + saveFileName);
+				
+
+
+                    
+                }
+        });
+}
+</script>
 <script>
 	$(document).ready(function() {
 		
@@ -20,34 +48,14 @@
 			  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 			});
 		
-		 $("input[type=submit]").bind("click", function() {
-			alert("아작스 시작 전");
-			$("form").ajaxSubmit({
-			//	dataType : "json",
-				success : function(data) {
-					alert("아작스 시작 전2222");
-					alert(data.result);
-					console.log(data);
-					var uploadPath =  data[0];
-					var fileName1 = data[1];
-					
-					$("#haha").html("<img src=" +uploadPath+fileName1+ ">");
-				},
-				error : function(error) {
-					alert("요청 처리 중 오류가 발생하였습니다.");
-				}
-			});
-			return false;
-		}); 
+	
+			
 	});
 
 
 
 	
 </script>
-
-
-
 
 
 </head>
@@ -96,7 +104,7 @@
   		<div class="row">
     		<div class="col-md-6 imgshow">
      			 One of three columns
-     			 <div id="fileUpload"></div>
+     			 <div id="file111"></div>
      			 <br>
      			 <br>
      			 <br>
@@ -131,14 +139,19 @@
 	       			
 		<!-- 파일 업로드  부분 -->
 	
+		<form id="FILE_FORM" method="post" enctype="multipart/form-data">
+            <input type="file" id="FILE_TAG" name="FILE_TAG">
+            <a class="ui-shadow ui-btn ui-corner-all" href="javascript:uploadFile();">전송</a>
+        </form>
+
+
 		
 		
 		
 		
 		
 		
-		
-		<form id="plz" action="fileUploadAjax.ajax" method="post" enctype="multipart/form-data">
+	<!-- 	<form id="plz" action="fileUploadAjax.ajax" method="post" enctype="multipart/form-data">
 		  <div class="custom-file">
 		 	<input type="file" class="custom-file-input" name="file1" />
 		    <input type="file" class="custom-file-input" id="customFile">
@@ -147,7 +160,7 @@
 		  <input type="submit" class="btn btn-primary" value="이미지 등록">
 		  
 		  <div id="haha"></div>
-		</form>
+		</form> -->
 		
 		<!-- 파일 업로드 부분 끝 -->
 	        
