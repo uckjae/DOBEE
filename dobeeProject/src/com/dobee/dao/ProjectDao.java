@@ -12,7 +12,7 @@ public interface ProjectDao {
 
 
     //프로젝트 생성
-    public void mkPjt();
+    public int mkPjt(Project project);
 
 
     //프로젝트 목록
