@@ -59,9 +59,7 @@ public class ChatService {
 	//회원이 속한 그룹 채팅방 리스트 가져오기
 	public List<ChatRoom> getGroupChatRoomList(String mail) {
 		ChatDao chatdao = sqlSession.getMapper(ChatDao.class);
-		System.out.println("메일 가져오니??"+mail);
 		List<ChatRoom> groupChatRoomList = chatdao.getGroupChatRoomList(mail);
-		System.out.println("서비스에서 가져와??"+groupChatRoomList.toString());
 		return groupChatRoomList;
 	}
 	

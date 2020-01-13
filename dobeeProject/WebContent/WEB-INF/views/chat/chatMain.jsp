@@ -261,7 +261,8 @@
 	           <ul class="list-unstyled friend-list">
 	           <c:forEach var="userList" items="${requestScope.userList}">
 		            <li>
-			           	<div><a href='chatDm.do?mail=${userList.mail }'><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
+		            <!-- chatDm.do?mail=${userList.mail } -->
+			           	<div><a href='#' class="dmUser" value=${userList.mail }><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
 			     	  	</div>
 		     	  	</li>
 	           </c:forEach>
@@ -340,7 +341,13 @@
     <!-- socket 연결 -->
 <script src="http://localhost:5000/socket.io/socket.io.js"></script>
 <script>
+
+
 	$(function(){
+
+		//일단 selfchat 소켓으로 연결
+		socketConnect("selfchat");
+		
 		  $.ajax({
 		  		url:"getUserList.do",
 		  		dataType:"json",
@@ -417,36 +424,77 @@
 	 			});
 	 			}
 			});
+
+
+	/*채팅 socket 연결*/
+	
 	
 	var username = $("#username").val();
-	
-	var socket = io.connect("http://localhost:5000/selfchat",{
-		path: '/socket.io'
+
+	function socketConnect(socketUrl) {
+		var socket = io.connect("http://localhost:5000/"+socketUrl,{
+			path: '/socket.io'
+				});
+		
+		$("#sendMessage").on('submit', function(e){
+			
+			var msg = $('#message').val();
+			socket.emit('send message to self', username, msg);
+			$('#message').val("");
+			$("#message").focus();
+			e.preventDefault();
+			
 			});
-	
-	$("#sendMessage").on('submit', function(e){
 		
-		var msg = $('#message').val();
-		socket.emit('send message to self', username, msg);
-		$('#message').val("");
-		$("#message").focus();
-		e.preventDefault();
+		socket.on('receive message', function(msg,currentDate){
+			$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
+					+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+					+'<div class="chat-body"><div class="chat-message">'
+					+'<h3>'+username+'</h3>'
+					+'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+					+'</div></div></li></div><br>');
+			$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+			});
+
+
+	}
+
+	/*DM 채팅방 연결하기*/
+	$(".dmUser").on("click", function() {
+		var mail = $(this).attr('value');
+		console.log('콘솔에서 메일 가져와?'+mail)
+		$.ajax({
+	 			url:"chatDm.do?mail="+mail,
+				dataType: "text",
+				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+				type:"post",
+				success:function(responsedata){
+					if(responsedata == "dm") {
+						socketConnect(responsedata)
+						console.log("dm 연결됨??");
+						
+						}
+					
+				},
+				error:function(){
+					
+				}
+			});
 		
-		});
-	
-	socket.on('receive message', function(msg,currentDate){
-		$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-				+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-				+'<div class="chat-body"><div class="chat-message">'
-				+'<h3>'+username+'</h3>'
-				+'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-				+'</div></div></li></div><br>');
-		$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-		});
+		
 		});
 
+
+	
+
+	
+
+	});
+	
+	
+
 </script>
-    </body>
+</body>
 </html>
 
 

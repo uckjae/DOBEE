@@ -31,11 +31,11 @@
 <script>
     $(document).ready(function() {
         $('#summernote').summernote({
-        	/* lang: 'ko-KR', */
-        	height: 400,
+        	
+        	height: 350,
         	placeholder: "글을 입력하세요.",
-        	lang: 'ko-KR',
-        	toolbar: [
+        	lang: 'ko-KR', /*한국어*/ 
+        	toolbar: [   /*summernote 글옵션 상자*/
         		  ['fontname'],
         		  ['fontsize'],
         		  ['font', ['bold', 'underline','italic','strikethrough','superscript','subscript']],  
@@ -94,8 +94,22 @@
   <div class="comment-form-wrap pt-xl-2">
    <h1 class="text-center mb-3 bread">게시글 작성</h1>
    
-   <form method="post">
-    <textarea id="summernote" name="editordata"></textarea>
+   <form action="noticeWrite.do" method="post">
+   
+    <input type="text" class="form-control mb-3" id="title" name="title"
+     placeholder="글 제목을 입력하시오" value="">
+     
+    <textarea id="summernote" name="content"></textarea>
+    
+    <div class="text-right" id="lengthBox"> 
+	  <span id="total-characters"></span>/<span id="max"></span>
+	</div>
+	
+    <div class ="text-center">
+     <input type="submit" class="btn btn-primary mr-3" value="작성">
+     <input type="reset" class="btn btn-primary mr-3" value="취소">
+    </div>
+    
    </form>
    
   </div>

@@ -66,6 +66,16 @@ public class AjaxController_alpaca {
     	return responseData;
     }
     
+  //1:1 채팅방
+    @RequestMapping(value = "chatDm.do", method = RequestMethod.POST)
+    public String chatDm(@RequestParam(value="mail") String mail) {
+    	System.out.println("1:1 채팅방 타??");
+    	System.out.println("메일 가져와??"+mail);
+    	String socketUrl = "";
+    	socketUrl = "dm";
+    	
+    	return socketUrl;
+    }
     
     
     //그룹 채팅방 만들기
