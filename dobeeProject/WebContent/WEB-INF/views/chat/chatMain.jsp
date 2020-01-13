@@ -432,14 +432,14 @@
 	var username = $("#username").val();
 
 	function socketConnect(socketUrl) {
+		console.log('이거 되니??');
 		var socket = io.connect("http://localhost:5000/"+socketUrl,{
 			path: '/socket.io'
 				});
 		
 		$("#sendMessage").on('submit', function(e){
-			
 			var msg = $('#message').val();
-			socket.emit('send message to self', username, msg);
+			socket.emit('send message', username, 'SELF', msg);
 			$('#message').val("");
 			$("#message").focus();
 			e.preventDefault();

@@ -38,11 +38,10 @@ public class AjaxController_alpaca {
 
 	//회원 목록 가져오기
     @RequestMapping(value="getUserList.do", method=RequestMethod.POST)
-    @JsonManagedReference
+    //@JsonManagedReference
     public List<User> getUserList() {
     	UserDao userdao = sqlsession.getMapper(UserDao.class);
     	List<User> result = userdao.getUserList();
-    	
     	return result;
     }
     

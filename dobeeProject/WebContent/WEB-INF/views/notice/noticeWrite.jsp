@@ -23,7 +23,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script src="./lang/summernote-ko-KR.js"></script>
-<title>TEST</title>
+<title>write</title>
 
 
 </head>
@@ -94,7 +94,7 @@
   <div class="comment-form-wrap pt-xl-2">
    <h1 class="text-center mb-3 bread">게시글 작성</h1>
    
-   <form action="noticeWrite.do" method="post">
+   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
    
     <input type="text" class="form-control mb-3" id="title" name="title"
      placeholder="글 제목을 입력하시오" value="">
@@ -107,7 +107,7 @@
 	
     <div class ="text-center">
      <input type="submit" class="btn btn-primary mr-3" value="작성">
-     <input type="reset" class="btn btn-primary mr-3" value="취소">
+     <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
     </div>
     
    </form>
