@@ -480,21 +480,19 @@ public class DoController {
     public String chatMain(Model model, Principal principal) {
     	String mail = principal.getName();
     	System.out.println("메일은?"+mail);
-    	User user = memberService.getUser(mail);
-    	System.out.println("유저 객체 만들어졌니?"+user.toString());
-    	//회원 정보 저장하기
-    	model.addAttribute("user", user);
     	
+    	User user = memberService.getUser(mail);
+    	System.out.println("넘어오니??"+user.toString());
+    	//회원 정보 저장하기
+    	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
     	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
     	for(int i = 0; i < chatRoomList.size(); i++) {
-    		System.out.println("채팅방 목록"+chatRoomList.get(i).getChatRoomName());
-    		//roomNameList.add(chatRoomList.get(i).getChatRoomName());
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
     	}
-    	//System.out.println("채팅방 목록 가져오니??"+roomNameList.toString());
-    	
+
     	model.addAttribute("roomNameList", roomNameList);
     	
     	//사원 목록 가져오기
@@ -502,7 +500,8 @@ public class DoController {
     	model.addAttribute("userList", userList);
     	
     	//기본 나에게 채팅으로 셋팅
-    	model.addAttribute("chatType", "SELF");
+    	model.addAttribute("chatType", "self");
+    	
     	return "chat/chatMain";
     }
     

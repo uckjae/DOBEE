@@ -60,6 +60,8 @@ public class ChatService {
 	public List<ChatRoom> getGroupChatRoomList(String mail) {
 		ChatDao chatdao = sqlSession.getMapper(ChatDao.class);
 		List<ChatRoom> groupChatRoomList = chatdao.getGroupChatRoomList(mail);
+		System.out.println("db에서 가져왔어??" +groupChatRoomList.toString());
+
 		return groupChatRoomList;
 	}
 	
