@@ -3,6 +3,8 @@ package com.dobee.controller;
 
 
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.services.ProjectService;
@@ -173,9 +176,38 @@ public class DoController {
     }
 
 
-    //공지사항글쓰기
+  //공지사항글쓰기
+    @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
-        return null;
+        return "notice/noticeWrite";
+    }
+    @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
+    public String noticeWrite(Notice n,HttpServletRequest request,Principal principal) throws IOException {
+    	
+    		List<CommonsMultipartFile> files = n.getFiles();
+    		List<String>filenames = new ArrayList<String>(); //파일명관리
+    		
+    		if(files != null && files.size()>0){ //최소한개 업로드
+    			for(CommonsMultipartFile multifile : files) {
+    				String filename = multifile.getOriginalFilename();//?
+    				String path  = request.getServletContext().getRealPath("/notice/upload");
+    			    
+    				String fpath = path+"\\"+filename;
+    			    
+    			    if(!filename.equals("")) {//실 파일 업로드
+    			    	FileOutputStream fs = new FileOutputStream(fpath);
+    			    	fs.write(multifile.getBytes());
+    			    	fs.close();
+    			    }
+    			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
+    			}
+    		}
+    		
+    		n.setSaveName(filenames.get(0));
+    		
+    		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
+    		noticedao.noticeWrite(n);		
+    		return "redirect:noticeWrite"; //들어주는 주소 ...
     }
 
 
