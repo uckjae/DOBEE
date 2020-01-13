@@ -6,6 +6,7 @@ import java.util.List;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
+import com.dobee.vo.member.Break;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 
@@ -39,9 +40,15 @@ public interface UserDao {
     public void myPage();
 
 
-  //부재일정신청
+    // 연차 불러오기
+    /* 01.12 게다죽 */
+    public List<Break> getVacationInBM();
+    
+    
+    //부재일정신청
     /* 01.12 게다죽 */
     public int absApply(Apply apply);
+    
     
     //부재 항목 불러오기
     /* 01.10 게다죽 */
@@ -58,8 +65,9 @@ public interface UserDao {
     public int overTimeApply(Apply apply);
 
 
-    //개인부재일정관리
-    public List<Apply> absMg();
+    //개인부재일정확인
+    /* 01.12 게다죽 */
+    public List<Apply> absMg(Apply apply);
 
 
     //개인근무내역확인

@@ -12,7 +12,13 @@
         				   http://www.springframework.org/schema/context/spring-context.xsd
         				   http://www.springframework.org/schema/security
         				   http://www.springframework.org/schema/security/spring-security.xsd">
-        				   
+        		
+<!-- 
+주석처리 일부러 한 겁니다. 일단 지우지 말아주세요 
+<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>    		
+    <mvc:resources mapping="/Users/**" location="/upload/" /> 
+ -->
+    
 	<!--Security  -->
 	<security:global-method-security pre-post-annotations="enabled" />
 	
@@ -39,9 +45,9 @@
         </property>
     </bean>
     <!-- 잭슨 뷰 리졸버 -->
-    <bean id="jsonView" name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+
+    <bean id="jsonView" name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
    
-    </bean>
     
    
     
@@ -61,6 +67,7 @@
 		</property>
 	</bean>
 
+	
 
 
 

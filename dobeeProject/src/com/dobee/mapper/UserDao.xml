@@ -59,4 +59,20 @@
 			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, #{apyCode})
 	</insert>
 	
+	<!-- 연차 불러오기 0112 -->
+	<select id="getVacationInBM" resultType="com.dobee.vo.member.Break">
+		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL='JG@KIM.COM'
+	</select>
+	
+	<!-- 부재내역 불러오기 -->
+	<select id="absMg" resultType="com.dobee.vo.Apply">
+		SELECT AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK
+			FROM APPLY A
+			    INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				INNER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM';
+	</select>
+	
 </mapper>

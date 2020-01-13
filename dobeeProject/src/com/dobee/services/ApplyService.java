@@ -34,8 +34,11 @@ public class ApplyService {
 
 
     //부재일정관리
-    public List<Apply> absMg(){
-        return null;
+    public List<Apply> absMg(Apply apply){
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<Apply> results = userDao.absMg(apply);
+        
+        return results;
     }
 
 
