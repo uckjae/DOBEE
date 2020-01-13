@@ -7,14 +7,29 @@
 	<c:import url="/common/tag.jsp" />
 	<script type="text/javascript">
 		$(function(){
+			/* 권한 코드 select option 만들기*/
 			$.ajax({
 				url:"ajax/admin/addUser.do",
 				dataType: "JSON",
 				success: function(data){
-					console.log("ajaxSuccess");
-					console.log(data);
+					$.each(data, function(i, elt) {
+						if(elt.authCode !=1){
+							var option = $("<option>");
+							$(option).val(elt.authCode);
+							if(elt.authCode == 2){
+								$(option).text("사원");
+							}
+							else{
+								$(option).text("팀장");
+							}
+							console.log(option);
+							$('#authCode').append(option);
+						}
+					})
 				}
 			})
+
+		
 		});
 	</script>
 </head>
