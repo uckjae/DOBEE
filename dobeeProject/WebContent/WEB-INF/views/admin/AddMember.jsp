@@ -45,7 +45,29 @@
 					
 				}	
 			})
+			
 		});
+
+		function sendMail (){
+			$.ajax({
+				url:"ajax/admin/sendEmail.do",
+				data: {'mail':$('#mail').val(),
+						'name' : $('#name').val()
+					},
+				dataType: "text",
+				method: "POST",
+				success: function(){
+					console.log("ajax sendmail success");
+					$('#addUserForm').submit();
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					console.log(textStatus);
+					console.log(errorThrown);
+				}
+				
+				
+			});
+		}
 	</script>
 </head>
 <body>
@@ -73,7 +95,7 @@
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <form action="#" method="post" enctype="multipart/form-data">
+                                        <form action="/dobeeProject/regitUser.do" id="addUserForm" method="post" enctype="multipart/form-data">
                                         	<div class="form-group">
                                                 		<div class="form-row">
                                                    			<div class="col-md-6">
@@ -106,7 +128,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
                                                             <input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호" required="required">
-                                                            <label for="authCode">전화번호</label>
+                                                            <label for="phone">전화번호</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,7 +156,7 @@
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <input type="submit" class="btn btn-primary btn-block" value="Edit">
+                                                    <button type="button" class="btn btn-primary btn-block" onclick="sendMail()">등록하기</button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"

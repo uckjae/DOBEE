@@ -2,7 +2,6 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +37,7 @@
 
 </head>
 <body>
-	
+	<c:set var="user" value="${requestScope.user }"/>
 
 
 	<div class="limiter" >
@@ -53,10 +52,10 @@
 			<hr style=" width: 30%; display: block; margin: 0px auto;">
 			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
 				<form class="login100-form validate-form" style=" height: 40%; text-align: center; ">
-				<h3> HELLO, 노비1 님 </h3>	<br>
-					<h6> DoBee 입사를 축하드립니다 ^^ ! </h6> 
+				<h3> HELLO, <c:out value="${user.name}"/> 님 </h3>	<br>
+					<h6> 입사를 축하드립니다 ^^ ! </h6> 
 					<br>
-					<h6> 사이트 이용을 위해 비밀 번호를 설정 해주세요. </h6>
+					<h6> 사이트 이용을 위해 비밀 번호를 설정 해주세요.<c:out value="${user.mail}"/> </h6>
 									
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
 						<input class="input100" type="text" name="username">

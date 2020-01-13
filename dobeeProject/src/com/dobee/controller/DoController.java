@@ -73,6 +73,9 @@ public class DoController {
     	this.sqlsession = sqlsession;
     }
     
+    @Autowired
+    private MemberService memberService;
+    
 
     //로그인
     @RequestMapping("login.do")
@@ -99,8 +102,15 @@ public class DoController {
     }
 
     //비밀번호재설정
-    public String resetPwd(){
-        return null;
+    @RequestMapping("password.do")
+    public String resetPwd(HttpServletRequest req, Model model){
+    	System.out.println("DoController resetPwd() in!!");
+    	System.out.println(req.getParameter("mail"));
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	User user = userDao.getUser(req.getParameter("mail"));
+    	System.out.println(user.toString());
+    	model.addAttribute("user", user);
+        return "main/emailPwdReset";
     }
 
 
@@ -548,6 +558,11 @@ public class DoController {
     @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
     public String addUser(User user, UserInfo userInfo) {
     	return "admin/AdminMain";
+    }
+    public String regitUser(User user) {
+    	System.out.println("DoContorller regitUser()");
+    	System.out.println(user.toString());
+    	return null;
     }
     
     
