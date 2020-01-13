@@ -2,25 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${title}</title>
+<title>${mail}</title>
 </head>
 <body>
-<h1 style = "font-size : 26">안녕하세요 고객님,</h1><br>
+<h1 style = "font-size : 26">안녕하세요 ${name} 님</h1><br>
 <div style = "border : 3px solid lightgray; padding : 5em;">
-	<p style = "color : green"><b>메일 서비스를 이용해 주셔서 감사합니다.</b></p><br>
+	<p style = "color : green"><b>DOBEE에 회원등록이 되었습니다.</b></p><br>
 	<p>-------------------------------------------------------------</p><br>
-	<p> 사용 일시 : 2019-06-17</p><br>
-	<p> 사용 아이피 : 192.168.*.** </p><br>
-	<p> 사용 금액 : <b>10,000,000</b>원(금 일천만원정)  </p><br>
-	<p> 혜택 가격(최초결제 혜택) : <b>1,000,000</b>원(금 일백만원정)  </p><br>
-	<p>-------------------------------------------------------------</p><br>
-	<p>사용 금액은 네이버 페이에 등록된 계좌에 자동 결제 됩니다.</p>
-	<p style = "font-size:9px; color : red">* 결제될 금액이 존재하지 않을시, 구속되며 <b>금고</b> 이상의 형에 처할 수 있습니다.</p>
-	<br><br>
-	<a href = "http://localhost:8080/Velocity_3Team/Index.htm" style = "padding-left : 10em">다시 메일 보내기</a></div>
-	<br><br><br><br><br><br><br><br><br>
-	
-	<a data-flickr-embed="true"  href="https://www.flickr.com/photos/jaehune/4067249062/in/photolist-7cpHrQ-n2AGZZ-nhdA4N-5GGY4X-82UU7o-9mzPw8-ngTXmd-niWJHF-5peYor-ngU862-dUyq8f-vzkoJ-ZWe8-nf8Le1-2sYR4z-9zPajL-nhbpyK-fqmDsb-212jt9E-iwNagH-sj4dqA-4oSSCk-7BZZL9-nhb7j4-nhbnfB-iwNe7h-ngU68f-nhbcS8-nhbbDr-iwNznX-iyv4vr-oqjswM-iwNpUw-jA1Cch-jzXrcX-iwNrAs-jA1CN7-jA1CXf-SFyDEW-jzXrPZ-oogNko-ngiAkZ-8wT3GK-8wT7q2-z5r5Wr-VxT2h2-D16Qd5-4J5rCZ-D16Q4h-D16PXq" title="화장실"><img src="https://live.staticflickr.com/2513/4067249062_015262e6fa.jpg" width="500" height="333" alt="화장실"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-	<p style="font-size:25px; color:red">비동기는 한강 화장실입니다.</p>
+	<p> 등록일 : ${date}</p><br>
+	${path}<br>
+	<form action="http://${path}" target="_blank" method="POST" >
+		<input type="hidden" name="mail" id="mail" value="${mail}" read>
+		<input type="submit" value="비밀번호 설정하기">
+	</form>
 </body>
 </html>

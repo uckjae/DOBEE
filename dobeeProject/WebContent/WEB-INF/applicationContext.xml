@@ -67,33 +67,33 @@
     </bean> -->
 	
 	
-	<!-- velocity 설정 -->
-	<!-- <bean id="velocityConfig"
-		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
-		<property name="velocityProperties">
-			<value>
-				input.encoding=UTF-8
-				output.encoding=UTF-8
-			</value>
-		</property>
-	</bean>
-	
-	<bean id="velocityEngine"
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
-	</bean>
-	
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-   		<property name="host" value="smtp.gmail.com" />
-   		<property name="port" value="587" />
-   		<property name="username" value="uckjae@gmail.com" />
-   		<property name="password" value="!dldnr7wo^g" />
-   		<property name="javaMailProperties">
-	   		<props>
-	   			<prop key="mail.smtp.auth">true</prop>
-	   	   		<prop key="mail.smtp.starttls.enable">true</prop>
-	   	 	</props>
-  	  	</property>
-  	</bean> -->
+	<!-- 메일 전송 설정 -->
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+      <property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
+      <property name="velocityProperties">
+         <value>
+            input.encoding=UTF-8
+            output.encoding=UTF-8
+         </value>
+      </property>
+   </bean>
+
+   <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
+   </bean>
+
+   <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <!-- <property name="port" value="587" /> -->
+      <property name="username" value="uckjae@gmail.com" />
+      <property name="password" value="!dldnr7wo^g" />
+      <property name="javaMailProperties">
+         <props>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+   </bean>
 </beans>

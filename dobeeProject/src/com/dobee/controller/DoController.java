@@ -85,8 +85,15 @@ public class DoController {
     }
 
     //비밀번호재설정
-    public String resetPwd(){
-        return null;
+    @RequestMapping("password.do")
+    public String resetPwd(HttpServletRequest req, Model model){
+    	System.out.println("DoController resetPwd() in!!");
+    	System.out.println(req.getParameter("mail"));
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	User user = userDao.getUser(req.getParameter("mail"));
+    	System.out.println(user.toString());
+    	model.addAttribute("user", user);
+        return "main/emailPwdReset";
     }
 
 
@@ -488,6 +495,7 @@ public class DoController {
     //그룹 채팅 메인
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
     public String chatGroup(@RequestParam(value="roomName") String roomName) {
+    
     	return null;
     }
     
@@ -510,7 +518,12 @@ public class DoController {
     
     
     //관리자_사원추가 서비스
-    
+    @RequestMapping(value="regitUser.do", method = RequestMethod.POST)
+    public String regitUser(User user) {
+    	System.out.println("DoContorller regitUser()");
+    	System.out.println(user.toString());
+    	return null;
+    }
     
     
 }
