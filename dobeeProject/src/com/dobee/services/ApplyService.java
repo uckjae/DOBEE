@@ -3,6 +3,8 @@ package com.dobee.services;
 import com.dobee.dao.UserDao;
 import com.dobee.vo.Apply;
 import com.dobee.vo.member.Attend;
+import com.dobee.vo.member.BreakManageList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class ApplyService {
     public String absApply(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.absApply(apply);
+    	
     	return "병신새끼야!";
     }
 
@@ -34,9 +37,9 @@ public class ApplyService {
 
 
     //부재일정관리
-    public List<Apply> absMg(Apply apply){
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
-        List<Apply> results = userDao.absMg(apply);
+    public List<BreakManageList> absMg(){
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<BreakManageList> results = userDao.absMg();
         
         return results;
     }

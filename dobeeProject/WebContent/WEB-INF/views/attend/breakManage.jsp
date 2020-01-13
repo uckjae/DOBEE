@@ -28,8 +28,6 @@
     
     <link rel="stylesheet" href="./css/jgcss.css">
 
-
-    
   </head>
  
   <body>
@@ -61,144 +59,131 @@
 		
 		<h1>부재 일정 관리</h1>
 
-		<form action="" method="post">
-			<table style="width: 100%">
-				<tr>
-					<td style="width: 9%"><h1>사용 연차</h1></td>
-					<td style="width: 12%" id="usedVacation">0</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><h1>남은 연차</h1></td>
-					<td id="remainVacation">0</td>
-					<td></td>					
-					<td style="width: 10%">
-						<select name="year">
-							<option value="">년도별</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-						</select>
-					</td>
-					<td style="width: 7%">
-						<select name="month">
-							<option value="">월별</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>		
-						</select>
-					</td>
-					<td style="width: 7%">
-						<select name="category">
-							<option value="">항목별</option>
-							<option value="연차">연차</option>
-							<option value="외근">외근</option>
-							<option value="출장">출장</option>
-						</select>
-					</td>
-					<td style="width: 7%">
-						<input type="submit" class="submit" value="검색하기 ">
-					</td>
-					
-				</tr>
-			</table>
-		</form>
-				
+		<!-- <form action="" method="post"> -->
+		
+		<table style="width: 100%">
+			<tr>
+				<td style="width: 9%"><h1>사용 연차</h1></td>
+				<td style="width: 12%" id="usedVacation">0</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><h1>남은 연차</h1></td>
+				<td id="remainVacation">0</td>
+				<td></td>					
+				<td style="width: 10%">
+					<select name="year" id="selectYear">
+						<option value="">년도별</option>
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+					</select>
+				</td>
+				<td style="width: 7%">
+					<select name="month" id="selectMonth">
+						<option value="">월별</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>		
+					</select>
+				</td>
+				<td style="width: 7%">
+					<select name="category" id="selectEntry">
+						<option value="">항목별</option>
+						<option value="연차">연차</option>
+						<option value="외근">외근</option>
+						<option value="출장">출장</option>
+					</select>
+				</td>
+				<td style="width: 7%">
+					<select name="category" id="selectAuth">
+						<option value="">항목별</option>
+						<option value="승인">승인</option>
+						<option value="반려">반려</option>
+						<option value="미승인">미승인</option>
+					</select>
+				</td>
+				<td style="width: 7%">
+					<!-- <input type="submit" id="search" class="submit" value="검색하기 "> -->
+				</td>
+			</tr>
+		</table>
+		
+		<!-- </form> -->
+		
+
 		<section>
 			<div class="col-md-12">
-				
-				<%-- 
-				<table id="brkTable" class="dataTable display hover">
-					<thead>
-						<tr>
-							<th class="notSeq" style="width: 10%">No</th>
-							<th class="title" style="width: 60%">제목</th>
-							<th class="regdate" style="width: 20%">작성일</th>
-							<th class="count" style="width: 10%">조회수</th>
-						</tr>
-					</thead>
-					<tbody>	
-						<c:forEach items="${list}" var="n" >
-							<tr>
-								<td class="notSeq">${n.notSeq}</td>
-								<td class="title">${n.title}</td>
-								<td class="regdate">${n.regDate}</td>
-								<td class="count">${n.count}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				--%>
-				
+			
 				<table id="breakTable" class="dataTable display hover" style="width :100%">
 					<thead id="thead">
 						<tr>
 							<th width="13%">부재항목</th>
 							<th>기간</th>
 							<th width="13%">사용 일수</th>
+							<th width="17%">신청 일자</th>
 							<th width="20%">승인여부</th>
 						</tr>
 					</thead>
-			
-					<tbody id="tbody">
-						<!-- 여기서 뿌려줄겨 -->
-						<tr>
-							<td class="bcategory">연차</td>
-							<td class="tterm">2020.01.03. ~ 2020.01.05</td>
-							<td class="tused">3</td>
-							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">미승인</button></td>
-						</tr>
-						<tr>
-							<td class="bcategory">반차</td>
-							<td class="tterm">2020.01.05. ~ 2020.01.05</td>
-							<td class="tused">0.5</td>
-							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">승인</button></td>
-						</tr>
-						<tr>
-							<td class="bcategory">외근</td>
-							<td class="tterm">2020.01.03. ~ 2020.01.05</td>
-							<td class="tused">0</td>
-							<td class="notauth"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">반려</button></td>
-						</tr>
-					</tbody>
+					
+					<c:forEach items="${brkList}" var="bl">
+					
+						<tbody id="tbody">
+							<!-- 여기서 뿌려줄겨 -->
+							<tr>
+								<td class="bcategory">${bl.entry }</td>
+								<td class="tterm">${bl.startAt } - ${bl.endAt }</td>
+								<td class="tused">${bl.usingBreak }</td>
+								<td class="tregdate">${bl.reqDate }</td>
+								<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal">${bl.isAuth }</button></td>
+							</tr>	
+						</tbody>
+					
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" role="dialog">
+						  <div class="modal-dialog modal-lg">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">상세 사유</h4>
+						      </div>
+						      <div class="modal-body">
+						         <h3>부재 사유</h3>
+						     <h4>사유</h4>
+						     <h5>${bl.reason }</h5>
+						      </div>
+						      <div class="modal-footer">
+						       <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					
+					</c:forEach>
 					
 					<tfoot>	
 					</tfoot>
 						
 				</table>
+
 			</div>
 		</section>
 	</div>
-	
+
 	<section id="modal_breakReason">
 		<div class="container">
-		  <!-- Modal -->
-		  <div class="modal fade" id="myModal" role="dialog">
-		    <div class="modal-dialog modal-lg">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">상세 사유</h4>
-		        </div>
-		        <div class="modal-body">
-		           <h3>부재 사유</h3>
-			      <h4>사유</h4>
-			      <h5>이러이러하옵니다...</h5>
-		        </div>
-		        <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
+		  
+		 
+		  
 		</div>		
 	</section>
 
+	
 	<c:import url="/common/bottom.jsp"/>   
    
     <!-- JavaScript files-->
@@ -246,6 +231,7 @@
   	<script>
 		window.onload = function(){
 
+			// 연차 정보 가져오기
 			$.ajax ({
 				url : "getVacationInBM.do",
 				dataType : "json",
@@ -257,6 +243,124 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+
+			// 년도 Option Ajax Loading
+			$.ajax({
+				url : "breakYearList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.BYList);
+					var yArray = [];
+					
+					yArray = data.OTYList;
+					for (var i = 0; i<yArray.length; i++) {
+						var option = document.createElement("option");
+						$(option).text(yArray[i]+'년');
+						$("#yearSelector").append(option);
+					}
+				}				
+			});	
+
+			// 월 Option Ajax Loading
+			$.ajax({
+				url : "breakYearMonthList.do",
+				dataType : "json",
+				success : function(data) {
+					console.log(data.BYMList);
+					var mArray = [];
+					
+					mArray = data.OTMList;
+					for (var i = 0; i<mArray.length; i++) {
+						var option = document.createElement("option");
+						$(option).text(mArray[i]+'월');
+						$("#monthSelector").append(option);
+					}
+				}			
+			});
+
+			// 부재항목 Option Ajax Loading
+			$.ajax({
+				url : "breakEntryList.do",
+				dataType : "json",
+				success : function(data) {
+			})
+			
+			// 승인여부 Option Ajax Loading
+			$.ajax({
+				url : "breakIsAuthList.do",
+				dataType : "json",
+				success : function(data) {
+			})
+
+			
+			// 년도 Option 변경시 Ajax 처리
+			$('#selectYear').change(function() {
+				$('#tbody').empty;
+
+				$.ajax ({
+					url : "getBreakListByYear.do",
+					dataType : "json",
+					success : function (data) {
+						// 년도 별 조회
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+			});
+
+			// 월 Option 변경시 Ajax 처리
+			$('#selectMonth').change(function() {
+				$('#tbody').empty;
+
+				$.ajax ({
+					url : "breakYearMonthList.do",
+					dataType : "json",
+					success : function (data) {
+						// 월 별 조회
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+			});
+
+			// 부재항목 Option 변경시 Ajax 처리
+			$('#selectEntry').change(function() {
+				$('#tbody').empty;
+
+				$.ajax ({
+					url : "breakListByEntry.do",
+					dataType : "json",
+					success : function (data) {
+						// 항목 별 조회
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+			});
+
+			// 승인여부 Option 변경시 Ajax 처리
+			$('#selectIsAuth').change(function() {
+				$('#tbody').empty;
+
+				$.ajax ({
+					url : "breakByIsAuth.do",
+					dataType : "json",
+					success : function (data) {
+						// 승인 여부 별 조회
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+			});
+
 
 		
 			$('#brkTable').DataTable({
