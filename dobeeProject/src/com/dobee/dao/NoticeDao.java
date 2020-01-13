@@ -12,7 +12,7 @@ public interface NoticeDao {
 
 
     //공지사항작성
-    public void noticeWrite();
+    public void noticeWrite(Notice n);
 
 
     //공지사항상세보기

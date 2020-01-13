@@ -38,26 +38,27 @@ public class AjaxController_alpaca {
 
 	//회원 목록 가져오기
     @RequestMapping(value="getUserList.do", method=RequestMethod.POST)
-    @JsonManagedReference
+    //@JsonManagedReference
     public List<User> getUserList() {
     	UserDao userdao = sqlsession.getMapper(UserDao.class);
     	List<User> result = userdao.getUserList();
-    	
     	return result;
     }
     
+    
+    //채팅방 만들기
     @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
-    public String makeChatRoom(@RequestParam(value="chatRoomName") String chatRoomName, @RequestParam(value="chatUserList[]") List<String> chatUsers) {
-    	System.out.println("이거 타니???");
+    public String makeChatRoom(@RequestParam(value="newChatRoomName") String newChatRoomName, @RequestParam(value="chatUserList[]") List<String> chatUsers) {
     	String responseData = "";
     	int result = 0;
     	int result2 = 0;
+    	System.out.println("채팅방 만들기"+newChatRoomName +"/"+chatUsers.toString());
     	
-    	result = chatservice.makeGroupChatRoom(chatRoomName);
+    	result = chatservice.makeGroupChatRoom(newChatRoomName);
     	//유저리스트 채팅방 db에 저장하기
 		if(result > 0 ) { //채팅방 만듦
 			
-			result2 = chatservice.makeGroupChatUsers(chatRoomName, chatUsers);
+			result2 = chatservice.makeGroupChatUsers(newChatRoomName, chatUsers);
 			responseData = "success";
 			System.out.println("성공함");
 			
@@ -66,19 +67,34 @@ public class AjaxController_alpaca {
     	return responseData;
     }
     
+    //1:1 채팅방 접속
+    @RequestMapping(value = "chatDm.do", method = RequestMethod.POST)
+    public String chatDm(@RequestParam(value="name") String name, @RequestParam(value="mail") String mail) {
+    	System.out.println("1:1 채팅방 타??");
+    	System.out.println("이름 가져와??"+name);
+
+    	System.out.println("메일 가져와??"+mail);
+    	//String socketUrl = "{chatType : 'DM', mail : mail, }";
+    	String socketUrl = "dm";
+    	
+    	return socketUrl;
+    }
     
+    //그룹 채팅방 접속
+    @RequestMapping(value = "chatGroup.do", method = RequestMethod.POST)
+    public String chatGroup(@RequestParam(value="chatRoomName") String chatRoomName) {
+    	System.out.println("그룹 채팅방 타??");
+    	System.out.println("이름 가져와??"+chatRoomName);
+
+    	//String socketUrl = "{chatType : 'DM', mail : mail, }";
+    	String socketUrl = "group";
+    	
+    	return socketUrl;
+    }
     
     //그룹 채팅방 만들기
     /*
-    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
-    public String makeChatRoom(@RequestParam(value="chatRoomName") String chatRoomName, @RequestParam(value="chatUserList[]") List<String> chatUserList) {
-    	System.out.println("이거 타니???");
-    	System.out.println("채팅방"+chatRoomName);
-    	System.out.println("유저리스트"+chatUserList);
-
-    	return null;
-    }
-    
+ 
     
     @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
     public String makeChatRoom(ChatRoom chatroom) {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -239,7 +240,7 @@ body {
             if ($('.modal:visible').length) {
                $('body').addClass('modal-open');
             }
-         });
+         });	
 
          
                
@@ -259,7 +260,7 @@ body {
         <div class="card my-5">
           <div class="card-body">
             <h2 class="card-title text-center" style="color:#000000;"> 새 프로젝트</h2>
-            <form class="form-signin" action="memberadd.me" accept-charset="UTF-8">
+            <form class="form-signin" action="pjtAdd.do" accept-charset="UTF-8" method="post">
              <h4 class="title"> 제목 </h4>
               <div class="form-label-group">
             
@@ -268,15 +269,15 @@ body {
               </div>
                 <h4 class="title"> 설명 ( 선택사항 ) </h4>
               <div class="form-label-group">
-                <input type="text" id="nickname" name="nickname" class="form-control" placeholder="" autofocus>
+                <input type="text" id="pjtProgress" name="pjtProgress" class="form-control" placeholder="" autofocus>
                   
               </div>
               
               <h4 class="title"> 시작일 </h4>
-           <input type="date" name="pjtStartDate" id="pjtStratName" style="width: 35%">
+           <input type="date" name="pjtStartAt" id="pjtStartAt" style="width: 35%">
            <br><br>
             <h4 class="title"> 마감일 </h4>
-           <input type="date" name="pjtEndDate" id="pjtEndDate" style="width: 35%">
+           <input type="date" name="pjtEndAt" id="pjtEndAt" style="width: 35%">
            <br><br>
            
            
@@ -343,25 +344,25 @@ body {
        <div class="container">
           <div class="row">
              <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt" >
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
+             
+                  
+             <c:forEach items="${list}" var="n">
+				<div class="col-md-4 pjt" >      
+					<tr>
+					<td class="title"> 프로젝트 이름 :  <a href="projectDetail.do?seq=${n.pjtSeq}" style="color:red">${n.pjtName}</a></td>
+					<br>
+					<td class="ing"> 진행 상황 : ${n.pjtProgress} </td>
+					<br>
+					<td class="date"> 시작 날짜 : ${n.pjtStartAt}  </td>
+					<br>
+					<td class="date"> 종료 날짜 : ${n.pjtEndAt}  </td>
+				</tr>
+				</div>
+			</c:forEach>
+             
+         
              <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
-             <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
-             <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+             <div class="col-md-4 pjt">
                 <h5 class="title">프로젝트 추가</h5><br/>
                  <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-folder-plus" style="font-size: 50px; color : black; text-align: center;"></i> </a>
              </div>

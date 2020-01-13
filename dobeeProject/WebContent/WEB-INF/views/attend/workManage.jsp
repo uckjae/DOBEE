@@ -19,13 +19,9 @@
   
    	<script type="text/javascript">	
 		window.onload = function(){
-			var app = new Vue ({
-				el : '#navbar',
-				data : []
-			});
 
 			$.ajax({
-				url : "overTimeYearList.ajax",
+				url : "overTimeYearList.do",
 				dataType : "json",
 				success : function(data) {
 					console.log(data.OTYList);
@@ -40,7 +36,7 @@
 			});	
 
 			$.ajax({
-				url : "overTimeMonthList.ajax",
+				url : "overTimeMonthList.do",
 				dataType : "json",
 				success : function(data) {
 					console.log(data.OTMList);
@@ -113,6 +109,9 @@
 			})		
 		});
 */
+
+
+
 	</script>
  
   <body>

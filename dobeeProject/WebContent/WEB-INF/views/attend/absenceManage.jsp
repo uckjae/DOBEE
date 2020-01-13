@@ -46,20 +46,6 @@
     <div class="page">
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
-
-	<script>
-		window.onload = function(){
-
-			var app = new Vue({
-				el : '#modal',
-				data : {
-					title : '두번째 요소'
-				}
-			});
-
-		}
-		
-  	</script>
    
  		<div id="navbar">
 			<ul class="nav nav-tabs">

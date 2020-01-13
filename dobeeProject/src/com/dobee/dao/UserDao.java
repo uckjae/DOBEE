@@ -6,7 +6,10 @@ import java.util.List;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
+import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.Break;
+import com.dobee.vo.member.BreakManageList;
+import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 
@@ -40,7 +43,7 @@ public interface UserDao {
     public void myPage();
 
 
-    // 연차 불러오기
+    // Ajax 연차 불러오기
     /* 01.12 게다죽 */
     public List<Break> getVacationInBM();
     
@@ -67,9 +70,25 @@ public interface UserDao {
 
     //개인부재일정확인
     /* 01.12 게다죽 */
-    public List<Apply> absMg(Apply apply);
+    public List<BreakManageList> absMg();
 
+    
+    // Ajax 개인부재일정확인 - Option - 년도 loading		0113
+    public List<Integer> breakYearList();
+    
+    
+    // Ajax 개인부재일정확인 - Option - 월 loading		0113
+    public List<Integer> breakYearMonthList();
+    
+    
+    // Ajax 개인부재일정확인 - Option - 부재항목 loading		0113
+    public List<String> breakEntryList();
+    
 
+    // Ajax 개인부재일정확인 - Option - 승인여부 loading		0113
+    public List<String> breakIsAuthList();
+    
+        
     //개인근무내역확인
     public List<Attend> workChart();
 
@@ -81,11 +100,12 @@ public interface UserDao {
     //연장근무관리
     public List<Apply> overTimeSign();
 
-    //연장근무 년도 불러오기
+    
+    // Ajax 연장근무 년도 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeYearList();
     	
-    //연장근무 월 불러오기
+    // Ajax 연장근무 월 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeMonthList();
     
@@ -96,6 +116,14 @@ public interface UserDao {
     
     //UserInfoList 가져오기
     public List<UserInfo> getUserInfoList();
+    
+    
+    //Authority 목록불러오기
+    public List<Authority> getAuthority();
+    
+    
+    //TeamList 불러오기
+    public List<TeamList> getTeamList();
 
 
 }

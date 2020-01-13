@@ -75,7 +75,7 @@
 		window.onload = function(){
 
 			$.ajax({
-				url : "getApprovalList.ajax",
+				url : "getApprovalList.do",
 				dataType : "json",
 				success : function(data) {			
 					var dArray = [];
@@ -106,17 +106,17 @@
 		
 		<ul class="nav nav-tabs">
 		  <li class="nav-item">
-		    <a class="nav-link active" href="#">Active</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Link</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="#">Link</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link disabled" href="#">Disabled</a>
-		  </li>
+			    <a class="nav-link" href="breakApply.do">부재일정 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link active" href="extendApply.do">연장근무 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="breakManage.do">부재 일정 관리</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
+			  </li>
 		</ul>
 		
 		<h1 style="text-align: left">연장근무 신청</h1>

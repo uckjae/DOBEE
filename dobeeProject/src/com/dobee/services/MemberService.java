@@ -1,5 +1,6 @@
 package com.dobee.services;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -66,6 +67,15 @@ public class MemberService {
     	UserDao userdao = sqlSession.getMapper(UserDao.class);
     	List<User> result = userdao.getUserList();
     	return result;
+    }
+    
+    
+    /* 01.13 알파카 */
+    //User 정보 가져오기
+    public User getUser(String mail) {
+    	UserDao userdao = sqlSession.getMapper(UserDao.class);
+    	User user = userdao.getUser(mail);
+    	return user;
     }
     
 

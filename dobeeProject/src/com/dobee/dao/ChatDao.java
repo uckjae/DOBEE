@@ -12,7 +12,7 @@ import com.dobee.vo.chat.ChatUsers;
 public interface ChatDao {
 	
 	//그룹 채팅방 만들기
-	public int makeGroupChatRoom(String chatRoomName);
+	public int makeGroupChatRoom(String newChatRoomName);
 	
 	//그룹 채팅방 채팅방 유저 만들기
 	public int makeGroupChatUsers(Map<String,String> map);
