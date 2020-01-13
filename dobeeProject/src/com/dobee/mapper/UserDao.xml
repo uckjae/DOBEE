@@ -22,25 +22,25 @@
 	</select>
 	
 	
-	<!-- 신청코드 불러오기 -->
+	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
 		SELECT APYCODE, ENTRY FROM APPLYCODE
 	</select>
 	
 		
-	<!-- 결재자 불러오귀 // AUTHCODE=1 팀장 -->
+	<!-- Ajax 결재자 불러오귀 // AUTHCODE=1 팀장 -->
 	<select id="getApprovalList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME FROM USER WHERE AUTHCODE=1
 	</select>
 	
 	
-	<!-- 연장근무 년도 불러오기 -->
+	<!-- Ajax 연장근무 년도 불러오기 -->
 	<select id="overTimeYearList" resultType="Integer">
 		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND
 	</select>
 	
 	
-	<!-- 연장근무 월 불러오기 -->
+	<!-- Ajax 연장근무 월 불러오기 -->
 	<select id="overTimeMonthList" resultType="Integer">
 		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%c') FROM ATTEND;
 	</select>
@@ -59,18 +59,47 @@
 			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, #{apyCode})
 	</insert>
 	
-	<!-- 연차 불러오기 0112 -->
+	
+	<!-- Ajax 연차 불러오기 0112 -->
 	<select id="getVacationInBM" resultType="com.dobee.vo.member.Break">
 		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL='JG@KIM.COM'
 	</select>
 	
+	<!-- Ajax 개인부재일정확인 - Option - 년도 loading		0113 -->
+	<select id="breakYearList" resultType="Integer">
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - Option - 월 loading		0113 -->
+	<select id="breakYearMonthList" resultType="Integer">
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%c') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - Option - 부재항목 loading		0113 -->
+	<select id="breakEntryList" resultType="String">
+		SELECT DISTINCT AC.ENTRY 
+			FROM APPLY A
+			INNER JOIN APPLYCODE AC
+        		ON A.APYCODE = AC.APYCODE
+		WHERE A.APYCODE != 6 AND  A.DRAFTER='JG@KIM.COM';
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - Option - 승인여부 loading		0113 -->
+	<select id="breakIsAuthList" resultType="String">
+		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+	</select>
+	
+	
 	<!-- 부재내역 불러오기 -->
-	<select id="absMg" resultType="com.dobee.vo.Apply">
-		SELECT AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK
+	<select id="absMg" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
-				INNER JOIN BREAKLIST BL
+				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
 		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM';
 	</select>

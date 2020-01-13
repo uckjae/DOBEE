@@ -38,6 +38,7 @@ import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.chat.ChatUsers;
+import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -239,7 +240,7 @@ public class DoController {
     }
 
 
-  //연장근무신청
+    //연장근무신청
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -258,10 +259,15 @@ public class DoController {
 
 
     //부재일정관리
-    @RequestMapping("breakManage.do")
-    public String absMg(){
-        return "attend/breakManage";
-    }
+  	/* 01.12 by 게다죽 ing */
+     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+     public String absMg(Model model){
+    	List<BreakManageList> results = applyService.absMg();
+     	System.out.println("results: " + results );
+     	model.addAttribute("brkList", results);
+     	
+     	return "attend/breakManage";
+     }
 
 
     //근무내역확인

@@ -6,12 +6,13 @@ import lombok.ToString;
 @ToString
 @Data
 public class BreakManageList {
+	int aplSeq;
    String entry;
    String reqDate;
    String startAt;
    String endAt;
    String isAuth;
-   String UsingBreak;
+   int usingBreak;
    String reason;
    String rejReason;
    
