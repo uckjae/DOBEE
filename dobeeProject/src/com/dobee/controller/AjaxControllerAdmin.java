@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
 import com.dobee.vo.member.Authority;
+import com.dobee.vo.member.TeamList;
+
 
 @RestController
 @RequestMapping("ajax/admin/**")
@@ -17,11 +19,17 @@ public class AjaxControllerAdmin {
 	@Autowired
 	SqlSession sqlSession;
 	
-	@RequestMapping("addUser.do")
+	@RequestMapping("authorityList.do")
 	public List<Authority> getAuthorityList(){
-		System.out.println("done");
 		UserDao userDao = sqlSession.getMapper(UserDao.class);
 		List<Authority> authorityList = userDao.getAuthority();
 		return authorityList;
+	}
+	
+	@RequestMapping("teamList.do")
+	public List<TeamList> getTeamList(){
+		UserDao userDao = sqlSession.getMapper(UserDao.class);
+		List<TeamList> teamList = userDao.getTeamList();
+		return teamList;
 	}
 }

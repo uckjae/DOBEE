@@ -9,7 +9,7 @@
 		$(function(){
 			/* 권한 코드 select option 만들기*/
 			$.ajax({
-				url:"ajax/admin/addUser.do",
+				url:"ajax/admin/authorityList.do",
 				dataType: "JSON",
 				success: function(data){
 					$.each(data, function(i, elt) {
@@ -22,14 +22,29 @@
 							else{
 								$(option).text("팀장");
 							}
-							console.log(option);
 							$('#authCode').append(option);
 						}
 					})
 				}
 			})
+	
+			/* 팀 목록 select option 만들기 */
+			$.ajax({
+				url:"ajax/admin/teamList.do",
+				dataType:"JSON",
+				success: function(data){
+					console.log("teamList Ajax");
+					console.log(data);
+					$.each(data, function(i, elt) {
+						var option = $('<option>');
+						$(option).val(elt.teamCode);
+						$(option).text(elt.teamName);
 
-		
+						$('#teamCode').append(option);
+					})
+					
+				}	
+			})
 		});
 	</script>
 </head>
@@ -103,13 +118,15 @@
                                                             <select id="authCode" name="authCode" class="form-control" placeholder="권한 코드" required="required">
                                                             	<option hidden>선택하세요</option>
                                                             </select>
-	                                                        <label for="authCode">권한 코드</label>
+	                                                        <label for="authCode">권한 선택</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="teamCode" name="teamCode" class="form-control" placeholder="팀 코드" required="required">
-                                                            <label for="teamCode">팀 코드</label>
+                                                           	<select id="teamCode" name="teamCode" class="form-control" placeholder="팀이름" required="required">
+                                                           		<option hidden>선택하세요</option>
+                                                           	</select>
+                                                            <label for="teamCode">팀 선택</label>
                                                         </div>
                                                     </div>
                                                 </div>

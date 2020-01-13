@@ -80,4 +80,10 @@
 	<select id="getAuthority" resultType="com.dobee.vo.member.Authority">
 		SELECT AUTH, AUTHCODE FROM AUTHORITY
 	</select>
+	
+	
+	<!-- 팀목록 불러오기 -->
+	<select id="getTeamList" resultType="com.dobee.vo.member.TeamList">
+		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST
+	</select>
 </mapper>

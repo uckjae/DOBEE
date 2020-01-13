@@ -506,7 +506,7 @@ public class DoController {
     
     
     //관리자_사원추가 페이지
-   @RequestMapping("addUser.do")
+   @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
 	   System.out.println("Docontroller addUser() in");
 	   return "admin/AddMember";

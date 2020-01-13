@@ -8,6 +8,7 @@ import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.Break;
+import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 
@@ -101,6 +102,10 @@ public interface UserDao {
     
     //Authority 목록불러오기
     public List<Authority> getAuthority();
+    
+    
+    //TeamList 불러오기
+    public List<TeamList> getTeamList();
 
 
 }
