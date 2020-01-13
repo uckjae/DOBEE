@@ -15,7 +15,7 @@
 	<!-- 채팅방 참여자 리스트 만들기 public int makeGroupChatUsers(String chatRoomName, List<String> chatUsers);-->
 	<insert id="makeGroupChatUsers" parameterType="hashMap">
 		INSERT INTO CHATUSERS(CHATSEQ, MAIL) 
-		VALUES( (SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{chatRoomName}), (SELECT MAIL FROM USER WHERE MAIL=#{mail}));
+		VALUES( (SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{newChatRoomName}), (SELECT MAIL FROM USER WHERE MAIL=#{mail}));
 	</insert>
 	
 	<!-- 채팅방 seq 가져오기 -->
@@ -26,10 +26,14 @@
 	<!-- //특정 회원이 속한 그룹 채팅방 리스트 가져오기
 	public String getGroupChatRoomList(String mail);  -->
 	<select id="getGroupChatRoomList" parameterType="String" resultType="com.dobee.vo.chat.ChatRoom">
-		SELECT CHATSEQ, CHATROOMNAME, CHATCODE
-		FROM CHATROOM
-		WHERE CHATSEQ=ANY (SELECT CHATSEQ FROM CHATUSERS WHERE MAIL=#{mail})
-		AND CHATCODE=3
+		<!-- SELECT * FROM CHATROOM CR
+		LEFT OUTER JOIN CHATUSERS CU
+		ON CR.CHATSEQ = CU.CHATSEQ
+		WHERE MAIL=#{mail} AND CR.CHATCODE=3; -->
+		SELECT * 
+		FROM CHATROOM 
+		WHERE CHATCODE=3 
+		AND CHATSEQ = ANY (SELECT CHATSEQ FROM CHATUSERS WHERE MAIL=${mail})
 	</select>
 	
 </mapper>
