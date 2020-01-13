@@ -482,17 +482,15 @@ public class DoController {
     
     
     //관리자_사원추가 페이지
-    @RequestMapping(value = "addUser.do", method = RequestMethod.GET)
-    public String addUser() {
-    	return "admin/AddMember";
-    }
+   @RequestMapping("addUser.do")
+   public String addUser() {
+	   System.out.println("Docontroller addUser() in");
+	   return "admin/AddMember";
+   }
     
     
     //관리자_사원추가 서비스
-    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
-    public String addUser(User user, UserInfo userInfo) {
-    	return "admin/AdminMain";
-    }
+    
     
     
 }

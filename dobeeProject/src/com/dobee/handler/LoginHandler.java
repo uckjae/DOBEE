@@ -42,8 +42,10 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
         UserDao userDao = sqlsession.getMapper(UserDao.class);
         String url = getReturnUrl(request,response);
                 
-        String mail = request.getParameter("mail");
-
+        Object obj = auth.getPrincipal();
+        System.out.println("loginHandler auth.getPrincipal" + obj.toString());
+        String mail = auth.getName();
+        System.out.println("loginHandler auth.getName()" + mail);
         User user = userDao.getUser(mail);
         
         request.getSession().setAttribute("user", user);
