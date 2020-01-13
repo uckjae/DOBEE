@@ -29,7 +29,7 @@ import com.dobee.vo.project.Project;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
-import com.dobee.services.GoogleVisionApi;
+import com.dobee.services.googleVisionService;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
@@ -302,7 +302,7 @@ public class DoController {
     @RequestMapping("goVision.do")
     public String goGoogleApi(){
     	System.out.println("goGoogleApi 함수요청");
-    	GoogleVisionApi vision = new GoogleVisionApi();
+    	googleVisionService vision = new googleVisionService();
     	
     	System.out.println(" vision 서비스단 통과");
     	    	

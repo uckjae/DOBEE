@@ -1,5 +1,6 @@
 package com.dobee.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,30 +18,14 @@ public class AjaxController_Reciept {
 	@Autowired
 	private ReceiptService receiptService;
 	
-	
 
 	
 	
-	
-//	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
-//	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {
-//		//System.out.println("dd");
-//		ModelAndView mav = new ModelAndView();
-//		if(receiptService.fileUpload(mRequest)) {
-//			mav.addObject("result", "success");
-//		} else {
-//			mav.addObject("result", "fail");
-//		}
-//		mav.setViewName("jsonView"); //view �̸� : json ���
-//		return mav;
-//	}
-	
-	
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
-	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {
+	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
 		System.out.println("컨트롤단/boardControlelr.java :  fileUploadAjax.do 요청들어왔다 ");
 		ArrayList<String> arrayList = new ArrayList<>();
-		
+
 		ModelAndView mav = new ModelAndView();
 		arrayList = receiptService.fileUpload(mRequest);
 		try {

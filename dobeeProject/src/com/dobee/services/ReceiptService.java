@@ -2,6 +2,7 @@ package com.dobee.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,50 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReceiptService {
 	
 	
-	public ArrayList<String> fileUpload(MultipartHttpServletRequest mRequest) {
-
-		
-//boolean isSuccess = false;
-//		
-//		String uploadPath = "/users/psh/file/";
-//		
-//		File dir = new File(uploadPath);
-//
-//		if (!dir.isDirectory()) {
-//			dir.mkdirs();
-//		}
-//		
-//		Iterator<String> iter = mRequest.getFileNames();
-//		while(iter.hasNext()) {
-//			String uploadFileName = iter.next();
-//			
-//			MultipartFile mFile = mRequest.getFile(uploadFileName);
-//			String originalFileName = mFile.getOriginalFilename();
-//			String saveFileName = originalFileName;
-//			
-//			if(saveFileName != null && !saveFileName.equals("")) {
-//				if(new File(uploadPath + saveFileName).exists()) {
-//					saveFileName = saveFileName + "_" + System.currentTimeMillis();
-//				}
-//				
-//				try {
-//					mFile.transferTo(new File(uploadPath + saveFileName));
-//					isSuccess = true;				
-//				} catch (IllegalStateException e) {
-//					e.printStackTrace();
-//					isSuccess = false;
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//					isSuccess = false;
-//				}
-//			} // if end
-//		} // while end
-//		return isSuccess;
-		
-		
+	public ArrayList<String> fileUpload(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
 		
 		ArrayList<String> arrayList = new ArrayList<>();
-		
 			
 		String isSuccess = "false";
 		
@@ -74,12 +34,22 @@ public class ReceiptService {
 			System.out.println("서비스단 / ReceiptService:  와일문 시작 ");
 			String uploadFileName = iter.next();
 			MultipartFile mFile = mRequest.getFile(uploadFileName);
-			String originalFileName = mFile.getOriginalFilename();
-			String saveFileName = originalFileName;
+			String origName;
+			
+			//String originalFileName = mFile.getOriginalFilename();
+			origName = new String(mFile.getOriginalFilename().getBytes("8859_1"), "utf-8");
+
+			String saveFileName = origName;
 			System.out.println("upload 서비스단 시작");
+			System.out.println(saveFileName);
 			if(saveFileName != null && !saveFileName.equals("")) {
 				if(new File(uploadPath + saveFileName).exists()) {
-					saveFileName = saveFileName + "_" + System.currentTimeMillis() + ".jpeg";
+					String ex = "";
+					String ori = "";
+					ori = saveFileName.split("\\.")[0];
+					ex = saveFileName.split("\\.")[1];
+					System.out.println("서비스단:ReceiptService: 파일명/확장자 =" + ori +"/" + ex );
+					saveFileName = ori + "_" + System.currentTimeMillis() + ex;
 				}
 				
 				try {
@@ -98,15 +68,11 @@ public class ReceiptService {
 			} // if end
 			else {
 				System.out.println("서비스단 / ReceiptService: form 태그로 부터 온 데이타가 없습니다.");
-		
 			}
 		
 			arrayList.add(isSuccess);
 			arrayList.add(uploadPath);
 			arrayList.add(saveFileName);
-			System.out.println(uploadPath);
-			System.out.println(saveFileName);
-			System.out.println(isSuccess);
 		} // while end
 		return arrayList;
 	} // fileUpload end
