@@ -6,15 +6,11 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import java.util.List;
 
-import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,11 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
-import com.dobee.services.ProjectService;
-import com.dobee.vo.notice.Notice;
-import com.dobee.vo.project.Project;
-
-
+import com.dobee.dao.ProjectDao;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
@@ -37,10 +29,10 @@ import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
-import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
 
 
 @Controller
@@ -363,12 +355,16 @@ public class DoController {
 
 
     //프로젝트메인
-    @RequestMapping("project.do")
-    public String projectMain(){
-		/*
-		 * ProjectService projectService = new ProjectService(); List<Project>
-		 * projectList = projectService.projectList();
-		 */
+    @RequestMapping("projectMain.do")
+    public String projectList(Project project,Model model){
+    	
+    		List<Project>list=null;
+    	
+    		ProjectDao projectdao=sqlsession.getMapper(ProjectDao.class);
+    		list= projectdao.getPjt(project);
+    		System.out.println(list);
+    		model.addAttribute("list",list);
+    
         return "project/pjtMain";
     }
 
