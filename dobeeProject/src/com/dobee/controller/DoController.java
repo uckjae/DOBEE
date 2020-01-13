@@ -463,15 +463,7 @@ public class DoController {
     	return null;
     }
     
-    //1:1 채팅방 메인
-    @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
-    public String chatDm(@RequestParam(value="mail") String mail) {
-    	
-    	
-    	return null;
-    }
-    
-    
+  
     
     
 //    //전체 채팅 채팅방 가져오기
