@@ -58,6 +58,9 @@ public class DoController {
     private SqlSession sqlsession;
     
     @Autowired
+    private ProjectService projectService;
+    
+    @Autowired
     private ApplyService applyService;
     
     @Autowired
@@ -386,8 +389,19 @@ public class DoController {
 
 
     //프로젝트생성
-    public String addProject(){
-        return null;
+    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
+    public String addProject(Project project){
+    	
+    	int result = 0;
+    	String viewpage = "";
+    	result = projectService.addProject(project);
+    	
+    	if(result > 0) {
+    		viewpage = "redirect:/pjtMain.do";
+    	}else {
+    		viewpage = "project/pjtChart";
+    	}
+    	 return viewpage;
     }
 
 

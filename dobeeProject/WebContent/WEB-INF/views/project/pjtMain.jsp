@@ -260,7 +260,7 @@ body {
         <div class="card my-5">
           <div class="card-body">
             <h2 class="card-title text-center" style="color:#000000;"> 새 프로젝트</h2>
-            <form class="form-signin" action="memberadd.me" accept-charset="UTF-8">
+            <form class="form-signin" action="pjtAdd.do" accept-charset="UTF-8" method="post">
              <h4 class="title"> 제목 </h4>
               <div class="form-label-group">
             
@@ -269,15 +269,15 @@ body {
               </div>
                 <h4 class="title"> 설명 ( 선택사항 ) </h4>
               <div class="form-label-group">
-                <input type="text" id="nickname" name="nickname" class="form-control" placeholder="" autofocus>
+                <input type="text" id="pjtProgress" name="pjtProgress" class="form-control" placeholder="" autofocus>
                   
               </div>
               
               <h4 class="title"> 시작일 </h4>
-           <input type="date" name="pjtStartDate" id="pjtStratName" style="width: 35%">
+           <input type="date" name="pjtStartAt" id="pjtStartAt" style="width: 35%">
            <br><br>
             <h4 class="title"> 마감일 </h4>
-           <input type="date" name="pjtEndDate" id="pjtEndDate" style="width: 35%">
+           <input type="date" name="pjtEndAt" id="pjtEndAt" style="width: 35%">
            <br><br>
            
            

@@ -1,5 +1,6 @@
 package com.dobee.services;
 
+import com.dobee.dao.ProjectDao;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
@@ -25,8 +26,12 @@ public class ProjectService {
 
 
     //프로젝트추가
-    public void addProject(){
-
+    public int addProject(Project project){
+    	int result = 0;
+    	ProjectDao dao = sqlSession.getMapper(ProjectDao.class);
+    	result = dao.mkPjt(project);
+    	return result;
+    	
     }
 
 
