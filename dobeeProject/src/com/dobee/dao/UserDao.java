@@ -6,6 +6,7 @@ import java.util.List;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
+import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.Break;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -96,6 +97,10 @@ public interface UserDao {
     
     //UserInfoList 가져오기
     public List<UserInfo> getUserInfoList();
+    
+    
+    //Authority 목록불러오기
+    public List<Authority> getAuthority();
 
 
 }
