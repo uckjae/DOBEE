@@ -425,11 +425,13 @@
 			});
 	
 	$("#sendMessage").on('submit', function(e){
+		
 		var msg = $('#message').val();
 		socket.emit('send message to self', username, msg);
 		$('#message').val("");
 		$("#message").focus();
 		e.preventDefault();
+		
 		});
 	
 	socket.on('receive message', function(msg,currentDate){
