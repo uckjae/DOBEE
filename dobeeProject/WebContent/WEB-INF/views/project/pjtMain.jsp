@@ -344,25 +344,25 @@ body {
        <div class="container">
           <div class="row">
              <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt" >
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
+             
+                  
+             <c:forEach items="${list}" var="n">
+				<div class="col-md-4 pjt" >      
+					<tr>
+					<td class="title"> 프로젝트 이름 :  <a href="projectDetail.do?seq=${n.pjtSeq}" style="color:red">${n.pjtName}</a></td>
+					<br>
+					<td class="ing"> 진행 상황 : ${n.pjtProgress} </td>
+					<br>
+					<td class="date"> 시작 날짜 : ${n.pjtStartAt}  </td>
+					<br>
+					<td class="date"> 종료 날짜 : ${n.pjtEndAt}  </td>
+				</tr>
+				</div>
+			</c:forEach>
+             
+         
              <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
-             <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
-                <h5 class="title">프로젝트이름</h5><br/>
-                <span class="bg-lgiht">진행상황</span><br/>
-                <p>날짜</p>
-             </div>
-             <!-- 프로젝트 -->
-             <div class="col-xl-2 col-md-2 col-sm-12 col-2 pjt">
+             <div class="col-md-4 pjt">
                 <h5 class="title">프로젝트 추가</h5><br/>
                  <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-folder-plus" style="font-size: 50px; color : black; text-align: center;"></i> </a>
              </div>

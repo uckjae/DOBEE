@@ -25,7 +25,7 @@ public class AjaxController_DABC {
 	private SqlSession sqlsession;
 	
 	// 부재신청 항목 불러오기
-	@RequestMapping("getApyCode.ajax")
+	@RequestMapping("getApyCode.do")
 	public View brkApyCat (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> results = userDao.getApyCode();
@@ -36,7 +36,7 @@ public class AjaxController_DABC {
 	
 	
 	// 부재신청 결재자 불러오기
-	@RequestMapping("getApprovalList.ajax")
+	@RequestMapping("getApprovalList.do")
 	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		ArrayList<User> results = userDao.getApprovalList();
@@ -46,8 +46,25 @@ public class AjaxController_DABC {
 	}
 	
 	
+	// 부재신청 년도 option list 불러오기
+	@RequestMapping("breakYearList.do")
+	public View breakYearList (Model map) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class)
+		ArrayList<User> results = userDao.a)
+		return jsonview;
+	}
+	
+	
+	// 부재신청 년도 option list 불러오기
+	@RequestMapping("breakYearMonthList.do")
+	public View breakYearMonthList (Model map) {
+		
+		return jsonview;
+	}
+	
+	
 	// 근무내역 확인 년도 불러오기
-	@RequestMapping("overTimeYearList.ajax")
+	@RequestMapping("overTimeYearList.do")
 	public View overTimeYearList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Integer> results = userDao.overTimeYearList();
@@ -59,7 +76,7 @@ public class AjaxController_DABC {
 	
 	
 	// 근무내역 확인 월 불러오기
-	@RequestMapping("overTimeMonthList.ajax")
+	@RequestMapping("overTimeMonthList.do")
 	public View overTimeMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Integer> results = userDao.overTimeMonthList();

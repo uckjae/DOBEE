@@ -90,7 +90,7 @@
 		window.onload = function(){
 
 			$.ajax({
-				url : "getApyCode.ajax",
+				url : "getApyCode.do",
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -104,7 +104,7 @@
 
 			
 			$.ajax({
-				url : "getApprovalList.ajax",
+				url : "getApprovalList.do",
 				dataType : "json",
 				success : function(data) {	
 					var dArray = [];
@@ -126,7 +126,7 @@
 	    <div id="navbar">
 			<ul class="nav nav-tabs">
 			  <li class="nav-item">
-			    <a class="nav-link active" href="#">부재일정 신청</a>
+			    <a class="nav-link active" href="breakApply.do">부재일정 신청</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" href="extendApply.do">연장근무 신청</a>
@@ -253,7 +253,7 @@
 						<input type="reset" value="초기화">
 					</form>
 					<br>
-						 -->
+					-->
 				</div>
 			</div>
 

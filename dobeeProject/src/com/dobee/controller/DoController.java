@@ -6,11 +6,15 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import java.util.List;
 
+import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
+import com.dobee.services.ProjectService;
+import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
+
+
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
@@ -29,6 +38,8 @@ import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.chat.ChatUsers;
+import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -231,7 +242,7 @@ public class DoController {
     }
 
 
-  //연장근무신청
+    //연장근무신청
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -250,10 +261,15 @@ public class DoController {
 
 
     //부재일정관리
-    @RequestMapping("breakManage.do")
-    public String absMg(){
-        return "attend/breakManage";
-    }
+  	/* 01.12 by 게다죽 ing */
+     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+     public String absMg(Model model){
+    	List<BreakManageList> results = applyService.absMg();
+     	System.out.println("results: " + results );
+     	model.addAttribute("brkList", results);
+     	
+     	return "attend/breakManage";
+     }
 
 
     //근무내역확인
@@ -508,7 +524,7 @@ public class DoController {
     
     
     //관리자_사원추가 페이지
-   @RequestMapping("addUser.do")
+   @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
 	   System.out.println("Docontroller addUser() in");
 	   return "admin/AddMember";
@@ -517,6 +533,10 @@ public class DoController {
     
     //관리자_사원추가 서비스
     
+    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
+    public String addUser(User user, UserInfo userInfo) {
+    	return "admin/AdminMain";
+    }
     
     
 }
