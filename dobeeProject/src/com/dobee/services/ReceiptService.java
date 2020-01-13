@@ -16,12 +16,52 @@ public class ReceiptService {
 	
 	public ArrayList<String> fileUpload(MultipartHttpServletRequest mRequest) {
 
+		
+//boolean isSuccess = false;
+//		
+//		String uploadPath = "/users/psh/file/";
+//		
+//		File dir = new File(uploadPath);
+//
+//		if (!dir.isDirectory()) {
+//			dir.mkdirs();
+//		}
+//		
+//		Iterator<String> iter = mRequest.getFileNames();
+//		while(iter.hasNext()) {
+//			String uploadFileName = iter.next();
+//			
+//			MultipartFile mFile = mRequest.getFile(uploadFileName);
+//			String originalFileName = mFile.getOriginalFilename();
+//			String saveFileName = originalFileName;
+//			
+//			if(saveFileName != null && !saveFileName.equals("")) {
+//				if(new File(uploadPath + saveFileName).exists()) {
+//					saveFileName = saveFileName + "_" + System.currentTimeMillis();
+//				}
+//				
+//				try {
+//					mFile.transferTo(new File(uploadPath + saveFileName));
+//					isSuccess = true;				
+//				} catch (IllegalStateException e) {
+//					e.printStackTrace();
+//					isSuccess = false;
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//					isSuccess = false;
+//				}
+//			} // if end
+//		} // while end
+//		return isSuccess;
+		
+		
+		
 		ArrayList<String> arrayList = new ArrayList<>();
 		
 			
 		String isSuccess = "false";
 		
-		String uploadPath = "/users/psh/file/";
+		String uploadPath = "/Users/psh/DOBEE/dobeeProject/webapp/upload/";
 		
 		File dir = new File(uploadPath);
 
@@ -39,7 +79,7 @@ public class ReceiptService {
 			System.out.println("upload 서비스단 시작");
 			if(saveFileName != null && !saveFileName.equals("")) {
 				if(new File(uploadPath + saveFileName).exists()) {
-					saveFileName = saveFileName + "_" + System.currentTimeMillis();
+					saveFileName = saveFileName + "_" + System.currentTimeMillis() + ".jpeg";
 				}
 				
 				try {

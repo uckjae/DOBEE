@@ -45,6 +45,7 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
         String mail = request.getParameter("mail");
 
         User user = userDao.getUser(mail);
+        
         request.getSession().setAttribute("user", user);
         System.out.println(user.toString());
         if(user.getAuthCode() == 1){// ADMIN

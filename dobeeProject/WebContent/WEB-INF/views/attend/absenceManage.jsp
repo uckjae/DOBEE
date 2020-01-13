@@ -49,10 +49,6 @@
 
 	<script>
 		window.onload = function(){
-			var app = new Vue ({
-				el : '#navbar',
-				data : []
-			});
 
 			var app = new Vue({
 				el : '#modal',
@@ -61,17 +57,28 @@
 				}
 			});
 
-			var app = new Vue({
-				el : '#dropdown',
-				data : {
-					val : ''
-				}
-			})			
 		}
 		
   	</script>
    
- 
+ 		<div id="navbar">
+			<ul class="nav nav-tabs">
+			  <li class="nav-item">
+			    <a class="nav-link active" href="#">부재일정 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="extendApply.do">연장근무 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="breakManage.do">부재 일정 관리</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
+			  </li>
+			</ul>
+		</div>
+		
+		<p>여기서부터 진행</p>
 	<div id="navbar">
 	  <b-card title="Card Title" no-body>
 	    <b-card-header header-tag="nav">

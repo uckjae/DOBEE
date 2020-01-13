@@ -243,12 +243,29 @@
 		
 		
 		
-		<!-- jquery form data ajax 통신 플러그인 -->
-	<!-- 	<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>jquery-form</artifactId>
-		    <version>3.51</version>
-		</dependency> -->
+<!-- https://mvnrepository.com/artifact/org.webjars/jquery-form -->
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>jquery-form</artifactId>
+    <version>3.51</version>
+</dependency>
+
+     <dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+        <dependency>
+		<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+        <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
+
 		
 		
 	</dependencies>

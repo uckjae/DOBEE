@@ -4,12 +4,14 @@ package com.dobee.controller;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import java.util.List;
 
+import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import com.dobee.vo.project.Project;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
+import com.dobee.services.ChatService;
 import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
@@ -49,6 +52,9 @@ public class DoController {
     
     @Autowired
     private ApplyService applyService;
+    
+    @Autowired
+    private ChatService chatService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -200,7 +206,7 @@ public class DoController {
     }
 
 
-  //연장근무신청
+    //연장근무신청
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -219,8 +225,13 @@ public class DoController {
 
 
     //부재일정관리
-    @RequestMapping("breakManage.do")
-    public String absMg(){
+    /* 01.12 by 게다죽 ing */
+    @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+    public String absMg(Apply apply, Model model){
+        List<Apply> results = applyService.absMg(apply);
+        System.out.println("results: " + results );
+        model.addAttribute("brkList", results);
+        
         return "attend/breakManage";
     }
 
@@ -294,15 +305,9 @@ public class DoController {
     	GoogleVisionApi vision = new GoogleVisionApi();
     	
     	System.out.println(" vision 서비스단 통과");
-    	
-    	
-    	
+    	    	
         return null;
     }
-    
-    
-    
-    
     
     
     //비용정산신청 vision 으로 부터 읽어온 text수정까지 하고 최종 확인
@@ -426,10 +431,33 @@ public class DoController {
 
     //채팅 메인
     @RequestMapping("chat.do")
-    public String chatMain(Model model) {
+    public String chatMain(Model model, HttpServletRequest request) {
+    	User user = (User) request.getSession().getAttribute("user");
+    	String mail = user.getMail();
+    	
+    	//이 회원이 속한 채팅방 목록 가져오기
+    	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<String> roomNameList = new ArrayList<String>();
+    	
+    	for(int i = 0; i < groupChatRoomList.size(); i++) {
+    		roomNameList.add(groupChatRoomList.get(i).getChatRoomName());
+    	}
+    	System.out.println("채팅방이름 리스트만"+roomNameList.toString());
+    	model.addAttribute("roomNameList", roomNameList);
+    	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
+    	
+    	return "chat/chatMain";
+    }
+    
+    
+    //1:1 채팅방 메인
+    @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
+    public String chatDm() {
+    	
+    	
     	
     	return "chat/chatMain";
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dobee.dao.ChatDao">
+
+
+
+	<!-- 그룹 채팅방 만들기 -->
+	<insert id="makeGroupChatRoom" parameterType="String">
+		INSERT INTO CHATROOM(CHATROOMNAME, CHATCODE) 
+		VALUES( #{chatRoomName}, (SELECT CHATCODE FROM CHATCODE WHERE CHATTYPE='GROUP'))
+	</insert>
+	
+	<!-- 채팅방 참여자 리스트 만들기 public int makeGroupChatUsers(String chatRoomName, List<String> chatUsers);-->
+	<insert id="makeGroupChatUsers" parameterType="hashMap">
+		INSERT INTO CHATUSERS(CHATSEQ, MAIL) 
+		VALUES( (SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{chatRoomName}), (SELECT MAIL FROM USER WHERE MAIL=#{mail}));
+	</insert>
+	
+	<!-- 채팅방 seq 가져오기 -->
+	<select id="getChatSeq" parameterType="String" resultType="int">
+		SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{chatRoomName}
+	</select>
+	
+	<!-- //특정 회원이 속한 그룹 채팅방 리스트 가져오기
+	public String getGroupChatRoomList(String mail);  -->
+	<select id="getGroupChatRoomList" parameterType="String" resultType="com.dobee.vo.chat.ChatRoom">
+		SELECT CHATSEQ, CHATROOMNAME, CHATCODE
+		FROM CHATROOM
+		WHERE CHATSEQ=ANY (SELECT CHATSEQ FROM CHATUSERS WHERE MAIL=#{mail})
+		AND CHATCODE=3
+	</select>
+	
+</mapper>

@@ -73,13 +73,9 @@
   
   	<script>
 		window.onload = function(){
-			var app = new Vue ({
-				el : '#navbar',
-				data : []
-			});
 
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "getApprovalList.ajax",
 				dataType : "json",
 				success : function(data) {			
 					var dArray = [];
@@ -90,7 +86,7 @@
 					}
 				},
 				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -101,32 +97,33 @@
     <nav class="side-navbar">
     <c:import url="/common/left.jsp" />
     </nav>
-
-    <div class="page">
-      <!-- navbar-->
-      <c:import url="/common/top.jsp"/>
-	<div id="navbar">
-	  <b-card title="Card Title" no-body>
-	    <b-card-header header-tag="nav">
-	      <b-nav card-header pills>
-	        <b-nav-item >부재일정 신청</b-nav-item>
-	        <b-nav-item active>연장근무 신청</b-nav-item>
-	        <b-nav-item><a href="breakManage.do">부재 일정 관리</a></b-nav-item>
-	        <b-nav-item ><a href="workManage.do">근무 내역 확인</a></b-nav-item>
-	        <b-nav-item >부재 관리</b-nav-item>
-	        <b-nav-item >연장근무 관리</b-nav-item>
-	      </b-nav>
-	    </b-card-header>
 	
-	    <b-card-body class="text-center">
-	      <b-card-text>
-	     	<h1 style="text-align: left">연장근무 신청</h1>
+
+	
+    <div class="page">
+		<!-- navbar-->
+		<c:import url="/common/top.jsp"/>
+		
+		<ul class="nav nav-tabs">
+		  <li class="nav-item">
+		    <a class="nav-link active" href="#">Active</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="#">Link</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="#">Link</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link disabled" href="#">Disabled</a>
+		  </li>
+		</ul>
+		
+		<h1 style="text-align: left">연장근무 신청</h1>
 	     	<br>
-	     	<div class="col-sm-2" style="background-color: yellow; width:20%"></div>
 	     	
-	     	<div class="col-sm-6" id="jgContainer">
+	     	<div id="jgContainer">
 				<div class="formDiv">
-				
 					<form action="extendApply.do" method="post">
 						시작 시간 	<input type="text" name="startAt" value="20200202"><br>
 						종료 시간 	<input type="text" name="endAt" value="20200203"><br>
@@ -191,7 +188,24 @@
 					</form>
 				</div>
 			</div>
-
+		
+	
+	<div id="navbar">
+	  <b-card title="Card Title" no-body>
+	    <b-card-header header-tag="nav">
+	      <b-nav card-header pills>
+	        <b-nav-item >부재일정 신청</b-nav-item>
+	        <b-nav-item active>연장근무 신청</b-nav-item>
+	        <b-nav-item><a href="breakManage.do">부재 일정 관리</a></b-nav-item>
+	        <b-nav-item ><a href="workManage.do">근무 내역 확인</a></b-nav-item>
+	        <b-nav-item >부재 관리</b-nav-item>
+	        <b-nav-item >연장근무 관리</b-nav-item>
+	      </b-nav>
+	    </b-card-header>
+	
+	    <b-card-body class="text-center">
+	      <b-card-text>
+	     	
 	      </b-card-text>
 	    </b-card-body>
 	  </b-card>

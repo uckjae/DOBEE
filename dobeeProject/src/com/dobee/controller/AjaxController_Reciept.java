@@ -18,15 +18,23 @@ public class AjaxController_Reciept {
 	private ReceiptService receiptService;
 	
 	
-	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.GET)
-	public ModelAndView fileUploadAjaxForm() {
-		
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("board/fileUpload_ajax");
-		
-		return mav;
-	}
+
+	
+	
+	
+//	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
+//	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {
+//		//System.out.println("dd");
+//		ModelAndView mav = new ModelAndView();
+//		if(receiptService.fileUpload(mRequest)) {
+//			mav.addObject("result", "success");
+//		} else {
+//			mav.addObject("result", "fail");
+//		}
+//		mav.setViewName("jsonView"); //view �̸� : json ���
+//		return mav;
+//	}
+	
 	
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) {

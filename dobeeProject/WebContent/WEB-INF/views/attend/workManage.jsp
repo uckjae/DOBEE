@@ -25,7 +25,7 @@
 			});
 
 			$.ajax({
-				url : "overTimeYearList.do",
+				url : "overTimeYearList.ajax",
 				dataType : "json",
 				success : function(data) {
 					console.log(data.OTYList);
@@ -40,7 +40,7 @@
 			});	
 
 			$.ajax({
-				url : "overTimeMonthList.do",
+				url : "overTimeMonthList.ajax",
 				dataType : "json",
 				success : function(data) {
 					console.log(data.OTMList);
