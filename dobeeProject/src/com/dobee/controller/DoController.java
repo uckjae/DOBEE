@@ -58,6 +58,9 @@ public class DoController {
     private SqlSession sqlsession;
     
     @Autowired
+    private ProjectService projectService;
+    
+    @Autowired
     private ApplyService applyService;
     
     @Autowired
@@ -385,8 +388,19 @@ public class DoController {
 
 
     //프로젝트생성
-    public String addProject(){
-        return null;
+    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
+    public String addProject(Project project){
+    	
+    	int result = 0;
+    	String viewpage = "";
+    	result = projectService.addProject(project);
+    	
+    	if(result > 0) {
+    		viewpage = "redirect:/pjtMain.do";
+    	}else {
+    		viewpage = "project/pjtChart";
+    	}
+    	 return viewpage;
     }
 
 
@@ -478,23 +492,28 @@ public class DoController {
     @RequestMapping("chat.do")
     public String chatMain(Model model, Principal principal) {
     	String mail = principal.getName();
+    	System.out.println("메일은?"+mail);
+    	
     	User user = memberService.getUser(mail);
+    	System.out.println("넘어오니??"+user.toString());
     	//회원 정보 저장하기
-    	model.addAttribute("user", user);
-    	
+    	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	
-    	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
-    	for(int i = 0; i < groupChatRoomList.size(); i++) {
-    		roomNameList.add(groupChatRoomList.get(i).getChatRoomName());
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
     	}
+
     	model.addAttribute("roomNameList", roomNameList);
     	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
+    	
+    	//기본 나에게 채팅으로 셋팅
+    	model.addAttribute("chatType", "self");
     	
     	return "chat/chatMain";
     }

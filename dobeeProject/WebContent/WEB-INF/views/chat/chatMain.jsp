@@ -1,3 +1,4 @@
+<%@page import="com.dobee.vo.chat.ChatRoom"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -200,10 +201,10 @@
 						      <form id="makeChatRoom" name="makeChatRoom" method="post">
 						      	<div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="chatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
+						      			<label for="newChatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;채널 이름</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="chatRoomName" name="chatRoomName">
+							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
 						        <div class="row">
@@ -242,7 +243,7 @@
             <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           <c:forEach var="roomName" items="${roomNameList}">
 		            <li>
-			           	<div><a href='chatGroup.do?roomName=${roomName }'><i class='fas fa-user'></i><span>&nbsp;&nbsp;${roomName}</span></a>
+			           	<div><a href='#' class="groupChatRoom"><i class='fas fa-user'></i><span>&nbsp;&nbsp;${roomName}</span></a>
 			     	  	</div>
 		     	  	</li>
 	           </c:forEach>
@@ -280,8 +281,8 @@
             			<img src="./img/alpaca.jpg" alt="avatar" class="rounded-circle" width="100px;" heigt="100px;">
             		</div>
             		<c:set var="user" value="${requestScope.user}"/>
-        			<div class="col-md-6" style="margin-top:20px;">
-               			<b style="font-size:40px; text-align:center;">${user.name}</b>
+        			<div class="col-md-6" style="margin-top:20px;" >
+               			<b id="chatRoomName" style="font-size:30px;">${user.name}</b>
             		</div>
             	</div>
             </li>
@@ -310,8 +311,11 @@
 				<div>        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
-		                <textarea class="form-control pl-2 my-0" id="message" name="message" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-		                <input type="hidden" id="username" name="username" value="알파카">
+		                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+						<%-- <input type="hidden" id="chatRoomNameToSocket" name="chatRoomNameToSocket" value="${user.name}"> --%>
+						<input type="hidden" id="nameSpace" name="nameSpace" value="${requestScope.chatType}">
+						<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+		                <input type="hidden" id="name" name="name" value="${user.name}">
 		              </div>
 		            </li>
 	            </div>
@@ -344,9 +348,51 @@
 
 
 	$(function(){
+		var socketUrl = "http://localhost:5000/"+nameSpace;
 
+		/*채팅 socket 연결*/
+		
+		function socketConnect(nameSpace, chatRoomName, chatType, name) {
+			var url = "http://localhost:5000/"+nameSpace;
+			var socket = io.connect( 'http://localhost:5000/'+nameSpace, {
+				path: '/socket.io'
+			})
+			console.log('url??'+url);
+			
+			$("#sendMessage").on('submit', function(e){
+				var chatContent = $('#chatContent').val();
+				
+				socket.emit('send message', chatRoomName, chatType, chatContent, name);
+				$('#chatContent').val("");
+				$("#chatContent").focus();
+				e.preventDefault();
+				});
+			
+			socket.on('receive message', function(chatContent,currentDate){
+				$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
+						+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+						+'<div class="chat-body"><div class="chat-message">'
+						+'<h3>'+name+'</h3>'
+						+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+						+'</div></div></li></div><br>');
+				$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+				});
+
+
+		}
+
+		function socketDisconnect(nameSpace) {
+			socket.on('disconnect', )
+		}
+
+
+		var nameSpace = $("#chatType").val();
+		var chatRoomName = $("#chatRoomName").text();
+		var chatType = $("#chatType").val();
+		var name = $("#name").val();
+		
 		//일단 selfchat 소켓으로 연결
-		socketConnect("selfchat");
+		socketConnect(nameSpace, chatRoomName, chatType, name);
 		
 		  $.ajax({
 		  		url:"getUserList.do",
@@ -376,24 +422,24 @@
 		});
 	
 	$("#makeChatRoomBtn").on('click', function(e){
-		if($("#chatRoomName").val() == "" || $("#chatRoomName").val() == null){
+		if($("#newChatRoomName").val() == "" || $("#newChatRoomName").val() == null){
 			swal({
 				title: "채널명",
 				text: "채널명을 입력하세요",
 				icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
-							$("#chatRoomName").focus();
+							$("#newChatRoomName").focus();
 							}
 						})
-						$("#chatRoomName").focus();
+						$("#newChatRoomName").focus();
 			}else{
 				var chatUserList = new Array();
 				$("input[name=userMail]").each(function(index, item){
 					chatUserList.push($(item).val());
 					});
 				var chatRoom = {
-						"chatRoomName" : $("#chatRoomName").val(),
+						"newChatRoomName" : $("#newChatRoomName").val(),
 	 	    			"chatUserList" : chatUserList
 	 	    			};
 	 			$.ajax({
@@ -426,52 +472,34 @@
 			});
 
 
-	/*채팅 socket 연결*/
-	
-	
-	var username = $("#username").val();
-
-	function socketConnect(socketUrl) {
-		console.log('이거 되니??');
-		var socket = io.connect("http://localhost:5000/"+socketUrl,{
-			path: '/socket.io'
-				});
-		
-		$("#sendMessage").on('submit', function(e){
-			var msg = $('#message').val();
-			socket.emit('send message', username, 'SELF', msg);
-			$('#message').val("");
-			$("#message").focus();
-			e.preventDefault();
-			
-			});
-		
-		socket.on('receive message', function(msg,currentDate){
-			$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-					+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-					+'<div class="chat-body"><div class="chat-message">'
-					+'<h3>'+username+'</h3>'
-					+'<span>'+msg+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-					+'</div></div></li></div><br>');
-			$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-			});
-
-
-	}
-
 	/*DM 채팅방 연결하기*/
 	$(".dmUser").on("click", function() {
 		var mail = $(this).attr('value');
+		var name = $(this).text();
 		console.log('콘솔에서 메일 가져와?'+mail)
+		console.log('콘솔에서 이름 가져와?'+name)
+		
 		$.ajax({
-	 			url:"chatDm.do?mail="+mail,
+	 			url:"chatDm.do?name="+name+"&mail="+mail,
 				dataType: "text",
 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 				type:"post",
 				success:function(responsedata){
 					if(responsedata == "dm") {
 						socketConnect(responsedata)
-						console.log("dm 연결됨??");
+						console.log("dm 소켓 연결됨??");
+						/*대화 목록 비우고 새로 만들기*/
+						$("#chatMsgMain").empty();
+						$("#chatMsgMain").append('<div class="col-md-12">'
+								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
+								+ '</ul></div>');
+
+						$("#chatRoomName").text("");
+						$("#chatRoomName").text(name);
+
+						socket.on('disconnect', function() {
+							console.log('self 채팅 해제');
+							});
 						
 						}
 					
@@ -480,14 +508,45 @@
 					
 				}
 			});
-		
-		
 		});
 
+	/*그룹 채팅방 연결하기*/
+	$(".groupChatRoom").on("click", function() {
+		var chatRoomName = $(this).text();
+		
+		$.ajax({
+	 			url:"chatGroup.do?chatRoomName="+chatRoomName,
+				dataType: "text",
+				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+				type:"post",
+				success:function(responsedata){
+					if(responsedata == "group") {
+						socket.on('disconnect', function() {
+							console.log('self 채팅 해제');
+							});
 
-	
+						
+						console.log('데이터가 뭔데??'+responsedata);
+						console.log("그룹 채팅방 소켓 연결됨??");
+						$("#chatMsgMain").empty();
+						$("#chatMsgMain").append('<div class="col-md-12">'
+								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
+								+ '</ul></div>');
 
-	
+						$("#chatRoomName").text("");
+						$("#chatRoomName").text(chatRoomName);
+						$("#chatType").val('group');
+						var nameSpace = "group";
+						var chatType = $("#chatType").val();
+						socketConnect(nameSpace, chatRoomName, chatType, name);
+												
+					}
+				},
+				error:function(){
+					
+				}
+			});
+		});
 
 	});
 	
