@@ -63,12 +63,12 @@ public class DoController {
     @Autowired
     private ChatService chatService;
     
+    @Autowired
+    private MemberService memberService;
+    
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
     }
-    
-    @Autowired
-    private MemberService memberService;
     
 
     //로그인
@@ -158,16 +158,16 @@ public class DoController {
     }
 
     
-  //공지사항리스트
+    //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
     	
-    			List<Notice>list=null;
-    	
-    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
-    		list=noticedao.noticeList(notice);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+		List<Notice>list=null;
+	
+		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+		list=noticedao.noticeList(notice);
+		System.out.println(list);
+		model.addAttribute("list",list);
     
         return "notice/noticeList";
     }
@@ -179,7 +179,7 @@ public class DoController {
     }
 
 
-  //공지사항글쓰기
+    //공지사항글쓰기
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
         return "notice/noticeWrite";
@@ -187,30 +187,30 @@ public class DoController {
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n,HttpServletRequest request,Principal principal) throws IOException {
     	
-    		List<CommonsMultipartFile> files = n.getFiles();
-    		List<String>filenames = new ArrayList<String>(); //파일명관리
-    		
-    		if(files != null && files.size()>0){ //최소한개 업로드
-    			for(CommonsMultipartFile multifile : files) {
-    				String filename = multifile.getOriginalFilename();//?
-    				String path  = request.getServletContext().getRealPath("/notice/upload");
-    			    
-    				String fpath = path+"\\"+filename;
-    			    
-    			    if(!filename.equals("")) {//실 파일 업로드
-    			    	FileOutputStream fs = new FileOutputStream(fpath);
-    			    	fs.write(multifile.getBytes());
-    			    	fs.close();
-    			    }
-    			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
-    			}
-    		}
-    		
-    		n.setSaveName(filenames.get(0));
-    		
-    		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    		noticedao.noticeWrite(n);		
-    		return "redirect:noticeList.do"; //들어주는 주소 ...
+    	List<CommonsMultipartFile> files = n.getFiles();
+		List<String>filenames = new ArrayList<String>(); //파일명관리
+		
+		if(files != null && files.size()>0){ //최소한개 업로드
+			for(CommonsMultipartFile multifile : files) {
+				String filename = multifile.getOriginalFilename();//?
+				String path  = request.getServletContext().getRealPath("/notice/upload");
+			    
+				String fpath = path+"\\"+filename;
+			    
+			    if(!filename.equals("")) {//실 파일 업로드
+			    	FileOutputStream fs = new FileOutputStream(fpath);
+			    	fs.write(multifile.getBytes());
+			    	fs.close();
+			    }
+			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
+			}
+		}
+		
+		n.setSaveName(filenames.get(0));
+		
+		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
+		noticedao.noticeWrite(n);		
+		return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
@@ -242,7 +242,7 @@ public class DoController {
     }
 
 
-    //연장근무신청
+    //연장근무신청 GET
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -260,7 +260,7 @@ public class DoController {
      }
 
 
-    //부재일정관리
+    //부재일정관리 GET
   	/* 01.12 by 게다죽 ing */
      @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
      public String absMg(Model model){
@@ -284,7 +284,6 @@ public class DoController {
     public String absSign(){
         return "attend/absenceManage";
     }
-
 
 
     //연장근무관리 리스트
