@@ -104,6 +104,9 @@
 
 		</tbody>
 	</table>
+	<p class="article-comment margin-small">
+		<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
+	</p>
 	
 		</div>
 		</div>

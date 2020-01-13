@@ -7,4 +7,7 @@
 <select id="noticeList" resultType="com.dobee.vo.notice.Notice">
    SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
 </select>
+<select id="noticeWrite" resultType="com.dobee.vo.notice.Notice">
+   INSERT NOTICE (TITLE,CONTENT,REGDATE)VALUES(#{title},#{content},now())
+</select>
 </mapper>

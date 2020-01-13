@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
+import com.dobee.dao.ProjectDao;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.project.Project;
@@ -42,6 +43,7 @@ import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
 
 
 @Controller
@@ -208,7 +210,7 @@ public class DoController {
     		
     		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
     		noticedao.noticeWrite(n);		
-    		return "redirect:noticeWrite"; //들어주는 주소 ...
+    		return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
@@ -369,12 +371,16 @@ public class DoController {
 
 
     //프로젝트메인
-    @RequestMapping("project.do")
-    public String projectMain(){
-		/*
-		 * ProjectService projectService = new ProjectService(); List<Project>
-		 * projectList = projectService.projectList();
-		 */
+    @RequestMapping("pjtMain.do")
+    public String projectList(Project project,Model model){
+    	
+    		List<Project>list=null;
+    	
+    		ProjectDao projectdao=sqlsession.getMapper(ProjectDao.class);
+    		list= projectdao.getPjt(project);
+    		System.out.println(list);
+    		model.addAttribute("list",list);
+    
         return "project/pjtMain";
     }
 
@@ -512,13 +518,15 @@ public class DoController {
     
     
     //관리자_사원추가 페이지
-    @RequestMapping(value = "addUser.do", method = RequestMethod.GET)
-    public String addUser() {
-    	return "admin/AddMember";
-    }
+   @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
+   public String addUser() {
+	   System.out.println("Docontroller addUser() in");
+	   return "admin/AddMember";
+   }
     
     
     //관리자_사원추가 서비스
+    
     @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
     public String addUser(User user, UserInfo userInfo) {
     	return "admin/AdminMain";

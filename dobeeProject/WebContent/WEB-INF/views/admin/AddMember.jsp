@@ -1,28 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<c:import url="/common/tag.jsp"/>
-	<meta charset="EUC-KR">
+	<c:import url="/common/tag.jsp" />
 	<script type="text/javascript">
-		/* Authcode∞°¡Æø¿±‚ */
-		${function(){
+		$(function(){
+			/* Í∂åÌïú ÏΩîÎìú select option ÎßåÎì§Í∏∞*/
 			$.ajax({
-				url:"getAuthCode.ajax",
-				dataType:"json",
-				success:function(data){
-					console.log("getAuthCode.ajax success");
-					console.log(data);
+				url:"ajax/admin/authorityList.do",
+				dataType: "JSON",
+				success: function(data){
+					$.each(data, function(i, elt) {
+						if(elt.authCode !=1){
+							var option = $("<option>");
+							$(option).val(elt.authCode);
+							if(elt.authCode == 2){
+								$(option).text("ÏÇ¨Ïõê");
+							}
+							else{
+								$(option).text("ÌåÄÏû•");
+							}
+							$('#authCode').append(option);
+						}
+					})
 				}
-			});
-		}}
+			})
+	
+			/* ÌåÄ Î™©Î°ù select option ÎßåÎì§Í∏∞ */
+			$.ajax({
+				url:"ajax/admin/teamList.do",
+				dataType:"JSON",
+				success: function(data){
+					console.log("teamList Ajax");
+					console.log(data);
+					$.each(data, function(i, elt) {
+						var option = $('<option>');
+						$(option).val(elt.teamCode);
+						$(option).text(elt.teamName);
+
+						$('#teamCode').append(option);
+					})
+					
+				}	
+			})
+		});
 	</script>
-<title>DOBEE</title>
 </head>
 <body>
-	 <!-- Side Navbar -->
+	<!-- Side Navbar -->
     <nav class="side-navbar">
     <c:import url="/common/Left_Admin.jsp" />
     </nav>
@@ -33,13 +60,12 @@
       
       <div id="content-wrapper">
             <!-- !! Content !! -->
-			<c:set var="emp" value="${requestScope.emp }"/>
             <div class="container-fluid">
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-user-edit"></i>
                  
-                        <b>ªÁø¯µÓ∑œ</b>
+                        <b>ÏÇ¨ÏõêÎì±Î°ù</b>
                
                     </div>
                     <div class="card-body">
@@ -54,17 +80,17 @@
                                                         		<div class="form-label-group">
                                                             		
                                                             		<input type="file" id="myPic" name="myPic" class="form-control" accept="image/*" hidden="true">
-                                                            		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="«¡∑Œ« ªÁ¡¯"  style="width:13em; height:100%;"></label>
+                                                            		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="ÌîÑÎ°úÌïÑÏÇ¨ÏßÑ"  style="width:13em; height:100%;"></label>
                                                         		</div>
                                                     		</div>
                                                     		<div class="col-md-6">
                                                         		<div class="form-label-group">
                                                             		<input type="text" id="name" name="name" class="form-control">
-                                                            		<label for="name">ªÁø¯¿Ã∏ß</label>
+                                                            		<label for="name">ÏÇ¨ÏõêÏù¥Î¶Ñ</label>
                                                             		<br>
                                                             		<br>
                                                             		<input type="email" id="mail" name="mail" class="form-control">
-                                                            		<label for="mail">ªÁø¯&nbsp;E-mail</label>
+                                                            		<label for="mail">ÏÇ¨Ïõê&nbsp;E-mail</label>
                                                         		</div>
                                                     		</div>
                                                 		</div>
@@ -73,14 +99,14 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="position" name="position" class="form-control" placeholder="¡˜√•" required="required" autofocus="autofocus">
-                                                            <label for="position">¡˜√•</label>
+                                                            <input type="text" id="position" name="position" class="form-control" placeholder="ÏßÅÏ±Ö" required="required" autofocus="autofocus">
+                                                            <label for="position">ÏßÅÏ±Ö</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="phone" name="phone" class="form-control" placeholder="¿¸»≠π¯»£" required="required">
-                                                            <label for="authCode">¿¸»≠π¯»£</label>
+                                                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Ï†ÑÌôîÎ≤àÌò∏" required="required">
+                                                            <label for="authCode">Ï†ÑÌôîÎ≤àÌò∏</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,56 +115,23 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <select id="authCode" name="authCode" class="form-control" placeholder="±««— ƒ⁄µÂ" required="required">
-                                                            	<option hidden>º±≈√«œººø‰</option>
+                                                            <select id="authCode" name="authCode" class="form-control" placeholder="Í∂åÌïú ÏΩîÎìú" required="required">
+                                                            	<option hidden>ÏÑ†ÌÉùÌïòÏÑ∏Ïöî</option>
                                                             </select>
-	                                                        <label for="authCode">±««— ƒ⁄µÂ</label>
+	                                                        <label for="authCode">Í∂åÌïú ÏÑ†ÌÉù</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="teamCode" name="teamCode" class="form-control" placeholder="∆¿ ƒ⁄µÂ" required="required">
-                                                            <label for="teamCode">∆¿ ƒ⁄µÂ</label>
+                                                           	<select id="teamCode" name="teamCode" class="form-control" placeholder="ÌåÄÏù¥Î¶Ñ" required="required">
+                                                           		<option hidden>ÏÑ†ÌÉùÌïòÏÑ∏Ïöî</option>
+                                                           	</select>
+                                                            <label for="teamCode">ÌåÄ ÏÑ†ÌÉù</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="form-row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                            <input type="number" id="deptno" name="deptno" class="form-control" placeholder="Dept No" required="required"
-                                                            			value="${emp.deptno}">
-                                                            <label for="deptno">Dept No</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                        	<input type="number" id="mgr" name="mgr" class="form-control" placeholder="Manager" required="required"
-                                                        				value="${emp.mgr}">
-                                                        	<label for="mgr">Manager</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="form-row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                            <input type="number" id="sal" name="sal" class="form-control" placeholder="Sal" required="required"
-                                                            			value="${emp.sal}">
-                                                            <label for="sal">Salary</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                            <input type="number" id="comm" name="comm" class="form-control" placeholder="Commission" required="required"
-                                                            			value="${emp.comm}">
-                                                            <label for="comm">Commission</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="form-row">
                                            		 <div class="col-md-6">
                                                     <input type="submit" class="btn btn-primary btn-block" value="Edit">
@@ -160,6 +153,5 @@
         </div>
       
     </div>
-
 </body>
 </html>

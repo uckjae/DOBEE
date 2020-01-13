@@ -75,7 +75,6 @@ public class MemberService {
     public User getUser(String mail) {
     	UserDao userdao = sqlSession.getMapper(UserDao.class);
     	User user = userdao.getUser(mail);
-    	System.out.println("memberservice 유저 가져오니?");
     	return user;
     }
     
