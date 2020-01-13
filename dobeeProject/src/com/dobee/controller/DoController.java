@@ -207,7 +207,7 @@ public class DoController {
     		
     		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
     		noticedao.noticeWrite(n);		
-    		return "redirect:noticeWrite"; //들어주는 주소 ...
+    		return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
