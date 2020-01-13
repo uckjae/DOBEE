@@ -10,7 +10,7 @@ import lombok.ToString;
 public class Project {
     private int pjtSeq;
     private String pjtName;
-    private Date pjtStartDate;
-    private Date pjtEndDate;
+    private String pjtStartAt;
+    private String pjtEndAt;
     private String pjtProgress;
 }

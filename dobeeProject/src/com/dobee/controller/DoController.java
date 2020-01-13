@@ -6,11 +6,15 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import java.util.List;
 
+import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +26,20 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
+import com.dobee.services.ProjectService;
+import com.dobee.vo.notice.Notice;
+import com.dobee.vo.project.Project;
+
+
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
-import com.dobee.services.GoogleVisionApi;
+import com.dobee.services.googleVisionService;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.chat.ChatUsers;
+import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -47,10 +58,16 @@ public class DoController {
     private SqlSession sqlsession;
     
     @Autowired
+    private ProjectService projectService;
+    
+    @Autowired
     private ApplyService applyService;
     
     @Autowired
     private ChatService chatService;
+    
+    @Autowired
+    private MemberService memberService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -154,16 +171,16 @@ public class DoController {
     }
 
     
-  //공지사항리스트
+    //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
     	
-    			List<Notice>list=null;
-    	
-    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
-    		list=noticedao.noticeList(notice);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+		List<Notice>list=null;
+	
+		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+		list=noticedao.noticeList(notice);
+		System.out.println(list);
+		model.addAttribute("list",list);
     
         return "notice/noticeList";
     }
@@ -175,7 +192,7 @@ public class DoController {
     }
 
 
-  //공지사항글쓰기
+    //공지사항글쓰기
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
         return "notice/noticeWrite";
@@ -183,30 +200,30 @@ public class DoController {
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n,HttpServletRequest request,Principal principal) throws IOException {
     	
-    		List<CommonsMultipartFile> files = n.getFiles();
-    		List<String>filenames = new ArrayList<String>(); //파일명관리
-    		
-    		if(files != null && files.size()>0){ //최소한개 업로드
-    			for(CommonsMultipartFile multifile : files) {
-    				String filename = multifile.getOriginalFilename();//?
-    				String path  = request.getServletContext().getRealPath("/notice/upload");
-    			    
-    				String fpath = path+"\\"+filename;
-    			    
-    			    if(!filename.equals("")) {//실 파일 업로드
-    			    	FileOutputStream fs = new FileOutputStream(fpath);
-    			    	fs.write(multifile.getBytes());
-    			    	fs.close();
-    			    }
-    			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
-    			}
-    		}
-    		
-    		n.setSaveName(filenames.get(0));
-    		
-    		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    		noticedao.noticeWrite(n);		
-    		return "redirect:noticeList.do"; //들어주는 주소 ...
+    	List<CommonsMultipartFile> files = n.getFiles();
+		List<String>filenames = new ArrayList<String>(); //파일명관리
+		
+		if(files != null && files.size()>0){ //최소한개 업로드
+			for(CommonsMultipartFile multifile : files) {
+				String filename = multifile.getOriginalFilename();//?
+				String path  = request.getServletContext().getRealPath("/notice/upload");
+			    
+				String fpath = path+"\\"+filename;
+			    
+			    if(!filename.equals("")) {//실 파일 업로드
+			    	FileOutputStream fs = new FileOutputStream(fpath);
+			    	fs.write(multifile.getBytes());
+			    	fs.close();
+			    }
+			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
+			}
+		}
+		
+		n.setSaveName(filenames.get(0));
+		
+		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
+		noticedao.noticeWrite(n);		
+		return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
@@ -238,7 +255,7 @@ public class DoController {
     }
 
 
-  //연장근무신청
+    //연장근무신청 GET
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
@@ -256,11 +273,16 @@ public class DoController {
      }
 
 
-    //부재일정관리
-    @RequestMapping("breakManage.do")
-    public String absMg(){
-        return "attend/breakManage";
-    }
+    //부재일정관리 GET
+  	/* 01.12 by 게다죽 ing */
+     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+     public String absMg(Model model){
+    	List<BreakManageList> results = applyService.absMg();
+     	System.out.println("results: " + results );
+     	model.addAttribute("brkList", results);
+     	
+     	return "attend/breakManage";
+     }
 
 
     //근무내역확인
@@ -275,7 +297,6 @@ public class DoController {
     public String absSign(){
         return "attend/absenceManage";
     }
-
 
 
     //연장근무관리 리스트
@@ -329,7 +350,7 @@ public class DoController {
     @RequestMapping("goVision.do")
     public String goGoogleApi(){
     	System.out.println("goGoogleApi 함수요청");
-    	GoogleVisionApi vision = new GoogleVisionApi();
+    	googleVisionService vision = new googleVisionService();
     	
     	System.out.println(" vision 서비스단 통과");
     	
@@ -377,8 +398,19 @@ public class DoController {
 
 
     //프로젝트생성
-    public String addProject(){
-        return null;
+    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
+    public String addProject(Project project){
+    	
+    	int result = 0;
+    	String viewpage = "";
+    	result = projectService.addProject(project);
+    	
+    	if(result > 0) {
+    		viewpage = "redirect:/pjtMain.do";
+    	}else {
+    		viewpage = "project/pjtChart";
+    	}
+    	 return viewpage;
     }
 
 
@@ -470,23 +502,28 @@ public class DoController {
     @RequestMapping("chat.do")
     public String chatMain(Model model, Principal principal) {
     	String mail = principal.getName();
+    	System.out.println("메일은?"+mail);
+    	
     	User user = memberService.getUser(mail);
+    	System.out.println("넘어오니??"+user.toString());
     	//회원 정보 저장하기
-    	model.addAttribute("user", user);
-    	
+    	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	
-    	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
-    	for(int i = 0; i < groupChatRoomList.size(); i++) {
-    		roomNameList.add(groupChatRoomList.get(i).getChatRoomName());
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
     	}
+
     	model.addAttribute("roomNameList", roomNameList);
     	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
+    	
+    	//기본 나에게 채팅으로 셋팅
+    	model.addAttribute("chatType", "self");
     	
     	return "chat/chatMain";
     }
@@ -495,7 +532,6 @@ public class DoController {
     //그룹 채팅 메인
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
     public String chatGroup(@RequestParam(value="roomName") String roomName) {
-    
     	return null;
     }
     
@@ -518,7 +554,11 @@ public class DoController {
     
     
     //관리자_사원추가 서비스
-    @RequestMapping(value="regitUser.do", method = RequestMethod.POST)
+    
+    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
+    public String addUser(User user, UserInfo userInfo) {
+    	return "admin/AdminMain";
+    }
     public String regitUser(User user) {
     	System.out.println("DoContorller regitUser()");
     	System.out.println(user.toString());

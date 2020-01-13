@@ -8,4 +8,8 @@
  SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
 </select>
 
+<insert id="mkPjt" parameterType="com.dobee.vo.project.Project"> 
+INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},#{pjtProgress} )
+
+</insert>
 </mapper>
