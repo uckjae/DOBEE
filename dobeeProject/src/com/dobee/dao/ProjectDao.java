@@ -16,7 +16,7 @@ public interface ProjectDao {
 
 
     //프로젝트 목록
-    public List<Project> getPjt();
+    public List<Project> getPjt(Project project);
 
 
     //업무리스트
