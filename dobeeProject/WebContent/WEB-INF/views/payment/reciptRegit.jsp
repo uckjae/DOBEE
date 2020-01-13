@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +14,9 @@
 function uploadFile(){
     var form = $('#FILE_FORM')[0];
     var formData = new FormData(form);
+    var allPath;
+    var uploadPath;
+    var saveFileName;
     formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
 
     $.ajax({
@@ -23,17 +28,55 @@ function uploadFile(){
                 success: function(result){
                     console.log(result);
                     alert("업로드 성공!!");
-                    var uploadPath  = result.uploadPath;
-                    var saveFileName = result.saveFileName;
-                    var allPath = uploadPath + saveFileName;
+                    uploadPath  = result.uploadPath;
+                    saveFileName = result.saveFileName;
+                    allPath = uploadPath + saveFileName;
                     var forder = "/Users/";
-					$("#uploadImg").append('<img id="imgtag" width="100">');
-					$("#imgtag").attr("src", forder + saveFileName);
-				
+                    var finalPath = forder + saveFileName;
+					$("#uploadImg").html('<img id="imgtag" width="100%" height="auto">');
+					$("#imgtag").attr("src", finalPath);
+					console.log("이게 이미지 경로 : " + allPath);
+					
 
 
                     
-                }
+                },
+                complete: function(){
+                    
+                	console.log("이게 이미지 경로 왜 이상하게 변형되지? : " + allPath);
+					console.log("아작스데이터 받아온 뒤 실행 함수 ");
+					console.log("구글 API 시작합니다");
+					$.ajax({
+						url:'goGoogleAjax.do',
+						data: {
+							"uploadPath" : uploadPath,
+						    "saveFileName" : saveFileName
+							},
+						type: 'POST',
+						dataType:'json',
+						success: function(result){
+								console.log("구글 아작스 성공!");
+								console.log(result);
+								$("#Input2").attr("value", result.key4);
+								$("#Input3").attr("value", result.key1);
+								$("#Input4").attr("value", result.key18);
+								
+								
+								
+
+
+
+
+
+								
+							},
+						error:function(){
+								console.log("구글 아작스 요청시 에러");
+							}
+							
+						})
+                    
+                },
         });
 }
 </script>
@@ -57,7 +100,13 @@ function uploadFile(){
 	
 </script>
 
+<style type="text/css">
+	img{
+		padding:15px !important;
+	}
 
+
+</style>
 </head>
 
 
@@ -88,9 +137,7 @@ function uploadFile(){
 	  <li class="nav-item">
 	    <a class="nav-link" href="#">법인 카드 목록</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#">Disabled</a>
-	  </li>
+
 	</ul>
 	
 	
@@ -103,16 +150,75 @@ function uploadFile(){
 	 <div class="container">
   		<div class="row">
     		<div class="col-md-6 imgshow">
-     			 One of three columns
-     			 <div id="uploadImg"></div>
-     			 
+     			 <div id="uploadImg">
+     			 	<img src="/Users/noimg.jpg" width="100%"> <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
+     			 </div>
+     			    			
+				<!-- 파일 업로드  부분 -->
+				<form id="FILE_FORM" class="md-form" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+				  <div class="custom-file" style="width:85%; float:left;" >
+				    <input type="file" class="custom-file-input" id="FILE_TAG" name="FILE_TAG" >
+				    <label class="custom-file-label" for="customFile" >영수증 사진 등록</label>
+				  </div>
+				  <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">업로드</a>
+		        </form> 
+		        
+		        
+		        
+		        
     		</div>
+    		
+    		
+    		
+    		
    			<div class="col-md-6 textshow">
-      			 One of two columns
       			 <!-- 좌측에 영수증사진에 대한 텍스트  --> 
       			 <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
       			 
-      			
+	      	<form id="costlistInfo">
+	      		<div class="form-group">
+				    <label for="exampleFormControlInput1">신청자 이메일</label>
+				    <input type="text" class="form-control" id="Input1" readonly="readonly">
+				  </div>
+	      		<div class="form-group">
+				    <label for="exampleFormControlSelect1">법인카드 선택</label>
+				    <select class="form-control" id="exampleFormControlSelect2">
+				      <option>1</option>
+				      <option>2</option>
+				      <option>3</option>
+				      <option>4</option>
+				      <option>5</option>
+				    </select>
+	  			  </div>
+	  			  <div class="form-group">
+				    <label for="exampleFormControlSelect2">비용항목 선택</label>
+				    <select class="form-control" id="exampleFormControlSelect3">
+				      <option>1</option>
+				      <option>2</option>
+				      <option>3</option>
+				      <option>4</option>
+				      <option>5</option>
+				    </select>
+	  			  </div>
+				    <div class="form-group">
+				    <label for="exampleFormControlInput1">사용일</label>
+				    <input type="text" class="form-control" id="Input2" placeholder="ex)2020-02-02">
+				  </div>
+				    <div class="form-group">
+				    <label for="exampleFormControlInput1">사용처</label>
+				    <input type="text" class="form-control" id="Input3" placeholder="ex)E-MART, 마루가메 제면 (정확한 상호명 입력)">
+				  </div>
+				    <div class="form-group">
+				    <label for="exampleFormControlInput1">사용금액</label>
+				    <input type="text" class="form-control" id="Input4" placeholder="ex)2000 (숫자만 입력)">
+				  </div>
+				    <div class="form-group">
+				    <label for="exampleFormControlInput1">상세내용</label>
+				    <input type="text" class="form-control" id="Input5" placeholder="ex) 이마트에서 필요한 간식이랑 사무용품들 구매하였습니다.">
+				  </div>
+			  
+			  	 <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">수정완료 및 등록</a>
+		 </form>
       			 
       			 
       			 
@@ -128,13 +234,7 @@ function uploadFile(){
 	       			
 	       			
 	  
-	       			
-		<!-- 파일 업로드  부분 -->
-	
-		<form id="FILE_FORM" method="post" enctype="multipart/form-data">
-            <input type="file" id="FILE_TAG" name="FILE_TAG">
-            <a class="ui-shadow ui-btn ui-corner-all" href="javascript:uploadFile();">전송</a>
-        </form>
+	    
 
 
 		
