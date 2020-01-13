@@ -355,7 +355,7 @@ public class DoController {
 
 
     //프로젝트메인
-    @RequestMapping("projectMain.do")
+    @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
     	
     		List<Project>list=null;

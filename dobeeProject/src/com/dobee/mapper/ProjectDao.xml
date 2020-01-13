@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.ProjectDao">
 
-<select id ="projectlist" resultType="com.dobee.vo.project.Project">
+<select id ="getPjt" resultType="com.dobee.vo.project.Project">
  SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
 </select>
 
