@@ -33,9 +33,10 @@ function uploadFile(){
                     allPath = uploadPath + saveFileName;
                     var forder = "/Users/";
                     var finalPath = forder + saveFileName;
-					$("#uploadImg").html('<img id="imgtag" width="100%" height="auto">');
+					$("#uploadImg").html('<img id="imgtag" width="100%">');
 					$("#imgtag").attr("src", finalPath);
 					console.log("이게 이미지 경로 : " + allPath);
+					
 					
 
 
@@ -62,11 +63,6 @@ function uploadFile(){
 								$("#Input4").attr("value", result.key18);
 								
 								
-								
-
-
-
-
 
 								
 							},
@@ -78,7 +74,13 @@ function uploadFile(){
                     
                 },
         });
-}
+}; //uploadFile() 함수 끝 
+
+function addDataBase(){
+	
+};
+
+
 </script>
 <script>
 	$(document).ready(function() {
