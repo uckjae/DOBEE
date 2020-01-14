@@ -438,7 +438,7 @@ public class DoController {
     		System.out.println(list);
     		model.addAttribute("list",list);
     
-        return "project/pjtMain";
+        return "project/pjtMain2";
     }
 
 
