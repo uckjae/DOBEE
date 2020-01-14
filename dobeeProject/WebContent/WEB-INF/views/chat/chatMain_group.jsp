@@ -147,9 +147,6 @@
 	.content{
 	    margin-top:40px;    
 	}
-	
-
-
   </style>
   
   <body>
