@@ -58,7 +58,7 @@
 				method: "POST",
 				success: function(){
 					console.log("ajax sendmail success");
-					$('#addUserForm').submit();
+					
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 					console.log(textStatus);
@@ -67,6 +67,13 @@
 				
 				
 			});
+		}
+
+		function submit(){
+			sendMail().then(function(){
+				console.log("submit()");
+				$('#addUserForm').submit();
+			})
 		}
 	</script>
 </head>
