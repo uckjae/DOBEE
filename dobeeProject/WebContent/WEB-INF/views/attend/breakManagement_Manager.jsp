@@ -49,10 +49,13 @@
 			    <a class="nav-link" href="extendApply.do">연장근무 신청</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link active" href="breakManage.do">부재 일정 관리</a>
+			    <a class="nav-link" href="breakManage.do">부재 일정 관리</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link active" href="absManage.do">부재관리_매니저</a>
 			  </li>
 			</ul>
 		</div>

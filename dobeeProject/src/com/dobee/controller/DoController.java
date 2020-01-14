@@ -236,13 +236,13 @@ public class DoController {
     }
 
 
-    // 부재일정신청 GET 0110
+    // 부재일정신청 GET 	0110 게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
         return "attend/breakApply";
     }
     
-    // 부재일정신청 POST 0112
+    // 부재일정신청 POST 	0112 게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
     public String absApplyPost(Apply apply, HttpServletRequest req){
     	String result = applyService.absApply(apply);
@@ -252,15 +252,14 @@ public class DoController {
     }
 
 
-    //연장근무신청 GET
+    // 연장근무신청 GET			0100 게다죽
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
     }
     
     
-    // 연장근무 신청 POST
- 	/* 01.10 by 게다죽 */
+    // 연장근무 신청 POST			0110 게다죽
      @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
      public String extendApplyPost(Apply apply, HttpServletRequest req) {
     	String result = applyService.overtimeApply(apply);
@@ -270,8 +269,7 @@ public class DoController {
      }
 
 
-    //부재일정관리 GET
-  	/* 01.12 by 게다죽 ing */
+    // 개인_부재일정관리 GET			0112 게다죽
      @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
      public String absMg(Model model){
     	List<BreakManageList> results = applyService.absMg();
@@ -282,34 +280,48 @@ public class DoController {
      }
 
 
-    //근무내역확인
+    // 개인_근무내역확인										&&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
     @RequestMapping("workManage.do")
     public String workChart(){
         return "attend/workManage";
     }
 
 
-    //부재관리
-    @RequestMapping("absManage.do")
+    // 매니저_부재관리 (isAuth update)			0114 게다죽
+    @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(){
-        return "attend/absenceManage";
+        return "attend/breakManagement_Manager";
+    }
+    
+    
+    // 매니저_부재관리 승인
+    @RequestMapping(value="absReqApprov.do", method=RequestMethod.POST)
+    public String absReqApprov(){
+        return null;
     }
 
 
-    //연장근무관리 리스트
+    // 매니저_부재관리 거절			0114
+    @RequestMapping(value="absReqReject.do", method=RequestMethod.POST)
+    public String absReqReject(){
+        return null;
+    }
+
+
+    // 매니저_연장근무관리 리스트
     @RequestMapping("extendManage.do")
     public String overtiemSignList(){
         return "attend/extendManage";
     }
 
 
-    //연장근무관리 승인
+    // 매니저_연장근무관리 승인
     public String overtimeSingApprov(){
         return null;
     }
 
 
-    //연장근무관리 거절
+    // 매니저_연장근무관리 거절
     public String overtimeSignReject(){
         return null;
     }
