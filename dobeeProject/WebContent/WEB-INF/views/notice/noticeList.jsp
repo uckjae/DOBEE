@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <c:import url="/common/tag.jsp"/>
@@ -37,6 +38,7 @@
     	            "previous": "이전"
     	        }
     	    },
+    	    "order": [[ 0, "desc" ]],
     	    "columnDefs": [
     	        {
         	      className: "dt-center", "targets": [1],
@@ -94,8 +96,12 @@
 		<c:forEach items="${list}" var="n" >
 			<tr>
 				<td class="notSeq">${n.notSeq}</td>
-				<td class="title">${n.title}</td>
-				<td class="regdate">${n.regDate}</td>
+				<td class="title">
+				  <a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
+				</td>
+				<td class="regdate">
+				<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+				</td>				
 				<td class="count">${n.count}</td>
 			</tr>
 		</c:forEach>

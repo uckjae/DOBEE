@@ -7,7 +7,25 @@
 <select id="noticeList" resultType="com.dobee.vo.notice.Notice">
    SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
 </select>
-<select id="noticeWrite" resultType="com.dobee.vo.notice.Notice">
-   INSERT NOTICE (TITLE,CONTENT,REGDATE)VALUES(#{title},#{content},now())
+
+<insert id="noticeWrite" parameterType="com.dobee.vo.notice.Notice">
+   INSERT NOTICE (TITLE,CONTENT,REGDATE,COUNT)VALUES(#{title},#{content},now(),0)
+</insert>
+
+<select id="noticeDetail" resultType="com.dobee.vo.notice.Notice">
+   SELECT NOTSEQ,REGDATE,TITLE, CONTENT FROM NOTICE WHERE NOTSEQ=#{notSeq}
 </select>
+
+<update id="noticeModify" parameterType="com.dobee.vo.notice.Notice">
+   UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{content} WHERE NOTSEQ=#{notSeq}
+</update>
+
+<update id="noticeCount" parameterType="com.dobee.vo.notice.Notice">
+   UPDATE NOTICE SET COUNT = COUNT+1
+   WHERE NOTSEQ=#{notSeq}
+</update>
+
+<delete id="noticeDel" parameterType="integer">
+		DELETE FROM NOTICE WHERE NOTSEQ=#{notSeq}
+	</delete>
 </mapper>
