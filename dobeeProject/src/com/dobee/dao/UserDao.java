@@ -68,7 +68,7 @@ public interface UserDao {
     public int overTimeApply(Apply apply);
 
 
-    //개인부재일정확인
+    //개인부재일정확인 - table 리스트 불러오기
     /* 01.12 게다죽 */
     public List<BreakManageList> absMg();
 
@@ -77,16 +77,31 @@ public interface UserDao {
     public List<Integer> breakYearList();
     
     
+    // Ajax 개인부재일정확인 - 년도별 List 출력		0113
+    public List<BreakManageList> getBreakListByYear();
+    
+    
     // Ajax 개인부재일정확인 - Option - 월 loading		0113
     public List<Integer> breakYearMonthList();
     
     
+    // Ajax 개인부재일정확인 - 년-월별 List 출력		0113
+    public List<BreakManageList> getBreakListByYMonth();
+    
     // Ajax 개인부재일정확인 - Option - 부재항목 loading		0113
-    public List<String> breakEntryList();
+    public List<ApplyCode> breakEntryList();
+    
+    
+    // Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113
+    public List<BreakManageList> getBreakListByEntry();
     
 
     // Ajax 개인부재일정확인 - Option - 승인여부 loading		0113
     public List<String> breakIsAuthList();
+    
+    
+    // Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
+    public List<BreakManageList> getBreakListByIsAuth();
     
         
     //개인근무내역확인
@@ -104,10 +119,12 @@ public interface UserDao {
     // Ajax 연장근무 년도 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeYearList();
-    	
+    
+    
     // Ajax 연장근무 월 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeMonthList();
+    
     
     //유저 리스트 가져오기
     /* 01.09 알파카 */

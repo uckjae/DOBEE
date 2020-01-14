@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dobee.services.googleVisionService;
+import com.dobee.services.GoogleVisionService;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 
 @Controller
 public class AjaxController_GoogleVision {
 
 	@Autowired
-	private googleVisionService googleVisionService;
+	private GoogleVisionService googleVisionService;
 	
 	
 	

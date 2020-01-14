@@ -65,31 +65,80 @@
 		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL='JG@KIM.COM'
 	</select>
 	
+	
 	<!-- Ajax 개인부재일정확인 - Option - 년도 loading		0113 -->
 	<select id="breakYearList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - 년도별 List 출력		0113 -->
+	<select id="getBreakListByYear" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND DATE_FORMAT(A.STARTAT, '%Y') = 2020;
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 월 loading		0113 -->
-	<select id="breakYearMonthList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%c') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+	<select id="breakYearMonthList" resultType="String">
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%m') AS STARTAT FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - 년-월별 List 출력		0113 -->
+	<select id="getBreakListByYMonth" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A	
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND DATE_FORMAT(A.STARTAT, '%Y-%m') = '2020-01';
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 부재항목 loading		0113 -->
-	<select id="breakEntryList" resultType="String">
-		SELECT DISTINCT AC.ENTRY 
+	<select id="breakEntryList" resultType="com.dobee.vo.ApplyCode">
+		SELECT DISTINCT AC.APYCODE, AC.ENTRY 
 			FROM APPLY A
-			INNER JOIN APPLYCODE AC
-        		ON A.APYCODE = AC.APYCODE
-		WHERE A.APYCODE != 6 AND  A.DRAFTER='JG@KIM.COM';
+				INNER JOIN APPLYCODE AC
+	        		ON A.APYCODE = AC.APYCODE
+			WHERE A.APYCODE != 6 AND  A.DRAFTER='JG@KIM.COM'
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113 -->
+	<select id="getBreakListByEntry" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND A.APYCODE = '3';
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 승인여부 loading		0113 -->
 	<select id="breakIsAuthList" resultType="String">
-		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM';
+		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	</select>
+	
+	
+	<!-- Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113 -->
+	<select id="getBreakListByIsAuth" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND A.ISAUTH = '미승인';
 	</select>
 	
 	
@@ -101,7 +150,7 @@
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM';
+		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM'
 	</select>
 	
 	

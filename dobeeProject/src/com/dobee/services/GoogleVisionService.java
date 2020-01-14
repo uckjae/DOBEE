@@ -26,12 +26,16 @@ import com.google.protobuf.ByteString;
 
 
 @Service
-public class googleVisionService {
+public class GoogleVisionService {
 
-	public googleVisionService() {
+	public GoogleVisionService() {
 		System.out.println("서비스단/GoogleVisionApi : 구글 비전 API  생성자 실행");
 	}	
 	public JSONObject goGoogle(String path) {
+		
+		List<String> keyUseLocation = null;
+		List<String> keyUseCost = null;
+		
 		List<AnnotateImageResponse> responses = null;
 		JSONObject jsonObj = new JSONObject();
 		try {
@@ -57,16 +61,10 @@ public class googleVisionService {
 			    		System.out.printf("Error: %s\n", res.getError().getMessage());
 			    		return null;
 			    	}else {
-			    		//System.out.println("Text : ");
-				    	//System.out.println(res.getTextAnnotationsList().get(0).getDescription());
-			    		//System.out.println("이 아래 부터 잘 봐@@@@@@@@@@@@@@@@@@@@2");
 			    		TextAnnotation annotation = res.getFullTextAnnotation();
-			    		//System.out.println(annotation.getText());
-			    		//System.out.println("이 위에 부터 끝 끝 끝 끝 @@@@@@@@@@@@@@@@@@@@");
 			    		int number = 0;
 			    		for (com.google.cloud.vision.v1.Page page: annotation.getPagesList()) {
 			                String pageText = "";
-
 			                for (Block block : page.getBlocksList()) {
 			                    String blockText = "";
 			                    for (Paragraph para : block.getParagraphsList()) {
@@ -78,14 +76,12 @@ public class googleVisionService {
 			                            }
 			                            paraText = paraText + wordText;
 			                        }
-			                        
 			                        System.out.println(paraText);
 			                        String sNum = Integer.toString(number);
 			                        jsonObj.put("key"+sNum, paraText);
 			                        number++;
 			                    }
 			                }
-			               
 			            }
 			    		
 			    		

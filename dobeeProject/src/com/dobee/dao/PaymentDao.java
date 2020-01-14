@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface PaymentDao {
 
-
+	//카드 등록
+	public void addDebit();
+	
+	
     //카드목록조회
     public List<Debit> debitList();
 
