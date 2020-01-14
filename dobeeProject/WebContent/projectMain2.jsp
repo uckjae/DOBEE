@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <style>
 body 
 {
@@ -32,7 +31,7 @@ body
 {
 	position : relative;
 	height : 400px;
-	background :  #453d3d;
+	background :  #807c7e;
 	display: flex;
 	justify-content: center;
 	align-items : center;
@@ -54,7 +53,7 @@ body
 
 .container .box:nth-child(1):before
 {
-	background: linear-gradient(600deg, #2F4353, #D2CCC4);
+	background: linear-gradient(600deg, #807c7e, #f4f6f5);
 
 }
 .container .box:after
@@ -85,7 +84,7 @@ body
 	margin: 0;
 	padding: 0;
 	font-size: 10em;
-	color : rgba(255,255,255,.05);
+	color : rgba(93,93,93,2);
 	transition : 0.5s;
 	
 }
@@ -150,7 +149,7 @@ body
 			 <div class="content">
 			 	<h2>01</h2>
 			 	<h3>Service One</h3>
-			 	<p>브라블라블라</p>
+			 	<p></p>
 			 	<a href="#">Read More</a>
 			 </div>
 		 </div>
@@ -160,7 +159,7 @@ body
 			 <div class="content">
 			 	<h2>02</h2>
 			 	<h3>Service Two</h3>
-			 	<p>브라블라블라</p>
+			 	<p></p>
 			 	<a href="#">Read More</a>
 			 </div>
 		 </div>
@@ -170,7 +169,7 @@ body
 			 <div class="content">
 			 	<h2>03</h2>
 			 	<h3>Service Three</h3>
-			 	<p>브라블라블라</p>
+			 	<p></p>
 			 	<a href="#">Read More</a>
 			 </div>
 		 </div>
@@ -180,7 +179,7 @@ body
 			 <div class="content">
 			 	<h2>04</h2>
 			 	<h3>Service Four</h3>
-			 	<p>브라블라블라</p>
+			 	<p></p>
 			 	<a href="#">Read More</a>
 			 </div>
 		 </div>
