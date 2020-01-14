@@ -58,7 +58,7 @@
 				method: "POST",
 				success: function(){
 					console.log("ajax sendmail success");
-					$('#addUserForm').submit();
+					
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 					console.log(textStatus);
@@ -67,6 +67,13 @@
 				
 				
 			});
+		}
+
+		function submit(){
+			sendMail().then(function(){
+				console.log("submit()");
+				$('#addUserForm').submit();
+			})
 		}
 	</script>
 </head>
@@ -101,7 +108,7 @@
                                                    			<div class="col-md-6">
                                                         		<div class="form-label-group">
                                                             		
-                                                            		<input type="file" id="myPic" name="myPic" class="form-control" accept="image/*" hidden="true">
+                                                            		<input type="file" id="multiFile" name="multiFile" class="form-control" accept="image/*" hidden="true">
                                                             		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
                                                         		</div>
                                                     		</div>

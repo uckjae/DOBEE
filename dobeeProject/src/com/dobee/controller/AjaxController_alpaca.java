@@ -81,16 +81,16 @@ public class AjaxController_alpaca {
     }
     
     //그룹 채팅방 접속
-    @RequestMapping(value = "chatGroup.do", method = RequestMethod.POST)
-    public String chatGroup(@RequestParam(value="chatRoomName") String chatRoomName) {
-    	System.out.println("그룹 채팅방 타??");
-    	System.out.println("이름 가져와??"+chatRoomName);
-
-    	//String socketUrl = "{chatType : 'DM', mail : mail, }";
-    	String socketUrl = "group";
-    	
-    	return socketUrl;
-    }
+//    @RequestMapping(value = "chatGroup.do", method = RequestMethod.POST)
+//    public String chatGroup(@RequestParam(value="chatRoomName") String chatRoomName) {
+//    	System.out.println("그룹 채팅방 타??");
+//    	System.out.println("이름 가져와??"+chatRoomName);
+//
+//    	//String socketUrl = "{chatType : 'DM', mail : mail, }";
+//    	String socketUrl = "group";
+//    	
+//    	return socketUrl;
+//    }
     
     //그룹 채팅방 만들기
     /*

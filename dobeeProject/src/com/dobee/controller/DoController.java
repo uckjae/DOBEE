@@ -6,15 +6,11 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import java.util.List;
 
-import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,19 +22,16 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
-import com.dobee.services.ProjectService;
-import com.dobee.vo.notice.Notice;
-import com.dobee.vo.project.Project;
-
-
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
+import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
+import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
-import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -68,6 +61,9 @@ public class DoController {
     
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private DebitService debitService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -139,6 +135,39 @@ public class DoController {
     	model.addAttribute("userList", userList);
     	model.addAttribute("userInfoList", userInfoList);
     	return "admin/AdminMain";
+    }
+    
+    
+    //관리자 법인카드등록 뷰단 이동
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.GET)
+    public String adminAddDebit() {
+    	return "admin/AddDebit";
+    }
+    
+    
+
+    //관리자 법인카드 목록 뷰단 이동
+    @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
+    public String adminListDebit() {
+    	return "admin/ListDebit";
+    }
+    
+    
+    
+    //관리자 법인카드 디비에 등록
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
+    public String adminAddDebitOK(Debit debit) {
+    	boolean check = debitService.addDebit(debit);
+    	if(check) {
+    		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    		
+    	}else {
+    		System.out.println("컨트롤단 : 법인카드 등록 실패");
+    		return null;
+    	}
+    	
+    	
+    	return "admin/ListDebit";
     }
     
     
@@ -511,8 +540,6 @@ public class DoController {
     @RequestMapping("chat.do")
     public String chatMain(Model model, Principal principal) {
     	String mail = principal.getName();
-    	System.out.println("메일은?"+mail);
-    	
     	User user = memberService.getUser(mail);
     	System.out.println("넘어오니??"+user.toString());
     	//회원 정보 저장하기
@@ -540,18 +567,62 @@ public class DoController {
     
     //그룹 채팅 메인
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
-    public String chatGroup(@RequestParam(value="roomName") String roomName) {
-    	return null;
+    public String chatGroup(@RequestParam(value="roomName") String roomName, Model model, Principal principal) {
+    	String mail = principal.getName();
+    	User user = memberService.getUser(mail);
+    	System.out.println("넘어오니??"+user.toString());
+    	//회원 정보 저장하기
+    	model.addAttribute("user", user);    	
+    	//이 회원이 속한 채팅방 목록 가져오기
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<String> roomNameList = new ArrayList<String>();
+    	
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
+    	}
+
+    	model.addAttribute("roomNameList", roomNameList);
+    	
+    	
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	model.addAttribute("userList", userList);
+    	
+    	//해당 그룹 채팅방으로 셋팅
+    	model.addAttribute("roomName", roomName);
+    	model.addAttribute("chatType", "group");
+    	
+    	return "chat/chatMain_group";
     }
+    
+    //DM 채팅 메인
+	/*
+	 * @RequestMapping(value = "chatDm.do", method = RequestMethod.GET) public
+	 * String chatDm(@RequestParam(value="chatTo") String userName, Model model,
+	 * Principal principal) { String mail = principal.getName(); User user =
+	 * memberService.getUser(mail); System.out.println("넘어오니??"+user.toString());
+	 * //회원 정보 저장하기 model.addAttribute("user", user); //이 회원이 속한 채팅방 목록 가져오기
+	 * List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+	 * List<String> roomNameList = new ArrayList<String>();
+	 * 
+	 * for(int i = 0; i < chatRoomList.size(); i++) {
+	 * roomNameList.add(chatRoomList.get(i).getChatRoomName()); }
+	 * 
+	 * model.addAttribute("roomNameList", roomNameList);
+	 * 
+	 * 
+	 * //사원 목록 가져오기 List<User> userList = memberService.getUserList();
+	 * model.addAttribute("userList", userList);
+	 * 
+	 * //해당 그룹 채팅방으로 셋팅 model.addAttribute("roomName", roomName);
+	 * model.addAttribute("chatType", "group");
+	 * 
+	 * return "chat/chatMain_group"; }
+	 */
     
   
     
-    
-//    //전체 채팅 채팅방 가져오기
-//    @RequestMapping("groupChat.do")
-//    public String groupChatMain() {
-//    	return "chat/chatMain_group";
-//    }
+  
     
     
     //관리자_사원추가 페이지

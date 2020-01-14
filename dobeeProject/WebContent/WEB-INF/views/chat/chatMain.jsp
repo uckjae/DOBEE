@@ -243,7 +243,7 @@
             <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           <c:forEach var="roomName" items="${roomNameList}">
 		            <li>
-			           	<div><a href='#' class="groupChatRoom"><i class='fas fa-user'></i><span>&nbsp;&nbsp;${roomName}</span></a>
+			           	<div><a href='chatGroup.do?roomName=${roomName }' class="groupChatRoom"><i class='fas fa-user'></i><span>&nbsp;&nbsp;${roomName}</span></a>
 			     	  	</div>
 		     	  	</li>
 	           </c:forEach>
@@ -342,35 +342,33 @@
 <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
 <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
-    <!-- socket 연결 -->
-<script src="http://localhost:5000/socket.io/socket.io.js"></script>
+<!-- socket 연결 -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
+var socket;
 
-	$(function(){
-		var socket;
-		var socketUrl = "http://localhost:5000/"+nameSpace;
-
-		/*채팅 socket 연결*/
-		
-		function socketConnect(nameSpace, chatRoomName, chatType, name, emitName) {
-			var url = "http://localhost:5000/"+nameSpace;
-			console.log('emitName 나와라!!!'+emitName);
-			socket = io.connect( 'http://localhost:5000/'+nameSpace, {
+function socketConnect(nameSpace, chatRoomName, chatType, name, sendEmitName, receiveEmitName) {
+	var chatType = $("#chatType").val();
+	var nameSpace = $("#chatType").val();
+	var chatRoomName = $("#chatRoomName").text();
+	var name = $("#name").val();
+	socket = io.connect( 'http://192.168.6.2:5000/'+nameSpace, {
 				path: '/socket.io'
 			})
-			console.log('url??'+url);
 			
 			$("#sendMessage").on('submit', function(e){
-				var chatContent = $('#chatContent').val();
+				chatContent = $('#chatContent').val();
 				
-				socket.emit(emitName, chatRoomName, chatType, chatContent, name);
+				console.log('내용 가져와??'+chatContent);
+				
+				socket.emit(sendEmitName, chatRoomName, chatType, chatContent, name);
 				$('#chatContent').val("");
 				$("#chatContent").focus();
 				e.preventDefault();
 				
 				});
 			
-			socket.on('receive message', function(chatContent,currentDate){
+			socket.on(receiveEmitName, function(chatContent,currentDate){
 				$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
 						+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
 						+'<div class="chat-body"><div class="chat-message">'
@@ -379,18 +377,22 @@
 						+'</div></div></li></div><br>');
 				$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 				});
-		}
 
+			}
 	
-		var nameSpace = $("#chatType").val();
-		var chatRoomName = $("#chatRoomName").text();
-		var chatType = $("#chatType").val();
-		var name = $("#name").val();
+	
+	$(function(){
+
 		
-		//일단 selfchat 소켓으로 연결
-					var emitNameSelf = "send message to self";
 		
-		socketConnect(nameSpace, chatRoomName, chatType, name, emitNameSelf);
+		if(socket == null || socket == ""){
+			//일단 나에게 채팅방 연결
+			socketConnect(nameSpace, chatRoomName, chatType, name, "send message to self", "receive message to self")
+
+			} else if(socket !== null &&  nameSpace == "self"){
+				socket.on('disconnect', function() {
+				});
+			} 
 		
 		  $.ajax({
 		  		url:"getUserList.do",
@@ -471,7 +473,7 @@
 
 
 	/*DM 채팅방 연결하기*/
-	$(".dmUser").on("click", function() {
+	/* $(".dmUser").on("click", function() {
 		var mail = $(this).attr('value');
 		var name = $(this).text();
 		console.log('콘솔에서 메일 가져와?'+mail)
@@ -485,7 +487,6 @@
 					if(responsedata == "dm") {
 						socketConnect(responsedata)
 						console.log("dm 소켓 연결됨??");
-						/*대화 목록 비우고 새로 만들기*/
 						$("#chatMsgMain").empty();
 						$("#chatMsgMain").append('<div class="col-md-12">'
 								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
@@ -493,7 +494,19 @@
 
 						$("#chatRoomName").text("");
 						$("#chatRoomName").text(name);
-						
+
+						$("#sendMessage").on('submit', function(e){
+							var chatContent = $('#chatContent').val();
+							
+							console.log('내용 가져와??'+chatContent);
+							console.log('emitName?'+emitName);
+							
+							socket.emit(emitName, chatRoomName, chatType, chatContent, name);
+							$('#chatContent').val("");
+							$("#chatContent").focus();
+							e.preventDefault();
+							
+							});
 						
 						}
 					
@@ -502,12 +515,11 @@
 					
 				}
 			});
-		});
+		}); */
 
 	/*그룹 채팅방 연결하기*/
-	$(".groupChatRoom").on("click", function() {
+	/* $(".groupChatRoom").on("click", function() {
 		var chatRoomName = $(this).text();
-	
 		
 		$.ajax({
 	 			url:"chatGroup.do?chatRoomName="+chatRoomName,
@@ -516,8 +528,20 @@
 				type:"post",
 				success:function(responsedata){
 					if(responsedata == "group") {
-						console.log("그룹 채팅방 소켓 연결됨??");
-						$("#chatMsgMain").empty();
+							
+						
+
+						
+							}
+				},
+				error:function(){
+					
+				}
+			});
+		});
+
+	
+	$("#chatMsgMain").empty();
 						$("#chatMsgMain").append('<div class="col-md-12">'
 								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
 								+ '</ul></div>');
@@ -527,28 +551,9 @@
 						$("#chatType").val('group');
 						var nameSpace = "group";
 						var chatType = $("#chatType").val();
-						if(socket !==null){
-
-							socket.emit('disconnect');
-							console.log('기존 소켓 끊기')
-
-							}
-
-						var emitName = "send message to group"; 
-						socketConnect(nameSpace, chatRoomName, chatType, name, emitName);
-						console.log('이거 탐???');
-												
-					}
-				},
-				error:function(){
-					
-				}
-			});
-		});
-
+						console.log('타입 바뀌니??'+chatType);
+	*/
 	});
-	
-	
 
 </script>
 </body>
