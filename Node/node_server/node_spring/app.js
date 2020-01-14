@@ -3,10 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-//const mysql = require('mysql');
 
 //socket.js 파일 쓰기
-const webSocket = require('./socket2');
+const webSocket = require('./socket');
 
 //server 함수에 app을 담아줌
 //var http = require('http').Server(app);

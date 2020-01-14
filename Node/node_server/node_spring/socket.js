@@ -7,7 +7,10 @@ module.exports = (server, app) => {
 
     app.set('io', io); //라우터에서 io 객체를 쓸 수 있게 저장 -> req.app.get('io')로 접근 가능
 
-    const selfchat = io.of('/selfchat');
+    const self = io.of('/self');
+    const group = io.of('/group');
+    const dm = io.of('/dm');
+
 
     function getFormatDate(date) {
         var year = date.getFullYear();              //yyyy
@@ -25,110 +28,270 @@ module.exports = (server, app) => {
     var date = new Date();
     var currentDate = getFormatDate(date);
 
-
-
-
-    selfchat.on('connection', (socket) => {
-        socket.on('send message to self', function (username, msg) {
-            console.log('메시지 넘어오니??');
-            console.log('username'+username);
-            console.log('msg'+msg);
-
+    function checkChatRoom(chatRoomName, chatType) {
+        return new Promise(function (resolve, reject) {
+            var sql = "select * from chatroom where chatroomname=? AND CHATCODE=(SELECT CHATCODE FROM CHATCODE WHERE CHATTYPE=?) ";
+            var check = "";
             db((err, conn) => {
-                //'나에게' 채팅방이 기존에 있는지 없는지 체크
-                var check_chatroom = "select * from chatroom where chatroomname=?";
-                conn.query(check_chatroom, username, function(err, result){
-
-                    if(err){
-                        console.error('에러 발생'+err);
-                        return conn.rollback(function () {
-                            conn.release();
-                            throw err;
-                        });
+                conn.query(sql, [chatRoomName, chatType], function(err, result) {
+                    if (err) {
+                        reject(new Error("에러 발생"));
                     }
-                    if(result.length>0){ //기존 '나에게' 채팅방이 있는 경우 -> 기존 방에 업데이트하기
+                    if (result.length > 0) {
+                        resolve("yes");
+                    } else {
+                        resolve("no");
+                    }
+                    conn.release();
+                });
+            });
+        });
+
+    }
+    //var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype='SELF'))";
+
+    // var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
+    //나에게 채팅방 만들기
+    function makeSelfChatRoom(chatRoomName, chatType, name) {
+
+        var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
+        var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))"
+        db((err, conn) => {
+            conn.beginTransaction(function (err) {
+                if (err) {
+                    conn.release();  // 반드시 해제해야 함
+                    throw err;
+                }
+                //채팅방 먼저 만들기
+                conn.query(sql1, [chatRoomName, chatType], function(err, result){
+                    if (err) {
+                        conn.release();  // 반드시 해제해야 함
+                        throw err;
+                    }
+                    conn.query(sql2, [chatRoomName, name], function(err, result){
                         if (err) {
                             conn.release();  // 반드시 해제해야 함
                             throw err;
                         }
-
-                        var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values(?, ?, (select chatseq from chatroom where chatroomname=?), (select mail from user where name=?))"
-                        conn.query(sql, [msg, currentDate, username, username], function (err, result) {
-                            if (err) { //에러나면 rollback
+                        conn.commit(function (err) {
+                            if (err) {
                                 return conn.rollback(function () {
                                     conn.release();
                                     throw err;
                                 });
                             }
-                            console.log('기존 대화방에 대화 내용 저장 완료');
+                            console.log('새로운 채팅방 만들기 완료');
+                            return conn.release();
                         });
+                    })
+                });
 
-                    } else if(result.length == 0){ //기존 방이 없는 경우 >> 새로 만들기
-                        //트랜잭션 시작
-                        conn.beginTransaction(function (err) {
+            });
+        });
+    }
+
+
+    function makeDmChatRoom(chatRoomName, chatType, chatUsers) {
+        return new Promise(function(resolve, reject){
+            var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
+            var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
+
+            db((err, conn) => {
+                conn.beginTransaction(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    //채팅방 먼저 만들기
+                    conn.query(sql1, [chatRoomName, chatType], function(err, result){
+                        if (err) {
+                            throw err;
+                        }
+
+                        console.log('첫번째 쿼리문 완료');
+
+                        conn.query(sql2, [chatRoomName, chatUsers[0]], function(err, result){
                             if (err) {
-                                conn.release();  // 반드시 해제해야 함
                                 throw err;
                             }
+                            console.log('두번째 쿼리문 완료?');
+                            conn.query(sql2, [chatRoomName, chatUsers[1]], function(err, result) {
+                                if (err) {
+                                    throw err;
 
-                            var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype='SELF'))";
-                            conn.query(sql1, username, function (err, result) {
-                                if (err) { //에러나면 rollback
-                                    return conn.rollback(function () {
+                                }
+                                conn.commit(function (err) {
+                                    if (err) {
+                                        conn.rollback(function () {
+                                            throw err;
+                                            reject(new Error('commit 실패'));
+                                        });
+                                    }
+                                    resolve('commit success');
+                                });
+                            });
+                        });
+                    });
+                });//transaction end
+
+
+
+                conn.release();
+            }); //db end
+        })
+    }
+    /*//DM 채팅방 만들기
+    function makeDmChatRoom(chatRoomName, chatType, chatUsers) {
+        var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
+        var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
+
+        db((err, conn) => {
+            conn.beginTransaction(function (err) {
+                if (err) {
+                    return conn.release();
+                    throw err;
+                }
+                //채팅방 먼저 만들기
+                conn.query(sql1, [chatRoomName, chatType], function(err, result){
+                    if (err) {
+                        conn.release();
+                        throw err;
+                    }
+                    
+                    console.log('첫번째 쿼리문 완료');
+
+                    conn.query(sql2, [chatRoomName, chatUsers[0]], function(err, result){
+                        if (err) {
+                            conn.release();
+                            throw err;
+                        }
+                        console.log('두번째 쿼리문 완료?');
+                        conn.query(sql2, [chatRoomName, chatUsers[1]], function(err, result) {
+                            if (err) {
+                                conn.release();
+                                throw err;
+
+                            }
+                            conn.commit(function (err) {
+                                if (err) {
+                                    conn.rollback(function () {
                                         conn.release();
                                         throw err;
                                     });
                                 }
-                                console.log('채팅방 만들기 성공');
-
-                                //'나에게' 채팅방 참여자 만들기
-                                var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
-
-                                conn.query(sql2, [username, username], function (err, result) {
-                                    if (err) { //에러나면 rollback
-                                        return conn.rollback(function () {
-                                            conn.release();
-                                            throw err;
-                                        });
-                                    }
-
-                                    var sql3 = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where name=?))"
-                                    conn.query(sql3, [msg, currentDate, username, username], function (err, result) {
-                                        if (err) { //에러나면 rollback
-                                            return conn.rollback(function () {
-                                                conn.release();
-                                                throw err;
-                                            });
-                                        }
-                                        conn.commit(function (err) {
-                                            if (err) {
-                                                return conn.rollback(function () {
-                                                    conn.release();
-                                                    throw err;
-                                                });
-                                            }
-                                            console.log('새로운 채팅방 만들고 대화 내용 저장 커밋 완료');
-                                            return conn.release();
-                                        });
-                                    });
-                                })
+                                console.log('dm 새로운 채팅방 만들기 완료');
                             });
-                        }); //transaction end
+                        });
+                    });
+                });
+                });//transaction end
+            conn.release();
+            }); //db end
+    }*/
 
-                    }; //기존 방이 없는 경우 끝
-                }); //체크하는 쿼리 끝
-            }); //db 연결 끝
-            socket.emit('receive message', msg, currentDate);
 
 
 
+    //채팅 내용 저장하기
+    function insertChatContent(chatContent, chatRoomName, name) {
+        console.log('채팅 내용 저장하기 -> 채팅방 이름 가져오니??'+chatRoomName);
+        db((err, conn) => {
+            var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where name=?))"
+            conn.query(sql, [chatContent, currentDate, chatRoomName, name], function (err, result) {
+                    if (err) { //에러나면 rollback
+                        conn.release();
+                        throw err;
+                }
+                if(result.length > 0 ){
+                    console.log('기존 채팅방에 대화 내용 저장 커밋 완료');
+                } else {
+                }
+                conn.release();
+
+            });
+        });
+    }
+
+    //나에게 채팅방
+    self.on('connection', (socket) => {
+        socket.on('send message to self', function (chatRoomName, chatType, chatContent, name) {
+
+            console.log('넘어오니??'+chatType+'/'+chatRoomName + "/ 내용 : "+chatContent+"/ 글쓴이 : "+name)
+
+            //기존 채팅방 있는지 확인하는 함수 실행
+            checkChatRoom(chatRoomName, chatType).then(function(data) {
+                //기존 채팅방이 있는 경우
+                if (data == "yes") {
+                    console.log('기존 채팅방 있니???');
+                    insertChatContent(chatContent, chatRoomName, name);
+                    //기존 채팅방이 없는 경우
+                } else if ((data == "no")) {
+                    console.log('elseif 타니???');
+                    makeSelfChatRoom(chatRoomName, chatType, name);
+                    insertChatContent(chatContent, chatRoomName, name);
+
+                }
+            });
+            socket.emit('receive message to self', chatContent, currentDate);
+        });
+
+        socket.on('disconnect', (socket) => {
+            console.log('self 네임 스페이스 접속 해제');
+
+        })
+
+    }); //나에게 채팅방 끝
+
+
+    group.on('connection', (socket) => {
+        console.log('그룹 채팅 참여');
+
+        socket.on('send message to group', function (chatRoomName, chatType, chatContent, name) {
+
+            console.log('그룹채팅넘어오니??'+chatType+'/'+chatRoomName +"/" + chatContent + "/" +name);
+
+            insertChatContent(chatContent, chatRoomName, name);
+            group.emit('receive message to group', chatContent, currentDate, name);
+            });
+        socket.on('disconnect', (socket) => {
+            console.log('group 네임 스페이스 접속 해제');
+
+        })
 
         });
 
 
+    dm.on('connection', (socket) => {
+        console.log('dm 채팅방 연결');
+        socket.on('send message to dm', function (chatRoomName, chatType, chatContent, chatUsers) {
+            console.log('어떻게 넘어오니?? 채팅방 이름 : ' + chatRoomName + "타입 : "+chatType+"내용 : "+chatContent+" 참가자들 : "+chatUsers);
+            //수신자
+            var fromName = chatUsers[0];
+            //기존 채팅방 있는지 확인하는 함수 실행
+            checkChatRoom(chatRoomName, chatType).then(function(data) {
+                //기존 채팅방이 있는 경우
+                if (data == "yes") {
+                    insertChatContent(chatContent, chatRoomName, fromName);
+                    //기존 채팅방이 없는 경우
+                } else if ((data == "no")) {
+                    makeDmChatRoom(chatRoomName, chatType, chatUsers).then(function(data){
+                        console.log('dm 채팅방 만들기 함수 실행 결과'+data);
+                        if(data == 'commit success'){
 
+                            insertChatContent(chatContent, chatRoomName, chatUsers[0]);
+                            console.log('대화내용 저장 완료');
+                        } else {
+                            console.log('대화내용 저장 실패!!!!!!!');
+                        }
+                    })
+                }
+            });
+            dm.emit('receive message to dm', chatContent, currentDate, chatUsers[0]);
+        });
 
-    });
+        socket.on('disconnect', (socket) => {
+            console.log('DM 네임 스페이스 접속 해제');
+        })
 
+    }); //dm 채팅방 끝
 
 };
