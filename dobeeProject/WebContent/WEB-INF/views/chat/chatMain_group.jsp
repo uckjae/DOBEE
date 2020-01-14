@@ -126,7 +126,7 @@
 	.chat-list .out .chat-message:before {
 	    right: -12px;
 	    border-bottom: 20px solid transparent;
-	    border-left: 20px solid #fc6d4c;
+	    border-left: 20px solid #888888;
 	}
 	
 	.card .card-header:first-child {
@@ -344,39 +344,48 @@
 <!-- socket 연결 -->
 <script src="http://localhost:5000/socket.io/socket.io.js"></script>
 <script>
-
-	
-	
-	
 	$(function(){
 
 		var chatType = $("#chatType").val();
 		var chatRoomName = $("#chatRoomName").text();
-		var name = $("#name").val();
+		var fromName = $("#name").val();
 		var socket = io.connect( 'http://localhost:5000/group', {
 					path: '/socket.io'
 				});
 				
 				$("#sendMessage").on('submit', function(e){
 					chatContent = $('#chatContent').val();
-					
-					console.log('그룹 채팅 내용 가져와??'+chatContent);
-					
-					socket.emit('send message to group', chatRoomName, chatType, chatContent, name);
+					socket.emit('send message to group', chatRoomName, chatType, chatContent, fromName);
 					$('#chatContent').val("");
 					$("#chatContent").focus();
 					e.preventDefault();
 					
 					});
 				
-				socket.on('receive message to group', function(chatContent,currentDate){
-					$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-							+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-							+'<div class="chat-body"><div class="chat-message">'
-							+'<h3>'+name+'</h3>'
-							+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-							+'</div></div></li></div><br>');
-					$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+				socket.on('receive message to group', function(chatContent,currentDate, name){
+					console.log('현재 입력한 사람은???'+fromName);
+					console.log('발신자는???'+name);
+					if(fromName == name) {
+						$('#chatLog').append('<div id="scroll"> <li class="out"><div class="chat-img" >'
+								+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+								+'<div class="chat-body"><div class="chat-message">'
+								+'<h3>'+name+'</h3>'
+								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+								+'</div></div></li></div><br>');
+						$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+ 
+						} else {
+
+							$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
+									+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+									+'<div class="chat-body"><div class="chat-message">'
+									+'<h3>'+name+'</h3>'
+									+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+									+'</div></div></li></div><br>');
+							$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+
+							}
+
 					});
 		
 		
@@ -458,73 +467,7 @@
 			});
 
 
-	/*DM 채팅방 연결하기*/
-	/* $(".dmUser").on("click", function() {
-		var mail = $(this).attr('value');
-		var name = $(this).text();
-		console.log('콘솔에서 메일 가져와?'+mail)
-		console.log('콘솔에서 이름 가져와?'+name)
-		$.ajax({
-	 			url:"chatDm.do?name="+name+"&mail="+mail,
-				dataType: "text",
-				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-				type:"post",
-				success:function(responsedata){
-					if(responsedata == "dm") {
-						socketConnect(responsedata)
-						console.log("dm 소켓 연결됨??");
-						$("#chatMsgMain").empty();
-						$("#chatMsgMain").append('<div class="col-md-12">'
-								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
-								+ '</ul></div>');
-
-						$("#chatRoomName").text("");
-						$("#chatRoomName").text(name);
-
-						$("#sendMessage").on('submit', function(e){
-							var chatContent = $('#chatContent').val();
-							
-							console.log('내용 가져와??'+chatContent);
-							console.log('emitName?'+emitName);
-							
-							socket.emit(emitName, chatRoomName, chatType, chatContent, name);
-							$('#chatContent').val("");
-							$("#chatContent").focus();
-							e.preventDefault();
-							
-							});
-						
-						}
-					
-				},
-				error:function(){
-					
-				}
-			});
-		}); */
-
-	/*그룹 채팅방 연결하기*/
-	/* $(".groupChatRoom").on("click", function() {
-		var chatRoomName = $(this).text();
-		
-		$.ajax({
-	 			url:"chatGroup.do?chatRoomName="+chatRoomName,
-				dataType: "text",
-				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-				type:"post",
-				success:function(responsedata){
-					if(responsedata == "group") {
-							
-						
-
-						
-							}
-				},
-				error:function(){
-					
-				}
-			});
-		});
+/*
 
 	
 	$("#chatMsgMain").empty();
