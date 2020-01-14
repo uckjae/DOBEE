@@ -12,8 +12,8 @@
  
  
  	<!-- 법인 카드 목록 불러오기 -->
- 	<select id=""resultType="com.dobee.vo.Debit">
+ 	<!-- <select id="listDebit"resultType="com.dobee.vo.Debit">
  		SELECT * FROM DEBIT
- 	</select>
+ 	</select> -->
 
 </mapper>
