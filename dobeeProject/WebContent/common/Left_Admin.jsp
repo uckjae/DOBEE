@@ -35,7 +35,7 @@
 					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;법인카드관리</i></a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
 						<li><a href="AdminDebit.do">법인카드 등록</a></li>
-						<li><a href="AdminDebit.do">법인카드 목록</a></li>
+						<li><a href="ListDebit.do">법인카드 목록</a></li>
 					</ul>
 				</li>
 				
