@@ -164,9 +164,10 @@ public class DoController {
     	}else {
     		System.out.println("컨트롤단 : 법인카드 등록 실패");
     		return null;
+    		//등록 실패하면 아무일도 안일어남
     	}
     	
-    	
+    	//등록 성공하면 카드 목록 뷰단으로 이동
     	return "admin/ListDebit";
     }
     
