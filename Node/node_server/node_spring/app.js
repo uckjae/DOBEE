@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-//const mysql = require('mysql');
 
 //socket.js 파일 쓰기
 const webSocket = require('./socket');
@@ -17,6 +16,12 @@ const usersRouter = require('./routes/users');
 const selfchat = require('./routes/selfchat');
 
 const app = express();
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 
 const server = app.listen(5000, () => {

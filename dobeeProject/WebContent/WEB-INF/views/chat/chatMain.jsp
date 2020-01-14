@@ -126,7 +126,7 @@
 	.chat-list .out .chat-message:before {
 	    right: -12px;
 	    border-bottom: 20px solid transparent;
-	    border-left: 20px solid #fc6d4c;
+	    border-left: 20px solid #888888;
 	}
 	
 	.card .card-header:first-child {
@@ -148,8 +148,6 @@
 	    margin-top:40px;    
 	}
 	
-
-
   </style>
   
   <body>
@@ -262,8 +260,7 @@
 	           <ul class="list-unstyled friend-list">
 	           <c:forEach var="userList" items="${requestScope.userList}">
 		            <li>
-		            <!-- chatDm.do?mail=${userList.mail } -->
-			           	<div><a href='#' class="dmUser" value=${userList.mail }><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
+			           	<div><a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="dmUser" value=${userList.mail }><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
 			     	  	</div>
 		     	  	</li>
 	           </c:forEach>
@@ -312,8 +309,6 @@
 		            <li class="white">
 		              <div class="form-group basic-textarea">
 		                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-						<%-- <input type="hidden" id="chatRoomNameToSocket" name="chatRoomNameToSocket" value="${user.name}"> --%>
-						<input type="hidden" id="nameSpace" name="nameSpace" value="${requestScope.chatType}">
 						<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
 		                <input type="hidden" id="name" name="name" value="${user.name}">
 		              </div>
@@ -345,54 +340,34 @@
 <!-- socket 연결 -->
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
-var socket;
-
-function socketConnect(nameSpace, chatRoomName, chatType, name, sendEmitName, receiveEmitName) {
-	var chatType = $("#chatType").val();
-	var nameSpace = $("#chatType").val();
-	var chatRoomName = $("#chatRoomName").text();
-	var name = $("#name").val();
-	socket = io.connect( 'http://192.168.6.2:5000/'+nameSpace, {
-				path: '/socket.io'
-			})
-			
-			$("#sendMessage").on('submit', function(e){
-				chatContent = $('#chatContent').val();
-				
-				console.log('내용 가져와??'+chatContent);
-				
-				socket.emit(sendEmitName, chatRoomName, chatType, chatContent, name);
-				$('#chatContent').val("");
-				$("#chatContent").focus();
-				e.preventDefault();
-				
-				});
-			
-			socket.on(receiveEmitName, function(chatContent,currentDate){
-				$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
-						+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-						+'<div class="chat-body"><div class="chat-message">'
-						+'<h3>'+name+'</h3>'
-						+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-						+'</div></div></li></div><br>');
-				$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-				});
-
-			}
-	
-	
 	$(function(){
 
-		
-		
-		if(socket == null || socket == ""){
-			//일단 나에게 채팅방 연결
-			socketConnect(nameSpace, chatRoomName, chatType, name, "send message to self", "receive message to self")
-
-			} else if(socket !== null &&  nameSpace == "self"){
-				socket.on('disconnect', function() {
+		var chatType = $("#chatType").val();
+		var chatRoomName = $("#chatRoomName").text();
+		var fromName = $("#name").val();
+		var socket = io.connect( 'http://192.168.6.2:5000/self', {
+					path: '/socket.io'
 				});
-			} 
+				
+				$("#sendMessage").on('submit', function(e){
+					chatContent = $('#chatContent').val();
+
+					socket.emit('send message to self', chatRoomName, chatType, chatContent, fromName);
+					$('#chatContent').val("");
+					$("#chatContent").focus();
+					e.preventDefault();
+					
+					});
+				
+				socket.on('receive message to self', function(chatContent,currentDate){
+						$('#chatLog').append('<div id="scroll"> <li class="out"><div class="chat-img" >'
+								+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
+								+'<div class="chat-body"><div class="chat-message">'
+								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+								+'</div></div></li></div><br>');
+						$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
+					});
+		
 		
 		  $.ajax({
 		  		url:"getUserList.do",
@@ -471,75 +446,7 @@ function socketConnect(nameSpace, chatRoomName, chatType, name, sendEmitName, re
 	 			}
 			});
 
-
-	/*DM 채팅방 연결하기*/
-	/* $(".dmUser").on("click", function() {
-		var mail = $(this).attr('value');
-		var name = $(this).text();
-		console.log('콘솔에서 메일 가져와?'+mail)
-		console.log('콘솔에서 이름 가져와?'+name)
-		$.ajax({
-	 			url:"chatDm.do?name="+name+"&mail="+mail,
-				dataType: "text",
-				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-				type:"post",
-				success:function(responsedata){
-					if(responsedata == "dm") {
-						socketConnect(responsedata)
-						console.log("dm 소켓 연결됨??");
-						$("#chatMsgMain").empty();
-						$("#chatMsgMain").append('<div class="col-md-12">'
-								+ '<ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">'
-								+ '</ul></div>');
-
-						$("#chatRoomName").text("");
-						$("#chatRoomName").text(name);
-
-						$("#sendMessage").on('submit', function(e){
-							var chatContent = $('#chatContent').val();
-							
-							console.log('내용 가져와??'+chatContent);
-							console.log('emitName?'+emitName);
-							
-							socket.emit(emitName, chatRoomName, chatType, chatContent, name);
-							$('#chatContent').val("");
-							$("#chatContent").focus();
-							e.preventDefault();
-							
-							});
-						
-						}
-					
-				},
-				error:function(){
-					
-				}
-			});
-		}); */
-
-	/*그룹 채팅방 연결하기*/
-	/* $(".groupChatRoom").on("click", function() {
-		var chatRoomName = $(this).text();
-		
-		$.ajax({
-	 			url:"chatGroup.do?chatRoomName="+chatRoomName,
-				dataType: "text",
-				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-				type:"post",
-				success:function(responsedata){
-					if(responsedata == "group") {
-							
-						
-
-						
-							}
-				},
-				error:function(){
-					
-				}
-			});
-		});
-
+/*
 	
 	$("#chatMsgMain").empty();
 						$("#chatMsgMain").append('<div class="col-md-12">'

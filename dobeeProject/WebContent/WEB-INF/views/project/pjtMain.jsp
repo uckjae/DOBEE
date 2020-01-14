@@ -197,6 +197,28 @@ body {
     </style>
     <script type="text/javascript">
       $(function(){
+		$.ajax({
+			url:"ajax/project/projectList.do",
+			success: function(data){
+				console.log(data)
+				dataType: "JSON",
+				success: function(data){
+					$.each(data, function(i, elt) {
+						if(elt.authCode !=1){
+							var option = $("<option>");
+							$(option).val(elt.authCode);
+							if(elt.authCode == 2){
+								$(option).text("사람1");
+							}
+							else{
+								$(option).text("사람2");
+							}
+							$('#pjtCode').append(option);
+						}
+					})
+				}
+			})
+          
          /* 프로젝트 멤버추가 */
          $('#memberList').change(function(){
             var memberList = $('#pjtMember').val();
@@ -245,7 +267,18 @@ body {
          
                
       });
+
+
+
+      
     </script>
+    
+   
+ 
+    
+
+
+
 </head>
 <body>
 
@@ -349,13 +382,19 @@ body {
              <c:forEach items="${list}" var="n">
 				<div class="col-md-4 pjt" >      
 					<tr>
-					<td class="title"> 프로젝트 이름 :  <a href="projectDetail.do?seq=${n.pjtSeq}" style="color:red">${n.pjtName}</a></td>
+					<td class="title" id="pjtCode"> 프로젝트 이름 : 
+					
+
+					
+					 <a href="projectDetail.do?seq=${n.pjtSeq}" style="color:red;" id="pjtCode">${n.pjtName}</a></td>
 					<br>
 					<td class="ing"> 진행 상황 : ${n.pjtProgress} </td>
 					<br>
 					<td class="date"> 시작 날짜 : ${n.pjtStartAt}  </td>
 					<br>
 					<td class="date"> 종료 날짜 : ${n.pjtEndAt}  </td>
+					
+					<a class="btn-del button" href="pjtDelete.do?pjtseq=${n.pjtSeq}"> 삭제  </a>
 				</tr>
 				</div>
 			</c:forEach>

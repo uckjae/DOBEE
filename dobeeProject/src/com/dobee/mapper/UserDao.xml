@@ -164,4 +164,10 @@
 	<select id="getTeamList" resultType="com.dobee.vo.member.TeamList">
 		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST
 	</select>
+	
+	
+	<!-- 사원등록 -->
+	<insert id="setUser">
+		
+	</insert>
 </mapper>

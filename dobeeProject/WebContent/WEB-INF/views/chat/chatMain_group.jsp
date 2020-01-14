@@ -147,9 +147,6 @@
 	.content{
 	    margin-top:40px;    
 	}
-	
-
-
   </style>
   
   <body>
@@ -262,8 +259,7 @@
 	           <ul class="list-unstyled friend-list">
 	           <c:forEach var="userList" items="${requestScope.userList}">
 		            <li>
-		            <!-- chatDm.do?mail=${userList.mail } -->
-			           	<div><a href='#' class="dmUser" value=${userList.mail }><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
+		            	<div><a href='chatDm.do?chatMail=${userList.mail}' class="dmUser" value=${userList.mail }><i class='fas fa-user'></i><span>&nbsp;&nbsp;${userList.name }</span></a>
 			     	  	</div>
 		     	  	</li>
 	           </c:forEach>
@@ -311,8 +307,6 @@
 		            <li class="white">
 		              <div class="form-group basic-textarea">
 		                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-						<%-- <input type="hidden" id="chatRoomNameToSocket" name="chatRoomNameToSocket" value="${user.name}"> --%>
-						<input type="hidden" id="nameSpace" name="nameSpace" value="${requestScope.chatType}">
 						<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
 		                <input type="hidden" id="name" name="name" value="${user.name}">
 		              </div>
@@ -354,9 +348,7 @@
 				});
 				
 				$("#sendMessage").on('submit', function(e){
-					console.log('네이므????'+chatRoomName);
 					chatContent = $('#chatContent').val();
-					console.log('내용????'+chatContent);
 
 					socket.emit('send message to group', chatRoomName, chatType, chatContent, fromName);
 					$('#chatContent').val("");
