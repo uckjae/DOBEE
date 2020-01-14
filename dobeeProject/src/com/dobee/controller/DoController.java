@@ -6,15 +6,11 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import java.util.List;
 
-import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,19 +22,16 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
-import com.dobee.services.ProjectService;
-import com.dobee.vo.notice.Notice;
-import com.dobee.vo.project.Project;
-
-
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
+import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
+import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
-import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -68,6 +61,9 @@ public class DoController {
     
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private DebitService debitService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -160,11 +156,18 @@ public class DoController {
     
     //관리자 법인카드 디비에 등록
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
-    public String adminAddDebitOK() {
+    public String adminAddDebitOK(Debit debit) {
+    	boolean check = debitService.addDebit(debit);
+    	if(check) {
+    		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    		
+    	}else {
+    		System.out.println("컨트롤단 : 법인카드 등록 실패");
+    		return null;
+    	}
     	
     	
-    	
-    	return "admin/AddDebit";
+    	return "admin/ListDebit";
     }
     
     
