@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
@@ -637,15 +639,13 @@ public class DoController {
     
     
     //관리자_사원추가 서비스
-    
+   	@DateTimeFormat(pattern = "yyyy-MM-dd")
     @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
-    public String addUser(User user, UserInfo userInfo) {
+    public String addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
+   		memberService.addUser(user, userInfo, req);
+   		
+   		
     	return "admin/AdminMain";
-    }
-    public String regitUser(User user) {
-    	System.out.println("DoContorller regitUser()");
-    	System.out.println(user.toString());
-    	return null;
     }
     
     

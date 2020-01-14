@@ -102,14 +102,14 @@
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <form action="/dobeeProject/regitUser.do" id="addUserForm" method="post" enctype="multipart/form-data">
+                                        <form action="#" id="addUserForm" method="post" enctype="multipart/form-data">
                                         	<div class="form-group">
                                                 		<div class="form-row">
                                                    			<div class="col-md-6">
                                                         		<div class="form-label-group">
                                                             		
                                                             		<input type="file" id="multiFile" name="multiFile" class="form-control" accept="image/*" hidden="true">
-                                                            		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
+                                                            		<label for="multiFile"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
                                                         		</div>
                                                     		</div>
                                                     		<div class="col-md-6">
@@ -117,13 +117,39 @@
                                                             		<input type="text" id="name" name="name" class="form-control">
                                                             		<label for="name">사원이름</label>
                                                             		<br>
-                                                            		<br>
                                                             		<input type="email" id="mail" name="mail" class="form-control">
                                                             		<label for="mail">사원&nbsp;E-mail</label>
+                                                            		<br>
+                                                            		<select id="emp" name="emp" class="form-control" required="required" autofocus="autofocus">
+                                                            			<option hidden>선택하세요</option>
+                                                            			<option value="재직">재직</option>
+                                                            			<option value="고용예정">고용예정</option>
+                                                            		</select>
+                                                            		<label for="emp">고용상태</label>
                                                         		</div>
                                                     		</div>
                                                 		</div>
                                             		</div>
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-label-group">
+                                                            <input type="date" id="regDate" name="regDate" class="form-control" placeholder="직책" required="required" autofocus="autofocus">
+                                                            <label for="regDate">고용일</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-label-group">
+                                                            <select id="serve" name="serve" class="form-control" required="required" autofocus="autofocus">
+                                                            	<option hidden>선택하세요</option>
+                                                            	<option value="정규직">정규직</option>
+                                                            	<option value="인턴">인턴</option>
+                                                            </select>
+                                                            <label for="serve">전화번호</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="form-row">
                                                     <div class="col-md-6">
@@ -163,7 +189,7 @@
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <button type="button" class="btn btn-primary btn-block" onclick="sendMail()">등록하기</button>
+                                                    <button type="button" class="btn btn-primary btn-block" onclick="submit()">등록하기</button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"
