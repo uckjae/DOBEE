@@ -32,24 +32,34 @@
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <form action="/dobeeProject/regitUser.do" id="addUserForm" method="post" enctype="multipart/form-data">
+                                        <form action="" id="addUserForm" method="post" >
                                         	<div class="form-group">
                                                 		<div class="form-row">
                                                    			<div class="col-md-6">
-                                                        		<div class="form-label-group">
+                                                   				<!-- 나중에 카드사진까지 등록할거면 이 부분 활성해서 수정해서 써야함 -->
+                                                        		<!-- <div class="form-label-group">
                                                             		
                                                             		<input type="file" id="myPic" name="myPic" class="form-control" accept="image/*" hidden="true">
                                                             		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
-                                                        		</div>
+                                                        		</div> -->
+                                                        		<input type="text" id="name" name="name" class="form-control">
+                                                            		<label for="name">카드번호</label>
+                                                            		<br>
+                                                            		<br>
+                                                            		<input type="text" id="name" name="name" class="form-control">
+                                                            		<label for="name">카드사</label>
+                                                            		<br>
                                                     		</div>
                                                     		<div class="col-md-6">
                                                         		<div class="form-label-group">
                                                             		<input type="text" id="name" name="name" class="form-control">
-                                                            		<label for="name">사원이름</label>
+                                                            		<label for="name">명의자이름</label>
                                                             		<br>
                                                             		<br>
-                                                            		<input type="email" id="mail" name="mail" class="form-control">
-                                                            		<label for="mail">사원&nbsp;E-mail</label>
+                                                            		<input type="text" id="name" name="name" class="form-control">
+                                                            		<label for="name">카드별칭</label>
+                                                            		<br>
+                                                            
                                                         		</div>
                                                     		</div>
                                                 		</div>
@@ -58,38 +68,21 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="position" name="position" class="form-control" placeholder="직책" required="required" autofocus="autofocus">
-                                                            <label for="position">직책</label>
+                                                            <input type="text" id="position" name="position" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  autofocus="autofocus">
+                                                            <label for="position">유효기간</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호" required="required">
-                                                            <label for="phone">전화번호</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="form-row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                            <select id="authCode" name="authCode" class="form-control" placeholder="권한 코드" required="required">
-                                                            	<option hidden>선택하세요</option>
-                                                            </select>
-	                                                        <label for="authCode">권한 선택</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                           	<select id="teamCode" name="teamCode" class="form-control" placeholder="팀이름" required="required">
+                                                           	<select id="teamCode" name="teamCode" class="form-control" placeholder="팀이름" >
                                                            		<option hidden>선택하세요</option>
                                                            	</select>
-                                                            <label for="teamCode">팀 선택</label>
+                                                            <label for="teamCode">카드구분</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                            
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
@@ -99,7 +92,6 @@
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"
                                                         		onClick="location.href='MemberList.do'">
                                                 </div>
-                                               
                                             </div>
                                         </form>
                                     </div>
