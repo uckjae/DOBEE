@@ -385,16 +385,7 @@
 							$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
 							}
-					
-					
-					/* $('#chatLog').append('<div id="scroll"> <li class="out"><div class="chat-img" >'
-							+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
-							+'<div class="chat-body"><div class="chat-message">'
-							+'<h3>'+name+'</h3>'
-							+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-							+'</div></div></li></div><br>');
-					$('#scroll').scrollTop($('#scroll')[0].scrollHeight); */
-					
+
 					});
 		
 		
