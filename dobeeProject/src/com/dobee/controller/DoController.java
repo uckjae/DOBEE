@@ -146,7 +146,6 @@ public class DoController {
     	return "admin/AddDebit";
     }
     
-    
 
     //관리자 법인카드 목록 뷰단 이동
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
@@ -155,20 +154,20 @@ public class DoController {
     }
     
     
-    
     //관리자 법인카드 디비에 등록
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
     public String adminAddDebitOK(Debit debit) {
+    	System.out.println("컨트롤 AdminDebit.do 응답 한다.");
     	boolean check = debitService.addDebit(debit);
+    	
+    	System.out.println("여기까지 오는지 보자 :" + check);
     	if(check) {
     		System.out.println("컨트롤단  : 법인카드 등록 성공");
-    		
     	}else {
     		System.out.println("컨트롤단 : 법인카드 등록 실패");
     		return null;
     		//등록 실패하면 아무일도 안일어남
     	}
-    	
     	//등록 성공하면 카드 목록 뷰단으로 이동
     	return "admin/ListDebit";
     }
@@ -180,7 +179,7 @@ public class DoController {
         return null;
     }
 
-
+    
     //출근/퇴근버튼
     public String attendButton(){
         return null;

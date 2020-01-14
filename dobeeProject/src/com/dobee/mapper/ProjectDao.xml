@@ -12,4 +12,38 @@
 INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},#{pjtProgress} )
 
 </insert>
+
+<delete id="delete" parameterType="integer">
+		DELETE FROM PROJECT WHERE pjtSeq = #{pjtSeq}
+		
+	</delete>
+<resultMap type="com.dobee.vo.project.Project" id="Project">
+    <result column="PJTSEQ" property="pjtSeq"/>
+    <result column="PJTNAME" property="pjtName"/>
+    <result column="PJTSTARTAT" property="pjtStartAt"/>
+    <result column="PJTENDAT" property="pjtEndAt"/>
+    <result column="PJTPROGRESS" property="pjtProgress"/>
+</resultMap>
+ 
+<resultMap type="com.dobee.vo.project.Task" id="Task">
+    <result column="TSKSEQ" property="tSeq"/>
+    <result column="TITLE" property="title"/>
+    <result column="PROGRESS" property="progress"/>
+    <result column="IMPORT" property="important"/>
+    <result column="STARTAT" property="startAt"/>
+    <result column="ENDAT" property="endAt"/>
+    <result column="MAIL" property="mail"/>
+    <result column="PJTSEQ" property="pSeq"/>
+    <collection property="project" resultMap="Project"/>
+</resultMap>
+<select id ="getProject" resultType="com.dobee.vo.project.Task">
+
+SELECT p.PJTSEQ, t.PJTSEQ FROM PROJECT p 
+JOIN task t ON p.pjtseq = t.pjtseq 
+WHERE p.pjtseq = #{pjtSeq} 
+
+</select>
+
+
+
 </mapper>
