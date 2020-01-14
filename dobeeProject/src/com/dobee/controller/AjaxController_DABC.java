@@ -58,12 +58,12 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
-	// Ajax 개인부재일정확인 - 년도별 List 출력		0113			&&&&&&&&&&&& 나중에 값 붙이고 값은 출력됨
+	// Ajax 개인부재일정확인 - 년도별 List 출력		0113
 	@RequestMapping("getBreakListByYear.do")
 	public View getBreakListByYear (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByYear();
-		System.out.println("ajax contr ListByYear : " + results);		// &&&&&&&&&&&&&&&&&&
+		// System.out.println("ajax contr ListByYear : " + results);
 		map.addAttribute("byYear", results);
 		
 		return jsonview;
@@ -80,12 +80,12 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
-	// Ajax 개인부재일정확인 - 년-월별 List 출력		0113			&&&&&&&&&&&& 나중에 값 붙이고 값은 출력됨
+	// Ajax 개인부재일정확인 - 년-월별 List 출력		0113				&&&&&&&& 값 못부름
 	@RequestMapping("getBreakYearMonthList.do")
 	public View getBreakYearMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByYMonth();
-		System.out.println("ajax contr ListByYearMonth : " + results);		// &&&&&&&&&&&&&&&&&&
+		// System.out.println("ajax contr ListByYearMonth : " + results);
 		map.addAttribute("byYMonth", results);
 		return jsonview;
 	}
@@ -102,12 +102,12 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113			&&&&&&&&&&&& 나중에 값 붙이고 값은 출력됨
+	// Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113			&&&&&&&&& 값 못부름
 	@RequestMapping("getBreakListByEntry.do")
 	public View getBreakListByEntry (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByYMonth();
-		System.out.println("ajax contr ListByEntry : " + results);		// &&&&&&&&&&&&&&&&&&
+		// System.out.println("ajax contr ListByEntry : " + results);
 		map.addAttribute("byEntry", results);
 		
 		return jsonview;
@@ -125,12 +125,12 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113			&&&&&&&&&&&& 나중에 값 붙이고 값은 출력됨
+	// Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
 	@RequestMapping("getBreakListByIsAuth.do")
 	public View getBreakListByIsAuth (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByIsAuth();
-		System.out.println("ajax contr ListByIsAuth : " + results);		// &&&&&&&&&&&&&&&&&&
+		System.out.println("ajax contr ListByIsAuth : " + results);
 		map.addAttribute("byIsAuth", results);
 		
 		return jsonview;
