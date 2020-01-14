@@ -30,7 +30,7 @@
 				<li><a href="#"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;권한</i>
 				</a></li>	
 				
-				<li><a href=""> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;법인카드 등록</i>
+				<li><a href="AdminDebit.do"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;법인카드 등록</i>
 				</a></li>
 							
 				

@@ -5,9 +5,7 @@
 <html>
 <head>
 	<c:import url="/common/tag.jsp" />
-	<script type="text/javascript">
-		
-	</script>
+	
 </head>
 <body>
 	<!-- Side Navbar -->
@@ -21,7 +19,8 @@
       
       <div id="content-wrapper">
             <!-- !! Content !! -->
-            잘나오냐? 
+            	<h1> 잘 나오냐 </h1>
+            	
       </div>
       
     </div>
