@@ -142,6 +142,25 @@ public class DoController {
     }
     
     
+    //관리자 법인카드등록 뷰단 이동
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.GET)
+    public String adminAddDebit() {
+    	return "admin/AddDebit";
+    }
+    
+    
+    //관리자 법인카드 디비에 등록
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
+    public String adminAddDebitOK() {
+    	
+    	
+    	
+    	return "admin/AddDebit";
+    }
+    
+    
+    
+    
     //회사 일정등록
     //@RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){

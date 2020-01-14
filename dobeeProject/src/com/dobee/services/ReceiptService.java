@@ -21,7 +21,7 @@ public class ReceiptService {
 			
 		String isSuccess = "false";
 		
-		String uploadPath = "/Users/psh/DOBEE/dobeeProject/webapp/upload/";
+		String uploadPath = "/Users/psh/DOBEE/dobeeProject/WebContent/upload/";
 		
 		File dir = new File(uploadPath);
 

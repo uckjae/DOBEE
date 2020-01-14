@@ -290,46 +290,25 @@
 					dataType : "json",
 					success : function (data) {
 						$('#tbody').empty();
-						
 						var byArray = [];
 						byArray = data.byYear;
-						console.log("확인  : " + byArray);
-						for (var i=0; i<byArray.length; i++) {
-							console.log("뭐임?")
-							/*
-							$('tbody').html(
-								<tr>
-									<td class="bcategory">	byArray[i].entry </td>
-									<td class="tterm">		byArray[i].startAt - byArray[i].endAt </td>
-									<td class="tused">		byArray[i].usingBreak </td>
-									<td class="tregdate">	byArray[i].reqDate </td>
-									<td class="notauth"><button type="button" class="btn btn-info btn-sm byArray[i].isAuth" data-toggle="modal" data-target="#myModalbyArray[i].aplSeq">${bl.isAuth }</button></td>
-								</tr>	
-														
-								<!-- Modal -->
-								<div class="modal fade" id="myModal${bl.aplSeq}" role="dialog">
-								  <div class="modal-dialog modal-lg">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal">&times;</button>
-								        <h4 class="modal-title">상세 사유</h4>
-								      </div>
-								      <div class="modal-body">
-								         <h3>부재 사유</h3>
-								     <h4>사유</h4>
-								     <h5>${bl.reason }</h5>
-								      </div>
-								      <div class="modal-footer">
-								       <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-								      </div>
-								    </div>
-								  </div>
-								</div>					
-							)
-							*/
-
-						}
-						
+						for (var i=0; i<byArray.length; i++) {	
+							$('#tbody').append(
+								'<tr> <td class="bcategory">' + byArray[i].entry +'</td>' +
+									'<td class="tterm">' +	byArray[i].startAt +' - '+ byArray[i].endAt + '</td>' +
+									'<td class="tused">' +	byArray[i].usingBreak + '</td>' +
+									'<td class="tregdate">' +	byArray[i].reqDate + '</td>'+
+									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+byArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+byArray[i].aplSeq+'">'+ ${bl.isAuth } +'</button></td>'+
+								'</tr>'
+								+
+								'<div class="modal fade" id="myModal'+byArray[i].aplSeq+'" role="dialog">'+
+									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
+									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
+									'<h5>'+byArray[i].reason+'</h5> </div> <div class="modal-footer">'+
+								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
+							);
+						}	
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -345,7 +324,25 @@
 					dataType : "json",
 					success : function (data) {
 						$('#tbody').empty();
-						// 월 별 조회
+						var bymArray = [];
+						bymArray = data.byYMonth;
+						for (var i=0; i<bymArray.length; i++) {	
+							$('#tbody').append(
+								'<tr> <td class="bcategory">' + bymArray[i].entry +'</td>' +
+									'<td class="tterm">' +	bymArray[i].startAt +' - '+ bymArray[i].endAt + '</td>' +
+									'<td class="tused">' +	bymArray[i].usingBreak + '</td>' +
+									'<td class="tregdate">' +	bymArray[i].reqDate + '</td>'+
+									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+bymArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+bymArray[i].aplSeq+'">'+ ${bl.isAuth } +'</button></td>'+
+								'</tr>'
+								+
+								'<div class="modal fade" id="myModal'+bymArray[i].aplSeq+'" role="dialog">'+
+									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
+									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
+									'<h5>'+bymArray[i].reason+'</h5> </div> <div class="modal-footer">'+
+								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
+							);
+						}	
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -361,7 +358,25 @@
 					dataType : "json",
 					success : function (data) {
 						$('#tbody').empty();
-						// 항목 별 조회
+						var beArray = [];
+						beArray = data.byEntry;
+						for (var i=0; i<beArray.length; i++) {	
+							$('#tbody').append(
+								'<tr> <td class="bcategory">' + beArray[i].entry +'</td>' +
+									'<td class="tterm">' +	beArray[i].startAt +' - '+ beArray[i].endAt + '</td>' +
+									'<td class="tused">' +	beArray[i].usingBreak + '</td>' +
+									'<td class="tregdate">' +	beArray[i].reqDate + '</td>'+
+									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+beArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+beArray[i].aplSeq+'">'+ ${bl.isAuth } +'</button></td>'+
+								'</tr>'
+								+
+								'<div class="modal fade" id="myModal'+beArray[i].aplSeq+'" role="dialog">'+
+									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
+									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
+									'<h5>'+beArray[i].reason+'</h5> </div> <div class="modal-footer">'+
+								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
+							);
+						}	
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -377,7 +392,25 @@
 					dataType : "json",
 					success : function (data) {
 						$('#tbody').empty();
-						// 승인 여부 별 조회
+						var biaArray = [];
+						biaArray = data.byIsAuth;
+						for (var i=0; i<biaArray.length; i++) {	
+							$('#tbody').append(
+								'<tr> <td class="bcategory">' + biaArray[i].entry +'</td>' +
+									'<td class="tterm">' +	biaArray[i].startAt +' - '+ biaArray[i].endAt + '</td>' +
+									'<td class="tused">' +	biaArray[i].usingBreak + '</td>' +
+									'<td class="tregdate">' +	biaArray[i].reqDate + '</td>'+
+									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+biaArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+biaArray[i].aplSeq+'">'+ ${bl.isAuth } +'</button></td>'+
+								'</tr>'
+								+
+								'<div class="modal fade" id="myModal'+biaArray[i].aplSeq+'" role="dialog">'+
+									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
+									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
+									'<h5>'+biaArray[i].reason+'</h5> </div> <div class="modal-footer">'+
+								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
+							);
+						}
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
