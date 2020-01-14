@@ -1,12 +1,12 @@
 package com.dobee.dao;
 
+import java.util.List;
+
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import com.dobee.vo.schedule.Schedule;
-
-import java.util.List;
 
 public interface ProjectDao {
 
@@ -19,6 +19,13 @@ public interface ProjectDao {
     public List<Project> getPjt(Project project);
 
 
+    //프로젝트 삭제 -- 1.13 추가
+    public int delete(int pjtseq); 
+    
+    // 프로젝트 가져오기 --1.14 추가
+ 	public List<Task> getProject(int seq);
+ 	
+ 	
     //업무리스트
     public List<Task> taskList();
 
@@ -49,6 +56,9 @@ public interface ProjectDao {
 
     //프로젝트 캘린더
     public List<Schedule> pjtSchedule();
+
+
+ 
 
 
 

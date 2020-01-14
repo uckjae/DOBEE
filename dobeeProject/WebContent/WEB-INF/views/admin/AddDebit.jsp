@@ -32,7 +32,7 @@
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <form action="" id="addUserForm" method="post" >
+                                        <form action="AdminDebit.do" method="post" >
                                         	<div class="form-group">
                                                 		<div class="form-row">
                                                    			<div class="col-md-6">
@@ -43,7 +43,7 @@
                                                             		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
                                                         		</div> -->
                                                         		<div class="form-label-group">
-                                                        			<input type="text" id="cardnum" name="cardnum" class="form-control" autofocus="autofocus">
+                                                        			<input type="text" id="cardNum" name="cardNum" class="form-control" autofocus="autofocus">
                                                             		<label for="name">카드번호</label>
                                                             		<br>
                                                             		<br>
@@ -58,7 +58,7 @@
                                                             		<label for="name">명의자이름</label>
                                                             		<br>
                                                             		<br>
-                                                            		<input type="text" id="nickname" name="nickname" class="form-control">
+                                                            		<input type="text" id="nickName" name="nickName" class="form-control">
                                                             		<label for="name">카드별칭</label>
                                                             		<br>
                                                             
@@ -70,7 +70,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="text" id="valdate" name="valdate" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  >
+                                                            <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  >
                                                             <label for="position">유효기간</label>
                                                         </div>
                                                     </div>
@@ -88,7 +88,7 @@
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <button type="button" class="btn btn-primary btn-block" onclick="location.href='AdminDebit.do'">등록하기</button>
+                                                    <button type="submit" class="btn btn-primary btn-block" >등록하기</button>
                                                 </div>
                                                 <div class="col-md-6"><!-- 취소하고 뒤로 가기 -->
                                                     <input type="button" class="btn btn-danger btn-block" value="뒤로가기"

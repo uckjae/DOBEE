@@ -141,6 +141,10 @@ public interface UserDao {
     
     //TeamList 불러오기
     public List<TeamList> getTeamList();
+    
 
+    //사원등록(관리자)
+    public void setUser();
+    
 
 }
