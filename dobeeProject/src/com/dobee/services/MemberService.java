@@ -6,9 +6,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dobee.dao.UserDao;
 import com.dobee.vo.member.User;
+import com.dobee.vo.member.UserInfo;
 
 @Service
 public class MemberService {
@@ -16,10 +19,6 @@ public class MemberService {
 
 	@Autowired
     private SqlSession sqlSession;
-	
-    public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
 
 
 	//로그인
@@ -76,6 +75,21 @@ public class MemberService {
     	UserDao userdao = sqlSession.getMapper(UserDao.class);
     	User user = userdao.getUser(mail);
     	return user;
+    }
+    
+    
+    //User 등록
+    @Transactional
+    public void addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
+    	System.out.println("MemberService addUser() in!!");
+    	try {
+    		UserDao userDao = sqlSession.getMapper(UserDao.class);
+    		userDao.addUser();
+    		userDao.addUserDetail();
+    	}catch(Exception e) {
+    		System.out.println("Transaction 예외발생 : " +e.getMessage());
+    		throw e;
+    	}
     }
     
 
