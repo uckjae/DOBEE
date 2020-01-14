@@ -49,8 +49,8 @@ public class AjaxController_DABC {
 	// 부재신청 년도 option list 불러오기
 	@RequestMapping("breakYearList.do")
 	public View breakYearList (Model map) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class)
-		ArrayList<User> results = userDao.a)
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		/* ArrayList<User> results = userDao. */
 		return jsonview;
 	}
 	

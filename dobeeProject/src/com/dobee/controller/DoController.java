@@ -73,9 +73,6 @@ public class DoController {
     	this.sqlsession = sqlsession;
     }
     
-    @Autowired
-    private MemberService memberService;
-    
 
     //로그인
     @RequestMapping("login.do")
