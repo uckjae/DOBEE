@@ -11,7 +11,7 @@
   <c:import url="/common/tag.jsp"/>
 <head>
 <style type="text/css">
-body 
+/* body 
 {
 	
 	margin : 0;
@@ -22,9 +22,9 @@ body
 	min-height : 100vh;
 	background : #fff;
 
-}
+} */
 
-.container
+.pjcontainer
 {
 	position : relative;
 	width:90%;
@@ -34,10 +34,10 @@ body
 	grid-gap : 0 40px;
 	
 }
-.container .box 
+.pjcontainer .pjbox 
 {
 	position : relative;
-	height : 400px;
+	height : 380px;
 	background :  #807c7e;
 	display: flex;
 	justify-content: center;
@@ -45,7 +45,7 @@ body
 	/* border: 1px solid #000; */
 }
 
-.container .box:before
+.pjcontainer .pjbox:before
 {
 	content : '';
 	position : absolute;
@@ -58,12 +58,12 @@ body
 	z-index : -1;
 }
 
-.container .box:nth-child(1):before
+.pjcontainer .pjbox:nth-child(1):before
 {
 	background: linear-gradient(600deg, #807c7e, #f4f6f5);
 
 }
-.container .box:after
+.pjcontainer .pjbox:after
 {
 	content : '';
 	position : absolute;
@@ -83,7 +83,7 @@ body
 
 }
 
-.box .content h2 
+.pjbox .content h2 
 {
 	position : absolute;
 	top : -60px;
@@ -96,13 +96,13 @@ body
 	
 }
 
-.box:hover .content h2
+.pjbox:hover .content h2
 {
 	top : -140px;
 
 }
 
-.box .content h3 
+.pjbox .content h3 
 {
 	margin : 0 0 10px;
 	padding : 0;
@@ -111,7 +111,7 @@ body
 	color: #fff;
 }
 
-.box .content p 
+.pjbox .content p 
 {
 	margin : 0;
 	padding : 0;
@@ -119,7 +119,7 @@ body
 	color: #fff;
 }
 
-.box .content a
+.pjbox .content a
 {
 	position : relative;
 	margin : 20px 0 0;
@@ -134,14 +134,14 @@ body
 	visibility: hidden;
 }
 
-.box:hover .content a
+.pjbox:hover .content a
 {
 
 	transform : translateY(0);
 	opacity: 1;
 	visibility: visible;
 }
-.box .content a:hover
+.pjbox .content a:hover
 {
 	color : #000;
 	background: #fff;
@@ -165,7 +165,7 @@ body {
 .card-signin {
   border: 0;
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  pjbox-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .card-signin .card-title {
@@ -214,7 +214,6 @@ body {
   display: block;
   width: 100%;
   margin-bottom: 0;
-  /* Override default `<label>` margin */
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
@@ -270,8 +269,6 @@ body {
 
 }
 
-/* Fallback for Edge
--------------------------------------------------- */
 
 @supports (-ms-ime-align: auto) {
   .form-label-group>label {
@@ -282,8 +279,6 @@ body {
   }
 }
 
-/* Fallback for IE
--------------------------------------------------- */
 
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
@@ -298,7 +293,6 @@ body {
           border : 2px;
           border-style: groove;
           padding-top : 1em;
-          /*padding-left : 5em; */
           margin-top : 1em;
           margin-left : auto;
           margin-right: auto;
@@ -307,7 +301,6 @@ body {
           text-align: center;
        }
        .pjt .add{
-          /* margin-left: 3em; */
           width: 4%;
           margin-left: 48%;
           margin-right: 48%;
@@ -477,10 +470,7 @@ body {
     </div>
   </div>   
               
-           
-  
-
-
+         
    <!-- Side Navbar -->
     <nav class="side-navbar">
        <c:import url="/common/left.jsp" />
@@ -488,160 +478,65 @@ body {
     <div class="page">
        <!-- 상단 Navbar -->
        <c:import url="/common/top.jsp"/>
-       
-       <select name="job">
-    <option value="">전체 프로젝트 관리</option>
-    <option value="2019-1분기">2019-1분기</option>
-    <option value="2019-2분기">2019-2분기</option>
-    <option value="2019-3분기">2019-3분기</option>
-    <option value="2019-4분기">2019-4분기</option>
-</select>
-       <!-- 프로젝트목록표시 -->
-       <div class="container">
-          <div class="row">
-             <!-- 프로젝트 -->
-             <div class="container">
-				<div class="box">
-					 <div class="content">
-					 	<h2>01</h2>
-					 	<h3>Service One</h3>
-					 	<p></p>
-					 	<a href="#">Read More</a>
-					 </div>
-				 </div>
-			</div>
-			<div class="container">
-				 <div class="box">
-					 <div class="content">
-					 	<h2>02</h2>
-					 	<h3>Service Two</h3>
-					 	<p></p>
-					 	<a href="#">Read More</a>
-					 </div>
-				 </div>
-			</div>
-			<div class="container">
-				 <div class="box">
-					 <div class="content">
-					 	<h2>03</h2>
-					 	<h3>Service Three</h3>
-					 	<p></p>
-					 	<a href="#">Read More</a>
-					 </div>
-				 </div>
-			</div>
-			<div class="container">
-				 <div class="box">
-					 <div class="content">
-					 	<h2>04</h2>
-					 	<h3>Service Four</h3>
-					 	<p></p>
-					 	<a href="#">Read More</a>
-					 </div>
-				 </div>
-			</div>
-                  
-           <%--   <c:forEach items="${list}" var="n">
-				<div class="col-md-4 pjt" >      
-					<tr>
-					<td class="title" id="pjtCode"> 프로젝트 이름 : 
-					
 
-					
-					 <a href="projectDetail.do?seq=${n.pjtSeq}" style="color:red;" id="pjtCode">${n.pjtName}</a></td>
-					<br>
-					<td class="ing"> 진행 상황 : ${n.pjtProgress} </td>
-					<br>
-					<td class="date"> 시작 날짜 : ${n.pjtStartAt}  </td>
-					<br>
-					<td class="date"> 종료 날짜 : ${n.pjtEndAt}  </td>
-					
-					<a class="btn-del button" href="pjtDelete.do?pjtseq=${n.pjtSeq}"> 삭제  </a>
-				</tr>
-				</div>
-			</c:forEach> --%>
-             
-         
-         
-         
-         
-         
-         
-         
              <!-- 프로젝트 -->
-             <div class="col-md-4 pjt">
-                <h5 class="title">프로젝트 추가</h5><br/>
-                 <a href="generic.html" class="button alt"  data-toggle="modal" data-target="#NewPro"> <i class="fas fa-folder-plus" style="font-size: 50px; color : black; text-align: center;"></i> </a>
+             <div class="container-fluid">
+             <div class="row">
+             <div class="col-md-3">
+	             <div class="pjcontainer">
+						<div class="pjbox">
+							 <div class="content">
+							 	<h2>01</h2>
+							 	<h3>Service One</h3>
+							 	<p></p>
+							 	<a href="#">Read More</a>
+							 </div>
+						 </div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="pjcontainer">
+						 <div class="pjbox">
+							 <div class="content">
+							 	<h2>02</h2>
+							 	<h3>Service Two</h3>
+							 	<p></p>
+							 	<a href="#">Read More</a>
+							 </div>
+						 </div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="pjcontainer">
+						 <div class="pjbox">
+							 <div class="content">
+							 	<h2>03</h2>
+							 	<h3>Service Three</h3>
+							 	<p></p>
+							 	<a href="#">Read More</a>
+							 </div>
+						 </div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="pjcontainer">
+						 <div class="pjbox">
+							 <div class="content">
+							 	<h2>04</h2>
+							 	<h3>Service Four</h3>
+							 	<p></p>
+							 	<a href="#">Read More</a>
+							 </div>
+						 </div>
+					</div>
+					</div>
+             
              </div>
-          </div>
-       </div>
-       
-       
-       
-       
-       
-       
-       
-       
-       
-    </div>
-    <!-- Modal  -->
-   
-    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModal" aria-hidden="true" draggable="true">
-    <div class="modal-dialog" role="form">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="project">프로젝트 생성</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-     
-     
-     
-     
-      </div>
-    </div>
+             
+                  </div>
+ 
   </div>
   
-  
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h3 class="modal-title">새 협업공간 만들기</h3>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-       
-        <!-- Modal body -->
-       <form action="team.do" method="post"> 
-        <div class="modal-body">
-        <p style="font-size: 12px">협업공간은 함께 일하는 멤버들끼리만 자료를 공유하고 
-        협업할 수 있는 공간입니다.<br> 협업공간을 만들고 함께 일할 멤버들을 초대해보세요.</p>
-          <label for="pname">협업공간 이름</label>
-          <input class="form-control createmodal" type="text" id="pname" name="pname" style="width: 100%">
-          <br>
-          <label for="pcontent">협업공간 설명</label>
-          <textarea class="form-control createmodal" rows="3" id="pcontent" name="pcontent" style="width: 100%"></textarea>
-        </div>
-        
-        <!-- Modal footer -->
-        
-        <input type="hidden" name="tseq" value="1">
-        <input type="hidden" name="ischarge" value="0">
-        <input type="hidden" name="email" value="${sessionScope.email} ">
-        <input type="hidden" name="istpalarm" value="0">
-        <input type="hidden" name="ptime" value="20/01/08"> 
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-secondary" value="만들기" style="background-color: #E71D36; border-color: #CCCCCC; color: #fff; cursor: pointer;" >
-          <input type="button" class="btn btn-secondary" value="취소" style="background-color: #E71D36; border-color: #CCCCCC; color: #fff; cursor: pointer;" data-dismiss="modal">
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
