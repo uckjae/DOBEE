@@ -147,7 +147,7 @@ public class DoController {
     }
     
 
-    //관리자 법인카드 목록 뷰단 이동
+    //관리자 법인카드 목록 뷰단이동 및 불러오기
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
     public String adminListDebit() {
     	return "admin/ListDebit";
