@@ -21,14 +21,18 @@
 		<div class="main-menu">
 			<ul id="side-main-menu" class="side-menu list-unstyled">
 				<li><a href="#exampledropdownDropdown" aria-expanded="false"
-					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;t사원관리</i></a>
+					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;사원관리</i></a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
 						<li><a href="adminMain.do">사원 목록</a></li>
 						<li><a href="addUser.do">사원 등록</a></li>
 					</ul>
 				</li>
 				<li><a href="#"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;권한</i>
-				</a></li>				
+				</a></li>	
+				
+				<li><a href=""> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;법인카드 등록</i>
+				</a></li>
+							
 				
 			</ul>
 		</div>
