@@ -526,7 +526,6 @@ public class DoController {
     public String chatMain(Model model, Principal principal) {
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
-    	System.out.println("넘어오니??"+user.toString());
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
@@ -544,7 +543,7 @@ public class DoController {
     	model.addAttribute("userList", userList);
     	
     	//기본 나에게 채팅으로 셋팅
-    	model.addAttribute("chatType", "self");
+    	model.addAttribute("chatType", "SELF");
     	
     	return "chat/chatMain";
     }
@@ -555,7 +554,6 @@ public class DoController {
     public String chatGroup(@RequestParam(value="roomName") String roomName, Model model, Principal principal) {
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
-    	System.out.println("넘어오니??"+user.toString());
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
@@ -575,35 +573,39 @@ public class DoController {
     	
     	//해당 그룹 채팅방으로 셋팅
     	model.addAttribute("roomName", roomName);
-    	model.addAttribute("chatType", "group");
+    	model.addAttribute("chatType", "GROUP");
     	
     	return "chat/chatMain_group";
     }
     
     //DM 채팅 메인
-	/*
-	 * @RequestMapping(value = "chatDm.do", method = RequestMethod.GET) public
-	 * String chatDm(@RequestParam(value="chatTo") String userName, Model model,
-	 * Principal principal) { String mail = principal.getName(); User user =
-	 * memberService.getUser(mail); System.out.println("넘어오니??"+user.toString());
-	 * //회원 정보 저장하기 model.addAttribute("user", user); //이 회원이 속한 채팅방 목록 가져오기
-	 * List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
-	 * List<String> roomNameList = new ArrayList<String>();
-	 * 
-	 * for(int i = 0; i < chatRoomList.size(); i++) {
-	 * roomNameList.add(chatRoomList.get(i).getChatRoomName()); }
-	 * 
-	 * model.addAttribute("roomNameList", roomNameList);
-	 * 
-	 * 
-	 * //사원 목록 가져오기 List<User> userList = memberService.getUserList();
-	 * model.addAttribute("userList", userList);
-	 * 
-	 * //해당 그룹 채팅방으로 셋팅 model.addAttribute("roomName", roomName);
-	 * model.addAttribute("chatType", "group");
-	 * 
-	 * return "chat/chatMain_group"; }
-	 */
+    @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
+    public String chatDm(@RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
+    	String mail = principal.getName();
+    	User user = memberService.getUser(mail);
+    	//회원 정보 저장하기
+    	model.addAttribute("user", user);    	
+    	//이 회원이 속한 채팅방 목록 가져오기
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<String> roomNameList = new ArrayList<String>();
+    	
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
+    	}
+
+    	model.addAttribute("roomNameList", roomNameList);
+    	
+    	
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	model.addAttribute("userList", userList);
+    	
+    	//해당 DM 채팅방으로 셋팅
+    	model.addAttribute("dmName", dmName);
+    	model.addAttribute("chatType", "DM");
+    	
+    	return "chat/chatMain_DM";
+    }
     
   
     
