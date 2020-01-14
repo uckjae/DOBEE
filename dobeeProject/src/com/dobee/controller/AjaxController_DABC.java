@@ -63,7 +63,6 @@ public class AjaxController_DABC {
 	public View getBreakListByYear (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByYear();
-		// System.out.println("ajax contr ListByYear : " + results);
 		map.addAttribute("byYear", results);
 		
 		return jsonview;
@@ -80,13 +79,13 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
-	// Ajax 개인부재일정확인 - 년-월별 List 출력		0113				&&&&&&&& 값 못부름
+	// Ajax 개인부재일정확인 - 년-월별 List 출력		0113
 	@RequestMapping("getBreakYearMonthList.do")
 	public View getBreakYearMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByYMonth();
-		// System.out.println("ajax contr ListByYearMonth : " + results);
 		map.addAttribute("byYMonth", results);
+		
 		return jsonview;
 	}
 	
@@ -102,12 +101,11 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113			&&&&&&&&& 값 못부름
+	// Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113
 	@RequestMapping("getBreakListByEntry.do")
 	public View getBreakListByEntry (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<BreakManageList> results = userDao.getBreakListByYMonth();
-		// System.out.println("ajax contr ListByEntry : " + results);
+		List<BreakManageList> results = userDao.getBreakListByEntry();
 		map.addAttribute("byEntry", results);
 		
 		return jsonview;
@@ -130,7 +128,6 @@ public class AjaxController_DABC {
 	public View getBreakListByIsAuth (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByIsAuth();
-		System.out.println("ajax contr ListByIsAuth : " + results);
 		map.addAttribute("byIsAuth", results);
 		
 		return jsonview;
@@ -145,7 +142,6 @@ public class AjaxController_DABC {
 		map.addAttribute("OTYList", results);
 		
 		return jsonview;
-		
 	}
 	
 	
@@ -169,5 +165,6 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+
 	
 }

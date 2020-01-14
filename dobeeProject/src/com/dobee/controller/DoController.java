@@ -6,15 +6,11 @@ package com.dobee.controller;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import java.util.List;
 
-import org.apache.http.HttpRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,19 +22,16 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
-import com.dobee.services.ProjectService;
-import com.dobee.vo.notice.Notice;
-import com.dobee.vo.project.Project;
-
-
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
+import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
+import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
-import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -68,6 +61,9 @@ public class DoController {
     
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private DebitService debitService;
     
     public void setSqlsession(SqlSession sqlsession) {
     	this.sqlsession = sqlsession;
@@ -160,11 +156,19 @@ public class DoController {
     
     //관리자 법인카드 디비에 등록
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
-    public String adminAddDebitOK() {
+    public String adminAddDebitOK(Debit debit) {
+    	boolean check = debitService.addDebit(debit);
+    	if(check) {
+    		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    		
+    	}else {
+    		System.out.println("컨트롤단 : 법인카드 등록 실패");
+    		return null;
+    		//등록 실패하면 아무일도 안일어남
+    	}
     	
-    	
-    	
-    	return "admin/AddDebit";
+    	//등록 성공하면 카드 목록 뷰단으로 이동
+    	return "admin/ListDebit";
     }
     
     
@@ -262,13 +266,13 @@ public class DoController {
     }
 
 
-    // 부재일정신청 GET 0110
+    // 부재일정신청 GET 	0110 게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
         return "attend/breakApply";
     }
     
-    // 부재일정신청 POST 0112
+    // 부재일정신청 POST 	0112 게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
     public String absApplyPost(Apply apply, HttpServletRequest req){
     	String result = applyService.absApply(apply);
@@ -278,15 +282,14 @@ public class DoController {
     }
 
 
-    //연장근무신청 GET
+    // 연장근무신청 GET			0100 게다죽
     @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
     public String overTiemApply(){
         return "attend/extendApply";
     }
     
     
-    // 연장근무 신청 POST
- 	/* 01.10 by 게다죽 */
+    // 연장근무 신청 POST			0110 게다죽
      @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
      public String extendApplyPost(Apply apply, HttpServletRequest req) {
     	String result = applyService.overtimeApply(apply);
@@ -296,8 +299,7 @@ public class DoController {
      }
 
 
-    //부재일정관리 GET
-  	/* 01.12 by 게다죽 ing */
+    // 개인_부재일정관리 GET			0112 게다죽
      @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
      public String absMg(Model model){
     	List<BreakManageList> results = applyService.absMg();
@@ -308,34 +310,48 @@ public class DoController {
      }
 
 
-    //근무내역확인
+    // 개인_근무내역확인										&&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
     @RequestMapping("workManage.do")
     public String workChart(){
         return "attend/workManage";
     }
 
 
-    //부재관리
-    @RequestMapping("absManage.do")
+    // 매니저_부재관리 (isAuth update)			0114 게다죽
+    @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(){
-        return "attend/absenceManage";
+        return "attend/breakManagement_Manager";
+    }
+    
+    
+    // 매니저_부재관리 승인
+    @RequestMapping(value="absReqApprov.do", method=RequestMethod.POST)
+    public String absReqApprov(){
+        return null;
     }
 
 
-    //연장근무관리 리스트
+    // 매니저_부재관리 거절			0114
+    @RequestMapping(value="absReqReject.do", method=RequestMethod.POST)
+    public String absReqReject(){
+        return null;
+    }
+
+
+    // 매니저_연장근무관리 리스트
     @RequestMapping("extendManage.do")
     public String overtiemSignList(){
         return "attend/extendManage";
     }
 
 
-    //연장근무관리 승인
+    // 매니저_연장근무관리 승인
     public String overtimeSingApprov(){
         return null;
     }
 
 
-    //연장근무관리 거절
+    // 매니저_연장근무관리 거절
     public String overtimeSignReject(){
         return null;
     }

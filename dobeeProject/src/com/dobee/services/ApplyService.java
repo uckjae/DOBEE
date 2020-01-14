@@ -23,7 +23,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.absApply(apply);
     	
-    	return "병신새끼야!";
+    	return "병신새끼야! 고운말 합시다";
     }
 
 
@@ -32,7 +32,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.overTimeApply(apply);
     	
-    	return "병신아!";
+    	return "병신아! 그래! 병신아!";
     }
 
 
