@@ -342,8 +342,8 @@
 <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
 <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
-    <!-- socket 연결 -->
-<script src="http://localhost:5000/socket.io/socket.io.js"></script>
+<!-- socket 연결 -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 var socket;
 
@@ -352,7 +352,7 @@ function socketConnect(nameSpace, chatRoomName, chatType, name, sendEmitName, re
 	var nameSpace = $("#chatType").val();
 	var chatRoomName = $("#chatRoomName").text();
 	var name = $("#name").val();
-	socket = io.connect( 'http://localhost:5000/'+nameSpace, {
+	socket = io.connect( 'http://192.168.6.2:5000/'+nameSpace, {
 				path: '/socket.io'
 			})
 			
