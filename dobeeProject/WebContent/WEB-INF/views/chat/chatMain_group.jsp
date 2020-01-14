@@ -306,7 +306,7 @@
 			</div>
 			<br>
             <!-- 채팅 보내기창 -->
-            <form id="sendMessage" method="post">
+            <form id="sendMessage">
 				<div>        
 		            <li class="white">
 		              <div class="form-group basic-textarea">
@@ -342,19 +342,22 @@
 <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
 <!-- socket 연결 -->
-<script src="http://localhost:5000/socket.io/socket.io.js"></script>
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 	$(function(){
 
 		var chatType = $("#chatType").val();
 		var chatRoomName = $("#chatRoomName").text();
 		var fromName = $("#name").val();
-		var socket = io.connect( 'http://localhost:5000/group', {
+		var socket = io.connect( 'http://192.168.6.2:5000/group', {
 					path: '/socket.io'
 				});
 				
 				$("#sendMessage").on('submit', function(e){
+					console.log('네이므????'+chatRoomName);
 					chatContent = $('#chatContent').val();
+					console.log('내용????'+chatContent);
+
 					socket.emit('send message to group', chatRoomName, chatType, chatContent, fromName);
 					$('#chatContent').val("");
 					$("#chatContent").focus();

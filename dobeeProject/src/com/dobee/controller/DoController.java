@@ -584,34 +584,29 @@ public class DoController {
     }
     
     //DM 채팅 메인
-    @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
-    public String chatDm(@RequestParam(value="chatTo") String userName, Model model, Principal principal) {
-    	String mail = principal.getName();
-    	User user = memberService.getUser(mail);
-    	System.out.println("넘어오니??"+user.toString());
-    	//회원 정보 저장하기
-    	model.addAttribute("user", user);    	
-    	//이 회원이 속한 채팅방 목록 가져오기
-    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
-    	List<String> roomNameList = new ArrayList<String>();
-    	
-    	for(int i = 0; i < chatRoomList.size(); i++) {
-    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
-    	}
-
-    	model.addAttribute("roomNameList", roomNameList);
-    	
-    	
-    	//사원 목록 가져오기
-    	List<User> userList = memberService.getUserList();
-    	model.addAttribute("userList", userList);
-    	
-    	//해당 그룹 채팅방으로 셋팅
-    	model.addAttribute("roomName", roomName);
-    	model.addAttribute("chatType", "group");
-    	
-    	return "chat/chatMain_group";
-    }
+	/*
+	 * @RequestMapping(value = "chatDm.do", method = RequestMethod.GET) public
+	 * String chatDm(@RequestParam(value="chatTo") String userName, Model model,
+	 * Principal principal) { String mail = principal.getName(); User user =
+	 * memberService.getUser(mail); System.out.println("넘어오니??"+user.toString());
+	 * //회원 정보 저장하기 model.addAttribute("user", user); //이 회원이 속한 채팅방 목록 가져오기
+	 * List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+	 * List<String> roomNameList = new ArrayList<String>();
+	 * 
+	 * for(int i = 0; i < chatRoomList.size(); i++) {
+	 * roomNameList.add(chatRoomList.get(i).getChatRoomName()); }
+	 * 
+	 * model.addAttribute("roomNameList", roomNameList);
+	 * 
+	 * 
+	 * //사원 목록 가져오기 List<User> userList = memberService.getUserList();
+	 * model.addAttribute("userList", userList);
+	 * 
+	 * //해당 그룹 채팅방으로 셋팅 model.addAttribute("roomName", roomName);
+	 * model.addAttribute("chatType", "group");
+	 * 
+	 * return "chat/chatMain_group"; }
+	 */
     
   
     
