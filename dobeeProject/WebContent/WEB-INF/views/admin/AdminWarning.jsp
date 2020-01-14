@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -19,16 +19,16 @@
 			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
 				<form class="login100-form validate-form" style=" height: 50%; text-align: center; ">
 				<h2> Warning </h2>
-					<h5><c:out value="${user.name}"></c:out>´Ô  ÇöÀç °ü¸®ÀÚ ¾ÆÀÌµð·Î ·Î±×ÀÎÇÏ¿´½À´Ï´Ù</h5>
+					<h5><c:out value="${user.name}"></c:out>ë‹˜  í˜„ìž¬ ê´€ë¦¬ìž ì•„ì´ë””ë¡œ ë¡œê·¸ì¸í•˜ì˜€ìŠµë‹ˆë‹¤</h5>
 					<hr style=" width: 25%; display: block; margin: 0px auto;">
-					<h6>¿©±â¼­ ¼öÁ¤µÈ ¸ðµç ³»¿ëÀº ½ÇÁ¦·Î ¹Ý¿µµÇ¸ç</h6>
-					<h6>»èÁ¦µÈ ³»¿ëÀº º¹±¸ÇÒ ¼ö ¾ø½À´Ï´Ù.</h6>
+					<h6>ì—¬ê¸°ì„œ ìˆ˜ì •ëœ ëª¨ë“  ë‚´ìš©ì€ ì‹¤ì œë¡œ ë°˜ì˜ë˜ë©°</h6>
+					<h6>ì‚­ì œëœ ë‚´ìš©ì€ ë³µêµ¬í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.</h6>
 					<hr style=" width: 10%; display: block; margin: 0px auto;">
-					<h6> Your URL : ÀÌ°Ç ¿Ö ¶ß°ÔÇÏ´Â °Å¾ß???? </h6>
+					<h6> Your URL : ì´ê±´ ì™œ ëœ¨ê²Œí•˜ëŠ” ê±°ì•¼???? </h6>
 					<h6> LOGIN ID : <c:out value="${user.mail}"></c:out> </h6>
 					<div class="container-login100-form-btn" style="height: 20%">
 						<a class="button btn-prev" href="adminMain.do">
-							°ü¸®ÀÚ ÆäÀÌÁö·Î ÀÌµ¿ÇÏ±â
+							ê´€ë¦¬ìž íŽ˜ì´ì§€ë¡œ ì´ë™í•˜ê¸°
 						</a>
 					</div>
 				</form>

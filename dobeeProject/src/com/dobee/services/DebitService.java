@@ -1,8 +1,10 @@
 package com.dobee.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.PaymentDao;
@@ -42,6 +44,11 @@ public class DebitService {
 	
     
     //법인 카드 목록 불러오기
-    
+    public ArrayList<Debit> listDebit(){
+    	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+    	ArrayList<Debit> listDebit = new ArrayList<>();
+    	listDebit = paymentDao.listDebit();
+    	return listDebit;
+    }
 	
 }

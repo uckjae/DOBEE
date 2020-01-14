@@ -18,6 +18,7 @@ public class PaymentService {
 
     //카드목록조회
     public List<Debit> debitList(){
+    	
         return null;
     }
 

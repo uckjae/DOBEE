@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
@@ -149,8 +150,12 @@ public class DoController {
 
     //관리자 법인카드 목록 뷰단이동 및 불러오기
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
-    public String adminListDebit() {
-    	return "admin/ListDebit";
+    public ModelAndView adminListDebit() {
+    	ModelAndView mav = new ModelAndView();
+    	ArrayList debitList = debitService.listDebit();
+    	mav.addObject("debitList", debitList);
+    	mav.setViewName("admin/ListDebit");
+    	return mav;
     }
     
     

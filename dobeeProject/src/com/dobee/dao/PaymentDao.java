@@ -1,10 +1,11 @@
 package com.dobee.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dobee.vo.Apply;
 import com.dobee.vo.CostList;
 import com.dobee.vo.Debit;
-
-import java.util.List;
 
 public interface PaymentDao {
 
@@ -13,7 +14,8 @@ public interface PaymentDao {
 	
 	
     //카드목록조회
-    public List<Debit> listDebit();
+    public ArrayList<Debit> listDebit();
+    
     
 
     //비용현황
