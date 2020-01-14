@@ -359,9 +359,6 @@
 				
 				$("#sendMessage").on('submit', function(e){
 					chatContent = $('#chatContent').val();
-					
-					console.log('그룹 채팅 내용 가져와??'+chatContent);
-					
 					socket.emit('send message to group', chatRoomName, chatType, chatContent, name);
 					$('#chatContent').val("");
 					$("#chatContent").focus();
@@ -370,6 +367,7 @@
 					});
 				
 				socket.on('receive message to group', function(chatContent,currentDate){
+					console.log('메시지 받어???');
 					$('#chatLog').append('<div id="scroll"> <li class="in"><div class="chat-img" >'
 							+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
 							+'<div class="chat-body"><div class="chat-message">'
