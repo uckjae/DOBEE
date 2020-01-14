@@ -1,10 +1,12 @@
 package com.dobee.services;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -80,12 +82,21 @@ public class MemberService {
     
     //User 등록
     @Transactional
-    public void addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public void addUser(User user, UserInfo userInfo) {
     	System.out.println("MemberService addUser() in!!");
     	try {
+			user.setMyPic(user.getMultiFile().getBytes());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("MemberService addUser() 파일바이트변환 에러");
+		}
+    	
+    	
+    	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
-    		userDao.addUser();
-    		userDao.addUserDetail();
+    		userDao.addUser(user);
+    		userDao.addUserDetail(userInfo);
     	}catch(Exception e) {
     		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
