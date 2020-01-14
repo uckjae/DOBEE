@@ -5,9 +5,9 @@
 <html>
 <head>
 	<c:import url="/common/tag.jsp" />
-	
 </head>
 <body>
+
 	<!-- Side Navbar -->
     <nav class="side-navbar">
     <c:import url="/common/Left_Admin.jsp" />
@@ -18,6 +18,16 @@
       <c:import url="/common/top.jsp"/>
       
       <div id="content-wrapper">
+      
+      
+      <script type="text/javascript">
+			/* 카드 구분  */
+		/* 	window.onload=function(){
+				document.getElementById("entry").addEventListener("click", )
+
+				}
+ */
+      </script>
             <!-- !! Content !! -->
             <div class="container-fluid">
                 <div class="card mb-3">
@@ -35,35 +45,32 @@
                                         <form action="AdminDebit.do" method="post" >
                                         	<div class="form-group">
                                                 		<div class="form-row">
-                                                   			<div class="col-md-6">
-                                                   				<!-- 나중에 카드사진까지 등록할거면 이 부분 활성해서 수정해서 써야함 -->
-                                                        		<!-- <div class="form-label-group">
-                                                            		
-                                                            		<input type="file" id="myPic" name="myPic" class="form-control" accept="image/*" hidden="true">
-                                                            		<label for="myPic"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
-                                                        		</div> -->
+                                                			<div class="col-md-6">
+                                                			<!--form-row 첫번째 컬럼에서만 보안경고문이 뜸 나중에 js,css 확인 필요 -->
                                                         		<div class="form-label-group">
-                                                        			<input type="text" id="cardNum" name="cardNum" class="form-control" autofocus="autofocus">
+                                                            		<input type="text" id="cardNum" name="cardNum" placeholder="1234-1234-1234-1234" class="form-control" autofocus="autofocus" autocomplete="off"/>
                                                             		<label for="name">카드번호</label>
                                                             		<br>
                                                             		<br>
-                                                            		<input type="text" id="corp" name="corp" class="form-control">
+                                                            		<input type="text" id="corp" name="corp" class="form-control" placeholder="국민은행" autocomplete="off"/>
                                                             		<label for="name">카드사</label>
                                                             		<br>
-                                                            	</div>
+                                                            		
+                                                        		</div>
                                                     		</div>
-                                                    		<div class="col-md-6">
+                                                    		
+                                                			<div class="col-md-6">
                                                         		<div class="form-label-group">
-                                                            		<input type="text" id="name" name="name" class="form-control">
+                                                            		<input type="text" id="name" name="name" class="form-control" autocomplete="off"/>
                                                             		<label for="name">명의자이름</label>
                                                             		<br>
                                                             		<br>
-                                                            		<input type="text" id="nickName" name="nickName" class="form-control">
+                                                            		<input type="text" id="nickName" name="nickName" class="form-control" autocomplete="off"/>
                                                             		<label for="name">카드별칭</label>
                                                             		<br>
-                                                            
                                                         		</div>
                                                     		</div>
+                                                    		
                                                 		</div>
                                             		</div>
                                             <div class="form-group">
@@ -76,8 +83,11 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                           	<select id="entry" name="entry" class="form-control" placeholder="팀이름" >
+                                                           	<select id="entry" name="entry" class="form-control" placeholder="법인카드구분" >
                                                            		<option hidden>선택하세요</option>
+                                                           		     <option>법인(공용)</option>
+															         <option>법인(개인)</option>
+															         <option>법인(체크)</option>
                                                            	</select>
                                                             <label for="teamCode">카드구분</label>
                                                         </div>

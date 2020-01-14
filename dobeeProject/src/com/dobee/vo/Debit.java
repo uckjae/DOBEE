@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Data
 public class Debit {
-    private int cardNum;
+    private String cardNum;
     private String corp;
     private String name;
     private String nickName;

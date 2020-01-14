@@ -437,7 +437,7 @@ ALTER TABLE `TASKDETAIL`
 
 -- 신용카드
 CREATE TABLE `DEBIT` (
-	`CARDNUM`  INT         NOT NULL COMMENT '카드번호', -- 카드번호
+	`CARDNUM`  VARCHAR(60) NOT NULL COMMENT '카드번호', -- 카드번호
 	`CORP`     VARCHAR(60) NOT NULL COMMENT '카드사', -- 카드사
 	`NAME`     VARCHAR(60) NOT NULL COMMENT '명의자이름', -- 명의자이름
 	`NICKNAME` VARCHAR(60) NOT NULL COMMENT '카드별칭', -- 카드별칭

@@ -13,8 +13,8 @@ public interface PaymentDao {
 	
 	
     //카드목록조회
-    public List<Debit> debitList();
-
+    public List<Debit> listDebit();
+    
 
     //비용현황
     public List<CostList> payChart();
