@@ -6,7 +6,7 @@ const logger = require('morgan');
 //const mysql = require('mysql');
 
 //socket.js 파일 쓰기
-const webSocket = require('./socket');
+const webSocket = require('./socket2');
 
 //server 함수에 app을 담아줌
 //var http = require('http').Server(app);
@@ -17,6 +17,12 @@ const usersRouter = require('./routes/users');
 const selfchat = require('./routes/selfchat');
 
 const app = express();
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 
 const server = app.listen(5000, () => {
