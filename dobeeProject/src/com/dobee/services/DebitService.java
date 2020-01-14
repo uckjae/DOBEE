@@ -2,6 +2,7 @@ package com.dobee.services;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.PaymentDao;
@@ -20,16 +21,22 @@ public class DebitService {
 	   
     //법인 카드 등록
     public boolean addDebit(Debit debit) {
-    	PaymentDao userdao = sqlSession.getMapper(PaymentDao.class);
-    	int result = userdao.addDebit(debit);
+    	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
     	boolean check = false;
-    	if(result == -1 ) {
-    		System.out.println("카드등록 서비스단 : 카드 등록 인서트안됨");
-    		check = false;
-    	}else {
-    		System.out.println("카드등록 서비스단 : 카드등록 성공");
-    		check = true;
-    	}
+    	try {
+    		
+    		int result = paymentDao.addDebit(debit);
+    		if(result == -1 ) {
+        		System.out.println("카드등록 서비스단 : 카드 등록 인서트안됨");
+        		check = false;
+        	}else {
+        		System.out.println("카드등록 서비스단 : 카드등록 성공");
+        		check = true;
+        	}
+		} catch (Exception e) {
+			System.out.println("서비스단 : 디비에 데이터 넣다가 오류났습니다 ");
+		}
+    
     	return check;
     }
 	
