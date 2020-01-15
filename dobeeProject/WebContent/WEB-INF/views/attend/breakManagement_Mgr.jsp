@@ -111,8 +111,11 @@
 									<td class="bReqDate">	${bl.reqDate}</td>
 									<td class="bEntry">		${bl.entry }</td>
 									<td class="bIsAuth">
-										<button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-seq="${bl.aplSeq}" data-reason="${bl.reason }" data-rejreason="${bl.rejReason }">${bl.isAuth }
-										</button></td>
+										<input type="hidden" value="${bl.aplSeq}" id="hdAplSeq">
+										<input type="hidden" value="${bl.reason }" id="hdReason">
+										<input type="hidden" value="${bl.rejReason }" id="hdRejReason">
+										<button onclick="view_modal('${bl.aplSeq}', '${bl.reason}', '${bl.rejReason}')" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
+									</td>
 									<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
 									<td class="bUsed">		${bl.usingBreak }</td>
 								</tr>
@@ -146,24 +149,25 @@
 							<div class="row">
 								<div class="col-md-1"></div>
 								<div class="col-md-10" style="background-color:lightgray;">
-									<input type="hidden" value="" id="inputAplSeq"> $ { b l.aplSeq } 넣을겨
+								
+									<input type="hidden" id="modalAplSeq" name="aplSeq">
+									
 									<br>
 									<div id="divReason">
 										<h3>부재 신청 사유</h3>
-										<p>$ { b l.reason } 넣을겨</p><br>
-										<input type="text" id="inputReason" placeholder="아 좀..">
+										<input type="text" id="modalReason" name="reason" readonly="readonly">
 									</div>
 									<br>
 									<select id="entrySelectorInModal" name="isAuth">
-										<option value="">항목 선택</option>
+										<option value="미승인">항목 선택</option>
 										<option value="승인">승인</option>
 										<option value="반려">반려</option>
 										<option value="미승인">보류</option>
 									</select>
+									
 									<div id="divRejReason">
 										<h3>부재 신청 거절 사유 입력</h3>
-										<h5>$ { b l.rejReason } 넣을겨</h5>
-										<input type="text" name="rejReason" placeholder="반려 할 경우 사유를 입력하십시오" style="width:90%;">
+										<input type="text" id="modalRejReason" name="rejReason" placeholder="반려 시 사유를 입력하세요.">
 									</div>
 								</div>
 								<div class="col-md-1"></div>
@@ -171,7 +175,8 @@
 						</div>
 						
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+							<input type="submit" class="btn btn-default" value="POST">
+							<button type="submit" class="btn btn-default" data-dismiss="modal">OK</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 						
@@ -215,6 +220,19 @@
 	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
   
   	<script>
+  	
+	  	function view_modal (aplSeq, reason, rejReason) {
+			$('#myModal').on('show.bs.modal', function(event) {
+				console.log("asdfdsa", aplSeq);
+				console.log(reason);
+				console.log(rejReason);
+				$(".modal-body #aplSeq").val(aplSeq);
+				$(".modal-body #reason").val(reason);
+				$(".modal-body #rejReason").val(rejReason);
+				
+			})
+		}
+		
 		window.onload = function(){
 
 			// 부재항목 Option Ajax Loading ********************
@@ -223,42 +241,29 @@
 				dataType : "json",
 				success : function(data) {
 					var eArray = [];
-					console.log("뭐임", data);
 					eArray = data.breakEntryListMgr;
 					for (var i=0; i<eArray.length; i++) {
 						$('#selectEntry').append("<option value=" + eArray[i].apyCode + ">" + eArray[i].entry + "</option>");
 					}
 				}
 			});
-			
-			// 승인여부 Option Ajax Loading
-			$.ajax({
-				url : "breakIsAuthList.do",
-				dataType : "json",
-				success : function(data) {
-					var aArray = [];
-					aArray = data.breakIsAuthList;
-					for (var i=0; i<aArray.length; i++) {
-						var option = document.createElement("option");
-						$(option).text(aArray[i]);
-						$('#selectIsAuth').append(option);
-					}
-				}
-			});
 
-			
-			var reason = "";
-			var rejReason = "";
-			var aplSeq = "";
-			
-			$('.btn-sm').click(function() {
-				$('#tbody').empty();
-				reason = $(event.relatedTarget).data('reason');
-				rejReason = $(event.relatedTarget).data('rejReason');
-				$(".modal-body #inputAplSeq").val(aplSeq);
-				
-				
-			})
+			let aplSeq = "";
+			let reason = "";
+			let rejReason = "";
+			let isAuth = "";	
+
+			$('.btn-sm').click('show.bs.modal', function(e) {
+					
+				aplSeq = $(this).data('aplseq');
+				reason = $(this).data('reason');
+				rejReason = $(this).data('rejReason');			
+
+				$('#modalAplSeq').val(aplSeq);
+				$('#modalReason').val(reason);
+				$('#modalRejReason').val(rejReason);
+
+			});
 			
 			// 부재항목 Option 변경시 List Ajax 처리
 			$('#selectEntry').change(function() {
@@ -289,40 +294,6 @@
 							);
 						}
 						*/
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-			});
-
-			// 승인여부 Option 변경시 List Ajax 처리
-			$('#selectIsAuth').change(function() {
-
-				$.ajax ({
-					url : "getBreakListByIsAuth.do",
-					dataType : "json",
-					success : function (data) {
-						$('#tbody').empty();
-						var biaArray = [];
-						biaArray = data.byIsAuth;
-						for (var i=0; i<biaArray.length; i++) {	
-							$('#tbody').append(
-								'<tr> <td class="bcategory">' + biaArray[i].entry +'</td>' +
-									'<td class="tterm">' +	biaArray[i].startAt +' - '+ biaArray[i].endAt + '</td>' +
-									'<td class="tused">' +	biaArray[i].usingBreak + '</td>' +
-									'<td class="tregdate">' +	biaArray[i].reqDate + '</td>'+
-									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+biaArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+biaArray[i].aplSeq+'">'+ biaArray[i].isAuth +'</button></td>'+
-								'</tr>'
-								+
-								'<div class="modal fade" id="myModal'+biaArray[i].aplSeq+'" role="dialog">'+
-									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
-									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
-									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
-									'<h5>'+biaArray[i].reason+'</h5> </div> <div class="modal-footer">'+
-								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
-							);
-						}
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

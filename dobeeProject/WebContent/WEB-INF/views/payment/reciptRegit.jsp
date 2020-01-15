@@ -91,6 +91,24 @@ window.onload=function(){
 					error:function(){
 							console.log("법인카드 목록 불러오기 아작스 에러남");
 						},
+					complete:function(){
+							$.ajax({
+								url:'debitCodeList.do',
+								type:'POST',
+								success:function(result){
+										console.log("비용항목 아작스 성공")
+										console.log(result);
+										for(let i = 0 ; i<result.length; i++){
+											$("#Select2").append("<option value='1'>" + result[i].entry +  "</option>");	
+										}
+									},
+								error:function(){
+										console.log("비용항목 아작스에서 에러남")
+									},
+								
+								})
+						
+						},
 					
 				})//아작스 끝
 			}
@@ -189,17 +207,11 @@ window.onload=function(){
 	      		<div class="form-group">
 				    <label for="exampleFormControlSelect1">법인카드 선택</label>
 				    <select class="form-control" id="Select1">
-				     
 				    </select>
 	  			  </div>
 	  			  <div class="form-group">
 				    <label for="exampleFormControlSelect2">비용항목 선택</label>
 				    <select class="form-control" id="Select2">
-				      <option>1</option>
-				      <option>2</option>
-				      <option>3</option>
-				      <option>4</option>
-				      <option>5</option>
 				    </select>
 	  			  </div>
 				    <div class="form-group">
@@ -218,7 +230,6 @@ window.onload=function(){
 				    <label for="exampleFormControlInput1">상세내용</label>
 				    <input type="text" class="form-control" id="Input5" placeholder="ex) 이마트에서 필요한 간식이랑 사무용품들 구매하였습니다.">
 				  </div>
-			  
 			  	 <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">수정완료 및 등록</a>
 		 </form>
       			 

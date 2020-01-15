@@ -244,7 +244,7 @@ public class DoController {
     }
 
 
-  //공지사항글쓰기
+    //공지사항글쓰기
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
         return "notice/noticeWrite";
@@ -382,29 +382,15 @@ public class DoController {
     }
 
 
-    // 매니저_부재관리 - isAuth update POST		0114 게다죽
+    // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
-    public String absReqHandle() {
-    	String result = applyService.absReqHandle();
-    	System.out.println("결과 확인 : "+ result);
-    	
-    	return "attend/breakManagement_Mgr";
+    public String absReqHandle(Apply apply) {
+        applyService.absReqHandle(apply);
+        System.out.println("돌아간것만 확인 ㄱㄱ");
+        
+        return "attend/breakManagement_Mgr";
     }
     
-    
-    // 매니저_부재관리 승인
-    @RequestMapping(value="absReqApprov.do", method=RequestMethod.POST)
-    public String absReqApprov(){
-        return null;
-    }
-
-
-    // 매니저_부재관리 거절
-    @RequestMapping(value="absReqReject.do", method=RequestMethod.POST)
-    public String absReqReject(){
-        return null;
-    }
-
 
     // 매니저_연장근무관리 리스트
     @RequestMapping("extendManage.do")

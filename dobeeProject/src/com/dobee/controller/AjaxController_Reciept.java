@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.services.DebitService;
 import com.dobee.services.ReceiptService;
+import com.dobee.vo.CostCode;
 
 @Controller
 public class AjaxController_Reciept {
@@ -53,7 +54,7 @@ public class AjaxController_Reciept {
 	}
 	
 	
-	  //영수증 등록_현재 사용자 이메일 불러오기
+	//영수증 등록_현재 사용자 이메일 불러오기
    	@RequestMapping("nowEmpEmail.do") 
    	@ResponseBody 
    	public String currentEmpEmail(Principal principal) { 
@@ -66,6 +67,15 @@ public class AjaxController_Reciept {
     public ArrayList cardList() {
     	ArrayList debitList = debitService.listDebit();
     	return debitList;
+    }
+    
+    
+    //영수증 등록_ 비용항목 선택 아작스로 불러다주기
+    @RequestMapping("debitCodeList.do")
+    @ResponseBody
+    public ArrayList costCodeList() {
+    	ArrayList listCodes = debitService.listCode();
+    	return listCodes;
     }
 	
 }
