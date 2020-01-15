@@ -17,7 +17,6 @@ public interface PaymentDao {
     //카드목록조회
     public ArrayList<Debit> listDebit();
     
-    
 
     //비용현황
     public List<CostList> payChart();
@@ -30,7 +29,13 @@ public interface PaymentDao {
     //비용처리 리스트
     public List<Apply> paymentApplyList();
 
+    
     //비용코드 불러다주기 
     public ArrayList<CostCode> debitCode();
+    
+    
+    //비용신청 등록하기
+    public int addCostApply();
+ 
 
 }

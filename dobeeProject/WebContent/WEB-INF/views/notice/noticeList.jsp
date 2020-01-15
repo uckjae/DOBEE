@@ -11,6 +11,14 @@
 <link rel="stylesheet" href="./css/notice.datatables.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+ <style>
+  @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body {
+   font-family: 'Noto Serif KR', serif;
+}
+
+</style>
 </head>
 
 

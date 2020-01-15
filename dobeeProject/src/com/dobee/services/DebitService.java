@@ -59,4 +59,19 @@ public class DebitService {
     	
     	return costCode;
     }
+    
+    
+    //비용 신청 디비에 등록하기 
+    public int addDebit() {
+    	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+    	int result = paymentDao.addCostApply();
+    	if(result != -1) {
+    		System.out.println("서비스단 : 비용 신청 성공 ");
+    	}else {
+    		System.out.println("서비스단 : 비용신청 실패");
+    	}
+    	
+    	return result;
+    	
+    }
 }

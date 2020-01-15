@@ -1,6 +1,7 @@
 package com.dobee.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.ProjectDao;
 import com.dobee.services.ProjectService;
+import com.dobee.vo.member.User;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
@@ -29,6 +31,8 @@ public class AjaxController_Project {
 	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
+		
+		System.out.println("추가할 때 메일 가져오니?"+pjtMembersMail.toString());
 		String responseData = "";
 		int result = 0;
 		int result2 = 0;
@@ -41,6 +45,7 @@ public class AjaxController_Project {
 		String pjtName = project.getPjtName();
 		
 		if(result > 0) {
+			//프로젝트 멤버 DB 저장
 			result2 = projectService.addProjectMember(pjtName, pjtMembersMail);
 			responseData = "success";
 		}
@@ -67,5 +72,23 @@ public class AjaxController_Project {
 	public String updateProject(@RequestParam(value="pjtSeq") String pjtSeq) {
 		return null;
 	}
+	
+	//특정 프로젝트 가져오기
+	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
+	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		Project project = null;
+		project = projectService.getProject(Integer.parseInt(pjtSeq));
+		return project;
+	}
+	
+	//특정 프로젝트 멤버가져오기
+	@RequestMapping(value="getPjtMember.do", method=RequestMethod.POST)
+	public List<String> getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		List<String> pjtMember = null;
+		pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		return pjtMember;
+	}
+	
+	
 	
 }

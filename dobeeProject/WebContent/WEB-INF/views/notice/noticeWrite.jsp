@@ -26,7 +26,14 @@
 <script src="./packages/summerfile/summernote-file.js"></script>
 <title>write</title>
 
+<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
 
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
 </head>
 
 <script>

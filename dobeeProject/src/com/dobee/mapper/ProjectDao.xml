@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.ProjectDao">
 
-<select id ="getPjt" resultType="com.dobee.vo.project.Project">
+<select id ="getPjtList" resultType="com.dobee.vo.project.Project">
  SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
 </select>
 
@@ -26,6 +26,18 @@
 <delete id="deleteMember" parameterType="integer">
 	DELETE FROM PROJECTMEMBER WHERE pjtSeq = #{pjtSeq}
 </delete>
+
+<!-- 특정 프로젝트 가져오기   01.15.알파카  -->
+<select id="getPjt" resultType="com.dobee.vo.project.Project">
+	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT WHERE PJTSEQ=#{pjtSeq}
+</select>
+
+<!-- 특정 프로젝트 멤버(이름, 메일) 가져오기 01.15.알파카 -->
+<select id="getPjtMember" resultType="String">
+	SELECT U.MAIL, U.NAME FROM USER U
+	LEFT OUTER JOIN PROJECTMEMBER P
+	ON U.MAIL = P.MAIL WHERE PJTSEQ=#{pjtSeq}
+</select>
 
 <resultMap type="com.dobee.vo.project.Project" id="Project">
     <result column="PJTSEQ" property="pjtSeq"/>
