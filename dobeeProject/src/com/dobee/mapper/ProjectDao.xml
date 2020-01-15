@@ -32,6 +32,13 @@
 	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT WHERE PJTSEQ=#{pjtSeq}
 </select>
 
+<!-- 특정 프로젝트 멤버(이름, 메일) 가져오기 01.15.알파카 -->
+<select id="getPjtMember" resultType="com.dobee.vo.member.User">
+	SELECT U.MAIL, U.NAME FROM USER U
+	LEFT OUTER JOIN PROJECTMEMBER P
+	ON U.MAIL = P.MAIL WHERE PJTSEQ=#{pjtSeq}
+</select>
+
 <resultMap type="com.dobee.vo.project.Project" id="Project">
     <result column="PJTSEQ" property="pjtSeq"/>
     <result column="PJTNAME" property="pjtName"/>

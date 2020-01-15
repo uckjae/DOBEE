@@ -3,6 +3,7 @@ package com.dobee.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
@@ -16,7 +17,6 @@ public interface ProjectDao {
     //프로젝트 생성
     public int mkPjt(Project project);
     
-    
     //프로젝트 생성시 참여 멤버 추가 --01.15.알파카
     public int mkPjtMember(Map<String,String> map);
 
@@ -26,6 +26,9 @@ public interface ProjectDao {
     
     //특정 프로젝트 가져오기
     public Project getPjt(int pjtSeq);
+    
+    //특정 프로젝트멤버 가져오기
+    public User getPjtMember(int pjtSeq);
 
     //프로젝트 삭제 -- 1.13 추가
     public int deletePjt(int pjtSeq); 
