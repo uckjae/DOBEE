@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <!-- Side Navbar -->
+    <nav class="side-navbar">
 <div class="side-navbar-wrapper">
 		<!-- Sidebar Header    -->
 		<div class="sidenav-header d-flex align-items-center justify-content-center">
@@ -19,13 +21,12 @@
 
 		<!-- Sidebar Navigation Menus-->
 		<div class="main-menu">
+		    <h5 class="sidenav-heading">전체일정</h5>
 			<ul id="side-main-menu" class="side-menu list-unstyled">
-				<li><a href="#"> <i class="fas fa-home fa-2x" style="color:#888888;">&nbsp;메인</i>
-				</a></li>
-				<li><a href="noticeList.do"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;공지사항</i>
-				</a></li>				
-				<li><a href="#exampledropdownDropdown" aria-expanded="false"
-					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;근무</i></a>
+				<li><a href="#"><i class="fas fa-home fa-2x"></i>메인</a></li>
+				<li><a href="noticeList.do"><i class="fas fa-clipboard-list fa-2x"></i>공지사항</a></li>
+				<h5 class="sidenav-heading">My근무</h5>				
+				<li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>근무</a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
 						<li><a href="breakApply.do">부재 일정 신청</a></li>
 						<li><a href="extendApply.do">연장 근무 신청</a></li>
@@ -35,17 +36,19 @@
 					</ul>
 				</li>
 				
+				<h5 class="sidenav-heading">정산관리</h5>
 				<li><a href="#exampledropdownDropdown2" aria-expanded="false"
-					data-toggle="collapse"> <i class="fas fa-receipt fa-2x" style="color:#888888;">&nbsp;비용</i></a>
+					data-toggle="collapse"> <i class="fas fa-receipt fa-2x"></i>비용</a>
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
 						<li><a href="reciptRegit.do">정산 신청</a></li>
 						<li><a href="reciptRegit.do">카드 관리</a></li>
 						<li><a href="reciptRegit.do">비용 현황</a></li>
 					</ul>
 				</li>
-										
-				<li><a href="pjtMain.do"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
-				<li><a href="chat.do"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
+								
+				<li><a href="pjtMain.do"> <i class="fas fa-tasks fa-2x"></i>프로젝트</a></li>
+				<li><a href="chat.do"><i class="fas fa-comments fa-2x"></i></a></li>
 			</ul>
 		</div>
 	</div>
+	</nav>
