@@ -1,7 +1,5 @@
 package com.dobee.vo.member;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,8 +11,8 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class UserInfo {
     private String mail;
-	/* @DateTimeFormat(pattern = "yyyy-MM-dd") */
-    private String regDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date regitDate;
     private String serve;
     private String emp;
     private String position;
