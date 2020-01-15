@@ -5,6 +5,16 @@
 <html>
 <head>
 	<c:import url="/common/tag.jsp" />
+	
+	<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
+	
 	<script type="text/javascript">
 		$(function(){
 			/* 권한 코드 select option 만들기*/
@@ -93,6 +103,8 @@
 
 		}
 	</script>
+	
+	
 </head>
 <body>
 	<!-- Side Navbar -->

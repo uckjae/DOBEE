@@ -5,11 +5,12 @@
 <html>
   <head>
     <c:import url="/common/tag.jsp"/>
-    <style>
+   <style>
+     @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
 		body {
 		  margin: 40px 10px;
 		  padding: 0;
-		  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+		   font-family: 'Noto Serif KR', serif;
 		  font-size: 14px;
 		}
 		

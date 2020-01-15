@@ -30,10 +30,14 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
 
-<style type="css/main.css">
-
-</style>
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
 
 </head>
 <body>
