@@ -37,9 +37,9 @@ public class ApplyService {
 
 
     // 개인_부재일정관리			0101
-    public List<BreakManageList> absMg(){
+    public List<BreakManageList> absMg(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-        List<BreakManageList> results = userDao.absMg();
+        List<BreakManageList> results = userDao.absMg(apply);
         
         return results;
     }

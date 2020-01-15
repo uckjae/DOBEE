@@ -70,7 +70,7 @@ public interface UserDao {
 
     // 개인_부재일정확인 - table 데이터 불러오기
     /* 01.12 게다죽 */
-    public List<BreakManageList> absMg();
+    public List<BreakManageList> absMg(Apply apply);
 
     
     // Ajax 개인부재일정확인 - Option - 년도 loading		0113

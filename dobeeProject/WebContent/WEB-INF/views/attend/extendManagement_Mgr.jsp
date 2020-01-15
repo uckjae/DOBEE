@@ -42,7 +42,7 @@
 		}
 		
 		.btn-info.btn-sm {
-			background-color:lightgray;
+			background-color: #e0da28;
 		}
 		
     </style>

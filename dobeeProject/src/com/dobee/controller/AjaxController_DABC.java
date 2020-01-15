@@ -25,7 +25,7 @@ public class AjaxController_DABC {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	// 개인_부재신청 항목 불러오기
+	// 개인_부재신청 부재항목 불러오기
 	@RequestMapping("getApyCode.do")
 	public View brkApyCat (Model map){
 		// Authentication auth // String mail = auth.getName();
@@ -37,7 +37,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 개인_부재신청 결재자 불러오기
+	// 개인_부재신청 결재자 불러오기	COMPLETE
 	@RequestMapping("getApprovalList.do")
 	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
