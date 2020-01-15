@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.dobee.dao.UserDao;
@@ -28,7 +27,8 @@ public class AjaxController_DABC {
 	
 	// 개인_부재신청 항목 불러오기
 	@RequestMapping("getApyCode.do")
-	public View brkApyCat (Model map) {
+	public View brkApyCat (Model map){
+		// Authentication auth // String mail = auth.getName();
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> results = userDao.getApyCode();
 		map.addAttribute("apyCode", results);

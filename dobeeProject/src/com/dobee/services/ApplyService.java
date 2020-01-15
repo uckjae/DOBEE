@@ -18,7 +18,7 @@ public class ApplyService {
     SqlSession sqlSession;
 
 
-    // 개인_부재일정신청			0101
+    // 개인_부재일정신청	POST		0101
     public String absApply(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.absApply(apply);
@@ -27,12 +27,12 @@ public class ApplyService {
     }
 
 
-    // 개인_연장근무신청			0101
+    // 개인_연장근무신청	POST		0101
     public String overtimeApply(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.overTimeApply(apply);
     	
-    	return "병신아! 그래! 병신아!";
+    	return "병신아! 그래! 병신아! ㅜㅠ";
     }
 
 
@@ -47,12 +47,6 @@ public class ApplyService {
 
     //근무내역확인
     public List<Attend> workChart(){
-        return null;
-    }
-
-
-    //부재관리_PM
-    public List<Apply> absSign(){
         return null;
     }
 
@@ -85,18 +79,12 @@ public class ApplyService {
     }
     
     
-    // 매니저_연장근무관리 - 데이터 테이블 출력 (POST)		0115
+    // 매니저_연장근무관리 - 승인/반려/미승인 (POST)		0115
     public void extReqHandle(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.extReqHandle(apply);
     	
     	// System.out.println("results 확인 : " + results);
-    }
-
-
-    //연장근무관리_승인
-    public void overtiemSignApprov(){
-
     }
 
 
