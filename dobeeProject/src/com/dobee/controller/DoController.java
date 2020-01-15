@@ -371,7 +371,7 @@ public class DoController {
     }
 
 
-    // 매니저_부재관리 (isAuth update) GET		0114 게다죽
+    // 매니저_부재관리 - isAuth update GET		0114 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(Model model){
     	List<BreakManageList> results = applyService.breakListMgr();
@@ -385,17 +385,28 @@ public class DoController {
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
-        applyService.absReqHandle(apply);	
-        System.out.println("돌아간것만 확인 ㄱㄱ");
+        applyService.absReqHandle(apply);
         
         return "attend/breakManagement_Mgr";
     }
     
 
-    // 매니저_연장근무관리 리스트
-    @RequestMapping("extendManage.do")
-    public String overtiemSignList(){
-        return "attend/extendManage";
+    // 매니저_연장근무관리 리스트 - isAuth update GET			0115 게다죽
+    @RequestMapping(value="extManage.do", method=RequestMethod.GET)
+    public String extSign(Model model){
+    	List<BreakManageList> results = applyService.extListMgr();
+        model.addAttribute("extListMgr", results);
+        
+    	return "attend/extendManagement_Mgr";
+    }
+    
+    
+    // 매니저_연장근무관리 리스트 - isAuth update POST			0115 게다죽
+    @RequestMapping(value="extManage.do", method=RequestMethod.POST)
+    public String extReqHandle(Apply apply){
+    	applyService.extReqHandle(apply);
+        
+    	return "attend/extendManagement_Mgr";
     }
 
     

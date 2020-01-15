@@ -48,9 +48,11 @@ public class ProjectService {
     	Map<String, String> map = new HashMap<String, String>();
     	map.put("pjtName", pjtName);
     	for(int i = 0; i<pjtMembersMail.size(); i++) {
-    		map.put("mail", pjtMembersMail.get(i).toString());
-    	}    	
-    	result = projectdao.mkPjtMember(map);
+    		String mail = pjtMembersMail.get(i).toString();
+    		map.put("mail", mail);
+        	result = projectdao.mkPjtMember(map);
+    	}
+    	System.out.println("result?"+result);
     	return result;
     }
 
@@ -64,10 +66,11 @@ public class ProjectService {
     }
     
     //특정 프로젝트 멤버 정보(메일, 이름) 가져오기
-    public User getPjtMember(int pjtSeq) {
-    	User pjtMember = null;
+    public List<String> getPjtMember(int pjtSeq) {
+    	List<String> pjtMember = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	pjtMember = projectdao.getPjtMember(pjtSeq);
+    	System.out.println("db에서 어떻게 가져와?"+pjtMember.toString());
     	return pjtMember;
     }
     

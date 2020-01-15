@@ -28,7 +28,15 @@
     </style>
     
     <link rel="stylesheet" href="./css/jgcss.css">
-
+	
+    <!-- Main File-->
+    <link href='./packages/core/main.css' rel='stylesheet' />
+	<link href='./packages/daygrid/main.css' rel='stylesheet' />
+	<link href='./packages/list/main.css' rel='stylesheet' />
+	<!-- Modal -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	
   </head>
  
   <body>
@@ -58,14 +66,15 @@
 			</ul>
 		</div>
 		
+		<br>
 		<h1>부재 일정 관리</h1>
-
+		<br>
 		<!-- <form action="" method="post"> -->
 		
 		<table style="width: 100%">
 			<tr>
 				<td style="width: 9%"><h1>사용 연차</h1></td>
-				<td style="width: 12%" id="usedVacation">0</td>
+				<td style="width: 12%" id="usedVacation">불러오는중...</td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -74,40 +83,41 @@
 			</tr>
 			<tr>
 				<td><h1>남은 연차</h1></td>
-				<td id="remainVacation">0</td>
-				<td></td>					
+				<td id="remainVacation">불러오는중...</td>			
 				<td style="width: 10%">
 					<select name="year" id="selectYear">
 						<option value="">년도별</option>
-						
+						<!-- Ajax -->
 					</select>
 				</td>
 				<td style="width: 7%">
 					<select name="month" id="selectMonth">
 						<option value="">월별</option>
-						
+						<!-- Ajax -->
 					</select>
 				</td>
 				<td style="width: 7%">
 					<select name="category" id="selectEntry">
 						<option value="">항목별</option>
-						
+						<!-- Ajax -->
 					</select>
 				</td>
 				<td style="width: 7%">
 					<select name="category" id="selectIsAuth">
 						<option value="">항목별</option>
-						
+						<!-- Ajax -->
 					</select>
 				</td>
-				<td style="width: 7%">
-					<!-- <input type="submit" id="search" class="submit" value="검색하기 "> -->
-				</td>
+				
 			</tr>
 		</table>
 		
 		<!-- </form> -->
-		
+		${sessionScope }<br>
+		${sessionScope.user.mail }<br>
+		${sessionScope.user.teamCode }<br>
+		${sessionScope.user.authCode }<br>
+		${sessionScope.user.name }
 
 		<section>
 			<div class="col-md-12">
@@ -139,8 +149,8 @@
 								<div class="modal-dialog modal-lg">
 									<div class="modal-content">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
 											<h4 class="modal-title">상세 사유</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 										<div class="modal-body">
 											<h3>부재 신청 사유</h3>
@@ -165,10 +175,7 @@
 
 						</c:forEach>
 					</tbody>
-					
-					
 
-					
 					<tfoot>	
 					</tfoot>
 						
@@ -193,20 +200,13 @@
     <!-- Main File-->
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
-    
-    <link href='./packages/core/main.css' rel='stylesheet' />
-	<link href='./packages/daygrid/main.css' rel='stylesheet' />
-	<link href='./packages/list/main.css' rel='stylesheet' />
+
 	<script src='./packages/core/main.js'></script>
 	<script src='./packages/interaction/main.js'></script>
 	<script src='./packages/daygrid/main.js'></script>
 	<script src='./packages/list/main.js'></script>
 	<script src='./packages/google-calendar/main.js'></script>
 
-	<!-- Modal -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-  
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	

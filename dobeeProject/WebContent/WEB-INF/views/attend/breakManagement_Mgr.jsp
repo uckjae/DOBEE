@@ -63,8 +63,12 @@
 			  <li class="nav-item">
 			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
 			  </li>
+			  
 			  <li class="nav-item">
-			    <a class="nav-link active" href="absManage.do">부재관리_매니저</a>
+			    <a class="nav-link active" href="absManage.do">부재신청 관리_매니저</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="extManage.do">연장근무 관리_매니저</a>
 			  </li>
 			</ul>
 		</div>
@@ -73,7 +77,7 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<br>
-				<h1>부재 신청 관리</h1>
+				<h1>연장근무 신청 관리</h1>
 				<br>
 		
 				<div class="formDiv">
@@ -97,25 +101,26 @@
 						<thead id="thead">
 							<tr>
 								<th width="8%">신청 번호</th>
-								<th width="17%">신청 일자</th>
-								<th width="12%">부재 항목</th>
-								<th width="12%">승인 여부</th>
+								<th width="15%">신청 ID</th>
+								<th width="15%">신청자명</th>
+								<th width="9%">신청 일자</th>
+								<th width="8%">부재 항목</th>
+								<th width="8%">승인 여부</th>
 								<th>기간</th>
-								<th width="15%">연차 사용 일수</th>
+								<th width="10%">연차 사용 일수</th>
 							</tr>
 						</thead>
 						
 						<tbody id="tbody">
 							<c:forEach items="${brkListMgr}" var="bl">
 								<tr>
-									<td class="bseq">		${bl.aplSeq }</td>
+									<td class="bSeq">		${bl.aplSeq }</td>
+									<td class="bMail">		${bl.drafter }</td>
+									<td class="bName">		${bl.name }</td>
 									<td class="bReqDate">	${bl.reqDate}</td>
 									<td class="bEntry">		${bl.entry }</td>
 									<td class="bIsAuth">
-										<input type="hidden" value="${bl.aplSeq}" id="hdAplSeq">
-										<input type="hidden" value="${bl.reason }" id="hdReason">
-										<input type="hidden" value="${bl.rejReason }" id="hdRejReason">
-										<button onclick="view_modal('${bl.aplSeq}', '${bl.reason}', '${bl.rejReason}')" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
+										<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
 									</td>
 									<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
 									<td class="bUsed">		${bl.usingBreak }</td>
@@ -176,12 +181,12 @@
 						</div>
 						
 						<div class="modal-footer">
-							<input type="submit" class="btn btn-default" value="POST">
-							<button type="submit" class="btn btn-default" data-dismiss="modal">OK</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<input type="submit" class="btn btn-default" value="확인">
+							&nbsp;&nbsp;
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
-						
 					</form>
+					
 				</div>
 			</div>
 		</div>
@@ -204,6 +209,7 @@
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
+    <!-- Google Calendar -->
 	<script src='./packages/core/main.js'></script>
 	<script src='./packages/interaction/main.js'></script>
 	<script src='./packages/daygrid/main.js'></script>
@@ -221,19 +227,6 @@
 	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
   
   	<script>
-  	
-	  	function view_modal (aplSeq, reason, rejReason) {
-			$('#myModal').on('show.bs.modal', function(event) {
-				console.log("asdfdsa", aplSeq);
-				console.log(reason);
-				console.log(rejReason);
-				$(".modal-body #aplSeq").val(aplSeq);
-				$(".modal-body #reason").val(reason);
-				$(".modal-body #rejReason").val(rejReason);
-				
-			})
-		}
-		
 		window.onload = function(){
 
 			// 부재항목 Option Ajax Loading ********************
