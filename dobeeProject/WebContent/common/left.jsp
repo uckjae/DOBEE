@@ -32,7 +32,7 @@
 						<li><a href="extendApply.do">연장 근무 신청</a></li>
 						<li><a href="breakManage.do">부재 일정 관리</a></li>
 						<li><a href="workManage.do">근무 내역 확인</a></li>
-						<li><a href="absManage.do">근무 내역 확인</a></li>
+						<li><a href="absManage.do">관리자 승인 페이지</a></li>
 					</ul>
 				</li>
 				

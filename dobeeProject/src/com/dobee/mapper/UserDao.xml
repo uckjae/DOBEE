@@ -18,7 +18,7 @@
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.UserInfo">
-		SELECT MAIL, REGDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
+		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
 	
@@ -154,6 +154,35 @@
 	</select>
 	
 	
+	<!-- Ajax 매니저_부재관리 - Option - 부재항목 loading		0114 -->
+    <select id="breakEntryListMgr" resultType="com.dobee.vo.ApplyCode">
+    	SELECT DISTINCT AC.APYCODE, AC.ENTRY 
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+	        		ON A.APYCODE = AC.APYCODE
+			WHERE A.APYCODE != 6
+    </select>
+    
+    
+    <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 -->
+    <select id="breakListMgr" resultType="com.dobee.vo.member.BreakManageList">
+    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+			    INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+		    WHERE A.APYCODE != 6
+		    ORDER BY A.APLSEQ ASC
+    </select>
+    
+    
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 -->
+    <update id="absReqHandle" parameterType="com.dobee.vo.Apply">
+    	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
+    </update>
+	
+	
 	<!-- 권한목록 불러오기 -->
 	<select id="getAuthority" resultType="com.dobee.vo.member.Authority">
 		SELECT AUTH, AUTHCODE FROM AUTHORITY
@@ -167,12 +196,12 @@
 	
 	
 	<!-- 사원등록 -->
-	<insert id="addUser">
+	<insert id="addUser" parameterType="com.dobee.vo.member.User">
 		INSERT INTO USER (MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE) VALUES (#{mail},#{name},#{myPic},#{authCode},#{teamCode})
 	</insert>
 	
 	<!-- 사원정보등록 -->
-	<insert id="addUserInfo">
-		INSERT INTO USERINFO (MAIL, REGDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},#{regDate},#{serve},#{emp},#{position},#{phone})
+	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
+		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
 </mapper>

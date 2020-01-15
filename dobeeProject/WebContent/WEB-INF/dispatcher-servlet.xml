@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -11,7 +12,9 @@
         				   http://www.springframework.org/schema/context 
         				   http://www.springframework.org/schema/context/spring-context.xsd
         				   http://www.springframework.org/schema/security
-        				   http://www.springframework.org/schema/security/spring-security.xsd">
+        				   http://www.springframework.org/schema/security/spring-security.xsd
+        				   http://www.springframework.org/schema/tx
+ 						   http://www.springframework.org/schema/tx/spring-tx.xsd">
         		
 <!-- 
 주석처리 일부러 한 겁니다. 일단 지우지 말아주세요 
@@ -66,7 +69,15 @@
 			<value>1</value>
 		</property>
 	</bean>
-
+	
+	<!-- 트랜잭션 -->
+	<bean id="transactionManager" 
+   		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="driverManagerDataSource" /> 
+   </bean>
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- /트랜잭션 -->
 	
 
 

@@ -111,6 +111,18 @@ public interface UserDao {
     //부재관리(팀장)
     public List<Apply> absSign();
 
+    
+    //부재관리(팀장) - 데이터 테이블 출력 (GET)		0114
+    public List<BreakManageList> breakListMgr();
+    
+    
+    // 매니저_부재관리 - isAuth update (POST)		0115
+    public int absReqHandle(Apply apply);
+    
+    
+    // Ajax 매니저_부재관리 - Option - 부재항목 loading		0114
+    public List<ApplyCode> breakEntryListMgr();
+    
 
     //연장근무관리
     public List<Apply> overTimeSign();

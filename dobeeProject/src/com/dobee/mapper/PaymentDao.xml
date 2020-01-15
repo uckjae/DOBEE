@@ -15,5 +15,10 @@
  	<select id="listDebit" resultType="com.dobee.vo.Debit">
  		SELECT * FROM DEBIT
  	</select> 
+ 	
+ 	<!-- 비용 코드 불러오기-->
+ 	<select id="debitCode" resultType="com.dobee.vo.CostCode">
+ 		SELECT * FROM COSTCODE
+ 	</select>
 
 </mapper>

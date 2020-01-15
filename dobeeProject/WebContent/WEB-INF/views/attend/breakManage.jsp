@@ -111,7 +111,7 @@
 		<section>
 			<div class="col-md-12">
 			
-				<table id="breakTable" class="dataTable display hover" style="width :100%">
+				<table id="brkTable" class="dataTable hover order-column row-border" style="width :100%">
 					<thead id="thead">
 						<tr>
 							<th width="13%">부재항목</th>
@@ -131,28 +131,37 @@
 								<td class="tused">		${bl.usingBreak }</td>
 								<td class="tregdate">	${bl.reqDate }</td>
 								<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal${bl.aplSeq}">${bl.isAuth }</button></td>
-							</tr>	
-							
+							</tr>
+
 							<!-- Modal -->
 							<div class="modal fade" id="myModal${bl.aplSeq}" role="dialog">
-							  <div class="modal-dialog modal-lg">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal">&times;</button>
-							        <h4 class="modal-title">상세 사유</h4>
-							      </div>
-							      <div class="modal-body">
-							         <h3>부재 사유</h3>
-							     <h4>사유</h4>
-							     <h5>${bl.reason }</h5>
-							      </div>
-							      <div class="modal-footer">
-							       <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-							      </div>
-							    </div>
-							  </div>
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">상세 사유</h4>
+										</div>
+										<div class="modal-body">
+											<h3>부재 신청 사유</h3>
+											<h4>사유</h4>
+											<h5>${bl.reason }</h5>
+										</div>
+
+										<c:if test="${not empty bl.rejReason }">
+											<div id="divRejReason">
+												<h3>부재 신청 반려 사유 </h3>
+												<h5>${bl.rejReason }</h5>
+											</div>
+										</c:if>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">OK</button>
+										</div>
+									</div>
+								</div>
 							</div>
-							
+
 						</c:forEach>
 					</tbody>
 					
