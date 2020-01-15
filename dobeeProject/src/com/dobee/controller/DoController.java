@@ -174,7 +174,7 @@ public class DoController {
     		//등록 실패하면 아무일도 안일어남
     	}
     	//등록 성공하면 카드 목록 뷰단으로 이동
-    	return "redirect:ListDebit.do";
+    	return "admin/ListDebit";
     }
     
     
