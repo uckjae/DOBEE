@@ -425,22 +425,16 @@ public class DoController {
     //프로젝트메인
     @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
-    	
-    		List<Project>list=null;
-    	
-    		ProjectDao projectdao=sqlsession.getMapper(ProjectDao.class);
-    		list= projectdao.getPjt(project);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+    	List<Project>list = projectService.projectList();
+    	model.addAttribute("list",list);
     
-        return "project/pjtMain2";
+        return "project/pjtMain5";
     }
 
 
     //프로젝트생성
     @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project){
-    	
     	int result = 0;
     	String viewpage = "";
     	result = projectService.addProject(project);
