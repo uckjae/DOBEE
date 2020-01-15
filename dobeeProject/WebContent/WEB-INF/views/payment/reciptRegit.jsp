@@ -61,56 +61,52 @@ function uploadFile(){
 								$("#Input2").attr("value", result.key4);
 								$("#Input3").attr("value", result.key1);
 								$("#Input4").attr("value", result.key18);
-								
-								
-
-								
 							},
 						error:function(){
 								console.log("구글 아작스 요청시 에러");
 							},
-						complete:function(){
-								$.ajax({
-									url:'nowEmpEmail.do',
-									data:{
-										
-										},
-									type:'POST',
-									success:function(result){
-											console.log('현재 사원이메일 가져오기 아작스 성공');
-											
-										},
-										
-
-									})
-							},
+					
+									
 						})// 2번째 아작스끝
                 },
         });
 }; //uploadFile() 함수 끝 
-
-function addDataBase(){
-	
-};
+// 법인카드 목록 불러오기 아작스
+window.onload=function(){
+	$.ajax({
+		url:'nowEmpEmail.do',
+		type:'POST',
+		success:function(result){
+				$("#Input1").attr("value", result);
+			},
+		complete:function(){
+				$.ajax({
+					url:'cardListtoReceipt.do',
+					type:'POST',
+					success:function(result){
+							for(let i = 0 ; i<result.length; i++){
+								$("#Select1").append("<option value='1'>" + result[i].cardNum +  "</option>");	
+							}
+						},
+					error:function(){
+							console.log("법인카드 목록 불러오기 아작스 에러남");
+						},
+					
+				})//아작스 끝
+			}
+		})
+}
 
 
 </script>
 <script>
 	$(document).ready(function() {
 		
-
-
-		
 		$(".custom-file-input").on("change", function() {
 			  var fileName = $(this).val().split("\\").pop();
 			  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 			});
-		
-	
-			
 	});
-
-
 
 	
 </script>
@@ -197,17 +193,13 @@ function addDataBase(){
 				  </div>
 	      		<div class="form-group">
 				    <label for="exampleFormControlSelect1">법인카드 선택</label>
-				    <select class="form-control" id="exampleFormControlSelect2">
-				      <option>1</option>
-				      <option>2</option>
-				      <option>3</option>
-				      <option>4</option>
-				      <option>5</option>
+				    <select class="form-control" id="Select1">
+				     
 				    </select>
 	  			  </div>
 	  			  <div class="form-group">
 				    <label for="exampleFormControlSelect2">비용항목 선택</label>
-				    <select class="form-control" id="exampleFormControlSelect3">
+				    <select class="form-control" id="Select2">
 				      <option>1</option>
 				      <option>2</option>
 				      <option>3</option>

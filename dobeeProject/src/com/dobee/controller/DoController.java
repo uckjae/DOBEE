@@ -714,10 +714,16 @@ public class DoController {
    	@RequestMapping("nowEmpEmail.do") 
    	@ResponseBody 
    	public String currentEmpEmail(Principal principal) { 
-   		
    		return principal.getName(); 
-   		
-   		}
+   	}
+   	
+    //영수증등록_현재 법인카드 목록 아작스로 불러다주기
+    @RequestMapping(value="cardListtoReceipt.do", method=RequestMethod.POST)
+    @ResponseBody
+    public ArrayList cardList() {
+    	ArrayList debitList = debitService.listDebit();
+    	return debitList;
+    }
 
     
     
