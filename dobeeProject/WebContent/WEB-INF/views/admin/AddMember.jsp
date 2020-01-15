@@ -46,6 +46,13 @@
 				}	
 			})
 			
+			/* 날짜 기본설정 */
+			getDate();
+
+			$('#regDate').change(function(){
+				console.log($('#regDate').val());
+			});
+			
 		});
 
 		function sendMail (){
@@ -72,8 +79,18 @@
 		function submit(){
 			sendMail().then(function(){
 				console.log("submit()");
+				/* document.getElementById('addUserForm').submit(); */
 				$('#addUserForm').submit();
 			})
+		}
+
+		/* 날짜 기본설정 */
+		function getDate(){
+		    var today = new Date();
+
+			document.getElementById("regDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+
 		}
 	</script>
 </head>
@@ -134,7 +151,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="date" id="regDate" name="regDate" class="form-control" placeholder="직책" required="required" autofocus="autofocus">
+                                                            <input type="date" id="regDate" name="regDate" class="form-control" required="required" autofocus="autofocus">
                                                             <label for="regDate">고용일</label>
                                                         </div>
                                                     </div>
@@ -145,7 +162,7 @@
                                                             	<option value="정규직">정규직</option>
                                                             	<option value="인턴">인턴</option>
                                                             </select>
-                                                            <label for="serve">전화번호</label>
+                                                            <label for="serve">고용</label>
                                                         </div>
                                                     </div>
                                                 </div>

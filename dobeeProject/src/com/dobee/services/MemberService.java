@@ -82,7 +82,6 @@ public class MemberService {
     
     //User 등록
     @Transactional
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void addUser(User user, UserInfo userInfo) {
     	System.out.println("MemberService addUser() in!!");
     	try {

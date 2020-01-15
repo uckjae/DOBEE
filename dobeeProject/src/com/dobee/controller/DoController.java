@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ProjectDao;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
-import com.dobee.services.GoogleVisionApi;
+import com.dobee.services.DebitService;
+import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
@@ -93,6 +95,8 @@ public class DoController {
     //비밀번호재설정
     public String resetPwd(){
         return null;
+    }
+    
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
     	System.out.println("DoController resetPwd() in!!");
@@ -689,16 +693,16 @@ public class DoController {
     //관리자_사원추가 페이지
    @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
-	   System.out.println("Docontroller addUser() in");
+	   System.out.println("Docontroller addUser() get in");
 	   return "admin/AddMember";
    }
     
     
     //관리자_사원추가 서비스
-   	@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
-    public String addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
-   		memberService.addUser(user, userInfo, req);
+   @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
+   public String addUser(User user, UserInfo userInfo) {
+   		System.out.println("Docontroller addUser() post in");
+   		memberService.addUser(user, userInfo);
    		
    		
     	return "admin/AdminMain";
