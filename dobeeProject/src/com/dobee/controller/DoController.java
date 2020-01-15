@@ -201,7 +201,7 @@ public class DoController {
     }
 
     
-  //공지사항리스트
+    //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
     	
@@ -314,7 +314,6 @@ public class DoController {
 		noticedao.noticeModify(n);		
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); //들어주는 주소 ...
     }
-
     
 
 
@@ -479,18 +478,13 @@ public class DoController {
     }
 
 
-    //프로젝트메인
+  //프로젝트메인
     @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
-    	
-    		List<Project>list=null;
-    	
-    		ProjectDao projectdao=sqlsession.getMapper(ProjectDao.class);
-    		list= projectdao.getPjt(project);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+    	List<Project>list = projectService.projectList();
+    	model.addAttribute("list",list);
     
-        return "project/pjtMain";
+        return "project/pjtMain5";
     }
 
 

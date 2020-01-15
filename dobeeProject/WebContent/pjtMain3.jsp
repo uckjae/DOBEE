@@ -34,130 +34,6 @@ body
 	min-height : 100vh;
 
 }
-
-.pjcontainer
-{
-	position : relative;
-	width:90%;
-	display : grid;
-	grid-template-columns : repeat(auto-fill, minmax(250px), 1fr));
-	grid-template-rows : auto;
-	grid-gap : 0 40px;
-	
-}
-.pjcontainer .pjbox 
-{
-	position : relative;
-	height : 320px;
-	background :  #807c7e;
-	display: flex;
-	justify-content: center;
-	align-items : center;
-}
-
-.pjcontainer .pjbox:before
-{
-	content : '';
-	position : absolute;
-	top : -2px;
-	left : -2px;
-	right : -2px;
-	bottom : -2px;
-	background: #fff;
-	transform : skew(2deg, 2deg);
-	z-index : -1;
-}
-
-.pjcontainer .pjbox:nth-child(0):before
-{
-	background: linear-gradient(600deg, #807c7e, #f4f6f5);
-
-}
-
-
-.pjcontainer .pjbox:after
-{
-	content : '';
-	position : absolute;
-	top : 0;
-	left : 0;
-	width : 50%;
-	height : 100%;
-	background: rgba(255,255,255,0.05);
-	pointer-events : none;
-}
-
-
-.content 
-{
-	position : relative;
-	padding : 20px;
-
-}
-
-.pjbox .content h2 
-{
-	position : absolute;
-	top : -40px;
-	right : 8px;
-	margin: 0;
-	padding: 0;
-	font-size: 10em;
-	color : rgba(93,93,93,2);
-	transition : 0.5s;
-}
-
-.pjbox:hover .content h2
-{
-	top : -140px;
-
-}
-
-.pjbox .content h3 
-{
-	margin : 0 0 10px;
-	padding : 0;
-	font-size: 24px;
-	font-weight : 500;
-	color: #fff;
-}
-
-.pjbox .content p 
-{
-	margin : 0;
-	padding : 0;
-	font-size: 16px;
-	color: #fff;
-}
-
-.pjbox .content a
-{
-	position : relative;
-	margin : 20px 0 0;
-	padding : 10px 20px;
-	text-decoration : none;
-	border: 1px solid #fff;
-	display : inline-block;
-	color : #fff;
-	transition : 0.5s;
-	transform : translateY(-40px);
-	opacity: 0;
-	visibility: hidden;
-}
-
-.pjbox:hover .content a
-{
-
-	transform : translateY(0);
-	opacity: 1;
-	visibility: visible;
-}
-.pjbox .content a:hover
-{
-	color : #000;
-	background: #fff;
-}
-
     </style>
 </head>
     <script type="text/javascript">
@@ -316,35 +192,125 @@ body
     <div class="page">
        <!-- 상단 Navbar -->
        <c:import url="/common/top.jsp"/>
-       	<select name="job">
-		    <option value="">전체 프로젝트 관리</option>
-		    <option value="2019-1분기">2019-1분기</option>
-		    <option value="2019-2분기">2019-2분기</option>
-		    <option value="2019-3분기">2019-3분기</option>
-		    <option value="2019-4분기">2019-4분기</option>
+       	<select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
+		 <option hidden>멤버</option>
 		</select>
        <br><br><br>
 
              <!-- 프로젝트 -->
-            
-             <div class="container-fluid">
-	             <div class="row">
-		             <c:forEach items="${list}" var="n">
-			             <div class="col-md-3">
-				             <div class="pjcontainer">
-									<div class="pjbox">
-										 <div class="content">
-										 	<h2>${n.pjtSeq}</h2>
-										 	<h3>${n.pjtName}</h3>
-										 	<p>${n.pjtProgress}</p>
-										 	<a href="#">Read More</a>
-										 </div>
-									 </div>
-								</div>
-							</div>
-						</c:forEach>
-	             	</div>
-                  </div>                 
+           <div class="row">
+           
+        
+             <!-- Card -->
+         <div class="col-xs-2">
+         </div>
+		<div class="col-xs-3">
+		
+		<div class="card weather-card">
+		
+		  <!-- Card content -->
+		  <div class="card-body pb-3">
+		
+		    <!-- Title -->
+		    <h4 class="card-title font-weight-bold">Warsaw</h4>
+		    <!-- Text -->
+		    <p class="card-text">Mon, 12:30 PM, Mostly Sunny</p>
+		    <div class="d-flex justify-content-between">
+		      <p class="display-1 degree">23</p>
+		      <i class="fas fa-sun-o fa-5x pt-3 amber-text"></i>
+		    </div>
+		    <div class="d-flex justify-content-between mb-4">
+		      <p><i class="fas fa-tint fa-lg text-info pr-2"></i>3% Precipitation</p>
+		      <p><i class="fas fa-leaf fa-lg grey-text pr-2"></i>21 km/h Winds</p>
+		    </div>
+		    <div class="progress md-progress">
+		      <div class="progress-bar black" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+		    </div>
+		    <ul class="list-unstyled d-flex justify-content-between font-small text-muted mb-4">
+		      <li class="pl-4">8AM</li>
+		      <li>11AM</li>
+		      <li>2PM</li>
+		      <li>5PM</li>
+		      <li class="pr-4">8PM</li>
+		    </ul>
+		
+		    <div class="collapse-content">
+		
+		      <div class="collapse" id="collapseExample">
+		
+		        <table class="table table-borderless table-sm mb-0">
+		          <tbody>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Tuesday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">24&deg;<span class="text-muted">/12&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-sun fa-lg amber-text"></i>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Wednesday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">19&deg;<span class="text-muted">/10&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-cloud-sun-rain fa-lg text-info"></i>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Thursday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">23&deg;<span class="text-muted">/15&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-sun fa-lg amber-text"></i>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Friday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">26&deg;<span class="text-muted">/19&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-sun fa-lg amber-text"></i>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Saturday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">20&deg;<span class="text-muted">/16&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-cloud fa-lg text-info"></i>
+		              </td>
+		            </tr>
+		            <tr>
+		              <td class="font-weight-normal align-middle">Sunday</td>
+		              <td class="float-right font-weight-normal">
+		                <p class="mb-1">22&deg;<span class="text-muted">/13&deg;</span></p>
+		              </td>
+		              <td class="float-right mr-3">
+		                <i class="fas fa-cloud-sun fa-lg text-info"></i>
+		              </td>
+		            </tr>
+		          </tbody>
+		        </table>
+		
+		      </div>
+		
+		      <hr class="">
+		
+		        <a class="btn btn-flat red-text p-1 my-1 mr-0 mml-1 deep-purple-text collapsed" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
+		
+		    </div>
+		
+		  </div>
+		
+		</div>
+		</div>
+		
+<!-- Card -->
   </div>
   
   

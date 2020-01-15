@@ -21,17 +21,19 @@ public class ProjectService {
 
     //프로젝트메인
     public List<Project> projectList(){
-        return null;
+    	List<Project>list = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	list = projectdao.getPjt();    	
+        return list;
     }
 
 
     //프로젝트추가
     public int addProject(Project project){
     	int result = 0;
-    	ProjectDao dao = sqlSession.getMapper(ProjectDao.class);
-    	result = dao.mkPjt(project);
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	result = projectdao.mkPjt(project);
     	return result;
-    	
     }
 
 
