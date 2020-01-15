@@ -19,13 +19,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dobee.dao.NoticeDao;
-import com.dobee.dao.ProjectDao;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
-import org.springframework.web.servlet.ModelAndView;
 import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
@@ -708,6 +710,17 @@ public class DoController {
    		
     	return "admin/AdminMain";
     }
+   	
+   	
+    //영수증 등록_현재 사용자 이메일 불러오기
+   	@RequestMapping("nowEmpEmail.do") 
+   	@ResponseBody 
+   	public String currentEmpEmail(Principal principal) { 
+   		
+   		return principal.getName(); 
+   		
+   		}
+
     
     
 }
