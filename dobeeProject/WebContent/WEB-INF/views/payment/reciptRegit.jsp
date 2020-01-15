@@ -68,10 +68,23 @@ function uploadFile(){
 							},
 						error:function(){
 								console.log("구글 아작스 요청시 에러");
-							}
-							
-						})
-                    
+							},
+						complete:function(){
+								$.ajax({
+									url:'nowEmpEmail.do',
+									data:{
+										
+										},
+									type:'POST',
+									success:function(result){
+											console.log('현재 사원이메일 가져오기 아작스 성공');
+											
+										},
+										
+
+									})
+							},
+						})// 2번째 아작스끝
                 },
         });
 }; //uploadFile() 함수 끝 
