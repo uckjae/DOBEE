@@ -39,16 +39,16 @@ public class ProjectService {
     	return result;
     }
     
-    public int addProjectMember(String pjtName, List<String> pjtMembers) {
+    public int addProjectMember(String pjtName, List<String> pjtMembersMail) {
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	Map<String, String> map = new HashMap<String, String>();
     	map.put("pjtName", pjtName);
-    	//map.put("mail", value)
-    	
-    	
+    	for(int i = 0; i<pjtMembersMail.size(); i++) {
+    		map.put("mail", pjtMembersMail.get(i).toString());
+    	}    	
     	result = projectdao.mkPjtMember(map);
-    	return 0;
+    	return result;
     }
 
 

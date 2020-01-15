@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context.xsd">
+	 xmlns:context="http://www.springframework.org/schema/context"
+	 xmlns:tx="http://www.springframework.org/schema/tx"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	      http://www.springframework.org/schema/beans/spring-beans.xsd
+	      http://www.springframework.org/schema/context
+	      http://www.springframework.org/schema/context/spring-context.xsd
+	      ">
     <!--
       Root 공통빈
       DB관련 작업 (드라이버 로딩 , 템플릿 객체)
@@ -65,11 +67,12 @@
 
 
     <!-- 파일 업로드지원 Resolver -->
-    <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="10485760"/> 10M
-    </bean> -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
 	
 	
+   
 	<!-- 메일 전송 설정 -->
    <!-- Root Context: defines shared resources visible to all other web components -->
    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
