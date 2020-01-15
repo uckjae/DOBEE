@@ -9,6 +9,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <c:import url="/common/tag.jsp"/>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
 <head>
 <style type="text/css">
 @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -165,79 +167,6 @@ body
 }
     </style>
 </head>
-    <script type="text/javascript">
-      $(function(){
-		$.ajax({
-			url:"ajax/project/projectList.do",
-			success: function(data){
-				console.log(data)
-				dataType: "JSON",
-				success: function(data){
-					$.each(data, function(i, elt) {
-						if(elt.authCode !=1){
-							var option = $("<option>");
-							$(option).val(elt.authCode);
-							if(elt.authCode == 2){
-								$(option).text("사람1");
-							}
-							else{
-								$(option).text("사람2");
-							}
-							$('#pjtCode').append(option);
-						}
-					})
-				}
-			})
-          
-         /* 프로젝트 멤버추가 */
-         $('#memberList').change(function(){
-            var memberList = $('#pjtMember').val();
-            var selectedMember = $('#memberList').val();
-
-            if(memberList.indexOf(selectedMember) == -1){
-               console.log(memberList.indexOf(selectedMember))
-               if(memberList==null || memberList==""){
-                  
-                  memberList += selectedMember;
-               }
-               else{
-                  memberList += ","+selectedMember;
-               }
-            }
-            $('#pjtMember').val(memberList);
-            $('#memberList').val(null);
-         });
-
-
-         /* 취소 클릭시 form value 제거 */
-         $('#deletebtn').click(function(){
-            console.log("deletebtn click!!");
-            $('#addProjetForm').find("input").each(function(){
-               if(this.id != "modalBtn"){
-                  $(this).val(null);
-               }
-            });
-         });
-
-         var usedNames = {}; 
-         $("select[name='memberList'] > option").each(function() { 
-             if(usedNames[this.text]) { 
-              $(this).remove(); 
-             } else { 
-              usedNames[this.text] = this.value; 
-             } 
-         }); 
-
-         $(document).on('hidden.bs.modal', function (event) {
-            if ($('.modal:visible').length) {
-               $('body').addClass('modal-open');
-            }
-         });	
-
-         
-               
-      });
-    </script>
 <body>
 
    <!-- Side Navbar -->
@@ -249,9 +178,9 @@ body
        <!-- 상단 Navbar -->
        <c:import url="/common/top.jsp"/>
        
-       	<select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
+       	<%-- <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
 		 <option hidden>멤버</option>
-		</select>
+		</select> --%>
        <br><br>
            <!-- 프로젝트 -->
            <div class="col-xs-12">
@@ -299,52 +228,37 @@ body
 						    <div class="modal-content">
 						
 						      <!--Header-->
-						      <div class="modal-header light-blue darken-3 white-text">
-						        <h4 class="title"><i class="fas fa-pencil-alt"></i> 새 프로젝트</h4>
+						      <div class="modal-header light-blue darken-3 white-text" style="text-align: center">
+						        <h4 class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
 						        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
 						      </div>
-						      
 						      <!--Body-->
 						      <div class="modal-body mb-0">
-						      <form id="makeChatRoom" name="makeChatRoom" method="post">
-						      	<div class="row">
+						      <form name="pjtForm" method="post">
+						      		<label for="pjtName" class="col-form-label"><i class="fas fa-pencil-alt"></i><span>&nbsp;프로젝트 이름</span></label>
+							        <input type="text" class="form-control" id="pjtName" name="pjtName">
+							        <br>
+							    <div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;프로젝트 이름</span></label>
+						      			<label for="pjtStartAt" class="col-form-label"><i class="fas fa-calendar"></i><span>&nbsp;시작일</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							   <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;설명 (선택사항)</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
+							          <input type="date" class="form-control" id="pjtStartAt" name="pjtStartAt">
 							       </div>
 							   </div>
 							    <div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;시작일</span></label>
+						      			<label for="pjtEndAt" class="col-form-label"><i class="fas fa-calendar"></i><span>&nbsp;마감일</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-							          <input type="date" class="form-control" id="newChatRoomName" name="newChatRoomName">
+							          <input type="date" class="form-control" id="pjtEndAt" name="pjtEndAt">
 							       </div>
 							   </div>
-							    <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fas fa-comment-dots"></i><span>&nbsp;마감일</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="date" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							   
 						        <div class="row">
 						      		<div class="col-sm-3">
-						      			<label for="userList" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 초대</span></label>
+						      			<label for="userList" class="col-form-label"><i class="fas fa-user"></i><span>&nbsp;멤버 추가</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
 		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
@@ -352,18 +266,17 @@ body
 		                                    </select>
 						      		</div>
 							   </div>
-							   <div>
 							   <br>
 							   <div class="row">
 								   <div class="col-sm-3">
 							       </div>
-							       <div class="col-sm-9" id="chatUserList" style="display:none">
+							       <div class="col-sm-9" id="pjtUserList" style="display:none">
 								   </div>
 								</div>
-							   </div>
+							   <div>
 							   <br>
 							      <div class="text-center mt-1-half">
-							        <button type="button" id="makeChatRoomBtn" class="btn btn-info mb-2 waves-effect waves-light" >만들기<i class="fas fa-send ml-1"></i></button>
+							        <button type="button" id="makePjtBtn" class="btn btn-info mb-2 waves-effect" ><i class="fas fa-send"></i>&nbsp;프로젝트 만들기</button>
 							      </div>
 						        </form>
 						      </div>
@@ -381,12 +294,107 @@ body
     <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
     <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="./vendor/chart.js/Chart.min.js"></script>
     <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="./js/charts-home.js"></script>
     <!-- Main File-->
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
+    <script>
+    $(function() {
+        var count = 0;
+    	$.ajax({
+      		url:"getUserList.do",
+      		dataType:"json",
+      		type:"post",
+      		success:function(data){
+      			$.each(data, function(index, element){
+    				let option = $("<option></option>");
+    				$(option).text(element.name+"("+element.mail+")");
+    				$(option).val(element.name+":"+element.mail);
+    				$("#userSelect").append(option);
+    			})
+      		}
+      	});
+
+    	$("#userSelect").change(function(){
+    		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
+    		var userName = userInfo[0]			
+    		var userMail = userInfo[1];
+    		$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+    						+userName+"</span><input type='hidden' name='mail' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
+    	
+    		$("#pjtUserList").css("display","block");
+    	
+    		});
+
+
+    	$("#makePjtBtn").on('click', function(e){
+    		if($("#pjtName").val() == "" || $("#pjtName").val() == null){
+    			swal({
+    				title: "프로젝트명",
+    				text: "프로젝트명을 입력하세요",
+    				icon: "warning" //"info,success,warning,error" 중 택1
+    					}).then((YES) => {
+    						if (YES) {
+    							$("#pjtName").focus();
+    							}
+    						})
+    						$("#pjtName").focus();
+    			}else{
+        			console.log('else 타니???');
+        			var queryString = $("form[name=pjtForm]").serialize() ;
+        			console.log('폼??'+queryString);
+        			/* var pjtName = $("#pjtName").val();
+        			var pjtStartAt = $("#pjtStartAt").val();
+        			var pjtEndAt = $("#pjtEndAt").val();
+        			var pjtUserList = new Array();
+    				$("input[name=userMail]").each(function(index, item){
+    					pjtUserList.push($(item).val());
+    					});
+    				var newPjt = {
+    	    				"pjtName" : pjtName,
+    	    				"pjtStartAt" : pjtStartAt,
+    	    				"pjtEndAt" : pjtEndAt,
+    	 	    			"pjtUserList" : pjtUserList
+    	 	    			}; */
+    	 			$.ajax({
+        	 			
+    	 	 			url:"ajax/project/pjtAdd.do",
+    	 				data: queryString  ,
+    	 				dataType: "text",
+    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+    	 				type:"post",
+    	 				success:function(responsedata){
+        	 				console.log('ajax 통신 성공?');
+    	 					/* console.log(responsedata);
+    	 					if(responsedata == "success"){ //채팅방 생성 완료
+    	 	 					console.log('채팅방 만듦')
+    	 	 					swal({
+    	 						   title: "채널 생성 완료",
+    	 						   text: "채널이 만들어졌습니다.",
+    	 						   icon: "success" //"info,success,warning,error" 중 택1
+    	 						}).then((YES) => {
+    	 							if (YES) {
+    	 								location.reload(true); 
+    	 							     }
+    	 							})
+    	 					
+    	 	 					} */
+    	 				},
+    	 				error:function(){
+    	 					
+    	 				}
+    	 			});
+
+    	 			
+    	 			}
+    			});
+
+        });
+
+    
+
+    </script>
 </body>
 </html>
