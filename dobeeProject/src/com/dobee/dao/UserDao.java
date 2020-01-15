@@ -116,8 +116,8 @@ public interface UserDao {
     public List<BreakManageList> breakListMgr();
     
     
-    // 매니저_부재관리 - isAuth update (POST)		0114 게다죽
-    public String absReqHandle();
+    // 매니저_부재관리 - isAuth update (POST)		0115
+    public int absReqHandle(Apply apply);
     
     
     // Ajax 매니저_부재관리 - Option - 부재항목 loading		0114

@@ -57,7 +57,7 @@ public class ApplyService {
     }
 
     
-    // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
+    // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0115		근데 이거 팀별로 조회하는거니까 조회 가능해야지?
     public List<BreakManageList> breakListMgr() {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	List<BreakManageList> results = userDao.breakListMgr();
@@ -66,20 +66,15 @@ public class ApplyService {
     }
     
     
-    // 매니저_부재관리 - isAuth update (POST)		0114 게다죽
-    public String absReqHandle() {
+    // 매니저_부재관리 - isAuth update (POST)		0115
+    public void absReqHandle(Apply apply) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	System.out.println("result 서비스1 : ");
-    	String result = userDao.absReqHandle();
-    	System.out.println("result 서비스 : " + result);
-    	return result;
+    	System.out.println("result 서비스1 일번 : "+apply.toString());
+    	int results = userDao.absReqHandle(apply);
+    	
+    	System.out.println("result 서비스 이번 : "+ results);
     }
     
-
-    //부재관리_승인
-    public void absSignApprov(){
-
-    }
 
 
     //연장근무관리_PM
