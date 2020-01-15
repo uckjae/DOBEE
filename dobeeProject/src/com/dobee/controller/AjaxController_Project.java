@@ -25,12 +25,31 @@ public class AjaxController_Project {
 	ProjectService projectService;
 	
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(Project project, ProjectMember member){
+    public String addProject(Project project, List<ProjectMember> projectMember){
 		System.out.println("이거 타니??");
+		System.out.println("리스트로 가져와??"+projectMember.toString());
+		System.out.println("리스트로사이즈??"+projectMember.size());
+		int result = 0;
+		int result2 = 0;
+		/*
+		//프로젝트 생성시 진행 상태를 미완료로 하기
+		project.setPjtProgress("미완료"); 
+		//프로젝트 만들기
+		result = projectService.addProject(project);
 		
-		System.out.println("프로제긑"+project);
+		String pjtName = project.getPjtName();
+		List<String> pjtMembers = null;
+		for(int i = 0; i<member.)
+		
+		if(result > 0) {
+			
+			result2 = projectService.addProjectMember(pjtName, pjtMembers);
+		}
+		
 		System.out.println("메메메멤ㅁ"+member);
 		//projectService.addProject(project);
+		 * 
+		 */
     	return null;
     	
     }

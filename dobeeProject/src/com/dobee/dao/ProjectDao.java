@@ -1,6 +1,7 @@
 package com.dobee.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
@@ -18,7 +19,7 @@ public interface ProjectDao {
     
     
     //프로젝트 생성시 참여 멤버 추가 --01.15.알파카
-    public int mkPjtMember(List<ProjectMember> pjtMemeber);
+    public int mkPjtMember(Map<String,String> map);
 
 
     //프로젝트 목록
