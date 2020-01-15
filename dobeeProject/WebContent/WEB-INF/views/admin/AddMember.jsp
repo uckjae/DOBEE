@@ -49,8 +49,8 @@
 			/* 날짜 기본설정 */
 			getDate();
 
-			$('#regDate').change(function(){
-				console.log($('#regDate').val());
+			$('#regitDate').change(function(){
+				console.log($('#regitDate').val());
 			});
 			
 		});
@@ -88,7 +88,7 @@
 		function getDate(){
 		    var today = new Date();
 
-			document.getElementById("regDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+			document.getElementById("regitDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
 
 
 		}
@@ -151,8 +151,8 @@
                                                 <div class="form-row">
                                                     <div class="col-md-6">
                                                         <div class="form-label-group">
-                                                            <input type="date" id="regDate" name="regDate" class="form-control" required="required" autofocus="autofocus">
-                                                            <label for="regDate">고용일</label>
+                                                            <input type="date" id="regitDate" name="regitDate" class="form-control" required="required" autofocus="autofocus">
+                                                            <label for="regitDate">고용일</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">

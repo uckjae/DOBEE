@@ -1,7 +1,7 @@
 -- 사원
 CREATE TABLE `USER` (
 	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
-	`PASSWORD` VARCHAR(100) COMMENT '비밀번호', -- 비밀번호
+	`PASSWORD` VARCHAR(100) NULL     COMMENT '비밀번호', -- 비밀번호
 	`NAME`     VARCHAR(20)  NOT NULL COMMENT '사원이름', -- 사원이름
 	`MYPIC`    MEDIUMBLOB   NULL     COMMENT '사원사진', -- 사원사진
 	`AUTHCODE` INT          NOT NULL COMMENT '권한코드', -- 권한코드
@@ -99,7 +99,7 @@ ALTER TABLE `TASKDETAIL`
 
 -- 신용카드
 CREATE TABLE `DEBIT` (
-	`CARDNUM`  VARCHAR(60) NOT NULL COMMENT '카드번호', -- 카드번호
+	`CARDNUM`  INT         NOT NULL COMMENT '카드번호', -- 카드번호
 	`CORP`     VARCHAR(60) NOT NULL COMMENT '카드사', -- 카드사
 	`NAME`     VARCHAR(60) NOT NULL COMMENT '명의자이름', -- 명의자이름
 	`NICKNAME` VARCHAR(60) NOT NULL COMMENT '카드별칭', -- 카드별칭
@@ -434,12 +434,12 @@ ALTER TABLE `BREAKLIST`
 
 -- 사원정보
 CREATE TABLE `USERINFO` (
-	`MAIL`     VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
-	`REGDATE`  DATE        NOT NULL COMMENT '입사일', -- 입사일
-	`SERVE`    VARCHAR(60) NOT NULL COMMENT '재직상태', -- 재직상태
-	`EMP`      VARCHAR(60) NOT NULL COMMENT '고용형태', -- 고용형태
-	`POSITION` VARCHAR(60) NOT NULL COMMENT '직책', -- 직책
-	`PHONE`    VARCHAR(30) NULL     COMMENT '휴대폰번호' -- 휴대폰번호
+	`MAIL`      VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
+	`REGITDATE` DATE        NOT NULL COMMENT '입사일', -- 입사일
+	`SERVE`     VARCHAR(60) NOT NULL COMMENT '재직상태', -- 재직상태
+	`EMP`       VARCHAR(60) NOT NULL COMMENT '고용형태', -- 고용형태
+	`POSITION`  VARCHAR(60) NOT NULL COMMENT '직책', -- 직책
+	`PHONE`     VARCHAR(30) NULL     COMMENT '휴대폰번호' -- 휴대폰번호
 )
 COMMENT '사원정보';
 
@@ -729,7 +729,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_USER_TO_DRAFTER` -- 사원 -> 신청
+	ADD CONSTRAINT `FK_USER_TO_APPLY` -- 사원 -> 신청
 		FOREIGN KEY (
 			`DRAFTER` -- 신청자
 		)
@@ -739,7 +739,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_USER_TO_APPROVAL` -- 사원 -> 신청2
+	ADD CONSTRAINT `FK_USER_TO_APPLY2` -- 사원 -> 신청2
 		FOREIGN KEY (
 			`APPROVAL` -- 결재자
 		)

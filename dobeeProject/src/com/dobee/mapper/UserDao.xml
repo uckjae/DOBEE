@@ -18,7 +18,7 @@
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.UserInfo">
-		SELECT MAIL, REGDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
+		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
 	
@@ -202,6 +202,6 @@
 	
 	<!-- 사원정보등록 -->
 	<insert id="addUserInfo">
-		INSERT INTO USERINFO (MAIL, REGDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},#{regDate},#{serve},#{emp},#{position},#{phone})
+		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},#{regitDate},#{serve},#{emp},#{position},#{phone})
 	</insert>
 </mapper>
