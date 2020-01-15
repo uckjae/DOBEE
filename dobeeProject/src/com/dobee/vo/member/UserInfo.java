@@ -18,7 +18,9 @@ public class UserInfo {
     private String position;
     private String phone;
     
-	
+	public Date getregitDate() {
+		return this.regitDate;
+	}
     
 	/*
 	 * public void setRegDate(String regDate) { System.out.println("setter탄다!!!");
