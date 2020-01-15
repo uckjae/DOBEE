@@ -171,7 +171,7 @@ public class DoController {
     		//등록 실패하면 아무일도 안일어남
     	}
     	//등록 성공하면 카드 목록 뷰단으로 이동
-    	return "admin/ListDebit";
+    	return "redirect:ListDebit.do";
     }
     
     
@@ -201,7 +201,7 @@ public class DoController {
     }
 
     
-  //공지사항리스트
+    //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
     	
@@ -314,7 +314,6 @@ public class DoController {
 		noticedao.noticeModify(n);		
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); //들어주는 주소 ...
     }
-
     
 
 
