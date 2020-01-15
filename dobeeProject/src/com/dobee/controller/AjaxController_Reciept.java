@@ -77,5 +77,7 @@ public class AjaxController_Reciept {
     	ArrayList listCodes = debitService.listCode();
     	return listCodes;
     }
+    
+    
 	
 }

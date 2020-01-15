@@ -2,6 +2,8 @@ package com.dobee.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,12 +11,14 @@ import lombok.ToString;
 @Data
 public class CostList {
     private int costSeq;
-    private Date regDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date regitDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date useDate;
     private String useAt;
     private int cost;
     private String detail;
-    private int code;
+    private int costCode;
     private int cardNum;
     private int mail;
 }

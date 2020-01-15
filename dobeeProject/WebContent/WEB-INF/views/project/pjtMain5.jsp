@@ -194,8 +194,10 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-								<li><a id="deleteBtn" href="#"><i class="fas fa-cog"></i></a></li>
-								<li><a href="#"><i class="fas fa-trash-alt"></i></a></li>
+ 					  		<li><a><button type="button" onclick="updatePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
+								<li><a><button type="button" onclick="deletePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
+								<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
 							</ul>
 							<div class="user-info">
 								<h2>${n.pjtName}</h2>
@@ -210,7 +212,7 @@ body
 						<img src="./img/plusgray.png" alt="">
 					</div>
 					<div class="user-info">
-						<a data-toggle="modal" href="#modalContactForm" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
+						<a data-toggle="modal" href="#pjtModal" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
 					    <span></span>
 					</div>
 				</div>
@@ -219,15 +221,13 @@ body
   </div>
    </div>
    <!-- 프로젝트 생성 modal -->
-   						<!-- modal -->
-						<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog cascading-modal" role="document">
 						    <!--Content-->
 						    <div class="modal-content">
-						
 						      <!--Header-->
 						      <div class="modal-header light-blue darken-3 white-text" style="text-align: center">
-						        <h4 class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
+						        <h4 id="pjtModalTitle" class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
 						        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
@@ -283,8 +283,10 @@ body
 						    <!--/.Content-->
 						  </div>
 						</div>						
-						<!-- end of modal -->   
-  
+						<!-- end of modal -->
+
+
+
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
@@ -299,19 +301,106 @@ body
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     <script>
-    $(function() {
-    	/* 프로젝트 삭제 */
-    	$("#deleteBtn").click(function() {
-    		console.log('이거 타니??');
-    		/* swal({
+   
+	var deletePjt = function (event) {
+        
+    	swal({
 			title: "프로젝트 삭제",
 			text: "프로젝트를 삭제하시겠습니까?",
 			icon: "warning" //"info,success,warning,error" 중 택1
-				}) */
+				}).then((YES) => {
+						var pjtSeq = $("#pjtSeq").val();
+						$.ajax({
+	    	 	 			url:"ajax/project/pjtDelete.do?pjtSeq="+pjtSeq,
+	    	 				dataType: "text",
+	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	    	 				type:"post",
+	    	 				success:function(responsedata){
+		    	 				console.log('ajax 통신 성공?');
+	    	 					console.log(responsedata);
+	    	 					if(responsedata == "success"){ //프로젝트 생성 완료
+	    	 	 					swal({
+	    	 						   title: "프로젝트 삭제 완료",
+	    	 						   text: "프로젝트가 삭제 되었습니다.",
+	    	 						   icon: "success" //"info,success,warning,error" 중 택1
+	    	 						}).then((YES) => {
+	    	 								location.reload(true); 
+	    	 							})
+	    	 					
+	    	 	 					}
+	    	 				},
+	    	 				error:function(){
+	    	 					
+	    	 				}
+	    	 			});
+					})
+        }
+
+	var updatePjt = function (event) {
+		var target = event;
+		console.log('이벤트????'+target);
+		//var pjtSeq = $(this).$("#pjtSeq").val();
+		///console.log('번호눈??'+pjtSeq);
 		
-        	});
+    	swal({
+			title: "프로젝트 수정",
+			text: "프로젝트를 수정하시겠습니까?",
+			icon: "warning" //"info,success,warning,error" 중 택1
+				}).then((YES) => {
+					console.log('yes 타니???')
+						
+						$.ajax({
+	    	 	 			url:"ajax/project/getPjt.do?pjtSeq="+pjtSeq,
+	    	 				dataType: "text",
+	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	    	 				type:"post",
+	    	 				success:function(project){
+		    	 					var pjtJsonData = JSON.parse(project);
+	    	 						
+	    	 						$("#pjtName").val(pjtJsonData.pjtName);
+	    	 						$("#pjtModalTitle").text('프로젝트 수정');
+	    	 						$("#pjtStartAt").val(pjtJsonData.pjtStartAt);
+	    	 						$("#pjtEndAt").val(pjtJsonData.pjtEndAt);
+
+	    	 						$.ajax({
+	    	 							url:"ajax/project/getPjtMember.do?pjtSeq="+pjtSeq,
+	    		    	 				dataType: "text",
+	    		    	 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	    		    	 				type:"post",
+	    		    	 				success : function(user){
+	    		    	 					console.log('ajax 통신 성공?');
+	    		    	 					console.log('유저유저'+user);
+		    		    	 				var userJsonData = JSON.parse(user);
+		    		    	 				console.log('제이슨???'+userJsonData);
+		    		    	 				//console.log('어케 나옴?'+userJsonData.mail);
+		    		    	 				/* $("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+		    		        						+userJsonData.name+"</span><input type='hidden' name='mail[]' value='"+userJsonData.mail+"'>&nbsp;&nbsp;</i></div>");
+		    		        	
+		    		        				$("#pjtUserList").css("display","block");
+		    		        				$('#pjtModal').modal('show'); */
+		    		        				
+		    		    	 				},
+		    		    	 			error : function() {
+			    		    	 			
+			    		    	 			}
+
+		    	 						});
+
+	    	 				},
+	    	 				error:function(){
+	    	 					
+	    	 				}
+	    	 			});
+					});
+	}
+
+
+    
+    
+    $(function() {
 
         
+
     	$.ajax({
       		url:"getUserList.do",
       		dataType:"json",
@@ -349,11 +438,9 @@ body
     							$("#pjtName").focus();
     							}
     						})
-    						$("#pjtName").focus();
     			}else{
         			var pjtForm = $("form[name=pjtForm]").serialize() ;
     	 			$.ajax({
-        	 			
     	 	 			url:"ajax/project/pjtAdd.do",
     	 				data: pjtForm ,
     	 				dataType: "text",

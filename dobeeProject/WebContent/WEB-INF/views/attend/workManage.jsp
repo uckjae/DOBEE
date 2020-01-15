@@ -13,6 +13,14 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	
+	<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
 </head>
 
 <body>

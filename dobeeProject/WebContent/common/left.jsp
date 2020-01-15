@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+
+body {
+   font-family: 'Noto Serif KR', serif;
+}
+
+</style>
+
+<body>
+
 <div class="side-navbar-wrapper">
 		<!-- Sidebar Header    -->
 		<div class="sidenav-header d-flex align-items-center justify-content-center">
@@ -22,30 +36,32 @@
 			<ul id="side-main-menu" class="side-menu list-unstyled">
 				<li><a href="#"> <i class="fas fa-home fa-2x" style="color:#888888;">&nbsp;메인</i>
 				</a></li>
-				<li><a href="noticeList.do"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;공지사항</i>
+				<li><a href="noticeList.do"><i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;공지사항</i>
 				</a></li>				
 				<li><a href="#exampledropdownDropdown" aria-expanded="false"
-					data-toggle="collapse"> <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;근무</i></a>
+					data-toggle="collapse" > <i class="fas fa-briefcase fa-2x" style="color:#888888;">&nbsp;근무</i></a>
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-						<li><a href="breakApply.do">부재 일정 신청</a></li>
-						<li><a href="extendApply.do">연장 근무 신청</a></li>
-						<li><a href="breakManage.do">부재 일정 관리</a></li>
-						<li><a href="workManage.do">근무 내역 확인</a></li>
-						<li><a href="absManage.do">관리자 승인 페이지</a></li>
+						<li><a href="breakApply.do" style="font-family: 'Noto Serif KR', serif;">부재 일정 신청</a></li>
+						<li><a href="extendApply.do" style="font-family: 'Noto Serif KR', serif;">연장 근무 신청</a></li>
+						<li><a href="breakManage.do" style="font-family: 'Noto Serif KR', serif;">부재 일정 관리</a></li>
+						<li><a href="workManage.do" style="font-family: 'Noto Serif KR', serif;">근무 내역 확인</a></li>
+						<li><a href="absManage.do" style="font-family: 'Noto Serif KR', serif;">관리자 승인 페이지</a></li>
 					</ul>
 				</li>
 				
 				<li><a href="#exampledropdownDropdown2" aria-expanded="false"
 					data-toggle="collapse"> <i class="fas fa-receipt fa-2x" style="color:#888888;">&nbsp;비용</i></a>
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
-						<li><a href="reciptRegit.do">정산 신청</a></li>
-						<li><a href="reciptRegit.do">카드 관리</a></li>
-						<li><a href="reciptRegit.do">비용 현황</a></li>
+						<li><a href="reciptRegit.do" style="font-family: 'Noto Serif KR', serif;">정산 신청</a></li>
+						<li><a href="reciptRegit.do" style="font-family: 'Noto Serif KR', serif;">카드 관리</a></li>
+						<li><a href="viewDebitList.do" style="font-family: 'Noto Serif KR', serif;">비용 현황</a></li>
 					</ul>
 				</li>
 										
-				<li><a href="pjtMain.do"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
-				<li><a href="chat.do"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
+				<li><a href="pjtMain.do" style="font-family: 'Noto Serif KR', serif;"> <i class="fas fa-tasks fa-2x" style="color:#888888;">&nbsp;프로젝트</i></a></li>
+				<li><a href="chat.do" style="font-family: 'Noto Serif KR', serif;"> <i class="fas fa-comments fa-2x" style="color:#888888;">&nbsp;채팅</i></a></li>
 			</ul>
 		</div>
 	</div>
+	
+	</body>

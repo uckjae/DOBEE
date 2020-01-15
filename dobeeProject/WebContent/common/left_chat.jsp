@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+ <style>
+  @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body {
+   font-family: 'Noto Serif KR', serif;
+}
+
+</style>
+
+<body>
 
 <nav class="side-navbar">
 	<div class="side-navbar-wrapper">
@@ -49,3 +59,5 @@
 
 	</div>
 </nav>
+
+</body>
