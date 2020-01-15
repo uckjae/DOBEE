@@ -142,15 +142,15 @@
 	</select>
 	
 	
-	<!-- 부재내역 불러오기 -->
-	<select id="absMg" resultType="com.dobee.vo.member.BreakManageList">
+	<!-- 부재내역 불러오기 - COMPLETE -->
+	<select id="absMg" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM'
+		    WHERE A.APYCODE != 6 AND A.DRAFTER = #{drafter}
 	</select>
 	
 	

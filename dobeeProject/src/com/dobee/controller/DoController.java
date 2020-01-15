@@ -13,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -343,9 +347,9 @@ public class DoController {
     }
     
     
-    // 개인_부재일정관리 GET			0112 게다죽
+    // 개인_연장근무관리 GET			0112 게다죽
     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
- 	public String extendApplyPost(Apply apply, HttpServletRequest req) {
+ 	public String extendApplyPost(Apply apply) {
 	 String result = applyService.overtimeApply(apply);
 	// System.out.println("봐봐 이," + result);
 
@@ -353,11 +357,11 @@ public class DoController {
 }
 
 
-    // 개인_부재일정관리 GET			0112 게다죽
+    // 개인_부재일정관리 GET			0112 게다죽		COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
-    public String absMg(Model model){
-   	List<BreakManageList> results = applyService.absMg();
-    	// System.out.println("results: " + results );
+    public String absMg(Model model, Apply apply, Authentication auth){
+    	apply.setDrafter(auth.getName());			// 꿀잼
+    	List<BreakManageList> results = applyService.absMg(apply);
     	model.addAttribute("brkList", results);
     	
     	return "attend/breakManage";
@@ -407,18 +411,6 @@ public class DoController {
     	applyService.extReqHandle(apply);
         
     	return "attend/extendManagement_Mgr";
-    }
-
-    
-    // 매니저_연장근무관리 승인  
-    public String overtimeSingApprov(){
-        return null;
-    }
-
-
-    // 매니저_연장근무관리 거절
-    public String overtimeSignReject(){
-        return null;
     }
 
 

@@ -24,7 +24,26 @@
 		#calendar {
 		  max-width: 900px;
 		  margin: 0 auto;
-		}	  	
+		}	
+		
+		.btn-info.btn-sm.반려 {
+			border-color:lightgray;
+			background-color:red;
+		}
+		
+		.btn-info.btn-sm.미승인 {
+			border-color:lightgray;
+			background-color:gray;
+		}
+		
+		.btn-info.btn-sm.승인 {
+			border-color:lightgray;
+			background-color:green;
+		}
+		
+		.btn-info.btn-sm {
+			background-color: #e0da28;
+		}  	
     </style>
     
     <link rel="stylesheet" href="./css/jgcss.css">
@@ -112,13 +131,7 @@
 			</tr>
 		</table>
 		
-		<!-- </form> -->
-		${sessionScope }<br>
-		${sessionScope.user.mail }<br>
-		${sessionScope.user.teamCode }<br>
-		${sessionScope.user.authCode }<br>
-		${sessionScope.user.name }
-
+		<!-- Table Section -->
 		<section>
 			<div class="col-md-12">
 			
@@ -141,38 +154,9 @@
 								<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
 								<td class="tused">		${bl.usingBreak }</td>
 								<td class="tregdate">	${bl.reqDate }</td>
-								<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal${bl.aplSeq}">${bl.isAuth }</button></td>
+								<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
+															data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button></td>
 							</tr>
-
-							<!-- Modal -->
-							<div class="modal fade" id="myModal${bl.aplSeq}" role="dialog">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title">상세 사유</h4>
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-										</div>
-										<div class="modal-body">
-											<h3>부재 신청 사유</h3>
-											<h4>사유</h4>
-											<h5>${bl.reason }</h5>
-										</div>
-
-										<c:if test="${not empty bl.rejReason }">
-											<div id="divRejReason">
-												<h3>부재 신청 반려 사유 </h3>
-												<h5>${bl.rejReason }</h5>
-											</div>
-										</c:if>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">OK</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
 						</c:forEach>
 					</tbody>
 
@@ -183,6 +167,48 @@
 
 			</div>
 		</section>
+		
+		
+		<!-- Modal Section -->
+		<section>
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">상세 사유</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<input type="hidden" id="modalAplSeq" name="aplSeq">
+							<h3>부재 신청 사유</h3>
+							<h4>사유</h4>
+							<input type="text" id="modalReason" name="reason" readonly="readonly">
+
+							<div id="divRejReason" style="margin-top : 30px;">
+								<h3>부재 신청 반려 사유 </h3>
+								<input type="text" id="modalRejReason" name="rejReason" readonly="readonly">
+							</div>
+						</div>
+<%-- 
+						<c:if test="${not empty bl.rejReason }">
+							<div id="divRejReason">
+								<h3>부재 신청 반려 사유 </h3>
+								<h5>${bl.rejReason }</h5>
+							</div>
+						</c:if>
+ --%>
+ 
+
+							
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">OK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
 	</div>
 	
 	<c:import url="/common/bottom.jsp"/>   
@@ -220,9 +246,25 @@
   	<script>
 		window.onload = function(){
 
+			let aplSeq = "";
+			let reason = "";
+			let rejReason = "";
+
+			$('.btn-sm').click('show.bs.modal', function(e) {
+					
+				aplSeq = $(this).data('aplseq');
+				reason = $(this).data('reason');
+				rejReason = $(this).data('rejReason');			
+
+				$('#modalAplSeq').val(aplSeq);
+				$('#modalReason').val(reason);
+				$('#modalRejReason').val(rejReason);
+
+			});
+			
 			// 연차 정보 가져오기
 			$.ajax ({
-				url : "getVacationInBM.do",
+				url : "getVacationInBM.do?",
 				dataType : "json",
 				success : function (data) {
 					$('#usedVacation').text(data.totalVacation[0].totalBreak)
@@ -232,7 +274,7 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
-
+ㅠ
 			// 년도 Option Ajax Loading
 			$.ajax({
 				url : "breakYearList.do",

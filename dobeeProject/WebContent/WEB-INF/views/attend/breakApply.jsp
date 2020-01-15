@@ -48,45 +48,6 @@
 	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
-	
-	<script>
-		window.onload = function(){
-
-			$.ajax({
-				url : "getApyCode.do",
-				dataType : "json",
-				success : function(data) {
-					var aArray = [];
-					aArray = data.apyCode;
-					console.log("a 확인", aArray)
-					for (var i=0; i<aArray.length-1; i++) {
-						var option = document.createElement("option")
-						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
-					}					
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-			
-			$.ajax({
-				url : "getApprovalList.do",
-				dataType : "json",
-				success : function(data) {			
-					var dArray = [];
-					dArray = data.renewedList;
-					for (var i =0; i<dArray.length; i++) {
-						var option = document.createElement("option")
-						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
-					}
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-
-		}
-  	</script>
   	
 <body>
 
@@ -193,13 +154,50 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	
-
 	<!-- datetime picker -->
 	<script src="./js/bootstrap-datetimepicker.min.js"></script>
 
+
+	<script>
+		window.onload = function(){
+
+			$.ajax({
+				url : "getApyCode.do",
+				dataType : "json",
+				success : function(data) {
+					var aArray = [];
+					aArray = data.apyCode;
+					for (var i=0; i<aArray.length-1; i++) {
+						var option = document.createElement("option")
+						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
+					}					
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {			
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
+					}
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+
+		}
+  	</script>
+	
 	<script>
 	$(function() {
-		
 		
 		$('input[name="datetimes"]').daterangepicker({
 		    timePicker: true,

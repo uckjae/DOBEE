@@ -47,34 +47,34 @@ public interface UserDao {
     public void myPage();
 
 
-    // Ajax 연차 불러오기
+    // Ajax 개인_연차 불러오기
     /* 01.12 게다죽 */
     public List<Break> getVacationInBM();
     
     
-    //부재일정신청
+    // 개인_부재일정신청
     /* 01.12 게다죽 */
     public int absApply(Apply apply);
     
     
-    //부재 항목 불러오기
+    // 부재 항목 불러오기
     /* 01.10 게다죽 */
     public List<ApplyCode> getApyCode();
       
 
-    //부재 결재자 불러오기
+    // 부재 결재자 불러오기
     /* 01.10 게다죽 */
     public ArrayList<User> getApprovalList();
 
     
-    //연장근무신청
+    // 개인_연장근무신청
     /* 01.12 게다죽 */
     public int overTimeApply(Apply apply);
 
 
-    //개인부재일정확인 - table 리스트 불러오기
+    // 개인_부재일정확인 - table 데이터 불러오기
     /* 01.12 게다죽 */
-    public List<BreakManageList> absMg();
+    public List<BreakManageList> absMg(Apply apply);
 
     
     // Ajax 개인부재일정확인 - Option - 년도 loading		0113
@@ -112,10 +112,6 @@ public interface UserDao {
     public List<Attend> workChart();
 
 
-    //부재관리(팀장)
-    public List<Apply> absSign();
-
-    
     // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
     public List<BreakManageList> breakListMgr();
     
@@ -132,20 +128,16 @@ public interface UserDao {
     public List<BreakManageList> extListMgr();
     
     
-    // 매니저_부재관리 - isAuth update (POST)		0115
+    // 매니저_연장근무관리 - isAuth update (POST)		0115
     public int extReqHandle(Apply apply);
     
     
-    //연장근무관리
-    public List<Apply> overTimeSign();
-
-    
-    // Ajax 연장근무 년도 불러오기
+    // Ajax 개인_연장근무 년도 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeYearList();
     
     
-    // Ajax 연장근무 월 불러오기
+    // Ajax 개인_연장근무 월 불러오기
     /* 01.10 게다죽 */
     public List<Integer> overTimeMonthList();
     

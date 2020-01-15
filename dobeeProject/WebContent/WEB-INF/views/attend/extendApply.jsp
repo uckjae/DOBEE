@@ -115,6 +115,7 @@
 									<select id="approval" name="approval">
 										<option hidden = "">결재자 선택</option>
 									</select>
+									<input type="hidden" name="drafter" value="${sessionScope.user.mail }"><br>
 								</td>
 							</tr>
 											
@@ -127,7 +128,7 @@
 									<textarea name="reason" id="reason" placeholder="1000 btye 이내 내용을 입력하십시오." style="width: 100%; height: 100%"></textarea>
 								</td>
 							</tr>
-							<input type="hidden" name="drafter" value="${sessionScope.user.mail }">						
+											
 						</table>
 						
 						<br>
@@ -192,7 +193,7 @@
 					dArray = data.renewedList;
 					for (var i =0; i<dArray.length; i++) {
 						var option = document.createElement("option")
-						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
+						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
 					}
 				},
 				error : function(error) {

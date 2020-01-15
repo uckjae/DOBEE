@@ -24,7 +24,26 @@
 		#calendar {
 		  max-width: 900px;
 		  margin: 0 auto;
-		}	  	
+		}
+		
+		.btn-info.btn-sm.반려 {
+			border-color:lightgray;
+			background-color:red;
+		}
+		
+		.btn-info.btn-sm.미승인 {
+			border-color:lightgray;
+			background-color:gray;
+		}
+		
+		.btn-info.btn-sm.승인 {
+			border-color:lightgray;
+			background-color:green;
+		}
+		
+		.btn-info.btn-sm {
+			background-color: #e0da28;
+		}
     </style>
     
     <link rel="stylesheet" href="./css/jgcss.css">
@@ -172,7 +191,7 @@
 									</select>
 									
 									<div id="divRejReason">
-										<h3>부재 신청 거절 사유 입력</h3>
+										<h3>부재 신청 반려 사유 입력</h3>
 										<input type="text" id="modalRejReason" name="rejReason" placeholder="반려 시 사유를 입력하세요.">
 									</div>
 								</div>
