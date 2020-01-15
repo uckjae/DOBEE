@@ -163,7 +163,7 @@ window.onload=function(){
 					type:'POST',
 					success:function(result){
 							for(let i = 0 ; i<result.length; i++){
-								$("#Select1").append("<option value='1'>" + result[i].cardNum +  "</option>");	
+								$("#Select1").append("<option>" + result[i].cardNum +  "</option>");	
 							}
 						},
 					error:function(){
@@ -177,7 +177,7 @@ window.onload=function(){
 										console.log("비용항목 아작스 성공")
 										console.log(result);
 										for(let i = 0 ; i<result.length; i++){
-											$("#Select2").append("<option value='1'>" + result[i].costCode +  "</option>");	
+											$("#Select2").append("<option>" + result[i].costCode +  "</option>");	
 										}
 									},
 								error:function(){
@@ -242,7 +242,6 @@ function showInput(){
 body{
    font-family: 'Noto Serif KR', serif;
 }
-	
 	</style>
 	
 </head>
@@ -289,7 +288,6 @@ body{
      			 <div id="uploadImg">
      			 	<img src="/Users/noimg.jpg" width="100%"> <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
      			 </div>
-     			    			
 				<!-- 파일 업로드  부분 -->
 				<form id="FILE_FORM" class="md-form" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 				  <div class="custom-file" style="width:85%; float:left;" >
@@ -298,7 +296,6 @@ body{
 				  </div>
 				  <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">업로드</a>
 		        </form> 
-		        
     		</div>
     		
     		
@@ -308,7 +305,7 @@ body{
       			 <!-- 좌측에 영수증사진에 대한 텍스트  --> 
       			 <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
       			 
-	      	<form id="costlistInfo">
+	      	<form id="costlistInfo" action="addFinalReceipt.do">
 	      		<div class="form-group">
 				    <label for="exampleFormControlInput1">신청자 이메일</label>
 				    <input type="text" class="form-control" id="Input1" name='mail' readonly="readonly">
@@ -320,7 +317,7 @@ body{
 	  			  </div>
 	  			  <div class="form-group">
 				    <label for="exampleFormControlSelect2">비용항목 선택</label>
-				    <select class="form-control"  name='costCode' id="Select2">
+				    <select class="form-control" name='costCode' id="Select2">
 				    </select>
 	  			  </div>
 				    <div class="form-group">
@@ -340,10 +337,10 @@ body{
 				    <input type="text" class="form-control" id="Input5" name='detail' placeholder="ex) 이마트에서 필요한 간식이랑 사무용품들 구매하였습니다.">
 				  </div>
 				  <button type="button" onclick="showInput()"> 자 콘솔창을 보자 </button>
-			  	 <button type='submit' class="btn btn-primary" onclick="location.href='addFinalReceipt.do'" style="width:auto; float:right;">수정완료 및 등록</button>
+			  	 <button type='submit' class="btn btn-primary" style="width:auto; float:right;">수정완료 및 등록</button>
 		 </form>
       			 
-      			 
+      			<!--  onclick="location.href='addFinalReceipt.do'"  -->
       			 
     		</div>
   		</div>
