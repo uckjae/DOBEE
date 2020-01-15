@@ -28,7 +28,7 @@ public interface ProjectDao {
     public Project getPjt(int pjtSeq);
     
     //특정 프로젝트멤버 가져오기
-    public User getPjtMember(int pjtSeq);
+    public List<String> getPjtMember(int pjtSeq);
 
     //프로젝트 삭제 -- 1.13 추가
     public int deletePjt(int pjtSeq); 
