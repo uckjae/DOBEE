@@ -112,7 +112,7 @@ public interface UserDao {
     public List<Apply> absSign();
 
     
-    //부재관리(팀장) - 데이터 테이블 출력 (GET)		0114
+    // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
     public List<BreakManageList> breakListMgr();
     
     
@@ -124,6 +124,14 @@ public interface UserDao {
     public List<ApplyCode> breakEntryListMgr();
     
 
+    // 매니저_연장근무관리 - 데이터 테이블 출력 (GET)		0115
+    public List<BreakManageList> extListMgr();
+    
+    
+    // 매니저_부재관리 - isAuth update (POST)		0115
+    public int extReqHandle(Apply apply);
+    
+    
     //연장근무관리
     public List<Apply> overTimeSign();
 

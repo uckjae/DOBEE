@@ -166,12 +166,14 @@
     
     <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 -->
     <select id="breakListMgr" resultType="com.dobee.vo.member.BreakManageList">
-    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON, A.DRAFTER, U.NAME
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
+				INNER JOIN USER U
+					ON A.DRAFTER = U.MAIL
 		    WHERE A.APYCODE != 6
 		    ORDER BY A.APLSEQ ASC
     </select>
@@ -179,6 +181,27 @@
     
     <!-- 매니저_부재관리 - isAuth update (POST)		0115 -->
     <update id="absReqHandle" parameterType="com.dobee.vo.Apply">
+    	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
+    </update>
+	
+	
+    <!-- 매니저_연장근무 관리 - 데이터 테이블 출력 (GET)		0115 -->
+    <select id="extListMgr" resultType="com.dobee.vo.member.BreakManageList">
+    	SELECT A.APLSEQ, U.NAME, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.DRAFTER, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+				INNER JOIN USER U
+					ON A.DRAFTER = U.MAIL
+			WHERE A.APYCODE = 6
+			ORDER BY A.APLSEQ ASC
+    </select>
+    
+    
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 ~ing -->
+    <update id="extReqHandle" parameterType="com.dobee.vo.Apply">
     	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
     </update>
 	
