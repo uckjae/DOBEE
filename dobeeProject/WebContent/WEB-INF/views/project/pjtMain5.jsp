@@ -20,7 +20,7 @@
 	
 	}
 	a {
-		color: #222222;
+		color: #888888;
 	}
 	
 	
@@ -194,9 +194,8 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a id="deleteBtn" href="#"><i class="fas fa-cog"></i></a></li>
+								<li><a href="#"><i class="fas fa-trash-alt"></i></a></li>
 							</ul>
 							<div class="user-info">
 								<h2>${n.pjtName}</h2>
@@ -219,7 +218,6 @@ body
   		</div>
   </div>
    </div>
-   
    <!-- 프로젝트 생성 modal -->
    						<!-- modal -->
 						<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -302,7 +300,18 @@ body
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     <script>
     $(function() {
-        var count = 0;
+    	/* 프로젝트 삭제 */
+    	$("#deleteBtn").click(function() {
+    		console.log('이거 타니??');
+    		/* swal({
+			title: "프로젝트 삭제",
+			text: "프로젝트를 삭제하시겠습니까?",
+			icon: "warning" //"info,success,warning,error" 중 택1
+				}) */
+		
+        	});
+
+        
     	$.ajax({
       		url:"getUserList.do",
       		dataType:"json",
@@ -328,7 +337,7 @@ body
     	
     		});
 
-
+		/* 프로젝트 생성 */
     	$("#makePjtBtn").on('click', function(e){
     		if($("#pjtName").val() == "" || $("#pjtName").val() == null){
     			swal({
@@ -342,26 +351,11 @@ body
     						})
     						$("#pjtName").focus();
     			}else{
-        			console.log('else 타니???');
-        			var queryString = $("form[name=pjtForm]").serialize() ;
-        			console.log('폼??'+queryString);
-        			/* var pjtName = $("#pjtName").val();
-        			var pjtStartAt = $("#pjtStartAt").val();
-        			var pjtEndAt = $("#pjtEndAt").val();
-        			var pjtUserList = new Array();
-    				$("input[name=userMail]").each(function(index, item){
-    					pjtUserList.push($(item).val());
-    					});
-    				var newPjt = {
-    	    				"pjtName" : pjtName,
-    	    				"pjtStartAt" : pjtStartAt,
-    	    				"pjtEndAt" : pjtEndAt,
-    	 	    			"pjtUserList" : pjtUserList
-    	 	    			}; */
+        			var pjtForm = $("form[name=pjtForm]").serialize() ;
     	 			$.ajax({
         	 			
     	 	 			url:"ajax/project/pjtAdd.do",
-    	 				data: queryString ,
+    	 				data: pjtForm ,
     	 				dataType: "text",
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
@@ -391,9 +385,9 @@ body
     	 			}
     			});
 
-        });
+	
 
-    
+    });
 
     </script>
 </body>
