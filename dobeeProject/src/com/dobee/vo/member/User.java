@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @ToString
+@Data @ToString
 public class User {
 
     private String mail;
@@ -18,6 +18,8 @@ public class User {
     private int authCode;
     private int teamCode;
     private MultipartFile multiFile;
+    private User() {}
+
 	public User(String mail, String password, String name, byte[] myPic, int authCode, int teamCode,
 			MultipartFile multiFile) {
 		

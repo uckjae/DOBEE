@@ -3,13 +3,16 @@ package com.dobee.services;
 import com.dobee.dao.ProjectDao;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
+import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProjectService {
@@ -33,6 +36,18 @@ public class ProjectService {
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	result = projectdao.mkPjt(project);
+    	return result;
+    }
+    
+    public int addProjectMember(String pjtName, List<String> pjtMembersMail) {
+    	int result = 0;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	Map<String, String> map = new HashMap<String, String>();
+    	map.put("pjtName", pjtName);
+    	for(int i = 0; i<pjtMembersMail.size(); i++) {
+    		map.put("mail", pjtMembersMail.get(i).toString());
+    	}    	
+    	result = projectdao.mkPjtMember(map);
     	return result;
     }
 

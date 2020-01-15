@@ -489,30 +489,13 @@ public class DoController {
     }
 
 
-  //프로젝트메인
+    //프로젝트메인
     @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
     	List<Project>list = projectService.projectList();
     	model.addAttribute("list",list);
     
         return "project/pjtMain5";
-    }
-
-
-    //프로젝트생성
-    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(Project project){
-    	
-    	int result = 0;
-    	String viewpage = "";
-    	result = projectService.addProject(project);
-    	
-    	if(result > 0) {
-    		viewpage = "redirect:/pjtMain.do";
-    	}else {
-    		viewpage = "project/pjtChart";
-    	}
-    	 return viewpage;
     }
 
 
@@ -712,14 +695,7 @@ public class DoController {
     }
    	
    	
-    //영수증 등록_현재 사용자 이메일 불러오기
-   	@RequestMapping("nowEmpEmail.do") 
-   	@ResponseBody 
-   	public String currentEmpEmail(Principal principal) { 
-   		
-   		return principal.getName(); 
-   		
-   		}
+  
 
     
     
