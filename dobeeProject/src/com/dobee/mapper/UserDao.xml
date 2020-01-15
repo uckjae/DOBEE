@@ -196,12 +196,12 @@
 	
 	
 	<!-- 사원등록 -->
-	<insert id="addUser">
+	<insert id="addUser" parameterType="com.dobee.vo.member.User">
 		INSERT INTO USER (MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE) VALUES (#{mail},#{name},#{myPic},#{authCode},#{teamCode})
 	</insert>
 	
 	<!-- 사원정보등록 -->
-	<insert id="addUserInfo">
-		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},#{regitDate},#{serve},#{emp},#{position},#{phone})
+	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
+		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
 </mapper>
