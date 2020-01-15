@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,32 +26,25 @@ public class AjaxController_Project {
 	ProjectService projectService;
 	
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(Project project, List<ProjectMember> projectMember){
-		System.out.println("이거 타니??");
-		System.out.println("리스트로 가져와??"+projectMember.toString());
-		System.out.println("리스트로사이즈??"+projectMember.size());
+    public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
+		String responseData = "";
 		int result = 0;
 		int result2 = 0;
-		/*
 		//프로젝트 생성시 진행 상태를 미완료로 하기
 		project.setPjtProgress("미완료"); 
-		//프로젝트 만들기
+		
+		//프로젝트 DB 저장
 		result = projectService.addProject(project);
 		
 		String pjtName = project.getPjtName();
-		List<String> pjtMembers = null;
-		for(int i = 0; i<member.)
 		
 		if(result > 0) {
-			
-			result2 = projectService.addProjectMember(pjtName, pjtMembers);
+			result2 = projectService.addProjectMember(pjtName, pjtMembersMail);
+			responseData = "success";
 		}
+
 		
-		System.out.println("메메메멤ㅁ"+member);
-		//projectService.addProject(project);
-		 * 
-		 */
-    	return null;
+    	return responseData;
     	
     }
 	/*

@@ -322,7 +322,7 @@ body
     		var userName = userInfo[0]			
     		var userMail = userInfo[1];
     		$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
-    						+userName+"</span><input type='hidden' name='mail' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
+    						+userName+"</span><input type='hidden' name='mail[]' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
     	
     		$("#pjtUserList").css("display","block");
     	
@@ -361,18 +361,18 @@ body
     	 			$.ajax({
         	 			
     	 	 			url:"ajax/project/pjtAdd.do",
-    	 				data: queryString  ,
+    	 				data: queryString ,
     	 				dataType: "text",
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
     	 				success:function(responsedata){
         	 				console.log('ajax 통신 성공?');
-    	 					/* console.log(responsedata);
-    	 					if(responsedata == "success"){ //채팅방 생성 완료
+    	 					console.log(responsedata);
+    	 					if(responsedata == "success"){ //프로젝트 생성 완료
     	 	 					console.log('채팅방 만듦')
     	 	 					swal({
-    	 						   title: "채널 생성 완료",
-    	 						   text: "채널이 만들어졌습니다.",
+    	 						   title: "프로젝트 생성 완료",
+    	 						   text: "프로젝트가 만들어졌습니다.",
     	 						   icon: "success" //"info,success,warning,error" 중 택1
     	 						}).then((YES) => {
     	 							if (YES) {
@@ -380,7 +380,7 @@ body
     	 							     }
     	 							})
     	 					
-    	 	 					} */
+    	 	 					}
     	 				},
     	 				error:function(){
     	 					
