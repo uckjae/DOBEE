@@ -68,4 +68,12 @@ public class AjaxController_Project {
 		return null;
 	}
 	
+	//특정 프로젝트 가져오기
+	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
+	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		Project project = null;
+		project = projectService.getProject(Integer.parseInt(pjtSeq));
+		return project;
+	}
+	
 }

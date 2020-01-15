@@ -27,7 +27,7 @@ public class ProjectService {
     public List<Project> projectList(){
     	List<Project>list = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	list = projectdao.getPjt();    	
+    	list = projectdao.getPjtList();    	
         return list;
     }
 
@@ -40,6 +40,7 @@ public class ProjectService {
     	return result;
     }
     
+    //프로젝트 멤버 추가
     public int addProjectMember(String pjtName, List<String> pjtMembersMail) {
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
@@ -52,10 +53,19 @@ public class ProjectService {
     	return result;
     }
 
-
+    
+    //특정 프로젝트 가져오기
+    
+    public Project getProject(int pjtSeq) {
+    	Project project = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	project = projectdao.getPjt(pjtSeq);
+    	return project;
+    }
+    
     //프로젝트삭제
     @Transactional
-    public int  delProject(int pjtSeq){
+    public int delProject(int pjtSeq){
     	
 //    	int result = 0;
 //    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);

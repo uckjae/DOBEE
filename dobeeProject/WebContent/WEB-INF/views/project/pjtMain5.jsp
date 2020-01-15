@@ -194,7 +194,8 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-					  			<li><a><button type="button" onclick="updatePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+<!-- 					  		<li><a><button type="button" onclick="updatePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
+ -->					  			<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li>
 								<li><a><button type="button" onclick="deletePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
 							</ul>
 							<div class="user-info">
@@ -211,7 +212,7 @@ body
 						<img src="./img/plusgray.png" alt="">
 					</div>
 					<div class="user-info">
-						<a data-toggle="modal" href="#pjtModal" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
+						<a data-toggle="modal" href="#pjtAddModal" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
 					    <span></span>
 					</div>
 				</div>
@@ -220,7 +221,7 @@ body
   </div>
    </div>
    <!-- 프로젝트 생성 modal -->
-						<div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="pjtAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog cascading-modal" role="document">
 						    <!--Content-->
 						    <div class="modal-content">
@@ -283,7 +284,8 @@ body
 						    <!--/.Content-->
 						  </div>
 						</div>						
-						<!-- end of modal -->   
+						<!-- end of modal -->
+						
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
@@ -334,26 +336,22 @@ body
         }
 
 	var updatePjt = function () {
-        
     	swal({
 			title: "프로젝트 수정",
 			text: "프로젝트를 수정하시겠습니까?",
 			icon: "warning" //"info,success,warning,error" 중 택1
 				}).then((YES) => {
-
-
-
 					
 						var pjtSeq = $("#pjtSeq").val();
 						$.ajax({
-	    	 	 			url:"ajax/project/pjtUpdate.do?pjtSeq="+pjtSeq,
+	    	 	 			url:"ajax/project/getPjt.do?pjtSeq="+pjtSeq,
 	    	 				dataType: "text",
 	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 	    	 				type:"post",
 	    	 				success:function(responsedata){
 	        	 				console.log('ajax 통신 성공?');
-	    	 					/* console.log(responsedata);
-	    	 					if(responsedata == "success"){ //프로젝트 생성 완료
+	    	 					console.log(responsedata);
+	    	 					/* if(responsedata == "success"){ //프로젝트 생성 완료
 	    	 	 					swal({
 	    	 						   title: "프로젝트 삭제 완료",
 	    	 						   text: "프로젝트가 삭제 되었습니다.",

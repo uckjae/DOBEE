@@ -385,7 +385,7 @@ public class DoController {
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
-        applyService.absReqHandle(apply);
+        applyService.absReqHandle(apply);	
         System.out.println("돌아간것만 확인 ㄱㄱ");
         
         return "attend/breakManagement_Mgr";
