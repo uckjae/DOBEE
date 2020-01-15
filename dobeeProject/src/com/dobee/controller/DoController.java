@@ -26,7 +26,7 @@ import com.dobee.dao.ProjectDao;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
-/*import com.dobee.services.GoogleVisionApi;*/
+import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.chat.ChatRoom;
