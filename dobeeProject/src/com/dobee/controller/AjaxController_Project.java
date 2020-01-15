@@ -1,6 +1,7 @@
 package com.dobee.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.ProjectDao;
 import com.dobee.services.ProjectService;
+import com.dobee.vo.member.User;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
@@ -67,5 +69,28 @@ public class AjaxController_Project {
 	public String updateProject(@RequestParam(value="pjtSeq") String pjtSeq) {
 		return null;
 	}
+	
+	//특정 프로젝트 가져오기
+	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
+	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		System.out.println("이거 타니??");
+		Project project = null;
+		project = projectService.getProject(Integer.parseInt(pjtSeq));
+		System.out.println("프로젝트 가져오니??"+project.toString());
+		return project;
+	}
+	
+	//특정 프로젝트 멤버가져오기
+	@RequestMapping(value="getPjtMember.do", method=RequestMethod.POST)
+	public User getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		System.out.println("이거 타니??");
+		System.out.println("번호 가져오니?"+pjtSeq);
+		User pjtMember = null;
+		pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		System.out.println("멤버 가져오니??"+pjtMember.toString());
+		return pjtMember;
+	}
+	
+	
 	
 }

@@ -4,6 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
+
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>

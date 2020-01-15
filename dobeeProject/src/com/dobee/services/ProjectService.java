@@ -1,6 +1,7 @@
 package com.dobee.services;
 
 import com.dobee.dao.ProjectDao;
+import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
@@ -27,7 +28,7 @@ public class ProjectService {
     public List<Project> projectList(){
     	List<Project>list = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	list = projectdao.getPjt();    	
+    	list = projectdao.getPjtList();    	
         return list;
     }
 
@@ -40,6 +41,7 @@ public class ProjectService {
     	return result;
     }
     
+    //프로젝트 멤버 추가
     public int addProjectMember(String pjtName, List<String> pjtMembersMail) {
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
@@ -52,10 +54,26 @@ public class ProjectService {
     	return result;
     }
 
-
+    
+    //특정 프로젝트 가져오기
+    public Project getProject(int pjtSeq) {
+    	Project project = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	project = projectdao.getPjt(pjtSeq);
+    	return project;
+    }
+    
+    //특정 프로젝트 멤버 정보(메일, 이름) 가져오기
+    public User getPjtMember(int pjtSeq) {
+    	User pjtMember = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	pjtMember = projectdao.getPjtMember(pjtSeq);
+    	return pjtMember;
+    }
+    
     //프로젝트삭제
     @Transactional
-    public int  delProject(int pjtSeq){
+    public int delProject(int pjtSeq){
     	
 //    	int result = 0;
 //    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);

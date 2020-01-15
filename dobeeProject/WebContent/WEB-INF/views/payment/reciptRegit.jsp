@@ -8,6 +8,8 @@
 <head>
 
 <c:import url="/common/tag.jsp" />
+
+
 <script>
 //날짜형태 yyyy-mm-dd 형태로 바꾸는 임의 함수
 Date.prototype.format = function (f) {
@@ -230,13 +232,19 @@ function showInput(){
 	
 </script>
 
-<style type="text/css">
+<style>
 	img{
 		padding:15px !important;
 	}
 
 
-</style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
+	
 </head>
 
 

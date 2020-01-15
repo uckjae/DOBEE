@@ -194,7 +194,8 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-					  			<li><a><button type="button" onclick="updatePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+ 					  		<li><a><button type="button" onclick="updatePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
 								<li><a><button type="button" onclick="deletePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
 							</ul>
 							<div class="user-info">
@@ -224,10 +225,9 @@ body
 						  <div class="modal-dialog cascading-modal" role="document">
 						    <!--Content-->
 						    <div class="modal-content">
-						
 						      <!--Header-->
 						      <div class="modal-header light-blue darken-3 white-text" style="text-align: center">
-						        <h4 class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
+						        <h4 id="pjtModalTitle" class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
 						        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
@@ -283,7 +283,10 @@ body
 						    <!--/.Content-->
 						  </div>
 						</div>						
-						<!-- end of modal -->   
+						<!-- end of modal -->
+
+
+
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
@@ -313,7 +316,7 @@ body
 	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 	    	 				type:"post",
 	    	 				success:function(responsedata){
-	        	 				console.log('ajax 통신 성공?');
+		    	 				console.log('ajax 통신 성공?');
 	    	 					console.log(responsedata);
 	    	 					if(responsedata == "success"){ //프로젝트 생성 완료
 	    	 	 					swal({
@@ -334,47 +337,58 @@ body
         }
 
 	var updatePjt = function () {
-        
     	swal({
 			title: "프로젝트 수정",
 			text: "프로젝트를 수정하시겠습니까?",
 			icon: "warning" //"info,success,warning,error" 중 택1
 				}).then((YES) => {
-
-
-
-					
-						var pjtSeq = $("#pjtSeq").val();
+					console.log('yes 타니???')
+					var pjtSeq = $("#pjtSeq").val();
+					console.log('번호눈??'+pjtSeq);
+						
 						$.ajax({
-	    	 	 			url:"ajax/project/pjtUpdate.do?pjtSeq="+pjtSeq,
+	    	 	 			url:"ajax/project/getPjt.do?pjtSeq="+pjtSeq,
 	    	 				dataType: "text",
 	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 	    	 				type:"post",
-	    	 				success:function(responsedata){
-	        	 				console.log('ajax 통신 성공?');
-	    	 					/* console.log(responsedata);
-	    	 					if(responsedata == "success"){ //프로젝트 생성 완료
-	    	 	 					swal({
-	    	 						   title: "프로젝트 삭제 완료",
-	    	 						   text: "프로젝트가 삭제 되었습니다.",
-	    	 						   icon: "success" //"info,success,warning,error" 중 택1
-	    	 						}).then((YES) => {
-	    	 								location.reload(true); 
-	    	 							})
-	    	 					
-	    	 	 					} */
+	    	 				success:function(project){
+		    	 					var pjtJsonData = JSON.parse(project);
+	    	 						
+	    	 						$("#pjtName").val(pjtJsonData.pjtName);
+	    	 						$("#pjtModalTitle").text('프로젝트 수정');
+	    	 						$("#pjtStartAt").val(pjtJsonData.pjtStartAt);
+	    	 						$("#pjtEndAt").val(pjtJsonData.pjtEndAt);
+
+	    	 						$.ajax({
+	    	 							url:"ajax/project/getPjtMember.do?pjtSeq="+pjtSeq,
+	    		    	 				dataType: "text",
+	    		    	 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	    		    	 				type:"post",
+	    		    	 				success : function(user){
+	    		    	 					console.log('ajax 통신 성공?');
+	    		    	 					console.log('유저유저'+user);
+		    		    	 				var userJsonData = JSON.parse(user);
+		    		    	 				//console.log('어케 나옴?'+userJsonData.mail);
+		    		    	 				$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+		    		        						+userJsonData.name+"</span><input type='hidden' name='mail[]' value='"+userJsonData.mail+"'>&nbsp;&nbsp;</i></div>");
+		    		        	
+		    		        				$("#pjtUserList").css("display","block");
+		    		        				$('#pjtModal').modal('show');
+		    		        				
+		    		    	 				},
+		    		    	 			error : function() {
+			    		    	 			
+			    		    	 			}
+
+		    	 						});
+
 	    	 				},
 	    	 				error:function(){
 	    	 					
 	    	 				}
 	    	 			});
 					});
-		
-
-
-
-
-        }
+	}
 
 
     

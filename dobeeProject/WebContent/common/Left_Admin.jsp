@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+     <style>
+  @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body {
+   font-family: 'Noto Serif KR', serif;
+}
+
+</style>
+
+    <body>
 <div class="side-navbar-wrapper">
 		<!-- Sidebar Header    -->
 		<div class="sidenav-header d-flex align-items-center justify-content-center">
@@ -38,11 +49,9 @@
 						<li><a href="ListDebit.do">법인카드 목록</a></li>
 					</ul>
 				</li>
-				
-				
-			
-							
-				
+								
 			</ul>
 		</div>
 	</div>
+	
+	</body>
