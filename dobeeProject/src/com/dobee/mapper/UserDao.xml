@@ -177,8 +177,8 @@
     </select>
     
     
-    <!-- 매니저_부재관리 - isAuth update (POST)		0114 -->
-    <update id="absReqHandle" parameterType="String">
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 -->
+    <update id="absReqHandle" parameterType="com.dobee.vo.Apply">
     	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
     </update>
 	

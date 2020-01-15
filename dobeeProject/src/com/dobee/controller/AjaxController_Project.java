@@ -25,6 +25,8 @@ public class AjaxController_Project {
 	@Autowired
 	ProjectService projectService;
 	
+	
+	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
 		String responseData = "";
@@ -42,29 +44,28 @@ public class AjaxController_Project {
 			result2 = projectService.addProjectMember(pjtName, pjtMembersMail);
 			responseData = "success";
 		}
-
-		
     	return responseData;
-    	
     }
-	/*
-	@RequestMapping("projectDetail.do")
-	public String getProjectList(int seq){
-		ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-		List<Task> projectList = projectDao.getProject(seq);
-		return "project/kanban";
-	}
-
 	
-	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(@RequestParam(value="pjtName") String pjtName, @RequestParam(value="pjtStartAt") String pjtStartAt, @RequestParam(value="pjtEndAt") String pjtEndAt, @RequestParam(value="pjtUserList[]") List<String> pjtUserList){
-		System.out.println("컨트롤러로 값 넘어오니?" + pjtName +"/"+pjtStartAt+"/"+pjtEndAt);
-		System.out.println("참여자들 넘어오니?"+pjtUserList.toString());
-		
-		//projectService.addProject(project);
-    	return null;
-    	
-    }
-	*/
+	//프로젝트 삭제 --01.15 알파카 (아직 완전 구현xxxx)
+	@RequestMapping(value="pjtDelete.do", method=RequestMethod.POST)
+	public String deleteProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		String responseData = "";
+		int result = 0;
+		result = projectService.delProject(Integer.parseInt(pjtSeq));
+		if(result > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "failure";
+		}
+		return responseData;
+	}
+	
+	
+	//프로젝트 수정 --01.15 알파카
+	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
+	public String updateProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		return null;
+	}
 	
 }

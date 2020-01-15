@@ -27,7 +27,11 @@ public interface ProjectDao {
 
 
     //프로젝트 삭제 -- 1.13 추가
-    public int delete(int pjtseq); 
+    public int deletePjt(int pjtSeq); 
+    
+    //프로젝트 그룹 삭제 --01.15.알파카
+    public int deletePjtMember(int pjtSeq);
+    
     
     // 프로젝트 가져오기 --1.14 추가
  	public List<Task> getProject(int seq);

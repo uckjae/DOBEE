@@ -20,5 +20,12 @@
  	<select id="debitCode" resultType="com.dobee.vo.CostCode">
  		SELECT * FROM COSTCODE
  	</select>
+ 	
+ 	<!-- 비용 신청 등록  -->
+ 	<insert id="addCostApply" parameterType="com.dobee.vo.CostList">
+ 		insert into costlist (regdate, usedate, useat, cost, detail, costcode, cardnum, mail) 
+ 		values( now(), #{usedate}, #{useat}, #{cost}, #{detail}, #{costcode}, #{cardnum},#{mail})
+ 	
+ 	</insert>
 
 </mapper>

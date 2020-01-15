@@ -9,6 +9,7 @@ import com.dobee.vo.project.TaskDetail;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +54,13 @@ public class ProjectService {
 
 
     //프로젝트삭제
-    public void  delProject(){
-
+    @Transactional
+    public int  delProject(int pjtSeq){
+    	
+//    	int result = 0;
+//    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+//    	result = projectdao.delete(pjtSeq);
+    	return 0;
     }
 
 
