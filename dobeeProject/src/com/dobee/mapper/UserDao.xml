@@ -167,7 +167,12 @@
 	
 	
 	<!-- 사원등록 -->
-	<insert id="setUser">
-		
+	<insert id="addUser">
+		INSERT INTO USER (MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE) VALUES (#{mail},#{name},#{myPic},#{authCode},#{teamCode})
+	</insert>
+	
+	<!-- 사원정보등록 -->
+	<insert id="addUserInfo">
+		INSERT INTO USERINFO (MAIL, REGDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},#{regDate},#{serve},#{emp},#{position},#{phone})
 	</insert>
 </mapper>
