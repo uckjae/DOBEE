@@ -3,6 +3,7 @@ package com.dobee.services;
 import com.dobee.dao.ProjectDao;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
+import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import org.apache.ibatis.session.SqlSession;
@@ -29,7 +30,7 @@ public class ProjectService {
 
 
     //프로젝트추가
-    public int addProject(Project project){
+    public int addProject(Project project, List<ProjectMember> projectMember){
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	result = projectdao.mkPjt(project);

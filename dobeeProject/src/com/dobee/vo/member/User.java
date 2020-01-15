@@ -18,6 +18,18 @@ public class User {
     private int authCode;
     private int teamCode;
     private MultipartFile multiFile;
+	public User(String mail, String password, String name, byte[] myPic, int authCode, int teamCode,
+			MultipartFile multiFile) {
+		
+		System.out.println("User constructor in!!!");
+		this.mail = mail;
+		this.password = password;
+		this.name = name;
+		this.myPic = myPic;
+		this.authCode = authCode;
+		this.teamCode = teamCode;
+		this.multiFile = multiFile;
+	}
    
-        
+      
 }

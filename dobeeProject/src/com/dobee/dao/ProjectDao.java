@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
+import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import com.dobee.vo.schedule.Schedule;
@@ -13,6 +14,11 @@ public interface ProjectDao {
 
     //프로젝트 생성
     public int mkPjt(Project project);
+    
+    
+    
+    //프로젝트 생성시 참여 멤버 추가 --01.15.알파카
+    public int mkPjtMember(List<ProjectMember> pjtMemeber);
 
 
     //프로젝트 목록

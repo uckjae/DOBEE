@@ -96,6 +96,8 @@ public class DoController {
     //비밀번호재설정
     //public String resetPwd(){
       //  return null;
+    //}
+    
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
     	System.out.println("DoController resetPwd() in!!");
@@ -487,30 +489,13 @@ public class DoController {
     }
 
 
-  //프로젝트메인
+    //프로젝트메인
     @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
     	List<Project>list = projectService.projectList();
     	model.addAttribute("list",list);
     
         return "project/pjtMain5";
-    }
-
-
-    //프로젝트생성
-    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(Project project){
-    	
-    	int result = 0;
-    	String viewpage = "";
-    	result = projectService.addProject(project);
-    	
-    	if(result > 0) {
-    		viewpage = "redirect:/pjtMain.do";
-    	}else {
-    		viewpage = "project/pjtChart";
-    	}
-    	 return viewpage;
     }
 
 
@@ -694,16 +679,16 @@ public class DoController {
     //관리자_사원추가 페이지
    @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
-	   System.out.println("Docontroller addUser() in");
+	   System.out.println("Docontroller addUser() get in");
 	   return "admin/AddMember";
    }
     
     
     //관리자_사원추가 서비스
-   	@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
-    public String addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
-   		//memberService.addUser(user, userInfo, req);
+   @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
+   public String addUser(User user, UserInfo userInfo) {
+   		System.out.println("Docontroller addUser() post in");
+   		memberService.addUser(user, userInfo);
    		
    		
     	return "admin/AdminMain";
