@@ -96,7 +96,7 @@ public class DoController {
     //비밀번호재설정
     //public String resetPwd(){
       //  return null;
-    }
+    //}
     
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
