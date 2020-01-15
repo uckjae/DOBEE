@@ -94,8 +94,6 @@
 		
 
 		<section>
-			<div class="col-md-12">
-			
 				<table id="absenseTable" class="dataTable display hover" style="width :100%">
 					<colgroup>
 						<col style="width: 5%">
@@ -148,7 +146,6 @@
 					</tfoot>
 						
 				</table>
-			</div>
 		</section>
 	
 
