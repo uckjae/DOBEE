@@ -10,7 +10,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProjectService {
@@ -30,11 +32,23 @@ public class ProjectService {
 
 
     //프로젝트추가
-    public int addProject(Project project, List<ProjectMember> projectMember){
+    public int addProject(Project project){
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	result = projectdao.mkPjt(project);
     	return result;
+    }
+    
+    public int addProjectMember(String pjtName, List<String> pjtMembers) {
+    	int result = 0;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	Map<String, String> map = new HashMap<String, String>();
+    	map.put("pjtName", pjtName);
+    	//map.put("mail", value)
+    	
+    	
+    	result = projectdao.mkPjtMember(map);
+    	return 0;
     }
 
 
