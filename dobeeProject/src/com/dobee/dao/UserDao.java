@@ -24,7 +24,11 @@ public interface UserDao {
 
 
     //비밀번호재설정
-    public void resetPwd(String mail, String phone, String newPwd);
+    //public void resetPwd(String mail, String phone, String newPwd);
+    
+    
+    //비밀번호 설정
+    public void resetPwd(User user);
 
 
     //출근

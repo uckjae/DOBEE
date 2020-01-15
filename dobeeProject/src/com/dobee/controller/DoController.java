@@ -13,14 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -109,9 +106,12 @@ public class DoController {
         return "main/emailPwdReset";
     }
 
-
-    public String resetPwdResult(){
-        return null;
+    @RequestMapping("resetPwdResult.do")
+    public String resetPwdResult(User user){
+        System.out.println("DoController resetPwdResult() in!!");
+        System.out.println(user.toString());
+        memberService.resetPwd(user);
+    	return "redirect: index.jsp";
     }
 
 

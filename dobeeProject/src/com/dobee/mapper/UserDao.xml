@@ -227,4 +227,10 @@
 	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
 		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
+	
+	
+	<!-- 비밀번호등록 -->
+	<update id="resetPwd" parameterType="com.dobee.vo.member.User">
+		UPDATE USER SET PASSWORD=#{password} WHERE MAIL=#{mail}
+	</update>
 </mapper>

@@ -88,7 +88,7 @@ body{
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
 							<td>${user.teamCode}</td>
-							<td>${userInfoList[status.index].regDate}</td>
+							<td>${userInfoList[status.index].regitDate}</td>
 							<td>${userInfoList[status.index].serve}</td>
 							<td>${userInfoList[status.index].emp}</td>
 							<td>${userInfoList[status.index].position}</td>

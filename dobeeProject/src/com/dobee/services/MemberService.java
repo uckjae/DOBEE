@@ -33,8 +33,9 @@ public class MemberService {
 
 
     //비밀번호재설정
-    public void updateMember(){
-
+    public void resetPwd(User user){
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	userDao.resetPwd(user);
     }
 
 

@@ -86,7 +86,7 @@ body{
 			});
 		}
 
-		function submit(){
+		function myFormSubmit(){
 			sendMail().then(function(){
 				console.log("submit()");
 				/* document.getElementById('addUserForm').submit(); */
@@ -218,7 +218,7 @@ body{
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <button type="button" class="btn btn-primary btn-block" onclick="submit()">등록하기</button>
+                                                    <button type="button" class="btn btn-primary btn-block" onclick="myFormSubmit()">등록하기</button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"
