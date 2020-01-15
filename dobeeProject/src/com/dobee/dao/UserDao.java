@@ -160,7 +160,7 @@ public interface UserDao {
     
     
     //사원정보추가
-    public void addUserDetail(UserInfo userInfo);
+    public void addUserInfo(UserInfo userInfo);
     
 
 }
