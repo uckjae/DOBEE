@@ -204,4 +204,10 @@
 	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
 		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
+	
+	
+	<!-- 비번 update -->
+	<update id="updatePassword">
+		UPDATE USER SET PASSWORD = #{param2} WHERE MAIL = #{parma1}
+	</update>
 </mapper>

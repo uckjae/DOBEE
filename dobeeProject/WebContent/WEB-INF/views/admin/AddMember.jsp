@@ -55,33 +55,39 @@
 			
 		});
 
-		function sendMail (){
-			$.ajax({
-				url:"ajax/admin/sendEmail.do",
-				data: {'mail':$('#mail').val(),
-						'name' : $('#name').val()
+		function myFormSubmit (){
+			return new Promise(function(resolve,reject){
+				console.log("sendMail()");
+				$.ajax({
+					url:"ajax/admin/sendEmail.do",
+					data: {'mail':$('#mail').val(),
+							'name' : $('#name').val()
+						},
+					dataType: "text",
+					method: "POST",
+					success: function(response){
+						resolve(response);
+						
 					},
-				dataType: "text",
-				method: "POST",
-				success: function(){
-					console.log("ajax sendmail success");
-					
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					console.log(textStatus);
-					console.log(errorThrown);
-				}
+					error: function(jqXHR, textStatus, errorThrown){
+						console.log(textStatus);
+						console.log(errorThrown);
+						reject(new Error("sendMail 에러"))
+					}
+			});
+			
+			
 				
 				
 			});
 		}
 
-		function submit(){
-			sendMail().then(function(){
+		function sendMail(){
+			myFormSubmit().then(function(data){
 				console.log("submit()");
-				/* document.getElementById('addUserForm').submit(); */
+				console.log(data)
 				$('#addUserForm').submit();
-			})
+			});
 		}
 
 		/* 날짜 기본설정 */
@@ -206,7 +212,7 @@
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <button type="button" class="btn btn-primary btn-block" onclick="submit()">등록하기</button>
+                                                    <button type="button" class="btn btn-primary btn-block" onclick="sendMail()">등록하기</button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"

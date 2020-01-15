@@ -98,7 +98,7 @@ public class DoController {
       //  return null;
     //}
     
-    @RequestMapping("password.do")
+    @RequestMapping("whatthepassword.do")
     public String resetPwd(HttpServletRequest req, Model model){
     	System.out.println("DoController resetPwd() in!!");
     	System.out.println(req.getParameter("mail"));
@@ -109,9 +109,13 @@ public class DoController {
         return "main/emailPwdReset";
     }
 
-
-    public String resetPwdResult(){
-        return null;
+    
+    @RequestMapping("setPassword.do")
+    public String resetPwdResult(User user){
+    	System.out.println("DoController resetPwdResult() in");
+        System.out.println(user.toString());
+        memberService.updatePassword(user.getMail(), user.getPassword());
+    	return "redirect : index.jsp";
     }
 
 

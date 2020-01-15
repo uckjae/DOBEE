@@ -51,12 +51,12 @@
 				<br>
 			<hr style=" width: 30%; display: block; margin: 0px auto;">
 			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
-				<form class="login100-form validate-form" style=" height: 40%; text-align: center; ">
+				<form action="setPassword.do" class="login100-form validate-form" style=" height: 40%; text-align: center; " method="post">
 				<h3> HELLO, <c:out value="${user.name}"/> 님 </h3>	<br>
 					<h6> 입사를 축하드립니다 ^^ ! </h6> 
 					<br>
 					<h6> 사이트 이용을 위해 비밀 번호를 설정 해주세요.<c:out value="${user.mail}"/> </h6>
-									
+					<input type="hidden" id="mail" name="mail" value="${user.mail}">			
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
 						<input class="input100" type="text" name="username">
 						<span class="focus-input100" data-placeholder="새로운 비밀번호 입력"></span>

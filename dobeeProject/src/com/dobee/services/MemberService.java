@@ -102,5 +102,11 @@ public class MemberService {
     	}
     }
     
+    
+    //비밀번호 업데이트
+    public void updatePassword(String mail, String password) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	userDao.updatePassword(mail, password);
+    }
 
 }
