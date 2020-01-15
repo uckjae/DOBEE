@@ -18,6 +18,9 @@ public class User {
     private int authCode;
     private int teamCode;
     private MultipartFile multiFile;
+    
+    private User() {}
+    
 	public User(String mail, String password, String name, byte[] myPic, int authCode, int teamCode,
 			MultipartFile multiFile) {
 		

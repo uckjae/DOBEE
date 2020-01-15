@@ -153,8 +153,6 @@ window.onload=function(){
 	
 	
 	
-	
-	
 	       
 	       
 	 <!--  우측에 영수증파일 업로드 되고, -->      
@@ -173,9 +171,6 @@ window.onload=function(){
 				  </div>
 				  <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">업로드</a>
 		        </form> 
-		        
-		        
-		        
 		        
     		</div>
     		
