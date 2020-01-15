@@ -54,7 +54,7 @@ body {
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
 						<li><a href="reciptRegit.do" style="font-family: 'Noto Serif KR', serif;">정산 신청</a></li>
 						<li><a href="reciptRegit.do" style="font-family: 'Noto Serif KR', serif;">카드 관리</a></li>
-						<li><a href="reciptRegit.do" style="font-family: 'Noto Serif KR', serif;">비용 현황</a></li>
+						<li><a href="viewDebitList.do" style="font-family: 'Noto Serif KR', serif;">비용 현황</a></li>
 					</ul>
 				</li>
 										
