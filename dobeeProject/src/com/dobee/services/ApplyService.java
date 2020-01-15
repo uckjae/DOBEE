@@ -18,7 +18,7 @@ public class ApplyService {
     SqlSession sqlSession;
 
 
-    //부재일정신청
+    // 개인_부재일정신청			0101
     public String absApply(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.absApply(apply);
@@ -27,7 +27,7 @@ public class ApplyService {
     }
 
 
-    //연장근무신청
+    // 개인_연장근무신청			0101
     public String overtimeApply(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.overTimeApply(apply);
@@ -36,7 +36,7 @@ public class ApplyService {
     }
 
 
-    //부재일정관리
+    // 개인_부재일정관리			0101
     public List<BreakManageList> absMg(){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
         List<BreakManageList> results = userDao.absMg();
@@ -56,6 +56,25 @@ public class ApplyService {
         return null;
     }
 
+    
+    // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
+    public List<BreakManageList> breakListMgr() {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	List<BreakManageList> results = userDao.breakListMgr();
+    	
+    	return results;
+    }
+    
+    
+    // 매니저_부재관리 - isAuth update (POST)		0114 게다죽
+    public String absReqHandle() {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	System.out.println("result 서비스1 : ");
+    	String result = userDao.absReqHandle();
+    	System.out.println("result 서비스 : " + result);
+    	return result;
+    }
+    
 
     //부재관리_승인
     public void absSignApprov(){

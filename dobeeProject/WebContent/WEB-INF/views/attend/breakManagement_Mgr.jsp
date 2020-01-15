@@ -27,6 +27,14 @@
     </style>
     
     <link rel="stylesheet" href="./css/jgcss.css">
+    
+    <link href='./packages/core/main.css' rel='stylesheet' />
+	<link href='./packages/daygrid/main.css' rel='stylesheet' />
+	<link href='./packages/list/main.css' rel='stylesheet' />
+	
+	<!-- Modal -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
 
   </head>
  
@@ -60,116 +68,119 @@
 			</ul>
 		</div>
 		
-		<h1>부재 일정 관리</h1>
-
-		<!-- <form action="" method="post"> -->
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<br>
+				<h1>부재 신청 관리</h1>
+				<br>
 		
-		<table style="width: 100%">
-			<tr>
-				<td style="width: 9%"><h1>사용 연차</h1></td>
-				<td style="width: 12%" id="usedVacation">0</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><h1>남은 연차</h1></td>
-				<td id="remainVacation">0</td>
-				<td></td>					
-				<td style="width: 10%">
-					<select name="year" id="selectYear">
-						<option value="">년도별</option>
+				<div class="formDiv">
+					<form action="" method="post">					 
 						
-					</select>
-				</td>
-				<td style="width: 7%">
-					<select name="month" id="selectMonth">
-						<option value="">월별</option>
+						<input type="text" value="옆 아이콘을 눌러 기간을 선택하세요" class="inputTerm" id="inputTerm">
+						<button value="날짜선택" id="selTerm">캘린더ICON</button>
+												
+						<select id="selectEntry">
+							<option value="">항목별</option>
+							<!-- Ajax -->
+						</select>
 						
-					</select>
-				</td>
-				<td style="width: 7%">
-					<select name="category" id="selectEntry">
-						<option value="">항목별</option>
-						
-					</select>
-				</td>
-				<td style="width: 7%">
-					<select name="category" id="selectIsAuth">
-						<option value="">항목별</option>
-						
-					</select>
-				</td>
-				<td style="width: 7%">
-					<!-- <input type="submit" id="search" class="submit" value="검색하기 "> -->
-				</td>
-			</tr>
-		</table>
-		
-		<!-- </form> -->
-		
-
-		<section>
-			<div class="col-md-12">
-			
-				<table id="breakTable" class="dataTable display hover" style="width :100%">
-					<thead id="thead">
-						<tr>
-							<th width="13%">부재항목</th>
-							<th>기간</th>
-							<th width="13%">사용 일수</th>
-							<th width="17%">신청 일자</th>
-							<th width="20%">승인여부</th>
-						</tr>
-					</thead>
-					
-					<tbody id="tbody">
-						<c:forEach items="${brkList}" var="bl">
-						
+						<input type="submit" class="submit" id="submit" value="돋보기ICON">
+					</form>
+				</div>
+				
+				<!-- 이거는 다른거고 -->
+				<section>
+					<table id="brkTable" class="dataTable hover order-column row-border" style="width :100%; margin-top:100px;">
+						<thead id="thead">
 							<tr>
-								<td class="bcategory">	${bl.entry }</td>
-								<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
-								<td class="tused">		${bl.usingBreak }</td>
-								<td class="tregdate">	${bl.reqDate }</td>
-								<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal${bl.aplSeq}">${bl.isAuth }</button></td>
-							</tr>	
-							
-							<!-- Modal -->
-							<div class="modal fade" id="myModal${bl.aplSeq}" role="dialog">
-							  <div class="modal-dialog modal-lg">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal">&times;</button>
-							        <h4 class="modal-title">상세 사유</h4>
-							      </div>
-							      <div class="modal-body">
-							         <h3>부재 사유</h3>
-							     <h4>사유</h4>
-							     <h5>${bl.reason }</h5>
-							      </div>
-							      <div class="modal-footer">
-							       <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-							
-						</c:forEach>
-					</tbody>
-					
-					
-
-					
-					<tfoot>	
-					</tfoot>
+								<th width="8%">신청 번호</th>
+								<th width="17%">신청 일자</th>
+								<th width="12%">부재 항목</th>
+								<th width="12%">승인 여부</th>
+								<th>기간</th>
+								<th width="15%">연차 사용 일수</th>
+							</tr>
+						</thead>
 						
-				</table>
-
+						<tbody id="tbody">
+							<c:forEach items="${brkListMgr}" var="bl">
+								<tr>
+									<td class="bseq">		${bl.aplSeq }</td>
+									<td class="bReqDate">	${bl.reqDate}</td>
+									<td class="bEntry">		${bl.entry }</td>
+									<td class="bIsAuth">
+										<button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-seq="${bl.aplSeq}" data-reason="${bl.reason }" data-rejreason="${bl.rejReason }">${bl.isAuth }
+										</button></td>
+									<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
+									<td class="bUsed">		${bl.usingBreak }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					
+						<tfoot>	
+						</tfoot>		
+					</table>
+					
+				</section>	
 			</div>
-		</section>
+			<div class="col-md-1"></div>
+		</div>
+		
 	</div>
+	
+
+	<!-- Modal -->
+	<section id="modal_breakreason">
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>부재 신청 사유</h2>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<form action="absManage.do" method="POST">
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-1"></div>
+								<div class="col-md-10" style="background-color:lightgray;">
+									<input type="hidden" value="" id="inputAplSeq"> $ { b l.aplSeq } 넣을겨
+									<br>
+									<div id="divReason">
+										<h3>부재 신청 사유</h3>
+										<p>$ { b l.reason } 넣을겨</p><br>
+										<input type="text" id="inputReason" placeholder="아 좀..">
+									</div>
+									<br>
+									<select id="entrySelectorInModal" name="isAuth">
+										<option value="">항목 선택</option>
+										<option value="승인">승인</option>
+										<option value="반려">반려</option>
+										<option value="미승인">보류</option>
+									</select>
+									<div id="divRejReason">
+										<h3>부재 신청 거절 사유 입력</h3>
+										<h5>$ { b l.rejReason } 넣을겨</h5>
+										<input type="text" name="rejReason" placeholder="반려 할 경우 사유를 입력하십시오" style="width:90%;">
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+						</div>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>	
+
 	
 	<c:import url="/common/bottom.jsp"/>   
    
@@ -187,18 +198,11 @@
     <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     
-    <link href='./packages/core/main.css' rel='stylesheet' />
-	<link href='./packages/daygrid/main.css' rel='stylesheet' />
-	<link href='./packages/list/main.css' rel='stylesheet' />
 	<script src='./packages/core/main.js'></script>
 	<script src='./packages/interaction/main.js'></script>
 	<script src='./packages/daygrid/main.js'></script>
 	<script src='./packages/list/main.js'></script>
 	<script src='./packages/google-calendar/main.js'></script>
-
-	<!-- Modal -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
   
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -213,56 +217,14 @@
   	<script>
 		window.onload = function(){
 
-			// 연차 정보 가져오기
-			$.ajax ({
-				url : "getVacationInBM.do",
-				dataType : "json",
-				success : function (data) {
-					$('#usedVacation').text(data.totalVacation[0].totalBreak)
-					$('#remainVacation').text(data.totalVacation[0].usedBreak)					
-				},
-				error : function(error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-
-			// 년도 Option Ajax Loading
+			// 부재항목 Option Ajax Loading ********************
 			$.ajax({
-				url : "breakYearList.do",
-				dataType : "json",
-				success : function(data) {
-					var yArray = [];
-					yArray = data.breakYearList;
-					for (var i=0; i<yArray.length; i++) {
-						var option = document.createElement("option");
-						$(option).text(yArray[i]+'년');
-						$("#selectYear").append(option);
-					}
-				}				
-			});	
-
-			// 월 Option Ajax Loading
-			$.ajax({
-				url : "breakYearMonthList.do",
-				dataType : "json",
-				success : function(data) {
-					var ymArray = [];
-					ymArray = data.breakYearMonthList;
-					for (var i = 0; i<ymArray.length; i++) {
-						var option = document.createElement("option");
-						$(option).text(ymArray[i]);
-						$("#selectMonth").append(option);
-					}
-				}			
-			});
-
-			// 부재항목 Option Ajax Loading
-			$.ajax({
-				url : "breakEntryList.do",
+				url : "breakEntryListMgr.do",
 				dataType : "json",
 				success : function(data) {
 					var eArray = [];
-					eArray = data.breakEntryList;
+					console.log("뭐임", data);
+					eArray = data.breakEntryListMgr;
 					for (var i=0; i<eArray.length; i++) {
 						$('#selectEntry').append("<option value=" + eArray[i].apyCode + ">" + eArray[i].entry + "</option>");
 					}
@@ -285,74 +247,19 @@
 			});
 
 			
-			// 년도 Option 변경시 List Ajax 처리
-			$('#selectYear').change(function() {
+			var reason = "";
+			var rejReason = "";
+			var aplSeq = "";
+			
+			$('.btn-sm').click(function() {
+				$('#tbody').empty();
+				reason = $(event.relatedTarget).data('reason');
+				rejReason = $(event.relatedTarget).data('rejReason');
+				$(".modal-body #inputAplSeq").val(aplSeq);
 				
-				$.ajax ({
-					url : "getBreakListByYear.do",
-					dataType : "json",
-					success : function (data) {
-						$('#tbody').empty();
-						var byArray = [];
-						byArray = data.byYear;
-						for (var i=0; i<byArray.length; i++) {	
-							$('#tbody').append(
-								'<tr> <td class="bcategory">' + byArray[i].entry +'</td>' +
-									'<td class="tterm">' +	byArray[i].startAt +' - '+ byArray[i].endAt + '</td>' +
-									'<td class="tused">' +	byArray[i].usingBreak + '</td>' +
-									'<td class="tregdate">' +	byArray[i].reqDate + '</td>'+
-									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+byArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+byArray[i].aplSeq+'">'+ byArray[i].isAuth +'</button></td>'+
-								'</tr>'
-								+
-								'<div class="modal fade" id="myModal'+byArray[i].aplSeq+'" role="dialog">'+
-									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
-									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
-									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
-									'<h5>'+byArray[i].reason+'</h5> </div> <div class="modal-footer">'+
-								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
-							);
-						}	
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				})
-			});
-
-			// 월 Option 변경시 List Ajax 처리
-			$('#selectMonth').change(function() {
-
-				$.ajax ({
-					url : "getBreakYearMonthList.do",
-					dataType : "json",
-					success : function (data) {
-						$('#tbody').empty();
-						var bymArray = [];
-						bymArray = data.byYMonth;
-						for (var i=0; i<bymArray.length; i++) {	
-							$('#tbody').append(
-								'<tr> <td class="bcategory">' + bymArray[i].entry +'</td>' +
-									'<td class="tterm">' +	bymArray[i].startAt +' - '+ bymArray[i].endAt + '</td>' +
-									'<td class="tused">' +	bymArray[i].usingBreak + '</td>' +
-									'<td class="tregdate">' +	bymArray[i].reqDate + '</td>'+
-									'<td class="notauth"><button type="button" class="btn btn-info btn-sm '+bymArray[i].isAuth+'" data-toggle="modal" data-target="#myModal'+bymArray[i].aplSeq+'">'+ bymArray[i].isAuth +'</button></td>'+
-								'</tr>'
-								+
-								'<div class="modal fade" id="myModal'+bymArray[i].aplSeq+'" role="dialog">'+
-									'<div class="modal-dialog modal-lg"> <div class="modal-content"> <div class="modal-header">'+
-									'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
-									'<h4 class="modal-title">상세 사유</h4> </div> <div class="modal-body"> <h3>부재 사유</h3> <h4>사유</h4>'+
-									'<h5>'+bymArray[i].reason+'</h5> </div> <div class="modal-footer">'+
-								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
-							);
-						}	
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-			});
-
+				
+			})
+			
 			// 부재항목 Option 변경시 List Ajax 처리
 			$('#selectEntry').change(function() {
 
@@ -361,6 +268,7 @@
 					dataType : "json",
 					success : function (data) {
 						$('#tbody').empty();
+						/*
 						var beArray = [];
 						beArray = data.byEntry;
 						for (var i=0; i<beArray.length; i++) {	
@@ -379,7 +287,8 @@
 									'<h5>'+beArray[i].reason+'</h5> </div> <div class="modal-footer">'+
 								'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
 							);
-						}	
+						}
+						*/
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

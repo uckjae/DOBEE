@@ -111,7 +111,7 @@
 		<section>
 			<div class="col-md-12">
 			
-				<table id="breakTable" class="dataTable display hover" style="width :100%">
+				<table id="brkTable" class="dataTable hover order-column row-border" style="width :100%">
 					<thead id="thead">
 						<tr>
 							<th width="13%">부재항목</th>
