@@ -12,13 +12,13 @@ import lombok.ToString;
 public class CostList {
     private int costSeq;
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date regDate;
+    private Date regitDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date useDate;
     private String useAt;
     private int cost;
     private String detail;
-    private int code;
+    private int costCode;
     private int cardNum;
     private int mail;
 }

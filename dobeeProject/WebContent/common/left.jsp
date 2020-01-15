@@ -42,7 +42,7 @@
 					<ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
 						<li><a href="reciptRegit.do">정산 신청</a></li>
 						<li><a href="reciptRegit.do">카드 관리</a></li>
-						<li><a href="reciptRegit.do">비용 현황</a></li>
+						<li><a href="viewDebitList.do">비용 현황</a></li>
 					</ul>
 				</li>
 								
