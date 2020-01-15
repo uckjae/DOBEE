@@ -26,15 +26,6 @@
     <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
     </bean>
 
-	<!-- 성호 // 디비 테스트 위해 혼자서만 쓰는 접속 코드 -->
-	  
-  <!--  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-        <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC&amp;characterEncoding=UTF-8"/>
-        <property name="username" value="tester" />
-        <property name="password" value="1004" />
-    </bean> -->
-    
     
     
     

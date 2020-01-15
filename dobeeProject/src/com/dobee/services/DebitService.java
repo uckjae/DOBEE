@@ -1,13 +1,13 @@
 package com.dobee.services;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.PaymentDao;
+import com.dobee.vo.CostCode;
 import com.dobee.vo.Debit;
 
 @Service
@@ -51,4 +51,12 @@ public class DebitService {
     	return listDebit;
     }
 	
+    
+    //비용코드 디비에서 불러다주기 
+    public ArrayList listCode() {
+    	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+    	ArrayList costCode = paymentDao.debitCode();
+    	
+    	return costCode;
+    }
 }
