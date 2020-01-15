@@ -154,10 +154,6 @@
 			</div>
 			</div>
 		<div class="col-md-5" >
-			 	
-			<!--
-			d 번호 : 		<input type="text" name="aplSeq" value="10000"><br>
-			d 신청일 : 	<input type="text" name="reqDate" value="20200202"><br> -->
 		   	- 사유 : 		<input type="text" name="reason" value="사유인데요?2"><br>
 		   	- 시작일 : 	<input type="text" name="startAt" value="20200202"><br>
 		   	- 종료일 :		<input type="text" name="endAt" value="20200203"><br>
@@ -193,68 +189,7 @@
 	     
 	     	<div class="col-sm-6" id="jgContainer">
 				<div class="formDiv">
-					<!-- 
-					<label for="from">From</label>
-					<input type="text" id="from" name="from">
-					<label for="to">to</label>
-					<input type="text" id="to" name="to">
-					-->
-							    
-<!-- 
-					<form action="breakApply21.do" method="post">					 
-						<table style="width: 100%; height: 500px;" style="margin:10px; align-self:center;">
-							<tr>
-								<td rowspan="4" width="50%">
-									<div class="calendarArea" style="width:100%">
-										<div id="loading">loading...</div>
-										<div id="calendar"></div>
-									</div>
-								</td>
-								<td></td>
-								<td></td>
-							</tr>		
-							<tr>
-								<td>기간 선택</td>
-								<td>
-									<input type="text" id="datetimes" style="width:250px"/><br>
-									시작일 : 	<input type="text" name="startAt" value="202002020900"><br>
-				      				종료일 :	<input type="text" name="endAt" value="202002031800"><br>	
-				      				신청자 : 	<input type="text" name="drafter" value="JG@KIM.COM"><br>
-								</td>
-							</tr>
-							<tr>
-								<td>부재항목</td>
-								<td>
-									<select name="apyCode" id="category" class="category">
-										<option hidden>category 선택</option>
-										ajax
-									</select>
-								</td>
-							</tr>	
-							<tr>
-								<td>결재자</td>
-								<td>
-									<select name="approval" id="approval">
-										<option hidden = "">결재자 선택</option>
-									</select>
-								</td>
 					
-							</tr>
-							<tr>
-								<td colspan="3">사유</td>
-							</tr>
-							<tr>
-								<td colspan="3">
-								<input type=text style="width:100%; height:100%"placeholder="1000 btye 이내 내용을 입력하십시오." id="inputReason" >
-									<textarea name="reason" style="width: 100%; height: 100%" placeholder="1000 btye 이내 내용을 입력하십시오."></textarea>
-								</td>
-							</tr>
-						</table>
-						<input type="submit" value="확인">
-						<input type="reset" value="초기화">
-					</form>
-					<br>
-					-->
 				</div>
 			</div>
 

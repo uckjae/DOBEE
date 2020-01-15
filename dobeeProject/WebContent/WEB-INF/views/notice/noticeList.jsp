@@ -63,33 +63,82 @@ body {
       <c:import url="/common/left.jsp"/>
     </nav>
     
+    
+   
+    
     <div class="page" >
       <!-- navbar-->
-      <c:import url="/common/top.jsp"/>
+       
       
-      <script> /*view 객체 생성*/
+      <c:import url="/common/top.jsp"/>
+     
+      
+      <script type="text/javascript"> 
 		window.onload = function(){
-			var app = new Vue ({
-				el : '#navbar',
-				data : []
-			})
-		}		
+
+			$.ajax({
+				url : "getApyCode.do",
+				dataType : "json",
+				success : function(data) {
+					var dArray = [];
+					dArray = data.apyCode;
+					for (var i = 0; i<dArray.length-1; i++) {
+						var option = document.createElement("option");
+						$("#apycodelist").append("<option value=" + dArray[i].apyCode + ">" + dArray[i].entry + "</option>");
+					}
+				}				
+			});
+
+			
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {	
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
+					}
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+				}
+			});
+			
+		}
+		
   	</script>
-  	   <div id="navbar">
-  	     <b-card-header header-tag="nav">
-  	       <b-nav card-header pills>
-	        <b-nav-item active>공지사항</b-nav-item>
-	       </b-nav>
-         </b-card-header>
-         </div>
+        
+        <div class ="container">
+	    <div id="navbar">
+			<ul class="nav nav-tabs">
+			  <li class="nav-item">
+			    <a class="nav-link active" href="breakApply.do">부재일정 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="extendApply.do">연장근무 신청</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="breakManage.do">부재 일정 관리</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
+			  </li>
+			</ul>
+		</div>
+	<br>
+	<h1 style="text-align: left">부재 신청</h1>
+   	<br>
       
       <div class="content" style="margin-right: 50px">
+      	
 		<div class="comment-form-wrap pt-xl-2">
 			<h1 class="text-center mb-3 bread">공지사항 리스트</h1>
 			<div class="table-responsive">
     
 	<!-- table-->
-	<!-- option display  -->
+	<!-- option display -->
 	<table id="myTable" class="dataTable display">
 		<thead>
 			<tr>
@@ -125,9 +174,10 @@ body {
 		</div>
 		</div>
 	  </div>
+	  </div>
 	</div>
 	
-	<c:import url="/common/bottom.jsp"/>
+	
 	
 	<!-- JavaScript files-->
     <script src="./vendor/popper.js/umd/popper.min.js"> </script>

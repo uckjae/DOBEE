@@ -194,14 +194,14 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
- 					  		<li><a><button type="button" onclick="updatePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+ 					  		<li><a><button type="button" onclick="updatePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
 					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
-								<li><a><button type="button" onclick="deletePjt()" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
+								<li><a><button type="button" onclick="deletePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
+								<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
 							</ul>
 							<div class="user-info">
 								<h2>${n.pjtName}</h2>
 					      		<span>${n.pjtProgress}</span>
-					      		<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
 							</div>
 						</div>
 					</div>
@@ -302,7 +302,7 @@ body
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     <script>
    
-	var deletePjt = function () {
+	var deletePjt = function (event) {
         
     	swal({
 			title: "프로젝트 삭제",
@@ -336,15 +336,18 @@ body
 					})
         }
 
-	var updatePjt = function () {
+	var updatePjt = function (event) {
+		var target = event;
+		console.log('이벤트????'+target);
+		//var pjtSeq = $(this).$("#pjtSeq").val();
+		///console.log('번호눈??'+pjtSeq);
+		
     	swal({
 			title: "프로젝트 수정",
 			text: "프로젝트를 수정하시겠습니까?",
 			icon: "warning" //"info,success,warning,error" 중 택1
 				}).then((YES) => {
 					console.log('yes 타니???')
-					var pjtSeq = $("#pjtSeq").val();
-					console.log('번호눈??'+pjtSeq);
 						
 						$.ajax({
 	    	 	 			url:"ajax/project/getPjt.do?pjtSeq="+pjtSeq,
@@ -368,12 +371,13 @@ body
 	    		    	 					console.log('ajax 통신 성공?');
 	    		    	 					console.log('유저유저'+user);
 		    		    	 				var userJsonData = JSON.parse(user);
+		    		    	 				console.log('제이슨???'+userJsonData);
 		    		    	 				//console.log('어케 나옴?'+userJsonData.mail);
-		    		    	 				$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+		    		    	 				/* $("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
 		    		        						+userJsonData.name+"</span><input type='hidden' name='mail[]' value='"+userJsonData.mail+"'>&nbsp;&nbsp;</i></div>");
 		    		        	
 		    		        				$("#pjtUserList").css("display","block");
-		    		        				$('#pjtModal').modal('show');
+		    		        				$('#pjtModal').modal('show'); */
 		    		        				
 		    		    	 				},
 		    		    	 			error : function() {

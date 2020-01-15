@@ -31,6 +31,8 @@ public class AjaxController_Project {
 	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
+		
+		System.out.println("추가할 때 메일 가져오니?"+pjtMembersMail.toString());
 		String responseData = "";
 		int result = 0;
 		int result2 = 0;
@@ -43,6 +45,7 @@ public class AjaxController_Project {
 		String pjtName = project.getPjtName();
 		
 		if(result > 0) {
+			//프로젝트 멤버 DB 저장
 			result2 = projectService.addProjectMember(pjtName, pjtMembersMail);
 			responseData = "success";
 		}
@@ -73,21 +76,16 @@ public class AjaxController_Project {
 	//특정 프로젝트 가져오기
 	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
 	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
-		System.out.println("이거 타니??");
 		Project project = null;
 		project = projectService.getProject(Integer.parseInt(pjtSeq));
-		System.out.println("프로젝트 가져오니??"+project.toString());
 		return project;
 	}
 	
 	//특정 프로젝트 멤버가져오기
 	@RequestMapping(value="getPjtMember.do", method=RequestMethod.POST)
-	public User getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
-		System.out.println("이거 타니??");
-		System.out.println("번호 가져오니?"+pjtSeq);
-		User pjtMember = null;
+	public List<String> getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		List<String> pjtMember = null;
 		pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
-		System.out.println("멤버 가져오니??"+pjtMember.toString());
 		return pjtMember;
 	}
 	
