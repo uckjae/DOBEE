@@ -28,8 +28,11 @@ import com.dobee.services.ApplyService;
 import com.dobee.services.ChatService;
 import com.dobee.services.GoogleVisionApi;
 import com.dobee.services.MemberService;
+import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
+import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -48,14 +51,19 @@ public class DoController {
     private SqlSession sqlsession;
     
     @Autowired
+    private ProjectService projectService;
+    
+    @Autowired
     private ApplyService applyService;
     
     @Autowired
     private ChatService chatService;
     
-    
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private DebitService debitService;
     
 
     //로그인
@@ -85,6 +93,15 @@ public class DoController {
     //비밀번호재설정
     public String resetPwd(){
         return null;
+    @RequestMapping("password.do")
+    public String resetPwd(HttpServletRequest req, Model model){
+    	System.out.println("DoController resetPwd() in!!");
+    	System.out.println(req.getParameter("mail"));
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	User user = userDao.getUser(req.getParameter("mail"));
+    	System.out.println(user.toString());
+    	model.addAttribute("user", user);
+        return "main/emailPwdReset";
     }
 
 
@@ -116,6 +133,43 @@ public class DoController {
     	model.addAttribute("userList", userList);
     	model.addAttribute("userInfoList", userInfoList);
     	return "admin/AdminMain";
+    }
+    
+    
+    //관리자 법인카드등록 뷰단 이동
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.GET)
+    public String adminAddDebit() {
+    	return "admin/AddDebit";
+    }
+    
+
+    //관리자 법인카드 목록 뷰단이동 및 불러오기
+    @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
+    public ModelAndView adminListDebit() {
+    	ModelAndView mav = new ModelAndView();
+    	ArrayList debitList = debitService.listDebit();
+    	mav.addObject("debitList", debitList);
+    	mav.setViewName("admin/ListDebit");
+    	return mav;
+    }
+    
+    
+    //관리자 법인카드 디비에 등록
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
+    public String adminAddDebitOK(Debit debit) {
+    	System.out.println("컨트롤 AdminDebit.do 응답 한다.");
+    	boolean check = debitService.addDebit(debit);
+    	
+    	System.out.println("여기까지 오는지 보자 :" + check);
+    	if(check) {
+    		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    	}else {
+    		System.out.println("컨트롤단 : 법인카드 등록 실패");
+    		return null;
+    		//등록 실패하면 아무일도 안일어남
+    	}
+    	//등록 성공하면 카드 목록 뷰단으로 이동
+    	return "redirect:ListDebit.do";
     }
     
     
@@ -301,24 +355,46 @@ public class DoController {
     public String absMg(){
         return "attend/breakManage";
     }
+    // 개인_부재일정관리 GET			0112 게다죽
+     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
+     public String absMg(Model model){
+    	List<BreakManageList> results = applyService.absMg();
+     	System.out.println("results: " + results );
+     	model.addAttribute("brkList", results);
+     	
+     	return "attend/breakManage";
+     }
 
 
-    //근무내역확인
+    // 개인_근무내역확인										&&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
     @RequestMapping("workManage.do")
     public String workChart(){
         return "attend/workManage";
     }
 
 
-    //부재관리
-    @RequestMapping("absManage.do")
+    // 매니저_부재관리 (isAuth update)			0114 게다죽
+    @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(){
         return "attend/absenceManage";
     }
+    
+    
+    // 매니저_부재관리 승인
+    @RequestMapping(value="absReqApprov.do", method=RequestMethod.POST)
+    public String absReqApprov(){
+        return null;
+    }
 
 
+    // 매니저_부재관리 거절			0114
+    @RequestMapping(value="absReqReject.do", method=RequestMethod.POST)
+    public String absReqReject(){
+        return null;
+    }
 
-    //연장근무관리 리스트
+
+    // 매니저_연장근무관리 리스트
     @RequestMapping("extendManage.do")
     public String overtiemSignList(){
         return "attend/extendManage";
@@ -331,7 +407,7 @@ public class DoController {
     }
 
 
-    //연장근무관리 거절
+    // 매니저_연장근무관리 거절
     public String overtimeSignReject(){
         return null;
     }
@@ -369,7 +445,7 @@ public class DoController {
     @RequestMapping("goVision.do")
     public String goGoogleApi(){
     	System.out.println("goGoogleApi 함수요청");
-		/* GoogleVisionApi vision = new GoogleVisionApi(); 빨간줄 간거 커밋하면 안돼요...*/
+    	GoogleVisionService vision = new GoogleVisionService();
     	
     	System.out.println(" vision 서비스단 통과");
     	
@@ -402,7 +478,7 @@ public class DoController {
 
 
     //프로젝트메인
-    @RequestMapping("projectMain.do")
+    @RequestMapping("pjtMain.do")
     public String projectList(Project project,Model model){
     	
     		List<Project>list=null;
@@ -417,8 +493,19 @@ public class DoController {
 
 
     //프로젝트생성
-    public String addProject(){
-        return null;
+    @RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
+    public String addProject(Project project){
+    	
+    	int result = 0;
+    	String viewpage = "";
+    	result = projectService.addProject(project);
+    	
+    	if(result > 0) {
+    		viewpage = "redirect:/pjtMain.do";
+    	}else {
+    		viewpage = "project/pjtChart";
+    	}
+    	 return viewpage;
     }
 
 
@@ -522,11 +609,15 @@ public class DoController {
     	for(int i = 0; i < groupChatRoomList.size(); i++) {
     		roomNameList.add(groupChatRoomList.get(i).getChatRoomName());
     	}
+
     	model.addAttribute("roomNameList", roomNameList);
     	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
+    	
+    	//기본 나에게 채팅으로 셋팅
+    	model.addAttribute("chatType", "SELF");
     	
     	return "chat/chatMain";
     }
@@ -534,22 +625,69 @@ public class DoController {
     
     //그룹 채팅 메인
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
-    public String chatGroup(@RequestParam(value="roomName") String roomName) {
-    	return null;
+    public String chatGroup(@RequestParam(value="roomName") String roomName, Model model, Principal principal) {
+    	String mail = principal.getName();
+    	User user = memberService.getUser(mail);
+    	//회원 정보 저장하기
+    	model.addAttribute("user", user);    	
+    	//이 회원이 속한 채팅방 목록 가져오기
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<String> roomNameList = new ArrayList<String>();
+    	
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
+    	}
+
+    	model.addAttribute("roomNameList", roomNameList);
+    	
+    	
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	model.addAttribute("userList", userList);
+    	
+    	//해당 그룹 채팅방으로 셋팅
+    	model.addAttribute("roomName", roomName);
+    	model.addAttribute("chatType", "GROUP");
+    	
+    	return "chat/chatMain_group";
+    }
+    
+    //DM 채팅 메인
+    @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
+    public String chatDm(@RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
+    	String mail = principal.getName();
+    	User user = memberService.getUser(mail);
+    	//회원 정보 저장하기
+    	model.addAttribute("user", user);    	
+    	//이 회원이 속한 채팅방 목록 가져오기
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<String> roomNameList = new ArrayList<String>();
+    	
+    	for(int i = 0; i < chatRoomList.size(); i++) {
+    		roomNameList.add(chatRoomList.get(i).getChatRoomName());
+    	}
+
+    	model.addAttribute("roomNameList", roomNameList);
+    	
+    	
+    	//사원 목록 가져오기
+    	List<User> userList = memberService.getUserList();
+    	model.addAttribute("userList", userList);
+    	
+    	//해당 DM 채팅방으로 셋팅
+    	model.addAttribute("dmName", dmName);
+    	model.addAttribute("chatType", "DM");
+    	
+    	return "chat/chatMain_DM";
     }
     
   
     
-    
-//    //전체 채팅 채팅방 가져오기
-//    @RequestMapping("groupChat.do")
-//    public String groupChatMain() {
-//    	return "chat/chatMain_group";
-//    }
+  
     
     
     //관리자_사원추가 페이지
-   @RequestMapping("addUser.do")
+   @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
 	   System.out.println("Docontroller addUser() in");
 	   return "admin/AddMember";
@@ -557,10 +695,12 @@ public class DoController {
     
     
     //관리자_사원추가 서비스
-   @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
-   @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public String addUser(User user, UserInfo userInfo) {
-    	memberService.addUser(user, userInfo);
+   	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
+    public String addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
+   		memberService.addUser(user, userInfo, req);
+   		
+   		
     	return "admin/AdminMain";
     }
     
