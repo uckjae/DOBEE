@@ -1,5 +1,9 @@
 package com.dobee.vo.notice;
 
+
+
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,14 +15,16 @@ import lombok.ToString;
 @ToString
 @Data
 public class Notice {
-    private int notSeq;
+    private int notSeq; //글번호
     private String title;
     private String content;
     private Date regDate;
-    private int count;
+    private int count; //조회수
     private int nfSeq;
     private String saveName;
     //private String orgName;
     private List<CommonsMultipartFile> files;
+    
+    
     
 }
