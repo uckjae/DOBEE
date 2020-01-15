@@ -93,8 +93,8 @@ public class DoController {
     }
 
     //비밀번호재설정
-    public String resetPwd(){
-        return null;
+    //public String resetPwd(){
+      //  return null;
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
     	System.out.println("DoController resetPwd() in!!");
@@ -700,7 +700,7 @@ public class DoController {
    	@DateTimeFormat(pattern = "yyyy-MM-dd")
     @RequestMapping(value= "addUser.do", method = RequestMethod.POST)
     public String addUser(User user, UserInfo userInfo, MultipartHttpServletRequest req) {
-   		memberService.addUser(user, userInfo, req);
+   		//memberService.addUser(user, userInfo, req);
    		
    		
     	return "admin/AdminMain";
