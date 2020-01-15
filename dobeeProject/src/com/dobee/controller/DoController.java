@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +52,9 @@ public class DoController {
     @Autowired
     private ChatService chatService;
     
+    public void setSqlsession(SqlSession sqlsession) {
+    	this.sqlsession = sqlsession;
+    }
     
     @Autowired
     private MemberService memberService;
@@ -369,7 +371,7 @@ public class DoController {
     @RequestMapping("goVision.do")
     public String goGoogleApi(){
     	System.out.println("goGoogleApi 함수요청");
-		/* GoogleVisionApi vision = new GoogleVisionApi(); 빨간줄 간거 커밋하면 안돼요...*/
+    	GoogleVisionApi vision = new GoogleVisionApi();
     	
     	System.out.println(" vision 서비스단 통과");
     	
@@ -557,12 +559,7 @@ public class DoController {
     
     
     //관리자_사원추가 서비스
-   @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
-   @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public String addUser(User user, UserInfo userInfo) {
-    	memberService.addUser(user, userInfo);
-    	return "admin/AdminMain";
-    }
+    
     
     
 }
