@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dobee.dao.PaymentDao">
+
+	<!-- 법인 카드 등록 -->
+	<insert id="addDebit" parameterType="com.dobee.vo.Debit">
+		INSERT INTO debit(cardNum, corp, name, nickName,  entry,  valDate) 
+		VALUES(#{cardNum}, #{corp}, #{name}, #{nickName},  #{entry} , #{valDate})
+	</insert>
+ 
+ 
+ 	<!-- 법인 카드 목록 불러오기 -->
+ 	<select id="listDebit" resultType="com.dobee.vo.Debit">
+ 		SELECT * FROM DEBIT
+ 	</select> 
+ 	
+ 	
+ 	<!-- 비용 코드 불러오기-->
+ 	<select id="debitCode" resultType="com.dobee.vo.CostCode">
+ 		SELECT * FROM COSTCODE
+ 	</select>
+ 	
+ 	
+ 	<!-- 비용 신청 등록  -->
+ 	<insert id="addCostApply" parameterType="com.dobee.vo.CostList">
+ 		insert into costlist (regitDate, useDate, useAt, cost, detail, costCode, cardNum, mail) 
+ 		values(curdate(), #{useDate},#{useAt}, #{cost}, #{detail}, #{costCode}, #{cardNum}, #{mail})
+ 	</insert>
+
+</mapper>
