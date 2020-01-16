@@ -77,11 +77,13 @@
 						신청</a></li>
 				<li class="nav-item"><a class="nav-link" href="breakManage.do">부재
 						일정 관리</a></li>
-		
 				<li class="nav-item"><a class="nav-link" href="workManage.do">근무
 						내역 확인</a></li>
-				<li class="nav-item"><a class="nav-link active"
-					href="extManage.do">연장근무 관리_매니저</a></li>
+						
+				<li class="nav-item">
+				    <a class="nav-link" href="absManage.do">부재신청 관리_매니저</a></li>		
+				<li class="nav-item">
+					<a class="nav-link active"	href="extManage.do">연장근무 관리_매니저</a></li>
 			</ul>
 		</div>
 		

@@ -264,7 +264,7 @@
 			
 			// 연차 정보 가져오기
 			$.ajax ({
-				url : "getVacationInBM.do?",
+				url : "getVacationInBM.do",
 				dataType : "json",
 				success : function (data) {
 					$('#usedVacation').text(data.totalVacation[0].totalBreak)
@@ -274,7 +274,7 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
-ㅠ
+
 			// 년도 Option Ajax Loading
 			$.ajax({
 				url : "breakYearList.do",

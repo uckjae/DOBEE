@@ -13,15 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +34,7 @@ import com.dobee.vo.Apply;
 import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.member.BreakManageList;
+import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -332,7 +330,7 @@ public class DoController {
     
     // 부재일정신청 POST 0112			게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, HttpServletRequest req){
+    public String absApplyPost(Apply apply){
     	String result = applyService.absApply(apply);
     	// System.out.println("봐봐  : " + result);
     	
@@ -684,7 +682,23 @@ public class DoController {
     }
    	
    	
-  
+  //팀리스트
+   @RequestMapping(value="teamList.do", method= RequestMethod.GET)
+   public String teamList(Model model) {
+	   System.out.println("DoController teamList() GET in!!");
+	   List<TeamList> teamList = memberService.teamList();
+	   model.addAttribute("teamList", teamList);
+	   return "admin/TeamManagement";
+   }
+   
+   
+   @RequestMapping(value="teamList.do", method= RequestMethod.POST)
+   public String teamList(TeamList teamList) {
+	   System.out.println("DoController teamList() Post in!!");
+	   
+	   
+	   return "admin/TeamManagement";
+   }
 
     
     

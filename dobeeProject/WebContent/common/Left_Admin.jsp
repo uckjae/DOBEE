@@ -36,6 +36,7 @@ body {
 					<ul id="exampledropdownDropdown" class="collapse list-unstyled ">
 						<li><a href="adminMain.do">사원 목록</a></li>
 						<li><a href="addUser.do">사원 등록</a></li>
+						<li><a href="teamList.do">팀관리</a></li>
 					</ul>
 				</li>
 				<li><a href="#"> <i class="fas fa-clipboard-list fa-2x" style="color:#888888;">&nbsp;권한관리</i>
