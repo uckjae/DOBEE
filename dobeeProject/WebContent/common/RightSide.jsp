@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-</head>
-<body>
-			<aside id="sidebar-right" class="sidebar-right">
+<aside id="sidebar-right" class="sidebar-right">
 				<div class="nano">
 					<div class="nano-content">
 						<a href="#" class="mobile-close visible-xs">
@@ -73,6 +67,3 @@
 					</div>
 				</div>
 			</aside>
-
-</body>
-</html>

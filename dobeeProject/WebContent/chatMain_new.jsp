@@ -18,7 +18,7 @@
 
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Map Builder</h2>
+						<h2>채팅</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -27,15 +27,13 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Maps</span></li>
+								<li><span>채팅</span></li>
 								<li><span>Builder</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
-
-
 
 					<!-- start: page -->
 					<section class="content-with-menu" data-theme-gmap-builder>
@@ -62,7 +60,7 @@
 
 										<div class="inner-menu-content">
 
-											<p class="title">Configuration</p>
+											<p class="title">채팅 목록</p>
 
 											<div class="form-group">
 												<div class="row">
@@ -146,33 +144,6 @@
 
 											<hr class="separator" />
 
-											<p class="title">Settings</p>
-
-											
-
-											<div class="form-group">
-												<div class="row">
-													<label class="col-xs-12 control-label" for="maptheme">Map Theme</label>
-													<div class="col-xs-12">
-														<select id="maptheme" class="form-control mb-md" data-plugin-selectTwo data-plugin-options='{ "minimumResultsForSearch": -1 }' data-builder-field="maptheme">
-															<option value="false" selected="selected">Default</option>
-														</select>
-													</div>
-												</div>
-											</div>
-
-											<hr class="separator" />
-
-											<div class="form-group">
-												<div class="row">
-													<div class="col-sm-6">
-														<button class="btn btn-primary btn-block mb-lg" type="button" data-toggle="modal" data-target="#ModalGetCode">Get Code</button>
-													</div>
-													<div class="col-sm-6">
-														<button class="btn btn-primary btn-block mb-lg" type="button" data-toggle="modal" data-target="#ModalPreview">Preview</button>
-													</div>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -314,31 +285,6 @@
 			</aside>
 		</section>
 
-		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-		
-		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<script src="assets/javascripts/maps/snazzy.themes.js"></script>
-		
-		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
-		
-		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
-
-
-		<!-- Examples -->
-		<script src="assets/javascripts/maps/examples.map.builder.js"></script>
+		<c:import url="/common/BottomTag.jsp"/>
 	</body>
 </html>
