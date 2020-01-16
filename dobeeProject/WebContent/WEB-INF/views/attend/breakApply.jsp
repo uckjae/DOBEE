@@ -5,6 +5,23 @@
 <html class="fixed">
 <head>
 
+	<!-- Google Calenar -->
+	<link href='./packages/core/main.css' rel='stylesheet' />
+	<link href='./packages/list/main.css' rel='stylesheet' />
+	<script src='./packages/core/main.js'></script>
+	<script src='./packages/list/main.js'></script>
+	<script src='./packages/core/main.js'></script>
+	<script src='./packages/interaction/main.js'></script>
+	<script src='./packages/daygrid/main.js'></script>
+	<script src='./packages/list/main.js'></script>
+	<script src='./packages/google-calendar/main.js'></script>
+	
+	<!-- datetime picker -->
+	<script src="./plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
+	<link rel="stylesheet" href="./plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+
 <c:import url="/common/HeadTag.jsp"/>
 
 </head>
@@ -12,18 +29,18 @@
 		<section class="body">
 
 			<!-- start: header -->
-			<c:import url="./common/Top.jsp"/>
+			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
 
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
-				<c:import url="./common/Side.jsp"/>
+				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>부재 신청</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -40,22 +57,6 @@
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					<div id="navbar">
-						<ul class="nav nav-tabs">
-							<li class="nav-item"><a class="nav-link active"
-								href="breakApply.do">부재일정 신청</a></li>
-							<li class="nav-item"><a class="nav-link" href="extendApply.do">연장근무
-									신청</a></li>
-							<li class="nav-item"><a class="nav-link" href="breakManage.do">부재
-									일정 관리</a></li>
-							<li class="nav-item"><a class="nav-link" href="workManage.do">근무
-									내역 확인</a></li>
-						</ul>
-					</div>
-					
-					<br>
-					<h1>부재 신청</h1>
-					<br>
 					
 					
 					<form action="breakApply.do" method="post">
@@ -114,16 +115,127 @@
 				</section>
 			</div>
 
-
-
-
 			<!-- 오른쪽 사이드바!! -->
-		<c:import url="./common/RightSide.jsp"/>
-	
+		<c:import url="/common/RightSide.jsp"/>
 			
 			<!-- 오른쪽 사이드바 끝!! -->
 		</section>
 
 		<c:import url="/common/BottomTag.jsp"/>
+		
+		<script>
+			window.onload = function(){
+	
+				$.ajax({
+					url : "getApyCode.do",
+					dataType : "json",
+					success : function(data) {
+						var aArray = [];
+						aArray = data.apyCode;
+						for (var i=0; i<aArray.length-1; i++) {
+							var option = document.createElement("option")
+							$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
+						}					
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+				$.ajax({
+					url : "getApprovalList.do",
+					dataType : "json",
+					success : function(data) {			
+						var dArray = [];
+						dArray = data.renewedList;
+						for (var i =0; i<dArray.length; i++) {
+							var option = document.createElement("option")
+							$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
+						}
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+
+			 	$('#datetimepickerStart').datetimepicker({
+		            format : 'YYYY-MM-DD HH:mm' 
+		        });
+		
+		        $('#datetimepickerEnd').datetimepicker({
+		            format : 'YYYY-MM-DD HH:mm' 
+		        });
+		        console.log("이거 돌아요?2");
+
+	
+			}
+	  	</script>
+		
+		<script>
+
+			document.addEventListener('DOMContentLoaded', function() {
+				var calendarEl = document.getElementById('calendar');
+	
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					plugins : [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
+					header : {
+						left : 'prev, next, today',
+						center : 'title',
+						right : 'dayGridMonth, dayGridWeek, listMonth'
+					},
+	
+					navLinks : true, // can click day/week names to navigate views
+					editable : false,
+					eventLimit : false, // allow "more" link when too many events
+					businessHours : true,
+					events : [ {
+						title : 'All Day Event',
+						start : '2019-08-01'
+					}, {
+						title : 'Long Event',
+						start : '2019-08-07',
+						end : '2019-08-10'
+					}, {
+						groupId : 999,
+						title : 'Repeating Event',
+						start : '2019-08-09T16:00:00'
+					}, {
+						groupId : 999,
+						title : 'Repeating Event',
+						start : '2019-08-16T16:00:00'
+					}, {
+						title : 'Conference',
+						start : '2019-08-11',
+						end : '2019-08-13'
+					}, {
+						title : 'Meeting',
+						start : '2019-08-12T10:30:00',
+						end : '2019-08-12T12:30:00'
+					}, {
+						title : 'Lunch',
+						start : '2019-08-12T12:00:00'
+					}, {
+						title : 'Meeting',
+						start : '2019-08-12T14:30:00'
+					}, {
+						title : 'Happy Hour',
+						start : '2019-08-12T17:30:00'
+					}, {
+						title : 'Dinner',
+						start : '2019-08-12T20:00:00'
+					}, {
+						title : 'Birthday Party',
+						start : '2019-08-13T07:00:00'
+					}, {
+						title : 'Click for Google',
+						url : 'http://google.com/',
+						start : '2019-08-28'
+					} ]
+				});
+	
+				calendar.render();
+			});
+		</script>
+		
 	</body>
 </html>

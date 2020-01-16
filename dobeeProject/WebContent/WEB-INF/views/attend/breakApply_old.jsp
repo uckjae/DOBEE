@@ -31,21 +31,7 @@
 	</style>
 </head>
 
-	<!-- Main File-->
-	<script src="./js/front.js"></script>
-	<script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
-	<!-- JavaScript files-->
-	<script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-	<!-- Main File-->
-	<link href='./packages/core/main.css' rel='stylesheet' />
-	<link href='./packages/daygrid/main.css' rel='stylesheet' />
-	<link href='./packages/list/main.css' rel='stylesheet' />
-		
-	<!-- datetime picker -->
-	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-  	
+	
 <body>
 
 	<!-- Side Navbar -->
@@ -156,6 +142,25 @@
 	
 	<!-- datetime picker -->
 	<script src="./js/bootstrap-datetimepicker.min.js"></script>
+	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	
+	<!-- Main File-->
+	<script src="./js/front.js"></script>
+	<script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
+	
+	<!-- JavaScript files-->
+	<script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+	
+	<!-- Main File-->
+	<link href='./packages/core/main.css' rel='stylesheet' />
+	<link href='./packages/daygrid/main.css' rel='stylesheet' />
+	<link href='./packages/list/main.css' rel='stylesheet' />
+		
+	<!-- datetime picker -->
+	
+  	
 
 
 	<script>
