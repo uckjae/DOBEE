@@ -2,6 +2,7 @@ package com.dobee.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
+import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 
@@ -32,6 +34,9 @@ public class AjaxControllerAdmin {
 	
 	@Autowired
 	JavaMailSender javaMailSender;
+	
+	@Autowired
+	MemberService memberService;
 	
 	
 	@Autowired
@@ -91,5 +96,19 @@ public class AjaxControllerAdmin {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	@RequestMapping("getTeam.do")
+	public TeamList getTeam(HttpServletRequest req, String teamCode) {
+		System.out.println("AjaxControllerAdmin getTeam()");
+		Enumeration enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println(enu.nextElement());
+			
+		}
+		System.out.println(teamCode);
+		TeamList team = memberService.getTeam(teamCode);
+		return team;
 	}
 }

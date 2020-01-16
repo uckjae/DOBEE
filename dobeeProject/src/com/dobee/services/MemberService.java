@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dobee.dao.UserDao;
+import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 
@@ -108,6 +109,27 @@ public class MemberService {
     public void updatePassword(String mail, String password) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.updatePassword(mail, password);
+    }
+
+    
+    
+    //팀 리스트 불러오기
+    public List<TeamList> teamList() {
+    	System.out.println("MemberService teamList()");
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	List<TeamList> teamList = userDao.teamList();
+    	
+    	return teamList;
+    }
+    
+    //팀 불러오기
+    public TeamList getTeam(String teamCode) {
+    	System.out.println("MemberService getTeam()");
+    	System.out.println(teamCode);
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	TeamList team = userDao.getTeam(teamCode);
+    	System.out.println(team.toString());
+    	return team;
     }
 
 }
