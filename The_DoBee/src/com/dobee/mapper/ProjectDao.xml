@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dobee.dao.ProjectDao">
+
+<select id ="getPjtList" resultType="com.dobee.vo.project.Project">
+ SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
+</select>
+
+<insert id="mkPjt" parameterType="com.dobee.vo.project.Project"> 
+	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},#{pjtProgress} )
+</insert>
+
+<!-- 프로젝트 생성시 참여 멤버 추가 01.15.알파카 -->
+<insert id="mkPjtMember" parameterType="hashMap">
+	INSERT INTO PROJECTMEMBER(PJTSEQ, MAIL) VALUES ((SELECT PJTSEQ FROM PROJECT WHERE PJTNAME=#{pjtName}), #{mail})
+</insert>
+
+<!-- 프로젝트 삭제  01.15.알파카 -->
+<delete id="deletePjt" parameterType="integer">
+	DELETE FROM PROJECT WHERE pjtSeq = #{pjtSeq}
+</delete>
+
+<!-- 프로젝트참여 멤버 삭제  01.15.알파카  -->
+<delete id="deleteMember" parameterType="integer">
+	DELETE FROM PROJECTMEMBER WHERE pjtSeq = #{pjtSeq}
+</delete>
+
+<!-- 특정 프로젝트 가져오기   01.15.알파카  -->
+<select id="getPjt" resultType="com.dobee.vo.project.Project">
+	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT WHERE PJTSEQ=#{pjtSeq}
+</select>
+
+<!-- 특정 프로젝트 멤버(이름, 메일) 가져오기 01.15.알파카 -->
+<select id="getPjtMember" resultType="String">
+	SELECT U.MAIL, U.NAME FROM USER U
+	LEFT OUTER JOIN PROJECTMEMBER P
+	ON U.MAIL = P.MAIL WHERE PJTSEQ=#{pjtSeq}
+</select>
+
+<resultMap type="com.dobee.vo.project.Project" id="Project">
+    <result column="PJTSEQ" property="pjtSeq"/>
+    <result column="PJTNAME" property="pjtName"/>
+    <result column="PJTSTARTAT" property="pjtStartAt"/>
+    <result column="PJTENDAT" property="pjtEndAt"/>
+    <result column="PJTPROGRESS" property="pjtProgress"/>
+</resultMap>
+ 
+<resultMap type="com.dobee.vo.project.Task" id="Task">
+    <result column="TSKSEQ" property="tSeq"/>
+    <result column="TITLE" property="title"/>
+    <result column="PROGRESS" property="progress"/>
+    <result column="IMPORT" property="important"/>
+    <result column="STARTAT" property="startAt"/>
+    <result column="ENDAT" property="endAt"/>
+    <result column="MAIL" property="mail"/>
+    <result column="PJTSEQ" property="pSeq"/>
+    <collection property="project" resultMap="Project"/>
+</resultMap>
+<select id ="getProject" resultType="com.dobee.vo.project.Task">
+
+SELECT p.PJTSEQ, t.PJTSEQ FROM PROJECT p 
+JOIN task t ON p.pjtseq = t.pjtseq 
+WHERE p.pjtseq = #{pjtSeq} 
+
+</select>
+
+
+
+</mapper>
