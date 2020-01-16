@@ -599,7 +599,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain_new";
+    	return "chat/chatMain";
     }
     
     
