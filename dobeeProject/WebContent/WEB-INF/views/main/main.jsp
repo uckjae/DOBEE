@@ -868,7 +868,7 @@
 		</section>
 	<!-- end : main Content -->
 	
-		<%-- <c:import url="/common/BottomTag.jsp"></c:import> --%>
+		<c:import url="/common/BottomTag.jsp"></c:import>
 		
 		<c:import url="/common/BottomTag.jsp"></c:import>
 	</body>
