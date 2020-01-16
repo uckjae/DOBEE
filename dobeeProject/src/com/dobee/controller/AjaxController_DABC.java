@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
 
 import com.dobee.dao.UserDao;
+import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
@@ -37,7 +38,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 개인_부재신청 결재자 불러오기		COMPLETE
+	// 개인_부재/연장신청 결재자 불러오기		COMPLETE
 	@RequestMapping("getApprovalList.do")
 	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -123,7 +124,7 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인_부재일정확인 - 승인여부 별  List 출력		011			~ing
+	// Ajax 개인_부재일정확인 - 승인여부 별  List 출력		0113			~ing
 	@RequestMapping("getBreakListByIsAuth.do")
 	public View getBreakListByIsAuth (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -131,6 +132,19 @@ public class AjaxController_DABC {
 		map.addAttribute("byIsAuth", results);
 		
 		return jsonview;
+	}
+	
+	
+	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116			~ing
+	@RequestMapping("getExtList.do")
+	public View getExtListToCalendar (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Apply> results = userDao.getExtListToCalendar(auth.getName());
+		System.out.println("결과, getExtListToCalendar : "+ results);
+		map.addAttribute("ExtListTC", results);
+		
+		return jsonview;
+		
 	}
 	
 	
@@ -159,10 +173,8 @@ public class AjaxController_DABC {
 	// 개인_남은/사용 연차 불러오기				COMPLETE
 	@RequestMapping("getVacationInBM.do")
 	public View getVacationInBM (Model map, Authentication auth) {
-		System.out.println("도는지 확인");
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Break> results = userDao.getVacationInBM(auth.getName());
-		System.out.println("결과 확인 : " + results);
 		map.addAttribute("totalVacation", results);
 		
 		return jsonview;

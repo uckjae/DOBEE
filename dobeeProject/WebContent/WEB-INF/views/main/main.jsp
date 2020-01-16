@@ -1,414 +1,875 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html class="fixed">
+<head>
 
-<html>
-  <head>
-    <c:import url="/common/tag.jsp"/>
-  </head>
-  
- <style> @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+<c:import url="/common/HeadTag.jsp"/>
 
-body {
-   font-family: 'Noto Serif KR', serif;
-}
+</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<c:import url="/common/Top.jsp"/>
+			<!-- end: header -->
+
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<c:import url="/common/Side.jsp"/>
+				<!-- end: sidebar -->
+
+				<!-- start : main Content -->
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>메인임니다?????</h2>
+					
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+								<li><span>Dashboard</span></li>
+							</ol>
+					
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+						</div>
+					</header>
+
+						<div class="row">
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">Best Seller</h2>
+									<p class="panel-subtitle">Customize the graphs as much as you want, there are so many options and features to display information using JSOFT Admin Template.</p>
+								</header>
+								<div class="panel-body">
+
+									<!-- Flot: Basic -->
+									<div class="chart chart-md" id="flotDashBasic"></div>
+									<script>
+
+										var flotDashBasicData = [{
+											data: [
+												[0, 170],
+												[1, 169],
+												[2, 173],
+												[3, 188],
+												[4, 147],
+												[5, 113],
+												[6, 128],
+												[7, 169],
+												[8, 173],
+												[9, 128],
+												[10, 128]
+											],
+											label: "Series 1",
+											color: "#0088cc"
+										}, {
+											data: [
+												[0, 115],
+												[1, 124],
+												[2, 114],
+												[3, 121],
+												[4, 115],
+												[5, 83],
+												[6, 102],
+												[7, 148],
+												[8, 147],
+												[9, 103],
+												[10, 113]
+											],
+											label: "Series 2",
+											color: "#2baab1"
+										}, {
+											data: [
+												[0, 70],
+												[1, 69],
+												[2, 73],
+												[3, 88],
+												[4, 47],
+												[5, 13],
+												[6, 28],
+												[7, 69],
+												[8, 73],
+												[9, 28],
+												[10, 28]
+											],
+											label: "Series 3",
+											color: "#734ba9"
+										}];
+
+										// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
+
+									</script>
+
+								</div>
+							</section>
+						</div>
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+									<h2 class="panel-title">Server Usage</h2>
+									<p class="panel-subtitle">It's easy to create custom graphs on JSOFT Admin Template, there are several graph types that you can use, such as lines, bars, pie charts, etc...</p>
+								</header>
+								<div class="panel-body">
+
+									<!-- Flot: Curves -->
+									<div class="chart chart-md" id="flotDashRealTime"></div>
+
+								</div>
+							</section>
+						</div>
+					</div>
+
+					<!-- start: page -->
+					<div class="row">
+						<div class="col-md-6 col-lg-12 col-xl-6">
+							<section class="panel">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-lg-8">
+											<div class="chart-data-selector" id="salesSelectorWrapper">
+												<h2>
+													Sales:
+													<strong>
+														<select class="form-control" id="salesSelector">
+															<option value="JSOFT Admin" selected>JSOFT Admin</option>
+															<option value="JSOFT Drupal" >JSOFT Drupal</option>
+															<option value="JSOFT Wordpress" >JSOFT Wordpress</option>
+														</select>
+													</strong>
+												</h2>
+
+												<div id="salesSelectorItems" class="chart-data-selector-items mt-sm">
+													<!-- Flot: Sales JSOFT Admin -->
+													<div class="chart chart-sm" data-sales-rel="JSOFT Admin" id="flotDashSales1" class="chart-active"></div>
+													<script>
+
+														var flotDashSales1Data = [{
+														    data: [
+														        ["Jan", 140],
+														        ["Feb", 240],
+														        ["Mar", 190],
+														        ["Apr", 140],
+														        ["May", 180],
+														        ["Jun", 320],
+														        ["Jul", 270],
+														        ["Aug", 180]
+														    ],
+														    color: "#0088cc"
+														}];
+
+														// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
+
+													</script>
+
+													<!-- Flot: Sales JSOFT Drupal -->
+													<div class="chart chart-sm" data-sales-rel="JSOFT Drupal" id="flotDashSales2" class="chart-hidden"></div>
+													<script>
+
+														var flotDashSales2Data = [{
+														    data: [
+														        ["Jan", 240],
+														        ["Feb", 240],
+														        ["Mar", 290],
+														        ["Apr", 540],
+														        ["May", 480],
+														        ["Jun", 220],
+														        ["Jul", 170],
+														        ["Aug", 190]
+														    ],
+														    color: "#2baab1"
+														}];
+
+														// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
+
+													</script>
+
+													<!-- Flot: Sales JSOFT Wordpress -->
+													<div class="chart chart-sm" data-sales-rel="JSOFT Wordpress" id="flotDashSales3" class="chart-hidden"></div>
+													<script>
+
+														var flotDashSales3Data = [{
+														    data: [
+														        ["Jan", 840],
+														        ["Feb", 740],
+														        ["Mar", 690],
+														        ["Apr", 940],
+														        ["May", 1180],
+														        ["Jun", 820],
+														        ["Jul", 570],
+														        ["Aug", 780]
+														    ],
+														    color: "#734ba9"
+														}];
+
+														// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
+
+													</script>
+												</div>
+
+											</div>
+										</div>
+										<div class="col-lg-4 text-center">
+											<h2 class="panel-title mt-md">Sales Goal</h2>
+											<div class="liquid-meter-wrapper liquid-meter-sm mt-lg">
+												<div class="liquid-meter">
+													<meter min="0" max="100" value="35" id="meterSales"></meter>
+												</div>
+												<div class="liquid-meter-selector" id="meterSalesSel">
+													<a href="#" data-val="35" class="active">Monthly Goal</a>
+													<a href="#" data-val="28">Annual Goal</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+						<div class="col-md-6 col-lg-12 col-xl-6">
+							<div class="row">
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-life-ring"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Support Questions</h4>
+														<div class="info">
+															<strong class="amount">1281</strong>
+															<span class="text-primary">(14 unread)</span>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase">(view all)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-secondary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-secondary">
+														<i class="fa fa-usd"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Profit</h4>
+														<div class="info">
+															<strong class="amount">$ 14,890.30</strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase">(withdraw)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-tertiary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-tertiary">
+														<i class="fa fa-shopping-cart"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Today's Orders</h4>
+														<div class="info">
+															<strong class="amount">38</strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase">(statement)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-quartenary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-quartenary">
+														<i class="fa fa-user"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Today's Visitors</h4>
+														<div class="info">
+															<strong class="amount">3765</strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase">(report)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					
+
+					<div class="row">
+						<div class="col-xl-3 col-lg-6">
+							<section class="panel panel-transparent">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">My Profile</h2>
+								</header>
+								<div class="panel-body">
+									<section class="panel panel-group">
+										<header class="panel-heading bg-primary">
+
+											<div class="widget-profile-info">
+												<div class="profile-picture">
+													<img src="assets/images/!logged-user.jpg">
+												</div>
+												<div class="profile-info">
+													<h4 class="name text-semibold">John Doe</h4>
+													<h5 class="role">Administrator</h5>
+													<div class="profile-footer">
+														<a href="#">(edit profile)</a>
+													</div>
+												</div>
+											</div>
+
+										</header>
+										<div id="accordion">
+											<div class="panel panel-accordion panel-accordion-first">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1One">
+															<i class="fa fa-check"></i> Tasks
+														</a>
+													</h4>
+												</div>
+												<div id="collapse1One" class="accordion-body collapse in">
+													<div class="panel-body">
+														<ul class="widget-todo-list">
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" checked="" id="todoListItem1" class="todo-check">
+																	<label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" id="todoListItem2" class="todo-check">
+																	<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" id="todoListItem3" class="todo-check">
+																	<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" id="todoListItem4" class="todo-check">
+																	<label class="todo-label" for="todoListItem4"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" id="todoListItem5" class="todo-check">
+																	<label class="todo-label" for="todoListItem5"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+															<li>
+																<div class="checkbox-custom checkbox-default">
+																	<input type="checkbox" id="todoListItem6" class="todo-check">
+																	<label class="todo-label" for="todoListItem6"><span>Lorem ipsum dolor sit amet</span></label>
+																</div>
+																<div class="todo-actions">
+																	<a class="todo-remove" href="#">
+																		<i class="fa fa-times"></i>
+																	</a>
+																</div>
+															</li>
+														</ul>
+														<hr class="solid mt-sm mb-lg">
+														<form method="get" class="form-horizontal form-bordered">
+															<div class="form-group">
+																<div class="col-sm-12">
+																	<div class="input-group mb-md">
+																		<input type="text" class="form-control">
+																		<div class="input-group-btn">
+																			<button type="button" class="btn btn-primary" tabindex="-1">Add</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<div class="panel panel-accordion">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1Two">
+															 <i class="fa fa-comment"></i> Messages
+														</a>
+													</h4>
+												</div>
+												<div id="collapse1Two" class="accordion-body collapse">
+													<div class="panel-body">
+														<ul class="simple-user-list mb-xlg">
+															<li>
+																<figure class="image rounded">
+																	<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
+																</figure>
+																<span class="title">Joseph Doe Junior</span>
+																<span class="message">Lorem ipsum dolor sit.</span>
+															</li>
+															<li>
+																<figure class="image rounded">
+																	<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle">
+																</figure>
+																<span class="title">Joseph Junior</span>
+																<span class="message">Lorem ipsum dolor sit.</span>
+															</li>
+															<li>
+																<figure class="image rounded">
+																	<img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle">
+																</figure>
+																<span class="title">Joe Junior</span>
+																<span class="message">Lorem ipsum dolor sit.</span>
+															</li>
+															<li>
+																<figure class="image rounded">
+																	<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
+																</figure>
+																<span class="title">Joseph Doe Junior</span>
+																<span class="message">Lorem ipsum dolor sit.</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+
+								</div>
+							</section>
+						</div>
+						<div class="col-xl-3 col-lg-6">
+							<section class="panel panel-transparent">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">My Stats</h2>
+								</header>
+								<div class="panel-body">
+									<section class="panel">
+										<div class="panel-body">
+											<div class="small-chart pull-right" id="sparklineBarDash"></div>
+											<script type="text/javascript">
+												var sparklineBarDashData = [5, 6, 7, 2, 0, 4 , 2, 4, 2, 0, 4 , 2, 4, 2, 0, 4];
+											</script>
+											<div class="h4 text-bold mb-none">488</div>
+											<p class="text-xs text-muted mb-none">Average Profile Visits</p>
+										</div>
+									</section>
+									<section class="panel">
+										<div class="panel-body">
+											<div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+												<div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+													<strong>Average</strong>
+													<label><span class="percent">45</span>%</label>
+												</div>
+											</div>
+											<div class="h4 text-bold mb-none">12</div>
+											<p class="text-xs text-muted mb-none">Working Projects</p>
+										</div>
+									</section>
+									<section class="panel">
+										<div class="panel-body">
+											<div class="small-chart pull-right" id="sparklineLineDash"></div>
+											<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+											<div class="h4 text-bold mb-none">89</div>
+											<p class="text-xs text-muted mb-none">Pending Tasks</p>
+										</div>
+									</section>
+								</div>
+							</section>
+							<section class="panel">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">
+										<span class="label label-primary label-sm text-normal va-middle mr-sm">198</span>
+										<span class="va-middle">Friends</span>
+									</h2>
+								</header>
+								<div class="panel-body">
+									<div class="content">
+										<ul class="simple-user-list">
+											<li>
+												<figure class="image rounded">
+													<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
+												</figure>
+												<span class="title">Joseph Doe Junior</span>
+												<span class="message truncate">Lorem ipsum dolor sit.</span>
+											</li>
+											<li>
+												<figure class="image rounded">
+													<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle">
+												</figure>
+												<span class="title">Joseph Junior</span>
+												<span class="message truncate">Lorem ipsum dolor sit.</span>
+											</li>
+											<li>
+												<figure class="image rounded">
+													<img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle">
+												</figure>
+												<span class="title">Joe Junior</span>
+												<span class="message truncate">Lorem ipsum dolor sit.</span>
+											</li>
+										</ul>
+										<hr class="dotted short">
+										<div class="text-right">
+											<a class="text-uppercase text-muted" href="#">(View All)</a>
+										</div>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<div class="input-group input-search">
+										<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="submit"><i class="fa fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</section>
+						</div>
+						<div class="col-xl-6 col-lg-12">
+							<section class="panel">
+								<header class="panel-heading panel-heading-transparent">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">Company Activity</h2>
+								</header>
+								<div class="panel-body">
+									<div class="timeline timeline-simple mt-xlg mb-md">
+										<div class="tm-body">
+											<div class="tm-title">
+												<h3 class="h5 text-uppercase">November 2013</h3>
+											</div>
+											<ol class="tm-items">
+												<li>
+													<div class="tm-box">
+														<p class="text-muted mb-none">7 months ago.</p>
+														<p>
+															It's awesome when we find a good solution for our projects, JSOFT Admin is <span class="text-primary">#awesome</span>
+														</p>
+													</div>
+												</li>
+												<li>
+													<div class="tm-box">
+														<p class="text-muted mb-none">7 months ago.</p>
+														<p>
+															Checkout! How cool is that!
+														</p>
+														<div class="thumbnail-gallery">
+															<a class="img-thumbnail lightbox" href="assets/images/projects/project-4.jpg" data-plugin-options='{ "type":"image" }'>
+																<img class="img-responsive" width="215" src="assets/images/projects/project-4.jpg">
+																<span class="zoom">
+																	<i class="fa fa-search"></i>
+																</span>
+															</a>
+														</div>
+													</div>
+												</li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<section class="panel panel-transparent">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">Global Stats</h2>
+								</header>
+								<div class="panel-body">
+									<div id="vectorMapWorld" style="height: 350px; width: 100%;"></div>
+								</div>
+							</section>
+						</div>
+						<div class="col-lg-6 col-md-12">
+							<section class="panel">
+								<header class="panel-heading panel-heading-transparent">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">Projects Stats</h2>
+								</header>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped mb-none">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Project</th>
+													<th>Status</th>
+													<th>Progress</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>JSOFT - Responsive HTML5 Template</td>
+													<td><span class="label label-success">Success</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+																100%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>2</td>
+													<td>JSOFT - Responsive Drupal 7 Theme</td>
+													<td><span class="label label-success">Success</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+																100%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>3</td>
+													<td>Tucson - Responsive HTML5 Template</td>
+													<td><span class="label label-warning">Warning</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+																60%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>4</td>
+													<td>Tucson - Responsive Business WordPress Theme</td>
+													<td><span class="label label-success">Success</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+																90%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td>JSOFT - Responsive Admin HTML5 Template</td>
+													<td><span class="label label-warning">Warning</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+																45%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>6</td>
+													<td>JSOFT - Responsive HTML5 Template</td>
+													<td><span class="label label-danger">Danger</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+																40%
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td>7</td>
+													<td>JSOFT - Responsive Drupal 7 Theme</td>
+													<td><span class="label label-success">Success</span></td>
+													<td>
+														<div class="progress progress-sm progress-half-rounded mt-xs light">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">
+																95%
+															</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+					<!-- end: page -->
+				</section>
+			</div>
+
+			<aside id="sidebar-right" class="sidebar-right">
+				<div class="nano">
+					<div class="nano-content">
+						<a href="#" class="mobile-close visible-xs">
+							Collapse <i class="fa fa-chevron-right"></i>
+						</a>
+			
+						<div class="sidebar-right-wrapper">
+			
+							<div class="sidebar-widget widget-calendar">
+								<h6>Upcoming Tasks</h6>
+								<div data-plugin-datepicker data-plugin-skin="dark" ></div>
+			
+								<ul>
+									<li>
+										<time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
+										<span>Company Meeting</span>
+									</li>
+								</ul>
+							</div>
+			
+							<div class="sidebar-widget widget-friends">
+								<h6>Friends</h6>
+								<ul>
+									<li class="status-online">
+										<figure class="profile-picture">
+											<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+										</figure>
+										<div class="profile-info">
+											<span class="name">Joseph Doe Junior</span>
+											<span class="title">Hey, how are you?</span>
+										</div>
+									</li>
+									<li class="status-online">
+										<figure class="profile-picture">
+											<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+										</figure>
+										<div class="profile-info">
+											<span class="name">Joseph Doe Junior</span>
+											<span class="title">Hey, how are you?</span>
+										</div>
+									</li>
+									<li class="status-offline">
+										<figure class="profile-picture">
+											<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+										</figure>
+										<div class="profile-info">
+											<span class="name">Joseph Doe Junior</span>
+											<span class="title">Hey, how are you?</span>
+										</div>
+									</li>
+									<li class="status-offline">
+										<figure class="profile-picture">
+											<img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+										</figure>
+										<div class="profile-info">
+											<span class="name">Joseph Doe Junior</span>
+											<span class="title">Hey, how are you?</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+			
+						</div>
+					</div>
+				</div>
+			</aside>
+		</section>
+	<!-- end : main Content -->
 	
-</style>
- 
- 
-  <body>
-    <!-- Side Navbar -->
-    <nav class="side-navbar">
-    <c:import url="/common/left.jsp" />
-    </nav>
-
-    <div class="page">
-    
-<div class="wrap">
-<div class="top_fix_zone" id="topBar">
-
-      <!-- navbar-->
-      <c:import url="/common/top.jsp"/>
-      </div>
- 
-</div>
-      
-        <!-- Counts Section -->
-      <section class="dashboard-counts section-padding">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-user"></i></div>
-                <div class="name"><strong class="text-uppercase">New Clients</strong><span>Last 7 days</span>
-                  <div class="count-number">25</div>
-                </div>
-              </div>
-            </div>
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-padnote"></i></div>
-                <div class="name"><strong class="text-uppercase">Work Orders</strong><span>Last 5 days</span>
-                  <div class="count-number">400</div>
-                </div>
-              </div>
-            </div>
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-check"></i></div>
-                <div class="name"><strong class="text-uppercase">New Quotes</strong><span>Last 2 months</span>
-                  <div class="count-number">342</div>
-                </div>
-              </div>
-            </div>
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-bill"></i></div>
-                <div class="name"><strong class="text-uppercase">New Invoices</strong><span>Last 2 days</span>
-                  <div class="count-number">123</div>
-                </div>
-              </div>
-            </div>
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-list"></i></div>
-                <div class="name"><strong class="text-uppercase">Open Cases</strong><span>Last 3 months</span>
-                  <div class="count-number">92</div>
-                </div>
-              </div>
-            </div>
-            <!-- Count item widget-->
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
-                <div class="icon"><i class="icon-list-1"></i></div>
-                <div class="name"><strong class="text-uppercase">New Cases</strong><span>Last 7 days</span>
-                  <div class="count-number">70</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
-      <!-- Header Section-->
-      <section class="dashboard-header section-padding">
-        <div class="container-fluid">
-          <div class="row d-flex align-items-md-stretch">
-     
-       <!-- full calrendar -->
-       
-       
-       
-       
-       
-            <!-- Line Chart -->
-            <div class="col-lg-6 col-md-12 flex-lg-last flex-md-first align-self-baseline">
-              <div class="card sales-report">
-                <h2 class="display h4">Sales marketing report</h2>
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor amet officiis</p>
-                <div class="line-chart">
-                  <canvas id="lineCahrt"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Statistics Section-->
-      <section class="statistics">
-        <div class="container-fluid">
-          <div class="row d-flex">
-            <div class="col-lg-4">
-              <!-- Income-->
-              <div class="card income text-center">
-                <div class="icon"><i class="icon-line-chart"></i></div>
-                <div class="number">126,418</div><strong class="text-primary">All Income</strong>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <!-- Monthly Usage-->
-              <div class="card data-usage">
-                <h2 class="display h4">Monthly Usage</h2>
-                <div class="row d-flex align-items-center">
-                  <div class="col-sm-6">
-                    <div id="progress-circle" class="d-flex align-items-center justify-content-center"></div>
-                  </div>
-                  <div class="col-sm-6"><strong class="text-primary">80.56 Gb</strong><small>Current Plan</small><span>100 Gb Monthly</span></div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <!-- User Actibity-->
-              <div class="card user-activity">
-                <h2 class="display h4">User Activity</h2>
-                <div class="number">210</div>
-                <h3 class="h4 display">Social Users</h3>
-                <div class="progress">
-                  <div role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar bg-primary"></div>
-                </div>
-                <div class="page-statistics d-flex justify-content-between">
-                  <div class="page-statistics-left"><span>Pages Visits</span><strong>230</strong></div>
-                  <div class="page-statistics-right"><span>New Visits</span><strong>73.4%</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Updates Section -->
-      <section class="mt-30px mb-30px">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-4 col-md-12">
-              <!-- Recent Updates Widget          -->
-              <div id="new-updates" class="card updates recent-updated">
-                <div id="updates-header" class="card-header d-flex justify-content-between align-items-center">
-                  <h2 class="h5 display"><a data-toggle="collapse" data-parent="#new-updates" href="#updates-box" aria-expanded="true" aria-controls="updates-box">News Updates</a></h2><a data-toggle="collapse" data-parent="#new-updates" href="#updates-box" aria-expanded="true" aria-controls="updates-box"><i class="fa fa-angle-down"></i></a>
-                </div>
-                <div id="updates-box" role="tabpanel" class="collapse show">
-                  <ul class="news list-unstyled">
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between"> 
-                      <div class="left-col d-flex">
-                        <div class="icon"><i class="icon-rss-feed"></i></div>
-                        <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                        </div>
-                      </div>
-                      <div class="right-col text-right">
-                        <div class="update-date">24<span class="month">Jan</span></div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Recent Updates Widget End-->
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <!-- Daily Feed Widget-->
-              <div id="daily-feeds" class="card updates daily-feeds">
-                <div id="feeds-header" class="card-header d-flex justify-content-between align-items-center">
-                  <h2 class="h5 display"><a data-toggle="collapse" data-parent="#daily-feeds" href="#feeds-box" aria-expanded="true" aria-controls="feeds-box">Your daily Feeds </a></h2>
-                  <div class="right-column">
-                    <div class="badge badge-primary">10 messages</div><a data-toggle="collapse" data-parent="#daily-feeds" href="#feeds-box" aria-expanded="true" aria-controls="feeds-box"><i class="fa fa-angle-down"></i></a>
-                  </div>
-                </div>
-                <div id="feeds-box" role="tabpanel" class="collapse show">
-                  <div class="feed-box">
-                    <ul class="feed-elements list-unstyled">
-                      <!-- List-->
-                      <li class="clearfix">
-                        <div class="feed d-flex justify-content-between">
-                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-5.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                            <div class="content"><strong>Aria Smith</strong><small>Posted a new blog </small>
-                              <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                            </div>
-                          </div>
-                          <div class="date"><small>5min ago</small></div>
-                        </div>
-                      </li>
-                      <!-- List-->
-                      <li class="clearfix">
-                        <div class="feed d-flex justify-content-between">
-                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-2.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                            <div class="content"><strong>Frank Williams</strong><small>Posted a new blog </small>
-                              <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                              <div class="CTAs"><a href="#" class="btn btn-xs btn-dark"><i class="fa fa-thumbs-up"> </i>Like</a><a href="#" class="btn btn-xs btn-dark"><i class="fa fa-heart"> </i>Love</a></div>
-                            </div>
-                          </div>
-                          <div class="date"><small>5min ago</small></div>
-                        </div>
-                      </li>
-                      <!-- List-->
-                      <li class="clearfix">
-                        <div class="feed d-flex justify-content-between">
-                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-3.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                            <div class="content"><strong>Ashley Wood</strong><small>Posted a new blog </small>
-                              <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                            </div>
-                          </div>
-                          <div class="date"><small>5min ago</small></div>
-                        </div>
-                      </li>
-                      <!-- List-->
-                      <li class="clearfix">
-                        <div class="feed d-flex justify-content-between">
-                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-1.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                            <div class="content"><strong>Jason Doe</strong><small>Posted a new blog </small>
-                              <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                            </div>
-                          </div>
-                          <div class="date"><small>5min ago</small></div>
-                        </div>
-                        <div class="message-card"> <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</small></div>
-                        <div class="CTAs pull-right"><a href="#" class="btn btn-xs btn-dark"><i class="fa fa-thumbs-up"> </i>Like</a></div>
-                      </li>
-                      <!-- List-->
-                      <li class="clearfix">
-                        <div class="feed d-flex justify-content-between">
-                          <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-6.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                            <div class="content"><strong>Sam Martinez</strong><small>Posted a new blog </small>
-                              <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                            </div>
-                          </div>
-                          <div class="date"><small>5min ago</small></div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <!-- Daily Feed Widget End-->
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <!-- Recent Activities Widget      -->
-              <div id="recent-activities-wrapper" class="card updates activities">
-                <div id="activites-header" class="card-header d-flex justify-content-between align-items-center">
-                  <h2 class="h5 display"><a data-toggle="collapse" data-parent="#recent-activities-wrapper" href="#activities-box" aria-expanded="true" aria-controls="activities-box">Recent Activities</a></h2><a data-toggle="collapse" data-parent="#recent-activities-wrapper" href="#activities-box" aria-expanded="true" aria-controls="activities-box"><i class="fa fa-angle-down"></i></a>
-                </div>
-                <div id="activities-box" role="tabpanel" class="collapse show">
-                  <ul class="activities list-unstyled">
-                    <!-- Item-->
-                    <li>
-                      <div class="row">
-                        <div class="col-4 date-holder text-right">
-                          <div class="icon"><i class="icon-clock"></i></div>
-                          <div class="date"> <span>6:00 am</span><span class="text-info">6 hours ago</span></div>
-                        </div>
-                        <div class="col-8 content"><strong>Meeting</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.                </p>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li>
-                      <div class="row">
-                        <div class="col-4 date-holder text-right">
-                          <div class="icon"><i class="icon-clock"></i></div>
-                          <div class="date"> <span>6:00 am</span><span class="text-info">6 hours ago</span></div>
-                        </div>
-                        <div class="col-8 content"><strong>Meeting</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.                </p>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li>
-                      <div class="row">
-                        <div class="col-4 date-holder text-right">
-                          <div class="icon"><i class="icon-clock"></i></div>
-                          <div class="date"> <span>6:00 am</span><span class="text-info">6 hours ago</span></div>
-                        </div>
-                        <div class="col-8 content"><strong>Meeting</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.                </p>
-                        </div>
-                      </div>
-                    </li>
-                    <!-- Item-->
-                    <li>
-                      <div class="row">
-                        <div class="col-4 date-holder text-right">
-                          <div class="icon"><i class="icon-clock"></i></div>
-                          <div class="date"> <span>6:00 am</span><span class="text-info">6 hours ago</span></div>
-                        </div>
-                        <div class="col-8 content"><strong>Meeting</strong>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.                </p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-       <c:import url="/common/bottom.jsp"/>
-    </div>
-    <!-- JavaScript files-->
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
-    <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="./vendor/chart.js/Chart.min.js"></script>
-    <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="./js/charts-home.js"></script>
-    <!-- Main File-->
-    <script src="./js/front.js"></script>
-    <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
-    
-  </body>
+		<c:import url="/common/RightSide.jsp"></c:import>
+		
+		<c:import url="/common/BottomTag.jsp"></c:import>
+	</body>
 </html>
-
-
-
-
