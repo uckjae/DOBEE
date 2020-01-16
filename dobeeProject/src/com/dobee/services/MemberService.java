@@ -117,5 +117,15 @@ public class MemberService {
     	
     	return teamList;
     }
+    
+    //팀 불러오기
+    public TeamList getTeam(String teamCode) {
+    	System.out.println("MemberService getTeam()");
+    	System.out.println(teamCode);
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	TeamList team = userDao.getTeam(teamCode);
+    	System.out.println(team.toString());
+    	return team;
+    }
 
 }

@@ -173,4 +173,8 @@ public interface UserDao {
     
     //팀 리스트 조회
     public List<TeamList> teamList();
+    
+    
+    //팀 정보얻기
+    public TeamList getTeam(String teamCode);
 }

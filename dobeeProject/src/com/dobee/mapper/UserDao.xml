@@ -239,4 +239,10 @@
 	<select id="teamList" resultType="com.dobee.vo.member.TeamList">
 		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST ORDER BY TEAMCODE ASC
 	</select>
+	
+	
+	<!-- 팀 조회 -->
+	<select id="getTeam" resultType="com.dobee.vo.member.TeamList">
+		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST WHERE TEAMCODE=#{teamCode}
+	</select>
 </mapper>
