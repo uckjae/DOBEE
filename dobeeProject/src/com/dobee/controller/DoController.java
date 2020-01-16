@@ -575,6 +575,7 @@ public class DoController {
     //채팅 메인
     @RequestMapping("chat.do")
     public String chatMain(Model model, Principal principal) {
+    	
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
     	//회원 정보 저장하기
@@ -598,7 +599,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain";
+    	return "chat/chatMain_new";
     }
     
     
