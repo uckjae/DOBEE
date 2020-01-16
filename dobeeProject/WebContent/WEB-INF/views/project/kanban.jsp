@@ -437,14 +437,6 @@ ul.tabs li.current{
 
 
 <body>
-    <!-- notice DataTables js-->
-	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript">
-	</script>
-
-	<script>
-  
-
-     </script>
 
 <!-- Side Navbar -->
     <nav class="side-navbar">
@@ -454,15 +446,6 @@ ul.tabs li.current{
     <div class="page" >
       <!-- navbar-->
       <c:import url="/common/top.jsp"/>
-      
-      <script> /*view 객체 생성*/
-		window.onload = function(){
-			var app = new Vue ({
-				el : '#navbar',
-				data : []
-			})
-		}		
-  	</script>
   	
   	<div id="navbar">
 	  <b-card title="Card Title" no-body>
@@ -847,12 +830,6 @@ ul.tabs li.current{
     </div>
   	   
   	   
-  	   
-  	   
-  	   
-  	   
-  	   
-  	   
 	<c:import url="/common/bottom.jsp"/>
 	
 	<!-- JavaScript files-->
@@ -864,7 +841,6 @@ ul.tabs li.current{
     <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Main File-->
     <script src="./js/front.js"></script>
-    <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
 	
 
 </body>

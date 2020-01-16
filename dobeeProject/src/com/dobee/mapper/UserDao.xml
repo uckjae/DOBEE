@@ -35,14 +35,14 @@
 	
 	
 	<!-- Ajax 연장근무 년도 불러오기 -->
-	<select id="overTimeYearList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND
+	<select id="overTimeYearList" parameterType="String" resultType="Integer">
+		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND WHERE MAIL = ${param1}
 	</select>
 	
 	
 	<!-- Ajax 연장근무 월 불러오기 -->
-	<select id="overTimeMonthList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%c') FROM ATTEND;
+	<select id="overTimeMonthList" parameterType="String" resultType="Integer">
+		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%c') FROM ATTEND WHERE MAIL = ${param1}
 	</select>
 	
 	
@@ -61,96 +61,96 @@
 	
 	
 	<!-- Ajax 연차 불러오기 0112 -->
-	<select id="getVacationInBM" resultType="com.dobee.vo.member.Break">
-		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL='JG@KIM.COM'
+	<select id="getVacationInBM" parameterType="String" resultType="com.dobee.vo.member.Break">
+		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL=#{param1}
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 년도 loading		0113 -->
-	<select id="breakYearList" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	<select id="breakYearList" parameterType="String" resultType="Integer">
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER=#{param1}
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - 년도별 List 출력		0113 -->
-	<select id="getBreakListByYear" resultType="com.dobee.vo.member.BreakManageList">
+	<select id="getBreakListByYear" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND DATE_FORMAT(A.STARTAT, '%Y') = 2020;
+			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND DATE_FORMAT(A.STARTAT, '%Y') = 2020;
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 월 loading		0113 -->
-	<select id="breakYearMonthList" resultType="String">
-		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%m') AS STARTAT FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	<select id="breakYearMonthList" parameterType="String" resultType="String">
+		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%m') AS STARTAT FROM APPLY WHERE APYCODE != 6 AND  DRAFTER=#{param1}
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - 년-월별 List 출력		0113 -->
-	<select id="getBreakListByYMonth" resultType="com.dobee.vo.member.BreakManageList">
+	<select id="getBreakListByYMonth" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A	
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND DATE_FORMAT(A.STARTAT, '%Y-%m') = '2020-01';
+			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND DATE_FORMAT(A.STARTAT, '%Y-%m') = '2020-01';
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 부재항목 loading		0113 -->
-	<select id="breakEntryList" resultType="com.dobee.vo.ApplyCode">
+	<select id="breakEntryList" parameterType="String" resultType="com.dobee.vo.ApplyCode">
 		SELECT DISTINCT AC.APYCODE, AC.ENTRY 
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
 	        		ON A.APYCODE = AC.APYCODE
-			WHERE A.APYCODE != 6 AND  A.DRAFTER='JG@KIM.COM'
+			WHERE A.APYCODE != 6 AND  A.DRAFTER=#{param1}
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113 -->
-	<select id="getBreakListByEntry" resultType="com.dobee.vo.member.BreakManageList">
+	<select id="getBreakListByEntry" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-			WHERE  A.DRAFTER='JG@KIM.COM' AND A.APYCODE = '2';
+			WHERE  A.DRAFTER=#{param1} AND A.APYCODE = '2';
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 승인여부 loading		0113 -->
-	<select id="breakIsAuthList" resultType="String">
-		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER='JG@KIM.COM'
+	<select id="breakIsAuthList" parameterType="String" resultType="String">
+		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER=#{param1}
 	</select>
 	
 	
 	<!-- Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113 -->
-	<select id="getBreakListByIsAuth" resultType="com.dobee.vo.member.BreakManageList">
+	<select id="getBreakListByIsAuth" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-			WHERE  A.APYCODE != 6 AND A.DRAFTER='JG@KIM.COM' AND A.ISAUTH = '미승인';
+			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND A.ISAUTH = '미승인';
 	</select>
 	
 	
-	<!-- 부재내역 불러오기 -->
-	<select id="absMg" resultType="com.dobee.vo.member.BreakManageList">
+	<!-- 부재내역 불러오기 - COMPLETE -->
+	<select id="absMg" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
-		    WHERE A.APYCODE != 6 AND A.DRAFTER = 'JG@KIM.COM'
+		    WHERE A.APYCODE != 6 AND A.DRAFTER = #{drafter}
 	</select>
 	
 	
@@ -166,12 +166,14 @@
     
     <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 -->
     <select id="breakListMgr" resultType="com.dobee.vo.member.BreakManageList">
-    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON, A.DRAFTER, U.NAME
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				LEFT OUTER JOIN BREAKLIST BL
 					ON A.APLSEQ = BL.APLSEQ
+				INNER JOIN USER U
+					ON A.DRAFTER = U.MAIL
 		    WHERE A.APYCODE != 6
 		    ORDER BY A.APLSEQ ASC
     </select>
@@ -179,6 +181,27 @@
     
     <!-- 매니저_부재관리 - isAuth update (POST)		0115 -->
     <update id="absReqHandle" parameterType="com.dobee.vo.Apply">
+    	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
+    </update>
+	
+	
+    <!-- 매니저_연장근무 관리 - 데이터 테이블 출력 (GET)		0115 -->
+    <select id="extListMgr" resultType="com.dobee.vo.member.BreakManageList">
+    	SELECT A.APLSEQ, U.NAME, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.DRAFTER, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+				LEFT OUTER JOIN BREAKLIST BL
+					ON A.APLSEQ = BL.APLSEQ
+				INNER JOIN USER U
+					ON A.DRAFTER = U.MAIL
+			WHERE A.APYCODE = 6
+			ORDER BY A.APLSEQ ASC
+    </select>
+    
+    
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 ~ing -->
+    <update id="extReqHandle" parameterType="com.dobee.vo.Apply">
     	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
     </update>
 	
@@ -204,4 +227,16 @@
 	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
 		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
+	
+	
+	<!-- 비밀번호등록 -->
+	<update id="resetPwd" parameterType="com.dobee.vo.member.User">
+		UPDATE USER SET PASSWORD=#{password} WHERE MAIL=#{mail}
+	</update>
+	
+	
+	<!-- 팀 리스트 조회 -->
+	<select id="teamList" resultType="com.dobee.vo.member.TeamList">
+		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST ORDER BY TEAMCODE ASC
+	</select>
 </mapper>

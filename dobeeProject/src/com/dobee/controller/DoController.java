@@ -13,14 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +34,7 @@ import com.dobee.vo.Apply;
 import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.member.BreakManageList;
+import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
@@ -109,9 +108,12 @@ public class DoController {
         return "main/emailPwdReset";
     }
 
-
-    public String resetPwdResult(){
-        return null;
+    @RequestMapping("resetPwdResult.do")
+    public String resetPwdResult(User user){
+        System.out.println("DoController resetPwdResult() in!!");
+        System.out.println(user.toString());
+        memberService.resetPwd(user);
+    	return "redirect: index.jsp";
     }
 
 
@@ -328,7 +330,7 @@ public class DoController {
     
     // 부재일정신청 POST 0112			게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, HttpServletRequest req){
+    public String absApplyPost(Apply apply){
     	String result = applyService.absApply(apply);
     	// System.out.println("봐봐  : " + result);
     	
@@ -343,9 +345,9 @@ public class DoController {
     }
     
     
-    // 개인_부재일정관리 GET			0112 게다죽
+    // 개인_연장근무관리 GET			0112 게다죽
     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
- 	public String extendApplyPost(Apply apply, HttpServletRequest req) {
+ 	public String extendApplyPost(Apply apply) {
 	 String result = applyService.overtimeApply(apply);
 	// System.out.println("봐봐 이," + result);
 
@@ -353,11 +355,11 @@ public class DoController {
 }
 
 
-    // 개인_부재일정관리 GET			0112 게다죽
+    // 개인_부재일정관리 GET			0112 게다죽		COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
-    public String absMg(Model model){
-   	List<BreakManageList> results = applyService.absMg();
-    	// System.out.println("results: " + results );
+    public String absMg(Model model, Apply apply, Authentication auth){
+    	apply.setDrafter(auth.getName());			// 꿀잼
+    	List<BreakManageList> results = applyService.absMg(apply);
     	model.addAttribute("brkList", results);
     	
     	return "attend/breakManage";
@@ -371,7 +373,7 @@ public class DoController {
     }
 
 
-    // 매니저_부재관리 (isAuth update) GET		0114 게다죽
+    // 매니저_부재관리 - isAuth update GET		0114 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(Model model){
     	List<BreakManageList> results = applyService.breakListMgr();
@@ -385,29 +387,28 @@ public class DoController {
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
-        applyService.absReqHandle(apply);	
-        System.out.println("돌아간것만 확인 ㄱㄱ");
+        applyService.absReqHandle(apply);
         
         return "attend/breakManagement_Mgr";
     }
     
 
-    // 매니저_연장근무관리 리스트
-    @RequestMapping("extendManage.do")
-    public String overtiemSignList(){
-        return "attend/extendManage";
+    // 매니저_연장근무관리 리스트 - isAuth update GET			0115 게다죽
+    @RequestMapping(value="extManage.do", method=RequestMethod.GET)
+    public String extSign(Model model){
+    	List<BreakManageList> results = applyService.extListMgr();
+        model.addAttribute("extListMgr", results);
+        
+    	return "attend/extendManagement_Mgr";
     }
-
     
-    // 매니저_연장근무관리 승인  
-    public String overtimeSingApprov(){
-        return null;
-    }
-
-
-    // 매니저_연장근무관리 거절
-    public String overtimeSignReject(){
-        return null;
+    
+    // 매니저_연장근무관리 리스트 - isAuth update POST			0115 게다죽
+    @RequestMapping(value="extManage.do", method=RequestMethod.POST)
+    public String extReqHandle(Apply apply){
+    	applyService.extReqHandle(apply);
+        
+    	return "attend/extendManagement_Mgr";
     }
 
 
@@ -681,7 +682,23 @@ public class DoController {
     }
    	
    	
-  
+  //팀리스트
+   @RequestMapping(value="teamList.do", method= RequestMethod.GET)
+   public String teamList(Model model) {
+	   System.out.println("DoController teamList() GET in!!");
+	   List<TeamList> teamList = memberService.teamList();
+	   model.addAttribute("teamList", teamList);
+	   return "admin/TeamManagement";
+   }
+   
+   
+   @RequestMapping(value="teamList.do", method= RequestMethod.POST)
+   public String teamList(TeamList teamList) {
+	   System.out.println("DoController teamList() Post in!!");
+	   
+	   
+	   return "admin/TeamManagement";
+   }
 
     
     

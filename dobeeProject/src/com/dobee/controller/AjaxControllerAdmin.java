@@ -65,7 +65,7 @@ public class AjaxControllerAdmin {
 		path.append(":");
 		path.append(req.getLocalPort());
 		path.append(req.getContextPath());
-		path.append("/password.do");
+		path.append("/whatthepassword.do");
 		try {
 			
 			messageHelper = new MimeMessageHelper(message,true,"UTF-8");
