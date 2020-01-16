@@ -340,8 +340,8 @@ body
 	var updatePjt = function (e) {
 		var type = e.type;
 		var child = e.value;
-		var p = $(this).children("input");
-		console.log('pppp'+p);
+		var p = $(this).children("input").val();
+		console.log('벨류??'+p);
 		
 	
 		//var pjtSeq = $(this).$("#pjtSeq").val();
