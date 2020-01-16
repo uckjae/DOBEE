@@ -72,6 +72,10 @@
 													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
 												     	  	</li>
 										          		</c:forEach>
+														<!-- <li>
+															<a href="#" class="menu-item">Amy Doe <span class="ball green"></span></a>
+														</li> -->
+													</ul>
 													</ul>
 												</div>
 											</div>
@@ -91,6 +95,9 @@
 												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>${userList.name }</a>
 											     	  	</li>
 										           </c:forEach>
+														<!-- <li>
+															<a href="#" class="menu-item">Amy Doe <span class="ball green"></span></a>
+														</li> -->
 													</ul>
 												</div>
 											</div>
