@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<!-- Vendor -->
+		<!-- Vendor -->
 		<script src="assets/vendor/jquery/jquery.js"></script>
 		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
