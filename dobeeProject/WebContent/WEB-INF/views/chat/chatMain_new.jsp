@@ -35,8 +35,6 @@
 						</div>
 					</header>
 
-
-
 					<!-- start: page -->
 					<section class="content-with-menu" data-theme-gmap-builder>
 						<div class="content-with-menu-container">
@@ -96,9 +94,6 @@
 											</div>
 
 											<hr class="separator" />
-
-										
-
 											<div class="form-group">
 												<div class="row">
 													<div class="col-sm-6">
@@ -113,9 +108,13 @@
 									</div>
 								</div>
 							</menu>
+							
+							<!-- 원래 구글맵 있던 자리!! -->
 							<div class="inner-body">
-								<div id="gmap"></div>
+						
 							</div>
+							
+							
 					</section>
 
 					<div id="MarkerModal" class="marker-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="MarkerModal" aria-hidden="true">
@@ -186,31 +185,7 @@
 			
 		</section>
 
-		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-		
-		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<script src="assets/javascripts/maps/snazzy.themes.js"></script>
-		
-		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
-		
-		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
+		<c:import url="/common/BottomTag.jsp"/>
 
-
-		<!-- Examples -->
-		<script src="assets/javascripts/maps/examples.map.builder.js"></script>
 	</body>
 </html>
