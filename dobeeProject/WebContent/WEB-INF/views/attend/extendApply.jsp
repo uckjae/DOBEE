@@ -36,10 +36,8 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	
-	<!-- datetime picker -->
-	<link rel="stylesheet" href="./css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
+	<!-- JQUERY datetime picker -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	
   </head>
  
@@ -97,16 +95,18 @@
 									<div id="calendar"></div>
 									</div>
 								</td>
+								<td>기간 선택</td>
+								<!-- <td><input type="text" name="datetimes" style="width:250px"/></td> -->
 							</tr>
 								
 							<tr>
 								<td>시작 시간</td>
-								<td><input type='text' class="form-control" id='datetimepickerStart' name="startAt"/></td>
+								<td><input type="text" name="startAt" id="startat"/></td>
 							</tr>
 							
 							<tr>
 								<td>종료 시간</td>
-								<td><input type='text' class="form-control" id='datetimepickerEnd' name="endAt"/></td>
+								<td><input type="text" name="endAt" id="endat"/></td>
 							</tr>
 							
 							<tr>
@@ -182,9 +182,6 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	
-	<!-- datetime picker -->
-	<script src="./js/bootstrap-datetimepicker.min.js"></script>
-	
 	<script>
 		window.onload = function(){
 
@@ -203,98 +200,66 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
-			
-			$.ajax ({
-				url : "getExtList.do",
-				dataType : "json",
-				success : function(data) {
-					var extArray = [];
-					extArray = data.ExtListTC;
-					console.log("확인 결과 : ", extArray);
-
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
 		}
   	</script>
 	
 	<script>
 		$(function() {
-
-			$('#datetimepickerStart').datetimepicker({
-	            format : 'YYYY-MM-DD HH:mm' 
-	        });
-
-	        $('#datetimepickerEnd').datetimepicker({
-	            format : 'YYYY-MM-DD HH:mm' 
-	        });
 	
+			$('input[name="datetimes"]').daterangepicker({
+			    timePicker: true,
+			    startDate: moment().startOf('hour'),
+			    endDate: moment().startOf('hour').add(32, 'hour'),
+			    locale: {
+			      format: 'M/DD hh:mm A'
+		    	}
+			});
+	
+			$('input[name="daterange"]').daterangepicker({
+					opens: 'left'
+				}, function(start, end, label) {
+					console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			});
 		});
 			
 		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				plugins : [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
-				header : {
-					left : 'prev, next, today',
-					center : 'title',
-					right : 'dayGridMonth, dayGridWeek, listMonth'
-				},
-
-				navLinks : true, 		// can click day/week names to navigate views
-				editable : false,
-				eventLimit : false, 	// allow "more" link when too many events
-				businessHours : true,
-
-				events : [ {
-					title : 'All Day Event',
-					start : '2019-08-01'
-				}, {
-					title : 'Long Event',
-					start : '2019-08-07',
-					end : '2019-08-10'
-				}, {
-					groupId : 999,
-					title : 'Repeating Event',
-					start : '2019-08-09T16:00:00'
-				}, {
-					groupId : 999,
-					title : 'Repeating Event',
-					start : '2019-08-16T16:00:00'
-				}, {
-					title : 'Conference',
-					start : '2019-08-11',
-					end : '2019-08-13'
-				}, {
-					title : 'Meeting',
-					start : '2019-08-12T10:30:00',
-					end : '2019-08-12T12:30:00'
-				}, {
-					title : 'Lunch',
-					start : '2019-08-12T12:00:00'
-				}, {
-					title : 'Meeting',
-					start : '2019-08-12T14:30:00'
-				}, {
-					title : 'Happy Hour',
-					start : '2019-08-12T17:30:00'
-				}, {
-					title : 'Dinner',
-					start : '2019-08-12T20:00:00'
-				}, {
-					title : 'Birthday Party',
-					start : '2019-08-13T07:00:00'
-				}, {
-					title : 'Click for Google',
-					url : 'http://google.com/',
-					start : '2019-08-28'
-				} ]
-			});
-
-			calendar.render();
+		  var calendarEl = document.getElementById('calendar');
+		
+		  var calendar = new FullCalendar.Calendar(calendarEl, {
+		
+		    plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
+		
+		    header: {
+		      left: 'prev,next today',
+		      center: 'title',
+		      right: 'dayGridMonth,listYear'
+		    },
+		
+		    displayEventTime: false, // don't show the time column in list view
+		
+		    // THIS KEY WON'T WORK IN PRODUCTION!!!
+		    // To make your own Google API key, follow the directions here:
+		    // http://fullcalendar.io/docs/google_calendar/
+		    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+		
+		    // US Holidays
+		    events: 'en.usa#holiday@group.v.calendar.google.com',
+		
+		    eventClick: function(arg) {
+		      // opens events in a popup window
+		      window.open(arg.event.url, 'google-calendar-event', 'width=700,height=600');
+		
+		      arg.jsEvent.preventDefault() // don't navigate in main tab
+		    },
+		
+		    loading: function(bool) {
+		      document.getElementById('loading').style.display =
+		        bool ? 'block' : 'none';
+		    }
+		
+		  });
+		
+		  calendar.render();
 		});
 		
 	</script>
