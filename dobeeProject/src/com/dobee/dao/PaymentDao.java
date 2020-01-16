@@ -35,7 +35,7 @@ public interface PaymentDao {
     
     
     //비용신청 등록하기
-    public int addCostApply();
+    public int addCostApply(CostList cost);
  
 
 }
