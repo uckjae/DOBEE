@@ -173,4 +173,12 @@ public interface UserDao {
     
     //비밀번호 업데이트
     public void updatePassword(String mail, String password);
+    
+    
+    //팀 리스트 조회
+    public List<TeamList> teamList();
+    
+    
+    //팀 정보얻기
+    public TeamList getTeam(String teamCode);
 }
