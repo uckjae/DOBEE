@@ -350,8 +350,8 @@ public class DoController {
     // 개인_연장근무관리 GET			0112 게다죽
     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
  	public String extendApplyPost(Apply apply) {
-	 String result = applyService.overtimeApply(apply);
-	// System.out.println("봐봐 이," + result);
+    	String result = applyService.overtimeApply(apply);
+    	// System.out.println("봐봐 이," + result);
 
 	return "attend/extendApply";
 }
