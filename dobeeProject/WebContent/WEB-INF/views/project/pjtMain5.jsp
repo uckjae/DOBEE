@@ -6,8 +6,9 @@
 <html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <c:import url="/common/tag.jsp"/>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
@@ -194,10 +195,14 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
- 					  		<li><a><button type="button" onclick="updatePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
-					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
-								<li><a><button type="button" onclick="deletePjt();" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
-								<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
+					  			<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'>
+					  			<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
+					  			<i class="fas fa-cog" style="color:#888888;"></i>
+					  			</button></a></li>
+					  			<!-- <li><a data-toggle="modal" data-target="#pjtModal22"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
+<!--  					  		<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+ -->					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
+								<li><a><button type="button" onclick="deletePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
 							</ul>
 							<div class="user-info">
 								<h2>${n.pjtName}</h2>
@@ -212,7 +217,7 @@ body
 						<img src="./img/plusgray.png" alt="">
 					</div>
 					<div class="user-info">
-						<a data-toggle="modal" href="#pjtModal" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
+						<a data-toggle="modal" href="#pjtModal"  style="text-decoration:none"><h2>프로젝트 생성</h2></a>
 					    <span></span>
 					</div>
 				</div>
@@ -221,10 +226,10 @@ body
   </div>
    </div>
    <!-- 프로젝트 생성 modal -->
-						<div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog cascading-modal" role="document">
-						    <!--Content-->
-						    <div class="modal-content">
+		   <div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		   <div class="modal-dialog cascading-modal" role="document">
+  						 <!--Content-->
+   							<div class="modal-content">
 						      <!--Header-->
 						      <div class="modal-header light-blue darken-3 white-text" style="text-align: center">
 						        <h4 id="pjtModalTitle" class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
@@ -285,20 +290,16 @@ body
 						</div>						
 						<!-- end of modal -->
 
-
-
+ 
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
     <script src="./vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
     <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
     <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="./js/charts-home.js"></script>
     <!-- Main File-->
-    <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     <script>
    
@@ -336,14 +337,18 @@ body
 					})
         }
 
-	var updatePjt = function (event) {
-		var target = event;
-		console.log('이벤트????'+target);
+	var updatePjt = function (e) {
+		var type = e.type;
+		var child = e.value;
+		var p = $(this).children("input");
+		console.log('pppp'+p);
+		
+	
 		//var pjtSeq = $(this).$("#pjtSeq").val();
 		///console.log('번호눈??'+pjtSeq);
 		
-    	swal({
-			title: "프로젝트 수정",
+    /* 	swal({
+			title: "프로젝트 수정",`
 			text: "프로젝트를 수정하시겠습니까?",
 			icon: "warning" //"info,success,warning,error" 중 택1
 				}).then((YES) => {
@@ -373,11 +378,11 @@ body
 		    		    	 				var userJsonData = JSON.parse(user);
 		    		    	 				console.log('제이슨???'+userJsonData);
 		    		    	 				//console.log('어케 나옴?'+userJsonData.mail);
-		    		    	 				/* $("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+		    		    	 				$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
 		    		        						+userJsonData.name+"</span><input type='hidden' name='mail[]' value='"+userJsonData.mail+"'>&nbsp;&nbsp;</i></div>");
 		    		        	
 		    		        				$("#pjtUserList").css("display","block");
-		    		        				$('#pjtModal').modal('show'); */
+		    		        				$('#pjtModal').modal('show');
 		    		        				
 		    		    	 				},
 		    		    	 			error : function() {
@@ -390,8 +395,9 @@ body
 	    	 				error:function(){
 	    	 					
 	    	 				}
-	    	 			});
+	    	 			}); //ajax
 					});
+		 */
 	}
 
 
