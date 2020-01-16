@@ -14,8 +14,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="./vendor/font-awesome/css/font-awesome.min.css">
     <!-- Fontastic Custom icon font-->
     <link rel="stylesheet" href="./css/fontastic.css">
@@ -36,5 +36,7 @@
 
 	<!--  chart js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
 	
 	

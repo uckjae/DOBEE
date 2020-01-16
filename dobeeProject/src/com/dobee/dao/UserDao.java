@@ -166,5 +166,7 @@ public interface UserDao {
     //사원정보추가
     public void addUserInfo(UserInfo userInfo);
     
-
+    
+    //비밀번호 업데이트
+    public void updatePassword(String mail, String password);
 }
