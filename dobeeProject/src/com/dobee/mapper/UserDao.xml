@@ -239,4 +239,10 @@
 	<update id="resetPwd" parameterType="com.dobee.vo.member.User">
 		UPDATE USER SET PASSWORD=#{password} WHERE MAIL=#{mail}
 	</update>
+	
+	
+	<!-- 팀 리스트 조회 -->
+	<select id="teamList" resultType="com.dobee.vo.member.TeamList">
+		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST ORDER BY TEAMCODE ASC
+	</select>
 </mapper>

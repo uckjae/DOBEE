@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.PaymentDao;
-import com.dobee.vo.CostCode;
+import com.dobee.vo.CostList;
 import com.dobee.vo.Debit;
 
 @Service
@@ -62,9 +62,9 @@ public class DebitService {
     
     
     //비용 신청 디비에 등록하기 
-    public int addDebit() {
+    public int applyDebit(CostList cost) {
     	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
-    	int result = paymentDao.addCostApply();
+    	int result = paymentDao.addCostApply(cost);
     	if(result != -1) {
     		System.out.println("서비스단 : 비용 신청 성공 ");
     	}else {
