@@ -107,7 +107,11 @@ public interface UserDao {
     // Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
     public List<BreakManageList> getBreakListByIsAuth(String drafter);
     
-        
+    
+	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116	COMPLETE		    
+    public List<Apply> getExtListToCalendar(String drafter);
+    
+    
     //개인근무내역확인
     public List<Attend> workChart();
 
@@ -169,8 +173,4 @@ public interface UserDao {
     
     //비밀번호 업데이트
     public void updatePassword(String mail, String password);
-    
-    
-    //팀 리스트 조회
-    public List<TeamList> teamList();
 }

@@ -1,0 +1,27 @@
+{
+  "name": "summernote-file",
+  "version": "0.0.3",
+  "description": "Summernote plugin to insert files by URL or file upload",
+  "main": "summernote-file.js",
+  "scripts": {
+	"test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+	"type": "git",
+	"url": "git+https://github.com/nobsod-freelance/summernote-file.git"
+  },
+  "keywords": [
+	"summernote",
+	"file",
+	"upload"
+  ],
+  "author": {
+	"name": "nobsod - Mathieu Coingt",
+	"url": "https://www.nobsod.fr"
+  },
+  "license": "MIT",
+  "bugs": {
+	"url": "https://github.com/nobsod-freelance/summernote-file/issues"
+  },
+  "homepage": "https://github.com/nobsod-freelance/summernote-file#readme"
+}

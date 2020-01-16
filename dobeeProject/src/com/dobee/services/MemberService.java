@@ -1,15 +1,17 @@
 package com.dobee.services;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dobee.dao.UserDao;
-import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 
@@ -106,16 +108,6 @@ public class MemberService {
     public void updatePassword(String mail, String password) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.updatePassword(mail, password);
-    }
-    
-    
-    //팀 리스트 불러오기
-    public List<TeamList> teamList() {
-    	System.out.println("MemberService teamList()");
-    	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	List<TeamList> teamList = userDao.teamList();
-    	
-    	return teamList;
     }
 
 }
