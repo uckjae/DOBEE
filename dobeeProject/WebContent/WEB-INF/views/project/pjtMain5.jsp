@@ -195,18 +195,13 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-					  			<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'>
-					  			<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
-					  			<i class="fas fa-cog" style="color:#888888;"></i>
-					  			</button></a></li>
-					  			<!-- <li><a data-toggle="modal" data-target="#pjtModal22"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
-<!--  					  		<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
- -->					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
-								<li><a><button type="button" onclick="deletePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
+					  			<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+					  			<li><a><button type="button" onclick="deletePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
 							</ul>
 							<div class="user-info">
-								<h2>${n.pjtName}</h2>
+								<a href="pjtKanban.do?pjtSeq=${n.pjtSeq}" style="display:block"><h2>${n.pjtName}</h2></a>
 					      		<span>${n.pjtProgress}</span>
+					      		<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
 							</div>
 						</div>
 					</div>
