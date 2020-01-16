@@ -104,6 +104,13 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<h1 class="mailbox-title text-light m-none">
+												<a id="mailboxToggleSidebar" class="sidebar-toggle-btn trigger-toggle-sidebar">
+													<span class="line"></span>
+													<span class="line"></span>
+													<span class="line"></span>
+													<span class="line line-angle1"></span>
+													<span class="line line-angle2"></span>
+												</a>
 									<c:set var="user" value="${requestScope.user}"/>
                							<b id="chatRoomName" style="font-size:30px;">${user.name}</b>
 											</h1>
