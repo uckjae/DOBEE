@@ -49,7 +49,7 @@ public interface UserDao {
 
     // Ajax 개인_연차 불러오기
     /* 01.12 게다죽 */
-    public List<Break> getVacationInBM();
+    public List<Break> getVacationInBM(String mail);
     
     
     // 개인_부재일정신청
@@ -78,34 +78,34 @@ public interface UserDao {
 
     
     // Ajax 개인부재일정확인 - Option - 년도 loading		0113
-    public List<Integer> breakYearList();
+    public List<Integer> breakYearList(String mail);
     
     
     // Ajax 개인부재일정확인 - 년도별 List 출력		0113
-    public List<BreakManageList> getBreakListByYear();
+    public List<BreakManageList> getBreakListByYear(String drafter);
     
     
     // Ajax 개인부재일정확인 - Option - 월 loading		0113
-    public List<Integer> breakYearMonthList();
+    public List<Integer> breakYearMonthList(String drafter);
     
     
     // Ajax 개인부재일정확인 - 년-월별 List 출력		0113
-    public List<BreakManageList> getBreakListByYMonth();
+    public List<BreakManageList> getBreakListByYMonth(String drafter);
     
     // Ajax 개인부재일정확인 - Option - 부재항목 loading		0113
-    public List<ApplyCode> breakEntryList();
+    public List<ApplyCode> breakEntryList(String drafter);
     
     
     // Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113
-    public List<BreakManageList> getBreakListByEntry();
+    public List<BreakManageList> getBreakListByEntry(String drafter);
     
 
     // Ajax 개인부재일정확인 - Option - 승인여부 loading		0113
-    public List<String> breakIsAuthList();
+    public List<String> breakIsAuthList(String drafter);
     
     
     // Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
-    public List<BreakManageList> getBreakListByIsAuth();
+    public List<BreakManageList> getBreakListByIsAuth(String drafter);
     
         
     //개인근무내역확인
@@ -134,12 +134,12 @@ public interface UserDao {
     
     // Ajax 개인_연장근무 년도 불러오기
     /* 01.10 게다죽 */
-    public List<Integer> overTimeYearList();
+    public List<Integer> overTimeYearList(String mail);
     
     
     // Ajax 개인_연장근무 월 불러오기
     /* 01.10 게다죽 */
-    public List<Integer> overTimeMonthList();
+    public List<Integer> overTimeMonthList(String mail);
     
     
     //유저 리스트 가져오기

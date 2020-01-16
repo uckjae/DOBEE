@@ -330,7 +330,7 @@ public class DoController {
     
     // 부재일정신청 POST 0112			게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, HttpServletRequest req){
+    public String absApplyPost(Apply apply){
     	String result = applyService.absApply(apply);
     	// System.out.println("봐봐  : " + result);
     	
