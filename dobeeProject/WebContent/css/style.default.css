@@ -190,11 +190,12 @@ section header {
 * ==========================================================
 */
 nav.navbar {
-  background-color: none;
+  background-color: #ffffff;
   padding: .8rem 0;
   /* Navbar Brand --------- */
   /*  Dropdowns ------------ */
   /* Toggle Button ---------- */
+  
 }
 
 nav.navbar .side-navbar-wrapper {
@@ -212,7 +213,7 @@ nav.navbar .navbar-holder {
 
 nav.navbar a {
   font-size: .8rem;
-  color: #fff;
+  color: #000000;
   position: relative;
 }
 
@@ -317,8 +318,8 @@ nav.navbar a.menu-btn {
   width: 40px;
   height: 40px;
   line-height: 40px;
-  background: #fff;
-  color: #453d3d;
+  background: #ffc107;
+  color: #000000;
   text-align: center;
   padding: 0 !important;
 }
@@ -374,7 +375,7 @@ nav.navbar a.menu-btn:hover {
   height: 100%;
   width: 180px;
   text-align: left;
-  background: #fafafa;
+  background: #FCFCFC;
   color: #fff;
   z-index: 999;
   overflow-y: auto;
@@ -414,14 +415,15 @@ nav.navbar a.menu-btn:hover {
   position: relative;
   font-size: .9rem;
   font-weight: 300;
-  color: #453d3d;
+  color: #000000;
   text-decoration: none;
   width: 100%;
   padding: 12px;
 }
 
-.side-navbar li a:focus, .side-navbar li a:hover, .side-navbar li a[aria-expanded="true"] {
-  background: #453d3d;
+.side-navbar li a:focus, .side-navbar li a:hover,
+.side-navbar li a[aria-expanded="true"] {
+  background: #ffc107;
   color: #fff;
   text-decoration: none;
 }
@@ -468,7 +470,7 @@ nav.navbar a.menu-btn:hover {
 }
 
 .side-navbar .sidenav-header {
-  background: #fafafa;
+  background: #F1F1F1;
   padding: 14px;
   margin-bottom: 10px;
 }
@@ -660,11 +662,11 @@ nav.navbar a.menu-btn:hover {
 }
 
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-  background-color: #33b35a;
+  background-color: #ffc107;
 }
 
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover {
-  background-color: #33b35a;
+  background-color: #ffc107;
 }
 
 /*
@@ -2738,7 +2740,7 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 .text-primary {
-  color: black !important;
+  color: #ffc107 !important;
 }
 
 a.text-primary:focus, a.text-primary:hover {

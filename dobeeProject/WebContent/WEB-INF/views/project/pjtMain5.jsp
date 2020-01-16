@@ -6,8 +6,9 @@
 <html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <c:import url="/common/tag.jsp"/>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
@@ -20,7 +21,7 @@
 	
 	}
 	a {
-		color: #222222;
+		color: #888888;
 	}
 	
 	
@@ -194,9 +195,14 @@ body
 						    <img src="./img/folder.png" alt="">
 						  </div>
 					  		<ul class="social-media">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+					  			<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'>
+					  			<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
+					  			<i class="fas fa-cog" style="color:#888888;"></i>
+					  			</button></a></li>
+					  			<!-- <li><a data-toggle="modal" data-target="#pjtModal22"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
+<!--  					  		<li><a><button type="button" onclick="updatePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-cog" style="color:#888888;"></i></button></a></li>
+ -->					  		<!-- 	<li><a data-toggle="modal" href="#pjtAddModal"><i class="fas fa-cog" style="color:#888888;"></i></a></li> -->
+								<li><a><button type="button" onclick="deletePjt(this);" style='padding: 0;border: none;outline:0;background: none;'><i class="fas fa-trash-alt" style="color:#888888;"></i></button></a></li>
 							</ul>
 							<div class="user-info">
 								<h2>${n.pjtName}</h2>
@@ -211,7 +217,7 @@ body
 						<img src="./img/plusgray.png" alt="">
 					</div>
 					<div class="user-info">
-						<a data-toggle="modal" href="#modalContactForm" style="text-decoration:none"><h2>프로젝트 생성</h2></a>
+						<a data-toggle="modal" href="#pjtModal"  style="text-decoration:none"><h2>프로젝트 생성</h2></a>
 					    <span></span>
 					</div>
 				</div>
@@ -219,17 +225,14 @@ body
   		</div>
   </div>
    </div>
-   
    <!-- 프로젝트 생성 modal -->
-   						<!-- modal -->
-						<div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog cascading-modal" role="document">
-						    <!--Content-->
-						    <div class="modal-content">
-						
+		   <div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		   <div class="modal-dialog cascading-modal" role="document">
+  						 <!--Content-->
+   							<div class="modal-content">
 						      <!--Header-->
 						      <div class="modal-header light-blue darken-3 white-text" style="text-align: center">
-						        <h4 class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
+						        <h4 id="pjtModalTitle" class="title"><i class="fas fa-folder-plus"></i>&nbsp;새 프로젝트</h4>
 						        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
@@ -285,24 +288,125 @@ body
 						    <!--/.Content-->
 						  </div>
 						</div>						
-						<!-- end of modal -->   
-  
+						<!-- end of modal -->
+
+ 
   
    <!-- JavaScript files-->
     <script src="./vendor/jquery/jquery.min.js"></script>
     <script src="./vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
     <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
     <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="./js/charts-home.js"></script>
     <!-- Main File-->
-    <script src="./js/front.js"></script>
     <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
     <script>
+   
+	var deletePjt = function (event) {
+        
+    	swal({
+			title: "프로젝트 삭제",
+			text: "프로젝트를 삭제하시겠습니까?",
+			icon: "warning" //"info,success,warning,error" 중 택1
+				}).then((YES) => {
+						var pjtSeq = $("#pjtSeq").val();
+						$.ajax({
+	    	 	 			url:"ajax/project/pjtDelete.do?pjtSeq="+pjtSeq,
+	    	 				dataType: "text",
+	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	    	 				type:"post",
+	    	 				success:function(responsedata){
+		    	 				console.log('ajax 통신 성공?');
+	    	 					console.log(responsedata);
+	    	 					if(responsedata == "success"){ //프로젝트 생성 완료
+	    	 	 					swal({
+	    	 						   title: "프로젝트 삭제 완료",
+	    	 						   text: "프로젝트가 삭제 되었습니다.",
+	    	 						   icon: "success" //"info,success,warning,error" 중 택1
+	    	 						}).then((YES) => {
+	    	 								location.reload(true); 
+	    	 							})
+	    	 					
+	    	 	 					}
+	    	 				},
+	    	 				error:function(){
+	    	 					
+	    	 				}
+	    	 			});
+					})
+        }
+
+	var updatePjt = function (e) {
+		var type = e.type;
+		var child = e.value;
+		var p = $(this).children("input").val();
+		console.log('벨류??'+p);
+		
+	
+		//var pjtSeq = $(this).$("#pjtSeq").val();
+		///console.log('번호눈??'+pjtSeq);
+		
+    /* 	swal({
+			title: "프로젝트 수정",`
+			text: "프로젝트를 수정하시겠습니까?",
+			icon: "warning" //"info,success,warning,error" 중 택1
+				}).then((YES) => {
+					console.log('yes 타니???')
+						
+						$.ajax({
+	    	 	 			url:"ajax/project/getPjt.do?pjtSeq="+pjtSeq,
+	    	 				dataType: "text",
+	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	    	 				type:"post",
+	    	 				success:function(project){
+		    	 					var pjtJsonData = JSON.parse(project);
+	    	 						
+	    	 						$("#pjtName").val(pjtJsonData.pjtName);
+	    	 						$("#pjtModalTitle").text('프로젝트 수정');
+	    	 						$("#pjtStartAt").val(pjtJsonData.pjtStartAt);
+	    	 						$("#pjtEndAt").val(pjtJsonData.pjtEndAt);
+
+	    	 						$.ajax({
+	    	 							url:"ajax/project/getPjtMember.do?pjtSeq="+pjtSeq,
+	    		    	 				dataType: "text",
+	    		    	 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	    		    	 				type:"post",
+	    		    	 				success : function(user){
+	    		    	 					console.log('ajax 통신 성공?');
+	    		    	 					console.log('유저유저'+user);
+		    		    	 				var userJsonData = JSON.parse(user);
+		    		    	 				console.log('제이슨???'+userJsonData);
+		    		    	 				//console.log('어케 나옴?'+userJsonData.mail);
+		    		    	 				$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fas fa-user'><span name='name'>"
+		    		        						+userJsonData.name+"</span><input type='hidden' name='mail[]' value='"+userJsonData.mail+"'>&nbsp;&nbsp;</i></div>");
+		    		        	
+		    		        				$("#pjtUserList").css("display","block");
+		    		        				$('#pjtModal').modal('show');
+		    		        				
+		    		    	 				},
+		    		    	 			error : function() {
+			    		    	 			
+			    		    	 			}
+
+		    	 						});
+
+	    	 				},
+	    	 				error:function(){
+	    	 					
+	    	 				}
+	    	 			}); //ajax
+					});
+		 */
+	}
+
+
+    
+    
     $(function() {
-        var count = 0;
+
+        
+
     	$.ajax({
       		url:"getUserList.do",
       		dataType:"json",
@@ -328,7 +432,7 @@ body
     	
     		});
 
-
+		/* 프로젝트 생성 */
     	$("#makePjtBtn").on('click', function(e){
     		if($("#pjtName").val() == "" || $("#pjtName").val() == null){
     			swal({
@@ -340,28 +444,11 @@ body
     							$("#pjtName").focus();
     							}
     						})
-    						$("#pjtName").focus();
     			}else{
-        			console.log('else 타니???');
-        			var queryString = $("form[name=pjtForm]").serialize() ;
-        			console.log('폼??'+queryString);
-        			/* var pjtName = $("#pjtName").val();
-        			var pjtStartAt = $("#pjtStartAt").val();
-        			var pjtEndAt = $("#pjtEndAt").val();
-        			var pjtUserList = new Array();
-    				$("input[name=userMail]").each(function(index, item){
-    					pjtUserList.push($(item).val());
-    					});
-    				var newPjt = {
-    	    				"pjtName" : pjtName,
-    	    				"pjtStartAt" : pjtStartAt,
-    	    				"pjtEndAt" : pjtEndAt,
-    	 	    			"pjtUserList" : pjtUserList
-    	 	    			}; */
+        			var pjtForm = $("form[name=pjtForm]").serialize() ;
     	 			$.ajax({
-        	 			
     	 	 			url:"ajax/project/pjtAdd.do",
-    	 				data: queryString ,
+    	 				data: pjtForm ,
     	 				dataType: "text",
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
@@ -391,9 +478,9 @@ body
     	 			}
     			});
 
-        });
+	
 
-    
+    });
 
     </script>
 </body>

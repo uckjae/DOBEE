@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import com.dobee.dao.UserDao;
@@ -26,9 +25,10 @@ public class AjaxController_DABC {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	// 부재신청 항목 불러오기
+	// 개인_부재신청 부재항목 불러오기
 	@RequestMapping("getApyCode.do")
-	public View brkApyCat (Model map) {
+	public View brkApyCat (Model map){
+		// Authentication auth // String mail = auth.getName();
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> results = userDao.getApyCode();
 		map.addAttribute("apyCode", results);
@@ -37,7 +37,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 부재신청 결재자 불러오기
+	// 개인_부재신청 결재자 불러오기	COMPLETE
 	@RequestMapping("getApprovalList.do")
 	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -48,7 +48,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인부재일정확인 - Option - 년도 loading		0113
+	// Ajax 개인_부재일정확인 - Option - 년도 loading		0113
 	@RequestMapping("breakYearList.do")
 	public View breakYearList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -58,7 +58,7 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
-	// Ajax 개인부재일정확인 - 년도별 List 출력		0113
+	// Ajax 개인_부재일정확인 - 년도별 List 출력		0113
 	@RequestMapping("getBreakListByYear.do")
 	public View getBreakListByYear (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -69,7 +69,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-    // Ajax 개인부재일정확인 - Option - 월 loading		0113
+    // Ajax 개인_부재일정확인 - Option - 월 loading		0113
 	@RequestMapping("breakYearMonthList.do")
 	public View breakYearMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -79,7 +79,7 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
-	// Ajax 개인부재일정확인 - 년-월별 List 출력		0113
+	// Ajax 개인_부재일정확인 - 년-월별 List 출력		0113
 	@RequestMapping("getBreakYearMonthList.do")
 	public View getBreakYearMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -90,7 +90,7 @@ public class AjaxController_DABC {
 	}
 	
 
-    // Ajax 개인부재일정확인 - Option - 부재항목 loading		0113
+    // Ajax 개인_부재일정확인 - Option - 부재항목 loading		0113
 	@RequestMapping("breakEntryList.do")
     public View breakEntryList (Model map) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -101,7 +101,7 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113
+	// Ajax 개인_부재일정확인 - 부재항목 별 List 출력		0113
 	@RequestMapping("getBreakListByEntry.do")
 	public View getBreakListByEntry (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -112,7 +112,7 @@ public class AjaxController_DABC {
 	}
 	
 
-    // Ajax 개인부재일정확인 - Option - 승인여부 loading		0113
+    // Ajax 개인_부재일정확인 - Option - 승인여부 loading		0113
 	@RequestMapping("breakIsAuthList.do")
     public View breakIsAuthList (Model map) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -123,7 +123,7 @@ public class AjaxController_DABC {
     }
 	
 	
-	// Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
+	// Ajax 개인_부재일정확인 - 승인여부 별  List 출력		011
 	@RequestMapping("getBreakListByIsAuth.do")
 	public View getBreakListByIsAuth (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -134,7 +134,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 근무내역 확인 년도 불러오기
+	// 개인_근무내역 확인 년도 불러오기
 	@RequestMapping("overTimeYearList.do")
 	public View overTimeYearList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -145,7 +145,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 근무내역 확인 월 불러오기
+	// 개인_근무내역 확인 월 불러오기
 	@RequestMapping("overTimeMonthList.do")
 	public View overTimeMonthList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -156,7 +156,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 남은/사용 연차 불러오기
+	// 개인_남은/사용 연차 불러오기
 	@RequestMapping("getVacationInBM.do")
 	public View getVactionInBM (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -165,6 +165,20 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
-
+	
+	
+	////////// 매니저 ///////////////////////////
+    
+	// Ajax 매니저_부재일정확인 - Option - 부재항목 loading		0115
+	@RequestMapping("breakEntryListMgr.do")
+	public View breakEntryListMgr (Model map) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<ApplyCode> result = userDao.breakEntryListMgr();
+		map.addAttribute("breakEntryListMgr", result);
+		
+		return jsonview;
+	}
+	
+	
 	
 }

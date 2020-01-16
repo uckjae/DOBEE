@@ -5,6 +5,16 @@
 <html>
 <head>
 	<c:import url="/common/tag.jsp" />
+	
+	<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
+	
 	<script type="text/javascript">
 		$(function(){
 			/* 권한 코드 select option 만들기*/
@@ -55,39 +65,33 @@
 			
 		});
 
-		function myFormSubmit (){
-			return new Promise(function(resolve,reject){
-				console.log("sendMail()");
-				$.ajax({
-					url:"ajax/admin/sendEmail.do",
-					data: {'mail':$('#mail').val(),
-							'name' : $('#name').val()
-						},
-					dataType: "text",
-					method: "POST",
-					success: function(response){
-						resolve(response);
-						
+		function sendMail (){
+			$.ajax({
+				url:"ajax/admin/sendEmail.do",
+				data: {'mail':$('#mail').val(),
+						'name' : $('#name').val()
 					},
-					error: function(jqXHR, textStatus, errorThrown){
-						console.log(textStatus);
-						console.log(errorThrown);
-						reject(new Error("sendMail 에러"))
-					}
-			});
-			
-			
+				dataType: "text",
+				method: "POST",
+				success: function(){
+					console.log("ajax sendmail success");
+					
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					console.log(textStatus);
+					console.log(errorThrown);
+				}
 				
 				
 			});
 		}
 
-		function sendMail(){
-			myFormSubmit().then(function(data){
+		function myFormSubmit(){
+			sendMail().then(function(){
 				console.log("submit()");
-				console.log(data)
+				/* document.getElementById('addUserForm').submit(); */
 				$('#addUserForm').submit();
-			});
+			})
 		}
 
 		/* 날짜 기본설정 */
@@ -99,6 +103,8 @@
 
 		}
 	</script>
+	
+	
 </head>
 <body>
 	<!-- Side Navbar -->
@@ -212,7 +218,7 @@
                                             
                                             <div class="form-row">
                                            		 <div class="col-md-6">
-                                                    <button type="button" class="btn btn-primary btn-block" onclick="sendMail()">등록하기</button>
+                                                    <button type="button" class="btn btn-primary btn-block" onclick="myFormSubmit()">등록하기</button>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="button" class="btn btn-danger btn-block" value="Cancel"

@@ -8,7 +8,14 @@
 
 <c:import url="/common/tag.jsp" />
 
+<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
 
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
 
 <!-- 루트 컴포넌트 연결 -->
 <script type="text/javascript" charset="utf-8" src="vuejs/app.js"></script>

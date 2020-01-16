@@ -5,6 +5,16 @@
 <html>
   <head>
     <c:import url="/common/tag.jsp"/>
+    
+    	<style >
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+
+body{
+   font-family: 'Noto Serif KR', serif;
+}
+	
+	</style>
+    
   </head>
   <!-- DataTables js-->
 		<link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
@@ -78,7 +88,7 @@
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
 							<td>${user.teamCode}</td>
-							<td>${userInfoList[status.index].regDate}</td>
+							<td>${userInfoList[status.index].regitDate}</td>
 							<td>${userInfoList[status.index].serve}</td>
 							<td>${userInfoList[status.index].emp}</td>
 							<td>${userInfoList[status.index].position}</td>

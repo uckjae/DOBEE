@@ -15,5 +15,7 @@ public class BreakManageList {
    int usingBreak;
    String reason;
    String rejReason;
+   String drafter;
+   String name;
    
 }

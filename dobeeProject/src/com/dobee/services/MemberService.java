@@ -33,8 +33,9 @@ public class MemberService {
 
 
     //비밀번호재설정
-    public void updateMember(){
-
+    public void resetPwd(User user){
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	userDao.resetPwd(user);
     }
 
 
@@ -95,7 +96,7 @@ public class MemberService {
     	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
     		userDao.addUser(user);
-    		userDao.addUserDetail(userInfo);
+    		userDao.addUserInfo(userInfo);
     	}catch(Exception e) {
     		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
