@@ -39,3 +39,5 @@
 
 		<!-- Examples -->
 		<script src="assets/javascripts/dashboard/examples.dashboard.js"></script>
+		
+		

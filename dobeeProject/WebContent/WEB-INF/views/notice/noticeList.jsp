@@ -2,34 +2,54 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<html>
+<html class="fixed">
 <head>
-<c:import url="/common/tag.jsp"/>
-<!-- notice DataTables css-->
-<link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
-<!-- notice DataTables css-->
-<link rel="stylesheet" href="./css/notice.datatables.css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
- <style>
-  @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+		<!-- Basic -->
+		<meta charset="UTF-8">
 
-body {
-   font-family: 'Noto Serif KR', serif;
-}
+		<title>Advanced Tables | Okler Themes | Porto-Admin</title>
+		<meta name="keywords" content="HTML5 Admin Template" />
+		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
 
-</style>
-</head>
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+
+	</head>
 
 
 <body>
-    <!-- notice DataTables js-->
-	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript">
-	</script>
+
 
 	<script>
      $(document).ready(function(){
-		$('#myTable').DataTable({
+		$('#datatable-default').DataTable({
 			/*language option*/
 			"language": {
     	        "emptyTable": "데이터가 없습니다.",
@@ -58,88 +78,53 @@ body {
 
      </script>
 
-<!-- Side Navbar -->
-    <nav class="side-navbar">
-      <c:import url="/common/left.jsp"/>
-    </nav>
+    
+      <section class="body">
+      
+      
+      
+      <!-- start: header -->
+	  <c:import url="/common/Top.jsp"/>
+	  <!-- end: header -->
+      
+      <div class="inner-wrapper">
+		<!-- start: sidebar -->
+		<c:import url="/common/Side.jsp"/>
+		<!-- end: sidebar -->
+				
+		<!-- start : main Content -->
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Blank Page</h2>
+					
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+								<li><span>Pages</span></li>
+								<li><span>Blank Page</span></li>
+							</ol>
+					
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+						</div>
+					</header>
     
     
-   
+    <!-- 작업 여기부터~!~!~!~~! -->      
     
-    <div class="page" >
-      <!-- navbar-->
-       
-      
-      <c:import url="/common/top.jsp"/>
-     
-      
-      <script type="text/javascript"> 
-		window.onload = function(){
-
-			$.ajax({
-				url : "getApyCode.do",
-				dataType : "json",
-				success : function(data) {
-					var dArray = [];
-					dArray = data.apyCode;
-					for (var i = 0; i<dArray.length-1; i++) {
-						var option = document.createElement("option");
-						$("#apycodelist").append("<option value=" + dArray[i].apyCode + ">" + dArray[i].entry + "</option>");
-					}
-				}				
-			});
-
-			
-			$.ajax({
-				url : "getApprovalList.do",
-				dataType : "json",
-				success : function(data) {	
-					var dArray = [];
-					dArray = data.renewedList;
-					for (var i =0; i<dArray.length; i++) {
-						var option = document.createElement("option")
-						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + "</option>")
-					}
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
-				}
-			});
-			
-		}
-		
-  	</script>
-        
-        <div class ="container">
-	    <div id="navbar">
-			<ul class="nav nav-tabs">
-			  <li class="nav-item">
-			    <a class="nav-link active" href="breakApply.do">부재일정 신청</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="extendApply.do">연장근무 신청</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="breakManage.do">부재 일정 관리</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="workManage.do">근무 내역 확인</a>
-			  </li>
-			</ul>
-		</div>
-	<br>
-	<h1 style="text-align: left">부재 신청</h1>
-   	<br>
-      
       <div class="content" style="margin-right: 50px">
       	
 		<div class="comment-form-wrap pt-xl-2">
 			<h1 class="text-center mb-3 bread">공지사항 리스트</h1>
-			<div class="table-responsive">
-    
+			
+			
+	<div class="panel-body">   
 	<!-- table-->
 	<!-- option display -->
-	<table id="myTable" class="dataTable display">
+	<table id="datatable-default" class="table table-bordered table-striped mb-none">
 		<thead>
 			<tr>
 				<th class="notSeq" style="width: 10%">No</th>
@@ -162,34 +147,59 @@ body {
 				<td class="count">${n.count}</td>
 			</tr>
 		</c:forEach>
-			
-			
-
 		</tbody>
 	</table>
+	
+	
 	<p class="article-comment margin-small">
 		<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
 	</p>
 	
-		</div>
-		</div>
+		</div> <!--테이블 div종료  -->
+		</div><!--공지사항 리스트 제목  -->
+	  </div><!--공지사항 콘텐츠  -->
+	  </section>
 	  </div>
-	  </div>
-	</div>
 	
+				<!-- 오른쪽 사이드바!! -->
+		<c:import url="/common/RightSide.jsp"/>
 	
-	
-	<!-- JavaScript files-->
-    <script src="./vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
-    <script src="./vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="./vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="./vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <!-- Main File-->
-    <script src="./js/front.js"></script>
-    <script src="https://kit.fontawesome.com/5d4e7bbd25.js" crossorigin="anonymous"></script>
-	
+			
+			<!-- 오른쪽 사이드바 끝!! -->
+		</section>
 
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+
+
+		<!-- Examples -->
+		<script src="assets/javascripts/tables/examples.datatables.default.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
+		<script src="assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+		
+		
+		
+		
 </body>
 </html>
