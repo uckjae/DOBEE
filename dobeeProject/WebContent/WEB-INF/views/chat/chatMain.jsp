@@ -12,8 +12,8 @@
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
 	}
-	h4 {
-			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
+	h6 {
+			font-size: 10px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
 	}
 	a {
@@ -177,14 +177,22 @@
 											</a>
 										</div>
 										<div class="inner-menu-content">
-										<button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalBootstrap"><strong>+</strong></button>
-<!-- 										<a class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md" data-toggle="modal" data-target="#modalBootstrap">Bootstrap</a>
- -->										<hr class="separator" />
-										
+										<hr class="separator" />
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
-													<h6 class="title">Channel</h6>
-													<span class="widget-toggle">+</span>
+												<div class="row">
+													<div class="col-xs-3">
+														<h6 class="title">Channel</h6>
+													</div>
+													<div class="col-xs-2">
+														<button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalBootstrap" style="display:inline;margin:0;"><strong>+</strong></button>
+													</div>
+													<div class="col-xs-4">
+													</div>
+													<div class="col-xs-2">
+														<span class="widget-toggle">+</span>
+													</div>
+													</div>
 												</div>
 												<div class="widget-content">
 													<ul class="list-unstyled mailbox-bullets">
@@ -197,7 +205,6 @@
 													</ul>
 												</div>
 											</div>
-							
 											<hr class="separator" />
 							
 											<!-- DM 목록 -->
@@ -252,33 +259,6 @@
 					            		<hr width="70%">
 					            	</div>
 					            </div>
-								<!-- <div class="mailbox-actions">
-									<ul class="list-unstyled m-none pt-lg pb-lg">
-										<li class="ib mr-sm">
-											<div class="btn-group">
-												<a href="#" class="item-action fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></a>
-							
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">All</a></li>
-													<li><a href="#">None</a></li>
-													<li><a href="#">Read</a></li>
-													<li><a href="#">Unread</a></li>
-													<li><a href="#">Starred</a></li>
-													<li><a href="#">Unstarred</a></li>
-												</ul>
-											</div>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-refresh" href="#"></a>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-tag" href="#"></a>
-										</li>
-										<li class="ib">
-											<a class="item-action fa fa-times text-danger" href="#"></a>
-										</li>
-									</ul>
-								</div> -->
 								
 								<!-- END: .mailbox-actions -->
 								<div class="nano">
