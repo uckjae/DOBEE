@@ -6,130 +6,6 @@
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
 	</head>
-	<style>
-	@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
-	body{
-			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
-	
-	}
-	h4, span {
-			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
-	
-	}
-	a {
-		color: #222222;
-	}
-	
-	body{
-    background:#eee;    
-	}
-	.chat-list {
-	    padding: 0;
-	    font-size: .8rem;
-	}
-	
-	.chat-list li {
-	    margin-bottom: 10px;
-	    overflow: auto;
-	    color: #ffffff;
-	}
-	
-	.chat-list .chat-img {
-	    float: left;
-	    width: 48px;
-	}
-	
-	.chat-list .chat-img img {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    width: 100%;
-	}
-	
-	.chat-list .chat-message {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    background: #888888;
-	    display: inline-block;
-	    padding: 10px 20px;
-	    position: relative;
-	}
-	
-	.chat-list .chat-message:before {
-	    content: "";
-	    position: absolute;
-	    top: 15px;
-	    width: 0;
-	    height: 0;
-	}
-	
-	.chat-list .chat-message h5 {
-	    margin: 0 0 5px 0;
-	    font-weight: 600;
-	    line-height: 100%;
-	    font-size: .9rem;
-	}
-	
-	.chat-list .chat-message p {
-	    line-height: 18px;
-	    margin: 0;
-	    padding: 0;
-	    font-color:#453d3d;
-	}
-	
-	.chat-list .chat-body {
-	    margin-left: 20px;
-	    float: left;
-	    width: 70%;
-	}
-	
-	.chat-list .in .chat-message:before {
-	    left: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-right: 20px solid #888888;
-	}
-	
-	.chat-list .out .chat-img {
-	    float: right;
-	}
-	
-	.chat-list .out .chat-body {
-	    float: right;
-	    margin-right: 20px;
-	    text-align: right;
-	}
-	
-	.chat-list .out .chat-message {
-	    background: #888888;
-	}
-	
-	.chat-list .out .chat-message:before {
-	    right: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-left: 20px solid #888888;
-	}
-	
-	.card .card-header:first-child {
-	    -webkit-border-radius: 0.3rem 0.3rem 0 0;
-	    -moz-border-radius: 0.3rem 0.3rem 0 0;
-	    border-radius: 0.3rem 0.3rem 0 0;
-	}
-	.card .card-header {
-	    background: #17202b;
-	    border: 0;
-	    font-size: 1rem;
-	    padding: .65rem 1rem;
-	    position: relative;
-	    font-weight: 600;
-	    color: #ffffff;
-	}
-	
-	.content{
-	    margin-top:40px;    
-	}
-	
-  </style>
 	<body>
 		<section class="body">
 
@@ -222,7 +98,6 @@
 									</div>
 								</div>
 							</menu>
-							
 							<div class="inner-body mailbox-folder">
 								<!-- START: .mailbox-header -->
 								<header class="mailbox-header">
@@ -281,9 +156,9 @@
 								</div> -->
 								
 								<!-- END: .mailbox-actions -->
-								<div class="nano">
-								<div class="container content" id="chatMsgMain">
-						            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
+							<div class="container content" id="chatMsgMain">
+					            <div class="nano-content">
+						            <ul class="chat-list" id="chatLog" style="height: 250px; overflow-y: scroll;">
 						        	</ul>
 								</div>
 							</div>
@@ -302,7 +177,6 @@
 							</form>
 								
 								
-							</div>
 							</div>
 						</div>
 					</section>
@@ -412,12 +286,14 @@
 					});
 				
 				socket.on('receive message to self', function(chatContent,currentDate){
-						$('#chatLog').append('<div><li class="out">'
+						$('#chatLog').append('<div id="scroll"> <li class="out"><div class="chat-img" >'
+								+'<img alt="Avtar" src="./img/alpaca.jpg"></div>'
 								+'<div class="chat-body"><div class="chat-message">'
 								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 								+'</div></div></li></div><br>');
+						$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 					});
-			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
+		
 		
 		  
 		
