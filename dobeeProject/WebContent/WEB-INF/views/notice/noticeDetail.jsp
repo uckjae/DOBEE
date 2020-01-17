@@ -18,15 +18,14 @@
 <title>Detail</title>
 
 <style type="text/css">
-html, body {
-	height: 100%;
-}
+
 .ds {
 	width: 100%;
-	min-height: 280px;
+	min-height: 300px;
 	border: 1px solid #34495E;
-	border-radius: 5px;
-	padding: 30px;
+	border-radius: 10px;
+	padding: 10px;
+	
 }
 </style>
 </head>
@@ -69,8 +68,11 @@ html, body {
 									<a href="#" class="fa fa-caret-down"></a>
 									<a href="#" class="fa fa-times"></a>
 								</div>
-						
-								<h2 class="panel-title">공지사항</h2>
+						        
+								<h2 class="panel-title">
+								<img src="img/noticeicon.png" style="width:3%; height:3%;">
+								&nbsp;&nbsp;공지사항</h2>
+								
 							</header>
 							
 					<div class="panel-body">		
@@ -82,12 +84,14 @@ html, body {
 						</p>
 						<input type="text" class="form-control mb-3" id="title"
 							name="title" value="${notice.title}" readonly>
+						<div style="margin: 15px"></div>
+						<div id="content1" row="10" class="ds">${notice.content}</div>
 						
-						<div id="content1" rows="10" class="ds">${notice.content}</div>
 						<div class="text-right" id="lengthBox">
 							<span id="total-characters"></span> <span id="max"></span>
 						</div>
-						<div class="text-center">
+						
+						<div class="text-right" style="margin:30px">
 							<a class="btn btn-primary mr-3"
 								href="noticeModify.do?notSeq=${notice.notSeq}">수정</a> <a
 								class="btn btn-primary mr-3"
@@ -95,7 +99,7 @@ html, body {
 								class="btn btn-primary mr-3" href="noticeList.do">목록</a>
 						</div>
 						</div>
-						</section>//
+						</section>
 			</section>
 		</div>
 
