@@ -25,7 +25,6 @@
             <div class="img-holder">
                 <div class="bg"></div>
                 <div class="info-holder">
-
                 </div>
             </div>
             <div class="form-holder">
