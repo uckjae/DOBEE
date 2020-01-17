@@ -91,7 +91,8 @@
 							<li><a href="index.html"> <i class="fa fa-home"></i>
 							</a></li>
 							<li><span>Pages</span></li>
-							<li><span>Blank Page</span></li>
+							<li><span>Notice Modify</span></li>
+							<li><span>제목:&nbsp;&nbsp;${notice.title}</span></li>
 						</ol>
 
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i

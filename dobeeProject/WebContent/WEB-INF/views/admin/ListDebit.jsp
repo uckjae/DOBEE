@@ -6,10 +6,11 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <c:import url="/common/HeadTag.jsp"/>
-<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+<!-- Specific Page Vendor CSS -->
+	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 <script type="text/javascript">
-  $(document).ready(function(){
+$(document).ready(function(){
 		$('#myTable').DataTable({
 			/*language option*/
 			"language": {
@@ -32,12 +33,83 @@
      	      className: "dt-center", "targets": [1],
    	        }
  	      ]
-			});	
+			});
 	});
 
+	function modify(data){
+		console.log("modify() in!!")
+		console.log(data);
+		var tr = $(data).closest('tr');
+		var teamCode = "";
+		teamCode = $(data).parent().prev().prev().text();
+		$(tr).empty();
+		
+		$.ajax({
+			url:"ajax/admin/getTeam.do",
+			data: {'teamCode' : teamCode},
+			type: "POST",
+			dataType: "json",
+			success: function(team){
+				console.log(team);
+				console.log(team.teamCode);
+				var firstTd = $('<td>');
+					$(firstTd).text("수정");
+				var secTd = $('<td>');
+					$(secTd).html('<input type="text" name="teamCode" id="teamCode" value="${team.teamCode}">');
+				var thirdTd = $('<td>');
+					$(thirdTd).html('<input type="text" name="teamName" id="teamName" value="${team.teamName}">');
+				var fourthTd = $('<td>');
+					$(fourthTd).html('<button class="btn btn-primary btn-block" onclick="myFormSubmit()">수정하기</button>');
+				var fifthTd = $('<td>');
+					$(fifthTd).html('<button class="btn btn-primary btn-block" onclick="removeForm(this)">취소</button>');
 
+				$(tr).append(firstTd);
+				$(tr).append(secTd);
+				$(tr).append(thirdTd);
+				$(tr).append(fourthTd);
+				$(tr).append(fifthTd);
+								
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
 	
-  </script>
+		});
+	}
+
+		
+	  function add(data){
+		  	console.log("modify() in!!")
+			console.log(data.parentElement.parentElement);
+			var target = data.parentElement.parentElement
+
+				var inputRow = $('<tr style="height: 2em" role="row">');
+				
+					var info = $('<td>');
+						$(info).text("수정하기");					
+					var teamName = $('<td>');
+						$(teamName).append('<input type="text" placeholder="팀 코드 입력">');
+					var teamCode = $('<td>');
+						$(teamCode).append('<input type="text" placeholder="팀 이름 입력">');
+					var submitButton = $('<td>');
+						$(submitButton).append('<input type="submit" value="수정">');
+					var cancleButton = $('<td>');
+						var btn = $('<button onclick="cancleModify(this)">');
+							$(btn).text("취소");
+						$(cancleButton).append(btn);
+				$(inputRow).append(info);
+				$(inputRow).append(teamName);
+				$(inputRow).append(teamCode);
+				$(inputRow).append(submitButton);
+				$(inputRow).append(cancleButton);
+			$(target).after(inputRow);
+		}
+
+		function cancleModify(data){
+			console.log(data);
+		}
+		</script>
 </head>
 	<body>
 		<section class="body">
@@ -71,13 +143,19 @@
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					작업 여기부터 하삼!!
-					<!-- start: page -->
-					
-					<section class="dashboard-counts section-padding">
-        <div class="container-fluid">
-        	<table id="myTable" class="dataTable display">
-				<thead>
+					<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a>
+							<a href="#" class="fa fa-times"></a>
+						</div>
+				
+						<h2 class="panel-title">Rows with Details</h2>
+					</header>
+			<div class="panel-body">
+				<form action="#" method="post">
+					<table id="myTable" class="table table-bordered table-striped mb-none">
+						<thead>
 					<tr>
 						<th style="width: auto">번호</th>
 						<th style="width: auto">카드번호</th>
@@ -103,9 +181,11 @@
 					
 		
 				</tbody>
-	</table>
-        </div>
-      </section>
+					</table>
+				</form>
+			</div>
+		</section>
+					<!-- start: page -->
 					<!-- end: page -->
 				</section>
 			</div>
@@ -119,9 +199,7 @@
 			
 			<!-- 오른쪽 사이드바 끝!! -->
 		</section>
-		
 
-		<%-- <c:import url="/common/BottomTag.jsp"/> --%>
-		 
+		<c:import url="/common/BottomTag.jsp"/>
 	</body>
 </html>
