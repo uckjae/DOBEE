@@ -365,7 +365,7 @@
 	  	
 
 		var chatType = $("#chatType").val();
-		var fromName = $("#name").val();
+		var fromName = $("#name").text();
 		var dmName = $("#dmName").text();
 		//채팅방 이름 : 발신자 - 수신자
 		var chatRoomName = fromName + "-" + dmName;
