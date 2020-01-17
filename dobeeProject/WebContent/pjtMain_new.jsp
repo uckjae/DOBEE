@@ -6,6 +6,160 @@
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
 	</head>
+	<style type="text/css">
+@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+
+	h4, span {
+			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
+	
+	}
+	a {
+		color: #888888;
+	}
+	
+	
+	
+body 
+{
+	font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5;
+	margin : 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items : center;
+	min-height : 100vh;
+
+}
+
+
+.container {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+  transition: box-shadow 0.3s ease-out;
+}
+
+.container:hover {
+  box-shadow: 1px 2px 10px rgba(0,0,0,0.5);
+}
+
+.img-container {
+  background-color: #eeeee;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transition: transform 0.3s ease-out;
+  z-index: 2;
+}
+
+.img-container:hover {
+	cursor: pointer;
+}
+
+.container:hover .img-container {
+	transform: translateY(-100px);
+}
+
+.img-container > img {
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.3s ease-out;
+}
+
+.container:hover > .img-container > img {
+  opacity: 0.5;
+}
+
+.social-media {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+}
+
+.social-media > li {
+  list-style: none;
+}
+
+.social-media > li > a {
+  display: block;
+  height: 50px;
+  width: 50px;
+  background-color: #FFF;
+  text-align: center;
+  color: #262626;
+  margin: 0 5px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(200px);
+  transition: all 0.3s ease-out;
+}
+
+.container:hover > .social-media > li > a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.social-media > li > a > .fa {
+  font-size: 24px;
+  line-height: 50px;
+  transition: transform 0.3s ease-out;
+}
+
+.social-media > li > a:hover > .fa {
+  transform: rotateY(360deg);
+}
+
+.container:hover .social-media li:nth-child(1) a {
+	transition-delay: 0s;
+}
+
+.container:hover .social-media li:nth-child(2) a {
+	transition-delay: 0.1s;
+}
+
+.container:hover .social-media li:nth-child(3) a {
+	transition-delay: 0.2s;
+}
+
+.container:hover .social-media li:nth-child(4) a {
+	transition-delay: 0.3s;
+}
+
+.container:hover .social-media li:nth-child(5) a {
+	transition-delay: 0.4s;
+}
+
+.user-info {
+  position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: #FFF;
+	height: 100px;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+  text-align: center
+}
+
+.user-info > h2 {
+  padding: 0;
+  margin: 10px 0;
+}
+
+.user-info > span {
+  color: #262626;
+  font-size: 16px;
+}
+    </style>
 	<body>
 		<section class="body">
 
