@@ -191,13 +191,6 @@ public class DoController {
     }
 
 
-    //출근/퇴근버튼 >> ajax 컨트롤러로 바꿈
-    /*
-    public String attendButton(){
-        return null;
-    }
-    */
-
 
     //마이페이지
     //@RequestMapping(value = "", method = RequestMethod.GET)
@@ -492,9 +485,11 @@ public class DoController {
     }
 
 
-    //칸반보드
-    public String kanban(){
-        return null;
+    //칸반보드 메인 불러오기
+    @RequestMapping("pjtKanban.do")
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq){
+    	System.out.println("플젝 번호 가져와?"+pjtSeq);
+        return "project/pjtKanban_new";
     }
 
 
@@ -603,7 +598,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain2";
+    	return "chat/chatMain";
     }
     
     

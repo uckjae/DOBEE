@@ -177,9 +177,11 @@
 											</a>
 										</div>
 										<div class="inner-menu-content">
-										<button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalBootstrap"><strong>+</strong></button>
-<!-- 										<a class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md" data-toggle="modal" data-target="#modalBootstrap">Bootstrap</a>
- -->										<hr class="separator" />
+											<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
+												<i class="fa fa-wechat mr-xs"></i>
+												새 대화 채널 만들기
+											</button>
+											<hr class="separator" />
 										
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
@@ -337,7 +339,6 @@
 						</div>
 						</div>
 						</div>
-			
 			
 		</section>
 		<c:import url="/common/BottomTag.jsp"/>

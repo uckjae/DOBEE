@@ -6,23 +6,24 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ReceiptService {
 	
-	
 	public ArrayList<String> fileUpload(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
 		
+		//String apachRealTempPath = mRequest.getSession().getServletContext().getRealPath("/");
+		//String apachUploadPath = apachRealTempPath + "uplaod";
+		
 		ArrayList<String> arrayList = new ArrayList<>();
-			
 		String isSuccess = "false";
-		
-		String uploadPath = "/Users/psh/DOBEE/dobeeProject/WebContent/upload/";
-		
+		String uploadPath = "/Users/psh/DOBEE_New/dobeeProject/WebContent/upload/";
 		File dir = new File(uploadPath);
 
 		if (!dir.isDirectory()) {
@@ -48,8 +49,7 @@ public class ReceiptService {
 					String ori = "";
 					ori = saveFileName.split("\\.")[0];
 					ex = saveFileName.split("\\.")[1];
-					System.out.println("서비스단:ReceiptService: 파일명/확장자 =" + ori +"/" + ex );
-					saveFileName = ori + "_" + System.currentTimeMillis() + ex;
+					saveFileName = ori + "_" + System.currentTimeMillis() + "." +ex;
 				}
 				
 				try {

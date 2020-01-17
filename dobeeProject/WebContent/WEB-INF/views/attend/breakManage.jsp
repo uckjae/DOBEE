@@ -33,6 +33,10 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 
+<!-- Table Style -->
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
 
 </head>
 	<body>
@@ -130,42 +134,43 @@
 					
 					
 					<section class="panel">
-						<div class="panel-body" style="min-height: 560px;">
-							<div class="row">
-								<div class="col-md-12">
-									<table id="brkTable" class="dataTable hover order-column row-border" style="width :100%">
-										<thead id="thead">
-											<tr>
-												<th width="13%">부재항목</th>
-												<th>기간</th>
-												<th width="13%">사용 일수</th>
-												<th width="17%">신청 일자</th>
-												<th width="20%">승인여부</th>
-											</tr>
-										</thead>
-										
-										<tbody id="tbody">
-											<c:forEach items="${brkList}" var="bl">
-											
-												<tr>
-													<td class="bcategory">	${bl.entry }</td>
-													<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
-													<td class="tused">		${bl.usingBreak }</td>
-													<td class="tregdate">	${bl.reqDate }</td>
-													<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
-																				data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-					
-										<tfoot>	
-										</tfoot>
-											
-									</table>
-								</div>
+						<header class="panel-heading">
+							<div class="panel-actions">
+								<a href="#" class="fa fa-caret-down"></a>
+								<a href="#" class="fa fa-times"></a>
 							</div>
+					
+							<h2 class="panel-title">Basic with Table Tools</h2>
+						</header>
+						<div class="panel-body">
+							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th width="13%">부재항목</th>
+										<th>기간</th>
+										<th width="13%">사용 일수</th>
+										<th width="17%">신청 일자</th>
+										<th width="20%">승인여부</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									<c:forEach items="${brkList}" var="bl">
+										<tr>
+											<td class="bcategory">	${bl.entry }</td>
+											<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
+											<td class="tused">		${bl.usingBreak }</td>
+											<td class="tregdate">	${bl.reqDate }</td>
+											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
+																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button></td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
 						</div>
 					</section>
+					
 					
 					<!-- Modal Section -->
 					<section>
@@ -227,10 +232,12 @@
 		
 <!-- SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT// -->
 	
-	<!-- Choi's TABLE SET -->
-	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
-	
-	
+	<!-- Table Script -->
+	<script src="assets/vendor/select2/select2.js"></script>
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+
 	
 		<script>
 			window.onload = function(){
@@ -256,8 +263,8 @@
 					url : "getVacationInBM.do",
 					dataType : "json",
 					success : function (data) {
-						$('#usedVacation').text(data.totalVacation[0].totalBreak)
-						$('#remainVacation').text(data.totalVacation[0].usedBreak)					
+						$('#usedVacation').html(data.totalVacation[0].totalBreak)
+						$('#remainVacation').html(data.totalVacation[0].usedBreak)					
 					},
 					error : function(error){
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
