@@ -185,15 +185,14 @@
 					</ul>
 			
 					<span class="separator"></span>
-					<c:set var="user" value="${requestScope.user}"/>
 					<div id="userbox" class="userbox">
 						<a href="#" data-toggle="dropdown">
 							<figure class="profile-picture">
 								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								<span class="name">${user.name}</span>
-								<span class="role">administrator</span>
+								<span class="name" id="name">${user.name}</span>
+								<span class="role" id="mail">${user.mail}</span>
 							</div>
 			
 							<i class="fa custom-caret"></i>
@@ -232,10 +231,10 @@
 			   icon: "info" //"info,success,warning,error" 중 택1
 			}).then((YES) => {
 				console.log('이거 타??');
-				
+				var mail = $("#mail").val();
 				$.ajax({
 		 			url:"attend.do",
-					data: chatRoom ,
+					data: mail ,
 					dataType: "text",
 					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 					type:"post",
