@@ -7,7 +7,7 @@
 		<c:import url="/common/HeadTag.jsp"/>
 	</head>
 	<style>
-	@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
 	body{
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
@@ -15,14 +15,11 @@
 	h4 {
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
-	}
+	} */
 	a {
 		color: #222222;
 	}
 	
-	body{
-    background:#eee;    
-	}
 	.chat-list {
 	    padding: 0;
 	    font-size: .8rem;
@@ -369,10 +366,11 @@
 
 		var chatType = $("#chatType").val();
 		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#name").val();
+		var fromName = $("#name").text();
 		var socket = io.connect( 'http://192.168.6.2:5000/dm', {
 					path: '/socket.io'
 				});
+				console.log('이름은?'+fromName);
 				
 				$("#sendMessage").on('submit', function(e){
 					chatContent = $('#chatContent').val();
