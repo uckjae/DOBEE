@@ -73,5 +73,20 @@ WHERE p.pjtseq = #{pjtSeq}
 </select>
 
 
+<!-- 업무리스트 목록 조회 -->
+<select id="taskList" resultType="com.dobee.vo.project.Task">
+	SELECT TASKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ FROM TASK WHERE PJTSEQ = #{pjtSeq} ORDER BY TASKSEQ
+</select>
 
+
+<!-- 업무추가 PM 업무내용, 담당자, 중요도 -->
+<insert id="addPMTask" parameterType="com.dobee.vo.project.Task">
+	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ) VALUES(#{title},#{mail},#{important},#{pjtSeq})
+</insert>
+
+
+<!-- 업무차가 담당자 날짜, 중요도, 상세내용, 체크리스ㅡ튼 -->
+<update id="addTask" parameterType="com.dobee.vo.project.Task">
+	UPDATE TASK SET STARTAT=#{startAt} , ENDAT=#{endAt} , IMPORTANT=#{important} , PROGRESS=#{progress} WHERE TASKSEQ=#{taskSeq} 
+</update>
 </mapper>
