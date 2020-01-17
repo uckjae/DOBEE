@@ -7,15 +7,15 @@
 		<c:import url="/common/HeadTag.jsp"/>
 	</head>
 	<style>
-	@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
 	body{
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
 	}
-	h4, span {
-			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
+	h6 {
+			font-size: 10px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
-	}
+	} */
 	a {
 		color: #222222;
 	}
@@ -177,10 +177,11 @@
 											</a>
 										</div>
 										<div class="inner-menu-content">
-										<button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalBootstrap"><strong>+</strong></button>
-<!-- 										<a class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md" data-toggle="modal" data-target="#modalBootstrap">Bootstrap</a>
- -->										<hr class="separator" />
-										
+										<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
+												<i class="fa fa-wechat mr-xs"></i>
+												새 대화 채널 만들기
+											</button>
+											<hr class="separator" />
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
 													<h6 class="title">Channel</h6>
@@ -197,9 +198,7 @@
 													</ul>
 												</div>
 											</div>
-							
 											<hr class="separator" />
-							
 											<!-- DM 목록 -->
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
@@ -210,7 +209,7 @@
 													<ul class="list-unstyled mailbox-bullets">
 													<c:forEach var="userList" items="${requestScope.userList}">
 											            <li>
-												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>${userList.name }</a>
+												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${userList.name }</a>
 											     	  	</li>
 										           </c:forEach>
 													</ul>
@@ -223,91 +222,64 @@
 								</div>
 							</menu>
 							
-							<div class="inner-body mailbox-folder">
-								<!-- START: .mailbox-header -->
-								<header class="mailbox-header">
-									<div class="row">
-										<div class="col-sm-6">
-											<h1 class="mailbox-title text-light m-none">
-									<c:set var="user" value="${requestScope.user}"/>
-               							<b id="chatRoomName" style="font-size:30px;">${user.name}</b>
-											</h1>
-										</div>
-										<div class="col-sm-6">
-											
-										</div>
-									</div>
-								</header>
-								<!-- END: .mailbox-header -->
 							
-								<!-- START: .mailbox-actions -->
-								 <div class="row">
-					            	<div class="col-md-4">
-					            		<hr width="70%">
-					            	</div>
-					       			<div class="col-md-4" id="currentDate">
-					            		<h3 style="text-align:center;font-size:25px;">오늘 </h3>
-					            	</div>     
-					            	<div class="col-md-4">
-					            		<hr width="70%">
-					            	</div>
-					            </div>
-								<!-- <div class="mailbox-actions">
-									<ul class="list-unstyled m-none pt-lg pb-lg">
-										<li class="ib mr-sm">
-											<div class="btn-group">
-												<a href="#" class="item-action fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></a>
-							
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">All</a></li>
-													<li><a href="#">None</a></li>
-													<li><a href="#">Read</a></li>
-													<li><a href="#">Unread</a></li>
-													<li><a href="#">Starred</a></li>
-													<li><a href="#">Unstarred</a></li>
-												</ul>
+							<div class="inner-body mg-main">
+									<!-- START: .mailbox-header -->
+									<header class="mailbox-header">
+										<div class="row">
+											<div class="col-sm-6">
+												<h1 class="mailbox-title text-light m-none">
+										<c:set var="user" value="${requestScope.user}"/>
+	               							<b id="chatRoomName" style="font-size:30px;">${user.name}</b>
+												</h1>
 											</div>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-refresh" href="#"></a>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-tag" href="#"></a>
-										</li>
-										<li class="ib">
-											<a class="item-action fa fa-times text-danger" href="#"></a>
-										</li>
-									</ul>
-								</div> -->
+											<div class="col-sm-6">
+											</div>
+										</div>
+									</header>
+									<!-- END: .mailbox-header -->
 								
-								<!-- END: .mailbox-actions -->
-								<div class="nano">
-								<div class="container content" id="chatMsgMain">
-						            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
-						        	</ul>
+									<!-- START: .mailbox-actions -->
+									 <div class="row">
+						            	<div class="col-md-4">
+						            		<hr width="70%">
+						            	</div>
+						       			<div class="col-md-4" id="currentDate">
+						            		<h3 style="text-align:center;font-size:25px;">오늘 </h3>
+						            	</div>     
+						            	<div class="col-md-4">
+						            		<hr width="70%">
+						            	</div>
+						            </div>
 								</div>
-							</div>
-							<form id="sendMessage" method="post">
-							<div>        
-					            <li class="white">
-					              <div class="form-group basic-textarea" stlye="width:300px">
-					                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-									<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-					                <input type="hidden" id="name" name="name" value="${user.name}">
-					              </div>
-					            </li>
-				            </div>
-					            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
-				             </ul>
-							</form>
-								
-								
-							</div>
-							</div>
+									<!-- END: .mailbox-actions -->
+										<div class="nano">
+											<div class="nano-content">
+												<div id="chatMsgMain">
+										            <ul class="list-unstyled" id="chatLog">
+										        	</ul>
+												</div>
+											</div>
+										</div>
+								<!-- 채팅 보내는 곳 -->
+									<section class="panel">
+										<div class="panel-body">
+											<form id="sendMessage" method="post">
+												<div>        
+									              <div class="form-group basic-textarea" stlye="width:300px">
+									                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+													<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+									                <input type="hidden" id="name" name="name" value="${user.name}">
+									              </div>
+							            		</div>
+								            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
+											</form>
+										</div>
+									</section>
+									
 						</div>
 					</section>
 					<!-- end: page -->
-				</section>
 			</div>
 			
 			<!-- 오른쪽 사이드 시작 -->
@@ -334,6 +306,7 @@
 							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
+							   <br>
 						        <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
@@ -368,6 +341,7 @@
 			
 			
 		</section>
+		</body>
 		<c:import url="/common/BottomTag.jsp"/>
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
@@ -392,11 +366,11 @@
 	  		}
 	  	});
 
-	  	
+		$(".nano").nanoScroller();
 
 		var chatType = $("#chatType").val();
 		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#name").val();
+		var fromName = $("#chatRoomName").text();
 		var socket = io.connect( 'http://192.168.6.2:5000/self', {
 					path: '/socket.io'
 				});
@@ -486,5 +460,4 @@
 			});
 	});
 </script>
-	</body>
 </html>

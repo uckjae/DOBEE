@@ -139,55 +139,6 @@ module.exports = (server, app) => {
             }); //db end
         })
     }
-    /*//DM 채팅방 만들기
-    function makeDmChatRoom(chatRoomName, chatType, chatUsers) {
-        var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
-        var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
-
-        db((err, conn) => {
-            conn.beginTransaction(function (err) {
-                if (err) {
-                    return conn.release();
-                    throw err;
-                }
-                //채팅방 먼저 만들기
-                conn.query(sql1, [chatRoomName, chatType], function(err, result){
-                    if (err) {
-                        conn.release();
-                        throw err;
-                    }
-                    
-                    console.log('첫번째 쿼리문 완료');
-
-                    conn.query(sql2, [chatRoomName, chatUsers[0]], function(err, result){
-                        if (err) {
-                            conn.release();
-                            throw err;
-                        }
-                        console.log('두번째 쿼리문 완료?');
-                        conn.query(sql2, [chatRoomName, chatUsers[1]], function(err, result) {
-                            if (err) {
-                                conn.release();
-                                throw err;
-
-                            }
-                            conn.commit(function (err) {
-                                if (err) {
-                                    conn.rollback(function () {
-                                        conn.release();
-                                        throw err;
-                                    });
-                                }
-                                console.log('dm 새로운 채팅방 만들기 완료');
-                            });
-                        });
-                    });
-                });
-                });//transaction end
-            conn.release();
-            }); //db end
-    }*/
-
 
 
 
@@ -197,9 +148,9 @@ module.exports = (server, app) => {
         db((err, conn) => {
             var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where name=?))"
             conn.query(sql, [chatContent, currentDate, chatRoomName, name], function (err, result) {
-                    if (err) { //에러나면 rollback
-                        conn.release();
-                        throw err;
+                if (err) { //에러나면 rollback
+                    conn.release();
+                    throw err;
                 }
                 if(result.length > 0 ){
                     console.log('기존 채팅방에 대화 내용 저장 커밋 완료');
@@ -251,13 +202,12 @@ module.exports = (server, app) => {
 
             insertChatContent(chatContent, chatRoomName, name);
             group.emit('receive message to group', chatContent, currentDate, name);
-            });
+        });
         socket.on('disconnect', (socket) => {
             console.log('group 네임 스페이스 접속 해제');
-
         })
 
-        });
+    });
 
 
     dm.on('connection', (socket) => {

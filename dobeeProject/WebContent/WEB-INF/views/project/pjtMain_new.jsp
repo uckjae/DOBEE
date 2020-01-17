@@ -108,9 +108,15 @@
 						      <!--Body-->
 						      <div class="modal-body mb-0">
 						      <form name="pjtForm" method="post">
-						      		<label for="pjtName" class="col-form-label"><i class="fa fa-pencil"></i><span>&nbsp;프로젝트 이름</span></label>
-							        <input type="text" class="form-control" id="pjtName" name="pjtName">
-							        <br>
+						     	 <div class="row">
+						     	 	<div class="col-sm-3">
+						      			<label for="pjtName" class="col-form-label"><i class="fa fa-pencil"></i><span>&nbsp;프로젝트 이름</span></label>
+						      		</div>
+						      		<div class="col-sm-9">
+							        	<input type="text" class="form-control" id="pjtName" name="pjtName">
+							        </div>
+							        </div>
+							     <br>
 							    <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="pjtStartAt" class="col-form-label"><i class="fa fa-calendar"></i><span>&nbsp;시작일</span></label>
@@ -134,9 +140,9 @@
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 추가</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 35px">
+						      			<select class="form-control" id="userSelect" name="userSelect" style="height : 40px">
 		                                    <option hidden>멤버</option>
-		                                    </select>
+		                                </select>
 						      		</div>
 							   </div>
 							   <br>
