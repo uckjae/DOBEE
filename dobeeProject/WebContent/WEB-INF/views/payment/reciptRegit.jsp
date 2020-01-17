@@ -300,11 +300,15 @@ console.log(path);
                             <!-- 좌측에 영수증사진에 대한 텍스트  -->
                             <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
 
-                            <form id="costlistInfo" action="addFinalReceipt.do">
+                            <form id="costlistInfo" action="addFinalReceipt.do" method="POST">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">신청자 이메일</label>
                                     <input type="text" class="form-control" id="Input1" name='mail' readonly="readonly">
                                 </div>
+                                <div class="form-group">
+				   					 <label for="exampleFormControlInput1">등록일</label>
+				    				<input type="date" class="form-control" id="Input0" name='regitReceiptDate' readonly="readonly">
+				  				</div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">법인카드 선택</label>
                                     <select class="form-control" name='cardNum' id="Select1">
@@ -369,6 +373,47 @@ console.log(path);
                        /*  $(this).siblings(".custom-file-label").addClass("selected").html(fileName); */
                     });
                 });
-            </script>
+    </script>
+            
+            
+            
+    <script>
+	//등록일 자동으로 현재 그 날 날짜 박아넣기
+	//문자열에서 숫자만 가져오기
+	function fn1(str){
+	    var res;
+	    res = str.replace(/[^0-9]/g,"");
+	    var y = res.substring(0,4);
+	    var m = res.substring(4,5);
+	    var rm
+	    if(m < 10){
+		    rm = "0"+m;
+		}
+		var d = res.substring(5,8);
+		var full = y+rm+d;
+		
+	    return full;
+	}
+
+	//문자열 날짜형태로 바꾸기 함수
+	function calculus1(str){    
+	    var end_ymd = str;    
+	    var yyyy = end_ymd.substr(0,4);
+	    var mm = end_ymd.substr(4,2);
+	    var dd = end_ymd.substr(6);  
+	    var com_ymd = new Date(yyyy,mm-1,dd)
+	    var inputdate = com_ymd.format('yyyy-MM-dd');  //임의 함수 써서 포맷팅함
+	    
+	    return inputdate;
+	}
+	var today = new Date();
+	var date = today.toLocaleDateString('ko-KR');
+	console.log(date);
+	var numberDate = fn1(date);
+	console.log(numberDate);
+	var regitDate = calculus1(numberDate);
+	console.log(regitDate)
+	$("#Input0").attr("value", regitDate);	
+	</script>
 </body>
 </html>
