@@ -20,7 +20,7 @@
 					<li class="nav-parent">
 						<a><i class="fa fa-briefcase" aria-hidden="true"></i><span>사원관리</span></a>
 						<ul class="nav nav-children">
-							<li><a href="breakApply.do">사원목록</a></li>
+							<li><a href="adminMain.do">사원목록</a></li>
 							<li><a href="addUser.do">사원등록</a></li>
 							<li><a href="teamManagement.do">팀관리</a></li>
 						</ul>
@@ -28,7 +28,7 @@
 					<li class="nav-parent">
 						<a><i class="fa fa-credit-card" aria-hidden="true"></i><span>비용</span></a>
 						<ul class="nav nav-children">
-							<li><a href="reciptRegit.do">정산신청</a></li>
+							<!-- <li><a href="reciptRegit.do">정산신청</a></li> -->
 							<li><a href="AdminDebit.do">카드관리</a></li>
 							<li><a href="ListDebit.do">비용현황</a></li>
 						</ul>
