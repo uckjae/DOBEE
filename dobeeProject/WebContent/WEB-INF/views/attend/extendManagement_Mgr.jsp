@@ -89,8 +89,8 @@
 								<thead id="thead">
 									<tr>
 										<th width="8%">신청 번호</th>
-										<th width="15&">신청 ID</th>
-										<th width="25&">신청자명</th>
+										<th width="15%">신청 ID</th>
+										<th width="10%">신청자명</th>
 										<th width="9%">신청 일자</th>
 										<th width="8%">부재 항목</th>
 										<th width="8%">승인 여부</th>
@@ -116,11 +116,7 @@
 													data-target="#myModal" 
 													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}"> 사유 확인
 												</button>
-												<a class="mb-xs mt-xs mr-xs modal-basic btn btn-primary" href="#myModal" data-toggle="modal"
-													data-target="#myModal" 
-													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}">사유 확인</a>
-											</td>
-				
+												
 										</tr>
 									</c:forEach>
 								</tbody>

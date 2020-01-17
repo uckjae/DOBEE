@@ -8,10 +8,6 @@
 <!-- Head Tag Script -->
 <c:import url="/common/HeadTag.jsp"/>
 
-<!-- Date-time picker -->
-<link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <!-- Full Calendar -->
 <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
 <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
@@ -120,12 +116,19 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
+	<!-- Date-time picker -->
+	<link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+	
 	<!-- Full Calendar -->
 	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 	
 	<!-- Examples -->
 	<script src="assets/javascripts/pages/my.calendar.js"></script>
+	
+		
 	
 	
 		<script>

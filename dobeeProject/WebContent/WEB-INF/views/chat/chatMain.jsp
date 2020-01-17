@@ -5,8 +5,6 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
-		    <!-- Sweet Alert -->
-    		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -179,15 +177,24 @@
 											</a>
 										</div>
 										<div class="inner-menu-content">
-										<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
-												<i class="fa fa-wechat mr-xs"></i>
-												새 대화 채널 만들기
-										</button>
 										<hr class="separator" />
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
-													<h6 class="title">Channel</h6>
-													<span class="widget-toggle">+</span>
+														<div class="row">
+															<div class="col-xs-3">
+																<h6 class="title">Channel</h6>
+															</div>
+															<div class="col-xs-0.5">
+															</div>
+															<div class="col-xs-2">
+																<button type="button" id="channelModal" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalBootstrap" style="display:inline;margin-bottom:30px;border:0;"><strong>+</strong></button>
+															</div>
+															<div class="col-xs-4">
+															</div>
+															<div class="col-xs-2">
+																<span class="widget-toggle">+</span>
+															</div>
+														</div>
 												</div>
 												<div class="widget-content">
 													<ul class="list-unstyled mailbox-bullets">
@@ -296,7 +303,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="margin-top: 13px;"><i class="fa fa-pencil"></i>새 대화 채널 만들기</h4>
+								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil"></i>새 대화 채널 만들기</h4>
 						</div>
 						<div class="modal-body mb-0">
 						      <form id="makeChatRoom" name="makeChatRoom" method="post">
@@ -308,13 +315,12 @@
 							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
-							   <br>
 						        <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
 						      		</div>
 						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 35px">
+		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
 		                                    <option hidden>멤버</option>
 		                                    </select>
 						      		</div>
@@ -324,10 +330,7 @@
 							   <div class="row">
 								   <div class="col-sm-3">
 							       </div>
-							       <div class="col-sm-9">
-								       	<div id="chatUserList" style="display:none;display:inline;">
-								       	
-								       	</div>
+							       <div class="col-sm-9" id="chatUserList" style="display:none">
 								   </div>
 								</div>
 							   </div>
@@ -337,7 +340,7 @@
 						
 						<div class="modal-footer">
 							<button type="button" id="makeChatRoomBtn" class="btn btn-primary modal-confirm">만들기</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-default" data-dismiss="btn btn-default modal-dismiss">Close</button>
 						</div>
 						</div>
 						</div>
@@ -351,8 +354,8 @@
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
     
 <!-- socket 연결 -->
-<!-- <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
- --><script>
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
+<script>
 	$(function(){
 
 		$.ajax({
@@ -374,8 +377,8 @@
 
 		var chatType = $("#chatType").val();
 		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#name").val();
-		/* var socket = io.connect( 'http://192.168.6.2:5000/self', {
+		var fromName = $("#chatRoomName").text();
+		var socket = io.connect( 'http://192.168.6.2:5000/self', {
 					path: '/socket.io'
 				});
 				
@@ -394,7 +397,7 @@
 								+'<div class="chat-body"><div class="chat-message">'
 								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 								+'</div></div></li></div><br>');
-					}); */
+					});
 			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
 		
 		  
@@ -406,10 +409,11 @@
 		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
 		var userName = userInfo[0]			
 		var userMail = userInfo[1];
-		$("#chatUserList").append("<div style='display:inline'><i class='fa fa-user'><span name='name' id='name"+(count++)+"'>"
+		$("#chatUserList").append("<div style='display:inline' class='list'><i class='fa fa-user'><span name='name' id='name"+(count++)+"'>"
 						+userName+"</span><input type='hidden' name='userMail' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
 	
 		$("#chatUserList").css("display","block");
+	
 		});
 	
 	$("#makeChatRoomBtn").on('click', function(e){

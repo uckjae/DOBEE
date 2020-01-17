@@ -50,11 +50,12 @@
                         </li>
                     </ul>
                 </div>
-
+			</div>
                 <!-- 프로젝트 넣기 -->
                 <div class="tab-content">
 
                     <div class="row">
+                    	<c:forEach items=${ taskList} var="task" varStatus="status"></c:forEach>
                         <div class="col-md-12 col-lg-12">
                             <!-- 예정 -->
                             <div class="col-md-3 col-xl-3">
@@ -78,24 +79,30 @@
                                     <div id="accordion">
                                         <div class="panel panel-accordion panel-accordion-first">
                                             <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <div class="row">
-                                                    <a class="accordion-toggle" data-toggle="collapse"
-                                                       data-parent="#accordion" href="#collapse1One">
-                                                        <i class="fa fa-check"></i> Tasks
-                                                    </a>
-                                                    <a href="" style="float: right;">
-                                                    	<i class="fa fa-plus-square"></i>
-                                                    </a>
-                                                    </div>
-                                                </h4>
+                                                 <div class="row">
+                                                 	<div class="col-md-9">
+	                                                	<h4 class="panel-title">
+		                                                    <a class="accordion-toggle" data-toggle="collapse"
+		                                                       data-parent="#accordion" href="#collapse1One" style="width: 80%;">
+		                                                        <i class="fa fa-check"></i> Tasks
+		                                                    </a>
+	                                                	</h4>
+                                                	</div>
+                                                	<div class="col-md-2">
+	                                                	<a href="" style="width:20%;">
+		                                                    <i class="fa fa-plus-square"></i>
+		                                                </a>
+	                                                </div>
+                                                </div>
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
+                                                       <c:if test="${task.progress eq '진행' }">
                                                         <li>
-                                                        	<span>열일하기</span>
+                                                        	<a href="taskDetail('${task.t }')">${task.title}</a>
                                                         </li>
+                                                       </c:if>
                                                     </ul>
                                                 </div>
                                             </div>
