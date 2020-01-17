@@ -65,7 +65,7 @@
 		<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>공지사항</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
