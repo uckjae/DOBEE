@@ -38,4 +38,6 @@ public interface PaymentDao {
     public int addCostApply(CostList cost);
  
 
+    //비용신청 리스트 불러오기 
+    //public ArrayList<CostList> 
 }

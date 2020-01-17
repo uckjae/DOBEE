@@ -48,46 +48,44 @@ module.exports = (server, app) => {
         });
 
     }
+    //var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype='SELF'))";
 
-    //나에게 채팅방 만들기(프로미스)
+    // var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))";
+    //나에게 채팅방 만들기
     function makeSelfChatRoom(chatRoomName, chatType, name) {
 
-        return new Promise(function(resolve, reject){
-
-            var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
-            var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE MAIL=?))"
-            db((err, conn) => {
-                conn.beginTransaction(function (err) {
+        var sql1 = "insert into chatroom(chatroomname, chatcode) values(?, (select chatcode from chatcode where chattype=?))";
+        var sql2 = "insert into chatusers(chatseq, mail) values((select chatseq from chatroom where chatroomname=?), (SELECT MAIL FROM USER WHERE NAME=?))"
+        db((err, conn) => {
+            conn.beginTransaction(function (err) {
+                if (err) {
+                    conn.release();  // 반드시 해제해야 함
+                    throw err;
+                }
+                //채팅방 먼저 만들기
+                conn.query(sql1, [chatRoomName, chatType], function(err, result){
                     if (err) {
                         conn.release();  // 반드시 해제해야 함
-                        reject(new Error("에러 발생"));
                         throw err;
                     }
-                    conn.query(sql1, [chatRoomName, chatType], function(err, result){
+                    conn.query(sql2, [chatRoomName, name], function(err, result){
                         if (err) {
                             conn.release();  // 반드시 해제해야 함
                             throw err;
                         }
-                        conn.query(sql2, [chatRoomName, name], function(err, result){
+                        conn.commit(function (err) {
                             if (err) {
-                                conn.release();  // 반드시 해제해야 함
-                                throw err;
+                                return conn.rollback(function () {
+                                    conn.release();
+                                    throw err;
+                                });
                             }
-                            conn.commit(function (err) {
-                                if (err) {
-                                    return conn.rollback(function () {
-                                        conn.release();
-                                        throw err;
-                                    });
-                                }
-                                console.log('새로운 채팅방 만들기 완료');
-                                resolve("yes");
-                                return conn.release();
-                            });
-                        })
-                    });
-
+                            console.log('새로운 채팅방 만들기 완료');
+                            return conn.release();
+                        });
+                    })
                 });
+
             });
         });
     }
@@ -145,11 +143,11 @@ module.exports = (server, app) => {
 
 
     //채팅 내용 저장하기
-    /*function insertChatContent(chatContent, chatRoomName, mail) {
+    function insertChatContent(chatContent, chatRoomName, name) {
         console.log('채팅 내용 저장하기 -> 채팅방 이름 가져오니??'+chatRoomName);
         db((err, conn) => {
-            var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where mail=?))"
-            conn.query(sql, [chatContent, currentDate, chatRoomName, mail], function (err, result) {
+            var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where name=?))"
+            conn.query(sql, [chatContent, currentDate, chatRoomName, name], function (err, result) {
                 if (err) { //에러나면 rollback
                     conn.release();
                     throw err;
@@ -162,49 +160,26 @@ module.exports = (server, app) => {
 
             });
         });
-    }*/
-
-    function insertChatContent(chatContent, chatRoomName, mail) {
-        return new Promise(function(resolve, reject){
-            db((err, conn) => {
-                var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where mail=?))"
-                conn.query(sql, [chatContent, currentDate, chatRoomName, mail], function (err, result) {
-                    if (err) { //에러나면 rollback
-                        reject(new Error("에러 발생"));
-                        conn.release();
-                    } else {
-                        resolve("yes");
-                    }
-                    conn.release();
-                });
-            });
-        });
     }
+
     //나에게 채팅방
     self.on('connection', (socket) => {
-        socket.on('send message to self', function (chatRoomName, chatType, chatContent, mail) {
+        socket.on('send message to self', function (chatRoomName, chatType, chatContent, name) {
 
-            console.log('넘어오니??'+chatType+'/'+chatRoomName + "/ 내용 : "+chatContent+"/ 글쓴이 : "+mail)
+            console.log('넘어오니??'+chatType+'/'+chatRoomName + "/ 내용 : "+chatContent+"/ 글쓴이 : "+name)
 
             //기존 채팅방 있는지 확인하는 함수 실행
             checkChatRoom(chatRoomName, chatType).then(function(data) {
-                //기존 채팅방이 있는 경우insertChatContent
+                //기존 채팅방이 있는 경우
                 if (data == "yes") {
                     console.log('기존 채팅방 있니???');
-                    insertChatContent(chatContent, chatRoomName, mail);
+                    insertChatContent(chatContent, chatRoomName, name);
                     //기존 채팅방이 없는 경우
                 } else if ((data == "no")) {
                     console.log('elseif 타니???');
-                    makeSelfChatRoom(chatRoomName, chatType, mail).then(function(data) {
-                        if (data == "yes") {
-                            console.log('나에게 채팅방 만드는 함수 성공');
-                            insertChatContent(chatContent, chatRoomName, mail);
-                        } else {
-                            console.log('나에게 채팅방 만드는 함수 실패');
-                            return;
-                        }
+                    makeSelfChatRoom(chatRoomName, chatType, name);
+                    insertChatContent(chatContent, chatRoomName, name);
 
-                    });
                 }
             });
             socket.emit('receive message to self', chatContent, currentDate);
@@ -221,10 +196,12 @@ module.exports = (server, app) => {
     group.on('connection', (socket) => {
         console.log('그룹 채팅 참여');
 
-        socket.on('send message to group', function (chatRoomName, chatType, chatContent, userMail, userName) {
-            insertChatContent(chatContent, chatRoomName, userMail);
+        socket.on('send message to group', function (chatRoomName, chatType, chatContent, name) {
 
-            group.emit('receive message to group', chatContent, currentDate, userName);
+            console.log('그룹채팅넘어오니??'+chatType+'/'+chatRoomName +"/" + chatContent + "/" +name);
+
+            insertChatContent(chatContent, chatRoomName, name);
+            group.emit('receive message to group', chatContent, currentDate, name);
         });
         socket.on('disconnect', (socket) => {
             console.log('group 네임 스페이스 접속 해제');

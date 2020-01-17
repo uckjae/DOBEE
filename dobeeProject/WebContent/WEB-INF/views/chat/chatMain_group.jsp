@@ -83,7 +83,7 @@
 	}
 	
 	.chat-list .in .chat-message:before {
-	    left: -12px;
+	    left: -5px;
 	    border-bottom: 20px solid transparent;
 	    border-right: 20px solid #888888;
 	}
@@ -255,7 +255,7 @@
 								<!-- END: .mailbox-actions -->
 								<div class="nano">
 								<div class="container content" id="chatMsgMain" style="height: 300px; overflow-y: scroll;">
-						            <ul class="list-unstyled" id="chatLog">
+						            <ul class="chat-list" id="chatLog" style="height: 300px;">
 						        	</ul>
 								</div>
 							</div>
@@ -345,7 +345,7 @@
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
 <script>
 	$(function(){
-
+		/* 유저 목록 뿌려주기*/
 		$.ajax({
 			 
 	  		url:"getUserList.do",
@@ -363,46 +363,55 @@
 
 	  	
 
-		var chatType = $("#chatType").val();
-		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#name").text();
-		console.log('이름 가져와?'+fromName);
-		var socket = io.connect( 'http://192.168.6.2:5000/group', {
-					path: '/socket.io'
-				});
-				
-				$("#sendMessage").on('submit', function(e){
-					
-					chatContent = $('#chatContent').val();
+	var chatType = $("#chatType").val();
+	var chatRoomName = $("#chatRoomName").text();
+	var userMail = $("#mail").text();
+	var name = $("#name").text();
+	var userName = $("#name").text();
+	var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
 
-					socket.emit('send message to group', chatRoomName, chatType, chatContent, fromName);
-					$('#chatContent').val("");
-					$("#chatContent").focus();
-					e.preventDefault();
-					
-					});
+	/* 서버 채팅으로 전달해주는 함수*/
+	var sendMessage = function() {
+		chatContent = $('#chatContent').val();
+		socket.emit('send message to group', chatRoomName, chatType, chatContent, userMail, userName);
+		$('#chatContent').val("");
+		$("#chatContent").focus();
+	}
+
+	/*send 버튼 클릭시 채팅 서버 전송*/
+	$("#sendMessage").on('submit', function(e){
+		sendMessage(); //서버로 가서 전송되는 함수
+		e.preventDefault();			
+	});
+
+	/*엔터 쳤을 때 채팅 서버 전송 */
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			sendMessage();
+			}
+		});
 				
-				socket.on('receive message to group', function(chatContent,currentDate, name){
-					console.log('현재 입력한 사람은???'+fromName);
-					console.log('발신자는???'+name);
-					if(fromName !== name) {
-						$('#chatLog').append('<div><li class="out">'
+	socket.on('receive message to group', function(chatContent, currentDate, userName){
+		console.log('지금 접속한 사람??'+name);
+		console.log('유저네임??'+userName);
+		if(userName !== name) {
+			console.log('이거 타니??');
+			$('#chatLog').append('<div><li class="out">'
 								+'<div class="chat-body"><div class="chat-message">'
-								+'<h3>'+name+'</h3>'
+								+'<h2>'+userName+'</h2>'
 								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 								+'</div></li></div><br>');
 						//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
  
-						} else {
+						}  else {
 							$('#chatLog').append('<div><li class="in">'
 									+'<div class="chat-body"><div class="chat-message">'
-									+'<h3>'+name+'</h3>'
+									+'<h2>'+name+'</h2>'
 									+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 									+'</div></li></div><br>');
 							//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
 							}
-
 					});
 		  
 		
