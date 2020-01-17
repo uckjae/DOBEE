@@ -148,7 +148,7 @@
 	
 	<!-- Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116 COMPLETE -->
 	<select id="getExtListToCalendar" parameterType="String" resultType="com.dobee.vo.Apply">
-		SELECT APLSEQ, STARTAT, ENDAT FROM APPLY WHERE ISAUTH="승인" AND DRAFTER = #{param1}
+		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d') AS ENDAT FROM APPLY WHERE ISAUTH="승인";
 	</select>		    
 	
 	

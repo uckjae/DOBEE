@@ -92,9 +92,7 @@
 						</div>
 					</section>
 					
-					
-					
-					
+										
 					<!-- start: page -->
 					<!-- end: page -->
 				</section>
@@ -127,8 +125,7 @@
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 	
 	<!-- Examples -->
-	<script src="assets/javascripts/pages/examples.calendar.js"></script>
-	
+	<script src="assets/javascripts/pages/my.calendar.js"></script>
 	
 	
 		<script>
@@ -149,21 +146,6 @@
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
-				
-				$.ajax ({
-					url : "getExtList.do",
-					dataType : "json",
-					success : function(data) {
-						var extArray = [];
-						extArray = data.ExtListTC;
-						console.log("확인 결과 : ", extArray);
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-						console.log("에에에에러");
-					}
-				});
-				
 			 	
 			 	$('#datetimepickerStart').datetimepicker({
 		            format : 'YYYY-MM-DD HH:mm' 
@@ -176,71 +158,6 @@
 	
 			}
 	  	</script>
-		
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				var calendarEl = document.getElementById('calendar');
-	
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					plugins : [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
-					header : {
-						left : 'prev, next, today',
-						center : 'title',
-						right : 'dayGridMonth, dayGridWeek, listMonth'
-					},
-	
-					navLinks : true, // can click day/week names to navigate views
-					editable : false,
-					eventLimit : false, // allow "more" link when too many events
-					businessHours : true,
-					events : [ {
-						title : 'All Day Event',
-						start : '2019-08-01'
-					}, {
-						title : 'Long Event',
-						start : '2019-08-07',
-						end : '2019-08-10'
-					}, {
-						groupId : 999,
-						title : 'Repeating Event',
-						start : '2019-08-09T16:00:00'
-					}, {
-						groupId : 999,
-						title : 'Repeating Event',
-						start : '2019-08-16T16:00:00'
-					}, {
-						title : 'Conference',
-						start : '2019-08-11',
-						end : '2019-08-13'
-					}, {
-						title : 'Meeting',
-						start : '2019-08-12T10:30:00',
-						end : '2019-08-12T12:30:00'
-					}, {
-						title : 'Lunch',
-						start : '2019-08-12T12:00:00'
-					}, {
-						title : 'Meeting',
-						start : '2019-08-12T14:30:00'
-					}, {
-						title : 'Happy Hour',
-						start : '2019-08-12T17:30:00'
-					}, {
-						title : 'Dinner',
-						start : '2019-08-12T20:00:00'
-					}, {
-						title : 'Birthday Party',
-						start : '2019-08-13T07:00:00'
-					}, {
-						title : 'Click for Google',
-						url : 'http://google.com/',
-						start : '2019-08-28'
-					} ]
-				});
-	
-				calendar.render();
-			});
-		</script>
 		
 	</body>
 </html>

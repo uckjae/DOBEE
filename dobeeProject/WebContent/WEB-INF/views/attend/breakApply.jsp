@@ -190,8 +190,6 @@
 		        $('#datetimepickerEnd').datetimepicker({
 		            format : 'YYYY-MM-DD HH:mm' 
 		        });
-		        console.log("이거 돌아요?2");
-
 	
 			}
 	  	</script>

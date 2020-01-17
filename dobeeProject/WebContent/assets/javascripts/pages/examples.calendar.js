@@ -52,6 +52,8 @@
 				next: 'fa fa-caret-right',
 			},
 
+			businessHours : true,
+
 			editable: true,
 			droppable: true, // this allows things to be dropped onto the calendar !!!
 			drop: function(date, allDay) { // this function is called when something is dropped
@@ -82,6 +84,11 @@
 				{
 					title: 'All Day Event',
 					start: new Date(y, m, 1)
+				},
+				{
+
+					title: 'Get Away',
+					start: new Date(y, m, 16)
 				},
 				{
 					title: 'Long Event',
