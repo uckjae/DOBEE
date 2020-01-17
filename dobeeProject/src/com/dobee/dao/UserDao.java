@@ -31,8 +31,8 @@ public interface UserDao {
     public void resetPwd(User user);
 
 
-    //출근
-    public void onWork(User member);
+    //출근하기 
+    public int onWork(String mail);
 
 
     //퇴근

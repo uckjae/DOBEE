@@ -223,7 +223,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-
+	//출근하기
 	function attend() {
 		swal({
 			   title: "출근",
@@ -231,15 +231,25 @@
 			   icon: "info" //"info,success,warning,error" 중 택1
 			}).then((YES) => {
 				console.log('이거 타??');
-				var mail = $("#mail").val();
+				var mail = $("#mail").text();
+				console.log('메일은??'+mail);
 				$.ajax({
-		 			url:"attend.do",
-					data: mail ,
+		 			url:"attend.do?mail="+mail,
 					dataType: "text",
 					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 					type:"post",
 					success:function(responsedata){
-						console.log('ajax 됨??');ㅣ
+						console.log('ajax 됨??');
+						console.log(responsedata);
+						if(responsedata == "success"){
+							swal({
+								   title: "출근",
+								   text: "출근 처리 되었습니다.",
+								   icon: "success" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+									location.reload(true); 
+								});
+							}
 						
 					},
 					error:function(){
@@ -248,8 +258,7 @@
 				});
 
 				
-				})
-		
+				});
 		
 		}
 </script>
