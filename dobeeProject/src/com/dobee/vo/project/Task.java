@@ -8,13 +8,13 @@ import lombok.ToString;
 @ToString
 @Data
 public class Task {
-    private int tSeq;
+    private int taskSeq;
     private String title;
     private String progress;
     private int important;
     private Date startAt;
     private Date endAt;
     private String mail;
-    private int pSeq;
+    private int pjtSeq;
 
 }
