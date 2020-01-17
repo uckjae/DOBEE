@@ -111,13 +111,15 @@ console.log(path);
                     var uploadPath;
                     var saveFileName;
                     var checkImg = $("#FILE_TAG")[0].files[0];
+                    
                      /*이미지를 업로드하지 않을 경우 업로드 버튼 작동안함 */
                     if(checkImg){
-                        console.log("이미지가있습니다");
-                        }else{
-                        	console.log("이미지를 없습니다 ");
-                            return;
-                            }
+                        console.log("이미지 업로드 되었습니다.");
+                    }else{
+                       	console.log("이미지가 없습니다.");
+                        return;
+                    }
+                    
                     formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
                     $.ajax({
                         url: 'fileUploadAjax.do',
@@ -213,32 +215,6 @@ console.log(path);
                         }
                     })
                 }
-
-
-
-              /*   //하...내가 이 함수까지 만들어야 하나 input 태그안에 있는 모든 데이터값 출력해보기 
-                function showInput() {
-                    var select1 = 22;
-                    var select2 = 44;
-
-                    select1 = $("#Select1 option:selected").text();
-                    select2 = $("#Select2 option:selected").text();
-                    var input1 = $('#Input1').val();
-                    var input2 = $('#Input2').val();
-                    var input3 = $('#Input3').val();
-                    var input4 = $('#Input4').val();
-                    var input5 = $('#Input5').val();
-
-                    console.log("select1: " + select1);
-                    console.log("select2: " + select2);
-                    console.log("input1: " + input1);
-                    console.log("input2: " + input2);
-                    console.log("input3: " + input3);
-                    console.log("input4: " + input4);
-                    console.log("input5: " + input5);
-
-                    return false;
-                } */
             </script>
             
             
@@ -308,12 +284,12 @@ console.log(path);
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">법인카드 선택</label>
                                     <select class="form-control" name='cardNum' id="Select1">
-				    </select>
+				    				</select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect2">비용항목 선택</label>
                                     <select class="form-control" name='costCode' id="Select2">
-				    </select>
+				    				</select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">사용일</label>
