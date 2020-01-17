@@ -2,27 +2,61 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css"/>
 <html class="fixed">
 <head>
 <!-- Basic -->
-		<c:import url="/common/HeadTag.jsp"/>
-        <meta name="author" content="okler.net">
-		<!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 		
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
-    crossorigin="anonymous">
-</script>
+
+
+<%-- <c:import url="/common/HeadTag.jsp"/> START--%>
+
+<!-- Mobile Metas -->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<!-- Web Fonts  -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+<!-- Vendor CSS -->
+<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css"/>
+<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css"/>
+<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css"/>
+<!-- Specific Page Vendor CSS -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css"/>
+<link rel="stylesheet" href="assets/vendor/morris/morris.css"/>
+<!-- Theme CSS -->
+<link rel="stylesheet" href="assets/stylesheets/theme.css"/>
+<!-- Skin CSS -->
+<link rel="stylesheet" href="assets/stylesheets/skins/default.css"/>
+<!-- Theme Custom CSS -->
+<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+<!-- Head Libs -->
+<script src="assets/vendor/modernizr/modernizr.js"></script>
+
+
+<%-- <c:import url="/common/HeadTag.jsp"/> END--%>
+		
+		
+		
+<meta name="author" content="okler.net">
+<!-- Specific Page Vendor CSS -->
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 
 <!-- include Nobootstrap summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
-<title>write</title>
 
+
+<title>write</title>
 
 </head>
 
@@ -54,7 +88,18 @@
         		        },
         		    },    	       	
             });
-        $.summernote.interface;     
+        $.summernote.interface;
+        
+        $("#datepicker").datepicker({
+        	 showOn: "both",
+             buttonImage: "img/calender0327.png",
+             buttonImageOnly: true,
+             buttonText: "Select date",
+             
+
+
+
+            });  
     });
 </script>
 
@@ -114,10 +159,12 @@
 							
 					<div class="panel-body">
    
-   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">   
+   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
     <input type="text" class="form-control mb-3" id="title" name="title"
      placeholder="글 제목을 입력하시오" value="">
-     <div style="margin: 15px"></div>  
+     <div style="margin: 15px">
+       <input type="text" id="datepicker">
+     </div>  
     <textarea id="summernote1" name="content"></textarea>    
     <div class="text-right" id="lengthBox"> 
 	  <span id="total-characters"></span><span id="max"></span>
