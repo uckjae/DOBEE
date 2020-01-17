@@ -89,17 +89,17 @@
 										<div id="popular1" class="tab-pane active" style="height: 50px;">
 											
 											<div class="col-md-3">
-												<h3>사용 연차</h3>
+												<h3>사용 가능 연차</h3>
 											</div>
-											<div class="col-md-2" id="usedVacation">
-												불러오는 중...
+											<div class="col-md-2" >
+												<h3 id="usedVacation"> 불러오는 중... </h3>
 											</div>
 											<div class="col-md-1"></div>
 											<div class="col-md-3">
 												<h3>남은 연차</h3>
 											</div>
-											<div class="col-md-2" id="remainVacation">
-												불러오는 중...
+											<div class="col-md-2" >
+												<h3 id="remainVacation">불러오는 중...</h3>
 											</div>
 											<div class="col-md-1"></div>
 										</div>
