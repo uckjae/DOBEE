@@ -2387,6 +2387,7 @@ fieldset[disabled] .form-control {
   cursor: not-allowed;
   background-color: #eeeeee;
   opacity: 1;
+  border-color: #34495E;
 }
 textarea.form-control {
   height: auto;
