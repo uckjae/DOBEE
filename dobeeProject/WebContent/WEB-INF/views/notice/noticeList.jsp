@@ -65,7 +65,7 @@
 		<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>공지사항</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -75,7 +75,7 @@
 									</a>
 								</li>
 								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>Notice </span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -85,10 +85,15 @@
     
     <!-- 작업 여기부터~!~!~!~~! -->      
     
-      <div class="content" style="margin-right: 50px">
-      	
-		<div class="comment-form-wrap pt-xl-2">
-			<h1 class="text-center mb-3 bread">공지사항 리스트</h1>
+      <section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+									<a href="#" class="fa fa-times"></a>
+								</div>
+						
+								<h2 class="panel-title">공지사항</h2>
+							</header>
 			
 			
 	<div class="panel-body">   
@@ -126,8 +131,10 @@
 	</p>
 	
 		</div> <!--테이블 div종료  -->
-		</div><!--공지사항 리스트 제목  -->
-	  </div><!--공지사항 콘텐츠  -->
+		</section>
+		
+		
+		
 	  </section>
 	  </div>
 	

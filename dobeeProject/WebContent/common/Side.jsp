@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<aside id="sidebar-left" class="sidebar-left">
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
+<aside id="sidebar-left" class="sidebar-left">
 	<div class="sidebar-header">
 		<!-- <div class="sidebar-title">Navigation</div> -->
 		<div class="sidebar-toggle hidden-xs"
@@ -15,7 +16,7 @@
 			<nav id="menu" class="nav-main" role="navigation">
 				<ul class="nav nav-main">
 					<li class="nav-active">
-						<a href="index.html"><i class="fa fa-home" aria-hidden="true"></i><span>메인</span></a>
+						<a href="main.do"><i class="fa fa-home" aria-hidden="true"></i><span>메인</span></a>
 					</li>
 					<li>
 						<a href="noticeList.do">
@@ -44,7 +45,7 @@
 					<li class="nav-parent">
 						<a><i class="fa fa-tasks" aria-hidden="true"></i><span>프로젝트</span></a></a>
 						<ul class="nav nav-children">
-							<li><a href="forms-basic.html"> 메인 </a></li>
+							<li><a href="pjtMain.do?mail=${user.mail}"> 메인 </a></li>
 							<li><a href="forms-advanced.html"> 칸반보드 </a></li>
 							<li><a href="forms-validation.html"> 일정 </a></li>
 							<li><a href="forms-layouts.html"> 프로젝트 현황 </a></li>

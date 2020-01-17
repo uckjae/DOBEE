@@ -132,8 +132,8 @@ body .btn-primary.dropdown-toggle {
 body .btn-primary {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #0088cc;
-	border-color: #0088cc;
+	background-color: #34495E;
+	border-color: #34495E;
 }
 
 body .btn-primary:hover {
@@ -344,7 +344,7 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 }
 /* Pagination */
 .pagination > li a {
-	color: #0088cc;
+	color: #34495E;
 }
 
 .pagination > li a:hover,
@@ -379,12 +379,12 @@ html.dark .pagination > li.active a:focus,
 html .pagination > li.active span:focus,
 html.dark .pagination > li.active span:focus {
 	background-color: #0088cc;
-	border-color: #0088cc;
+	border-color: #34495E;
 }
 
 html .pagination > li.active a,
 html.dark .pagination > li.active a {
-	background-color: #0088cc;
+	background-color: #34495E;
 }
 /* Fullcalendar */
 .fc .fc-widget-header {

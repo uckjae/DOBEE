@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString @Data
 public class Attend {
     private int attSeq;
-    private int attTime;
+    private String attTime;
     private String mail;
     private int attCode;
 }

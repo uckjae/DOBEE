@@ -121,8 +121,10 @@ public class DoController {
 
     //메인페이지(로그인후)
     @RequestMapping("main.do")
-    public String main(){
+    public String main(Principal principal , HttpServletRequest request, Model model){
     	System.out.println("컨트롤러 main.do");
+    	User user = (User) request.getSession().getAttribute("user");
+    	model.addAttribute("user", user);
         return "main/main";
     }
 
@@ -189,10 +191,12 @@ public class DoController {
     }
 
 
-    //출근/퇴근버튼
+    //출근/퇴근버튼 >> ajax 컨트롤러로 바꿈
+    /*
     public String attendButton(){
         return null;
     }
+    */
 
 
     //마이페이지
@@ -480,11 +484,11 @@ public class DoController {
 
     //프로젝트메인
     @RequestMapping("pjtMain.do")
-    public String projectList(Project project,Model model){
-    	List<Project>list = projectService.projectList();
+    public String projectList(@RequestParam(value="mail") String mail, Model model){
+    	List<Project>list = projectService.projectList(mail);
     	model.addAttribute("list",list);
-    
-        return "project/pjtMain5";
+   
+        return "project/pjtMain_new";
     }
 
 
@@ -681,10 +685,15 @@ public class DoController {
    		memberService.addUser(user, userInfo);
    		
    		
-    	return "admin/AdminMain";
+    	return "redirect: adminMain.do";
     }
    	
-   	
+  
+   @RequestMapping(value="teamManagement.do", method= RequestMethod.GET)
+   public String teamManagement() {
+	   
+	   return "admin/TeamManagement";
+   }
   
 
     
