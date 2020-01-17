@@ -305,6 +305,7 @@
 							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
+							    <br>
 						        <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>

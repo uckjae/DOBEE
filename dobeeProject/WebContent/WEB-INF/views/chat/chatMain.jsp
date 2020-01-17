@@ -128,7 +128,15 @@
 	.content{
 	    margin-top:40px;    
 	}
-	
+	.swal-button {
+    	background: #34495E;
+	}
+	.swal-footer {
+  		text-align: center;
+	}
+	.swal-icon--warning {
+		border-color: #f27474;
+	}
   </style>
 	<body>
 		<section class="body">
@@ -192,7 +200,7 @@
 													 <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           											<c:forEach var="roomName" items="${roomNameList}">
 												            <li>
-													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
+													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${roomName}</a>
 												     	  	</li>
 										          		</c:forEach>
 													</ul>
@@ -229,7 +237,7 @@
 										<div class="col-sm-6">
 											<h1 class="mailbox-title text-light m-none">
 									<c:set var="user" value="${requestScope.user}"/>
-               							<b id="chatRoomName" style="font-size:30px;">${user.name}</b>
+               							<b id="chatRoomName" style="font-size:30px;">&nbsp;${user.name}</b>
 											</h1>
 										</div>
 										<div class="col-sm-6">
@@ -254,22 +262,24 @@
 								
 								<!-- END: .mailbox-actions -->
 								<div class="nano">
-								<div class="container content" id="chatMsgMain">
-						            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
-						        	</ul>
+									<div class="container content" id="chatMsgMain">
+							            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
+							        	</ul>
+									</div>
 								</div>
-							</div>
+								
+								
+								
 							<form id="sendMessage" method="post">
 							<div>        
 					            <li class="white">
 					              <div class="form-group basic-textarea" stlye="width:300px">
 					                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
 									<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-					                <input type="hidden" id="name" name="name" value="${user.name}">
 					              </div>
 					            </li>
 				            </div>
-					            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
+					            	<button type="submit" id="chatSend" class="btn btn-dark" style="float:right;">send</button>
 				             </ul>
 							</form>
 								
@@ -306,6 +316,7 @@
 							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
+							   <br>
 						        <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
@@ -364,34 +375,47 @@
 	  		}
 	  	});
 
-	  	
 
-		var chatType = $("#chatType").val();
-		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#chatRoomName").text();
-		var socket = io.connect( 'http://192.168.6.2:5000/self', {
-					path: '/socket.io'
-				});
-				
-				$("#sendMessage").on('submit', function(e){
-					chatContent = $('#chatContent').val();
+	var chatType = $("#chatType").val();
+	var userMail = $("#mail").text();
+	var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
+		
+	var sendMessage = function() {
+		chatContent = $('#chatContent').val();
+		socket.emit('send message to self', chatRoomName, chatType, chatContent, fromMail);
+		$('#chatContent').val("");
+		$("#chatContent").focus();
+		e.preventDefault();
+		}
 
-					socket.emit('send message to self', chatRoomName, chatType, chatContent, fromName);
-					$('#chatContent').val("");
-					$("#chatContent").focus();
-					e.preventDefault();
-					
-					});
-				
-				socket.on('receive message to self', function(chatContent,currentDate){
-						$('#chatLog').append('<div><li class="out">'
-								+'<div class="chat-body"><div class="chat-message">'
-								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-								+'</div></div></li></div><br>');
-					});
+	/*채팅 서버 전송*/
+	$("#sendMessage").on('submit', function(e){
+		chatContent = $('#chatContent').val();
+		var chatRoomName = userMail; //채팅방 이름을 유저메일로 세팅
+		socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
+		$('#chatContent').val("");
+		$("#chatContent").focus();
+		e.preventDefault();
+	});
+	
+	/*채팅 뿌려주기*/
+	socket.on('receive message to self', function(chatContent,currentDate){
+		$('#chatLog').append('<div><li class="out">'
+			+'<div class="chat-body"><div class="chat-message">'
+			+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+			+'</div></div></li></div><br>');
+	});
 			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
 		
-		  
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			chatContent = $('#chatContent').val();
+			var chatRoomName = userMail; //채팅방 이름을 유저메일로 세팅
+			socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
+			$('#chatContent').val("");
+			$("#chatContent").focus();
+			}
+		});
 		
 	var count = 0;
 	
@@ -411,8 +435,11 @@
 		if($("#newChatRoomName").val() == "" || $("#newChatRoomName").val() == null){
 			swal({
 				title: "채널명",
-				text: "채널명을 입력하세요",
-				icon: "warning" //"info,success,warning,error" 중 택1
+				text: "채널명을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true,
+				confirmButtonColor: "#34495E"
+				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
 							$("#newChatRoomName").focus();
@@ -441,7 +468,10 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						   type: "success", //"info,success,warning,error" 중 택1
+	 						   showCancelButton: true,
+	 						  	cancelButtonColor: "#34495E",
+	 						    confirmButtonColor: "#34495E",
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 

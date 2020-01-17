@@ -11,11 +11,11 @@
 	body{
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
-	} */
+	}
 	h4 {
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
-	}
+	} */
 	a {
 		color: #222222;
 	}
@@ -251,56 +251,25 @@
 					            		<hr width="70%">
 					            	</div>
 					            </div>
-								<!-- <div class="mailbox-actions">
-									<ul class="list-unstyled m-none pt-lg pb-lg">
-										<li class="ib mr-sm">
-											<div class="btn-group">
-												<a href="#" class="item-action fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></a>
-							
-												<ul class="dropdown-menu" role="menu">
-													<li><a href="#">All</a></li>
-													<li><a href="#">None</a></li>
-													<li><a href="#">Read</a></li>
-													<li><a href="#">Unread</a></li>
-													<li><a href="#">Starred</a></li>
-													<li><a href="#">Unstarred</a></li>
-												</ul>
-											</div>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-refresh" href="#"></a>
-										</li>
-										<li class="ib mr-sm">
-											<a class="item-action fa fa-tag" href="#"></a>
-										</li>
-										<li class="ib">
-											<a class="item-action fa fa-times text-danger" href="#"></a>
-										</li>
-									</ul>
-								</div> -->
 								
 								<!-- END: .mailbox-actions -->
 								<div class="nano">
-								<div class="container content" id="chatMsgMain">
-						            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
+								<div class="container content" id="chatMsgMain" style="height: 300px; overflow-y: scroll;">
+						            <ul class="list-unstyled" id="chatLog">
 						        	</ul>
 								</div>
 							</div>
 							<form id="sendMessage" method="post">
 							<div>        
-					            <li class="white">
-					              <div class="form-group basic-textarea" stlye="width:300px">
+					              <div class="form-group basic-textarea" stlye="width:280px">
 					                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
 									<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
 					                <input type="hidden" id="name" name="name" value="${user.name}">
 					              </div>
-					            </li>
 				            </div>
+				            <br>
 					            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
-				             </ul>
 							</form>
-								
-								
 							</div>
 							</div>
 						</div>
@@ -333,6 +302,7 @@
 							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
 							       </div>
 							   </div>
+							    <br>
 						        <div class="row">
 						      		<div class="col-sm-3">
 						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
