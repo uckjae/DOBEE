@@ -12,12 +12,12 @@
 		<section class="body">
 
 			<!-- start: header -->
-			<c:import url="./common/Top.jsp"/>
+			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
 
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
-				<c:import url="./common/Side.jsp"/>
+				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
@@ -33,15 +33,18 @@
 									</a>
 								</li>
 								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>법인 카드 리스트</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					작업 여기부터 하삼!!
 					<!-- start: page -->
+					
+					
+					
+					
 					<!-- end: page -->
 				</section>
 			</div>
@@ -50,7 +53,7 @@
 
 
 			<!-- 오른쪽 사이드바!! -->
-		<c:import url="./common/RightSide.jsp"/>
+		<c:import url="/common/RightSide.jsp"/>
 	
 			
 			<!-- 오른쪽 사이드바 끝!! -->

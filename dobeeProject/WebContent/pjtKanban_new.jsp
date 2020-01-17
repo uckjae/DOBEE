@@ -98,9 +98,9 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
-                                                       <c:if test="${task.progress eq '진행' }">
+                                                       <c:if test="${task.progress eq '예정' }">
                                                         <li>
-                                                        	<a href="taskDetail('${task.t }')">${task.title}</a>
+                                                        	<a href="taskDetail('${task.taskSeq}')">${task.title}</a>
                                                         </li>
                                                        </c:if>
                                                     </ul>
@@ -142,42 +142,11 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
+                                                        <c:if test="${task.progress eq '진행' }">
                                                         <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
+                                                        	<a href="taskDetail('${task.taskSeq}')">${task.title}</a>
                                                         </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                       </c:if>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -217,42 +186,11 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
+                                                        <c:if test="${task.progress eq '테스트' }">
                                                         <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
+                                                        	<a href="taskDetail('${task.taskSeq}')">${task.title}</a>
                                                         </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                       </c:if>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -292,42 +230,11 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
+                                                        <c:if test="${task.progress eq '완료' }">
                                                         <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
+                                                        	<a href="taskDetail('${task.taskSeq}')">${task.title}</a>
                                                         </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                       </c:if>
                                                     </ul>
                                                 </div>
                                             </div>
