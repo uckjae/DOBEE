@@ -20,7 +20,7 @@ import com.dobee.vo.member.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @RestController
-public class AjaxController_alpaca {
+public class AjaxController_Chat {
 	
 	private SqlSession sqlsession;
 	private ChatService chatservice;

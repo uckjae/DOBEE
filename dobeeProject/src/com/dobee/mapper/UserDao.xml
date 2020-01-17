@@ -21,7 +21,11 @@
 		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
-	
+	<!-- Ajax 출근 하기 public int onWork(String mail); -->
+	<insert id="onWork">
+		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 
+		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출근'))
+	</insert>
 	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
 		SELECT APYCODE, ENTRY FROM APPLYCODE

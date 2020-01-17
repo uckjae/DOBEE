@@ -65,7 +65,7 @@
 		<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>공지사항</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -75,7 +75,7 @@
 									</a>
 								</li>
 								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>Notice List</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
