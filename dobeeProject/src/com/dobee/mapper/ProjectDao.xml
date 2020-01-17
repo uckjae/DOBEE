@@ -5,7 +5,13 @@
 <mapper namespace="com.dobee.dao.ProjectDao">
 
 <select id ="getPjtList" resultType="com.dobee.vo.project.Project">
- SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
+	SELECT P.PJTSEQ, P.PJTNAME, P.PJTSTARTAT, PJTENDAT, PJTPROGRESS
+	FROM USER U
+	JOIN PROJECTMEMBER PM
+	ON U.MAIL = PM.MAIL
+	JOIN PROJECT P
+	ON PM.PJTSEQ = P.PJTSEQ
+	WHERE U.MAIL = #{mail};
 </select>
 
 <insert id="mkPjt" parameterType="com.dobee.vo.project.Project"> 

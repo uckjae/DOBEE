@@ -22,7 +22,7 @@ public interface ProjectDao {
 
 
     //프로젝트 목록 가져오기
-    public List<Project> getPjtList();
+    public List<Project> getPjtList(String mail);
     
     //특정 프로젝트 가져오기
     public Project getPjt(int pjtSeq);
