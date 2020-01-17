@@ -365,42 +365,42 @@
 	  	
 
 		var chatType = $("#chatType").val();
-		var chatRoomName = $("#chatRoomName").text();
-		var fromName = $("#name").text();
+		var fromName = $("#name").val();
+		var dmName = $("#dmName").text();
+		//채팅방 이름 : 발신자 - 수신자
+		var chatRoomName = fromName + "-" + dmName;
+		console.log('dm 채팅방 이름??'+chatRoomName); 
 		var socket = io.connect( 'http://192.168.6.2:5000/dm', {
 					path: '/socket.io'
 				});
-				console.log('이름은?'+fromName);
 				
 				$("#sendMessage").on('submit', function(e){
+					console.log('채팅방 타입' + chatType);
 					chatContent = $('#chatContent').val();
-
-					socket.emit('send message to dm', chatRoomName, chatType, chatContent, fromName);
+					var chatUsers = [fromName, dmName];
+					socket.emit('send message to dm', chatRoomName, chatType, chatContent, chatUsers);
 					$('#chatContent').val("");
 					$("#chatContent").focus();
 					e.preventDefault();
 					
 					});
 				
-				socket.on('receive message to dm', function(chatContent,currentDate, name){
-					console.log('현재 입력한 사람은???'+fromName);
-					console.log('발신자는???'+name);
-					if(fromName !== name) {
-						$('#chatLog').append('<div><li class="out">'
+				socket.on('receive message to dm', function(chatContent,currentDate, fromName){
+					if(fromName == dmName) { 
+						$('#chatLog').append('<div> <li class="in"><div class="chat-img" >'
 								+'<div class="chat-body"><div class="chat-message">'
-								+'<h3>'+name+'</h3>'
+								+'<h3>'+fromName+'</h3>'
 								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-								+'</div></li></div><br>');
+								+'</div></div></li></div><br>');
 						//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
- 
-						} else {
-							$('#chatLog').append('<div><li class="in">'
-									+'<div class="chat-body"><div class="chat-message">'
-									+'<h3>'+name+'</h3>'
-									+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-									+'</div></li></div><br>');
-							//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
+						} else { //입력한 사람한테 뿌리기
+							$('#chatLog').append('<div> <li class="out"><div class="chat-img" >'
+									+'<div class="chat-body"><div class="chat-message">'
+									+'<h3>'+fromName+'</h3>'
+									+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
+									+'</div></div></li></div><br>');
+							//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 							}
 
 					});
