@@ -42,7 +42,7 @@ public interface ProjectDao {
  	
  	
     //업무리스트
-    public List<Task> taskList();
+    public List<Task> taskList(int pjtSeq);
 
 
     //업무추가 - PM

@@ -39,6 +39,7 @@ import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.project.Project;
+import com.dobee.vo.project.Task;
 
 
 @Controller
@@ -485,8 +486,11 @@ public class DoController {
 
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
-    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq){
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
     	System.out.println("플젝 번호 가져와?"+pjtSeq);
+    	int seq = Integer.parseInt(pjtSeq);
+    	List<Task> taskList = projectService.taskList(seq);
+    	model.addAttribute("taskList", taskList);
         return "project/pjtKanban_new";
     }
 

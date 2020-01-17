@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="fixed search-results">
 <head>
@@ -50,11 +51,12 @@
                         </li>
                     </ul>
                 </div>
-
+			</div>
                 <!-- 프로젝트 넣기 -->
                 <div class="tab-content">
 
                     <div class="row">
+                    	
                         <div class="col-md-12 col-lg-12">
                             <!-- 예정 -->
                             <div class="col-md-3 col-xl-3">
@@ -78,24 +80,39 @@
                                     <div id="accordion">
                                         <div class="panel panel-accordion panel-accordion-first">
                                             <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <div class="row">
-                                                    <a class="accordion-toggle" data-toggle="collapse"
-                                                       data-parent="#accordion" href="#collapse1One">
-                                                        <i class="fa fa-check"></i> Tasks
-                                                    </a>
-                                                    <a href="" style="float: right;">
-                                                    	<i class="fa fa-plus-square"></i>
-                                                    </a>
-                                                    </div>
-                                                </h4>
+                                                <div class="row">
+                                                 	<div class="col-md-9">
+	                                                	<h4 class="panel-title">
+		                                                    <a class="accordion-toggle" data-toggle="collapse"
+		                                                       data-parent="#accordion" href="#collapse1One" style="width: 80%;">
+		                                                        <i class="fa fa-check"></i> Tasks
+		                                                    </a>
+	                                                	</h4>
+                                                	</div>
+                                                	<div class="col-md-2">
+	                                                	<a href="" style="width:20%;">
+		                                                    <i class="fa fa-plus-square"></i>
+		                                                </a>
+	                                                </div>
+                                                </div>
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
-                                                        <li>
-                                                        	<span>열일하기</span>
-                                                        </li>
+                                                    	<c:forEach items="${ taskList}" var="task" varStatus="status">
+	                                                        <c:if test="${task.progress eq '예정' }">
+	                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+	                                                        </c:if>
+                                                        </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -135,42 +152,20 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '진행' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -210,42 +205,20 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '테스트' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -285,42 +258,20 @@
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" checked="" id="todoListItem1"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem1"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem2"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="checkbox-custom checkbox-default">
-                                                                <input type="checkbox" id="todoListItem3"
-                                                                       class="todo-check">
-                                                                <label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-                                                            </div>
-                                                            <div class="todo-actions">
-                                                                <a class="todo-remove" href="#">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </div>
-                                                        </li>
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '완료' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+													</c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -330,6 +281,7 @@
                             </div>
 
                         </div>
+                        
                     </div>
 
 
