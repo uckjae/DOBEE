@@ -72,8 +72,7 @@
 						        
 								<h2 class="panel-title">
 								<img src="img/noticeicon.png" style="width:3%; height:3%;">
-								&nbsp;&nbsp;공지사항</h2>
-								
+								&nbsp;&nbsp;공지사항</h2>								
 							</header>
 							
 					<div class="panel-body">		

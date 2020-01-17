@@ -132,6 +132,7 @@
 		<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
 	</p>
 	
+	
 		</div> <!--테이블 div종료  -->
 		</section>
 		
