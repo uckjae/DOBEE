@@ -91,8 +91,10 @@
 									<a href="#" class="fa fa-caret-down"></a>
 									<a href="#" class="fa fa-times"></a>
 								</div>
-						
-								<h2 class="panel-title">공지사항</h2>
+						         
+								<h2 class="panel-title">
+								<img src="img/noticeicon.png" style="width:3%; height:3%;">
+								&nbsp;&nbsp;공지사항</h2>
 							</header>
 			
 			
