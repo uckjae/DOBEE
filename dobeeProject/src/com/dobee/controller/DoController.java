@@ -485,11 +485,11 @@ public class DoController {
     }
 
 
-    //칸반보드
+    //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq){
     	System.out.println("플젝 번호 가져와?"+pjtSeq);
-        return null;
+        return "project/pjtKanban_new";
     }
 
 
