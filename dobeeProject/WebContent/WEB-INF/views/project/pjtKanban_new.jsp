@@ -6,6 +6,19 @@
 <html class="fixed search-results">
 <head>
     <c:import url="/common/HeadTag.jsp"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+		$(function(){
+			$('.taskDetail').click('show.bs.modal', function(e) {
+				console.log("what the hell 이네");
+				var tskSeq = $(this).data('tskseq');
+				console.log(tskSeq);
+			});
+			
+		});
+
+		
+    </script>
 </head>
 <body>
 <section class="body">
@@ -100,19 +113,19 @@
                                                 <div class="panel-body">
                                                     <ul class="widget-todo-list">
                                                     	<c:forEach items="${ taskList}" var="task" varStatus="status">
-	                                                        <c:if test="${task.progress eq '예정' }">
-	                                                        <div class="row">
+                                                        <c:if test="${task.progress eq '예정' }">
+                                                        <div class="row">
 	                                                        <li>
-	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
 	                                                        	<span class="label label-primary text-normal pull-right">
-		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
-		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
 	                                                        </li>
                                                         </div>
-	                                                        </c:if>
-                                                        </c:forEach>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -130,7 +143,7 @@
                                                 <img src="assets/images/!logged-user.jpg">
                                             </div>
                                             <div class="profile-info">
-                                                <h4 class="name text-semibold">예정</h4>
+                                                <h4 class="name text-semibold">진행</h4>
                                                 <h5 class="role">total number : </h5>
                                                 <div class="profile-footer">
                                                     	진행도
@@ -156,11 +169,11 @@
                                                         <c:if test="${task.progress eq '진행' }">
                                                         <div class="row">
 	                                                        <li>
-	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
 	                                                        	<span class="label label-primary text-normal pull-right">
-		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
-		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
 	                                                        </li>
                                                         </div>
@@ -183,7 +196,7 @@
                                                 <img src="assets/images/!logged-user.jpg">
                                             </div>
                                             <div class="profile-info">
-                                                <h4 class="name text-semibold">예정</h4>
+                                                <h4 class="name text-semibold">테스트</h4>
                                                 <h5 class="role">total number : </h5>
                                                 <div class="profile-footer">
                                                     	진행도
@@ -209,11 +222,11 @@
                                                         <c:if test="${task.progress eq '테스트' }">
                                                         <div class="row">
 	                                                        <li>
-	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
 	                                                        	<span class="label label-primary text-normal pull-right">
-		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
-		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
 	                                                        </li>
                                                         </div>
@@ -236,7 +249,7 @@
                                                 <img src="assets/images/!logged-user.jpg">
                                             </div>
                                             <div class="profile-info">
-                                                <h4 class="name text-semibold">예정</h4>
+                                                <h4 class="name text-semibold">완료</h4>
                                                 <h5 class="role">total number : </h5>
                                                 <div class="profile-footer">
                                                   	 진행도
@@ -262,11 +275,11 @@
                                                         <c:if test="${task.progress eq '완료' }">
                                                         <div class="row">
 	                                                        <li>
-	                                                        	<a href="taskDetail('${task.tskSeq}')">${task.title}</a>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
 	                                                        	<span class="label label-primary text-normal pull-right">
-		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
-		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yyyy-MM-dd"/>
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
 	                                                        </li>
                                                         </div>
@@ -287,6 +300,126 @@
 
                 </div>
                 <!-- end: page -->
+                <!-- Modal Form -->
+				<div id="taskDetailModal" class="modal fade">
+					<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2>부재 신청 사유</h2>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<ul class="list-unstyled nav nav-pills">
+											<li class="active">
+												<a href="#detail" data-toggle="tab">상세</a>
+											</li>
+											<li>
+												<a href="#content" data-toggle="tab">내용</a>
+											</li>
+											<li>
+												<a href="#checkList" data-toggle="tab">체크리스트</a>
+											</li>
+										</ul>
+									</div>
+									
+									<div class="tab-content">
+										<div class="tab-pane active" id="detail">
+											<h1>first</h1>
+											<form id="demo-form" class="form-horizontal mb-lg">
+													<div class="form-group mt-lg">
+														<label class="col-sm-3 control-label">Name</label>
+														<div class="col-sm-9">
+															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Email</label>
+														<div class="col-sm-9">
+															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">URL</label>
+														<div class="col-sm-9">
+															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Comment</label>
+														<div class="col-sm-9">
+															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
+														</div>
+													</div>
+												</form>
+										</div>
+										<div class="tab-pane" id="content">
+											<h1>second</h1>
+											<form id="demo-form" class="form-horizontal mb-lg" >
+													<div class="form-group mt-lg">
+														<label class="col-sm-3 control-label">Name</label>
+														<div class="col-sm-9">
+															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Email</label>
+														<div class="col-sm-9">
+															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">URL</label>
+														<div class="col-sm-9">
+															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Comment</label>
+														<div class="col-sm-9">
+															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
+														</div>
+													</div>
+												</form>
+										</div>
+										<div class="tab-pane" id="checkList">
+											<h1>second</h1>
+											<form id="demo-form" class="form-horizontal mb-lg" >
+													<div class="form-group mt-lg">
+														<label class="col-sm-3 control-label">Name</label>
+														<div class="col-sm-9">
+															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Email</label>
+														<div class="col-sm-9">
+															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">URL</label>
+														<div class="col-sm-9">
+															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Comment</label>
+														<div class="col-sm-9">
+															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
+														</div>
+													</div>
+												</form>
+										</div>
+									</div>
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-default" value="확인">
+											&nbsp;&nbsp;
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+									
+									
+								</div>
+							</div>
+				</div>
+				<!-- /Modal -->
         </section>
     </div>
 
