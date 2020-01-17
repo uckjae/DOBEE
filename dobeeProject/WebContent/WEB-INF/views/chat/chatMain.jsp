@@ -379,22 +379,19 @@
 	var chatType = $("#chatType").val();
 	var userMail = $("#mail").text();
 	var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
-		
+
+	/* 서버 채팅으로 전달해주는 함수*/
 	var sendMessage = function() {
+		var chatRoomName = userMail;
 		chatContent = $('#chatContent').val();
-		socket.emit('send message to self', chatRoomName, chatType, chatContent, fromMail);
+		socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
 		$('#chatContent').val("");
 		$("#chatContent").focus();
-		e.preventDefault();
 		}
 
 	/*채팅 서버 전송*/
 	$("#sendMessage").on('submit', function(e){
-		chatContent = $('#chatContent').val();
-		var chatRoomName = userMail; //채팅방 이름을 유저메일로 세팅
-		socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
-		$('#chatContent').val("");
-		$("#chatContent").focus();
+		sendMessage();
 		e.preventDefault();
 	});
 	
@@ -406,14 +403,11 @@
 			+'</div></div></li></div><br>');
 	});
 			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
-		
+	
+	/*엔터 쳤을 때 채팅 서버 전송 */
 	$("#chatContent").keydown(function(){
 		if(event.keyCode ==13 && $('#chatContent').val()!=''){
-			chatContent = $('#chatContent').val();
-			var chatRoomName = userMail; //채팅방 이름을 유저메일로 세팅
-			socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
-			$('#chatContent').val("");
-			$("#chatContent").focus();
+			sendMessage();
 			}
 		});
 		
