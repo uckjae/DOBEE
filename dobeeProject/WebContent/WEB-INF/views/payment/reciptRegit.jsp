@@ -201,21 +201,19 @@ console.log(path);
                                                 console.log(result);
                                                 
                                                 for (let i = 0; i < result.length; i++) {
-                                                     
                                                     $("#Select2").append("<option value="+result[i].codeName+ ">" + result[i].entry + "</option>");
                                                 }
                                             },
                                             error: function() {
                                                 console.log("비용항목 아작스에서 에러남")
                                             },
-
                                         })
                                     },
                                 }) //아작스 끝
                         }
                     })
                 }
-            </script>
+</script>
             
             
             
@@ -245,7 +243,6 @@ console.log(path);
 							<li><span>Pages</span></li>
 							<li><span>Blank Page</span></li>
 						</ol>
-
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
 							class="fa fa-chevron-left"></i></a>
 					</div>
@@ -253,7 +250,7 @@ console.log(path);
 				<!-- 작업 여기부터~!~!~!~~! -->
 				
 				
-				<!--  우측에 영수증파일 업로드 되고, -->
+				<!-- 우측에 영수증파일 업로드 되고 -->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-6 imgshow">
@@ -311,14 +308,11 @@ console.log(path);
                       			<br>
                                 <button type='submit' class="btn btn-primary" style="width:auto; float:right;">수정완료 및 등록</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
 
-
 				<!-- start: page -->
-
 
 
 				<!-- end: page -->
@@ -326,17 +320,14 @@ console.log(path);
 			</section>
 		</div>
 
-
-
-
 		<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp" />
-
-
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 	
 	<c:import url="/common/BottomTag.jsp" />
+	
+	
 	 <script>
                 //영수증 업로드시 이미지 이름 올라가게하는 스크립트
                 $(document).ready(function() {
@@ -346,7 +337,6 @@ console.log(path);
                     });
                 });
     </script>
-            
             
             
     <script>

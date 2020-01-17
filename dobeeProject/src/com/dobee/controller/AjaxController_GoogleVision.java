@@ -22,7 +22,7 @@ public class AjaxController_GoogleVision {
 	private GoogleVisionService googleVisionService;
 	
 	
-	
+	//구글 비전 API 작동! 구글! 나에게 힘을 줘! 혜리야 미안해! 하지만 프로젝트가 다가아니야! 더 소중한 너의 위 건강을 신경쓰길 바래!
 	@RequestMapping(value="/goGoogleAjax.do", method=RequestMethod.POST)
 	public @ResponseBody JSONObject visionApi(HttpServletRequest req, @RequestParam String uploadPath,
 			@RequestParam String saveFileName) 
@@ -33,16 +33,12 @@ public class AjaxController_GoogleVision {
 		String uPath = uploadPath;
 		String sFileName = saveFileName;
 		
-		
 		System.out.println(" 컨트롤단 도착했고 파라미터값왔는지 확인하자 : uPath " +  uPath);
 		System.out.println(" 컨트롤단 도착했고 파라미터값왔는지 확인하자 : sFileName " +  sFileName);
 		
 		JSONObject result = googleVisionService.goGoogle(uPath+sFileName);
+		System.out.println("Google Vision Text 추출 한 값 : " + result);
 		
 		return result;
 	}
-	
-	
-	
-	
 }
