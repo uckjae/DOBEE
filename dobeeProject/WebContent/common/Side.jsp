@@ -39,7 +39,7 @@
 						<a><i class="fa fa-credit-card" aria-hidden="true"></i><span>비용</span></a>
 						<ul class="nav nav-children">
 							<li><a href="reciptRegit.do">정산신청</a></li>
-							<li><a href="reciptRegit.do">카드관리</a></li>
+							
 							<li><a href="reciptRegit.do">비용현황</a></li>
 						</ul>
 					</li>
