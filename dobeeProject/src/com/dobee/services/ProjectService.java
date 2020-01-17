@@ -86,8 +86,10 @@ public class ProjectService {
 
 
     //업무리스트
-    public List<Task> taskList(){
-        return null;
+    public List<Task> taskList(int pjtSeq){
+        ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+        List<Task> taskList = projectDao.taskList(pjtSeq);
+    	return taskList;
     }
 
 

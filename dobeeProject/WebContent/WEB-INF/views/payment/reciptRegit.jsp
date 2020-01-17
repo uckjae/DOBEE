@@ -162,7 +162,7 @@ console.log(path);
                 }; //uploadFile() 함수 끝 
 
 
-
+		
                 // 법인카드 목록 불러오기 아작스
                 window.onload = function() {
                     $.ajax({
@@ -190,13 +190,10 @@ console.log(path);
                                             success: function(result) {
                                                 console.log("비용항목 아작스 성공")
                                                 console.log(result);
+                                                
                                                 for (let i = 0; i < result.length; i++) {
-                                                  /*   array = [];
-                                                    if(result[i] == ){
-                                                       작업 중 코드에 대한 항목명 입력
-                                                        }
-                                                    array.push(result[i]) */
-                                                    $("#Select2").append("<option>" + result[i].costCode + "</option>");
+                                                     
+                                                    $("#Select2").append("<option value="+result[i].entry+"">" + result[i].costCode+ "</option>");
                                                 }
                                             },
                                             error: function() {
@@ -276,9 +273,9 @@ console.log(path);
 				
 				
 				<!--  우측에 영수증파일 업로드 되고, -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-6 imgshow">
+                        <div class="col-lg-6 imgshow">
                             <div id="uploadImg">
                                 <img src="assets/images/noimg.jpg" width="100%">
                                 <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
@@ -294,9 +291,7 @@ console.log(path);
                         </div>
 
 
-
-
-                        <div class="col-md-6 textshow">
+                        <div class="col-lg-6 textshow">
                             <!-- 좌측에 영수증사진에 대한 텍스트  -->
                             <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
 
