@@ -389,7 +389,7 @@
 		$("#chatContent").focus();
 		}
 
-	/*채팅 서버 전송*/
+	/*send 버튼 클릭시 채팅 서버 전송*/
 	$("#sendMessage").on('submit', function(e){
 		sendMessage();
 		e.preventDefault();

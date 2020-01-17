@@ -378,14 +378,18 @@
 		$("#chatContent").focus();
 	}
 
-			
+	/*send 버튼 클릭시 채팅 서버 전송*/
 	$("#sendMessage").on('submit', function(e){
 		sendMessage(); //서버로 가서 전송되는 함수
-		
 		e.preventDefault();			
 	});
 
-	
+	/*엔터 쳤을 때 채팅 서버 전송 */
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			sendMessage();
+			}
+		});
 				
 	socket.on('receive message to group', function(chatContent, currentDate, userName){
 		console.log('지금 접속한 사람??'+name);
