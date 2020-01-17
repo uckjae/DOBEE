@@ -177,31 +177,22 @@
 											</a>
 										</div>
 										<div class="inner-menu-content">
-										<hr class="separator" />
+										<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
+												<i class="fa fa-wechat mr-xs"></i>
+												새 대화 채널 만들기
+											</button>
+											<hr class="separator" />
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
-														<div class="row">
-															<div class="col-xs-3">
-																<h6 class="title">Channel</h6>
-															</div>
-															<div class="col-xs-0.5">
-															</div>
-															<div class="col-xs-2">
-																<button type="button" id="channelModal" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalBootstrap" style="display:inline;margin-bottom:30px;border:0;"><strong>+</strong></button>
-															</div>
-															<div class="col-xs-4">
-															</div>
-															<div class="col-xs-2">
-																<span class="widget-toggle">+</span>
-															</div>
-														</div>
+													<h6 class="title">Channel</h6>
+													<span class="widget-toggle">+</span>
 												</div>
 												<div class="widget-content">
 													<ul class="list-unstyled mailbox-bullets">
 													 <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           											<c:forEach var="roomName" items="${roomNameList}">
 												            <li>
-													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${roomName}</a>
+													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
 												     	  	</li>
 										          		</c:forEach>
 													</ul>
