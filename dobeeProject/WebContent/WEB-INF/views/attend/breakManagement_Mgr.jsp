@@ -33,6 +33,10 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 
+<!-- Table Style -->
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
 
 </head>
 	<body>
@@ -50,7 +54,7 @@
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>연장근무 신청 관리</h2>
+						<h2>부재 신청 관리</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -102,48 +106,51 @@
 					
 					
 					<section class="panel">
-						<div class="panel-body" style="min-height: 560px;">
-							<div class="row">
-								<div class="col-md-12">
-									
-									<table id="brkTable" class="dataTable hover order-column row-border" style="width :100%; margin-top:100px;">
-										<thead id="thead">
-											<tr>
-												<th width="8%">신청 번호</th>
-												<th width="15%">신청 ID</th>
-												<th width="15%">신청자명</th>
-												<th width="9%">신청 일자</th>
-												<th width="8%">부재 항목</th>
-												<th width="8%">승인 여부</th>
-												<th>기간</th>
-												<th width="10%">연차 사용 일수</th>
-											</tr>
-										</thead>
-										
-										<tbody id="tbody">
-											<c:forEach items="${brkListMgr}" var="bl">
-												<tr>
-													<td class="bSeq">		${bl.aplSeq }</td>
-													<td class="bMail">		${bl.drafter }</td>
-													<td class="bName">		${bl.name }</td>
-													<td class="bReqDate">	${bl.reqDate}</td>
-													<td class="bEntry">		${bl.entry }</td>
-													<td class="bIsAuth">
-														<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
-													</td>
-													<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
-													<td class="bUsed">		${bl.usingBreak }</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									
-										<tfoot>	
-										</tfoot>		
-									</table>
-								</div>
+						<header class="panel-heading">
+							<div class="panel-actions">
+								<a href="#" class="fa fa-caret-down"></a>
+								<a href="#" class="fa fa-times"></a>
 							</div>
+					
+							<h2 class="panel-title">Table</h2>
+						</header>
+						<div class="panel-body">
+							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th width="8%">신청 번호</th>
+										<th width="15%">신청 ID</th>
+										<th width="15%">신청자명</th>
+										<th width="9%">신청 일자</th>
+										<th width="8%">부재 항목</th>
+										<th width="8%">승인 여부</th>
+										<th>기간</th>
+										<th width="10%">연차 사용 일수</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									<c:forEach items="${brkListMgr}" var="bl">
+										<tr>
+											<td class="bSeq">		${bl.aplSeq }</td>
+											<td class="bMail">		${bl.drafter }</td>
+											<td class="bName">		${bl.name }</td>
+											<td class="bReqDate">	${bl.reqDate}</td>
+											<td class="bEntry">		${bl.entry }</td>
+											<td class="bIsAuth">
+												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
+											</td>
+											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
+											<td class="bUsed">		${bl.usingBreak }</td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
 						</div>
 					</section>
+					
+				
 					
 					<!-- Modal -->
 					<section id="modal_breakreason">
@@ -218,9 +225,11 @@
 		
 <!-- SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT// -->
 	
-	<!-- Choi's TABLE SET -->
-	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
-	
+	<!-- Table Script -->
+	<script src="assets/vendor/select2/select2.js"></script>
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 	
 	
 		<script>

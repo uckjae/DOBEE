@@ -191,6 +191,11 @@ console.log(path);
                                                 console.log("비용항목 아작스 성공")
                                                 console.log(result);
                                                 for (let i = 0; i < result.length; i++) {
+                                                  /*   array = [];
+                                                    if(result[i] == ){
+                                                       작업 중 코드에 대한 항목명 입력
+                                                        }
+                                                    array.push(result[i]) */
                                                     $("#Select2").append("<option>" + result[i].costCode + "</option>");
                                                 }
                                             },
@@ -207,7 +212,7 @@ console.log(path);
 
 
 
-                //하...내가 이 함수까지 만들어야 하나 input 태그안에 있는 모든 데이터값 출력해보기 
+              /*   //하...내가 이 함수까지 만들어야 하나 input 태그안에 있는 모든 데이터값 출력해보기 
                 function showInput() {
                     var select1 = 22;
                     var select2 = 44;
@@ -229,7 +234,9 @@ console.log(path);
                     console.log("input5: " + input5);
 
                     return false;
-                }
+                } */
+
+                
             </script>
             
             
@@ -251,7 +258,7 @@ console.log(path);
 			<!-- start : main Content -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>Blank Page</h2>
+					<h2>정산 신청</h2>
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
@@ -266,7 +273,8 @@ console.log(path);
 					</div>
 				</header>
 				<!-- 작업 여기부터~!~!~!~~! -->
-				작업 여기부터 하삼!!
+				
+				
 				<!--  우측에 영수증파일 업로드 되고, -->
                 <div class="container">
                     <div class="row">
@@ -279,7 +287,7 @@ console.log(path);
                             <form id="FILE_FORM" class="md-form" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
                                 <div class="custom-file" style="width:85%; float:left;">
                                     <input type="file" class="custom-file-input" id="FILE_TAG" name="FILE_TAG">
-                                    <label class="custom-file-label" for="customFile">영수증 사진 등록</label>
+                                   <!--  <label class="custom-file-label" for="customFile"></label> -->
                                 </div>
                                 <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">업로드</a>
                             </form>
@@ -292,11 +300,15 @@ console.log(path);
                             <!-- 좌측에 영수증사진에 대한 텍스트  -->
                             <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
 
-                            <form id="costlistInfo" action="addFinalReceipt.do">
+                            <form id="costlistInfo" action="addFinalReceipt.do" method="POST">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">신청자 이메일</label>
                                     <input type="text" class="form-control" id="Input1" name='mail' readonly="readonly">
                                 </div>
+                                <div class="form-group">
+				   					 <label for="exampleFormControlInput1">등록일</label>
+				    				<input type="date" class="form-control" id="Input0" name='regitReceiptDate' readonly="readonly">
+				  				</div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">법인카드 선택</label>
                                     <select class="form-control" name='cardNum' id="Select1">
@@ -323,22 +335,22 @@ console.log(path);
                                     <label for="exampleFormControlInput1">상세내용</label>
                                     <input type="text" class="form-control" id="Input5" name='detail' placeholder="ex) 이마트에서 필요한 간식이랑 사무용품들 구매하였습니다.">
                                 </div>
-                                <button type="button" onclick="showInput()"> 자 콘솔창을 보자 </button>
+                      <!--           <button type="button" onclick="showInput()"> 자 콘솔창을 보자 </button> -->
+                      			<br>
                                 <button type='submit' class="btn btn-primary" style="width:auto; float:right;">수정완료 및 등록</button>
                             </form>
-
-                            <!--  onclick="location.href='addFinalReceipt.do'"  -->
 
                         </div>
                     </div>
                 </div>
 
 
-
 				<!-- start: page -->
 
 
+
 				<!-- end: page -->
+				
 			</section>
 		</div>
 
@@ -358,9 +370,50 @@ console.log(path);
                 $(document).ready(function() {
                     $(".custom-file-input").on("change", function() {
                         var fileName = $(this).val().split("\\").pop();
-                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                       /*  $(this).siblings(".custom-file-label").addClass("selected").html(fileName); */
                     });
                 });
-            </script>
+    </script>
+            
+            
+            
+    <script>
+	//등록일 자동으로 현재 그 날 날짜 박아넣기
+	//문자열에서 숫자만 가져오기
+	function fn1(str){
+	    var res;
+	    res = str.replace(/[^0-9]/g,"");
+	    var y = res.substring(0,4);
+	    var m = res.substring(4,5);
+	    var rm
+	    if(m < 10){
+		    rm = "0"+m;
+		}
+		var d = res.substring(5,8);
+		var full = y+rm+d;
+		
+	    return full;
+	}
+
+	//문자열 날짜형태로 바꾸기 함수
+	function calculus1(str){    
+	    var end_ymd = str;    
+	    var yyyy = end_ymd.substr(0,4);
+	    var mm = end_ymd.substr(4,2);
+	    var dd = end_ymd.substr(6);  
+	    var com_ymd = new Date(yyyy,mm-1,dd)
+	    var inputdate = com_ymd.format('yyyy-MM-dd');  //임의 함수 써서 포맷팅함
+	    
+	    return inputdate;
+	}
+	var today = new Date();
+	var date = today.toLocaleDateString('ko-KR');
+	console.log(date);
+	var numberDate = fn1(date);
+	console.log(numberDate);
+	var regitDate = calculus1(numberDate);
+	console.log(regitDate)
+	$("#Input0").attr("value", regitDate);	
+	</script>
 </body>
 </html>

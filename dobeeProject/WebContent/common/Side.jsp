@@ -39,7 +39,7 @@
 						<ul class="nav nav-children">
 							<li><a href="reciptRegit.do">정산신청</a></li>
 							<li><a href="reciptRegit.do">카드관리</a></li>
-							<li><a href="viewDebitList.do">비용현황</a></li>
+							<li><a href="reciptRegit.do">비용현황</a></li>
 						</ul>
 					</li>
 					<li class="nav-parent">

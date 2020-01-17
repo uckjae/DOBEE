@@ -140,11 +140,10 @@ public class AjaxController_DABC {
 	public View getExtListToCalendar (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.getExtListToCalendar(auth.getName());
-		System.out.println("결과, getExtListToCalendar : "+ results);
+		System.out.println("getExtList.do : "+ results);
 		map.addAttribute("ExtListTC", results);
 		
 		return jsonview;
-		
 	}
 	
 	
