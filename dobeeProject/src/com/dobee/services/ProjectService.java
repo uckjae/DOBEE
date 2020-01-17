@@ -25,10 +25,10 @@ public class ProjectService {
 
 
     //프로젝트메인
-    public List<Project> projectList(){
+    public List<Project> projectList(String mail){
     	List<Project>list = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	list = projectdao.getPjtList();    	
+    	list = projectdao.getPjtList(mail);    	
         return list;
     }
 

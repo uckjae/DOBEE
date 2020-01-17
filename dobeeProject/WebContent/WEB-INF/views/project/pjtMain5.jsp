@@ -225,6 +225,7 @@ body
   		</div>
   </div>
    </div>
+   
    <!-- 프로젝트 생성 modal -->
 		   <div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		   <div class="modal-dialog cascading-modal" role="document">

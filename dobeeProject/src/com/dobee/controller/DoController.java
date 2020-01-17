@@ -122,10 +122,8 @@ public class DoController {
     //메인페이지(로그인후)
     @RequestMapping("main.do")
     public String main(Principal principal , HttpServletRequest request, Model model){
-    	System.out.println("프린시펄??"+principal.getName());
     	System.out.println("컨트롤러 main.do");
     	User user = (User) request.getSession().getAttribute("user");
-    	System.out.println("객체 가져와??"+user.toString());
     	model.addAttribute("user", user);
         return "main/main";
     }
@@ -192,13 +190,6 @@ public class DoController {
         return null;
     }
 
-
-    //출근/퇴근버튼 >> ajax 컨트롤러로 바꿈
-    /*
-    public String attendButton(){
-        return null;
-    }
-    */
 
 
     //마이페이지
@@ -486,16 +477,18 @@ public class DoController {
 
     //프로젝트메인
     @RequestMapping("pjtMain.do")
-    public String projectList(Project project,Model model){
-    	List<Project>list = projectService.projectList();
+    public String projectList(@RequestParam(value="mail") String mail, Model model){
+    	List<Project>list = projectService.projectList(mail);
     	model.addAttribute("list",list);
-    
-        return "project/pjtMain5";
+   
+        return "project/pjtMain_new";
     }
 
 
     //칸반보드
-    public String kanban(){
+    @RequestMapping("pjtKanban.do")
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq){
+    	System.out.println("플젝 번호 가져와?"+pjtSeq);
         return null;
     }
 
@@ -605,7 +598,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain2";
+    	return "chat/chatMain";
     }
     
     

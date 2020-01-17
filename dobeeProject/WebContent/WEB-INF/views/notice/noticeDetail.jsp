@@ -24,7 +24,7 @@ html, body {
 .ds {
 	width: 100%;
 	min-height: 280px;
-	border: 1px solid #ced4da;
+	border: 1px solid #34495E;
 	border-radius: 5px;
 	padding: 30px;
 }
@@ -63,9 +63,17 @@ html, body {
 
 				<!-- navbar-->
 
-				<div class="content" style="margin-right: 85px; margin-left: 85px">
-					<div class="comment-form-wrap pt-xl-2">
-						<h1 class="text-center mb-3 bread">게시글 확인</h1>
+				<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+									<a href="#" class="fa fa-times"></a>
+								</div>
+						
+								<h2 class="panel-title">공지사항</h2>
+							</header>
+							
+					<div class="panel-body">		
 						<input type="number" hidden="true" value="${notice.notSeq}">
 						<p style="float: right">
 							작성일:
@@ -74,6 +82,7 @@ html, body {
 						</p>
 						<input type="text" class="form-control mb-3" id="title"
 							name="title" value="${notice.title}" readonly>
+						
 						<div id="content1" rows="10" class="ds">${notice.content}</div>
 						<div class="text-right" id="lengthBox">
 							<span id="total-characters"></span> <span id="max"></span>
@@ -85,8 +94,8 @@ html, body {
 								href="noticeDel.do?notSeq=${notice.notSeq}">삭제</a> <a
 								class="btn btn-primary mr-3" href="noticeList.do">목록</a>
 						</div>
-					</div>
-				</div>
+						</div>
+						</section>//
 			</section>
 		</div>
 
