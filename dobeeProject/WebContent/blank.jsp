@@ -12,12 +12,12 @@
 		<section class="body">
 
 			<!-- start: header -->
-			<c:import url="./common/Top.jsp"/>
+			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
 
 			<div class="inner-wrapper">
 				<!-- start: sidebar -->
-				<c:import url="./common/Side.jsp"/>
+				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
@@ -50,7 +50,7 @@
 
 
 			<!-- 오른쪽 사이드바!! -->
-		<c:import url="./common/RightSide.jsp"/>
+		<c:import url="/common/RightSide.jsp"/>
 	
 			
 			<!-- 오른쪽 사이드바 끝!! -->

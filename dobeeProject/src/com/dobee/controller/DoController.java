@@ -681,10 +681,15 @@ public class DoController {
    		memberService.addUser(user, userInfo);
    		
    		
-    	return "admin/AdminMain";
+    	return "redirect: adminMain.do";
     }
    	
-   	
+  
+   @RequestMapping(value="teamManagement.do", method= RequestMethod.GET)
+   public String teamManagement() {
+	   
+	   return "admin/TeamManagement";
+   }
   
 
     
