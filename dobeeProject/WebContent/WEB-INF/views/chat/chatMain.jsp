@@ -7,7 +7,7 @@
 		<c:import url="/common/HeadTag.jsp"/>
 	</head>
 	<style>
-	@import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
 	body{
 			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
@@ -15,7 +15,7 @@
 	h6 {
 			font-size: 10px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
 	
-	}
+	} */
 	a {
 		color: #222222;
 	}
@@ -180,33 +180,34 @@
 										<hr class="separator" />
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
-												<div class="row">
-													<div class="col-xs-3">
-														<h6 class="title">Channel</h6>
-													</div>
-													<div class="col-xs-2">
-														<button type="button" id="channelModal" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalBootstrap" style="display:inline;margin:0;"><strong>+</strong></button>
-													</div>
-													<div class="col-xs-4">
-													</div>
-													<div class="col-xs-2">
-														<span class="widget-toggle">+</span>
-													</div>
-													</div>
+														<div class="row">
+															<div class="col-xs-3">
+																<h6 class="title">Channel</h6>
+															</div>
+															<div class="col-xs-0.5">
+															</div>
+															<div class="col-xs-2">
+																<button type="button" id="channelModal" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalBootstrap" style="display:inline;margin-bottom:30px;border:0;"><strong>+</strong></button>
+															</div>
+															<div class="col-xs-4">
+															</div>
+															<div class="col-xs-2">
+																<span class="widget-toggle">+</span>
+															</div>
+														</div>
 												</div>
 												<div class="widget-content">
 													<ul class="list-unstyled mailbox-bullets">
 													 <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           											<c:forEach var="roomName" items="${roomNameList}">
 												            <li>
-													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
+													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${roomName}</a>
 												     	  	</li>
 										          		</c:forEach>
 													</ul>
 												</div>
 											</div>
 											<hr class="separator" />
-							
 											<!-- DM 목록 -->
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
@@ -217,7 +218,7 @@
 													<ul class="list-unstyled mailbox-bullets">
 													<c:forEach var="userList" items="${requestScope.userList}">
 											            <li>
-												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>${userList.name }</a>
+												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${userList.name }</a>
 											     	  	</li>
 										           </c:forEach>
 													</ul>
