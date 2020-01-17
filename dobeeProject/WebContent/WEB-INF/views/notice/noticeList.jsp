@@ -75,7 +75,7 @@
 									</a>
 								</li>
 								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>Notice List</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
