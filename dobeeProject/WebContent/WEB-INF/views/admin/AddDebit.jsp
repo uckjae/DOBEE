@@ -1,44 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="fixed">
 <head>
-	<c:import url="/common/tag.jsp" />
+
+<c:import url="/common/HeadTag.jsp"/>
+
 </head>
+	<body>
+		<section class="body">
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+			<!-- start: header -->
+			<c:import url="/common/Top.jsp"/>
+			<!-- end: header -->
 
-body{
-   font-family: 'Noto Serif KR', serif;
-}
-
-</style>
-<body>
-
-	<!-- Side Navbar -->
-    <nav class="side-navbar">
-    <c:import url="/common/Left_Admin.jsp" />
-    </nav>
-
-    <div class="page">
-      <!-- navbar-->
-      <c:import url="/common/top.jsp"/>
-      
-      <div id="content-wrapper">
-      
-      
-      <script type="text/javascript">
-			/* 카드 구분  */
-		/* 	window.onload=function(){
-				document.getElementById("entry").addEventListener("click", )
-
-				}
- */
-      </script>
-            <!-- !! Content !! -->
-            <div class="container-fluid">
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<c:import url="/common/SideAdmin.jsp"/>
+				<!-- end: sidebar -->
+				
+			<!-- start : main Content -->
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Blank Page</h2>
+					
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+								<li><span>Pages</span></li>
+								<li><span>Blank Page</span></li>
+							</ol>
+					
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+						</div>
+					</header>
+					<!-- 작업 여기부터~!~!~!~~! -->
+					작업 여기부터 하삼!!
+					<div class="container-fluid">
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-user-edit"></i>
@@ -122,9 +125,21 @@ body{
                     </div>
                 </div>
             </div>	
-            	
-      </div>
-      
-    </div>
-</body>
+					<!-- start: page -->
+					<!-- end: page -->
+				</section>
+			</div>
+
+
+
+
+			<!-- 오른쪽 사이드바!! -->
+		<c:import url="/common/RightSide.jsp"/>
+	
+			
+			<!-- 오른쪽 사이드바 끝!! -->
+		</section>
+
+		<c:import url="/common/BottomTag.jsp"/>
+	</body>
 </html>

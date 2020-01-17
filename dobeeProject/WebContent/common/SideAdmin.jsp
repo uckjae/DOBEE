@@ -29,24 +29,11 @@
 						<a><i class="fa fa-credit-card" aria-hidden="true"></i><span>비용</span></a>
 						<ul class="nav nav-children">
 							<li><a href="reciptRegit.do">정산신청</a></li>
-							<li><a href="reciptRegit.do">카드관리</a></li>
-							<li><a href="reciptRegit.do">비용현황</a></li>
-						</ul>
-					</li>
-					<li class="nav-parent">
-						<a><i class="fa fa-tasks" aria-hidden="true"></i><span>프로젝트</span></a></a>
-						<ul class="nav nav-children">
-							<li><a href="forms-basic.html"> 메인 </a></li>
-							<li><a href="forms-advanced.html"> 칸반보드 </a></li>
-							<li><a href="forms-validation.html"> 일정 </a></li>
-							<li><a href="forms-layouts.html"> 프로젝트 현황 </a></li>
+							<li><a href="AdminDebit.do">카드관리</a></li>
+							<li><a href="ListDebit.do">비용현황</a></li>
 						</ul>
 					</li>
 					
-					<li>
-						<a href="chat.do">
-						<i class="fa fa-comments" aria-hidden="true"></i><span>채팅</span></a>
-					</li>
 					
 				</ul>
 			</nav>
