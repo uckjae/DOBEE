@@ -185,14 +185,14 @@
 					</ul>
 			
 					<span class="separator"></span>
-			
+					<c:set var="user" value="${requestScope.user}"/>
 					<div id="userbox" class="userbox">
 						<a href="#" data-toggle="dropdown">
 							<figure class="profile-picture">
 								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								<span class="name">John Doe Junior</span>
+								<span class="name">${user.name}</span>
 								<span class="role">administrator</span>
 							</div>
 			
@@ -203,7 +203,7 @@
 							<ul class="list-unstyled">
 								<li class="divider"></li>
 								<li>
-									<a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-power-off"></i>출근/퇴근</a>
+									<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근/퇴근</a>
 								</li>
 								<li>
 									<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-user"></i>정보수정</a>
@@ -220,3 +220,37 @@
 				</div>
 				<!-- end: search & user box -->
 			</header>
+			
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+
+	function attend() {
+		swal({
+			   title: "출근",
+			   text: "출근 하시겠습니까?",
+			   icon: "info" //"info,success,warning,error" 중 택1
+			}).then((YES) => {
+				console.log('이거 타??');
+				
+				$.ajax({
+		 			url:"attend.do",
+					data: chatRoom ,
+					dataType: "text",
+					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+					type:"post",
+					success:function(responsedata){
+						console.log('ajax 됨??');ㅣ
+						
+					},
+					error:function(){
+						
+					}
+				});
+
+				
+				})
+		
+		
+		}
+</script>

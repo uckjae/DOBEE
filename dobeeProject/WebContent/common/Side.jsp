@@ -15,7 +15,7 @@
 			<nav id="menu" class="nav-main" role="navigation">
 				<ul class="nav nav-main">
 					<li class="nav-active">
-						<a href="index.html"><i class="fa fa-home" aria-hidden="true"></i><span>메인</span></a>
+						<a href="main.do"><i class="fa fa-home" aria-hidden="true"></i><span>메인</span></a>
 					</li>
 					<li>
 						<a href="noticeList.do">
