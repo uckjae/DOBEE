@@ -89,7 +89,7 @@
 									</a>
 								</li>
 								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>Notice Write</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -97,12 +97,27 @@
 					</header>
     
 
- <div class="content" style="margin-right: 85px; margin-left: 85px">
-  <div class="comment-form-wrap pt-xl-2">
-   <h1 class="text-center mb-3 bread">게시글 작성</h1>
+
+   
+                        <section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+									<a href="#" class="fa fa-times"></a>
+								</div>
+						        
+								<h2 class="panel-title">
+								<img src="img/noticeicon.png" style="width:3%; height:3%;">
+								&nbsp;&nbsp;공지사항 글쓰기</h2>
+								
+							</header>
+							
+					<div class="panel-body">
+   
    <form action="noticeWrite.do" method="post" enctype="multipart/form-data">   
     <input type="text" class="form-control mb-3" id="title" name="title"
-     placeholder="글 제목을 입력하시오" value="">     
+     placeholder="글 제목을 입력하시오" value="">
+     <div style="margin: 15px"></div>  
     <textarea id="summernote1" name="content"></textarea>    
     <div class="text-right" id="lengthBox"> 
 	  <span id="total-characters"></span><span id="max"></span>
@@ -112,8 +127,9 @@
      <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
     </div>   
    </form>   
-  </div>
- </div>
+   </div>
+   </section>
+ 
 
  </section>
 	  </div>
