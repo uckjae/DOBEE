@@ -56,22 +56,24 @@
 						<div class="row">
 						<c:forEach items="${list}" var="n">
 							<div class="col-md-6 col-lg-6 col-xl-3">
-								<section class="panel">
-									<header class="panel-heading bg-primary">
-										<div class="panel-heading-icon">
-											<i class="fa fa-globe"></i>
+								<a href="pjtKanban.do?pjtSeq=${n.pjtSeq}" style="text-decoration:none;color:#777">
+									<section class="panel">
+										<header class="panel-heading bg-primary">
+											<div class="panel-heading-icon">
+												<i class="fa fa-globe"></i>
+											</div>
+										</header>
+										<div class="panel-body text-center">
+											<h3 class="text-semibold mt-sm text-center">${n.pjtName}</h3>
+											<p class="text-center">${n.pjtProgress}</p>
 										</div>
-									</header>
-									<div class="panel-body text-center">
-										<h3 class="text-semibold mt-sm text-center">${n.pjtName}</h3>
-										<p class="text-center">${n.pjtProgress}</p>
-									</div>
-								</section>
-							</div>
+									</section>
+									</a>
+								</div>
 							</c:forEach>
 						<!-- 프로젝트 만들기 -->
 						<div class="col-md-6 col-lg-6 col-xl-3">
-							<a data-toggle="modal" href="#pjtModal"  style="text-decoration:none;color:#777">
+							<a data-toggle="modal" href="#pjtModal" style="text-decoration:none;color:#777">
 								<section class="panel">
 									<header class="panel-heading bg-secondary">
 										<div class="panel-heading-icon">
@@ -90,6 +92,7 @@
 					<!-- end: page -->
 				</section>
 			</div>
+			
 				   <!-- 프로젝트 생성 modal -->
 		   	<div class="modal fade" id="pjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		   		<div class="modal-dialog cascading-modal" role="document">
@@ -154,7 +157,7 @@
 						    </div>
 						    <!--/.Content-->
 						  </div>
-						</div>						
+				</div>						
 						<!-- end of modal -->
 			<!-- 오른쪽 사이드 시작 -->
 			<c:import url="/common/RightSide.jsp"/>

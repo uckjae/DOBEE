@@ -191,13 +191,6 @@ public class DoController {
     }
 
 
-    //출근/퇴근버튼 >> ajax 컨트롤러로 바꿈
-    /*
-    public String attendButton(){
-        return null;
-    }
-    */
-
 
     //마이페이지
     //@RequestMapping(value = "", method = RequestMethod.GET)
@@ -493,7 +486,9 @@ public class DoController {
 
 
     //칸반보드
-    public String kanban(){
+    @RequestMapping("pjtKanban.do")
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq){
+    	System.out.println("플젝 번호 가져와?"+pjtSeq);
         return null;
     }
 
