@@ -314,14 +314,33 @@
 	  		}
 	  	});
 
-	  	
+		var chatType = $("#chatType").val();
+		var chatRoomName = $("#chatRoomName").text();
+		var userMail = $("#mail").text();
+		var name = $("#name").text();
+		var userName = $("#name").text();
+		var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
 
-	var chatType = $("#chatType").val();
-	var chatRoomName = $("#chatRoomName").text();
-	var userMail = $("#mail").text();
-	var name = $("#name").text();
-	var userName = $("#name").text();
-	var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
+		
+		socket.on('connect', function() {
+			//db에 있던 이전 대화 내용 가져오기
+			socket.emit('getChatContent', chatRoomName);
+		});
+
+		socket.on('printChatHistory', function(msg){
+	        var msgArray = msg.reverse();
+	        console.log(msgArray);
+	       
+	        $.each(msgArray, function(index,element){
+	            console.log(element);
+	            $('#chatLog').append('<div class="row">'
+	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
+	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
+	                +'</div><br>');
+	        });
+	    });
+
+
 
 	/* 서버 채팅으로 전달해주는 함수*/
 	var sendMessage = function() {
