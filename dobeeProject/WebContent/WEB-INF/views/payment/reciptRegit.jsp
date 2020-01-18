@@ -13,12 +13,12 @@
 img {
 	padding: 15px !important;
 }
+
+
 </style>
 
 
 <script>
-
-
 
 var path = window.location.pathname;
 console.log(path);
@@ -110,8 +110,17 @@ console.log(path);
                     var allPath;
                     var uploadPath;
                     var saveFileName;
+                    var checkImg = $("#FILE_TAG")[0].files[0];
+                    
+                     /*이미지를 업로드하지 않을 경우 업로드 버튼 작동안함 */
+                    if(checkImg){
+                        console.log("이미지 업로드 되었습니다.");
+                    }else{
+                       	console.log("이미지가 없습니다.");
+                        return;
+                    }
+                    
                     formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
-
                     $.ajax({
                         url: 'fileUploadAjax.do',
                         processData: false,
@@ -127,7 +136,7 @@ console.log(path);
                             allPath = uploadPath + saveFileName;
                             var forder = '/upload/';
                             var urlPath = forder + saveFileName;
-                            $("#uploadImg").html('<img id="imgtag" width="100%">');
+                            $("#uploadImg").html('<img id="imgtag" width="100%" alt="이미지가 보이진 않지만 올라간 상태입니다.">');
                             $("#imgtag").attr("src", urlPath);
                             console.log("이거 요청 주소 : " + urlPath);
                             console.log("이게 이미지 경로 : " + allPath);
@@ -146,11 +155,40 @@ console.log(path);
                                         console.log("구글 아작스 성공!");
                                         console.log(result);
 
-                                        var temp = fn(result.key4);
+                                       	for (var prop in result){
+                                            var fcost = result[prop].match("일시불");
+                                            console.log(fcost);
+                                            if(fcost != null){
+                                                console.log("여기에서 일시불 발견" + prop);
+                                                var costKey = prop;
+                                                }
+                                           	var fday = result[prop].match("구매");
+                                           	console.log(fday);
+                                            if(fday != null){
+                                            	console.log("여기에서 구매 발견" + prop);
+                                            	var useDayKey = prop;
+                                            }
+                                         }
+										/* 구매의 매 이후의 문자열만 가져가는 과정 */
+										var maeFindIndex = result[useDayKey].indexOf("매");
+										console.log(maeFindIndex);
+										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
+										console.log("여기 확인해봐!!! " + exceptionOther);
+                                       	
+										/*  일시불의 같은 라인에서 /를 찾아서 그 다음 부터 절삭해서 가져가는 과정 */
+										var slushIndex = result[costKey].lastIndexOf("/");
+                                       	console.log("여기인!!!!! " + slushIndex);
+										var exceptionStrCost = result[costKey].substr(slushIndex+1);
+										console.log(exceptionStrCost);
+									
+                                       	/*날짜 처리과정 */
+                                        var temp = fn(exceptionOther);
                                         var usedate = calculus(temp);
+                                        
+                                        /* 뽑아 낸 텍스트 input tag에 넣기 */ 
                                         $("#Input2").attr("value", usedate);
                                         $("#Input3").attr("value", result.key1);
-                                        var usecost = fn(result.key18);
+                                        var usecost = fn(exceptionStrCost);
                                         $("#Input4").attr("value", usecost);
                                     },
                                     error: function() {
@@ -160,7 +198,6 @@ console.log(path);
                         },
                     });
                 }; //uploadFile() 함수 끝 
-
 
 		
                 // 법인카드 목록 불러오기 아작스
@@ -192,49 +229,19 @@ console.log(path);
                                                 console.log(result);
                                                 
                                                 for (let i = 0; i < result.length; i++) {
-                                                     
-                                                    $("#Select2").append("<option value="+result[i].entry+"">" + result[i].costCode+ "</option>");
+                                                    $("#Select2").append("<option value="+result[i].codeName+ ">" + result[i].entry + "</option>");
                                                 }
                                             },
                                             error: function() {
                                                 console.log("비용항목 아작스에서 에러남")
                                             },
-
                                         })
                                     },
                                 }) //아작스 끝
                         }
                     })
                 }
-
-
-
-              /*   //하...내가 이 함수까지 만들어야 하나 input 태그안에 있는 모든 데이터값 출력해보기 
-                function showInput() {
-                    var select1 = 22;
-                    var select2 = 44;
-
-                    select1 = $("#Select1 option:selected").text();
-                    select2 = $("#Select2 option:selected").text();
-                    var input1 = $('#Input1').val();
-                    var input2 = $('#Input2').val();
-                    var input3 = $('#Input3').val();
-                    var input4 = $('#Input4').val();
-                    var input5 = $('#Input5').val();
-
-                    console.log("select1: " + select1);
-                    console.log("select2: " + select2);
-                    console.log("input1: " + input1);
-                    console.log("input2: " + input2);
-                    console.log("input3: " + input3);
-                    console.log("input4: " + input4);
-                    console.log("input5: " + input5);
-
-                    return false;
-                } */
-
-                
-            </script>
+</script>
             
             
             
@@ -264,7 +271,6 @@ console.log(path);
 							<li><span>Pages</span></li>
 							<li><span>Blank Page</span></li>
 						</ol>
-
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
 							class="fa fa-chevron-left"></i></a>
 					</div>
@@ -272,7 +278,7 @@ console.log(path);
 				<!-- 작업 여기부터~!~!~!~~! -->
 				
 				
-				<!--  우측에 영수증파일 업로드 되고, -->
+				<!-- 우측에 영수증파일 업로드 되고 -->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-6 imgshow">
@@ -281,12 +287,9 @@ console.log(path);
                                 <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
                             </div>
                             <!-- 파일 업로드  부분 -->
-                            <form id="FILE_FORM" class="md-form" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-                                <div class="custom-file" style="width:85%; float:left;">
-                                    <input type="file" class="custom-file-input" id="FILE_TAG" name="FILE_TAG">
-                                   <!--  <label class="custom-file-label" for="customFile"></label> -->
-                                </div>
-                                <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right;">업로드</a>
+                            <form id="FILE_FORM" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+                                    <input type="file" id="FILE_TAG" name="FILE_TAG"  style="display:inline !important;" >
+                                    <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right">업로드</a>
                             </form>
                         </div>
 
@@ -294,7 +297,6 @@ console.log(path);
                         <div class="col-lg-6 textshow">
                             <!-- 좌측에 영수증사진에 대한 텍스트  -->
                             <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
-
                             <form id="costlistInfo" action="addFinalReceipt.do" method="POST">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">신청자 이메일</label>
@@ -307,12 +309,12 @@ console.log(path);
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">법인카드 선택</label>
                                     <select class="form-control" name='cardNum' id="Select1">
-				    </select>
+				    				</select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect2">비용항목 선택</label>
                                     <select class="form-control" name='costCode' id="Select2">
-				    </select>
+				    				</select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">사용일</label>
@@ -334,14 +336,11 @@ console.log(path);
                       			<br>
                                 <button type='submit' class="btn btn-primary" style="width:auto; float:right;">수정완료 및 등록</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
 
-
 				<!-- start: page -->
-
 
 
 				<!-- end: page -->
@@ -349,17 +348,14 @@ console.log(path);
 			</section>
 		</div>
 
-
-
-
 		<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp" />
-
-
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 	
 	<c:import url="/common/BottomTag.jsp" />
+	
+	
 	 <script>
                 //영수증 업로드시 이미지 이름 올라가게하는 스크립트
                 $(document).ready(function() {
@@ -369,7 +365,6 @@ console.log(path);
                     });
                 });
     </script>
-            
             
             
     <script>

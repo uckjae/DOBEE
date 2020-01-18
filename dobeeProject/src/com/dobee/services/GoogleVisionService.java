@@ -39,7 +39,6 @@ public class GoogleVisionService {
 		List<AnnotateImageResponse> responses = null;
 		JSONObject jsonObj = new JSONObject();
 		try {
-			//String imageFilePath = "/users/psh/image/1.jpeg";
 			String imageFilePath = path;
 			List<AnnotateImageRequest> requests = new ArrayList<>();
 			
@@ -72,37 +71,18 @@ public class GoogleVisionService {
 			                        for (Word word: para.getWordsList()) {
 			                            String wordText = "";
 			                            for (Symbol symbol: word.getSymbolsList()) {
-			                                wordText = wordText + symbol.getText();
+			                            	wordText = symbol.getText();
+			                            	paraText = paraText + wordText;
 			                            }
-			                            paraText = paraText + wordText;
 			                        }
-			                        System.out.println(paraText);
-			                        String sNum = Integer.toString(number);
-			                        jsonObj.put("key"+sNum, paraText);
-			                        number++;
+			                        blockText = blockText + paraText;
 			                    }
+			                    System.out.println("여기를확인해보자 " + blockText);
+		                        String sNum = Integer.toString(number);
+		                        jsonObj.put("key"+sNum, blockText);
+		                        number++;
 			                }
 			            }
-			    		
-			    		
-			    		/*
-			    		for (EntityAnnotation annotation1 : res.getTextAnnotationsList()) {
-			    			System.out.printf("Text: %s\n", annotation1.getDescription()); // 인식한 텍스트를 인식 단위 (단어?) 별로 출력
-			    			//System.out.printf("Position : %s\n", annotation.getBoundingPoly()); // 해당 인식 단위에 대한 좌표 출력
-			    			}
-
-				    	*/
-				    	
-				    	//json 형태로 만들기 
-//				    	try {
-//				    		
-//				    		jsonObj.put(row, res.getTextAnnotationsList().get(0).getDescription());
-//				    		
-//						} catch (Exception e) {
-//							System.out.println("json 파일 만들다가 캣치문 빠짐 ");
-//						}
-				    	
-			    		
 			    	}
 			    }
 				}catch (Exception e) {

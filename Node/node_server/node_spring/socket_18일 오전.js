@@ -170,8 +170,7 @@ module.exports = (server, app) => {
                 var sql = "insert into chatcontent(chatcontent, chattime, chatseq, mail) values (?,?, (select chatseq from chatroom where chatroomname=?), (select mail from user where mail=?))"
                 conn.query(sql, [chatContent, currentDate, chatRoomName, mail], function (err, result) {
                     if (err) { //에러나면 rollback
-                        reject(("에러 발생"));
-                        throw err
+                        reject(new Error("에러 발생"));
                     } else {
                         resolve("yes");
                     }
@@ -234,8 +233,8 @@ module.exports = (server, app) => {
 
     dm.on('connection', (socket) => {
         console.log('dm 채팅방 연결');
-        socket.on('send message to dm', function (chatRoomName, chatType, chatContent, userMail, chatUsers) {
-            console.log('어떻게 넘어오니?? 채팅방 이름 : ' + chatRoomName + "타입 : "+chatType+"내용 : "+chatContent+" 참가자들 : "+chatUsers+"메일"+userMail);
+        socket.on('send message to dm', function (chatRoomName, chatType, chatContent, chatUsers) {
+            console.log('어떻게 넘어오니?? 채팅방 이름 : ' + chatRoomName + "타입 : "+chatType+"내용 : "+chatContent+" 참가자들 : "+chatUsers);
             //수신자
             var fromName = chatUsers[0];
             //기존 채팅방 있는지 확인하는 함수 실행
@@ -243,20 +242,19 @@ module.exports = (server, app) => {
                 //기존 채팅방이 있는 경우
                 if (data == "yes") {
                     console.log('기존 채팅방 있니???')
-                    insertChatContent(chatContent, chatRoomName, userMail);
+                    insertChatContent(chatContent, chatRoomName, fromName);
                     //기존 채팅방이 없는 경우
                 } else if ((data == "no")) {
                     makeDmChatRoom(chatRoomName, chatType, chatUsers).then(function(data){
                         console.log('dm 채팅방 만들기 함수 실행 결과'+data);
                         if(data == 'commit success'){
-                                insertChatContent(chatContent, chatRoomName, userMail);
-                                console.log('대화내용 저장 완료');
+
+                            insertChatContent(chatContent, chatRoomName, chatUsers[0]);
+                            console.log('대화내용 저장 완료');
                         } else {
                             console.log('대화내용 저장 실패!!!!!!!');
                         }
-                    }, function(err) {
-                        console.log('채팅 내용 저장 프로미스 함수 에러 발생'+err)
-                    })
+                    }).catch(function(err) {console.log('에러?'+err)})
                 }
             });
             dm.emit('receive message to dm', chatContent, currentDate, chatUsers[0]);

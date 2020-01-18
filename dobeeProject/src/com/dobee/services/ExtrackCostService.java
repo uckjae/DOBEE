@@ -6,21 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class ExtrackCostService {
 
-	
-    /* 날짜 형식을 추출하는 함수. 아래 형태의 숫자를 추출
-     * 
-     * 0000-00-00
-     * 0000.00.00
-     * 0000/00/00
-     * 0000 00 00
-     * 
-     * http://stackoverflow.com/questions/18591242/java-extract-date-from-string-using-regex-failing 
-     * 
-     */
-    public List<String> extractCost(String str) {
 
+    public List<String> extractCost(String str) {
         List<String> list = new ArrayList<String>();
-        
         Matcher matcher ;
         
         if (str.isEmpty()) {
@@ -32,7 +20,7 @@ public class ExtrackCostService {
             Pattern pattern = Pattern.compile(patternStr, flags);
             matcher = pattern.matcher(str);
 
-            int count = 0;
+            int count = 0; 
             while (matcher.find()) {
                 list.add(matcher.group());
                 count++;

@@ -5,6 +5,8 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
+		<!-- Sweet Alert -->
+   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -188,8 +190,9 @@
 										<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
 												<i class="fa fa-wechat mr-xs"></i>
 												새 대화 채널 만들기
-											</button>
-											<hr class="separator" />
+										</button>
+										<hr class="separator" />
+										
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
 													<h6 class="title">Channel</h6>
@@ -200,13 +203,15 @@
 													 <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
 	           											<c:forEach var="roomName" items="${roomNameList}">
 												            <li>
-													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${roomName}</a>
+													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
 												     	  	</li>
 										          		</c:forEach>
 													</ul>
 												</div>
 											</div>
+							
 											<hr class="separator" />
+							
 											<!-- DM 목록 -->
 											<div class="sidebar-widget m-none">
 												<div class="widget-header">
@@ -217,7 +222,7 @@
 													<ul class="list-unstyled mailbox-bullets">
 													<c:forEach var="userList" items="${requestScope.userList}">
 											            <li>
-												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>&nbsp;&nbsp;${userList.name }</a>
+												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>${userList.name }</a>
 											     	  	</li>
 										           </c:forEach>
 													</ul>
@@ -229,61 +234,52 @@
 									</div>
 								</div>
 							</menu>
-							
-							<div class="inner-body mailbox-folder">
+						<div class="inner-body mailbox-folder">
 								<!-- START: .mailbox-header -->
 								<header class="mailbox-header">
 									<div class="row">
 										<div class="col-sm-6">
 											<h1 class="mailbox-title text-light m-none">
-									<c:set var="user" value="${requestScope.user}"/>
-               							<b id="chatRoomName" style="font-size:30px;">&nbsp;${user.name}</b>
+											<c:set var="user" value="${requestScope.user}"/>
+	               							<b id="chatRoomName" style="font-size:30px;">&nbsp;${user.name}</b>
 											</h1>
 										</div>
 										<div class="col-sm-6">
-											
 										</div>
 									</div>
 								</header>
 								<!-- END: .mailbox-header -->
-							
 								<!-- START: .mailbox-actions -->
-								 <div class="row">
-					            	<div class="col-md-4">
-					            		<hr width="70%">
-					            	</div>
-					       			<div class="col-md-4" id="currentDate">
-					            		<h3 style="text-align:center;font-size:25px;">오늘 </h3>
-					            	</div>     
-					            	<div class="col-md-4">
-					            		<hr width="70%">
-					            	</div>
-					            </div>
-								
-								<!-- END: .mailbox-actions -->
-								<div class="nano">
-									<div class="container content" id="chatMsgMain">
-							            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
-							        	</ul>
+									<div class="row">
+							            <div class="col-md-4">
+							            	<hr width="70%">
+							            </div>
+							       		<div class="col-md-4" id="currentDate">
+							            	<h3 style="text-align:center;font-size:25px;">오늘 </h3>
+							            </div>     
+							            <div class="col-md-4">
+							            	<hr width="70%">
+							            </div>
+						            </div>
+									<!-- END: .mailbox-actions -->
+									<div class="nano">
+										<div class="container content" id="chatMsgMain">
+								            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
+								        	</ul>
+										</div>
 									</div>
-								</div>
-								
-								
-								
-							<form id="sendMessage" method="post">
-							<div>        
-					            <li class="white">
-					              <div class="form-group basic-textarea" stlye="width:300px">
-					                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-									<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-					              </div>
-					            </li>
-				            </div>
-					            	<button type="submit" id="chatSend" class="btn btn-dark" style="float:right;">send</button>
-				             </ul>
-							</form>
-								
-								
+									
+									
+								<!-- 채팅방 보내는 곳 -->
+								<form id="sendMessage" method="post">
+								<div>        
+						              <div class="form-group basic-textarea" stlye="width:300px">
+						                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
+										<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+						              </div>
+					            </div>
+						            	<button type="submit" id="chatSend" class="btn btn-dark" style="float:right;">send</button>
+								</form>
 							</div>
 							</div>
 						</div>
@@ -291,63 +287,13 @@
 					<!-- end: page -->
 				</section>
 			</div>
-			
+
 			<!-- 오른쪽 사이드 시작 -->
 			<c:import url="/common/RightSide.jsp"/>
-			<!-- 오른쪽 사이드 끝 -->
-			
-			<!-- 채팅방 모달 -->
-			<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				<div class="modal-text text-center">
-				
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil"></i>새 대화 채널 만들기</h4>
-						</div>
-						<div class="modal-body mb-0">
-						      <form id="makeChatRoom" name="makeChatRoom" method="post">
-						      	<div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fa fa-comment"></i><span>&nbsp;채널 이름</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							   <br>
-						        <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
-		                                    <option hidden>멤버</option>
-		                                    </select>
-						      		</div>
-							   </div>
-							   <div>
-							   <br>
-							   <div class="row">
-								   <div class="col-sm-3">
-							       </div>
-							       <div class="col-sm-9" id="chatUserList" style="display:none">
-								   </div>
-								</div>
-							   </div>
-							   <br>
-							 </form>
-						</div>
-						
-						<div class="modal-footer">
-							<button type="button" id="makeChatRoomBtn" class="btn btn-primary modal-confirm">만들기</button>
-							<button type="button" class="btn btn-default" data-dismiss="btn btn-default modal-dismiss">Close</button>
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
+			<!-- 오른쪽 사이드 끝 -->			
+			<!-- 채팅방 만드는 모달 -->
+			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
+			<!-- 채팅방 만드는 모달 끝 -->
 			
 			
 		</section>
@@ -356,7 +302,7 @@
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
     
 <!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 	$(function(){
 
@@ -395,6 +341,14 @@
 		e.preventDefault();
 	});
 	
+	
+	/*엔터 쳤을 때 채팅 서버 전송 */
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			sendMessage();
+			}
+		});
+
 	/*채팅 뿌려주기*/
 	socket.on('receive message to self', function(chatContent,currentDate){
 		$('#chatLog').append('<div><li class="out">'
@@ -404,17 +358,10 @@
 	});
 			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
 	
-	/*엔터 쳤을 때 채팅 서버 전송 */
-	$("#chatContent").keydown(function(){
-		if(event.keyCode ==13 && $('#chatContent').val()!=''){
-			sendMessage();
-			}
-		});
 		
 	var count = 0;
 	
 	$("#userSelect").change(function(){
-		 console.log('이거 실행됨?');
 		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
 		var userName = userInfo[0]			
 		var userMail = userInfo[1];
@@ -431,8 +378,7 @@
 				title: "채널명",
 				text: "채널명을 입력하세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
-				showConfirmButton: true,
-				confirmButtonColor: "#34495E"
+				showConfirmButton: true
 				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
@@ -462,10 +408,8 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   type: "success", //"info,success,warning,error" 중 택1
-	 						   showCancelButton: true,
-	 						  	cancelButtonColor: "#34495E",
-	 						    confirmButtonColor: "#34495E",
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 

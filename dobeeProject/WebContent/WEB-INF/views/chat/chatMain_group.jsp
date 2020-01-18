@@ -5,6 +5,8 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
+		 <!-- Sweet Alert -->
+   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -280,60 +282,11 @@
 			
 			<!-- 오른쪽 사이드 시작 -->
 			<c:import url="/common/RightSide.jsp"/>
-			<!-- 오른쪽 사이드 끝 -->
+			<!-- 오른쪽 사이드 끝 -->			
+			<!-- 채팅방 만드는 모달 -->
+			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
+			<!-- 채팅방 만드는 모달 끝 -->
 			
-			<!-- 채팅방 모달 -->
-			<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				<div class="modal-text text-center">
-				
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil"></i>새 대화 채널 만들기</h4>
-						</div>
-						<div class="modal-body mb-0">
-						      <form id="makeChatRoom" name="makeChatRoom" method="post">
-						      	<div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fa fa-comment"></i><span>&nbsp;채널 이름</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							    <br>
-						        <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
-		                                    <option hidden>멤버</option>
-		                                    </select>
-						      		</div>
-							   </div>
-							   <div>
-							   <br>
-							   <div class="row">
-								   <div class="col-sm-3">
-							       </div>
-							       <div class="col-sm-9" id="chatUserList" style="display:none">
-								   </div>
-								</div>
-							   </div>
-							   <br>
-							 </form>
-						</div>
-						
-						<div class="modal-footer">
-							<button type="button" id="makeChatRoomBtn" class="btn btn-primary modal-confirm">만들기</button>
-							<button type="button" class="btn btn-default" data-dismiss="btn btn-default modal-dismiss">Close</button>
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
 			
 			
 		</section>
@@ -390,7 +343,7 @@
 			sendMessage();
 			}
 		});
-				
+	/*채팅 뿌려주기*/
 	socket.on('receive message to group', function(chatContent, currentDate, userName){
 		console.log('지금 접속한 사람??'+name);
 		console.log('유저네임??'+userName);
@@ -433,8 +386,10 @@
 		if($("#newChatRoomName").val() == "" || $("#newChatRoomName").val() == null){
 			swal({
 				title: "채널명",
-				text: "채널명을 입력하세요",
-				icon: "warning" //"info,success,warning,error" 중 택1
+				text: "채널명을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true
+				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
 							$("#newChatRoomName").focus();
@@ -463,7 +418,8 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 
