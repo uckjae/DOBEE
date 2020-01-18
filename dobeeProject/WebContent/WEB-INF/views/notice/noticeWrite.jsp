@@ -195,7 +195,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 	   </div>
 	</div>
 	<!--공지사항 일정내용  -->
-	<input type="text" class="form-control mb-3" id="nscontent" name="nscontent"
+	<input type="text" class="form-control mb-3" id="nscontent" name="nsContent"
      placeholder="공자사항일정 내용" value="" style="max-width:430">
      
      <div style="margin:10px"></div>

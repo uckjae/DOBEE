@@ -15,6 +15,13 @@ public interface NoticeDao {
     //공지사항작성
     public void noticeWrite(Notice n);
     
+    //공지사항작성
+    public void noticeWrite2(NotSchedule ns);
+    
+    //공지사항작성
+    public void noticeWrite3(Schedule sc);
+    
+    
     //공지사항 수정
     public void noticeModify(Notice notice);
 
