@@ -1,6 +1,8 @@
 package com.dobee.dao;
 
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.schedule.NotSchedule;
+import com.dobee.vo.schedule.Schedule;
 
 import java.util.List;
 
