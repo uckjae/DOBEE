@@ -136,7 +136,7 @@ console.log(path);
                             allPath = uploadPath + saveFileName;
                             var forder = '/upload/';
                             var urlPath = forder + saveFileName;
-                            $("#uploadImg").html('<img id="imgtag" width="100%">');
+                            $("#uploadImg").html('<img id="imgtag" width="100%" alt="이미지가 보이진 않지만 올라간 상태입니다.">');
                             $("#imgtag").attr("src", urlPath);
                             console.log("이거 요청 주소 : " + urlPath);
                             console.log("이게 이미지 경로 : " + allPath);
@@ -155,11 +155,40 @@ console.log(path);
                                         console.log("구글 아작스 성공!");
                                         console.log(result);
 
-                                        var temp = fn(result.key4);
+                                       	for (var prop in result){
+                                            var fcost = result[prop].match("일시불");
+                                            console.log(fcost);
+                                            if(fcost != null){
+                                                console.log("여기에서 일시불 발견" + prop);
+                                                var costKey = prop;
+                                                }
+                                           	var fday = result[prop].match("구매");
+                                           	console.log(fday);
+                                            if(fday != null){
+                                            	console.log("여기에서 구매 발견" + prop);
+                                            	var useDayKey = prop;
+                                            }
+                                         }
+										/* 구매의 매 이후의 문자열만 가져가는 과정 */
+										var maeFindIndex = result[useDayKey].indexOf("매");
+										console.log(maeFindIndex);
+										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
+										console.log("여기 확인해봐!!! " + exceptionOther);
+                                       	
+										/*  일시불의 같은 라인에서 /를 찾아서 그 다음 부터 절삭해서 가져가는 과정 */
+										var slushIndex = result[costKey].lastIndexOf("/");
+                                       	console.log("여기인!!!!! " + slushIndex);
+										var exceptionStrCost = result[costKey].substr(slushIndex+1);
+										console.log(exceptionStrCost);
+									
+                                       	/*날짜 처리과정 */
+                                        var temp = fn(exceptionOther);
                                         var usedate = calculus(temp);
+                                        
+                                        /* 뽑아 낸 텍스트 input tag에 넣기 */ 
                                         $("#Input2").attr("value", usedate);
                                         $("#Input3").attr("value", result.key1);
-                                        var usecost = fn(result.key18);
+                                        var usecost = fn(exceptionStrCost);
                                         $("#Input4").attr("value", usecost);
                                     },
                                     error: function() {
@@ -169,7 +198,6 @@ console.log(path);
                         },
                     });
                 }; //uploadFile() 함수 끝 
-
 
 		
                 // 법인카드 목록 불러오기 아작스
