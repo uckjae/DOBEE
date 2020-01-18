@@ -305,7 +305,6 @@
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 	$(function(){
-
 		$.ajax({
 			 
 	  		url:"getUserList.do",
@@ -320,12 +319,32 @@
 				})
 	  		}
 	  	});
+	  	
+		var chatType = $("#chatType").val();
+		var userMail = $("#mail").text();
+		var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
 
+		socket.on('connect', function() {
+			//db에 있던 이전 대화 내용 가져오기
+			socket.emit('getChatContent', userMail);
+		});
 
-	var chatType = $("#chatType").val();
-	var userMail = $("#mail").text();
-	var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
+		socket.on('printChatHistory', function(msg){
+	        var msgArray = msg.reverse();
+	        console.log(msgArray);
+	       
+	        $.each(msgArray, function(index,element){
+	            console.log(element);
+	            $('#chatLog').append('<div class="row">'
+	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
+	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
+	                +'</div><br>');
+	        });
+	    });
+	    
+		
 
+	
 	/* 서버 채팅으로 전달해주는 함수*/
 	var sendMessage = function() {
 		var chatRoomName = userMail;
@@ -362,6 +381,7 @@
 	var count = 0;
 	
 	$("#userSelect").change(function(){
+		 console.log('이거 실행됨?');
 		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
 		var userName = userInfo[0]			
 		var userMail = userInfo[1];

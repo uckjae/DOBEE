@@ -155,27 +155,29 @@ console.log(path);
                                         console.log("구글 아작스 성공!");
                                         console.log(result);
 
+                                        // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
                                        	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
-                                            console.log(fcost);
                                             if(fcost != null){
                                                 console.log("여기에서 일시불 발견" + prop);
+                                                console.log(fcost);
                                                 var costKey = prop;
                                                 }
                                            	var fday = result[prop].match("구매");
-                                           	console.log(fday);
                                             if(fday != null){
                                             	console.log("여기에서 구매 발견" + prop);
+                                            	console.log(fday);
                                             	var useDayKey = prop;
                                             }
                                          }
-										/* 구매의 매 이후의 문자열만 가져가는 과정 */
+                                        
+										/* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
 										var maeFindIndex = result[useDayKey].indexOf("매");
 										console.log(maeFindIndex);
 										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
 										console.log("여기 확인해봐!!! " + exceptionOther);
                                        	
-										/*  일시불의 같은 라인에서 /를 찾아서 그 다음 부터 절삭해서 가져가는 과정 */
+										/*  일시불의 같은 라인에서 뒤에서 부터 '/' 을 찾아 절삭하는 과정 */
 										var slushIndex = result[costKey].lastIndexOf("/");
                                        	console.log("여기인!!!!! " + slushIndex);
 										var exceptionStrCost = result[costKey].substr(slushIndex+1);
