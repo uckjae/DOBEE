@@ -5,6 +5,8 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
+		<!-- Sweet Alert -->
+   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -356,7 +358,7 @@
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
     
 <!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 	$(function(){
 
@@ -395,6 +397,14 @@
 		e.preventDefault();
 	});
 	
+	
+	/*엔터 쳤을 때 채팅 서버 전송 */
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			sendMessage();
+			}
+		});
+
 	/*채팅 뿌려주기*/
 	socket.on('receive message to self', function(chatContent,currentDate){
 		$('#chatLog').append('<div><li class="out">'
@@ -404,17 +414,10 @@
 	});
 			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
 	
-	/*엔터 쳤을 때 채팅 서버 전송 */
-	$("#chatContent").keydown(function(){
-		if(event.keyCode ==13 && $('#chatContent').val()!=''){
-			sendMessage();
-			}
-		});
 		
 	var count = 0;
 	
 	$("#userSelect").change(function(){
-		 console.log('이거 실행됨?');
 		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
 		var userName = userInfo[0]			
 		var userMail = userInfo[1];
@@ -431,8 +434,7 @@
 				title: "채널명",
 				text: "채널명을 입력하세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
-				showConfirmButton: true,
-				confirmButtonColor: "#34495E"
+				showConfirmButton: true
 				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
@@ -462,10 +464,8 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   type: "success", //"info,success,warning,error" 중 택1
-	 						   showCancelButton: true,
-	 						  	cancelButtonColor: "#34495E",
-	 						    confirmButtonColor: "#34495E",
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 

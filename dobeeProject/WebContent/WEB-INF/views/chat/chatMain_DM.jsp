@@ -5,6 +5,8 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
+		<!-- Sweet Alert -->
+   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -348,64 +350,71 @@
 <script>
 	$(function(){
 
-		$.ajax({
-			 
-	  		url:"getUserList.do",
-	  		dataType:"json",
-	  		type:"post",
-	  		success:function(data){
-	  			$.each(data, function(index, element){
-					let option = $("<option></option>");
-					$(option).text(element.name+"("+element.mail+")");
-					$(option).val(element.name+":"+element.mail);
-					$("#userSelect").append(option);
-				})
-	  		}
-	  	});
+	$.ajax({
+	  	url:"getUserList.do",
+	  	dataType:"json",
+	  	type:"post",
+	  	success:function(data){
+	  		$.each(data, function(index, element){
+				let option = $("<option></option>");
+				$(option).text(element.name+"("+element.mail+")");
+				$(option).val(element.name+":"+element.mail);
+				$("#userSelect").append(option);
+			})
+	  	}
+	  });
 
-	  	
 
-		var chatType = $("#chatType").val();
-		var fromName = $("#name").text();
-		var dmName = $("#dmName").text();
-		//채팅방 이름 : 발신자 - 수신자
-		var chatRoomName = fromName + "-" + dmName;
-		console.log('dm 채팅방 이름??'+chatRoomName); 
-		var socket = io.connect( 'http://192.168.6.2:5000/dm', {
-					path: '/socket.io'
-				});
-				
-				$("#sendMessage").on('submit', function(e){
-					console.log('채팅방 타입' + chatType);
-					chatContent = $('#chatContent').val();
-					var chatUsers = [fromName, dmName];
-					socket.emit('send message to dm', chatRoomName, chatType, chatContent, chatUsers);
-					$('#chatContent').val("");
-					$("#chatContent").focus();
-					e.preventDefault();
-					
-					});
-				
-				socket.on('receive message to dm', function(chatContent,currentDate, fromName){
-					if(fromName == dmName) { 
-						$('#chatLog').append('<div> <li class="in"><div class="chat-img" >'
+	var chatType = $("#chatType").val();
+	var userMail = $("#mail").text();
+	var fromName = $("#name").text();
+	var dmName = $("#dmName").text();
+	//채팅방 이름 : 발신자 - 수신자
+	var chatRoomName = fromName + "-" + dmName;
+	var socket = io.connect( 'http://192.168.6.2:5000/dm', {path: '/socket.io'});
+
+	/* 서버 채팅으로 전달해주는 함수*/
+	var sendMessage = function() {
+		chatContent = $('#chatContent').val();
+		var chatUsers = [fromName, dmName];
+		socket.emit('send message to dm', chatRoomName, chatType, chatContent, userMail, chatUsers);
+		$('#chatContent').val("");
+		$("#chatContent").focus();
+	}
+
+	/*send 버튼 클릭시 채팅 서버 전송*/
+	$("#sendMessage").on('submit', function(e){
+		sendMessage();
+		e.preventDefault();
+	});
+	/*엔터 쳤을 때 채팅 서버 전송 */
+	$("#chatContent").keydown(function(){
+		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			sendMessage();
+			}
+		});
+	
+	/*채팅 뿌려주기*/
+	socket.on('receive message to dm', function(chatContent,currentDate, fromName){
+		if(fromName == dmName) { 
+			$('#chatLog').append('<div> <li class="in"><div class="chat-img" >'
 								+'<div class="chat-body"><div class="chat-message">'
 								+'<h3>'+fromName+'</h3>'
 								+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 								+'</div></div></li></div><br>');
 						//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
 
-						} else { //입력한 사람한테 뿌리기
-							$('#chatLog').append('<div> <li class="out"><div class="chat-img" >'
+		} else { //입력한 사람한테 뿌리기
+			$('#chatLog').append('<div> <li class="out"><div class="chat-img" >'
 									+'<div class="chat-body"><div class="chat-message">'
 									+'<h3>'+fromName+'</h3>'
 									+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
 									+'</div></div></li></div><br>');
 							//$('#scroll').scrollTop($('#scroll')[0].scrollHeight);
-							}
+			}
 
-					});
-		  
+	});
+	
 		
 	var count = 0;
 	
@@ -425,8 +434,10 @@
 		if($("#newChatRoomName").val() == "" || $("#newChatRoomName").val() == null){
 			swal({
 				title: "채널명",
-				text: "채널명을 입력하세요",
-				icon: "warning" //"info,success,warning,error" 중 택1
+				text: "채널명을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true
+				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
 							$("#newChatRoomName").focus();
@@ -455,7 +466,8 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 

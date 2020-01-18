@@ -5,6 +5,8 @@
 <html class="fixed sidebar-left-collapsed">
 	<head>
 		<c:import url="/common/HeadTag.jsp"/>
+		 <!-- Sweet Alert -->
+   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	</head>
 	<style>
 	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
@@ -390,7 +392,7 @@
 			sendMessage();
 			}
 		});
-				
+	/*채팅 뿌려주기*/
 	socket.on('receive message to group', function(chatContent, currentDate, userName){
 		console.log('지금 접속한 사람??'+name);
 		console.log('유저네임??'+userName);
@@ -433,8 +435,10 @@
 		if($("#newChatRoomName").val() == "" || $("#newChatRoomName").val() == null){
 			swal({
 				title: "채널명",
-				text: "채널명을 입력하세요",
-				icon: "warning" //"info,success,warning,error" 중 택1
+				text: "채널명을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true
+				//icon: "warning" //"info,success,warning,error" 중 택1
 					}).then((YES) => {
 						if (YES) {
 							$("#newChatRoomName").focus();
@@ -463,7 +467,8 @@
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
-	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
 	 						}).then((YES) => {
 	 							if (YES) {
 	 								location.reload(true); 
