@@ -665,9 +665,10 @@ public class DoController {
     	
     	//해당 DM 채팅방으로 셋팅
     	model.addAttribute("dmName", dmName);
+    	model.addAttribute("dmMail", dmMail);
     	model.addAttribute("chatType", "DM");
     	
-    	return "chat/chatMain_DM";
+    	return "chat/chatMain_DM2";
     }
     
   
