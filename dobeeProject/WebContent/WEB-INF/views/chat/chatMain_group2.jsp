@@ -12,72 +12,13 @@
 		width: 100%; height: 100%;
 	}
 	img{ max-width:100%;}
-	.inbox_people {
-	  background: #f8f8f8 none repeat scroll 0 0;
-	  float: left;
-	  overflow: hidden;
-	  width: 40%; border-right:1px solid #c4c4c4;
-	}
-	.inbox_msg {
-	  border: 1px solid #c4c4c4;
-	  clear: both;
-	  overflow: hidden;
-	}
-	.top_spac{ margin: 20px 0 0;}
 	
-	
-	.recent_heading {float: left; width:40%;}
-	.srch_bar {
-	  display: inline-block;
-	  text-align: right;
-	  width: 60%; padding:
-	}
-	.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-	
-	.recent_heading h4 {
-	  color: #05728f;
-	  font-size: 21px;
-	  margin: auto;
-	}
-	.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-	.srch_bar .input-group-addon button {
-	  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-	  border: medium none;
-	  padding: 0;
-	  color: #707070;
-	  font-size: 18px;
-	}
-	.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-	
-	.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-	.chat_ib h5 span{ font-size:13px; float:right;}
-	.chat_ib p{ font-size:14px; color:#989898; margin:auto}
-	.chat_img {
-	  float: left;
-	  width: 11%;
-	}
-	.chat_ib {
-	  float: left;
-	  padding: 0 0 0 15px;
-	  width: 88%;
-	}
-	
-	.chat_people{ overflow:hidden; clear:both;}
-	.chat_list {
-	  border-bottom: 1px solid #c4c4c4;
-	  margin: 0;
-	  padding: 18px 16px 10px;
-	}
-	.inbox_chat { height: 550px; overflow-y: scroll;}
-	
-	.active_chat{ background:#ebebeb;}
-	
-	.incoming_msg {
-	margin-top: 10px;
-	}
 	.incoming_msg_img {
 	  display: inline-block;
 	  width: 6%;
+	}
+	.incoming_msg_img img{
+	  border-radius: 50%;
 	}
 	.received_msg {
 	  display: inline-block;
@@ -107,7 +48,7 @@
 	  width: 60%;
 	}
 	
-	 .sent_msg p {
+	.sent_msg p {
 	  background: #537291 none repeat scroll 0 0; /*#05728f*/
 	  border-radius: 3px;
 	  font-size: 14px;
@@ -229,8 +170,6 @@
 			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
 			<!-- 채팅방 만드는 모달 끝 -->
 			
-			
-			
 		</section>
 		<c:import url="/common/BottomTag.jsp"/>
 		<!-- Specific Page Vendor -->
@@ -270,15 +209,29 @@
 		});
 
 		socket.on('printChatHistory', function(msg){
-	        var msgArray = msg.reverse();
+			var msgArray = msg.reverse();
 	        console.log(msgArray);
-	       
 	        $.each(msgArray, function(index,element){
-	            console.log(element);
-	            $('#chatLog').append('<div class="row">'
-	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
-	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
-	                +'</div><br>');
+	         
+	            if(userName !== element.NAME) {
+	    			$("#msg_history").append('<div class="incoming_msg">'
+	    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+	    					+'<div class="received_msg">'
+	    					+'<div class="received_withd_msg">'
+	    					+'<p>'+element.CHATCONTENT+'</p>'
+	    					+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+	    					+'</div></div>');
+	    			$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
+	    			
+	    			} else {
+	    				$("#msg_history").append('<div class="outgoing_msg">'
+	    						+'<div class="sent_msg">'
+	    						+'<p>'+element.CHATCONTENT+'</p>'
+	    						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+	    						+'</div>');
+	    				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
+	    			}
+                
 	        });
 	    });
 
@@ -301,7 +254,6 @@
 	/*엔터 쳤을 때 채팅 서버 전송 */
 	$("input[name='chatContent']").keypress(function(){
 		if(event.keyCode ==13 && $('#chatContent').val()!=''){
-			console.log('키프1111레스 ???');
 			//sendMessage();
 			}
 		});
@@ -309,21 +261,21 @@
 	socket.on('receive message to group', function(chatContent, currentDate, userName){
 		if(userName !== name) {
 			$("#msg_history").append('<div class="incoming_msg">'
-					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="img"> </div>'
 					+'<div class="received_msg">'
 					+'<div class="received_withd_msg">'
 					+'<p>'+chatContent+'</p>'
 					+'<span class="time_date">'+currentDate+'</span> </div>'
-					+'</div></div>'
-					);
+					+'</div></div>');
+			$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 			
 			} else {
 				$("#msg_history").append('<div class="outgoing_msg">'
 						+'<div class="sent_msg">'
 						+'<p>'+chatContent+'</p>'
 						+'<span class="time_date">'+currentDate+'</span> </div>'
-						+'</div>'   
-						);
+						+'</div>');
+				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 				}
 		});
 		  
