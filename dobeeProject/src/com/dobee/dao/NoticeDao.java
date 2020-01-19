@@ -15,10 +15,10 @@ public interface NoticeDao {
     //공지사항작성
     public void noticeWrite(Notice n);
     
-    //공지사항작성
+    //공지사항일정내용
     public void noticeWrite2(NotSchedule ns);
     
-    //공지사항작성
+    //공지사항일정
     public void noticeWrite3(Schedule sc);
     
     

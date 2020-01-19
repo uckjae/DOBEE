@@ -24,7 +24,7 @@
 			"language": {
     	        "emptyTable": "데이터가 없습니다.",
     	        "lengthMenu": "페이지당 _MENU_ 개씩 보기",
-    	        "info": "현재 _START_ - _END_ / _TOTAL_건",
+    	        "info": "현d재 _START_ - _END_ / _TOTAL_건",
     	        "infoEmpty": "데이터 없음",
     	        "infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
     	        "search": "검색: ",
@@ -36,12 +36,7 @@
     	            "previous": "이전"
     	        }
     	    },
-    	    "order": [[ 0, "desc" ]],
-    	    "columnDefs": [
-    	        {
-        	      className: "dt-center", "targets": [1],
-      	        }
-    	      ]
+    	    "order": [[ 0, "desc" ]]
 			});	
 	});
 
@@ -70,9 +65,7 @@
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
-									</a>
+									<span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
 								</li>
 								<li><span>Pages</span></li>
 								<li><span>Notice</span></li>
@@ -93,7 +86,7 @@
 								</div>
 						         
 								<h2 class="panel-title">
-								<img src="img/noticeicon.png" style="width:3%; height:3%;">
+								<img src="img/noticeiconsub.png" style="width:30; height:30;">
 								&nbsp;&nbsp;공지사항</h2>
 							</header>
 			
