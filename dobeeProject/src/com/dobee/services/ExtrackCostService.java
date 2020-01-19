@@ -6,16 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class ExtrackCostService {
 
-	
-    /* 날짜 형식을 추출하는 함수. 아래 형태의 숫자를 추출
-     * 
-     * 0000-00-00
-     * 0000.00.00
-     * 0000/00/00
-     * 0000 00 00
-     * 
-     * 
-     */
+
     public List<String> extractCost(String str) {
         List<String> list = new ArrayList<String>();
         Matcher matcher ;

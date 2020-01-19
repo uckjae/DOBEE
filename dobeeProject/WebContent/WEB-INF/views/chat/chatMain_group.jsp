@@ -282,60 +282,11 @@
 			
 			<!-- 오른쪽 사이드 시작 -->
 			<c:import url="/common/RightSide.jsp"/>
-			<!-- 오른쪽 사이드 끝 -->
+			<!-- 오른쪽 사이드 끝 -->			
+			<!-- 채팅방 만드는 모달 -->
+			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
+			<!-- 채팅방 만드는 모달 끝 -->
 			
-			<!-- 채팅방 모달 -->
-			<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				<div class="modal-text text-center">
-				
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil"></i>새 대화 채널 만들기</h4>
-						</div>
-						<div class="modal-body mb-0">
-						      <form id="makeChatRoom" name="makeChatRoom" method="post">
-						      	<div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fa fa-comment"></i><span>&nbsp;채널 이름</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							    <br>
-						        <div class="row">
-						      		<div class="col-sm-3">
-						      			<label for="userList" class="col-form-label"><i class="fa fa-user"></i><span>&nbsp;멤버 초대</span></label>
-						      		</div>
-						      		<div class="col-sm-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
-		                                    <option hidden>멤버</option>
-		                                    </select>
-						      		</div>
-							   </div>
-							   <div>
-							   <br>
-							   <div class="row">
-								   <div class="col-sm-3">
-							       </div>
-							       <div class="col-sm-9" id="chatUserList" style="display:none">
-								   </div>
-								</div>
-							   </div>
-							   <br>
-							 </form>
-						</div>
-						
-						<div class="modal-footer">
-							<button type="button" id="makeChatRoomBtn" class="btn btn-primary modal-confirm">만들기</button>
-							<button type="button" class="btn btn-default" data-dismiss="btn btn-default modal-dismiss">Close</button>
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
 			
 			
 		</section>
@@ -363,14 +314,33 @@
 	  		}
 	  	});
 
-	  	
+		var chatType = $("#chatType").val();
+		var chatRoomName = $("#chatRoomName").text();
+		var userMail = $("#mail").text();
+		var name = $("#name").text();
+		var userName = $("#name").text();
+		var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
 
-	var chatType = $("#chatType").val();
-	var chatRoomName = $("#chatRoomName").text();
-	var userMail = $("#mail").text();
-	var name = $("#name").text();
-	var userName = $("#name").text();
-	var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
+		
+		socket.on('connect', function() {
+			//db에 있던 이전 대화 내용 가져오기
+			socket.emit('getChatContent', chatRoomName);
+		});
+
+		socket.on('printChatHistory', function(msg){
+	        var msgArray = msg.reverse();
+	        console.log(msgArray);
+	       
+	        $.each(msgArray, function(index,element){
+	            console.log(element);
+	            $('#chatLog').append('<div class="row">'
+	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
+	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
+	                +'</div><br>');
+	        });
+	    });
+
+
 
 	/* 서버 채팅으로 전달해주는 함수*/
 	var sendMessage = function() {

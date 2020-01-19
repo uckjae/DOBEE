@@ -6,11 +6,8 @@
 <html class="fixed">
 <head>
 <!-- Basic -->
-		
-
 
 <%-- <c:import url="/common/HeadTag.jsp"/> START--%>
-
 <!-- Mobile Metas -->
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -32,8 +29,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
 <!-- Head Libs -->
 <script src="assets/vendor/modernizr/modernizr.js"></script>
-
-
 <%-- <c:import url="/common/HeadTag.jsp"/> END--%>
 		
 		
@@ -58,12 +53,12 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 <title>write</title>
 
+
 </head>
 
 <script>
     $(document).ready(function() {
-        $('#summernote1').summernote({
-        	
+        $('#summernote1').summernote({     	
         	height: 350,
         	placeholder: "글을 입력하세요.",
         	lang: 'ko-KR', /*한국어*/ 
@@ -91,16 +86,34 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
         $.summernote.interface;
         
         $("#datepicker").datepicker({
-        	 showOn: "both",
-             buttonImage: "img/calender0327.png",
-             buttonImageOnly: true,
-             buttonText: "Select date",
-             
+             dateFormat: 'yymmdd',
+             prevText: '이전 달',
+             nextText: '다음 달',
+             monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+             monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+             dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+             dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+             showMonthAfterYear: true,
+             yearSuffix: '년'
 
+            });
+        
+        $("#datepicker2").datepicker({
+            dateFormat: 'yymmdd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
 
-
-            });  
+           });  
     });
+    
 </script>
 
 
@@ -109,7 +122,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <body>
 
 <section class="body">
-      
+
       
       
       <!-- start: header -->
@@ -150,7 +163,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 									<a href="#" class="fa fa-caret-down"></a>
 									<a href="#" class="fa fa-times"></a>
 								</div>
-						        
+						        <!--page title(공지사항 글쓰기)-->
 								<h2 class="panel-title">
 								<img src="img/noticeicon.png" style="width:3%; height:3%;">
 								&nbsp;&nbsp;공지사항 글쓰기</h2>
@@ -158,17 +171,40 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 							</header>
 							
 					<div class="panel-body">
-   
+   <!--공지사항 제목  -->
    <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
     <input type="text" class="form-control mb-3" id="title" name="title"
      placeholder="글 제목을 입력하시오" value="">
-     <div style="margin: 15px">
-       <input type="text" id="datepicker">
-     </div>  
+     
+     <div style="margin:10px"></div>
+     <!--공지사항 일정시작,종료  -->
+     <div class="form-group">
+		<div class="col-mb-3">
+		  <div class="input-daterange input-group">
+				
+				<span class="input-group-addon">
+				  <i class="fa fa-calendar"></i>
+				</span>
+				<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
+				
+				<span class="input-group-addon">
+				  <i class="fa fa-calendar"></i>
+				</span>
+				<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
+		 </div>
+	   </div>
+	</div>
+	<!--공지사항 일정내용  -->
+	<input type="text" class="form-control mb-3" id="nscontent" name="nsContent"
+     placeholder="공자사항일정 내용" value="" style="max-width:430">
+     
+     <div style="margin:10px"></div>
+     <!--공지사항 내용  -->
     <textarea id="summernote1" name="content"></textarea>    
     <div class="text-right" id="lengthBox"> 
 	  <span id="total-characters"></span><span id="max"></span>
-	</div>	
+	</div>
+	<!--공지사항 작성,취소 버튼 -->
     <div class ="text-center">
      <input type="submit" class="btn btn-primary mr-3" value="작성">
      <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>

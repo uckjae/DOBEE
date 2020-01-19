@@ -71,15 +71,16 @@ public class GoogleVisionService {
 			                        for (Word word: para.getWordsList()) {
 			                            String wordText = "";
 			                            for (Symbol symbol: word.getSymbolsList()) {
-			                                wordText = wordText + symbol.getText();
+			                            	wordText = symbol.getText();
+			                            	paraText = paraText + wordText;
 			                            }
-			                            paraText = paraText + wordText;
 			                        }
-			                        System.out.println(paraText);
-			                        String sNum = Integer.toString(number);
-			                        jsonObj.put("key"+sNum, paraText);
-			                        number++;
+			                        blockText = blockText + paraText;
 			                    }
+			                    System.out.println("여기를확인해보자 " + blockText);
+		                        String sNum = Integer.toString(number);
+		                        jsonObj.put("key"+sNum, blockText);
+		                        number++;
 			                }
 			            }
 			    	}
