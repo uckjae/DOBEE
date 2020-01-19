@@ -66,8 +66,8 @@ public class ProjectService {
     }
     
     //특정 프로젝트 멤버 정보(메일, 이름) 가져오기
-    public List<String> getPjtMember(int pjtSeq) {
-    	List<String> pjtMember = null;
+    public List<User> getPjtMember(int pjtSeq) {
+    	List<User> pjtMember = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	pjtMember = projectdao.getPjtMember(pjtSeq);
     	System.out.println("db에서 어떻게 가져와?"+pjtMember.toString());
