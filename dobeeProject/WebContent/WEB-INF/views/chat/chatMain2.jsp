@@ -12,69 +12,13 @@
 		width: 100%; height: 100%;
 	}
 	img{ max-width:100%;}
-	.inbox_people {
-	  background: #f8f8f8 none repeat scroll 0 0;
-	  float: left;
-	  overflow: hidden;
-	  width: 40%; border-right:1px solid #c4c4c4;
-	}
-	.inbox_msg {
-	  border: 1px solid #c4c4c4;
-	  clear: both;
-	  overflow: hidden;
-	}
-	.top_spac{ margin: 20px 0 0;}
-	
-	
-	.recent_heading {float: left; width:40%;}
-	.srch_bar {
-	  display: inline-block;
-	  text-align: right;
-	  width: 60%; padding:
-	}
-	.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-	
-	.recent_heading h4 {
-	  color: #05728f;
-	  font-size: 21px;
-	  margin: auto;
-	}
-	.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-	.srch_bar .input-group-addon button {
-	  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-	  border: medium none;
-	  padding: 0;
-	  color: #707070;
-	  font-size: 18px;
-	}
-	.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-	
-	.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-	.chat_ib h5 span{ font-size:13px; float:right;}
-	.chat_ib p{ font-size:14px; color:#989898; margin:auto}
-	.chat_img {
-	  float: left;
-	  width: 11%;
-	}
-	.chat_ib {
-	  float: left;
-	  padding: 0 0 0 15px;
-	  width: 88%;
-	}
-	
-	.chat_people{ overflow:hidden; clear:both;}
-	.chat_list {
-	  border-bottom: 1px solid #c4c4c4;
-	  margin: 0;
-	  padding: 18px 16px 10px;
-	}
-	.inbox_chat { height: 550px; overflow-y: scroll;}
-	
-	.active_chat{ background:#ebebeb;}
 	
 	.incoming_msg_img {
 	  display: inline-block;
 	  width: 6%;
+	}
+	.incoming_msg_img img{
+	  border-radius: 50%;
 	}
 	.received_msg {
 	  display: inline-block;
@@ -262,11 +206,12 @@
 	        console.log(msgArray);
 	       
 	        $.each(msgArray, function(index,element){
-	            console.log(element);
-	            $('#chatLog').append('<div class="row">'
-	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
-	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
-	                +'</div><br>');
+	        	$("#msg_history").append('<div class="outgoing_msg">'
+						+'<div class="sent_msg">'
+						+'<p>'+element.CHATCONTENT+'</p>'
+						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+						+'</div>');
+                
 	        });
 	    });
 	    
