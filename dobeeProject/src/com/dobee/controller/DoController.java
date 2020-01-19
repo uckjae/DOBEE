@@ -504,8 +504,11 @@ public class DoController {
 
 
     //업무생성
-    public String addTaskPM(){
-        return null;
+    @RequestMapping("addPMTask.do")
+    public String addPMTask(Task task){
+    	System.out.println("Docontorller addPMTask() in!!");
+    	projectService.addPMTask(task);
+    	return "pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
