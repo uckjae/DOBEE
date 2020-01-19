@@ -5,17 +5,19 @@
 <html class="fixed">
 <head>
 
-		<!-- Basic -->
-		<c:import url="/common/HeadTag.jsp"/>
-		<meta name="author" content="okler.net">
-		<!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-	</head>
+<!-- Basic -->
+<c:import url="/common/HeadTag.jsp"/>
+<meta name="author" content="okler.net">
+<!-- Specific Page Vendor CSS -->
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		
+</head>
 
 <body>
-
 
 	<script>
      $(document).ready(function(){
@@ -27,7 +29,6 @@
     	        "info": "현d재 _START_ - _END_ / _TOTAL_건",
     	        "infoEmpty": "데이터 없음",
     	        "infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
-    	        "search": "검색: ",
     	        "zeroRecords": "일치하는 데이터가 없습니다.",
     	        "loadingRecords": "로딩중...",
     	        "processing": "잠시만 기다려 주세요",
@@ -39,15 +40,10 @@
     	    "order": [[ 0, "desc" ]]
 			});	
 	});
-
-
      </script>
-
-    
+  
       <section class="body">
-      
-      
-      
+           
       <!-- start: header -->
 	  <c:import url="/common/Top.jsp"/>
 	  <!-- end: header -->
@@ -86,7 +82,7 @@
 								</div>
 						         
 								<h2 class="panel-title">
-								<img src="img/noticeiconsub.png" style="width:30; height:30;">
+								<img src="img/noticeiconmain.png" style="width:50; height:60;">
 								&nbsp;&nbsp;공지사항</h2>
 							</header>
 			
@@ -97,24 +93,24 @@
 	<table id="datatable-default" class="table table-bordered table-striped mb-none">
 		<thead>
 			<tr>
-				<th class="notSeq" style="width: 10%">No</th>
-				<th class="title" style="width: 60%">제목</th>
-				<th class="regdate" style="width: 20%">작성일</th>
-				<th class="count" style="width: 10%">조회수</th>
+				<th class="notSeq" style="width: 10%; text-align: center;">No</th>
+				<th class="title"  style="width: 60%; text-align: center;">제목</th>
+				<th class="regdate" style="width: 20%; text-align: center;">작성일</th>
+				<th class="count" style="width: 10%; text-align: center;">조회수</th>
 			</tr>
 		</thead>
 		<tbody>
 		
 		<c:forEach items="${list}" var="n" >
 			<tr>
-				<td class="notSeq">${n.notSeq}</td>
-				<td class="title">
+				<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
+				<td class="title"  style="text-align: center;">
 				  <a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
 				</td>
-				<td class="regdate">
+				<td class="regdate" style="text-align: center;">
 				<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
 				</td>				
-				<td class="count">${n.count}</td>
+				<td class="count" style="text-align: center;">${n.count}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
