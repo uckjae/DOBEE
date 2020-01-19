@@ -487,10 +487,14 @@ public class DoController {
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
-    	System.out.println("플젝 번호 가져와?"+pjtSeq);
+    	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
+    	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
+    	List<User> pjtMember = projectService.getPjtMember(seq);
+    	model.addAttribute("project", project);
     	model.addAttribute("taskList", taskList);
+    	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
 
