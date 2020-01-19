@@ -504,8 +504,11 @@ public class DoController {
 
 
     //업무생성
-    public String addTaskPM(){
-        return null;
+    @RequestMapping("addPMTask.do")
+    public String addPMTask(Task task){
+    	System.out.println("Docontorller addPMTask() in!!");
+    	projectService.addPMTask(task);
+    	return "pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
@@ -665,9 +668,10 @@ public class DoController {
     	
     	//해당 DM 채팅방으로 셋팅
     	model.addAttribute("dmName", dmName);
+    	model.addAttribute("dmMail", dmMail);
     	model.addAttribute("chatType", "DM");
     	
-    	return "chat/chatMain_DM";
+    	return "chat/chatMain_DM2";
     }
     
   

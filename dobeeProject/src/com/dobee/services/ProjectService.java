@@ -94,8 +94,10 @@ public class ProjectService {
 
 
     //업무추가_PM
-    public void addTaskPM(){
-
+    public void addPMTask(Task task){
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	projectDao.addPMTask(task);
+    	
     }
 
 

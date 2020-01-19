@@ -142,9 +142,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
-									</a>
+									<span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
 								</li>
 								<li><span>Pages</span></li>
 								<li><span>Notice Write</span></li>
@@ -165,7 +163,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 								</div>
 						        <!--page title(공지사항 글쓰기)-->
 								<h2 class="panel-title">
-								<img src="img/noticeicon.png" style="width:3%; height:3%;">
+								<img src="img/noticeiconmain.png" style="width:50; height:60;">
 								&nbsp;&nbsp;공지사항 글쓰기</h2>
 								
 							</header>

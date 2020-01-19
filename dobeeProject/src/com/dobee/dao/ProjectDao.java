@@ -46,7 +46,7 @@ public interface ProjectDao {
 
 
     //업무추가 - PM
-    public void addPMTask();
+    public void addPMTask(Task task);
 
 
     //업무추가 - 담당자

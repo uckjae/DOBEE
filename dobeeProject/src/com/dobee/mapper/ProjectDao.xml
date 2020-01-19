@@ -57,7 +57,7 @@
     <result column="TSKSEQ" property="tSeq"/>
     <result column="TITLE" property="title"/>
     <result column="PROGRESS" property="progress"/>
-    <result column="IMPORT" property="important"/>
+    <result column="IMPORTANT" property="important"/>
     <result column="STARTAT" property="startAt"/>
     <result column="ENDAT" property="endAt"/>
     <result column="MAIL" property="mail"/>
@@ -75,18 +75,18 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!-- 업무리스트 목록 조회 -->
 <select id="taskList" resultType="com.dobee.vo.project.Task">
-	SELECT TSKSEQ, TITLE, PROGRESS, IMPORT, STARTAT, ENDAT, MAIL, PJTSEQ FROM TASK WHERE PJTSEQ = #{pjtSeq} ORDER BY TSKSEQ
+	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ FROM TASK WHERE PJTSEQ = #{pjtSeq} ORDER BY TSKSEQ
 </select>
 
 
 <!-- 업무추가 PM 업무내용, 담당자, 중요도 -->
 <insert id="addPMTask" parameterType="com.dobee.vo.project.Task">
-	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ) VALUES(#{title},#{mail},#{import},#{pjtSeq})
+	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT, ENDAT) VALUES(#{title},#{mail},#{important},#{pjtSeq},'예정', now(), now())
 </insert>
 
 
 <!-- 업무차가 담당자 날짜, 중요도, 상세내용, 체크리스ㅡ튼 -->
 <update id="addTask" parameterType="com.dobee.vo.project.Task">
-	UPDATE TASK SET STARTAT=#{startAt} , ENDAT=#{endAt} , IMPORT=#{import} , PROGRESS=#{progress} WHERE TSKSEQ=#{tskSeq} 
+	UPDATE TASK SET STARTAT=#{startAt} , ENDAT=#{endAt} , IMPORTANT=#{important} , PROGRESS=#{progress} WHERE TSKSEQ=#{tskSeq} 
 </update>
 </mapper>

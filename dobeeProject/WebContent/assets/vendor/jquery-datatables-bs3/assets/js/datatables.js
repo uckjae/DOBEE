@@ -25,7 +25,12 @@
 	            "previous": "이전"
 	        }
 	    },
-	    "order": [[ 0, "desc" ]]
+	    "order": [[ 0, "desc" ]],
+	    "columnDefs": [
+	        {
+    	      className: "dt-center", "targets": "_all"
+  	        }
+	      ]
 	} );
 
 	/* Default class modification */

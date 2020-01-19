@@ -23,26 +23,29 @@
 			$('#listenSlider').change(function(){
 				var value = $(this).val();
 				console.log(value);
-				$('#importShow').text(value);
+				$('#importantShow').text(value);
 			});
 
 			/* 모달띄우는함수 */
 			$('.addTask').click('show.bs.modal',function(e){
 				console.log("addTask class 가 눌렸어");
+				console.log($('#addTaskModal'));
+				$('#addPMTaskForm').trigger('reset');
+				$('.ui-slider-range').attr('style','width: 0%;');
+				$('.ui-slider-handle').attr('style','left:0%');
+				$('#importantShow').text('0');	
 				var pjtSeq = $(this).data('pjtseq');
-				console.log(pjtSeq);
+				
 
 				
 					
 			});
 				
-			$('#addTaskModal').on('hidden',function(){
-				console.log("modal이 닫힌다!!!");
-			});
 			
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+				
 				console.log(tskSeq);
 			});
 			/* /모달띄우는 함수 */
@@ -351,7 +354,7 @@
 								<div class="modal-content">
 									<div class="modal-header">
 										<h2><input type="text" name="title" class="input-line" placeholder="업무를 입력하세요" form="addPMTaskForm" required/></h2>
-										<button type="button" class="close" data-dismiss="addTaskModal" onclick="formDismiss()">&times;</button>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 									
 									<div class="tab-content">
@@ -361,11 +364,11 @@
 													
 												</div>
 											</div>
-											<form action="addPMTask.do" id="addPMTaskForm" class="form-horizontal mb-lg">
+											<form action="addPMTask.do" id="addPMTaskForm" class="form-horizontal mb-lg" method="post">
 													<div class="form-group mt-lg">
 														<label class="col-md-3 control-label">담당자</label>
 														<div class="col-md-6">
-															<select class="form-control" id="taskMember" name="mail">
+															<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
 																<option hidden>선택하세요</option>
 																<c:forEach items="${pjtMember}" var="user" varStatus="status">
 																	<option value="${user.mail}">${user.name}</option>
@@ -375,11 +378,11 @@
 													</div>
 													
 													<div class="form-group">
-														<label class="col-md-3 control-label">중요도&nbsp;<b id="importShow">0</b><b>/5</b></label>
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="importantShow">0</b><b>/5</b></label>
 														<div class="col-md-6">
 															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min", "max": 5 }' data-plugin-slider-output="#listenSlider">
-																<input id="listenSlider" name="import" type="hidden" value="0" />
-																
+																<input id="listenSlider" name="important" type="hidden" value="0" form="addPMTaskForm" />
+																<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
 															</div>
 														</div>
 													</div>
@@ -388,7 +391,7 @@
 										
 									</div>
 										<div class="modal-footer">
-											<input type="submit" class="btn btn-default" value="확인">
+											<input type="submit" class="btn btn-default" value="업무추가" form="addPMTaskForm">
 											&nbsp;&nbsp;
 											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 										</div>
