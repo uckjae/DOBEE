@@ -72,9 +72,6 @@
 	
 	.active_chat{ background:#ebebeb;}
 	
-	.incoming_msg {
-	margin-top: 10px;
-	}
 	.incoming_msg_img {
 	  display: inline-block;
 	  width: 6%;
@@ -107,7 +104,7 @@
 	  width: 60%;
 	}
 	
-	 .sent_msg p {
+	.sent_msg p {
 	  background: #537291 none repeat scroll 0 0; /*#05728f*/
 	  border-radius: 3px;
 	  font-size: 14px;
@@ -153,7 +150,6 @@
 </head>
 <body>
 		<section class="body">
-
 			<!-- start: header -->
 			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
@@ -163,7 +159,7 @@
 				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="height:100%;">
 					<header class="page-header">
 						<h2>채팅</h2>
 					
@@ -175,7 +171,7 @@
 									</a>
 								</li>
 								<li><span>채팅</span></li>
-								<li><span>그룹 채팅</span></li>
+								<li><span>나에게 메시지 보내기</span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -184,36 +180,34 @@
 					<!-- start: page -->
 					<section class="content-with-menu mailbox">
 						<div class="content-with-menu-container">
-							
-							
+						
 							<!-- 채팅 메뉴 시작 -->
 							<c:import url="/WEB-INF/views/chat/chatMenu.jsp"/>
 							<!-- 채팅 메뉴 끝 -->
 							
 							<!-- 채팅 영역 시작 -->
-							
 							<div class="inner-body mailbox-email" style="padding-left: 30px;padding-top: 30px;height:100%;">
-								<!-- START: .mailbox-header -->
-								<header class="mailbox-header">
-               							<b class="mailbox-title text-light m-none" style="font-size:25px;" id="chatRoomName">${requestScope.roomName}</b>
-								</header>
-								<hr class="separator" />
-								<!-- END: .mailbox-header -->
-								<!-- 채팅 대화 뿌려지는 곳 -->
+									<!-- START: .mailbox-header -->
+									<header class="mailbox-header" style="padding-top: 10px;padding-bottom: 15px;">
+										<b class="mailbox-title text-light m-none" style="font-size:25px;" id="chatRoomName">
+											<c:set var="user" value="${requestScope.user}"/>
+			               					${user.name}
+										</b>
+									</header>
+									<hr class="separator" />
+									<!-- END: .mailbox-header -->
+										<!-- 채팅 대화 뿌려지는 곳 -->
 											<div class="mailbox-email-container" style="width:100%">
 									          <div class="msg_history" id="msg_history">
-									          </div>		
-									         <!-- 채팅 보내기 -->							
+									          </div>											
 											<div class="type_msg">
 									            <div class="input_msg_write">
-									            	<form id="sendMessage">
-										              <input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
-										              <input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-										              <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-									              	</form>
+										          <input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
+									              <input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+									              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 									            </div>
 								          	</div>
-										</div>							
+										</div>
 									</div>
 									<!-- 채팅 영역 끝 -->
 						</div>
@@ -221,7 +215,7 @@
 					<!-- end: page -->
 				</section>
 			</div>
-			
+
 			<!-- 오른쪽 사이드 시작 -->
 			<c:import url="/common/RightSide.jsp"/>
 			<!-- 오른쪽 사이드 끝 -->			
@@ -230,17 +224,15 @@
 			<!-- 채팅방 만드는 모달 끝 -->
 			
 			
-			
 		</section>
 		<c:import url="/common/BottomTag.jsp"/>
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
     
 <!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
 <script>
 	$(function(){
-		/* 유저 목록 뿌려주기*/
 		$.ajax({
 			 
 	  		url:"getUserList.do",
@@ -255,18 +247,14 @@
 				})
 	  		}
 	  	});
-
+	  	
 		var chatType = $("#chatType").val();
-		var chatRoomName = $("#chatRoomName").text();
 		var userMail = $("#mail").text();
-		var name = $("#name").text();
-		var userName = $("#name").text();
-		var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
+		var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
 
-		
 		socket.on('connect', function() {
 			//db에 있던 이전 대화 내용 가져오기
-			socket.emit('getChatContent', chatRoomName);
+			socket.emit('getChatContent', userMail);
 		});
 
 		socket.on('printChatHistory', function(msg){
@@ -281,52 +269,44 @@
 	                +'</div><br>');
 	        });
 	    });
+	    
+		
 
-
-
+	
 	/* 서버 채팅으로 전달해주는 함수*/
 	var sendMessage = function() {
+		var chatRoomName = userMail;
 		chatContent = $('#chatContent').val();
-		socket.emit('send message to group', chatRoomName, chatType, chatContent, userMail, userName);
+		socket.emit('send message to self', chatRoomName, chatType, chatContent, userMail);
 		$('#chatContent').val("");
 		$("#chatContent").focus();
-	}
+		}
 
 	/*send 버튼 클릭시 채팅 서버 전송*/
 	$("#sendMessage").on('submit', function(e){
-		e.preventDefault();	
-		sendMessage(); //서버로 가서 전송되는 함수		
+		sendMessage();
+		e.preventDefault();
 	});
-
+	
+	
 	/*엔터 쳤을 때 채팅 서버 전송 */
 	$("input[name='chatContent']").keypress(function(){
 		if(event.keyCode ==13 && $('#chatContent').val()!=''){
-			console.log('키프1111레스 ???');
-			//sendMessage();
+			console.log('키프레스 넘어가라 ???');
+			sendMessage();
 			}
 		});
+
 	/*채팅 뿌려주기*/
-	socket.on('receive message to group', function(chatContent, currentDate, userName){
-		if(userName !== name) {
-			$("#msg_history").append('<div class="incoming_msg">'
-					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
-					+'<div class="received_msg">'
-					+'<div class="received_withd_msg">'
-					+'<p>'+chatContent+'</p>'
-					+'<span class="time_date">'+currentDate+'</span> </div>'
-					+'</div></div>'
-					);
-			
-			} else {
-				$("#msg_history").append('<div class="outgoing_msg">'
-						+'<div class="sent_msg">'
-						+'<p>'+chatContent+'</p>'
-						+'<span class="time_date">'+currentDate+'</span> </div>'
-						+'</div>'   
-						);
-				}
-		});
-		  
+	socket.on('receive message to self', function(chatContent,currentDate){
+		$("#msg_history").append('<div class="outgoing_msg">'
+				+'<div class="sent_msg">'
+				+'<p>'+chatContent+'</p>'
+				+'<span class="time_date">'+currentDate+'</span> </div>'
+				+'</div>'   
+				);
+	});
+	
 		
 	var count = 0;
 	
