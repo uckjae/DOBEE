@@ -211,6 +211,7 @@
 						+'<p>'+element.CHATCONTENT+'</p>'
 						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
 						+'</div>');
+	        	$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
                 
 	        });
 	    });
@@ -248,8 +249,8 @@
 				+'<div class="sent_msg">'
 				+'<p>'+chatContent+'</p>'
 				+'<span class="time_date">'+currentDate+'</span> </div>'
-				+'</div>'   
-				);
+				+'</div>');
+		$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 	});
 	
 		

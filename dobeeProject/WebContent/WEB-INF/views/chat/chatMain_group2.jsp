@@ -221,6 +221,7 @@
 	    					+'<p>'+element.CHATCONTENT+'</p>'
 	    					+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
 	    					+'</div></div>');
+	    			$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 	    			
 	    			} else {
 	    				$("#msg_history").append('<div class="outgoing_msg">'
@@ -228,6 +229,7 @@
 	    						+'<p>'+element.CHATCONTENT+'</p>'
 	    						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
 	    						+'</div>');
+	    				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 	    			}
                 
 	        });
@@ -264,16 +266,16 @@
 					+'<div class="received_withd_msg">'
 					+'<p>'+chatContent+'</p>'
 					+'<span class="time_date">'+currentDate+'</span> </div>'
-					+'</div></div>'
-					);
+					+'</div></div>');
+			$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 			
 			} else {
 				$("#msg_history").append('<div class="outgoing_msg">'
 						+'<div class="sent_msg">'
 						+'<p>'+chatContent+'</p>'
 						+'<span class="time_date">'+currentDate+'</span> </div>'
-						+'</div>'   
-						);
+						+'</div>');
+				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 				}
 		});
 		  
