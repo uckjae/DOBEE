@@ -9,8 +9,16 @@
 </select>
 
 <insert id="noticeWrite" parameterType="com.dobee.vo.notice.Notice">
-   INSERT NOTICE (TITLE,CONTENT,REGDATE,COUNT)VALUES(#{title},#{content},now(),0)
+   INSERT INTO NOTICE (TITLE,CONTENT,REGDATE,COUNT)VALUES(#{title},#{content},now(),0)
 </insert>
+<insert id="noticeWrite2" parameterType="com.dobee.vo.schedule.NotSchedule">
+   INSERT INTO NOTSCHEDULE (NSCONTENT) VALUES(#{nsContent})
+</insert>
+
+<insert id="noticeWrite3" parameterType="com.dobee.vo.schedule.Schedule">
+   INSERT INTO SCHEDULE (STARTTIME,ENDTIME) VALUES(#{startTime},#{endTime})
+</insert>
+
 
 <select id="noticeDetail" resultType="com.dobee.vo.notice.Notice">
    SELECT NOTSEQ,REGDATE,TITLE, CONTENT FROM NOTICE WHERE NOTSEQ=#{notSeq}

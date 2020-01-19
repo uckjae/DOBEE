@@ -6,19 +6,63 @@
 <html class="fixed search-results">
 <head>
     <c:import url="/common/HeadTag.jsp"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style type="text/css">
+	.input-line{
+	    background: transparent;
+	    border: none;
+	    border-bottom: 2px solid #000000;
+	}
+	
+	</style>
+
+		<!-- Examples -->
+		<!-- <script src="assets/javascripts/forms/examples.advanced.form.js" /></script> -->
     <script type="text/javascript">
 		$(function(){
+			/* 중요도 슬라이드 변경시 값표시 */
+			$('#listenSlider').change(function(){
+				var value = $(this).val();
+				console.log(value);
+				$('#importShow').text(value);
+			});
+
+			/* 모달띄우는함수 */
+			$('.addTask').click('show.bs.modal',function(e){
+				console.log("addTask class 가 눌렸어");
+				var pjtSeq = $(this).data('pjtseq');
+				console.log(pjtSeq);
+
+				
+					
+			});
+				
+			$('#addTaskModal').on('hidden',function(){
+				console.log("modal이 닫힌다!!!");
+			});
+			
 			$('.taskDetail').click('show.bs.modal', function(e) {
-				console.log("what the hell 이네");
+				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
 				console.log(tskSeq);
 			});
+			/* /모달띄우는 함수 */
+			
+			/* 모달꺼지면 내용지우는 함수 */
 			
 		});
 
 		
     </script>
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+	<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
+	<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+	<link rel="stylesheet" href="assets/vendor/codemirror/theme/monokai.css" />
+	
+	
 </head>
 <body>
 <section class="body">
@@ -103,7 +147,7 @@
 	                                                	</h4>
                                                 	</div>
                                                 	<div class="col-md-2">
-	                                                	<a href="" style="width:20%;">
+	                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
 		                                                    <i class="fa fa-plus-square"></i>
 		                                                </a>
 	                                                </div>
@@ -301,6 +345,60 @@
                 </div>
                 <!-- end: page -->
                 <!-- Modal Form -->
+                <!-- PM업무추가모달 -->
+                <div id="addTaskModal" class="modal fade">
+					<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2><input type="text" name="title" class="input-line" placeholder="업무를 입력하세요" form="addPMTaskForm" required/></h2>
+										<button type="button" class="close" data-dismiss="addTaskModal" onclick="formDismiss()">&times;</button>
+									</div>
+									
+									<div class="tab-content">
+										<div class="tab-pane active" id="addTaskTab">
+											<div class="form-group">
+												<div class="col-md-6" style="float: left;">
+													
+												</div>
+											</div>
+											<form action="addPMTask.do" id="addPMTaskForm" class="form-horizontal mb-lg">
+													<div class="form-group mt-lg">
+														<label class="col-md-3 control-label">담당자</label>
+														<div class="col-md-6">
+															<select class="form-control" id="taskMember" name="mail">
+																<option hidden>선택하세요</option>
+																<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																	<option value="${user.mail}">${user.name}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="importShow">0</b><b>/5</b></label>
+														<div class="col-md-6">
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min", "max": 5 }' data-plugin-slider-output="#listenSlider">
+																<input id="listenSlider" name="import" type="hidden" value="0" />
+																
+															</div>
+														</div>
+													</div>
+												</form>
+										</div>
+										
+									</div>
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-default" value="확인">
+											&nbsp;&nbsp;
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+									
+									
+								</div>
+							</div>
+				</div>
+                
+                <!-- 상세보기모달 -->
 				<div id="taskDetailModal" class="modal fade">
 					<div class="modal-dialog modal-lg">
 								<div class="modal-content">

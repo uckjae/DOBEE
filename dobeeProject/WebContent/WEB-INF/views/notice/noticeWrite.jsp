@@ -122,11 +122,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <body>
 
 <section class="body">
-      <style>
-.img{
-width:30px;
-}
-</style>
+
       
       
       <!-- start: header -->
@@ -167,7 +163,7 @@ width:30px;
 									<a href="#" class="fa fa-caret-down"></a>
 									<a href="#" class="fa fa-times"></a>
 								</div>
-						        
+						        <!--page title(공지사항 글쓰기)-->
 								<h2 class="panel-title">
 								<img src="img/noticeicon.png" style="width:3%; height:3%;">
 								&nbsp;&nbsp;공지사항 글쓰기</h2>
@@ -175,13 +171,13 @@ width:30px;
 							</header>
 							
 					<div class="panel-body">
-   
+   <!--공지사항 제목  -->
    <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
     <input type="text" class="form-control mb-3" id="title" name="title"
      placeholder="글 제목을 입력하시오" value="">
      
      <div style="margin:10px"></div>
-     
+     <!--공지사항 일정시작,종료  -->
      <div class="form-group">
 		<div class="col-mb-3">
 		  <div class="input-daterange input-group">
@@ -189,25 +185,26 @@ width:30px;
 				<span class="input-group-addon">
 				  <i class="fa fa-calendar"></i>
 				</span>
-				<input type="text" class="form-control" name="start" id="datepicker" placeholder="시작일">
+				<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
 				
 				<span class="input-group-addon">
 				  <i class="fa fa-calendar"></i>
 				</span>
-				<input type="text" class="form-control" name="end" id="datepicker2" placeholder="종료일">
+				<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
 		 </div>
 	   </div>
 	</div>
-	
-	<input type="text" class="form-control mb-3" id="title" name="title"
+	<!--공지사항 일정내용  -->
+	<input type="text" class="form-control mb-3" id="nscontent" name="nsContent"
      placeholder="공자사항일정 내용" value="" style="max-width:430">
      
      <div style="margin:10px"></div>
-     
+     <!--공지사항 내용  -->
     <textarea id="summernote1" name="content"></textarea>    
     <div class="text-right" id="lengthBox"> 
 	  <span id="total-characters"></span><span id="max"></span>
-	</div>	
+	</div>
+	<!--공지사항 작성,취소 버튼 -->
     <div class ="text-center">
      <input type="submit" class="btn btn-primary mr-3" value="작성">
      <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>

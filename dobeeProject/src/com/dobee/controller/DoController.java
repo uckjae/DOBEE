@@ -40,6 +40,8 @@ import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
+import com.dobee.vo.schedule.NotSchedule;
+import com.dobee.vo.schedule.Schedule;
 
 
 @Controller
@@ -250,8 +252,8 @@ public class DoController {
         return "notice/noticeWrite";
     }
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
-    public String noticeWrite(Notice n,HttpServletRequest request,Principal principal) throws IOException {
-    	
+    public String noticeWrite(Notice n, NotSchedule ns, Schedule sc,HttpServletRequest request,Principal principal) throws IOException {
+    	    //방금수정 NotSchedule ns 추가
     		List<CommonsMultipartFile> files = n.getFiles();
     		List<String>filenames = new ArrayList<String>(); //파일명관리
     		
@@ -274,7 +276,9 @@ public class DoController {
     		n.setSaveName(filenames.get(0));
     		
     		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    		noticedao.noticeWrite(n);		
+    		noticedao.noticeWrite(n); //방금수정	
+    		noticedao.noticeWrite2(ns); //방금수정
+    		noticedao.noticeWrite3(sc); //방금수정
     		return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
@@ -487,10 +491,14 @@ public class DoController {
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
-    	System.out.println("플젝 번호 가져와?"+pjtSeq);
+    	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
+    	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
+    	List<User> pjtMember = projectService.getPjtMember(seq);
+    	model.addAttribute("project", project);
     	model.addAttribute("taskList", taskList);
+    	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
 
