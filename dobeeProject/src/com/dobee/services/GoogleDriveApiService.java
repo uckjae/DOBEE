@@ -71,7 +71,7 @@ public class GoogleDriveApiService {
 
         // Print the names and IDs for up to 10 files.
         FileList result = service.files().list()
-                .setPageSize(10)
+                .setPageSize(100)
                 .setFields("nextPageToken, files(id, name)")
                 .execute();
         List<File> files = result.getFiles();

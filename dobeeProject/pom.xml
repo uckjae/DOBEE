@@ -294,7 +294,7 @@
       </dependency>
 		
 	 <!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-drive -->
-	 <!-- 구글 드라이브 실험 중 오늘 중으로 안되면 다시 파기 --> 
+	 <!-- 구글 드라이브 실험 중 오늘 중으로 안되면 다시 파기 ( Test중 )  --> 
 	<dependency>
 	    <groupId>com.google.apis</groupId>
 	    <artifactId>google-api-services-drive</artifactId>
@@ -306,6 +306,12 @@
 	    <version>1.22.0</version>
 	</dependency>
 	
+	<!--  구글 API 클라이언트 AUTH 필요 할 때 사용자 유저마다 보안토큰키 만들어서 관리해주는(Test 중)  -->
+	 <dependency>
+     	<groupId>com.google.api-client</groupId>
+     	<artifactId>google-api-client</artifactId>
+     	<version>1.30.5</version>
+   </dependency>
 		
 		
 	</dependencies>
