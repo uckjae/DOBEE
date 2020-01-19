@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
 <html class="fixed">
 <head>
 <!-- Basic -->
@@ -88,11 +87,12 @@
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
-							<li><a href="index.html"> <i class="fa fa-home"></i>
-							</a></li>
+							<li>
+							  <span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
+							</li>
 							<li><span>Pages</span></li>
 							<li><span>Notice Modify</span></li>
-							<li><span>제목:&nbsp;&nbsp;${notice.title}</span></li>
+							<li><span>Title:&nbsp;&nbsp;${notice.title}</span></li>
 						</ol>
 
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
@@ -112,8 +112,8 @@
 						</div>
 
 						<h2 class="panel-title">
-							<img src="img/noticeicon.png" style="width: 3%; height: 3%;">
-							&nbsp;&nbsp;공지사항 글쓰기
+							<img src="img/noticeiconmain.png" style="width:50; height:60;">
+							&nbsp;&nbsp;공지사항 수정
 						</h2>
 
 					</header>
