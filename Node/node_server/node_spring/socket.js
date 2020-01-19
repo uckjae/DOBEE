@@ -133,9 +133,6 @@ module.exports = (server, app) => {
                         });
                     });
                 });//transaction end
-
-
-
                 conn.release();
             }); //db end
         })
@@ -158,17 +155,6 @@ module.exports = (server, app) => {
         });
     }
 
-    /*//db에서 이전 대화 가져오기
-    socket.on('getChat', function(){
-       var sql = "SELECT PK, USER, CONTENT, date_format(time,'%Y/%m/%d %H:%i') as TIME FROM CHAT ORDER BY PK DESC LIMIT 5";
-       connection.query(sql, function(err, rows){
-           if(err){
-               console.log(err);
-           } else{
-               io.to(socket.id).emit('printChatHistory', rows);
-           }
-       });
-    });*/
 
     //db에서 이틀전까지의 대화 최신순으로 가져오기 (채팅방 이름만 있음됨)
     function getChatContent(chatRoomName) {
@@ -176,7 +162,7 @@ module.exports = (server, app) => {
         console.log('채팅방 이름??'+chatRoomName);
         return new Promise(function(resolve, reject){
             db((err, conn) => {
-                var sql = "SELECT C.CHATCONTENT, C.CHATTIME, U.NAME \n" +
+                var sql = "SELECT C.CHATCONTENT, date_format(C.CHATTIME, '%Y/%m/%d %H:%i') AS CHATTIME, U.NAME \n" +
                     "FROM CHATCONTENT C \n" +
                     "JOIN USER U ON C.MAIL = U.MAIL \n" +
                     "WHERE C.CHATSEQ=(SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=?) \n" +
@@ -256,6 +242,7 @@ module.exports = (server, app) => {
         });
         //이전 대화 가져오기
         socket.on('getChatContent', function (chatRoomName) {
+            console.log('이거 타니???');
             getChatContent(chatRoomName).then(function(data) {
                 if (data !== null) {
                     group.emit('printChatHistory', data);

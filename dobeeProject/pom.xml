@@ -293,8 +293,19 @@
          <version>2.0</version>
       </dependency>
 		
-		
-
+	 <!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-drive -->
+	 <!-- 구글 드라이브 실험 중 오늘 중으로 안되면 다시 파기 --> 
+	<dependency>
+	    <groupId>com.google.apis</groupId>
+	    <artifactId>google-api-services-drive</artifactId>
+	    <version>v3-rev110-1.23.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.google.oauth-client</groupId>
+	    <artifactId>google-oauth-client-jetty</artifactId>
+	    <version>1.22.0</version>
+	</dependency>
+	
 		
 		
 	</dependencies>

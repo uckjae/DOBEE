@@ -491,10 +491,14 @@ public class DoController {
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
-    	System.out.println("플젝 번호 가져와?"+pjtSeq);
+    	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
+    	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
+    	List<User> pjtMember = projectService.getPjtMember(seq);
+    	model.addAttribute("project", project);
     	model.addAttribute("taskList", taskList);
+    	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
 
@@ -604,7 +608,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain";
+    	return "chat/chatMain2";
     }
     
     
@@ -634,7 +638,7 @@ public class DoController {
     	model.addAttribute("roomName", roomName);
     	model.addAttribute("chatType", "GROUP");
     	
-    	return "chat/chatMain_group";
+    	return "chat/chatMain_group2";
     }
     
     //DM 채팅 메인

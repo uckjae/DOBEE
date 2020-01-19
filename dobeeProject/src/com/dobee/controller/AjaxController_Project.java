@@ -83,8 +83,9 @@ public class AjaxController_Project {
 	
 	//특정 프로젝트 멤버가져오기
 	@RequestMapping(value="getPjtMember.do", method=RequestMethod.POST)
-	public List<String> getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
-		List<String> pjtMember = null;
+	public List<User> getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		System.out.println("AjaxContorller_Project getPjtMember() in!!");
+		List<User> pjtMember = null;
 		pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		return pjtMember;
 	}
