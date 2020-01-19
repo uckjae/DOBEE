@@ -150,7 +150,7 @@ $(document).ready(function(){
 							<a href="#" class="fa fa-times"></a>
 						</div>
 				
-						<h2 class="panel-title">Rows with Details</h2>
+						<h2 class="panel-title">법인카드 목록</h2>
 					</header>
 			<div class="panel-body">
 				<form action="#" method="post">

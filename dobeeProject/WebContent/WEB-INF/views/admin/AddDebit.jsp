@@ -40,7 +40,6 @@
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					작업 여기부터 하삼!!
 					<div class="container-fluid">
                 <div class="card mb-3">
                     <div class="card-header">
@@ -97,9 +96,9 @@
                                                         <div class="form-label-group">
                                                            	<select id="entry" name="entry" class="form-control" placeholder="법인카드구분" >
                                                            		<option hidden>선택하세요</option>
-                                                           		     <option>법인(공용)</option>
-															         <option>법인(개인)</option>
-															         <option>법인(체크)</option>
+                                                           		<option>법인(공용)</option>
+															    <option>법인(개인)</option>
+															    <option>법인(체크)</option>
                                                            	</select>
                                                             <label for="teamCode">카드구분</label>
                                                         </div>

@@ -262,19 +262,14 @@
 							</div>
 							<form id="sendMessage" method="post">
 							<div>        
-					            <li class="white">
 					              <div class="form-group basic-textarea" stlye="width:300px">
 					                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
 									<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
 					                <input type="hidden" id="name" name="name" value="${user.name}">
 					              </div>
-					            </li>
 				            </div>
 					            	<button type="submit" class="btn btn-dark" style="float:right;">send</button>
-				             </ul>
 							</form>
-								
-								
 							</div>
 							</div>
 						</div>
