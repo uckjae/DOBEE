@@ -49,6 +49,30 @@ public class AjaxController_DABC {
 	}
 	
 	
+	// Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	@RequestMapping("AbsAll.do")
+	public View AbsAll (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Apply> results = userDao.AbsAll(auth.getName());
+		System.out.println("AbsAll : "+ results);
+		map.addAttribute("AbsAll", results);
+		
+		return jsonview;
+	}
+	
+	
+	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	@RequestMapping("ExtAll.do")
+	public View ExtAll (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Apply> results = userDao.ExtAll(auth.getName());
+		System.out.println("ExtAll : "+ results);
+		map.addAttribute("ExtAll", results);
+		
+		return jsonview;
+	}
+	
+	
 	// Ajax 개인_부재일정확인 - Option - 년도 loading		0113	COMPLETE
 	@RequestMapping("breakYearList.do")
 	public View breakYearList (Model map, Authentication auth) {
@@ -79,6 +103,7 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+	
 	
 	// Ajax 개인_부재일정확인 - 년-월별 List 출력		0113		~ing
 	@RequestMapping("getBreakYearMonthList.do")
@@ -130,18 +155,6 @@ public class AjaxController_DABC {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<BreakManageList> results = userDao.getBreakListByIsAuth(auth.getName());
 		map.addAttribute("byIsAuth", results);
-		
-		return jsonview;
-	}
-	
-	
-	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116			~ing
-	@RequestMapping("getExtList.do")
-	public View getExtListToCalendar (Model map, Authentication auth) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Apply> results = userDao.getExtListToCalendar(auth.getName());
-		System.out.println("getExtList.do : "+ results);
-		map.addAttribute("ExtListTC", results);
 		
 		return jsonview;
 	}

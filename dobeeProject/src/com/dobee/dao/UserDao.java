@@ -3,6 +3,8 @@ package com.dobee.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Attend;
@@ -75,7 +77,7 @@ public interface UserDao {
     // 개인_부재일정확인 - table 데이터 불러오기
     /* 01.12 게다죽 */
     public List<BreakManageList> absMg(Apply apply);
-
+  
     
     // Ajax 개인부재일정확인 - Option - 년도 loading		0113
     public List<Integer> breakYearList(String mail);
@@ -92,6 +94,7 @@ public interface UserDao {
     // Ajax 개인부재일정확인 - 년-월별 List 출력		0113
     public List<BreakManageList> getBreakListByYMonth(String drafter);
     
+    
     // Ajax 개인부재일정확인 - Option - 부재항목 loading		0113
     public List<ApplyCode> breakEntryList(String drafter);
     
@@ -106,10 +109,13 @@ public interface UserDao {
     
     // Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113
     public List<BreakManageList> getBreakListByIsAuth(String drafter);
+
     
+    // Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+    public List<Apply> AbsAll(String drafter);
     
-	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116	COMPLETE		    
-    public List<Apply> getExtListToCalendar(String drafter);
+    // Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)		0119	COMPLETE		    
+    public List<Apply> ExtAll(String drafter);
     
     
     //개인근무내역확인
