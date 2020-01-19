@@ -1,4 +1,4 @@
-﻿-- 사원
+-- 사원
 ALTER TABLE `USER`
 	DROP FOREIGN KEY `FK_AUTHORITY_TO_USER`; -- 권한 -> 사원
 
@@ -76,11 +76,11 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	DROP FOREIGN KEY `FK_USER_TO_DRAFTER`; -- 사원 -> 신청 DRAFTER
+	DROP FOREIGN KEY `FK_USER_TO_DRAFTER`; -- 사원 -> 신청
 
 -- 신청
 ALTER TABLE `APPLY`
-	DROP FOREIGN KEY `FK_USER_TO_APPROVAL`; -- 사원 -> 신청2 APPROVAL
+	DROP FOREIGN KEY `FK_USER_TO_APPROVAL`; -- 사원 -> 신청2
 
 -- 회사일정
 ALTER TABLE `CORPSCHEDULE`
@@ -396,14 +396,14 @@ ALTER TABLE `PROJECT`
 
 -- 업무
 CREATE TABLE `TASK` (
-	`TSKSEQ`   INT          NOT NULL COMMENT '업무번호', -- 업무번호
-	`TITLE`    VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
-	`PROGRESS` VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
-	`IMPORT`   INT          NOT NULL COMMENT '중요도', -- 중요도
-	`STARTAT`  DATE         NOT NULL COMMENT '시작일', -- 시작일
-	`ENDAT`    DATE         NOT NULL COMMENT '완료일', -- 완료일
-	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
-	`PJTSEQ`   INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
+	`TSKSEQ`    INT          NOT NULL COMMENT '업무번호', -- 업무번호
+	`TITLE`     VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
+	`PROGRESS`  VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
+	`IMPORTANT` INT          NOT NULL DEFAULT 0 COMMENT '중요도', -- 중요도
+	`STARTAT`   DATE         NOT NULL COMMENT '시작일', -- 시작일
+	`ENDAT`     DATE         NOT NULL COMMENT '완료일', -- 완료일
+	`MAIL`      VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
+	`PJTSEQ`    INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
 COMMENT '업무';
 
@@ -1067,7 +1067,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_USER_TO_DRAFTER` -- 사원 -> 신청 DRAFTER
+	ADD CONSTRAINT `FK_USER_TO_DRAFTER` -- 사원 -> 신청
 		FOREIGN KEY (
 			`DRAFTER` -- 신청자
 		)
@@ -1077,7 +1077,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_USER_TO_APPROVAL` -- 사원 -> 신청2 APPROVAL
+	ADD CONSTRAINT `FK_USER_TO_APPROVAL` -- 사원 -> 신청2
 		FOREIGN KEY (
 			`APPROVAL` -- 결재자
 		)
