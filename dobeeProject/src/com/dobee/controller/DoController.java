@@ -508,7 +508,7 @@ public class DoController {
     public String addPMTask(Task task){
     	System.out.println("Docontorller addPMTask() in!!");
     	projectService.addPMTask(task);
-    	return "pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 

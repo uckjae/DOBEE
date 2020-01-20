@@ -14,9 +14,10 @@
 	}
 	
 	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<!-- Examples -->
-		<!-- <script src="assets/javascripts/forms/examples.advanced.form.js" /></script> -->
+	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
     <script type="text/javascript">
 		$(function(){
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -45,6 +46,12 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+
+				$('#taskForm').trigger('reset');
+				$('#taskDetailForm').trigger('reset');
+				$('#checkListForm').trigger('reset');
+
+				
 				
 				console.log(tskSeq);
 			});
@@ -406,7 +413,7 @@
 					<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h2>부재 신청 사유</h2>
+										<h2><input type="text" name="title" class="input-line" value=""></h2>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<ul class="list-unstyled nav nav-pills">
 											<li class="active">
@@ -424,7 +431,7 @@
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
 											<h1>first</h1>
-											<form id="demo-form" class="form-horizontal mb-lg">
+											<form id="taskForm" class="form-horizontal mb-lg">
 													<div class="form-group mt-lg">
 														<label class="col-sm-3 control-label">Name</label>
 														<div class="col-sm-9">
@@ -453,7 +460,7 @@
 										</div>
 										<div class="tab-pane" id="content">
 											<h1>second</h1>
-											<form id="demo-form" class="form-horizontal mb-lg" >
+											<form id="taskDetailForm" class="form-horizontal mb-lg" >
 													<div class="form-group mt-lg">
 														<label class="col-sm-3 control-label">Name</label>
 														<div class="col-sm-9">
@@ -482,7 +489,7 @@
 										</div>
 										<div class="tab-pane" id="checkList">
 											<h1>second</h1>
-											<form id="demo-form" class="form-horizontal mb-lg" >
+											<form id="checkListForm" class="form-horizontal mb-lg" >
 													<div class="form-group mt-lg">
 														<label class="col-sm-3 control-label">Name</label>
 														<div class="col-sm-9">
