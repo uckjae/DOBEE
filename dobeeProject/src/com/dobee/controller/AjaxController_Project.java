@@ -91,6 +91,16 @@ public class AjaxController_Project {
 	}
 	
 	
+	//특적 업무 가져오기
+	@RequestMapping("getTask.do")
+	public Task getTask(int tskSeq) {
+		System.out.println("AjaxController_Project getTask() in");
+		Task task = new Task();
+		task = projectService.getTask(tskSeq);
+		System.out.println(task.toString());
+		return task;
+		
+	}
 	
 	
 	

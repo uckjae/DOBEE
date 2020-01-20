@@ -6,6 +6,7 @@
 <html class="fixed search-results">
 <head>
     <c:import url="/common/HeadTag.jsp"/>
+    <c:import url="/common/BottomTag.jsp"/>
 	<style type="text/css">
 	.input-line{
 	    background: transparent;
@@ -14,7 +15,48 @@
 	}
 	
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+	<!-- Specific Page Vendor -->
+		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+		<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+		<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+		<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+		<script src="assets/vendor/fuelux/js/spinner.js"></script>
+		<script src="assets/vendor/dropzone/dropzone.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+		<script src="assets/vendor/codemirror/lib/codemirror.js"></script>
+		<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
+		<script src="assets/vendor/codemirror/addon/edit/matchbrackets.js"></script>
+		<script src="assets/vendor/codemirror/mode/javascript/javascript.js"></script>
+		<script src="assets/vendor/codemirror/mode/xml/xml.js"></script>
+		<script src="assets/vendor/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<script src="assets/vendor/codemirror/mode/css/css.js"></script>
+		<script src="assets/vendor/summernote/summernote.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+
+
+		<!-- Examples -->
+		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+		<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+	
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
 		<!-- Examples -->
 	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
@@ -51,6 +93,17 @@
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
 
+
+				$.ajax({
+					url:"ajax/project/getTask.do",
+					data: {"tskSeq":tskSeq},
+					dataType: "JSON",
+					success: function(data){
+						console.log(data);
+					}
+				});
+					
+				$('#taskDetailTitle').val()
 				
 				
 				console.log(tskSeq);
@@ -63,14 +116,20 @@
 
 		
     </script>
-    <link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-	<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
-	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
-	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
-	<link rel="stylesheet" href="assets/vendor/codemirror/theme/monokai.css" />
+    <!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
+		<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+		<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
+		<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+		<link rel="stylesheet" href="assets/vendor/codemirror/lib/codemirror.css" />
+		<link rel="stylesheet" href="assets/vendor/codemirror/theme/monokai.css" />
 	
 	
 </head>
@@ -387,8 +446,8 @@
 													<div class="form-group">
 														<label class="col-md-3 control-label">중요도&nbsp;<b id="importantShow">0</b><b>/5</b></label>
 														<div class="col-md-6">
-															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min", "max": 5 }' data-plugin-slider-output="#listenSlider">
-																<input id="listenSlider" name="important" type="hidden" value="0" form="addPMTaskForm" />
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#listenSlider">
+																<input id="listenSlider" name="important" type="hidden" value="1" form="addPMTaskForm" />
 																<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
 															</div>
 														</div>
@@ -413,7 +472,7 @@
 					<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h2><input type="text" name="title" class="input-line" value=""></h2>
+										<h2><input id="taskDetailTitle" type="text" name="title" class="input-line" value="" readonly="readonly"></h2>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<ul class="list-unstyled nav nav-pills">
 											<li class="active">
@@ -537,7 +596,7 @@
 
 </section>
 
-<c:import url="/common/BottomTag.jsp"/>
+
 
 
 </body>

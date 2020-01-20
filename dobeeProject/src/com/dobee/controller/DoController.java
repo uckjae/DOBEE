@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -496,8 +497,11 @@ public class DoController {
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
+    	
+    	JSONArray jsonArray = new JSONArray();
+    	jsonArray.addAll(taskList);
     	model.addAttribute("project", project);
-    	model.addAttribute("taskList", taskList);
+    	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
