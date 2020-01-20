@@ -200,13 +200,13 @@
 	console.log('지그 ㅁ유저 메일?'+userMail);
 	console.log('메일 가져와?'+dmMail);
 	//채팅방 이름 : 발신자 - 수신자
-	var chatRoomName = userMail + "-" + dmMail;
+	//var chatRoomName = userMail + "-" + dmMail;
 	var chatUsersMail = [userMail, dmMail];
 	var socket = io.connect( 'http://192.168.6.2:5000/dm', {path: '/socket.io'});
 
-	/* socket.on('connect', function() {
+	socket.on('connect', function() {
 		//db에 있던 이전 대화 내용 가져오기
-		socket.emit('getChatContent', chatRoomName);
+		socket.emit('getChatContent', chatUsersMail, chatType);
 	});
 
 	socket.on('printChatHistory', function(msg){
@@ -214,9 +214,26 @@
         console.log(msgArray);
         $.each(msgArray, function(index,element){
             console.log(element);
-            
+            if(fromName !== element.NAME) {
+    			$("#msg_history").append('<div class="incoming_msg">'
+    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+    					+'<div class="received_msg">'
+    					+'<div class="received_withd_msg">'
+    					+'<p>'+element.CHATCONTENT+'</p>'
+    					+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+    					+'</div></div>');
+    			$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
+    			
+    			} else {
+    				$("#msg_history").append('<div class="outgoing_msg">'
+    						+'<div class="sent_msg">'
+    						+'<p>'+element.CHATCONTENT+'</p>'
+    						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+    						+'</div>');
+    				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
+    			}
         });
-    }); */
+    });
     
 
 	/* 서버 채팅으로 전달해주는 함수*/

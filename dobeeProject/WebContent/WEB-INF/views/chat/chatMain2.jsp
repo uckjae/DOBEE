@@ -198,7 +198,7 @@
 
 		socket.on('connect', function() {
 			//db에 있던 이전 대화 내용 가져오기
-			socket.emit('getChatContent', userMail);
+			socket.emit('getChatContent', userMail, chatType);
 		});
 
 		socket.on('printChatHistory', function(msg){
