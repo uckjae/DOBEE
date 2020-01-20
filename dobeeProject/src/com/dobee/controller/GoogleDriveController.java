@@ -18,7 +18,6 @@ public class GoogleDriveController {
 	public GoogleDriveController() {
 		System.out.println("구글 드라이브 API 시작합니다");
 	}
-	
 
 	@RequestMapping("googleDrive.do")
 	public String doDrvie() throws IOException, GeneralSecurityException {
@@ -30,5 +29,11 @@ public class GoogleDriveController {
 	}
 	
 	
+	@RequestMapping("googleDrivePicker.do")
+	public String doDrviePicker() {
+		System.out.println("구글 드라이브 컨트롤단 피커!!! :  일단 맵핑 함수 도착");
+		
+		return "payment/helloworld";
+	}
 	
 }

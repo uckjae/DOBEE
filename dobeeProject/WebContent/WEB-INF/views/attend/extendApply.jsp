@@ -8,6 +8,10 @@
 <!-- Head Tag Script -->
 <c:import url="/common/HeadTag.jsp"/>
 
+<!-- Date-time picker -->
+<link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!-- Full Calendar -->
 <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
 <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
@@ -34,11 +38,11 @@
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-briefcase" aria-hidden="true"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>근무</span></li>
+								<li><span>연장 근무 신청</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -73,7 +77,7 @@
 										결재자
 										<br>
 										<select id="approval" name="approval">
-											<option hidden = "">결재자 선택</option>
+											<option hidden = ""> 결재자 선택 </option>
 										</select>
 										<input type="hidden" name="drafter" value="${sessionScope.user.mail }"><br>
 										사유
@@ -111,24 +115,21 @@
 	
 	<!-- Date-Time Picker -->
 		<!-- JQuery 3.4.1 min - google -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- JQuery ui 1.12.0 -->
+			<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 		<!-- Moment.js 2.24.0 min - cloudflare -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
-	<!-- Date-time picker -->
-	<link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		
+	
 	
 	<!-- Full Calendar -->
 	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 	
 	<!-- Examples -->
-	<script src="assets/javascripts/pages/my.calendar.js"></script>
-	
-		
+	<script src="assets/javascripts/pages/ext.calendar.js"></script>
 	
 	
 		<script>
@@ -151,11 +152,11 @@
 				});
 			 	
 			 	$('#datetimepickerStart').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
+		            format : 'YYYY-MM-DD HH:mm'
 		        });
 		
 		        $('#datetimepickerEnd').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
+		            format : 'YYYY-MM-DD HH:mm'
 		        });
 
 	

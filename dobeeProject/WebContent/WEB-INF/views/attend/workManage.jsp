@@ -54,11 +54,11 @@
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-briefcase" aria-hidden="true"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>근무</span></li>
+								<li><span>근무 내역 관리</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -200,13 +200,13 @@
 	 			
 				var stackedBar = new Chart(ctx, {
 				    type: 'bar',
-	 				// var xIndex = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+	 				
 			    	// 놀고 있는 손 뭐하니 코딩해라
 				    data: {
-				        labels: xIndex,
+				        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 				        datasets: [{
 				            label: '# of Votes',
-				            data: [12, 19, 3, 5, 2, 3],
+				            data: [12:00, 19:00, 15:15, 5:23, 2:13],
 				            backgroundColor: [
 				                'rgba(255, 99, 132, 0.2)',
 				                'rgba(54, 162, 235, 0.2)',
@@ -229,9 +229,11 @@
 				    options: {
 				        scales: {
 					        xAxes : [{
+					        	type: 'time',
 						        staked : true
 						    }],
 				            yAxes: [{
+					            
 					            stacked : true,
 				                ticks: {
 				                    beginAtZero: true

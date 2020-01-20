@@ -26,6 +26,8 @@
 		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 
 		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출근'))
 	</insert>
+	
+	
 	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
 		SELECT APYCODE, ENTRY FROM APPLYCODE
@@ -50,20 +52,32 @@
 	</select>
 	
 	
-	<!-- 연장근무 신청하기 0112 -->
+	<!-- 개인_연장근무 신청하기 0112 -->
 	<insert id="overTimeApply" parameterType="com.dobee.vo.Apply">
 		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
 			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, 6)
 	</insert>
 		
 	
-	<!-- 부재 신청하기 0112 -->
+	<!-- 개인_부재 신청하기 0112 -->
 	<insert id="absApply" parameterType="com.dobee.vo.Apply">
 		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
 			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, #{apyCode})
 	</insert>
 	
 	
+	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기 (싸그리)			0119 COMPLETE -->
+	<select id="AbsAll" parameterType="String" resultType="com.dobee.vo.Apply">
+		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d %H:%i') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d %H:%i') AS ENDAT, ISAUTH, APYCODE FROM APPLY WHERE APYCODE!=6 AND DRAFTER=#{param1}
+	</select>
+	
+	
+	<!-- Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)			0119 COMPLETE -->
+	<select id="ExtAll" parameterType="String" resultType="com.dobee.vo.Apply">
+		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d %H:%i') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d %H:%i') AS ENDAT, ISAUTH FROM APPLY WHERE APYCODE=6 AND DRAFTER=#{param1}
+	</select>
+	
+
 	<!-- Ajax 연차 불러오기 0112 -->
 	<select id="getVacationInBM" parameterType="String" resultType="com.dobee.vo.member.Break">
 		SELECT TOTALBREAK, USEDBREAK FROM BREAK WHERE MAIL= #{param1}
@@ -144,13 +158,7 @@
 					ON A.APLSEQ = BL.APLSEQ
 			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND A.ISAUTH = '미승인';
 	</select>
-	
-	
-	<!-- Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0116 COMPLETE -->
-	<select id="getExtListToCalendar" parameterType="String" resultType="com.dobee.vo.Apply">
-		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d') AS ENDAT FROM APPLY WHERE ISAUTH="승인"
-	</select>		    
-	
+
 	
 	<!-- 부재내역 불러오기 - COMPLETE -->
 	<select id="absMg" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
