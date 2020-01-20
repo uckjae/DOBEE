@@ -191,6 +191,8 @@ console.log(path);
                                         $("#Input2").attr("value", usedate);
                                         $("#Input3").attr("value", result.key1);
                                         var usecost = fn(exceptionStrCost);
+
+                                        
                                         $("#Input4").attr("value", usecost);
                                     },
                                     error: function() {
@@ -231,7 +233,7 @@ console.log(path);
                                                 console.log(result);
                                                 
                                                 for (let i = 0; i < result.length; i++) {
-                                                    $("#Select2").append("<option value="+result[i].codeName+ ">" + result[i].entry + "</option>");
+                                                    $("#Select2").append("<option value="+result[i].costCode+ ">" + result[i].entry + "</option>");
                                                 }
                                             },
                                             error: function() {
@@ -270,8 +272,8 @@ console.log(path);
 						<ol class="breadcrumbs">
 							<li><a href="index.html"> <i class="fa fa-home"></i>
 							</a></li>
-							<li><span>Pages</span></li>
-							<li><span>Blank Page</span></li>
+							<li><span>비용</span></li>
+							<li><span>정산 신청</span></li>
 						</ol>
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
 							class="fa fa-chevron-left"></i></a>

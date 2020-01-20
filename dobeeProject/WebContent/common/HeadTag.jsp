@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<head>
 <!-- Basic -->
 <meta charset="UTF-8">
 
@@ -43,4 +41,3 @@
 <!-- 혜리가 넣지말라고했지만 하도 답답해서headTag 에 내가 박아넣은 부트스트랩 파일과,제이쿼리 대신vendor 폴더에있는거 불러왔음 -->
 <!-- <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>  -->
-</head>
