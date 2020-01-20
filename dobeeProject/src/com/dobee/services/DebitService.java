@@ -72,6 +72,18 @@ public class DebitService {
     	}
     	
     	return result;
-    	
     }
+    
+    
+    //비용 신청(=영수증 등록) 목록 보여주기 
+    public ArrayList<CostList> listReceipt() {
+    	ArrayList<CostList> list = new ArrayList<>();
+    	System.out.println("영수증 목록보기 서비스단 시작");
+    	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+    	list = paymentDao.listReceipt();
+    	System.out.println("영수증 목록보기 서비스단 일 다하고 리턴 전 ");
+    	return list;
+    }
+    
+    
 }

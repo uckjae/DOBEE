@@ -425,20 +425,12 @@ public class DoController {
         return null;
     }
 
-
-    //비용현황
-    @RequestMapping("debitList.do")
-    public String paymentChart(){
-    	System.out.println("debitlist.do 까지 왔음");
-        return "payment/test";
-    }
     
-
     //비용정산신청 뷰단 화면 이동
-    @RequestMapping("reciptRegit.do")
+    @RequestMapping("receiptRegit.do")
     public String receiptReg(){
-    	System.out.println("reciptRegit.do 요청했음");
-        return "payment/reciptRegit";
+    	System.out.println("receiptRegit.do.do 요청했음");
+        return "payment/receiptRegit";
     }
 
 
