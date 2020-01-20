@@ -17,7 +17,8 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css"/>
 <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css"/>
-<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css"/>
+<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
 <!-- Specific Page Vendor CSS -->
 <link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css"/>
 <link rel="stylesheet" href="assets/vendor/morris/morris.css"/>
@@ -38,8 +39,6 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 		
-
-
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -85,7 +84,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
             });
         $.summernote.interface;
         
-        $("#datepicker").datepicker({
+       /*  $("#datepicker").datepicker({
              dateFormat: 'yymmdd',
              prevText: '이전 달',
              nextText: '다음 달',
@@ -111,7 +110,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
             showMonthAfterYear: true,
             yearSuffix: '년'
 
-           });  
+           });   */
     });
     
 </script>
@@ -171,30 +170,40 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 					<div class="panel-body">
    <!--공지사항 제목  -->
    <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
-    <input type="text" class="form-control mb-3" id="title" name="title"
-     placeholder="글 제목을 입력하시오" value="">
+    <div class="form-group">
+    	<label class="control-label">제목</label>
+    	<input type="text" class="form-control mb-3" id="title" name="title" placeholder="글제목" value="">
+    </div>
      
      <div style="margin:10px"></div>
      <!--공지사항 일정시작,종료  -->
-     <div class="form-group">
-		<div class="col-mb-3">
-		  <div class="input-daterange input-group">
-				
-				<span class="input-group-addon">
-				  <i class="fa fa-calendar"></i>
-				</span>
-				<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
-				
-				<span class="input-group-addon">
-				  <i class="fa fa-calendar"></i>
-				</span>
-				<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
-		 </div>
-	   </div>
+     <div class="row">
+	     <div class="col-md-6">
+	     	<div class="form-group">
+	     		<label class="control-label">일정 내용</label>
+				<input type="text" class="form-control md-3" id="nscontent" name="nsContent" placeholder="공자사항 일정 내용" value="">
+	     	</div>
+	     </div>
+	     <div class="col-md-6">
+	     	<div class="form-group">
+	     		<label class="control-label">일정</label>
+	     		<div class="input-daterange input-group" data-plugin-datepicker>
+					<span class="input-group-addon">
+					  <i class="fa fa-calendar"></i>
+					</span>
+					<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
+					
+					<span class="input-group-addon">
+					  <i class="fa fa-calendar"></i>
+					</span>
+					<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
+		 		</div> 
+	     	</div>
+	     </div>
+     		
+		  
 	</div>
 	<!--공지사항 일정내용  -->
-	<input type="text" class="form-control mb-3" id="nscontent" name="nsContent"
-     placeholder="공자사항일정 내용" value="" style="max-width:430">
      
      <div style="margin:10px"></div>
      <!--공지사항 내용  -->
@@ -222,6 +231,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 		</section>
 
     
-  
+<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
 </body>
 </html>

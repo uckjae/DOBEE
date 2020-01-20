@@ -22,6 +22,7 @@ public class Task {
     private Date endAt;
     private String mail;
     private int pjtSeq;
+    private String name;//담당자 이름  vo에만 추가
     
     public void setStartAt(String startAt) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -13,10 +13,57 @@
 	    border: none;
 	    border-bottom: 2px solid #000000;
 	}
+	.input-noneborder{
+		background: transparent;
+	    border: none;
+	    font-style: italic;
+	    font-size: 2em;
+	}
 	
 	</style>
 	
-	<!-- Specific Page Vendor -->
+	<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
+		<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+		<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
+		<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+		<!-- Head Libs -->
+		<script src="assets/vendor/modernizr/modernizr.js"></script>
+	
+	
+	<!-- Vendor -->
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		
+		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
 		<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
 		<script src="assets/vendor/select2/select2.js"></script>
@@ -30,16 +77,10 @@
 		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-		<script src="assets/vendor/codemirror/lib/codemirror.js"></script>
-		<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
-		<script src="assets/vendor/codemirror/addon/edit/matchbrackets.js"></script>
-		<script src="assets/vendor/codemirror/mode/javascript/javascript.js"></script>
-		<script src="assets/vendor/codemirror/mode/xml/xml.js"></script>
-		<script src="assets/vendor/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-		<script src="assets/vendor/codemirror/mode/css/css.js"></script>
 		<script src="assets/vendor/summernote/summernote.js"></script>
 		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
 		
@@ -47,26 +88,22 @@
 		<script src="assets/javascripts/theme.custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
-
-
-		<!-- Examples -->
-		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
-		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-	
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+		<script src="assets/javascripts/theme.init.js"></script>
 
 		<!-- Examples -->
 	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
     <script type="text/javascript">
 		$(function(){
 			/* 중요도 슬라이드 변경시 값표시 */
-			$('#listenSlider').change(function(){
+			$('#addPMTaskFormBar').change(function(){
 				var value = $(this).val();
 				console.log(value);
-				$('#importantShow').text(value);
+				$('#addPMTaskImportant').text(value);
+			});
+			$('#taskFormBar').change(function(){
+				var value = $(this).val();
+				console.log(value);
+				$('#taskImportant').text(value);
 			});
 
 			/* 모달띄우는함수 */
@@ -100,6 +137,13 @@
 					dataType: "JSON",
 					success: function(data){
 						console.log(data);
+						var task = data;
+						$('#taskDetailTitle').val(task.title);
+						$('#taskFormStartAt').val(task.startAt);
+						$('#taskFormEndtAt').val(task.endAt);
+						$('#taskFormMail').val(task.name);
+						$('#listenSlider').val(task.important);
+						$('#importantShow').text(task.important);
 					}
 				});
 					
@@ -110,27 +154,13 @@
 			});
 			/* /모달띄우는 함수 */
 			
-			/* 모달꺼지면 내용지우는 함수 */
+			
 			
 		});
 
 		
     </script>
-    <!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-		<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
-		<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
-		<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
-		<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
-		<link rel="stylesheet" href="assets/vendor/codemirror/lib/codemirror.css" />
-		<link rel="stylesheet" href="assets/vendor/codemirror/theme/monokai.css" />
-	
+    
 	
 </head>
 <body>
@@ -444,10 +474,10 @@
 													</div>
 													
 													<div class="form-group">
-														<label class="col-md-3 control-label">중요도&nbsp;<b id="importantShow">0</b><b>/5</b></label>
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="addPMTaskImportant">1</b><b>/5</b></label>
 														<div class="col-md-6">
-															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#listenSlider">
-																<input id="listenSlider" name="important" type="hidden" value="1" form="addPMTaskForm" />
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
+																<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
 																<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
 															</div>
 														</div>
@@ -489,33 +519,36 @@
 									
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
-											<h1>first</h1>
 											<form id="taskForm" class="form-horizontal mb-lg">
-													<div class="form-group mt-lg">
-														<label class="col-sm-3 control-label">Name</label>
-														<div class="col-sm-9">
-															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
+												<div class="form-group">
+													<label class="col-md-3 control-label">날짜</label>
+													<div class="col-md-6">
+														<div class="input-daterange input-group" data-plugin-datepicker>
+															<span class="input-group-addon">
+																<i class="fa fa-calendar"></i>
+															</span>
+															<input type="text" id="taskFormStartAt" name="startAt" class="form-control">
+															<span class="input-group-addon">to</span>
+															<input type="text" id="taskFormEndAt" name="endAt" class="form-control">
 														</div>
 													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Email</label>
-														<div class="col-sm-9">
-															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label">담장자</label>
+													<div class="col-md-6">
+															<input type="text" id="taskFormMail" name="mail" class="input-noneborder" readonly="readonly"/>
+													</div>
+												</div>
+												<div class="form-group">
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
+														<div class="col-md-6">
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
+																<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" />
+																<input type="hidden" name="pjtSeq" value="" />
+															</div>
 														</div>
 													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">URL</label>
-														<div class="col-sm-9">
-															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Comment</label>
-														<div class="col-sm-9">
-															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
-														</div>
-													</div>
-												</form>
+											</form>
 										</div>
 										<div class="tab-pane" id="content">
 											<h1>second</h1>
