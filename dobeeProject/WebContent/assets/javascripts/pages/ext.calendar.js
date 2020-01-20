@@ -22,11 +22,49 @@
 				revert: true,      // will cause the event to go back to its
 				revertDuration: 0  //  original position after the drag
 			});
-
 		});
 	};
 
-	var initCalendar = function() {
+	var eventList = [];
+
+	$.ajax ({
+		url : "ExtAll.do",
+		dataType : "json",
+		success : function(data) {
+			var events = [];
+			events = data.ExtAll;
+			
+			$.each(events, (index, element) => {
+				if (element.isAuth === '승인') {
+					eventList.push({
+						title: "연장근무", 
+						start: element.startAt, 
+						end: element.endAt,
+						color: "#f28c1f"
+					})		
+				} else if (element.isAuth === '미승인') {
+					eventList.push({
+						title: "미승인", 
+						start: element.startAt, 
+						end: element.endAt,
+						color: "#c842f5"
+					})		
+				} /*else if (element.isAuth === '반려') {
+					eventList.push({
+						title: "반려", 
+						start: element.startAt, 
+						end: element.endAt,
+						color: "#fc4103"
+					})		
+				}*/
+				
+			});
+			
+		}
+	});						
+	
+	
+	var initCalendar = function(view) {
 				
 		var $calendar = $('#calendar');
 		var date = new Date();
@@ -57,10 +95,10 @@
 			businessHours : true,
 			editable: false,
 			eventLimit : true,
-			
 			droppable: false, // this allows things to be dropped onto the calendar !!!
 			
 			drop: function(date, allDay) { // this function is called when something is dropped
+				
 				var $externalEvent = $(this);
 				// retrieve the dropped element's stored Event Object
 				var originalEventObject = $externalEvent.data('eventObject');
@@ -82,32 +120,11 @@
 					// if so, remove the element from the "Draggable Events" list
 					$(this).remove();
 				}
-
-			},
-			
-			events: function(start, end, timezone, callback) {
-				$.ajax ({
-					url : "getExtList.do",
-					dataType : "json",
-					success : function(data) {
-						var events = [];
-						events = data.ExtListTC;
-						$.each(events, (index, element) => {
-							console.log(element);
-							events.push({
-								title: "연장근무", 
-								start: element.startAt, 
-								end: element.endAt,
-								color: "#f28c1f"
-							})		
-						});
-						callback(events);
-					}
-				});
-			}
-			
-			
+			},	
+			events: eventList				
 		});
+		
+		
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS
 		var $calendarButtons = $calendar.find('.fc-header-right > span');

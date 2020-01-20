@@ -60,11 +60,11 @@
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-briefcase" aria-hidden="true"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>근무</span></li>
+								<li><span>부재 신청 관리</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>

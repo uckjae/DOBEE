@@ -38,20 +38,17 @@
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-briefcase" aria-hidden="true"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>근무</span></li>
+								<li><span>부재 일정 신청</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					
-					
-					
 					
 					
 					<section class="panel">
@@ -71,31 +68,31 @@
 										<br>
 										<br>
 								
-										- 시작시간
+										시작시간
 										<input type='text' class="form-control" id='datetimepickerStart' name="startAt"/>
 										<br>
-										- 종료시간
+										종료시간
 										<input type='text' class="form-control" id='datetimepickerEnd' name="endAt"/>
 										<br>
 										<input type="hidden" name="drafter" value="${sessionScope.user.mail }">
-										- 결재자 
+										결재자 
 										<br>
 										<select name="approval" id="approvalList" style="width: 60%;">
-											<option hidden="">== 결재자 선택 ==</option>
+											<option hidden=""> 결재자 선택  s</option>
 											<!-- Ajax -->
 										</select>
 										<br>
 										<br>
-										- 부재항목코드
+										부재항목코드
 										<br>
 										<select name="apyCode" id="apycodelist" style="width: 60%;">
-											<option hidden="">== 항목 선택 ==</option>
+											<option hidden=""> 항목 선택 </option>
 											<!-- Ajax -->
 										</select>
 										<br>
 										<br>
 										
-										- 사유 <br>
+										사유 <br>
 										<textarea name="reason" placeholder="연장근무 사유를 입력해주세요." style="width:100%; height: 100px;"></textarea>
 										<br>
 										<br>
@@ -143,7 +140,7 @@
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 	
 	<!-- Examples -->
-	<script src="assets/javascripts/pages/examples.calendar.js"></script>
+	<script src="assets/javascripts/pages/abs.calendar.js"></script>
 	
 	
 	
@@ -194,70 +191,7 @@
 			}
 	  	</script>
 		
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				var calendarEl = document.getElementById('calendar');
-	
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					plugins : [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
-					header : {
-						left : 'prev, next, today',
-						center : 'title',
-						right : 'dayGridMonth, dayGridWeek, listMonth'
-					},
-	
-					navLinks : true, // can click day/week names to navigate views
-					editable : false,
-					eventLimit : false, // allow "more" link when too many events
-					businessHours : true,
-					events : [ {
-						title : 'All Day Event',
-						start : '2019-08-01'
-					}, {
-						title : 'Long Event',
-						start : '2019-08-07',
-						end : '2019-08-10'
-					}, {
-						groupId : 999,
-						title : 'Repeating Event',
-						start : '2019-08-09T16:00:00'
-					}, {
-						groupId : 999,
-						title : 'Repeating Event',
-						start : '2019-08-16T16:00:00'
-					}, {
-						title : 'Conference',
-						start : '2019-08-11',
-						end : '2019-08-13'
-					}, {
-						title : 'Meeting',
-						start : '2019-08-12T10:30:00',
-						end : '2019-08-12T12:30:00'
-					}, {
-						title : 'Lunch',
-						start : '2019-08-12T12:00:00'
-					}, {
-						title : 'Meeting',
-						start : '2019-08-12T14:30:00'
-					}, {
-						title : 'Happy Hour',
-						start : '2019-08-12T17:30:00'
-					}, {
-						title : 'Dinner',
-						start : '2019-08-12T20:00:00'
-					}, {
-						title : 'Birthday Party',
-						start : '2019-08-13T07:00:00'
-					}, {
-						title : 'Click for Google',
-						url : 'http://google.com/',
-						start : '2019-08-28'
-					} ]
-				});
-	
-				calendar.render();
-			});
-		</script>
+		
 		
 	</body>
 </html>

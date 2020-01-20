@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -488,8 +489,11 @@ public class DoController {
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
+    	
+    	JSONArray jsonArray = new JSONArray();
+    	jsonArray.addAll(taskList);
     	model.addAttribute("project", project);
-    	model.addAttribute("taskList", taskList);
+    	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
@@ -500,7 +504,7 @@ public class DoController {
     public String addPMTask(Task task){
     	System.out.println("Docontorller addPMTask() in!!");
     	projectService.addPMTask(task);
-    	return "pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
@@ -603,7 +607,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain2";
+    	return "chat/chatMain";
     }
     
     
@@ -633,7 +637,7 @@ public class DoController {
     	model.addAttribute("roomName", roomName);
     	model.addAttribute("chatType", "GROUP");
     	
-    	return "chat/chatMain_group2";
+    	return "chat/chatMain_group";
     }
     
     //DM 채팅 메인
@@ -663,7 +667,7 @@ public class DoController {
     	model.addAttribute("dmMail", dmMail);
     	model.addAttribute("chatType", "DM");
     	
-    	return "chat/chatMain_DM2";
+    	return "chat/chatMain_DM";
     }
     
   

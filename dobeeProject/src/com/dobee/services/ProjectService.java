@@ -99,7 +99,14 @@ public class ProjectService {
     	projectDao.addPMTask(task);
     	
     }
-
+    
+    
+    //특정업무 조회
+    public Task getTask(int tskSeq) {
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	Task task = projectDao.getTask(tskSeq);
+    	return task;
+    }
 
     //업무추가
     public void addTask(){
