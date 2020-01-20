@@ -11,6 +11,19 @@
     <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-theme2.css">
+    
+    
+    <script>
+    $(document).on('click','#idModal',function(){
+
+
+
+        });
+
+
+    
+    </script>
+    
 </head>
 <body>
     <div class="form-body">
@@ -38,11 +51,11 @@
                     <div class="form-items">
                         <h3>도비에 오신 걸 환영합니다.</h3>
                         <p>Dobby is free</p>
-                        <div class="page-links">
-                            <a href="login2.html" class="active">ID 찾기</a>
+                        <div>
+                            <p class="active">ID 찾기</p>
                         </div>
                         
-                        <form  action="/dobeeProject/login?${_csrf.parameterName}=${_csrf.token}" method="post">
+                        <form  action="" method="post">
                             <input class="form-control" type="text" name="name" placeholder="이름을 입력하세요" required>
                             <input class="form-control" type="text" name="phone" placeholder="휴대폰번호를 입력하세요" required>
                             <c:if test="${param.error != null}">
@@ -53,11 +66,19 @@
 									</c:if>
 							   </div>
 							</c:if>
+							
                             <div class="form-button">
-                                <button id="submit" type="submit" class="ibtn">확인</button> <a href="forget2.html">Forget password?</a>
+                            
+                             <button type="button" id="idModal" data-toggle="modal"
+					           data-target="#idModal" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">완료
+				             </button>
+				             
+                                <a href="forget2.html">Forget password?</a>
+                                
                             </div>
+                           
                         </form>
-                        
+                         
                        <!--  <div class="other-links">
                             <span>Or login with</span><a href="#">Facebook</a><a href="#">Google</a><a href="#">Linkedin</a>
                         </div> -->
@@ -66,7 +87,59 @@
             </div>
             
         </div>
+        
+        <!-- 프로젝트 생성 modal -->
+		<div class="modal fade" id="idModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true"
+			style="display: none;">
+
+			<div class="modal-dialog cascading-modal" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header light-blue darken-3 white-text"
+						style="text-align: center">
+						<h4 id="pjtModalTitle" class="title">찾은 아이디</h4>
+						<button type="button" class="close waves-effect waves-light"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+
+					<!--Body 시작-->
+					<div class="modal-body mb-0">
+						<form name="pjtForm" method="post">
+							<div class="row">
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="pjtName"
+										name="pjtName">
+								</div>
+							</div>
+
+							<br>
+							<div class="text-center mt-1-half">
+								<!--하단  -->
+								<button type="button" id="makePjtBtn"
+									class="btn btn-info mb-2 waves-effect">확인</button>
+							</div>
+
+						</form>
+					</div>
+					<!-- body 종료-->
+
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+        
+   
     </div>
+    
+    
+
+    
+    
+    
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
