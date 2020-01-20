@@ -13,37 +13,23 @@
 						<div class="container-fluid">
 						<div class="modal-body mb-0" style="margin-top: 30px;">
 						      <form id="makeChatRoom" name="makeChatRoom" method="post">
-						      	<div class="row">
-						      		<div class="col-md-3">
-						      			<label for="newChatRoomName" class="col-form-label"><i class="fa fa-comment fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;채널 이름</span></label>
-						      		</div>
-						      		<div class="col-md-9">
-							          <input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName">
-							       </div>
-							   </div>
-							   <br>
-						        <div class="row">
-						      		<div class="col-md-3">
-						      			<label for="userList" class="col-form-label"><i class="fa fa-user fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;멤버 초대</span></label>
-						      		</div>
-						      		<div class="col-md-9">
-		                                    <select class="form-control" id="userSelect" name="userSelect" style="height : 43px">
-		                                    <option hidden>멤버 추가</option>
-		                                    </select>
-						      		</div>
-							   </div>
-							   <div>
-							   <br>
-							   <div class="row">
-								   <div class="col-sm-3">
-							       </div>
-							       <div class="col-sm-9" id="chatUserList" style="display:none">
-								   </div>
+						      	<div class="form-group">
+									<label class="col-md-3 control-label"><i class="fa fa-comment fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;채널 이름</span></label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="newChatRoomName" name="newChatRoomName" style="height:35px;">
+										</div>
 								</div>
-							   </div>
-							   <br>
+							  	<br>
+							  		<div class="form-group">
+									<label class="col-md-3 control-label" for="userList"><i class="fa fa-user fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;멤버 초대</span></label>
+										<div class="col-md-9">
+											<select  class="form-control populate" id="userSelect" name="userSelect" multiple="multiple" style="width:100%;">
+											</select>
+										</div>
+								</div>
+							   	<br>
 							 </form>
-						</div>
+							</div>
 						</div>
 						<div class="modal-footer">
 						<div class="row">
@@ -59,4 +45,3 @@
 						</div>
 				</div>
 			</div>
-			

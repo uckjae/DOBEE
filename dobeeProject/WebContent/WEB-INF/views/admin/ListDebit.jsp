@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="fixed">
 <head>
@@ -126,7 +127,7 @@ $(document).ready(function(){
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>법인카드 목록</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -135,8 +136,8 @@ $(document).ready(function(){
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>법인카드관리</span></li>
+								<li><span>법인카드 목록</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -175,7 +176,7 @@ $(document).ready(function(){
 							<td>${debitList.name}</td>
 							<td>${debitList.nickName}</td>
 							<td>${debitList.entry}</td>
-							<td>${debitList.valDate}</td>
+							<td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td>
 						</tr>
 					</c:forEach>
 					
