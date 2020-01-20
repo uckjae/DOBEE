@@ -1,4 +1,4 @@
--- 사원
+﻿-- 사원
 ALTER TABLE `USER`
 	DROP FOREIGN KEY `FK_AUTHORITY_TO_USER`; -- 권한 -> 사원
 
@@ -400,8 +400,8 @@ CREATE TABLE `TASK` (
 	`TITLE`     VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
 	`PROGRESS`  VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
 	`IMPORTANT` INT          NOT NULL DEFAULT 0 COMMENT '중요도', -- 중요도
-	`STARTAT`   DATE         NOT NULL COMMENT '시작일', -- 시작일
-	`ENDAT`     DATE         NOT NULL COMMENT '완료일', -- 완료일
+	`STARTAT`   DATE         NULL COMMENT '시작일', -- 시작일
+	`ENDAT`     DATE         NULL COMMENT '완료일', -- 완료일
 	`MAIL`      VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
 	`PJTSEQ`    INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
