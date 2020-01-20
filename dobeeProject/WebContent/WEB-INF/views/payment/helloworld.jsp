@@ -1,4 +1,3 @@
-<h2>Index</h2>
 
 <center>
     <h2>Google Picker API</h2>
@@ -124,7 +123,7 @@
                 addView(UploadView).
                 setOAuthToken(accessToken).
                 setCallback(this.PickerResponse.bind(this)).
-                setTitle('Google Picker API - EVERYDAY BE CODING').
+                setTitle('Google Picker API').
                 build().
                 setVisible(true);
         },
