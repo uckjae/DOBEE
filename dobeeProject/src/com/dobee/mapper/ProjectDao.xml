@@ -89,4 +89,10 @@ WHERE p.pjtseq = #{pjtSeq}
 <update id="addTask" parameterType="com.dobee.vo.project.Task">
 	UPDATE TASK SET STARTAT=#{startAt} , ENDAT=#{endAt} , IMPORTANT=#{important} , PROGRESS=#{progress} WHERE TSKSEQ=#{tskSeq} 
 </update>
+
+
+<!-- 특정업무 조회 -->
+<select id="getTask" resultType="com.dobee.vo.project.Task">
+	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ FROM TASK WHERE TSKSEQ=#{tskSeq}
+</select>
 </mapper>

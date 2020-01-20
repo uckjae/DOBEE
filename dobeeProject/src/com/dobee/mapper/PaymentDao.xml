@@ -29,4 +29,8 @@
  		values(#{regitReceiptDate}, #{useDate},#{useAt}, #{cost}, #{detail}, #{costCode}, #{cardNum}, #{mail})
  	</insert>
 
+	<!--  비용 신청 리스트 보여주기 (=영수증 등록 목록 보여주기)-->
+	<select id="listReceipt" resultType="com.dobee.vo.CostList">
+		select * from CostList
+	</select>
 </mapper>

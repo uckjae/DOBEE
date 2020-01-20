@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -425,20 +426,12 @@ public class DoController {
         return null;
     }
 
-
-    //비용현황
-    @RequestMapping("debitList.do")
-    public String paymentChart(){
-    	System.out.println("debitlist.do 까지 왔음");
-        return "payment/test";
-    }
     
-
     //비용정산신청 뷰단 화면 이동
-    @RequestMapping("reciptRegit.do")
+    @RequestMapping("receiptRegit.do")
     public String receiptReg(){
-    	System.out.println("reciptRegit.do 요청했음");
-        return "payment/reciptRegit";
+    	System.out.println("receiptRegit.do.do 요청했음");
+        return "payment/receiptRegit";
     }
 
 
@@ -496,8 +489,11 @@ public class DoController {
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
+    	
+    	JSONArray jsonArray = new JSONArray();
+    	jsonArray.addAll(taskList);
     	model.addAttribute("project", project);
-    	model.addAttribute("taskList", taskList);
+    	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
         return "project/pjtKanban_new";
     }
@@ -508,7 +504,7 @@ public class DoController {
     public String addPMTask(Task task){
     	System.out.println("Docontorller addPMTask() in!!");
     	projectService.addPMTask(task);
-    	return "pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 

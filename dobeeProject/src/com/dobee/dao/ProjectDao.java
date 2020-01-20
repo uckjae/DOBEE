@@ -44,7 +44,11 @@ public interface ProjectDao {
     //업무리스트
     public List<Task> taskList(int pjtSeq);
 
-
+    
+    //특정업무조회
+    public Task getTask(int tskSeq);
+    
+    
     //업무추가 - PM
     public void addPMTask(Task task);
 

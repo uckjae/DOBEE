@@ -1,9 +1,11 @@
 package com.dobee.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,16 +59,25 @@ public class DebitController {
     		System.out.println("컨트롤단 : 비용신청 실패");
     		return null;
     	}
-    	return "redirect:viewDebitList.do";
+    	return "redirect:receiptList.do";
     }
     
     
-    //비용신청 현황 뷰단 가기
-    @RequestMapping("viewDebitList.do")
-    public String viewDebit() {
-    	return "payment/debitList";
+    //비용신청 목록(= 영수증 등록 목록 보기) 가기
+    @RequestMapping("receiptList.do")
+    public String viewDebit(Model model) {
+    	System.out.println("영수증 목록보기 컨트롤단 시작");
+    	ArrayList<CostList> list = new ArrayList<>();
+    	list = debitService.listReceipt();
+    	System.out.println("영수증 목록보기 컨트롤단 서비스단 통과 후");
+    	model.addAttribute("list", list);
+    	
+    	
+    	return "payment/receiptList";
     }
 	
+    
+    
 	
 	
 	
