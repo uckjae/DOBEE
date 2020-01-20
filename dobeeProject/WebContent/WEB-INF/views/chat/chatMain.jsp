@@ -3,146 +3,97 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html class="fixed sidebar-left-collapsed">
-	<head>
-		<c:import url="/common/HeadTag.jsp"/>
-		<!-- Sweet Alert -->
-   		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	</head>
-	<style>
-	/* @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
-	body{
-			font-size: 20px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
-	
+<head>
+	<c:import url="/common/HeadTag.jsp"/>
+	<!-- Sweet Alert -->
+   	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   	<style>
+	html, body {
+		width: 100%; height: 100%;
 	}
-	h6 {
-			font-size: 10px; font-family: 'Nanum Brush Script', serif; line-height: 1.5; color: #222222;
+	img{ max-width:100%;}
 	
-	} */
-	a {
-		color: #222222;
+	.incoming_msg_img {
+	  display: inline-block;
+	  width: 6%;
 	}
-	
-	body{
-    background:#eee;    
+	.incoming_msg_img img{
+	  border-radius: 50%;
 	}
-	.chat-list {
-	    padding: 0;
-	    font-size: .8rem;
+	.received_msg {
+	  display: inline-block;
+	  padding: 0 0 0 10px;
+	  vertical-align: top;
+	  width: 92%;
+	 }
+	 .received_withd_msg p {
+	  background: #ebebeb none repeat scroll 0 0;
+	  border-radius: 3px;
+	  color: #646464;
+	  font-size: 14px;
+	  margin: 0;
+	  padding: 5px 10px 5px 12px;
+	  width: 100%;
 	}
-	
-	.chat-list li {
-	    margin-bottom: 10px;
-	    overflow: auto;
-	    color: #ffffff;
+	.time_date {
+	  color: #747474;
+	  display: block;
+	  font-size: 12px;
+	  margin: 8px 0 0;
 	}
-	
-	.chat-list .chat-img {
-	    float: left;
-	    width: 48px;
-	}
-	
-	.chat-list .chat-img img {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    width: 100%;
-	}
-	
-	.chat-list .chat-message {
-	    -webkit-border-radius: 50px;
-	    -moz-border-radius: 50px;
-	    border-radius: 50px;
-	    background: #888888;
-	    display: inline-block;
-	    padding: 10px 20px;
-	    position: relative;
+	.received_withd_msg { width: 48%;}
+	.mesgs {
+	  float: left;
+	  padding: 30px 15px 0 25px;
+	  width: 60%;
 	}
 	
-	.chat-list .chat-message:before {
-	    content: "";
-	    position: absolute;
-	    top: 15px;
-	    width: 0;
-	    height: 0;
+	.sent_msg p {
+	  background: #537291 none repeat scroll 0 0; /*#05728f*/
+	  border-radius: 3px;
+	  font-size: 14px;
+	  margin: 0; color:#fff;
+	  padding: 5px 10px 5px 12px;
+	  width:100%;
+	}
+	.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+	.sent_msg {
+	  float: right;
+	  width: 46%;
+	}
+	.input_msg_write input {
+	  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	  border: medium none;
+	  color: #4c4c4c;
+	  font-size: 15px;
+	  min-height: 48px;
+	  width: 100%;
 	}
 	
-	.chat-list .chat-message h5 {
-	    margin: 0 0 5px 0;
-	    font-weight: 600;
-	    line-height: 100%;
-	    font-size: .9rem;
+	.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+	.msg_send_btn {
+	  background: #05728f none repeat scroll 0 0;
+	  border: medium none;
+	  border-radius: 50%;
+	  color: #fff;
+	  cursor: pointer;
+	  font-size: 17px;
+	  height: 33px;
+	  position: absolute;
+	  right: 0;
+	  top: 11px;
+	  width: 33px;
 	}
-	
-	.chat-list .chat-message p {
-	    line-height: 18px;
-	    margin: 0;
-	    padding: 0;
-	    font-color:#453d3d;
+	.messaging { padding: 0 0 50px 0;}
+	.msg_history {
+	  height: 450px;
+	  overflow-y: auto;
 	}
-	
-	.chat-list .chat-body {
-	    margin-left: 20px;
-	    float: left;
-	    width: 70%;
-	}
-	
-	.chat-list .in .chat-message:before {
-	    left: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-right: 20px solid #888888;
-	}
-	
-	.chat-list .out .chat-img {
-	    float: right;
-	}
-	
-	.chat-list .out .chat-body {
-	    float: right;
-	    margin-right: 20px;
-	    text-align: right;
-	}
-	
-	.chat-list .out .chat-message {
-	    background: #888888;
-	}
-	
-	.chat-list .out .chat-message:before {
-	    right: -12px;
-	    border-bottom: 20px solid transparent;
-	    border-left: 20px solid #888888;
-	}
-	
-	.card .card-header:first-child {
-	    -webkit-border-radius: 0.3rem 0.3rem 0 0;
-	    -moz-border-radius: 0.3rem 0.3rem 0 0;
-	    border-radius: 0.3rem 0.3rem 0 0;
-	}
-	.card .card-header {
-	    background: #17202b;
-	    border: 0;
-	    font-size: 1rem;
-	    padding: .65rem 1rem;
-	    position: relative;
-	    font-weight: 600;
-	    color: #ffffff;
-	}
-	
-	.content{
-	    margin-top:40px;    
-	}
-	.swal-button {
-    	background: #34495E;
-	}
-	.swal-footer {
-  		text-align: center;
-	}
-	.swal-icon--warning {
-		border-color: #f27474;
-	}
-  </style>
-	<body>
+	</style>
+   	
+</head>
+<body>
 		<section class="body">
-
 			<!-- start: header -->
 			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
@@ -152,7 +103,7 @@
 				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="height:100%;">
 					<header class="page-header">
 						<h2>채팅</h2>
 					
@@ -164,6 +115,7 @@
 									</a>
 								</li>
 								<li><span>채팅</span></li>
+								<li><span>나에게 메시지 보내기</span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -171,117 +123,37 @@
 
 					<!-- start: page -->
 					<section class="content-with-menu mailbox">
-						<div class="content-with-menu-container" data-mailbox data-mailbox-view="folder">
-							<div class="inner-menu-toggle">
-								<a href="#" class="inner-menu-expand" data-open="inner-menu">
-									Show Menu <i class="fa fa-chevron-right"></i>
-								</a>
-							</div>
+						<div class="content-with-menu-container">
+						
+							<!-- 채팅 메뉴 시작 -->
+							<c:import url="/WEB-INF/views/chat/chatMenu.jsp"/>
+							<!-- 채팅 메뉴 끝 -->
 							
-							<menu id="content-menu" class="inner-menu" role="menu">
-								<div class="nano">
-									<div class="nano-content">
-										<div class="inner-menu-toggle-inside">
-											<a href="#" class="inner-menu-collapse">
-												<i class="fa fa-chevron-up visible-xs-inline"></i><i class="fa fa-chevron-left hidden-xs-inline"></i> Hide Menu
-											</a>
-										</div>
-										<div class="inner-menu-content">
-										<button type="button" id="channelModal" data-toggle="modal" data-target="#modalBootstrap" class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">
-												<i class="fa fa-wechat mr-xs"></i>
-												새 대화 채널 만들기
-										</button>
-										<hr class="separator" />
-										
-											<div class="sidebar-widget m-none">
-												<div class="widget-header">
-													<h6 class="title">Channel</h6>
-													<span class="widget-toggle">+</span>
-												</div>
-												<div class="widget-content">
-													<ul class="list-unstyled mailbox-bullets">
-													 <c:set var="roomNameList" value="${requestScope.roomNameList}"/>
-	           											<c:forEach var="roomName" items="${roomNameList}">
-												            <li>
-													           	<a href='chatGroup.do?roomName=${roomName }' class="menu-item"><span><i class='fa fa-user'></i></span>${roomName}</a>
-												     	  	</li>
-										          		</c:forEach>
-													</ul>
-												</div>
-											</div>
-							
-											<hr class="separator" />
-							
-											<!-- DM 목록 -->
-											<div class="sidebar-widget m-none">
-												<div class="widget-header">
-													<h6 class="title">Direct Messages</h6>
-													<span class="widget-toggle">+</span>
-												</div>
-												<div class="widget-content">
-													<ul class="list-unstyled mailbox-bullets">
-													<c:forEach var="userList" items="${requestScope.userList}">
-											            <li>
-												           	<a href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}' class="menu-item" value=${userList.mail }><span><i class='fa fa-user'></i></span>${userList.name }</a>
-											     	  	</li>
-										           </c:forEach>
-													</ul>
-												</div>
-											</div>
-											
-											
-										</div>
-									</div>
-								</div>
-							</menu>
-						<div class="inner-body mailbox-folder">
-								<!-- START: .mailbox-header -->
-								<header class="mailbox-header">
-									<div class="row">
-										<div class="col-sm-6">
-											<h1 class="mailbox-title text-light m-none">
+							<!-- 채팅 영역 시작 -->
+							<div class="inner-body mailbox-email" style="padding-left: 30px;padding-top: 30px;height:100%;">
+									<!-- START: .mailbox-header -->
+									<header class="mailbox-header" style="padding-top: 10px;padding-bottom: 15px;">
+										<b class="mailbox-title text-light m-none" style="font-size:25px;" id="chatRoomName">
 											<c:set var="user" value="${requestScope.user}"/>
-	               							<b id="chatRoomName" style="font-size:30px;">&nbsp;${user.name}</b>
-											</h1>
-										</div>
-										<div class="col-sm-6">
-										</div>
-									</div>
-								</header>
-								<!-- END: .mailbox-header -->
-								<!-- START: .mailbox-actions -->
-									<div class="row">
-							            <div class="col-md-4">
-							            	<hr width="70%">
-							            </div>
-							       		<div class="col-md-4" id="currentDate">
-							            	<h3 style="text-align:center;font-size:25px;">오늘 </h3>
-							            </div>     
-							            <div class="col-md-4">
-							            	<hr width="70%">
-							            </div>
-						            </div>
-									<!-- END: .mailbox-actions -->
-									<div class="nano">
-										<div class="container content" id="chatMsgMain">
-								            <ul class="list-unstyled" id="chatLog" style="height: 250px; overflow-y: scroll;">
-								        	</ul>
+			               					${user.name}
+										</b>
+									</header>
+									<hr class="separator" />
+									<!-- END: .mailbox-header -->
+										<!-- 채팅 대화 뿌려지는 곳 -->
+											<div class="mailbox-email-container" style="width:100%">
+									          <div class="msg_history" id="msg_history">
+									          </div>											
+											<div class="type_msg">
+									            <div class="input_msg_write">
+										          <input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
+									              <input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+									              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+									            </div>
+								          	</div>
 										</div>
 									</div>
-									
-									
-								<!-- 채팅방 보내는 곳 -->
-								<form id="sendMessage" method="post">
-								<div>        
-						              <div class="form-group basic-textarea" stlye="width:300px">
-						                <textarea class="form-control pl-2 my-0" id="chatContent" name="chatContent" rows="3" placeholder="메시지를 입력해주세요"></textarea>
-										<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-						              </div>
-					            </div>
-						            	<button type="submit" id="chatSend" class="btn btn-dark" style="float:right;">send</button>
-								</form>
-							</div>
-							</div>
+									<!-- 채팅 영역 끝 -->
 						</div>
 					</section>
 					<!-- end: page -->
@@ -326,7 +198,7 @@
 
 		socket.on('connect', function() {
 			//db에 있던 이전 대화 내용 가져오기
-			socket.emit('getChatContent', userMail);
+			socket.emit('getChatContent', userMail, chatType);
 		});
 
 		socket.on('printChatHistory', function(msg){
@@ -334,11 +206,13 @@
 	        console.log(msgArray);
 	       
 	        $.each(msgArray, function(index,element){
-	            console.log(element);
-	            $('#chatLog').append('<div class="row">'
-	                +'<div class="col-sm-9" style="text-align:left;">'+element.NAME+' : '+element.CHATCONTENT+'</div>'
-	                +'<div class="col-sm-3" style="text-align:right;">'+element.CHATTIME+'</div>'
-	                +'</div><br>');
+	        	$("#msg_history").append('<div class="outgoing_msg">'
+						+'<div class="sent_msg">'
+						+'<p>'+element.CHATCONTENT+'</p>'
+						+'<span class="time_date">'+element.CHATTIME+'</span> </div>'
+						+'</div>');
+	        	$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
+                
 	        });
 	    });
 	    
@@ -362,20 +236,22 @@
 	
 	
 	/*엔터 쳤을 때 채팅 서버 전송 */
-	$("#chatContent").keydown(function(){
+	$("input[name='chatContent']").keypress(function(){
 		if(event.keyCode ==13 && $('#chatContent').val()!=''){
+			console.log('키프레스 넘어가라 ???');
 			sendMessage();
 			}
 		});
 
 	/*채팅 뿌려주기*/
 	socket.on('receive message to self', function(chatContent,currentDate){
-		$('#chatLog').append('<div><li class="out">'
-			+'<div class="chat-body"><div class="chat-message">'
-			+'<span>'+chatContent+'</span>&nbsp;&nbsp;&nbsp;<span>'+currentDate+'</span>'
-			+'</div></div></li></div><br>');
+		$("#msg_history").append('<div class="outgoing_msg">'
+				+'<div class="sent_msg">'
+				+'<p>'+chatContent+'</p>'
+				+'<span class="time_date">'+currentDate+'</span> </div>'
+				+'</div>');
+		$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 	});
-			/*<div class="chat-img" > <img alt="Avtar" src="./img/alpaca.jpg"></div> */
 	
 		
 	var count = 0;

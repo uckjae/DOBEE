@@ -611,7 +611,7 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	return "chat/chatMain2";
+    	return "chat/chatMain";
     }
     
     
@@ -641,7 +641,7 @@ public class DoController {
     	model.addAttribute("roomName", roomName);
     	model.addAttribute("chatType", "GROUP");
     	
-    	return "chat/chatMain_group2";
+    	return "chat/chatMain_group";
     }
     
     //DM 채팅 메인
@@ -671,7 +671,7 @@ public class DoController {
     	model.addAttribute("dmMail", dmMail);
     	model.addAttribute("chatType", "DM");
     	
-    	return "chat/chatMain_DM2";
+    	return "chat/chatMain_DM";
     }
     
   
