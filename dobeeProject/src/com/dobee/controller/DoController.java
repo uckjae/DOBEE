@@ -244,7 +244,7 @@ public class DoController {
         Schedule sc = null;
         
         int noticeCount = 0;
-                
+                        
         //조회수 올리기
         noticeCount = noticeService.updateNoticeCount(notSeq);
         
@@ -254,16 +254,27 @@ public class DoController {
         
         //DB에서 파일 가져오기
         nf = noticeService.getNoticeFile(notSeq);
-        model.addAttribute("nf", nf);
-        
+        if(nf !=null) {
+            model.addAttribute("nf", nf);
+        } else {
+        	model.addAttribute("nf", null);
+        }
+
         //DB에서 공지사항 일정 가져오기
         ns = noticeService.getNotSchedule(notSeq);
-        model.addAttribute("ns", ns);
-        sc = scheduleService.getSchedule(ns.getSchSeq());
-        model.addAttribute("sc", sc);
         
-        System.out.println("파일도 가져와"+nf.toString());
+        if(ns !=null) {
+            System.out.println("공지사항 일정?"+ns.toString());
+        	model.addAttribute("ns", ns);
+            sc = scheduleService.getSchedule(ns.getSchSeq());
+            System.out.println("스케쥴은?"+sc.toString());
+            model.addAttribute("sc", sc);
+        } else {
+        	model.addAttribute("ns", null);
+        	model.addAttribute("sc", null);
+        }
         
+       
         return "notice/noticeDetail";
     }
     
@@ -389,7 +400,6 @@ public class DoController {
     //공지사항수정하기get
     @RequestMapping(value="noticeModify.do",method=RequestMethod.GET)
     public String noticeModify(int notSeq,Model model){
-    	
         NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
         Notice notice =noticedao.getNotice(notSeq);
         model.addAttribute("notice",notice);
