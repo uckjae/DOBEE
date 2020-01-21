@@ -5,16 +5,79 @@
 <html class="fixed">
 <head>
 
-<!-- Basic -->
-<c:import url="/common/HeadTag.jsp" />
-<meta name="author" content="okler.net">
-<!-- Specific Page Vendor CSS -->
-<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>Detail</title>
+	<!-- Specific Page Vendor CSS -->
+	<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+	<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
+	<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+
+	<!-- Theme CSS -->	
+	<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+
+	<!-- Skin CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+
+	<!-- Theme Custom CSS -->
+	<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+
+	<!-- Head Libs -->
+	<script src="assets/vendor/modernizr/modernizr.js"></script>
+	
+	
+	<!-- Vendor -->
+	<script src="assets/vendor/jquery/jquery.js"></script>
+	<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
+	<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
+	<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
+	<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		
+	<!-- Specific Page Vendor -->
+	<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+	<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+	<script src="assets/vendor/select2/select2.js"></script>
+	<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+	<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+	<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+	<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+	<script src="assets/vendor/fuelux/js/spinner.js"></script>
+	<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+	<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+	<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>		
+	<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		
+	<!-- Theme Base, Components and Settings -->
+	<script src="assets/javascripts/theme.js"></script>
+	
+	<!-- Theme Custom -->
+	<script src="assets/javascripts/theme.custom.js"></script>
+		
+	<!-- Theme Initialization Files -->
+	<script src="assets/javascripts/theme.init.js"></script>
+
+	<!-- Examples -->
+	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+
+	<!-- include Nobootstrap summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+	
+	<!-- 파일 업로드 -->
+	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 
 <style type="text/css">
 .ds {
@@ -89,6 +152,26 @@
 								<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="<fmt:formatDate value='${sc.endTime}' pattern='yyyy-MM-dd'/>" readonly>
 							</div> 
 						</div>
+						<!-- 파일 업로드  -->
+						<div class="form-group" style="margin-bottom:3px;"> 
+							 	 <label class="col-md-3 control-label">파일</label>
+							 	 <a href="noticeDownload.do?p=upload&f=${nf.orgName}">${nf.orgName}</a>
+						</div>
+						<!-- <div class="form-group">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="input-append">
+								 	<div class="uneditable-input">
+								 		<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
+									</div>
+									<span class="btn btn-default btn-file">
+										<span class="fileupload-exists">변경</span>
+										<span class="fileupload-new">파일 선택</span>
+										<input type="file" name="file"  />
+									</span>
+									<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+								</div>
+							</div>
+						</div> -->
 						<div id="content1" row="10" class="ds">${notice.content}</div>
 						<div class="text-right" id="lengthBox">
 							<span id="total-characters"></span> <span id="max"></span>
@@ -104,33 +187,11 @@
 						</section>
 			</section>
 		</div>
-
 		<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp" />
 
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 	<c:import url="/common/BottomTag.jsp" />
-<script>
-function date_to_str(format)
-
-{
-    var year = format.getFullYear();
-    var month = format.getMonth() + 1;
-    if(month<10) month = '0' + month;
-    var date = format.getDate();
-    if(date<10) date = '0' + date;
-
-    return year + "-" + month + "-" + date;
-}
-
-$(function(){
-	var startTime_format = date_to_str(format);
-	
-});
-
-
-
-</script>
 </body>
 </html>
