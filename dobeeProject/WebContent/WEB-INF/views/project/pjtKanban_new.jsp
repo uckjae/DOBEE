@@ -144,8 +144,10 @@
 							
 					}
 				});
-
-				$.ajax({
+				console.log("getTaskDetailList() 앞!!")
+				getTaskDetailList(tskSeq);
+				console.log("getTaskDetailList() 뒤!!")
+				/* $.ajax({
 					url:"ajax/project/getTaskDetailList.do",
 					data: {"tskSeq":tskSeq},
 					dataType: "JSON",
@@ -154,10 +156,11 @@
 						console.log(data);
 						
 					}
-				});
+				}); */
 					
 				$('#taskFormTskSeq').val(tskSeq);
-				
+
+				getTaskDetailList(tskSeq);
 				console.log(tskSeq);
 			});
 
@@ -231,8 +234,56 @@
 			
 		}
 
-		function getTaskDetailList(){
+		function getTaskDetailList(tskSeq){
+			console.log("getTaskDetailList() in!!");
 
+			$.ajax({
+				url:"ajax/project/getTaskDetailList.do",
+				method:"post",
+				data: {"tskSeq":tskSeq},
+				dataType:"JSON",
+				success: function(data){
+					console.log("getTaskDetailList Ajax Success!!");
+					var TaskDetailList = data;
+					$(TaskDetailList).each(function(index,element){
+						console.log(index +" / " +element);
+						var tdSeq = element.tdSeq;
+						var tdContent = element.tdContent;
+						console.log(tdSeq);
+						console.log(tdContent);
+						var list = $('<li>');
+						
+						var taskDetailListForm = $('<form>');
+							$(taskDetailListForm).attr("id",tdSeq);
+							$(taskDetailListForm).attr("action","ajax/project/editTaskDetail.do?tdSeq="+tdSeq);
+
+							var div = $('<div class="col-md-6>');
+								var input = $('<input disalbed class="form-control">');
+									$(input).attr("id",tdSeq+"input");
+									$(input).val(tdContent);
+									$(input).text(tdContent);
+								console.log("inputTag");
+								console.log(input);
+							$(div).append(input);
+								var anchorEdit = $('<a onclick="taskDetailEdit(this)">');
+									var editIcon = $('<i class="fa fa-edit">');
+								$(anchorEdit).append(editIcon);
+							$(div).append(anchorEdit);
+								var anchorDelete = $('<a onclick="taskDetailDelete(this)">');
+									var deleteIcon = $('<i class="fa fa-trash-o">');
+								$(anchorDelete).append(deleteIcon);
+							$(div).append(anchorDelete);
+						$(taskDetailListForm).append(div);
+
+						$(list).append(taskDetailListForm);
+						console.log(list);
+						$('#taskDetailListView').append(list);
+							
+						console.log(tdSeq+" / "+tdContent);
+					})
+				}
+				
+			});
 		}
 		
     </script>
@@ -669,14 +720,18 @@
 										<div class="tab-pane" id="content">
 											
 											<form action="ajax/project/taskContentForm.do" id="taskContentForm" class="form-horizontal mb-lg" >
-													<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
-													<div class="form-group">
-														<div class="col-md-6">
-															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
-														</div>
+												<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
+												<div class="form-group">
+													<div class="col-md-6">
+														<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
 													</div>
+												</div>
+											</form>
+											<div>
+												<ul id="taskDetailListView">
 													
-												</form>
+												</ul>
+											</div>
 										</div>
 										<div class="tab-pane" id="checkList">
 											<h1>second</h1>

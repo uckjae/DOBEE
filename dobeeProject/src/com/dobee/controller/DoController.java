@@ -438,64 +438,135 @@ public class DoController {
     */
 
 
-    // 부재일정신청 GET 0110			게다죽
+    // 개인_부재일정신청 GET 0110           게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
         return "attend/breakApply";
     }
     
-    // 부재일정신청 POST 0112			게다죽
+    
+    // 개인_부재일정신청 POST 0112          게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply){
-    	String result = applyService.absApply(apply);
-    	// System.out.println("봐봐  : " + result);
-    	
+    public String absApplyPost(Apply apply, Authentication auth){
+        apply.setDrafter(auth.getName());
+        String result = applyService.absApply(apply);
+        // System.out.println("봐봐  : " + result);
+        
         return "attend/breakApply";
+    }
+    
+    
+    // 개인_부재일정 수정/삭제 GET                0120    COMPLETE
+    @RequestMapping(value="editApply.do", method=RequestMethod.GET)
+    public String getEditApply (Model model, Apply apply, Authentication auth, Integer aplSeq) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        BreakManageList results = applyService.getBMLforEdit(apply);
+        model.addAttribute("editApplyList", results);
+        
+        return "attend/breakApplyEdit";
+    }
+    
+    
+    // 개인_부재일정 수정 POST      0121 COMPLETE
+    @RequestMapping(value="postEditApply.do", method = RequestMethod.POST)
+    public String postEditApply (BreakManageList bml, Integer aplSeq, Authentication auth) {
+        bml.setDrafter(auth.getName());
+        bml.setAplSeq(aplSeq);
+        int results = applyService.postEditApply(bml);
+        
+        return "main/main";
+    }
+    
+    
+    // 개인_부재일정 삭제 POST          0120    COMPLETE
+    @RequestMapping(value="deleteApply.do", method=RequestMethod.GET)
+    public String postDeleteApply (Integer aplSeq) {
+        applyService.deleteApply(aplSeq);
+        
+        return "attend/breakManage";    
     }
 
 
-    // 연장근무 신청 POST			0110 게다죽
-    @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
+    // 연장근무 신청 GET          0110 게다죽
+    @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
     public String overTiemApply(){
+        
         return "attend/extendApply";
     }
     
     
-    // 개인_연장근무관리 GET			0112 게다죽
+    // 개인_연장근무신청 POST           0112 게다죽
     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
- 	public String extendApplyPost(Apply apply) {
-    	String result = applyService.overtimeApply(apply);
-    	// System.out.println("봐봐 이," + result);
+    public String extendApplyPost(Apply apply) {
+        String result = applyService.overtimeApply(apply);
+        // System.out.println("봐봐 이," + result);
 
-	return "attend/extendApply";
-}
+        return "attend/extendApply";
+    }
 
 
-    // 개인_부재일정관리 GET			0112 게다죽		COMPLETE 0116
+    // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
-    public String absMg(Model model, Apply apply, Authentication auth){
-    	apply.setDrafter(auth.getName());			// 꿀잼
-    	List<BreakManageList> results = applyService.absMg(apply);
-    	model.addAttribute("brkList", results);
-    	
-    	return "attend/breakManage";
+    public String absMg(Model model, Authentication auth){
+        List<BreakManageList> results = applyService.absMg(auth.getName());
+        model.addAttribute("brkList", results);
+        
+        return "attend/breakManage";
     }
     
 
-    // 개인_근무내역확인										&&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
-    @RequestMapping("workManage.do")
-    public String workChart(){
+    // 개인_근무내역관리/확인 GET         0121 게다죽        ~ing....???                 &&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
+    @RequestMapping(value="workManage.do", method=RequestMethod.GET)
+    public String getExtList(Model model, Authentication auth){
+        List<Apply> results = applyService.getExtList(auth.getName());
+        model.addAttribute("extList", results);
+
+        return "attend/workManage";
+    }
+    
+    
+    // 개인_연장근무 신청 수정 Page GET       0121 게다죽        COMPLETE
+    @RequestMapping(value="editExtApply.do", method=RequestMethod.GET)
+    public String getEditExtList (Model model, Apply apply, Authentication auth, Integer aplSeq) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        Apply results = applyService.getELforEdit(apply);
+        model.addAttribute("ELforEdit", results);
+        
+        return "attend/extApplyEdit";
+    }
+    
+    
+    // 개인_연장근무 신청 수정 Page POST      0121 게다죽        COMPLETE
+    @RequestMapping(value="postEditExtApply.do", method = RequestMethod.POST)
+    public String postEditExtList (Apply apply, Integer aplSeq, Authentication auth) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        int result = applyService.postEditExtApply(apply);
+        
+        return "main/main";
+    }
+    
+    
+    // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
+    @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
+    public String postDeleteExtList (Integer aplSeq) {
+        System.out.println("이거 일단 도니?" );
+        System.out.println("이거 일단 도니?" + aplSeq);
+        int result = applyService.postDeleteExtList(aplSeq);
+        System.out.println("이거 일단 도니?" + result);
+        System.out.println("결과를 확인하는 ? " + result);
         return "attend/workManage";
     }
 
 
-    // 매니저_부재관리 - isAuth update GET		0114 게다죽
+    // 매니저_부재관리 - isAuth update GET     0114 게다죽            // 나중에 권한 코드로 수정 validation 입혀줘야 하고
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
-    public String absSign(Model model){
-    	List<BreakManageList> results = applyService.breakListMgr();
-    	// System.out.println("다시 한번더 확인 : " + results);
-    	model.addAttribute("brkListMgr", results);
-    	
+    public String absSign(Model model){                         
+        List<BreakManageList> results = applyService.breakListMgr();
+        model.addAttribute("brkListMgr", results);
+        
         return "attend/breakManagement_Mgr";
     }
 
@@ -503,28 +574,29 @@ public class DoController {
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
+        System.out.println("이거 봐바 : " + apply.toString());
         applyService.absReqHandle(apply);
         
         return "attend/breakManagement_Mgr";
     }
     
 
-    // 매니저_연장근무관리 리스트 - isAuth update GET			0115 게다죽
+    // 매니저_연장근무관리 리스트 - isAuth update GET           0115 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.GET)
     public String extSign(Model model){
-    	List<BreakManageList> results = applyService.extListMgr();
+        List<BreakManageList> results = applyService.extListMgr();
         model.addAttribute("extListMgr", results);
         
-    	return "attend/extendManagement_Mgr";
+        return "attend/extendManagement_Mgr";
     }
     
     
-    // 매니저_연장근무관리 리스트 - isAuth update POST			0115 게다죽
+    // 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.POST)
     public String extReqHandle(Apply apply){
-    	applyService.extReqHandle(apply);
+        applyService.extReqHandle(apply);
         
-    	return "attend/extendManagement_Mgr";
+        return "attend/extendManagement_Mgr";
     }
 
 

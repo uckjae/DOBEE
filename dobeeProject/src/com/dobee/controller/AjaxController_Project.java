@@ -102,11 +102,11 @@ public class AjaxController_Project {
 	}
 	
 	//특정업무의 TaskDetailList
-	@RequestMapping("getTaskList")
+	@RequestMapping("getTaskDetailList.do")
 	public List<TaskDetail> getTaskDetailList(int tskSeq){
 		System.out.println("AjaxController_Project getTaskDetailList() in");
 		List<TaskDetail> taskDetailList = projectService.getTaskDetailList(tskSeq); 
-		
+		System.out.println(taskDetailList);
 		return taskDetailList;
 	}
 	
