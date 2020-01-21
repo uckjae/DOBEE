@@ -16,8 +16,6 @@
 	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 	<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
 	<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
@@ -54,7 +52,6 @@
 	<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 	<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 	<script src="assets/vendor/fuelux/js/spinner.js"></script>
-	<script src="assets/vendor/dropzone/dropzone.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
@@ -79,7 +76,7 @@
 	
 	<!-- 파일 업로드 -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
-	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>s
 </head>
 
 <script>
@@ -110,6 +107,9 @@
         		    },    	       	
             });
         $.summernote.interface;
+
+        
+        
         
     });
 </script>
@@ -131,8 +131,8 @@
 								<li>
 									<span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Notice Write</span></li>
+								<li><span>공지사항</span></li>
+								<li><span>글쓰기</span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -149,7 +149,7 @@
 						</header>
 						<div class="panel-body">
 						
-						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
+						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" class="dropzone" id="dZUpload">
 						      <!--공지사항 제목  -->
 							   <div class="form-group">
 								   	<label class="col-md-3 control-label">제목</label>
@@ -175,18 +175,17 @@
 							 </div>
 							 <div class="form-group">
 								 <div class="fileupload fileupload-new" data-provides="fileupload">
-														<div class="input-append">
-															<div class="uneditable-input">
-																<i class="fa fa-file fileupload-exists"></i>
-																<span class="fileupload-preview"></span>
-															</div>
-															<span class="btn btn-default btn-file">
-																<span class="fileupload-exists">변경</span>
-																<span class="fileupload-new">파일 선택</span>
-																<input type="file" />
-															</span>
-															<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
-														</div>
+								 	<div class="input-append">
+								 		<div class="uneditable-input">
+								 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
+										</div>
+										<span class="btn btn-default btn-file">
+											<span class="fileupload-exists">변경</span>
+											<span class="fileupload-new">파일 선택</span>
+											<input type="file" name="file"  />
+										</span>
+										<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+									</div>
 								</div>
 							</div>
 							<!--공지사항 일정내용  -->
@@ -202,7 +201,7 @@
 						     <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
 						    </div>   
 						   </form>   
-						  </div>
+						 </div>
    				</section>
  			</section>
 	  	</div>
@@ -211,6 +210,6 @@
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 
-    
+   
 </body>
 </html>
