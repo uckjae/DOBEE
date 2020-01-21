@@ -54,7 +54,8 @@
 									</a>
 								</li>
 								<li><span>근무</span></li>
-								<li><span>부재 일정 신청 수정</span></li>
+								<li><span>부재 일정 관리</span></li>
+								<li><span>신청 / 수정</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -62,7 +63,6 @@
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
 
-					
 					<section class="panel">
 						<div class="panel-body">
 							<div class="row">

@@ -57,7 +57,8 @@
 									</a>
 								</li>
 								<li><span>근무</span></li>
-								<li><span>연장 근무 신청 수정</span></li>
+								<li><span>근무 내역 관리</span></li>
+								<li><span>신청 / 수정</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>

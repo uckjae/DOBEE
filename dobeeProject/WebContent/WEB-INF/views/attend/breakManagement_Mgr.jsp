@@ -112,7 +112,7 @@
 								<a href="#" class="fa fa-times"></a>
 							</div>
 					
-							<h2 class="panel-title">Table</h2>
+							<h2 class="panel-title">Table Title</h2>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -150,7 +150,7 @@
 						</div>
 					</section>
 					
-				
+					
 					<!-- Modal -->
 					<section id="modal_breakreason">
 						<div class="modal fade" id="myModal" role="dialog">
@@ -208,7 +208,6 @@
 					<!-- end: page -->
 				</section>
 			</div>
-			
 			
 					<!-- start: page -->
 					<!-- end: page -->

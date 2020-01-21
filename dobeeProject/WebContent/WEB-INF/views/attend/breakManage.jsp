@@ -168,16 +168,16 @@
 											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
 																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button>
 											</td>
-											
-											<c:choose>
-												<c:when test="${bl.isAuth == '미승인'}">
-													<td class="teditdelete"> <button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정/삭제</button> <td>
-												</c:when>
-												<c:otherwise>
-													<td>-<td>
-												</c:otherwise>
-											</c:choose>
-											
+											<td class="teditdelete">
+												<c:choose>
+													<c:when test="${bl.isAuth == '미승인'}">
+														<button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
+													</c:when>
+													<c:otherwise>
+														-
+													</c:otherwise>
+												</c:choose>
+											</td>
 											
 										</tr>
 									</c:forEach>
@@ -273,7 +273,7 @@
 					$('#modalRejReason').val(rejReason);
 	
 				});
-				
+
 				// 연차 정보 가져오기
 				$.ajax ({
 					url : "getVacationInBM.do",
@@ -301,7 +301,32 @@
 						}
 					}				
 				});	
-	
+
+
+				$('#brkTable').DataTable({
+					/*language option*/
+					"language" : {
+						"emptyTable" : "데이터가 없습니다.",
+						"lengthMenu" : "페이지당 _MENU_ 개씩 보기",
+						"info" : "현재 _START_ - _END_ / _TOTAL_건",
+						"infoEmpty" : "데이터 없음",
+						"infoFiltered" : "( _MAX_건의 데이터에서 필터링됨 )",
+						"search" : "검색: ",
+						"zeroRecords" : "일치하는 데이터가 없습니다.",
+						"loadingRecords" : "로딩중...",
+						"processing" : "잠시만 기다려 주세요",
+						"paginate" : {
+							"next" : "다음",
+							"previous" : "이전"
+						}
+					},
+					"columnDefs" : [{
+						className : "dt-center",
+						"targets" : [ 1 ],
+					}]
+				});
+				
+				
 				// 월 Option Ajax Loading
 				$.ajax({
 					url : "breakYearMonthList.do",
@@ -480,30 +505,6 @@
 							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					});
-				});
-	
-			
-				$('#brkTable').DataTable({
-					/*language option*/
-					"language" : {
-						"emptyTable" : "데이터가 없습니다.",
-						"lengthMenu" : "페이지당 _MENU_ 개씩 보기",
-						"info" : "현재 _START_ - _END_ / _TOTAL_건",
-						"infoEmpty" : "데이터 없음",
-						"infoFiltered" : "( _MAX_건의 데이터에서 필터링됨 )",
-						"search" : "검색: ",
-						"zeroRecords" : "일치하는 데이터가 없습니다.",
-						"loadingRecords" : "로딩중...",
-						"processing" : "잠시만 기다려 주세요",
-						"paginate" : {
-							"next" : "다음",
-							"previous" : "이전"
-						}
-					},
-					"columnDefs" : [{
-						className : "dt-center",
-						"targets" : [ 1 ],
-					}]
 				});
 	
 			}
