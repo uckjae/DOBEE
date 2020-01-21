@@ -33,6 +33,7 @@ import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
 import com.dobee.services.NoticeService;
 import com.dobee.services.ProjectService;
+import com.dobee.services.ScheduleService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
@@ -76,6 +77,9 @@ public class DoController {
     
     @Autowired
     private NoticeService noticeService;
+    
+    @Autowired
+    private ScheduleService scheduleService;
     
 
     //로그인
@@ -260,15 +264,15 @@ public class DoController {
     }
     
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
-    public String noticeWrite(Notice n, NoticeFile nf, NotSchedule ns, Schedule sc, HttpServletRequest request) throws IOException {
-    	System.out.println("객체 어케 넘어와?"+n.toString()+"//////"+nf.getFile().getOriginalFilename());
+    public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
+    	System.out.println("스케쥴 객체 어케 넘어와?"+ns.toString()+"//////"+sc.toString());
 
     	//공지사항 글 DB 넣기
     	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
     	
+    	//파일 업로드 파일명
     	CommonsMultipartFile file = nf.getFile();
     	String filename = file.getOriginalFilename(); //파일명관리
-    	System.out.println("파일 이름 어케 가져와?"+filename);
     	
     	if(!( filename == null || filename.trim().equals("") )) { //공지사항에 파일을 업로드 했을 때
 
@@ -290,21 +294,32 @@ public class DoController {
         	//공지사항 글번호 주입
         	nf.setNotSeq(notSeq);
         	
-        	System.out.println("nf 객체는??"+nf.toString());
-        	
         	int result = noticeService.noticeFileWrite(nf);
         	if(result > 0) {
         		System.out.println("공지사항 파일 업로드 완료");
         	}
-    		
     	}
-    	/*
-    	if( ns !=null && sc !=null ) {
+    	
+    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) { //일정 캘린더에 값이 있으면
     		
+    		int result = scheduleService.addSchedule(sc); 
+    		
+    		if(result > 0) { //DB에 잘 저장됨
+    			System.out.println("스케쥴 등록 완료");
+    			int schSeq = result;
+    			ns.setSchSeq(schSeq);
+    			//공지사항 일정 등록
+    			
+    			ns.setNotSeq(notSeq); //공지사항 글 번호 주입
+    			int result2 = noticeService.addNotSchedule(ns);
+    			
+    			if(result2 > 0) {
+    				System.out.println("공지사항 일정 등록 완료");
+    			}
+    			
+    		}
+    		 System.out.println("둘다 잘 들어감!!");	
     	}
-    	*/
-    		
-    	//서비스로 빼기
     	
     	
     	

@@ -5,25 +5,31 @@
 <mapper namespace="com.dobee.dao.NoticeDao">
 
 <select id="noticeList" resultType="com.dobee.vo.notice.Notice">
-   SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
+	SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
 </select>
 
-<!-- 공지사항 글 insert -->
+<!-- 공지사항 글 insert >> insert 후 seq return 함 -->
 <insert id="noticeWrite" parameterType="com.dobee.vo.notice.Notice" useGeneratedKeys="true" keyProperty="notSeq">
-   INSERT INTO NOTICE (TITLE,CONTENT,REGDATE,COUNT) VALUES(#{title},#{content},now(),0)
+	INSERT INTO NOTICE (TITLE,CONTENT,REGDATE,COUNT) VALUES(#{title},#{content},now(),0)
 </insert>
 <!-- 공지사항 파일 insert -->
 <insert id="noticeFileWrite" parameterType="com.dobee.vo.notice.NoticeFile">
-   INSERT INTO NOTICEFILE(ORGNAME, SAVENAME, NOTSEQ) VALUES (#{orgName},#{saveName},(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ=#{notSeq}))
+	INSERT INTO NOTICEFILE(ORGNAME, SAVENAME, NOTSEQ) VALUES (#{orgName},#{saveName},(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ=#{notSeq}))
 </insert>
 
-<insert id="noticeWrite2" parameterType="com.dobee.vo.schedule.NotSchedule">
+<!-- 공지사항 일정 내용 insert -->
+<insert id="notshceduleWrite" parameterType="com.dobee.vo.schedule.NotSchedule">
+	INSERT INTO NOTSCHEDULE(NSCONTENT, SCHSEQ, NOTSEQ) VALUES (#{nsContent},(SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ = #{schSeq}), (SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ = #{notSeq}));
+	
+</insert>
+
+<!-- <insert id="noticeWrite2" parameterType="com.dobee.vo.schedule.NotSchedule">
    INSERT INTO NOTSCHEDULE (NSCONTENT) VALUES(#{nsContent})
 </insert>
 
 <insert id="noticeWrite3" parameterType="com.dobee.vo.schedule.Schedule">
    INSERT INTO SCHEDULE (STARTTIME,ENDTIME) VALUES(#{startTime},#{endTime})
-</insert>
+</insert> -->
 
 
 <select id="noticeDetail" resultType="com.dobee.vo.notice.Notice">

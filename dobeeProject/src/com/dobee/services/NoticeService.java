@@ -18,12 +18,12 @@ import com.dobee.vo.schedule.Schedule;
 public class NoticeService {
 
 
-	 @Autowired
-	    private SqlSession sqlsession;
+	@Autowired
+	   private SqlSession sqlSession;
 	    
-	    public void setSqlsession(SqlSession sqlsession) {
-	    	this.sqlsession = sqlsession;
-	    }
+	   public void setSqlsession(SqlSession sqlSession) {
+	    this.sqlSession = sqlSession;
+	}
 
 
     //공지사항리스트
@@ -35,12 +35,11 @@ public class NoticeService {
     //공지사항 글 작성
     public int noticeWrite(Notice n){
     	int result = 0;
-    	NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
     	result = noticedao.noticeWrite(n);
     	
     	if(result > 0) { //DB에 insert 성공하면
-    		result = n.getNotSeq();
-    		System.out.println("값 가져오니????"+result);
+    		result = n.getNotSeq(); //seq 리턴함
     	} else { //DB에 insert 실패
     		result = 0; 
     	}
@@ -49,17 +48,22 @@ public class NoticeService {
 
     }
     
-  //공지사항 글 작성시 파일 업로드
+    //공지사항 글 작성시 파일 업로드
     public int noticeFileWrite(NoticeFile nf){
     	int result = 0;
-    	NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
     	result = noticedao.noticeFileWrite(nf);
-    	
-    	
     	return result;
 
     }
-
+    
+  //공지사항 일정 등록
+    public int addNotSchedule(NotSchedule ns) {
+    	int result = 0;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.notshceduleWrite(ns);
+    	return result;
+    }
 
     //공지사항수정
     public void noticeModi(){

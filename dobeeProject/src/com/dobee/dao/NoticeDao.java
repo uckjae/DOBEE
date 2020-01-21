@@ -19,13 +19,9 @@ public interface NoticeDao {
     //공지사항 파일 --01.21 알파카
     public int noticeFileWrite(NoticeFile nf);
     
-    //공지사항일정내용
+    //공지사항 일정 추가 --01.21 알파카
     public int notshceduleWrite(NotSchedule ns);
-    
-    //공지사항일정
-    public int shceduleWrite(Schedule sc);
-    
-    
+        
     //공지사항 수정
     public void noticeModify(Notice notice);
 

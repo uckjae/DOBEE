@@ -159,14 +159,14 @@
 						     <!--공지사항 일정시작,종료  -->
 							   <div class="form-group">
 							     	<label class="col-md-3 control-label">공지사항 일정</label>
-									<input type="text" class="form-control md-3" id="nscontent" name="nsContent" placeholder="일정 내용을 입력하세요" value="">
+									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" placeholder="일정 내용을 입력하세요" value="">
 							   </div>
 							  <div class="form-group">
 								    <div class="input-daterange input-group" data-plugin-datepicker>
 										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
+										<input type="text" class="form-control" name="startTime" id="datepicker" placeholder="시작일">
 										<span class="input-group-addon">to</span>
-										<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
+										<input type="text" class="form-control" name="endTime" id="datepicker2" placeholder="종료일">
 									 </div> 
 							   </div>
 							 <!-- 파일 업로드  -->
