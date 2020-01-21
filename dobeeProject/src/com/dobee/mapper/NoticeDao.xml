@@ -8,9 +8,15 @@
    SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
 </select>
 
-<insert id="noticeWrite" parameterType="com.dobee.vo.notice.Notice">
-   INSERT INTO NOTICE (TITLE,CONTENT,REGDATE,COUNT)VALUES(#{title},#{content},now(),0)
+<!-- 공지사항 글 insert -->
+<insert id="noticeWrite" parameterType="com.dobee.vo.notice.Notice" useGeneratedKeys="true" keyProperty="notSeq">
+   INSERT INTO NOTICE (TITLE,CONTENT,REGDATE,COUNT) VALUES(#{title},#{content},now(),0)
 </insert>
+<!-- 공지사항 파일 insert -->
+<insert id="noticeFileWrite" parameterType="com.dobee.vo.notice.NoticeFile">
+   INSERT INTO NOTICEFILE(ORGNAME, SAVENAME, NOTSEQ) VALUES (#{orgName},#{saveName},(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ=#{notSeq}))
+</insert>
+
 <insert id="noticeWrite2" parameterType="com.dobee.vo.schedule.NotSchedule">
    INSERT INTO NOTSCHEDULE (NSCONTENT) VALUES(#{nsContent})
 </insert>
