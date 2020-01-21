@@ -64,7 +64,7 @@
 	});						
 	
 	
-	var initCalendar = function(view) {
+	var initCalendar = function(isLoading, view) {
 				
 		var $calendar = $('#calendar');
 		var date = new Date();

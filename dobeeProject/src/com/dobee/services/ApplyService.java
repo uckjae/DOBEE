@@ -23,7 +23,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	userDao.absApply(apply);
     	
-    	return "병신새끼야! 고운말 합시다";
+    	return "다시다 요리수";
     }
 
 
@@ -32,20 +32,81 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.overTimeApply(apply);
     	
-    	return "병신아! 그래! 병신아! ㅜㅠ";
+    	return "그래! 이맛이야";
+    }
+    
+    
+    // 개인_부재일정 수정/삭제 GET				0120	COMPLETE
+    public BreakManageList getBMLforEdit(Apply apply) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	BreakManageList result = userDao.getBMLforEdit(apply);
+    	
+    	return result;
+    }
+    
+    
+    // 개인_부재일정 수정 POST 			0120	COMPLETE
+    public int postEditApply(BreakManageList bml) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	int result = userDao.postEditApply(bml);
+    	
+    	return 5959;
+    }
+    
+    
+    // 개인 부재일정 삭제 POST 			0120 	COMPLETE
+    public void deleteApply (Integer aplSeq) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	userDao.deleteApply(aplSeq);
     }
 
-
-    // 개인_부재일정관리			0101
-    public List<BreakManageList> absMg(Apply apply){
+    
+    // 개인_부재일정관리			0101	COMPLETE
+    public List<BreakManageList> absMg(String drafter){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-        List<BreakManageList> results = userDao.absMg(apply);
+        List<BreakManageList> results = userDao.absMg(drafter);
         
         return results;
     }
 
 
-    //근무내역확인
+    // 개인_근무내역확인/관리	(GET)	0121		COMPLETE
+    public List<Apply> getExtList(String drafter) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	List<Apply> results = userDao.getExtList(drafter);
+
+    	return results;
+    }
+    
+    
+    // 개인_연장근무 일정 수정/삭제 (GET)		0121	COMPLETE
+    public Apply getELforEdit (Apply apply) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	Apply results = userDao.getELforEdit(apply);
+    	
+    	return results;
+    }
+    
+    
+    // 개인_연장근무 신청 수정 Page POST		0121 게다죽		COMPLETE
+    public int postEditExtApply(Apply apply) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	int result = userDao.postEditExtApply(apply);
+    	
+    	return 5959;
+    }
+    
+    
+    // 개인_연장근무 신청 삭제 POST		0121 게다죽		COMPLETE
+    public int postDeleteExtList (Integer aplSeq) {
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	int result = userDao.postDeleteExtList(aplSeq);
+    	
+    	return 5959;
+    }
+    
+    
+    // 근무내역확인
     public List<Attend> workChart(){
         return null;
     }
@@ -62,10 +123,11 @@ public class ApplyService {
     
     // 매니저_부재관리 - isAuth update (POST)		0115
     public void absReqHandle(Apply apply) {
+    	System.out.println("이여기" + apply.toString());
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.absReqHandle(apply);
     	
-    	// System.out.println("results 확인 : " + results);
+    	System.out.println("results 확인 : " + results);
     }
     
 

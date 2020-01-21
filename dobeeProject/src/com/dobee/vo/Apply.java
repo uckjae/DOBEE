@@ -1,7 +1,5 @@
 package com.dobee.vo;
 
-import java.util.Date;
-
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,11 +10,12 @@ public class Apply {
     private String reqDate;
     private String reason;
     private String startAt;
+    private int useBreak;
     private String endAt;
     private String isAuth;
     private String rejReason;
     private String drafter;
     private String approval;
-    private int apyCode; 
+    private int apyCode;
     
 }
