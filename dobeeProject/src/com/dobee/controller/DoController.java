@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,7 @@ import com.dobee.services.ChatService;
 import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
+import com.dobee.services.NoticeService;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.Debit;
@@ -39,6 +41,7 @@ import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.NotSchedule;
@@ -70,6 +73,9 @@ public class DoController {
     
     @Autowired
     private DebitService debitService;
+    
+    @Autowired
+    private NoticeService noticeService;
     
 
     //로그인
@@ -252,35 +258,57 @@ public class DoController {
     public String noticeWrite(){
         return "notice/noticeWrite";
     }
+    
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
-    public String noticeWrite(Notice n, NotSchedule ns, Schedule sc,HttpServletRequest request,Principal principal) throws IOException {
-    	    //방금수정 NotSchedule ns 추가
-    		List<CommonsMultipartFile> files = n.getFiles();
-    		List<String>filenames = new ArrayList<String>(); //파일명관리
+    public String noticeWrite(Notice n, NoticeFile nf, NotSchedule ns, Schedule sc, HttpServletRequest request) throws IOException {
+    	System.out.println("객체 어케 넘어와?"+n.toString()+"//////"+nf.getFile().getOriginalFilename());
+
+    	//공지사항 글 DB 넣기
+    	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
+    	
+    	CommonsMultipartFile file = nf.getFile();
+    	String filename = file.getOriginalFilename(); //파일명관리
+    	System.out.println("파일 이름 어케 가져와?"+filename);
+    	
+    	if(!( filename == null || filename.trim().equals("") )) { //공지사항에 파일을 업로드 했을 때
+
+        	String path = request.getServletContext().getRealPath("/upload");
+        	String fpath = path + "\\" + filename;
+        		
+        	//파일 쓰기 작업
+        	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+        	fs.write(file.getBytes());
+        	fs.close();
+        		
+        	//DB에 파일 이름 저장
+        	nf.setOrgName(filename);
+        	UUID randomIdMulti = UUID.randomUUID();
+        	String saveName = filename+"_"+randomIdMulti;
+        	System.out.println("저장될 파일 이름?"+saveName);
+        	nf.setSaveName(saveName);
+        
+        	//공지사항 글번호 주입
+        	nf.setNotSeq(notSeq);
+        	
+        	System.out.println("nf 객체는??"+nf.toString());
+        	
+        	int result = noticeService.noticeFileWrite(nf);
+        	if(result > 0) {
+        		System.out.println("공지사항 파일 업로드 완료");
+        	}
     		
-    		if(files != null && files.size()>0){ //최소한개 업로드
-    			for(CommonsMultipartFile multifile : files) {
-    				String filename = multifile.getOriginalFilename();//?
-    				String path  = request.getServletContext().getRealPath("/img");
-    			    
-    				String fpath = path+"\\"+filename;
-    			    
-    			    if(!filename.equals("")) {//실 파일 업로드
-    			    	FileOutputStream fs = new FileOutputStream(fpath);
-    			    	fs.write(multifile.getBytes());
-    			    	fs.close();
-    			    }
-    			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
-    			}
-    		}
+    	}
+    	/*
+    	if( ns !=null && sc !=null ) {
     		
-    		n.setSaveName(filenames.get(0));
+    	}
+    	*/
     		
-    		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    		noticedao.noticeWrite(n); //방금수정	
-    		noticedao.noticeWrite2(ns); //방금수정
-    		noticedao.noticeWrite3(sc); //방금수정
-    		return "redirect:noticeList.do"; //들어주는 주소 ...
+    	//서비스로 빼기
+    	
+    	
+    	
+    	return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
@@ -295,6 +323,7 @@ public class DoController {
     }
     
     //공지사항수정하기post
+    /*
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(Notice n,HttpServletRequest request,Principal principal) throws IOException {
     	System.out.println("docontroller noticeModify() Notice.toString() : " + n.toString());
@@ -322,7 +351,7 @@ public class DoController {
 		noticedao.noticeModify(n);		
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); //들어주는 주소 ...
     }
-    
+    */
 
 
     // 부재일정신청 GET 0110			게다죽

@@ -1,6 +1,7 @@
 package com.dobee.dao;
 
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
@@ -13,13 +14,16 @@ public interface NoticeDao {
     public List<Notice> noticeList(Notice notice);
 
     //공지사항작성
-    public void noticeWrite(Notice n);
+    public int noticeWrite(Notice n);
+    
+    //공지사항 파일 --01.21 알파카
+    public int noticeFileWrite(NoticeFile nf);
     
     //공지사항일정내용
-    public void noticeWrite2(NotSchedule ns);
+    public int notshceduleWrite(NotSchedule ns);
     
     //공지사항일정
-    public void noticeWrite3(Schedule sc);
+    public int shceduleWrite(Schedule sc);
     
     
     //공지사항 수정
