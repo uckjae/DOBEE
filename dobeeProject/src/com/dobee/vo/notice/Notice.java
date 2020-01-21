@@ -20,11 +20,5 @@ public class Notice {
     private String content; //글내용
     private Date regDate; //작성일
     private int count; //조회수
-    private int nfSeq;
-    private String saveName;
-    //private String orgName;
-    private List<CommonsMultipartFile> files;
-    
-    
-    
+   
 }

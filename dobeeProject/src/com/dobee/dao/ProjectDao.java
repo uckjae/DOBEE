@@ -58,11 +58,11 @@ public interface ProjectDao {
 
 
     //상세업무 리스트
-    public List<TaskDetail> taskDetailList();
+    public List<TaskDetail> getTaskDetailList(int tskSeq);
 
 
     //상세업무추가
-    public void addTaskDetail();
+    public void addTaskDetail(TaskDetail taskDetail);
 
 
     //체크리스트 조회

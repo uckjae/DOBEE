@@ -61,12 +61,24 @@ public interface UserDao {
     public int absApply(Apply apply);
     
     
-    // 부재 항목 불러오기
+    // 개인_부재일정 수정	0120 GET			COMPLETE
+    public BreakManageList getBMLforEdit(Apply apply);
+    
+
+    // 개인_부재일정 수정	0120 POST			COMPLETE
+    public int postEditApply(BreakManageList bml); 
+    
+    
+    // 개인_부재일정 삭제	0120 POST			COMPLETE
+    public void deleteApply(Integer aplSeq);
+    
+    
+    // Ajax 부재 항목 불러오기
     /* 01.10 게다죽 */
     public List<ApplyCode> getApyCode();
       
 
-    // 부재 결재자 불러오기
+    // Ajax 부재 결재자 불러오기
     /* 01.10 게다죽 */
     public ArrayList<User> getApprovalList();
 
@@ -78,7 +90,7 @@ public interface UserDao {
 
     // 개인_부재일정확인 - table 데이터 불러오기
     /* 01.12 게다죽 */
-    public List<BreakManageList> absMg(Apply apply);
+    public List<BreakManageList> absMg(String drafter);
   
     
     // Ajax 개인부재일정확인 - Option - 년도 loading		0113
@@ -116,14 +128,31 @@ public interface UserDao {
     // Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
     public List<Apply> AbsAll(String drafter);
     
+    
     // Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)		0119	COMPLETE		    
     public List<Apply> ExtAll(String drafter);
     
     
-    //개인근무내역확인
+    // 개인_근무내역확인
     public List<Attend> workChart();
+    
+    
+    // 개인_근무내역 관리 - 연장근무 신청 내역 불러오기			0121	COMPLETE
+    public List<Apply> getExtList(String drafter);
+    
+    
+    // 개인_연장근무 수정/삭제 (GET) - 페이지 데이터 불러오기			0121	COMPLETE
+    public Apply getELforEdit(Apply apply);
+    
+    
+    // 개인_연장근무 신청 수정 Page POST		0121 게다죽		COMPLETE
+    public int postEditExtApply (Apply apply);
+    
 
-
+    // 개인_연장근무 신청 삭제 POST		0121 게다죽		COMPLETE
+    public int postDeleteExtList (Integer aplSeq);
+    
+    
     // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
     public List<BreakManageList> breakListMgr();
     

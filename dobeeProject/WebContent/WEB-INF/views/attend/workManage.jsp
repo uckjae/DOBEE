@@ -31,6 +31,11 @@
 <!-- Modal -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
+
+<!-- Table Style -->
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
 	
 </head>
 	<body>
@@ -113,8 +118,8 @@
 												<option hidden="">==월    별==</option>
 												<!-- Ajax -->
 											</select>
-										
 										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -133,6 +138,66 @@
 							</div>
 						</div>
 					</section>
+					
+					
+					<section class="panel">
+						<div class="panel-body" style="min-height: 560px;">
+							<div class="row">
+								<div class="col-md-12">
+									<h1>임시로 캘린더를 뿌립시다</h1>
+									<canvas id="myCal" width="500px" height="250px"></canvas>
+								</div>
+							</div>
+						</div>
+					</section>
+					
+					<section class="panel">
+						<header class="panel-heading">
+							<div class="panel-actions">
+								<a href="#" class="fa fa-caret-down"></a>
+								<a href="#" class="fa fa-times"></a>
+							</div>
+					
+							<h3 class="panel-title">Data Table</h3>
+						</header>
+						<div class="panel-body">
+							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th width="8%">신청 번호</th>
+										<th>기간</th>
+										<th width="17%">신청 일자</th>
+										<th width="20%">승인여부</th>
+										<th width="8%">수정/삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									<c:forEach items="${extList}" var="el">
+										<tr>
+											<td class="tseq">		${el.aplSeq }</td>
+											<td class="tterm">		${el.startAt } - ${el.endAt }</td>
+											<td class="tregdate">	${el.reqDate }</td>
+											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${el.isAuth }" data-toggle="modal" data-target="#myModal"
+																		data-aplSeq="${el.aplSeq }" data-reason="${el.reason }" data-rejReason="${el.rejReason }">${el.isAuth }</button>
+											</td>
+											<td class="teditdelete">
+												<c:choose>
+													<c:when test="${el.isAuth == '미승인'}">
+														<button class="btn btn-info btn-sm edit" onclick="location.href='editExtApply.do?aplSeq=${el.aplSeq}'">수정/삭제</button>
+													</c:when>
+													<c:otherwise>
+														-
+													</c:otherwise>
+												</c:choose>
+											</td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
+						</div>
+					</section>	
 					
 					
 					<!-- start: page -->
@@ -159,14 +224,40 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 	
-	<!-- Choi's TABLE SET -->
-	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
+	<!-- Table Script -->
+	<script src="assets/vendor/select2/select2.js"></script>
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 	
 	
 	
 		<script type="text/javascript">	
 			window.onload = function(){
-	
+
+				$('#extTable').DataTable({
+					/*language option*/
+					"language" : {
+						"emptyTable" : "데이터가 없습니다.",
+						"lengthMenu" : "페이지당 _MENU_ 개씩 보기",
+						"info" : "현재 _START_ - _END_ / _TOTAL_건",
+						"infoEmpty" : "데이터 없음",
+						"infoFiltered" : "( _MAX_건의 데이터에서 필터링됨 )",
+						"search" : "검색: ",
+						"zeroRecords" : "일치하는 데이터가 없습니다.",
+						"loadingRecords" : "로딩중...",
+						"processing" : "잠시만 기다려 주세요",
+						"paginate" : {
+							"next" : "다음",
+							"previous" : "이전"
+						}
+					},
+					"columnDefs" : [{
+						className : "dt-center",
+						"targets" : [ 1 ],
+					}]
+				});
+				
 				$.ajax({
 					url : "overTimeYearList.do",
 					dataType : "json",
@@ -194,8 +285,12 @@
 						}
 					}			
 				});
+
+				
 	
-	
+
+
+				
 	 			var ctx = document.getElementById('stackedBar').getContext('2d');
 	 			
 				var stackedBar = new Chart(ctx, {
@@ -242,6 +337,8 @@
 				        }
 				    }
 				});
+
+				
 			}
 			
 	

@@ -58,30 +58,36 @@
 		});
 
 		function sendMail (){
-			$.ajax({
-				url:"ajax/admin/sendEmail.do",
-				data: {'mail':$('#mail').val(),
-						'name' : $('#name').val()
+			reurn new Promise(function(resolve,reject){
+				console.log("sendMail()");
+				console.log($('#formMail').val());
+				console.log($('#formName').val());
+				$.ajax({
+					url:"ajax/admin/sendEmail.do",
+					data: {'mail':$('#formMail').val(),
+							'name' : $('#formName').val()
+						},
+					dataType: "text",
+					method: "GET",
+					success: function(response){
+						resolve(response);
+						
 					},
-				dataType: "text",
-				method: "POST",
-				success: function(){
-					console.log("ajax sendmail success");
+					error: function(jqXHR, textStatus, errorThrown){
+						console.log(textStatus);
+						console.log(errorThrown);
+					}
 					
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					console.log(textStatus);
-					console.log(errorThrown);
-				}
-				
-				
+					
+				});
 			});
+			
 		}
 
 		function myFormSubmit(){
 			sendMail().then(function(){
 				console.log("submit()");
-				/* document.getElementById('addUserForm').submit(); */
+				document.getElementById('addUserForm').submit();
 				$('#addUserForm').submit();
 				
 			})
@@ -149,19 +155,19 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="name">사원이름</label>
 												<div class="col-md-6">
-													<input class="form-control" id="name" name="name" type="text">
+													<input class="form-control" id="formName" name="name" form="addUserForm" type="text">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="mail">사원&nbsp;E-mail</label>
 												<div class="col-md-6">
-													<input class="form-control" id="mail" name="mail" type="email">
+													<input class="form-control" id="formMail" name="mail" type="email" form="addUserForm">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="emp">고용상태</label>
 												<div class="col-md-6">
-													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus">
+													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus" form="addUserForm">
 														<option hidden>선택하세요</option>
 														<option value="재직">재직</option>
                                                         <option value="고용예정">고용예정</option>
@@ -171,7 +177,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="regitDate">고용일</label>
 												<div class="col-md-6">
-													<input class="form-control" id="regitDate" name="regitDate" type="date">
+													<input class="form-control" id="regitDate" name="regitDate" type="date" form="addUserForm">
 												</div>
 											</div>
 											<div class="form-group">
@@ -187,13 +193,13 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="position">직책</label>
 												<div class="col-md-6">
-													<input class="form-control" id="position" name="position" type="text">
+													<input class="form-control" id="position" name="position" type="text" form="addUserForm">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="authCode">권한코드</label>
 												<div class="col-md-6">
-													<select class="form-control mb-md" id="authCode" name="authCode" required="required" autofocus="autofocus">
+													<select class="form-control mb-md" id="authCode" name="authCode" required="required" autofocus="autofocus" form="addUserForm">
 														<option hidden>선택하세요</option>
 													</select>
 												</div>
@@ -201,13 +207,19 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="teamCode">팀 선택</label>
 												<div class="col-md-6">
-													<select class="form-control mb-md" id="teamCode" name="teamCode" required="required" autofocus="autofocus">
+													<select class="form-control mb-md" id="teamCode" name="teamCode" required="required" autofocus="autofocus" form="addUserForm">
 														<option hidden>선택하세요</option>
 													</select>
 												</div>
 											</div>
+											<div class="form-group">
+                                                <label class="col-md-3 control-label" for="phone">전화번호</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="phone" name="phone" class="form-control" form="addUserForm">
+                                                </div>
+                                            </div>
 											<div class="col-md-6 control-label">
-												<button class="btn btn-primary" onclick="myFormSubmit()">등록</button>
+												<a class="btn btn-primary" onclick="myFormSubmit()">등록</a>
 												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
 											</div>
 										

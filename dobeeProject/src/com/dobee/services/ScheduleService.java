@@ -1,8 +1,11 @@
 package com.dobee.services;
 
+import com.dobee.dao.NoticeDao;
+import com.dobee.dao.ScheduleDao;
 import com.dobee.vo.schedule.Schedule;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,16 +22,38 @@ public class ScheduleService {
     public List<Schedule> mainSchedule(){
         return null;
     }
-
-
+    
+    
+    //일정 추가
+    public int addSchedule(Schedule sc) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	int result = 0;
+    	result = scheduledao.addSchedule(sc);
+    	if(result > 0) { //DB에 insert 성공하면
+    		result = sc.getSchSeq();//seq 리턴함
+    	} else { //DB에 insert 실패
+    		result = 0; 
+    	}
+    	
+    	return result;
+    }
+    
+    //일정 가져오기
+    public Schedule getSchedule(int schSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	Schedule sc = null;
+    	sc = scheduledao.getSchedule(schSeq);
+    	return sc;
+    }
+    
     //회사일정등록
-    public void addSchedule(){
+    public void addCorpSchedule(){
 
     }
 
 
     //회사일정수정
-    public void modiSchedule(){
+    public void modiCorpSchedule(){
 
     }
 
@@ -43,4 +68,6 @@ public class ScheduleService {
     public void projectSchedule(){
 
     }
+    
+    
 }

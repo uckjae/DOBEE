@@ -80,7 +80,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	DROP FOREIGN KEY `FK_USER_TO_APPROVAL`; -- 사원 -> 신청2
+	DROP FOREIGN KEY `FK_USER_TO_APPROVAL`; -- 사원 -> 결재
 
 -- 회사일정
 ALTER TABLE `CORPSCHEDULE`
@@ -400,8 +400,8 @@ CREATE TABLE `TASK` (
 	`TITLE`     VARCHAR(100) NOT NULL COMMENT '업무 제목', -- 업무 제목
 	`PROGRESS`  VARCHAR(30)  NOT NULL COMMENT '진행상황', -- 진행상황
 	`IMPORTANT` INT          NOT NULL DEFAULT 0 COMMENT '중요도', -- 중요도
-	`STARTAT`   DATE         NULL COMMENT '시작일', -- 시작일
-	`ENDAT`     DATE         NULL COMMENT '완료일', -- 완료일
+	`STARTAT`   DATE         NULL     COMMENT '시작일', -- 시작일
+	`ENDAT`     DATE         NULL     COMMENT '완료일', -- 완료일
 	`MAIL`      VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
 	`PJTSEQ`    INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
 )
@@ -493,7 +493,8 @@ ALTER TABLE `PROJSCHEDULE`
 -- 근태
 CREATE TABLE `ATTEND` (
 	`ATTSEQ`  INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
-	`ATTTIME` DATETIME    NOT NULL COMMENT '출퇴근시간', -- 출퇴근시간
+	`ATTTIME` DATETIME    NOT NULL COMMENT '시작시간', -- 시작시간
+	`OFFTIME` DATETIME    NULL     COMMENT '종료시간', -- 종료시간
 	`MAIL`    VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
 	`ATTCODE` INT         NOT NULL COMMENT '근태코드' -- 근태코드
 )
@@ -657,6 +658,7 @@ CREATE TABLE `APPLY` (
 	`REASON`    VARCHAR(1000) NOT NULL COMMENT '사유', -- 사유
 	`STARTAT`   DATETIME      NOT NULL COMMENT '시작일', -- 시작일
 	`ENDAT`     DATETIME      NOT NULL COMMENT '종료일', -- 종료일
+	`USEBREAK`  INT           NOT NULL COMMENT '연차사용일수', -- 연차사용일수
 	`ISAUTH`    VARCHAR(50)   NOT NULL COMMENT '승인여부', -- 승인여부
 	`REJREASON` VARCHAR(1000) NULL     COMMENT '반려사유', -- 반려사유
 	`DRAFTER`   VARCHAR(60)   NOT NULL COMMENT '신청자', -- 신청자
@@ -754,9 +756,9 @@ ALTER TABLE `BREAK`
 -- 휴가목록
 CREATE TABLE `BREAKLIST` (
 	`BRKSEQ`     INT         NOT NULL COMMENT '연차사용목록시퀀스', -- 연차사용목록시퀀스
+	`USINGBREAK` INT         NOT NULL COMMENT '연차사용일수', -- 연차사용일수
 	`APLSEQ`     INT         NOT NULL COMMENT '신청번호', -- 신청번호
-	`MAIL`       VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
-	`USINGBREAK` INT         NOT NULL COMMENT '연차사용일수' -- 연차사용일수
+	`MAIL`       VARCHAR(60) NOT NULL COMMENT '사원메일' -- 사원메일
 )
 COMMENT '휴가목록';
 
@@ -1077,7 +1079,7 @@ ALTER TABLE `APPLY`
 
 -- 신청
 ALTER TABLE `APPLY`
-	ADD CONSTRAINT `FK_USER_TO_APPROVAL` -- 사원 -> 신청2
+	ADD CONSTRAINT `FK_USER_TO_APPROVAL` -- 사원 -> 결재
 		FOREIGN KEY (
 			`APPROVAL` -- 결재자
 		)

@@ -59,18 +59,79 @@
 	</select>
 	
 	
-	<!-- 개인_연장근무 신청하기 0112 -->
+	<!-- 개인_연장근무 신청하기 	0112 COMPLETE -->
 	<insert id="overTimeApply" parameterType="com.dobee.vo.Apply">
 		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
 			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, 6)
 	</insert>
+	
+	
+	<!-- 개인_연장근무 확인/관리		0121	COMPELTE -->
+	<select id="getExtList" parameterType="String" resultType="com.dobee.vo.Apply">
+		SELECT APLSEQ, REQDATE, STARTAT, ENDAT, ISAUTH, APPROVAL, REASON, REJREASON
+			FROM APPLY
+			WHERE APYCODE = 6 AND DRAFTER = #{drafter}
+	</select>
+	
+	<!-- 개인_연장근무 수정/삭제 (GET) - 페이지 데이터 불러오기		0121	COMPLETE -->
+	<select id="getELforEdit" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.Apply">
+		SELECT APLSEQ, REQDATE, STARTAT, ENDAT, REASON, APPROVAL
+			 FROM APPLY
+			 WHERE APYCODE= 6 AND DRAFTER = #{drafter} AND APLSEQ = #{aplSeq}
+	</select>
+	
+	
+	<!-- 개인_연장근무 수정하기 (POST)			0120	COMPLETE -->
+	<update id="postEditExtApply" parameterType="com.dobee.vo.Apply">
+		UPDATE APPLY
+			SET STARTAT = #{startAt},
+				ENDAT = #{endAt},
+	        	APPROVAL = #{approval},
+	        	REASON = #{reason}
+		WHERE APLSEQ = #{aplSeq} AND DRAFTER = #{drafter}
+	</update>
+	
+	
+	<!-- 개인_연장근무 신청 삭제 POST			0121 게다죽	COMPLETE -->
+    <delete id="postDeleteExtList">
+    	DELETE FROM APPLY WHERE APLSEQ = #{aplSeq}
+    </delete>
 		
 	
-	<!-- 개인_부재 신청하기 0112 -->
+	<!-- 개인_부재 신청하기	 0112	COMPLETE -->
 	<insert id="absApply" parameterType="com.dobee.vo.Apply">
-		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, ISAUTH, DRAFTER, APPROVAL, APYCODE)
-			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, '미승인', #{drafter}, #{approval}, #{apyCode})
+		INSERT INTO APPLY (REQDATE, REASON, STARTAT, ENDAT, USEBREAK, ISAUTH, DRAFTER, APPROVAL, APYCODE)
+			VALUES (CURDATE(), #{reason}, #{startAt}, #{endAt}, #{useBreak}, '미승인', #{drafter}, #{approval}, #{apyCode})
 	</insert>
+	
+	
+	<!-- 개인 부재 신청 수정하기 (GET)	 	0120		COMPLETE -->
+	<select id="getBMLforEdit" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+					ON A.APYCODE = AC.APYCODE
+			WHERE A.DRAFTER=#{drafter} AND A.APLSEQ = #{aplSeq}
+	</select>
+	
+	
+	<!-- 개인 부재 신청 수정하기 (POST)		0120		COMPLETE -->
+	<update id="postEditApply" parameterType="com.dobee.vo.Apply">
+		UPDATE APPLY
+			SET APYCODE = #{apyCode},
+				STARTAT = #{startAt},
+				ENDAT = #{endAt},
+				USEBREAK = #{useBreak},
+	        	APPROVAL = #{approval},
+	        	REASON = #{reason}
+		WHERE APLSEQ = #{aplSeq}
+	</update>
+
+	
+	<!-- 개인_부재 신청 삭제하기 (POST)		0120			COMPLETE -->
+	<delete id="deleteApply" parameterType="Integer" >
+		DELETE FROM APPLY WHERE APLSEQ = #{aplSeq}
+	</delete>
 	
 	
 	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기 (싸그리)			0119 COMPLETE -->
@@ -167,14 +228,12 @@
 	</select>
 
 	
-	<!-- 부재내역 불러오기 - COMPLETE -->
-	<select id="absMg" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
-		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+	<!-- 개인_부재내역 불러오기 - COMPLETE -->
+	<select id="absMg" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
+		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
-				LEFT OUTER JOIN BREAKLIST BL
-					ON A.APLSEQ = BL.APLSEQ
 		    WHERE A.APYCODE != 6 AND A.DRAFTER = #{drafter}
 	</select>
 	
@@ -189,14 +248,12 @@
     </select>
     
     
-    <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 -->
+    <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 COMPLETE -->
     <select id="breakListMgr" resultType="com.dobee.vo.member.BreakManageList">
-    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON, A.DRAFTER, U.NAME
+    	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON, A.DRAFTER, U.NAME
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
-				LEFT OUTER JOIN BREAKLIST BL
-					ON A.APLSEQ = BL.APLSEQ
 				INNER JOIN USER U
 					ON A.DRAFTER = U.MAIL
 		    WHERE A.APYCODE != 6
@@ -204,13 +261,13 @@
     </select>
     
     
-    <!-- 매니저_부재관리 - isAuth update (POST)		0115 -->
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 COMPLETE -->
     <update id="absReqHandle" parameterType="com.dobee.vo.Apply">
     	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
     </update>
 	
 	
-    <!-- 매니저_연장근무 관리 - 데이터 테이블 출력 (GET)		0115 -->
+    <!-- 매니저_연장근무 관리 - 데이터 테이블 출력 (GET)		0115 COMPLETE -->
     <select id="extListMgr" resultType="com.dobee.vo.member.BreakManageList">
     	SELECT A.APLSEQ, U.NAME, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.DRAFTER, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
@@ -225,7 +282,7 @@
     </select>
     
     
-    <!-- 매니저_부재관리 - isAuth update (POST)		0115 ~ing -->
+    <!-- 매니저_부재관리 - isAuth update (POST)		0115 COMPLETE -->
     <update id="extReqHandle" parameterType="com.dobee.vo.Apply">
     	UPDATE APPLY SET REJREASON = #{rejReason}, ISAUTH = #{isAuth} WHERE APLSEQ = #{aplSeq}
     </update>

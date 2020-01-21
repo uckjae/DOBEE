@@ -3,12 +3,15 @@ package com.dobee.controller;
 
 
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,7 +36,9 @@ import com.dobee.services.ChatService;
 import com.dobee.services.DebitService;
 import com.dobee.services.GoogleVisionService;
 import com.dobee.services.MemberService;
+import com.dobee.services.NoticeService;
 import com.dobee.services.ProjectService;
+import com.dobee.services.ScheduleService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
@@ -42,6 +47,7 @@ import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
+import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.NotSchedule;
@@ -73,6 +79,12 @@ public class DoController {
     
     @Autowired
     private DebitService debitService;
+    
+    @Autowired
+    private NoticeService noticeService;
+    
+    @Autowired
+    private ScheduleService scheduleService;
     
 
     //로그인
@@ -229,23 +241,91 @@ public class DoController {
     }
 
 
-    //공지사항상세보기
-    @RequestMapping("noticeDetail.do")
-    public String noticeDetail(int notSeq, Model model){
-        Notice notice = null;
-        int n = 0;
-        NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    	notice=noticedao.noticeDetail(notSeq);
-        n=noticedao.noticeCount(notSeq);
-    	//System.out.println(notice.toString());
-    	//System.out.println("doContorller noticeDetail() notice seq : " + notice.getNotSeq());
+    //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
+    @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
+    public String noticeDetail(@RequestParam(value="notSeq") int notSeq, Model model){
+        Notice notice = null; 
+        NoticeFile nf = null;
+        NotSchedule ns = null;
+        Schedule sc = null;
         
-        model.addAttribute("n",n); //조회수 
-        model.addAttribute("notice",notice);
+        int noticeCount = 0;
+                        
+        //조회수 올리기
+        noticeCount = noticeService.updateNoticeCount(notSeq);
+        
+        //DB에서 글 가져오기
+        notice = noticeService.getNotice(notSeq);
+        model.addAttribute("notice", notice);
+        
+        //DB에서 파일 가져오기
+        nf = noticeService.getNoticeFile(notSeq);
+        if(nf !=null) {
+            model.addAttribute("nf", nf);
+        } else {
+        	model.addAttribute("nf", null);
+        }
+
+        //DB에서 공지사항 일정 가져오기
+        ns = noticeService.getNotSchedule(notSeq);
+        
+        if(ns !=null) {
+            System.out.println("공지사항 일정?"+ns.toString());
+        	model.addAttribute("ns", ns);
+            sc = scheduleService.getSchedule(ns.getSchSeq());
+            System.out.println("스케쥴은?"+sc.toString());
+            model.addAttribute("sc", sc);
+        } else {
+        	model.addAttribute("ns", null);
+        	model.addAttribute("sc", null);
+        }
+        
+       
         return "notice/noticeDetail";
     }
     
-   //공지사항삭제하기
+    //공지사항 파일 다운로드 noticeDownload.do
+    @RequestMapping(value="noticeDownload.do")
+    public void noticeDownload(@RequestParam(value="p") String p, @RequestParam(value="f") String f, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		/*
+		 * //한글 처리 형식 지정 String sEncoding = new
+		 * String(filename.getBytes("euc-kr"),"8859_1");
+		 * response.setHeader("Content-Disposition","attachment;filename= " +
+		 * sEncoding);
+		 * //response.setHeader("Content-Disposition","attachment;filename= " + filename
+		 * +";");
+		 */
+		// 한글 파일명 처리 (Filtter 처리 확인) -> 경우 ...
+		// 한글 파일 깨짐 현상 해결하기
+		// String fname = new String(f.getBytes("ISO8859_1"),"UTF-8");
+		String fname = new String(f.getBytes("euc-kr"), "8859_1");
+		System.out.println(fname);
+		// 다운로드 기본 설정 (브라우져가 read 하지 않고 ... 다운 )
+		// 요청 - 응답 간에 헤더정보에 설정을 강제 다운로드
+		// response.setHeader("Content-Disposition", "attachment;filename=" +
+		// new String(fname.getBytes(),"ISO8859_1"));
+		response.setHeader("Content-Disposition", "attachment;filename=" + fname + ";");
+		// 파일명 전송
+		// 파일 내용전송
+		String fullpath = request.getServletContext().getRealPath(p + "/" + f);
+		System.out.println(fullpath);
+		FileInputStream fin = new FileInputStream(fullpath);
+		// 출력 도구 얻기 :response.getOutputStream()
+		ServletOutputStream sout = response.getOutputStream();
+		byte[] buf = new byte[1024]; // 전체를 다읽지 않고 1204byte씩 읽어서
+		int size = 0;
+		while ((size = fin.read(buf, 0, buf.length)) != -1) // buffer 에 1024byte
+		// 담고
+		{ // 마지막 남아있는 byte 담고 그다음 없으면 탈출
+			sout.write(buf, 0, size); // 1kbyte씩 출력
+		}
+		fin.close();
+		sout.close();
+	}
+    
+    //공지사항삭제하기
     @RequestMapping("noticeDel.do")
     public String noticeDelte(int notSeq){
     	NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
@@ -259,49 +339,81 @@ public class DoController {
     public String noticeWrite(){
         return "notice/noticeWrite";
     }
+    
+    //공지사항글쓰기
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
-    public String noticeWrite(Notice n, NotSchedule ns, Schedule sc,HttpServletRequest request,Principal principal) throws IOException {
-    	    //방금수정 NotSchedule ns 추가
-    		List<CommonsMultipartFile> files = n.getFiles();
-    		List<String>filenames = new ArrayList<String>(); //파일명관리
+    public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
+    	
+    	//공지사항 글 DB 넣기
+    	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
+    	
+    	//파일 업로드 파일명
+    	CommonsMultipartFile file = nf.getFile();
+    	String filename = file.getOriginalFilename(); //원본 파일명
+    	
+    	//공지사항 파일을 업로드한 경우
+    	if(!( filename == null || filename.trim().equals("") )) {
+        	String path = request.getServletContext().getRealPath("/upload");
+        	String fpath = path + "\\" + filename;
+        		
+        	//파일 쓰기 작업
+        	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+        	fs.write(file.getBytes());
+        	fs.close();
+        		
+        	//DB에 파일 이름 저장
+        	nf.setOrgName(filename);
+        	UUID randomIdMulti = UUID.randomUUID();
+        	String saveName = filename+"_"+randomIdMulti;
+        	System.out.println("저장될 파일 이름?"+saveName);
+        	nf.setSaveName(saveName);
+        
+        	//공지사항 글번호 주입
+        	nf.setNotSeq(notSeq);
+        	
+        	int result = noticeService.noticeFileWrite(nf);
+        	if(result > 0) {
+        		System.out.println("공지사항 파일 업로드 완료");
+        	}
+    	}
+    	
+    	//공지사항 일정을 입력한 경우
+    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
     		
-    		if(files != null && files.size()>0){ //최소한개 업로드
-    			for(CommonsMultipartFile multifile : files) {
-    				String filename = multifile.getOriginalFilename();//?
-    				String path  = request.getServletContext().getRealPath("/img");
-    			    
-    				String fpath = path+"\\"+filename;
-    			    
-    			    if(!filename.equals("")) {//실 파일 업로드
-    			    	FileOutputStream fs = new FileOutputStream(fpath);
-    			    	fs.write(multifile.getBytes());
-    			    	fs.close();
-    			    }
-    			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
+    		int result = scheduleService.addSchedule(sc); 
+    		
+    		if(result > 0) { //DB에 잘 저장됨
+    			System.out.println("스케쥴 등록 완료");
+    			int schSeq = result;
+    			ns.setSchSeq(schSeq);
+    			//공지사항 일정 등록
+    			
+    			ns.setNotSeq(notSeq); //공지사항 글 번호 주입
+    			int result2 = noticeService.addNotSchedule(ns);
+    			
+    			if(result2 > 0) {
+    				System.out.println("공지사항 일정 등록 완료");
     			}
+    			
     		}
-    		
-    		n.setSaveName(filenames.get(0));
-    		
-    		NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    		noticedao.noticeWrite(n); //방금수정	
-    		noticedao.noticeWrite2(ns); //방금수정
-    		noticedao.noticeWrite3(sc); //방금수정
-    		return "redirect:noticeList.do"; //들어주는 주소 ...
+    	}
+    	
+    	
+    	return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
     //공지사항수정하기get
     @RequestMapping(value="noticeModify.do",method=RequestMethod.GET)
     public String noticeModify(int notSeq,Model model){
-    	
         NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
-        Notice notice =noticedao.noticeDetail(notSeq);
+        Notice notice =noticedao.getNotice(notSeq);
         model.addAttribute("notice",notice);
     	return "notice/noticeModify";
     }
     
     //공지사항수정하기post
+    /*
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(Notice n,HttpServletRequest request,Principal principal) throws IOException {
     	System.out.println("docontroller noticeModify() Notice.toString() : " + n.toString());
@@ -329,67 +441,138 @@ public class DoController {
 		noticedao.noticeModify(n);		
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); //들어주는 주소 ...
     }
-    
+    */
 
 
-    // 부재일정신청 GET 0110			게다죽
+    // 개인_부재일정신청 GET 0110           게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
         return "attend/breakApply";
     }
     
-    // 부재일정신청 POST 0112			게다죽
+    
+    // 개인_부재일정신청 POST 0112          게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply){
-    	String result = applyService.absApply(apply);
-    	// System.out.println("봐봐  : " + result);
-    	
+    public String absApplyPost(Apply apply, Authentication auth){
+        apply.setDrafter(auth.getName());
+        String result = applyService.absApply(apply);
+        // System.out.println("봐봐  : " + result);
+        
         return "attend/breakApply";
+    }
+    
+    
+    // 개인_부재일정 수정/삭제 GET                0120    COMPLETE
+    @RequestMapping(value="editApply.do", method=RequestMethod.GET)
+    public String getEditApply (Model model, Apply apply, Authentication auth, Integer aplSeq) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        BreakManageList results = applyService.getBMLforEdit(apply);
+        model.addAttribute("editApplyList", results);
+        
+        return "attend/breakApplyEdit";
+    }
+    
+    
+    // 개인_부재일정 수정 POST      0121 COMPLETE
+    @RequestMapping(value="postEditApply.do", method = RequestMethod.POST)
+    public String postEditApply (BreakManageList bml, Integer aplSeq, Authentication auth) {
+        bml.setDrafter(auth.getName());
+        bml.setAplSeq(aplSeq);
+        int results = applyService.postEditApply(bml);
+        
+        return "main/main";
+    }
+    
+    
+    // 개인_부재일정 삭제 POST          0120    COMPLETE
+    @RequestMapping(value="deleteApply.do", method=RequestMethod.GET)
+    public String postDeleteApply (Integer aplSeq) {
+        applyService.deleteApply(aplSeq);
+        
+        return "attend/breakManage";    
     }
 
 
-    // 연장근무 신청 POST			0110 게다죽
-    @RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
+    // 연장근무 신청 GET          0110 게다죽
+    @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
     public String overTiemApply(){
+        
         return "attend/extendApply";
     }
     
     
-    // 개인_연장근무관리 GET			0112 게다죽
+    // 개인_연장근무신청 POST           0112 게다죽
     @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
- 	public String extendApplyPost(Apply apply) {
-    	String result = applyService.overtimeApply(apply);
-    	// System.out.println("봐봐 이," + result);
+    public String extendApplyPost(Apply apply) {
+        String result = applyService.overtimeApply(apply);
+        // System.out.println("봐봐 이," + result);
 
-	return "attend/extendApply";
-}
+        return "attend/extendApply";
+    }
 
 
-    // 개인_부재일정관리 GET			0112 게다죽		COMPLETE 0116
+    // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
-    public String absMg(Model model, Apply apply, Authentication auth){
-    	apply.setDrafter(auth.getName());			// 꿀잼
-    	List<BreakManageList> results = applyService.absMg(apply);
-    	model.addAttribute("brkList", results);
-    	
-    	return "attend/breakManage";
+    public String absMg(Model model, Authentication auth){
+        List<BreakManageList> results = applyService.absMg(auth.getName());
+        model.addAttribute("brkList", results);
+        
+        return "attend/breakManage";
     }
     
 
-    // 개인_근무내역확인										&&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
-    @RequestMapping("workManage.do")
-    public String workChart(){
+    // 개인_근무내역관리/확인 GET         0121 게다죽        ~ing....???                 &&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
+    @RequestMapping(value="workManage.do", method=RequestMethod.GET)
+    public String getExtList(Model model, Authentication auth){
+        List<Apply> results = applyService.getExtList(auth.getName());
+        model.addAttribute("extList", results);
+
+        return "attend/workManage";
+    }
+    
+    
+    // 개인_연장근무 신청 수정 Page GET       0121 게다죽        COMPLETE
+    @RequestMapping(value="editExtApply.do", method=RequestMethod.GET)
+    public String getEditExtList (Model model, Apply apply, Authentication auth, Integer aplSeq) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        Apply results = applyService.getELforEdit(apply);
+        model.addAttribute("ELforEdit", results);
+        
+        return "attend/extApplyEdit";
+    }
+    
+    
+    // 개인_연장근무 신청 수정 Page POST      0121 게다죽        COMPLETE
+    @RequestMapping(value="postEditExtApply.do", method = RequestMethod.POST)
+    public String postEditExtList (Apply apply, Integer aplSeq, Authentication auth) {
+        apply.setAplSeq(aplSeq);
+        apply.setDrafter(auth.getName());
+        int result = applyService.postEditExtApply(apply);
+        
+        return "main/main";
+    }
+    
+    
+    // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
+    @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
+    public String postDeleteExtList (Integer aplSeq) {
+        System.out.println("이거 일단 도니?" );
+        System.out.println("이거 일단 도니?" + aplSeq);
+        int result = applyService.postDeleteExtList(aplSeq);
+        System.out.println("이거 일단 도니?" + result);
+        System.out.println("결과를 확인하는 ? " + result);
         return "attend/workManage";
     }
 
 
-    // 매니저_부재관리 - isAuth update GET		0114 게다죽
+    // 매니저_부재관리 - isAuth update GET     0114 게다죽            // 나중에 권한 코드로 수정 validation 입혀줘야 하고
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
-    public String absSign(Model model){
-    	List<BreakManageList> results = applyService.breakListMgr();
-    	// System.out.println("다시 한번더 확인 : " + results);
-    	model.addAttribute("brkListMgr", results);
-    	
+    public String absSign(Model model){                         
+        List<BreakManageList> results = applyService.breakListMgr();
+        model.addAttribute("brkListMgr", results);
+        
         return "attend/breakManagement_Mgr";
     }
 
@@ -397,28 +580,29 @@ public class DoController {
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
+        System.out.println("이거 봐바 : " + apply.toString());
         applyService.absReqHandle(apply);
         
         return "attend/breakManagement_Mgr";
     }
     
 
-    // 매니저_연장근무관리 리스트 - isAuth update GET			0115 게다죽
+    // 매니저_연장근무관리 리스트 - isAuth update GET           0115 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.GET)
     public String extSign(Model model){
-    	List<BreakManageList> results = applyService.extListMgr();
+        List<BreakManageList> results = applyService.extListMgr();
         model.addAttribute("extListMgr", results);
         
-    	return "attend/extendManagement_Mgr";
+        return "attend/extendManagement_Mgr";
     }
     
     
-    // 매니저_연장근무관리 리스트 - isAuth update POST			0115 게다죽
+    // 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.POST)
     public String extReqHandle(Apply apply){
-    	applyService.extReqHandle(apply);
+        applyService.extReqHandle(apply);
         
-    	return "attend/extendManagement_Mgr";
+        return "attend/extendManagement_Mgr";
     }
 
 
