@@ -1,103 +1,109 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<title>IdFind</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iofrm</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="css/iofrm-theme2.css">
+    
+    
+   <script>
+$(document).on('click','#findId',function(){
+	var name = $('#name').val();
 
-<style >
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+ 	var phone = $('#phone').val();
 
-body{
-   font-family: 'Noto Serif KR', serif;
-}
-	
-	</style>
+ 	var postData = {'name' : name ,'phone' : phone};
 
+	$.ajax({
+        url:'/findingId.do',
+        type:'POST',
+        data: postData,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType : "json",
+
+        success:function(data){
+        	var emailLists = data.user_email;
+        	var emailLength = emailLists.length
+        	var emailfind = emailLists.substring(1, emailLength-1)
+       	 		 $("#emailList").append("<h1>"+"회원님의 정보로 등록된 이메일은 : "+emailfind+" 입니다.</h1>")
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown){
+        	alert('정보를 다시 입력해주시길 바랍니다.' );
+        }
+    });
+});
+
+</script>
 </head>
 <body>
-	
-	  <img src="img/dobeelogo.png" alt="dobeelogo" style="float: left; width:10%; height: 14%">
+    <div class="form-body">
+    
+        <!--시작  -->
+        <div class="website-logo">
+            <a href="#">
+                <div class="logo">
+                    <img class="logo-size" src="img/logo-light.svg" alt="">
+                </div>
+            </a>
+        </div>
+        <!--끝 -->
+        
+        <div class="row">
+        
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                </div>
+            </div>
+            
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>도비에 오신 걸 환영합니다.</h3>
+                        <p>Dobby is free</p>
+                        <div>
+                            <p class="active">ID 찾기</p>
+                        </div>
+                        
+                        <form>
+                         <input class="form-control" type="text" name="user_name" id ="name" placeholder="이름을 입력하세요" required>
+                         <input class="form-control" type="text" name="user_phone" id ="phone"  placeholder="휴대폰번호를 입력하세요" required>
 
-	<div class="limiter" style="height: 20%">
-	  
-		<div class="container-login100" style="width: 65%">
-						
-              <img src="img/workplace.PNG" alt="AVATAR" style="width:40%; height: 400px">
-				
-				
-				<br>
-		
-			<div class="wrap-login100 p-t-85 p-b-20">
-				<form class="login100-form validate-form" style="height: 30%">
-				<h2> 아이디 찾기 </h2>			
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
-						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="이름"></span>
-					</div>
+                            <div class="form-button">
+                            
+                             <button type="button" id="findId"
+					           class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">완료
+				             </button>
+				             
+                                <a href="forget2.html">Forget password?</a>
+                                
+                            </div>
+                           
+                        </form>
+                         
+                       <!--  <div class="other-links">
+                            <span>Or login with</span><a href="#">Facebook</a><a href="#">Google</a><a href="#">Linkedin</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+        </div>
 
-					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="text" name="pass">
-						<span class="focus-input100" data-placeholder="휴대폰번호"></span>
-					</div>
-					
-					
-					<div class="container-login100-form-btn" style="height: 20%">
-						<button class="login100-form-btn">
-							아이디 찾기
-						</button>
-						</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
-
+    </div>
+    
+  
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
