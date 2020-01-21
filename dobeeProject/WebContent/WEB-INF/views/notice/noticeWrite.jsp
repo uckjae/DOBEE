@@ -76,7 +76,21 @@
 	
 	<!-- 파일 업로드 -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
-	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>s
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<!-- Sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<style>
+	.swal-button {
+    	background: #34495E;
+	}
+	.swal-footer {
+  		text-align: center;
+	}
+	.swal-icon--warning {
+		border-color: #f27474;
+	}
+	
+	</style>
 </head>
 
 <script>
@@ -106,10 +120,58 @@
         		        },
         		    },    	       	
             });
+        
         $.summernote.interface;
 
-        
-        
+        $("#notceWriteForm").on('submit', function(e){
+            e.preventDefault();
+        	if($("#title").val() == "" && $("#summernote").val() == ""){
+        		swal({
+    				title: "공지사항 글",
+    				text: "제목 또는 내용을 입력해주세요", 
+    				icon: "warning", //"info,success,warning,error" 중 택1
+    				showConfirmButton: true
+    				//icon: "warning" //"info,success,warning,error" 중 택1
+    					}).then((YES) => {
+    							$("#title").focus();
+    							})
+            	} else if ($("#nsContent").val()!==""){
+					if($("#startTime").val()=="" || $("#endTime").val()=="" ){
+			        	swal({
+							title: "공지사항 일정",
+							text: "일정을 달력에서 선택해주세요", 
+							icon: "warning", //"info,success,warning,error" 중 택1
+							showConfirmButton: true
+							//icon: "warning" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+										$("#startTime").focus();
+										})
+
+					} 
+
+            	} else if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
+					if($("#nsContent").val()==""){
+				        swal({
+							title: "공지사항 일정",
+							text: "일정 내용을 입력해주세요", 
+							icon: "warning", //"info,success,warning,error" 중 택1
+							showConfirmButton: true
+							//icon: "warning" //"info,success,warning,error" 중 택1
+							}).then((YES) => {
+								$("#nsContent").focus();
+									});
+					} 
+            	} else {
+                	console.log('이거 타???');
+            		$("#notceWriteForm").submit();
+                	}
+
+
+           	
+                 	//$("#notceWriteForm").submit();
+               
+
+        });
         
     });
 </script>
@@ -149,7 +211,7 @@
 						</header>
 						<div class="panel-body">
 						
-						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
+						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="notceWriteForm">
 						      <!--공지사항 제목  -->
 							   <div class="form-group">
 								   	<label class="col-md-3 control-label">제목</label>
@@ -197,7 +259,7 @@
 							</div>
 							<!--공지사항 작성,취소 버튼 -->
 						    <div class ="text-center" style="margin-top:18px;">
-						     <input type="submit" class="btn btn-primary mr-3" value="작성">
+						     <input type="submit" id="submitBtn" class="btn btn-primary mr-3" value="작성">
 						     <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
 						    </div>   
 						   </form>   
