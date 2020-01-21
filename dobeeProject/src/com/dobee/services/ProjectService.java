@@ -134,14 +134,17 @@ public class ProjectService {
 
 
     //상세업무조회
-    public List<TaskDetail> taskDetailList(){
-        return null;
+    public List<TaskDetail> getTaskDetailList(int tskSeq){
+        ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+        List<TaskDetail> taskDetailList = projectDao.getTaskDetailList(tskSeq);
+    	return taskDetailList;
     }
 
 
     // 상세업무입력
-    public void addTaskDetail(){
-
+    public void addTaskDetail(TaskDetail taskDetail){
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	projectDao.addTaskDetail(taskDetail);
     }
 
 

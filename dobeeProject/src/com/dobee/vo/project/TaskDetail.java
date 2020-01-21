@@ -6,7 +6,7 @@ import lombok.ToString;
 @ToString
 @Data
 public class TaskDetail {
-    private int tDSeq;
-    private String tDContent;
-    private int tSeq;
+    private int tdSeq;
+    private String tdContent;
+    private int tskSeq;
 }

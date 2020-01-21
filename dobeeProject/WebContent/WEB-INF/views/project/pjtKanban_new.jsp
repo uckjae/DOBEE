@@ -7,20 +7,7 @@
 <head>
     <c:import url="/common/HeadTag.jsp"/>
     <c:import url="/common/BottomTag.jsp"/>
-	<style type="text/css">
-	.input-line{
-	    background: transparent;
-	    border: none;
-	    border-bottom: 2px solid #000000;
-	}
-	.input-noneborder{
-		background: transparent;
-	    border: none;
-	    font-style: italic;
-	    font-size: 2em;
-	}
 	
-	</style>
 	
 	<!-- Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
@@ -129,8 +116,8 @@
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
-
-
+				$('.progress-button').attr("style","background-color:white; color:black;");
+				$('#taskDetailTskSeq').attr("value",tskSeq);
 				$.ajax({
 					url:"ajax/project/getTask.do",
 					data: {"tskSeq":tskSeq},
@@ -139,28 +126,137 @@
 						console.log(data);
 						var task = data;
 						$('#taskDetailTitle').val(task.title);
-						$('#taskFormStartAt').val(task.startAt);
-						$('#taskFormEndtAt').val(task.endAt);
+						var startDate = new Date(task.startAt);
+						var formatedStartDate = date_to_str(startDate);
+						$('#taskFormStartAt').val(formatedStartDate);
+						var endDate = new Date(task.endAt);
+						var formatedEndDate = date_to_str(endDate);
+						$('#taskFormEndtAt').val(formatedEndDate);
 						$('#taskFormMail').val(task.name);
 						$('#listenSlider').val(task.important);
 						$('#importantShow').text(task.important);
+						$('.progress-button').each(function(index,element){
+							if($(element).text() == task.progress){
+								$(element).attr("style","background-color:#34495e; color:white;");
+								$('#taskFormProgress').val($(element).text());
+							}
+						});
+							
+					}
+				});
+
+				$.ajax({
+					url:"ajax/project/getTaskDetailList.do",
+					data: {"tskSeq":tskSeq},
+					dataType: "JSON",
+					success:function(data){
+						console.log("taskDetailLis Ajax Success!!!");
+						console.log(data);
+						
 					}
 				});
 					
-				$('#taskDetailTitle').val()
-				
+				$('#taskFormTskSeq').val(tskSeq);
 				
 				console.log(tskSeq);
 			});
+
+			$('.progress-button').click(function(){
+				$('.progress-button').attr("style","background-color:white; color:black;");
+				$(this).attr("style","background-color:#34495e; color:white;");
+				$('#taskFormProgress').val($(this).text());
+			});
 			/* /모달띄우는 함수 */
+
+			/* 버튼에따라  value */
 			
 			
 			
 		});
 
+		function date_to_str(format)
+
+		{
+		    var year = format.getFullYear();
+		    var month = format.getMonth() + 1;
+		    if(month<10) month = '0' + month;
+		    var date = format.getDate();
+		    if(date<10) date = '0' + date;
+		
+		    return year + "-" + month + "-" + date;
+		}
+
+		function makeContent(data){
+			console.log(data);
+			console.log($(data).attr("class"));
+			if($(data).attr("class") == "fa fa-plus-square before"){
+				var formDiv = $('<div class="row">');
+					var form = $('<form action="ajax/project/addTaskDetail.do" id="addTaskDetailForm" style="text-align:center; width: -moz-max-content;">');
+						var taskDetailInput = $('<input type="text" form="taskContentForm" name="tdContent" class="input-line" style="width: text-align: center; margin-left: 5em;">');
+						var taskDetailSubmit = $('<a class="mb-xs mt-xs mr-xs btn btn-primary" onclick="taskDetailSubmit(this)" style="margin-left:1em">');
+							$(taskDetailSubmit).text("추가하기");
+						var taskDetailCancle = $('<button class = "mb-xs mt-xs mr-xs btn btn-primary" style="margin-left:1em">');
+							$(taskDetailCancle).attr("onclick","makeContent("+data+")");
+							$(taskDetailCancle).text("취소하기");
+					$(form).append(taskDetailInput);
+					$(form).append(taskDetailSubmit);
+					$(form).append(taskDetailCancle);
+				$(formDiv).append(form);
+				$('#taskDetailTskSeq').after(formDiv);
+				$(data).attr("class","fa fa-minus-square after");
+			}else{
+				console.log("else 탔다");
+				$('#addTaskDetailForm').remove();
+				$(data).attr("class","fa fa-plus-square before");
+			}
+		}
+
+		function taskDetailSubmit(data){
+			
+			console.log(data);
+			var thisForm = $('#taskContentForm');
+			console.log(thisForm);
+			var formData = thisForm.serialize();
+			console.log(formData);
+			$.ajax({
+				url: "ajax/project/addTaskDetail.do",
+				method: "post",
+				data: formData,
+				dataType: "JSON",
+				success:function(){
+					makeContent($('#addTaskContentButton'));
+				}
+									
+			});
+			
+		}
+
+		function getTaskDetailList(){
+
+		}
 		
     </script>
-    
+    <style type="text/css">
+	.input-line{
+	    background: transparent;
+	    border: none;
+	    border-bottom: 2px solid #000000;
+	    border-color: #428bca;
+	    color : #428bca;
+	}
+	.input-noneborder{
+		background: transparent;
+	    border: none;
+	    font-size: 1.5em;
+	}
+	
+	.progress-button:focus{
+		background-color: #34495e;
+		color: white;
+	}
+	
+	
+	</style>
 	
 </head>
 <body>
@@ -204,6 +300,7 @@
                         </li>
                         <li>
                             <a href="#medias" data-toggle="tab">2020년 1분기</a>
+                            <button></button>
                         </li>
                     </ul>
                 </div>
@@ -519,7 +616,7 @@
 									
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
-											<form id="taskForm" class="form-horizontal mb-lg">
+											<form id="ajax/project/taskForm.do" class="form-horizontal mb-lg">
 												<div class="form-group">
 													<label class="col-md-3 control-label">날짜</label>
 													<div class="col-md-6">
@@ -535,78 +632,64 @@
 												</div>
 												<div class="form-group">
 													<label class="col-md-3 control-label">담장자</label>
-													<div class="col-md-6">
-															<input type="text" id="taskFormMail" name="mail" class="input-noneborder" readonly="readonly"/>
+													<div class="col-md-6 row">
+															<i class="fa fa-reddit"></i><input type="text" id="taskFormMail" name="mail" class="input-noneborder" readonly="readonly"/>
 													</div>
 												</div>
 												<div class="form-group">
-														<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
-														<div class="col-md-6">
-															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
-																<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" />
-																<input type="hidden" name="pjtSeq" value="" />
-															</div>
+													<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
+													<div class="col-md-6">
+														<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
+															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" />
+															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" />
+															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" />
 														</div>
 													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label">진행상황</label>
+													<input type="hidden" id="taskFormProgress" name="progress" value=""> 
+													<div class="col-md-6 btn-group">
+														<button type="button" class="btn btn-default progress-button">예정</button>
+														<button type="button" class="btn btn-default progress-button">진행</button>
+														<button type="button" class="btn btn-default progress-button">테스트</button>
+														<button type="button" class="btn btn-default progress-button">완료</button>
+													</div>
+												</div>
+												<br>
+												<br>
+												<hr>
+												<div class="form-group" style="text-align: center;">
+													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록">
+														&nbsp;&nbsp;
+													<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+												</div>	
 											</form>
 										</div>
 										<div class="tab-pane" id="content">
-											<h1>second</h1>
-											<form id="taskDetailForm" class="form-horizontal mb-lg" >
-													<div class="form-group mt-lg">
-														<label class="col-sm-3 control-label">Name</label>
-														<div class="col-sm-9">
-															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
-														</div>
-													</div>
+											
+											<form action="ajax/project/taskContentForm.do" id="taskContentForm" class="form-horizontal mb-lg" >
+													<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
 													<div class="form-group">
-														<label class="col-sm-3 control-label">Email</label>
-														<div class="col-sm-9">
-															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
+														<div class="col-md-6">
+															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
 														</div>
 													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">URL</label>
-														<div class="col-sm-9">
-															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Comment</label>
-														<div class="col-sm-9">
-															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
-														</div>
-													</div>
+													
 												</form>
 										</div>
 										<div class="tab-pane" id="checkList">
 											<h1>second</h1>
 											<form id="checkListForm" class="form-horizontal mb-lg" >
-													<div class="form-group mt-lg">
-														<label class="col-sm-3 control-label">Name</label>
-														<div class="col-sm-9">
-															<input type="text" name="name" class="form-control" placeholder="Type your name..." required/>
-														</div>
+													
+												<div class="form-group">
+													<label class="col-sm-3 control-label">Comment</label>
+													<div class="col-sm-9">
+														<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
 													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Email</label>
-														<div class="col-sm-9">
-															<input type="email" name="email" class="form-control" placeholder="Type your email..." required/>
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">URL</label>
-														<div class="col-sm-9">
-															<input type="url" name="url" class="form-control" placeholder="Type an URL..." />
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Comment</label>
-														<div class="col-sm-9">
-															<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
-														</div>
-													</div>
-												</form>
+												</div>
+												
+											</form>
 										</div>
 									</div>
 										<div class="modal-footer">
