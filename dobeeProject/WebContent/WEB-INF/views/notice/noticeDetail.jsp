@@ -140,38 +140,54 @@
 							<input type="text" class="form-control mb-3" id="title" name="title" value="${notice.title}" readonly>
 						</div>
 						<div style="margin: 15px"></div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">공지사항 일정</label>
-							<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }"readonly>
-						</div>
-						<div class="form-group">
-							<div class="input-daterange input-group" data-plugin-datepicker>
-								<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-								<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="<fmt:formatDate value='${sc.startTime}' pattern='yyyy-MM-dd'/>" readonly>
-								<span class="input-group-addon">to</span>
-								<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="<fmt:formatDate value='${sc.endTime}' pattern='yyyy-MM-dd'/>" readonly>
-							</div> 
-						</div>
-						<!-- 파일 업로드  -->
-						<div class="form-group" style="margin-bottom:3px;"> 
-							 	 <label class="col-md-3 control-label">파일</label>
-							 	 <a href="noticeDownload.do?p=upload&f=${nf.orgName}">${nf.orgName}</a>
-						</div>
-						<!-- <div class="form-group">
-							<div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="input-append">
-								 	<div class="uneditable-input">
-								 		<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
-									</div>
-									<span class="btn btn-default btn-file">
-										<span class="fileupload-exists">변경</span>
-										<span class="fileupload-new">파일 선택</span>
-										<input type="file" name="file"  />
-									</span>
-									<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+						
+						
+						<!-- 공지사항 일정 -->
+						<c:choose>
+							<c:when test="${ not empty ns}">
+								<div class="form-group">
+									<label class="col-md-3 control-label">공지사항 일정</label>
+									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }"readonly>
 								</div>
+								<div class="form-group">
+									<div class="input-daterange input-group" data-plugin-datepicker>
+										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="<fmt:formatDate value='${sc.startTime}' pattern='yyyy-MM-dd'/>" readonly>
+										<span class="input-group-addon">to</span>
+										<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="<fmt:formatDate value='${sc.endTime}' pattern='yyyy-MM-dd'/>" readonly>
+									</div> 
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="form-group">
+									<label class="col-md-3 control-label">공지사항 일정</label>
+									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value=""readonly>
+								</div>
+								<div class="form-group">
+									<div class="input-daterange input-group" data-plugin-datepicker>
+										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="" readonly>
+										<span class="input-group-addon">to</span>
+										<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="" readonly>
+									</div> 
+								</div>
+							</c:otherwise>
+						</c:choose>
+						<!-- 파일 업로드  -->
+						<c:choose>
+							<c:when test="${ not empty nf}">
+								<div class="form-group" style="margin-bottom:3px;"> 
+								 	 <label class="col-md-3 control-label">파일</label>
+								 	 <a href="noticeDownload.do?p=upload&f=${nf.orgName}">${nf.orgName}</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="form-group" style="margin-bottom:3px;"> 
+							 	 <label class="col-md-3 control-label">파일</label>
 							</div>
-						</div> -->
+							</c:otherwise>
+						</c:choose>
+						
 						<div id="content1" row="10" class="ds">${notice.content}</div>
 						<div class="text-right" id="lengthBox">
 							<span id="total-characters"></span> <span id="max"></span>
