@@ -5,12 +5,17 @@
 <!doctype html>
 <html class="fixed">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <c:import url="/common/HeadTag.jsp"/>
-<!-- Specific Page Vendor CSS -->
-	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-<script type="text/javascript">
+
+
+	
+		<script src="assets/vendor/jquery/jquery.js"></script>
+		
+	<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />	
+<!-- <script type="text/javascript">
 $(document).ready(function(){
 		$('#myTable').DataTable({
 			/*language option*/
@@ -36,81 +41,7 @@ $(document).ready(function(){
  	      ]
 			});
 	});
-
-	function modify(data){
-		console.log("modify() in!!")
-		console.log(data);
-		var tr = $(data).closest('tr');
-		var teamCode = "";
-		teamCode = $(data).parent().prev().prev().text();
-		$(tr).empty();
-		
-		$.ajax({
-			url:"ajax/admin/getTeam.do",
-			data: {'teamCode' : teamCode},
-			type: "POST",
-			dataType: "json",
-			success: function(team){
-				console.log(team);
-				console.log(team.teamCode);
-				var firstTd = $('<td>');
-					$(firstTd).text("수정");
-				var secTd = $('<td>');
-					$(secTd).html('<input type="text" name="teamCode" id="teamCode" value="${team.teamCode}">');
-				var thirdTd = $('<td>');
-					$(thirdTd).html('<input type="text" name="teamName" id="teamName" value="${team.teamName}">');
-				var fourthTd = $('<td>');
-					$(fourthTd).html('<button class="btn btn-primary btn-block" onclick="myFormSubmit()">수정하기</button>');
-				var fifthTd = $('<td>');
-					$(fifthTd).html('<button class="btn btn-primary btn-block" onclick="removeForm(this)">취소</button>');
-
-				$(tr).append(firstTd);
-				$(tr).append(secTd);
-				$(tr).append(thirdTd);
-				$(tr).append(fourthTd);
-				$(tr).append(fifthTd);
-								
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				console.log(textStatus);
-				console.log(errorThrown);
-			}
-	
-		});
-	}
-
-		
-	  function add(data){
-		  	console.log("modify() in!!")
-			console.log(data.parentElement.parentElement);
-			var target = data.parentElement.parentElement
-
-				var inputRow = $('<tr style="height: 2em" role="row">');
-				
-					var info = $('<td>');
-						$(info).text("수정하기");					
-					var teamName = $('<td>');
-						$(teamName).append('<input type="text" placeholder="팀 코드 입력">');
-					var teamCode = $('<td>');
-						$(teamCode).append('<input type="text" placeholder="팀 이름 입력">');
-					var submitButton = $('<td>');
-						$(submitButton).append('<input type="submit" value="수정">');
-					var cancleButton = $('<td>');
-						var btn = $('<button onclick="cancleModify(this)">');
-							$(btn).text("취소");
-						$(cancleButton).append(btn);
-				$(inputRow).append(info);
-				$(inputRow).append(teamName);
-				$(inputRow).append(teamCode);
-				$(inputRow).append(submitButton);
-				$(inputRow).append(cancleButton);
-			$(target).after(inputRow);
-		}
-
-		function cancleModify(data){
-			console.log(data);
-		}
-		</script>
+		</script> -->
 </head>
 	<body>
 		<section class="body">
@@ -144,7 +75,66 @@ $(document).ready(function(){
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
-					<section class="panel">
+					
+				<div id="datatable-editable_wrapper" class="dataTables_wrapper no-footer">
+				
+				
+							<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+									<a href="#" class="fa fa-times"></a>
+								</div>
+						
+								<h2 class="panel-title">법인카드 목록</h2>
+							</header>
+							<div class="panel-body">
+								<div class="row">
+									
+								</div>
+								<table class="table table-bordered table-striped mb-none" id="myTable">
+									<thead>
+										<tr>
+											<th style="width: auto">번호</th>
+											<th style="width: auto">카드번호</th>
+											<th style="width: auto">카드사</th>
+											<th style="width: auto">명의자 이름</th>
+											<th style="width: auto">카드별칭</th>
+											<th style="width: auto">카드구분</th>
+											<th style="width: auto">유효기간</th>
+											<th style="width: auto">수정 및 삭제</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+								  <c:forEach items="${debitList}" var="debitList" varStatus="status">
+										<tr>
+											<td>${status.index+1}</td>
+											<td>${debitList.cardNum}</td>
+											<td>${debitList.corp}</td>
+											<td>${debitList.name}</td>
+											<td>${debitList.nickName}</td>
+											<td>${debitList.entry}</td>
+											<td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td>
+											<td class="actions">
+												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+												<a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+												<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+											</td>
+									    </tr>
+									</c:forEach>
+										
+								
+									</tbody>
+								</table>
+							</div>
+						</section>
+						
+						
+						
+				<!--  @@@@@@@@@@@@@@@@@ 원본-->
+			<%-- 		<section class="panel">
 					<header class="panel-heading">
 						<div class="panel-actions">
 							<a href="#" class="fa fa-caret-down"></a>
@@ -155,7 +145,7 @@ $(document).ready(function(){
 					</header>
 			<div class="panel-body">
 				<form action="#" method="post">
-					<table id="myTable" class="table table-bordered table-striped mb-none">
+					<table class="table table-bordered table-striped mb-none" id="datatable-editable">
 						<thead>
 					<tr>
 						<th style="width: auto">번호</th>
@@ -167,6 +157,8 @@ $(document).ready(function(){
 						<th style="width: auto">유효기간</th>
 					</tr>
 				</thead>
+				
+				
 				<tbody>
 					<c:forEach items="${debitList}" var="debitList" varStatus="status">
 						<tr>
@@ -185,7 +177,9 @@ $(document).ready(function(){
 					</table>
 				</form>
 			</div>
-		</section>
+		</section> --%>
+		<!-- 원본 끝 @@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	</div> 
 					<!-- start: page -->
 					<!-- end: page -->
 				</section>
@@ -196,11 +190,17 @@ $(document).ready(function(){
 
 			<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp"/>
-	
-			
 			<!-- 오른쪽 사이드바 끝!! -->
-		</section>
-
 		<c:import url="/common/BottomTag.jsp"/>
+			
+			
+		</section>
+	<!-- Specific Page Vendor -->
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> 
+	<!-- Examples -->	
+	   <script src="assets/javascripts/tables/examples.datatables.editable.js"></script> 
+	  
 	</body>
 </html>
