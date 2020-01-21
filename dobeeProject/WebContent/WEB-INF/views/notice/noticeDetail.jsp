@@ -78,19 +78,69 @@
 	<!-- 파일 업로드 -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
 	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-
-<style type="text/css">
-.ds {
-	width: 100%;
-	min-height: 300px;
-	border: 1px solid #a9a9a9;
-	border-radius: 5px;
-	padding: 10px;
+	<!-- Sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
-}
+<style type="text/css">
+	.ds {
+		width: 100%;
+		min-height: 300px;
+		border: 1px solid #a9a9a9;
+		border-radius: 5px;
+		padding: 10px;
+		
+	}
+	.swal-button {
+    	background: #34495E;
+	}
+	.swal-footer {
+  		text-align: center;
+	}
+	.swal-icon--warning {
+		border-color: #f27474;
+	}
 </style>
 </head>
+<script>
+function noticeDel () {
 
+	swal({
+		title: "글 삭제",
+		text: "글을 삭제하시겠습니까?", 
+		icon: "warning", //"info,success,warning,error" 중 택1
+		showConfirmButton: true
+		//icon: "warning" //"info,success,warning,error" 중 택1
+			}).then((YES) => {
+				var notSeq = $("#notSeq").val();
+				console.log('값 가져와?'+notSeq);
+				$.ajax({
+	 	 			url:"noticeDel.do?notSeq="+notSeq,
+	 				dataType: "text",
+	 				contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+	 					console.log(responsedata);
+	 					if(responsedata == "success"){ //삭제 완료
+	 	 					console.log('삭제 완료')
+	 	 					swal({
+	 						   title: "삭제 완료",
+	 						   text: "글이 삭제되었습니다.",
+	 						   icon: "success", //"info,success,warning,error" 중 택1
+	 						  showConfirmButton: true
+	 						}).then((YES) => {
+	 								location.href="noticeList.do"; 
+	 							})
+	 	 					}
+	 				},
+	 				error:function(){
+	 					
+	 				}
+	 			});
+			});
+	
+	}
+
+</script>
 <body>
 	<section class="body">
 
@@ -138,6 +188,7 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">제목</label>
 							<input type="text" class="form-control mb-3" id="title" name="title" value="${notice.title}" readonly>
+							<input type="hidden" id="notSeq" value="${notice.notSeq}">
 						</div>
 						<div style="margin: 15px"></div>
 						
@@ -193,11 +244,11 @@
 							<span id="total-characters"></span> <span id="max"></span>
 						</div>
 						<div class="text-right" style="margin:30px">
-							<a class="btn btn-primary mr-3"
-								href="noticeModify.do?notSeq=${notice.notSeq}">수정</a> <a
-								class="btn btn-primary mr-3"
-								href="noticeDel.do?notSeq=${notice.notSeq}">삭제</a> <a
-								class="btn btn-primary mr-3" href="noticeList.do">목록</a>
+							<a class="btn btn-primary mr-3" href="noticeModify.do?notSeq=${notice.notSeq}">수정</a>
+							<span class="btn btn-primary mr-3" style="cursor:pointer" onclick="noticeDel();">삭제</span>
+							<!-- <a id="noticeDel" class="btn btn-primary mr-3" href="#">삭제</a>  -->
+							<!-- noticeDel.do?notSeq=${notice.notSeq} -->
+							<a class="btn btn-primary mr-3" href="noticeList.do">목록</a>
 						</div>
 						</div>
 						</section>
@@ -209,5 +260,6 @@
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 	<c:import url="/common/BottomTag.jsp" />
+
 </body>
 </html>

@@ -319,13 +319,6 @@ public class DoController {
 		sout.close();
 	}
     
-    //공지사항삭제하기
-    @RequestMapping("noticeDel.do")
-    public String noticeDelte(int notSeq){
-    	NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
-        noticedao.noticeDel(notSeq);
-    	return "redirect:noticeList.do";
-    }
 
 
     //공지사항글쓰기

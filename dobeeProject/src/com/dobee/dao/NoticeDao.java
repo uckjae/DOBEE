@@ -35,7 +35,7 @@ public interface NoticeDao {
     public void noticeModify(Notice notice);
     
     //공지사항 삭제
-    public int noticeDel(int notSeq);
+    public int delNotice(int notSeq);
     
     //공지사항 조회수
     public int noticeCount(int notSeq);

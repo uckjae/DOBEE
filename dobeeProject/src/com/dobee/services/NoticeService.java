@@ -70,8 +70,11 @@ public class NoticeService {
 
 
     //공지사항삭제
-    public void noticeDel(){
-
+    public int delNotice(int notSeq){
+    	int result = 0;
+    	NoticeDao noticedao = sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.delNotice(notSeq);
+    	return result;
     }
 
 

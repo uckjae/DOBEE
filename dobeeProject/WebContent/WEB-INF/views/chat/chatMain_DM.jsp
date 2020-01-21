@@ -94,6 +94,15 @@
 	  height: 450px;
 	  overflow-y: auto;
 	}
+	.swal-button {
+    	background: #34495E;
+	}
+	.swal-footer {
+  		text-align: center;
+	}
+	.swal-icon--warning {
+		border-color: #f27474;
+	}
 </style>
    	
 </head>

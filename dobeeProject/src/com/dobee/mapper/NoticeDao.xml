@@ -45,7 +45,8 @@
    UPDATE NOTICE SET COUNT = COUNT+1
    WHERE NOTSEQ=#{notSeq}
 </update>
-<delete id="noticeDel" parameterType="integer">
-		DELETE FROM NOTICE WHERE NOTSEQ=#{notSeq}
-	</delete>
+<!-- 공지사항 삭제 -->
+<delete id="delNotice" parameterType="integer">
+	DELETE FROM NOTICE WHERE NOTSEQ=#{notSeq}
+</delete>
 </mapper>
