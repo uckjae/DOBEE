@@ -24,6 +24,9 @@
 		.btn-info.btn-sm {
 			background-color: #e0da28;
 		} 
+		.btn btn-info btn-sm.edit {
+			background-color : #000000;
+		}
 	</style>
 	
 <!-- Head Tag Script -->
@@ -92,14 +95,14 @@
 												<h3>사용 가능 연차</h3>
 											</div>
 											<div class="col-md-2" >
-												<h3 id="usedVacation"> 불러오는 중... </h3>
+												<h3 id="remainVacation"> 불러오는 중... </h3>
 											</div>
 											<div class="col-md-1"></div>
 											<div class="col-md-3">
-												<h3>남은 연차</h3>
+												<h3>사용 연차</h3>
 											</div>
 											<div class="col-md-2" >
-												<h3 id="remainVacation">불러오는 중...</h3>
+												<h3 id="usedVacation">불러오는 중...</h3>
 											</div>
 											<div class="col-md-1"></div>
 										</div>
@@ -140,7 +143,7 @@
 								<a href="#" class="fa fa-times"></a>
 							</div>
 					
-							<h2 class="panel-title">Basic with Table Tools</h2>
+							<h3 class="panel-title">Data Table</h3>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -148,9 +151,10 @@
 									<tr>
 										<th width="13%">부재항목</th>
 										<th>기간</th>
-										<th width="13%">사용 일수</th>
+										<th width="13%">연차 사용 일수</th>
 										<th width="17%">신청 일자</th>
 										<th width="20%">승인여부</th>
+										<th width="8%">수정/삭제</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -159,10 +163,22 @@
 										<tr>
 											<td class="bcategory">	${bl.entry }</td>
 											<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
-											<td class="tused">		${bl.usingBreak }</td>
+											<td class="tused">		${bl.useBreak }</td>
 											<td class="tregdate">	${bl.reqDate }</td>
 											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
-																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button></td>
+																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button>
+											</td>
+											
+											<c:choose>
+												<c:when test="${bl.isAuth == '미승인'}">
+													<td class="teditdelete"> <button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정/삭제</button> <td>
+												</c:when>
+												<c:otherwise>
+													<td>-<td>
+												</c:otherwise>
+											</c:choose>
+											
+											
 										</tr>
 									</c:forEach>
 									
@@ -263,8 +279,8 @@
 					url : "getVacationInBM.do",
 					dataType : "json",
 					success : function (data) {
-						$('#usedVacation').html(data.totalVacation[0].totalBreak)
-						$('#remainVacation').html(data.totalVacation[0].usedBreak)					
+						$('#remainVacation').html(data.totalVacation[0].totalBreak - data.totalVacation[0].usedBreak)
+						$('#usedVacation').html(data.totalVacation[0].usedBreak)						
 					},
 					error : function(error){
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

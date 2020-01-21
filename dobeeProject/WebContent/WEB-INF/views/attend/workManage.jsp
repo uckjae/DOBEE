@@ -113,8 +113,8 @@
 												<option hidden="">==월    별==</option>
 												<!-- Ajax -->
 											</select>
-										
 										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -133,6 +133,66 @@
 							</div>
 						</div>
 					</section>
+					
+					
+					<section class="panel">
+						<div class="panel-body" style="min-height: 560px;">
+							<div class="row">
+								<div class="col-md-12">
+									<h1>임시로 캘린더를 뿌립시다</h1>
+									<canvas id="myCal" width="500px" height="250px"></canvas>
+								</div>
+							</div>
+						</div>
+					</section>
+					
+					<section class="panel">
+						<header class="panel-heading">
+							<div class="panel-actions">
+								<a href="#" class="fa fa-caret-down"></a>
+								<a href="#" class="fa fa-times"></a>
+							</div>
+					
+							<h3 class="panel-title">Data Table</h3>
+						</header>
+						<div class="panel-body">
+							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th width="8%">신청 번호</th>
+										<th>기간</th>
+										<th width="17%">신청 일자</th>
+										<th width="20%">승인여부</th>
+										<th width="8%">수정/삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+									<c:forEach items="${extList}" var="el">
+										<tr>
+											<td class="tseq">		${el.aplSeq }</td>
+											<td class="tterm">		${el.startAt } - ${el.endAt }</td>
+											<td class="tregdate">	${el.reqDate }</td>
+											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${el.isAuth }" data-toggle="modal" data-target="#myModal"
+																		data-aplSeq="${el.aplSeq }" data-reason="${el.reason }" data-rejReason="${el.rejReason }">${el.isAuth }</button>
+											</td>
+											<c:choose>
+												<c:when test="${el.isAuth == '미승인'}">
+													<td class="teditdelete"> <button class="btn btn-info btn-sm edit" onclick="location.href='editExtApply.do?aplSeq=${el.aplSeq}'">수정/삭제</button> <td>
+												</c:when>
+												<c:otherwise>
+													<td>-<td>
+												</c:otherwise>
+											</c:choose>
+											
+											
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
+						</div>
+					</section>	
 					
 					
 					<!-- start: page -->

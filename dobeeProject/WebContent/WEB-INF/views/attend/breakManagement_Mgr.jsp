@@ -141,7 +141,7 @@
 												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
 											</td>
 											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
-											<td class="bUsed">		${bl.usingBreak }</td>
+											<td class="bUsed">		${bl.useBreak }</td>
 										</tr>
 									</c:forEach>
 									
@@ -151,7 +151,6 @@
 					</section>
 					
 				
-					
 					<!-- Modal -->
 					<section id="modal_breakreason">
 						<div class="modal fade" id="myModal" role="dialog">
@@ -166,7 +165,7 @@
 										<div class="modal-body">
 											<div class="row">
 												<div class="col-md-1"></div>
-												<div class="col-md-10" style="background-color:lightgray;">
+												<div class="col-md-10">
 												
 													<input type="hidden" id="modalAplSeq" name="aplSeq">
 													
@@ -209,7 +208,8 @@
 					<!-- end: page -->
 				</section>
 			</div>
-
+			
+			
 					<!-- start: page -->
 					<!-- end: page -->
 		</section>
@@ -256,8 +256,11 @@
 				$('.btn-sm').click('show.bs.modal', function(e) {
 						
 					aplSeq = $(this).data('aplseq');
+					console.log('시퀀스 : '+aplSeq);
 					reason = $(this).data('reason');
-					rejReason = $(this).data('rejReason');			
+					console.log('이유 ' +reason);
+					rejReason = $(this).data('rejReason');
+					console.log(rejReason);			
 	
 					$('#modalAplSeq').val(aplSeq);
 					$('#modalReason').val(reason);

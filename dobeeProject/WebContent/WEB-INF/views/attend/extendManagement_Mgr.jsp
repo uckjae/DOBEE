@@ -71,9 +71,7 @@
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
-					
-					
-					
+
 					<section class="panel">
 						<header class="panel-heading">
 							<div class="panel-actions">
