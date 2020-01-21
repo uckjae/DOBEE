@@ -3,6 +3,7 @@ package com.dobee.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dobee.vo.Apply;
@@ -14,6 +15,7 @@ import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
+import com.sun.media.jfxmedia.logging.Logger;
 
 public interface UserDao {
 
@@ -22,7 +24,7 @@ public interface UserDao {
 
 
     //아이디찾기
-    public String findId(String name, String mail);
+    public String findId(String name, String phone);
 
 
     //비밀번호재설정

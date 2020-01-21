@@ -21,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,12 +100,16 @@ public class DoController {
     	return "main/noAuthority";
     }
     
-    
+  
     //아이디찾기
-    public String fidId(){
-        return null;
+    @RequestMapping(value="findId.do",method=RequestMethod.GET)
+    public String findId(String name, String phone ,  Model model){
+    	String find;
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	 find = userDao.findId(name, phone);
+    	 model.addAttribute("find",find);
+      return "main/findId";
     }
-
 
     public String fidIdResult(){
         return null;

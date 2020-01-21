@@ -1,4 +1,4 @@
--- 사원
+﻿-- 사원
 ALTER TABLE `USER`
 	DROP FOREIGN KEY `FK_AUTHORITY_TO_USER`; -- 권한 -> 사원
 
@@ -493,7 +493,8 @@ ALTER TABLE `PROJSCHEDULE`
 -- 근태
 CREATE TABLE `ATTEND` (
 	`ATTSEQ`  INT         NOT NULL COMMENT '근태목록번호', -- 근태목록번호
-	`ATTTIME` DATETIME    NOT NULL COMMENT '출퇴근시간', -- 출퇴근시간
+	`ATTTIME` DATETIME    NOT NULL COMMENT '시작시간', -- 시작시간
+	`OFFTIME` DATETIME    NULL     COMMENT '종료시간', -- 종료시간
 	`MAIL`    VARCHAR(60) NOT NULL COMMENT '사원메일', -- 사원메일
 	`ATTCODE` INT         NOT NULL COMMENT '근태코드' -- 근태코드
 )
@@ -656,8 +657,8 @@ CREATE TABLE `APPLY` (
 	`REQDATE`   DATE          NOT NULL COMMENT '신청일', -- 신청일
 	`REASON`    VARCHAR(1000) NOT NULL COMMENT '사유', -- 사유
 	`STARTAT`   DATETIME      NOT NULL COMMENT '시작일', -- 시작일
-	`USEBREAK`  INT           NOT NULL COMMENT '연차사용일수', -- 연차사용일수
 	`ENDAT`     DATETIME      NOT NULL COMMENT '종료일', -- 종료일
+	`USEBREAK`  INT           NOT NULL COMMENT '연차사용일수', -- 연차사용일수
 	`ISAUTH`    VARCHAR(50)   NOT NULL COMMENT '승인여부', -- 승인여부
 	`REJREASON` VARCHAR(1000) NULL     COMMENT '반려사유', -- 반려사유
 	`DRAFTER`   VARCHAR(60)   NOT NULL COMMENT '신청자', -- 신청자

@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.UserDao">
 	
+	<!--아이디 찾기 -->
+	<select id = "findId" parameterType = "com.dobee.vo.member.User">
+     SELECT U.MAIL AS MAIL FROM USERINFO AS I JOIN USER AS U ON I.MAIL=U.MAIL 
+     WHERE NAME = #{name} AND PHONE=#{phone}
+    </select>
+	
+	
 	<!--  -->
 	<select id="getUserList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
@@ -17,7 +24,7 @@
 	
 	
 	<!-- UserInfo 정보가져오기 -->
-	<select id="getUserInfoList" resultType="com.dobee.vo.member.UserInfo">
+	<select id="getUserInfoList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
@@ -299,7 +306,7 @@
 	</insert>
 	
 	<!-- 사원정보등록 -->
-	<insert id="addUserInfo" parameterType="com.dobee.vo.member.UserInfo">
+	<insert id="addUserInfo" parameterType="com.dobee.vo.member.User">
 		INSERT INTO USERINFO (MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE) VALUES (#{mail},'2020-01-20',#{serve},#{emp},#{position},#{phone})
 	</insert>
 	

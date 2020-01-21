@@ -1,6 +1,9 @@
 package com.dobee.vo.member;
 
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -11,13 +14,23 @@ import lombok.ToString;
 @Data @ToString
 public class User {
 
-    private String mail;
+    private String mail; 
     private String password;
-    private String name;
+    private String name; 
     private byte[] myPic;
     private int authCode;
     private int teamCode;
     private MultipartFile multiFile;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date regitDate;
+    private String serve;
+    private String emp;
+    private String position; 
+    private String phone; 
+    
+	public Date getregitDate() {
+		return this.regitDate;
+	}
     private User() {}
 
 	public User(String mail, String password, String name, byte[] myPic, int authCode, int teamCode,
