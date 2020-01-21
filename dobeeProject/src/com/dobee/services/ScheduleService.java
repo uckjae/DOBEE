@@ -37,7 +37,15 @@ public class ScheduleService {
     	
     	return result;
     }
-
+    
+    //일정 가져오기
+    public Schedule getSchedule(int schSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	Schedule sc = null;
+    	sc = scheduledao.getSchedule(schSeq);
+    	return sc;
+    }
+    
     //회사일정등록
     public void addCorpSchedule(){
 

@@ -7,4 +7,8 @@
 <insert id="addSchedule" parameterType="com.dobee.vo.schedule.Schedule" useGeneratedKeys="true" keyProperty="schSeq">
 	INSERT INTO SCHEDULE(STARTTIME, ENDTIME) VALUES( #{startTime}, #{endTime} )
 </insert>
+<!-- 스케쥴 가져오기  public Schedule getSchedule(int schSeq); -->
+<select id="getSchedule" resultType="com.dobee.vo.schedule.Schedule">
+	SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=#{schSeq}
+</select>
 </mapper>

@@ -44,52 +44,55 @@
 			<section role="main" class="content-body">
 				<header class="page-header">
 					<h2>공지사항</h2>
-
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
 							<li>
 							  <span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
 							</li>
-							<li><span>Pages</span></li>
-							<li><span>Notice Detail</span></li>
-							<li><span>Title:&nbsp;&nbsp;${notice.title}</span></li>
+							<li><span>공지사항</span></li>
+							<li><span>&nbsp;&nbsp;${notice.title}</span></li>
 						</ol>
-
-						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
-							class="fa fa-chevron-left"></i></a>
+						<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 					</div>
 				</header>
 
 				<!-- navbar-->
-
 				<section class="panel">
-							<header class="panel-heading">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a>
-									<a href="#" class="fa fa-times"></a>
-								</div>
-						        
-								<h2 class="panel-title">
-								<img src="img/noticeiconmain.png" style="width:50; height:60;">
-								&nbsp;&nbsp;공지사항</h2>								
-							</header>
-							
-					<div class="panel-body">		
-						<input type="number" hidden="true" value="${notice.notSeq}">
-						<p style="float: right">
-							작성일:
-							<fmt:formatDate value="${notice.regDate}"
-								pattern="yyyy-MM-dd HH:mm" />
-						</p>
-						<input type="text" class="form-control mb-3" id="title"
-							name="title" value="${notice.title}" readonly>
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a>
+							<a href="#" class="fa fa-times"></a>
+						</div>
+							<h2 class="panel-title">
+							<img src="img/noticeiconmain.png" style="width:50; height:60;">&nbsp;&nbsp;공지사항</h2>								
+					</header>
+					
+					<div class="panel-body">
+						<div class="form-group" style="margin-bottom: 0px;">
+							<p style="float: right">작성일&nbsp;:&nbsp;<fmt:formatDate value="${notice.regDate}" pattern="yyyy-MM-dd HH:mm" />
+							</p>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">제목</label>
+							<input type="text" class="form-control mb-3" id="title" name="title" value="${notice.title}" readonly>
+						</div>
 						<div style="margin: 15px"></div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">공지사항 일정</label>
+							<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }"readonly>
+						</div>
+						<div class="form-group">
+							<div class="input-daterange input-group" data-plugin-datepicker>
+								<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+								<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="<fmt:formatDate value='${sc.startTime}' pattern='yyyy-MM-dd'/>" readonly>
+								<span class="input-group-addon">to</span>
+								<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="<fmt:formatDate value='${sc.endTime}' pattern='yyyy-MM-dd'/>" readonly>
+							</div> 
+						</div>
 						<div id="content1" row="10" class="ds">${notice.content}</div>
-						
 						<div class="text-right" id="lengthBox">
 							<span id="total-characters"></span> <span id="max"></span>
 						</div>
-						
 						<div class="text-right" style="margin:30px">
 							<a class="btn btn-primary mr-3"
 								href="noticeModify.do?notSeq=${notice.notSeq}">수정</a> <a
@@ -108,6 +111,26 @@
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 	<c:import url="/common/BottomTag.jsp" />
+<script>
+function date_to_str(format)
 
+{
+    var year = format.getFullYear();
+    var month = format.getMonth() + 1;
+    if(month<10) month = '0' + month;
+    var date = format.getDate();
+    if(date<10) date = '0' + date;
+
+    return year + "-" + month + "-" + date;
+}
+
+$(function(){
+	var startTime_format = date_to_str(format);
+	
+});
+
+
+
+</script>
 </body>
 </html>

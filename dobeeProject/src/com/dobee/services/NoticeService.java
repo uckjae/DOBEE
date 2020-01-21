@@ -31,15 +31,13 @@ public class NoticeService {
         return null;
     }
 
-
-    //공지사항 글 작성
+    //공지사항 글 작성 --01.21 알파카
     public int noticeWrite(Notice n){
     	int result = 0;
     	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
     	result = noticedao.noticeWrite(n);
-    	
     	if(result > 0) { //DB에 insert 성공하면
-    		result = n.getNotSeq(); //seq 리턴함
+    		result = n.getNotSeq(); //seq 리턴함 >> setter로 주입!!
     	} else { //DB에 insert 실패
     		result = 0; 
     	}
@@ -48,7 +46,7 @@ public class NoticeService {
 
     }
     
-    //공지사항 글 작성시 파일 업로드
+    //공지사항 글 작성시 파일 업로드 --01.21 알파카
     public int noticeFileWrite(NoticeFile nf){
     	int result = 0;
     	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
@@ -57,7 +55,7 @@ public class NoticeService {
 
     }
     
-  //공지사항 일정 등록
+    //공지사항 일정 등록 --01.21 알파카
     public int addNotSchedule(NotSchedule ns) {
     	int result = 0;
     	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
@@ -77,11 +75,38 @@ public class NoticeService {
     }
 
 
-    //공지사항 상세보기
-    public Notice getNotice(){
-        return null;
+    //공지사항 글 상세 가져오기 --01.21 알파카
+    public Notice getNotice(int notSeq){
+    	Notice notice = null;
+    	NoticeDao noticedao = sqlSession.getMapper(NoticeDao.class);
+    	notice = noticedao.getNotice(notSeq);
+        return notice;
     }
-
-
-    //
+    
+    //공지사항 파일 가져오기 --01.21 알파카
+    public NoticeFile getNoticeFile(int notSeq) {
+    	NoticeFile nf = null;
+    	NoticeDao noticedao = sqlSession.getMapper(NoticeDao.class);
+    	nf = noticedao.getNoticeFile(notSeq);
+    	return nf;
+    }
+    
+    //공지사항 일정 가져오기 --01.21 알파카
+    public NotSchedule getNotSchedule(int notSeq) {
+    	NotSchedule ns = null;
+    	NoticeDao noticedao = sqlSession.getMapper(NoticeDao.class);
+    	ns = noticedao.getNotSchedule(notSeq);
+    	return ns;
+    }
+    
+    
+    //공지사항 조회수 올리기 --01.21 알파카
+    public int updateNoticeCount(int notSeq) {
+    	int result = 0;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.noticeCount(notSeq);    	
+    	return result;
+    }
+    
+    
 }

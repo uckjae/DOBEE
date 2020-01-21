@@ -232,19 +232,35 @@ public class DoController {
     }
 
 
-    //공지사항상세보기
-    @RequestMapping("noticeDetail.do")
-    public String noticeDetail(int notSeq, Model model){
-        Notice notice = null;
-        int n = 0;
-        NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-    	notice=noticedao.noticeDetail(notSeq);
-        n=noticedao.noticeCount(notSeq);
-    	//System.out.println(notice.toString());
-    	//System.out.println("doContorller noticeDetail() notice seq : " + notice.getNotSeq());
+    //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
+    @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
+    public String noticeDetail(@RequestParam(value="notSeq") int notSeq, Model model){
+        Notice notice = null; 
+        NoticeFile nf = null;
+        NotSchedule ns = null;
+        Schedule sc = null;
         
-        model.addAttribute("n",n); //조회수 
-        model.addAttribute("notice",notice);
+        int noticeCount = 0;
+                
+        //조회수 올리기
+        noticeCount = noticeService.updateNoticeCount(notSeq);
+        
+        //DB에서 글 가져오기
+        notice = noticeService.getNotice(notSeq);
+        model.addAttribute("notice", notice);
+        
+        //DB에서 파일 가져오기
+        nf = noticeService.getNoticeFile(notSeq);
+        model.addAttribute("nf", nf);
+        
+        //DB에서 공지사항 일정 가져오기
+        ns = noticeService.getNotSchedule(notSeq);
+        model.addAttribute("ns", ns);
+        sc = scheduleService.getSchedule(ns.getSchSeq());
+        model.addAttribute("sc", sc);
+        
+        System.out.println("파일도 가져와"+nf.toString());
+        
         return "notice/noticeDetail";
     }
     
@@ -263,19 +279,19 @@ public class DoController {
         return "notice/noticeWrite";
     }
     
+    //공지사항글쓰기
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	System.out.println("스케쥴 객체 어케 넘어와?"+ns.toString()+"//////"+sc.toString());
-
+    	
     	//공지사항 글 DB 넣기
     	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
     	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //파일명관리
+    	String filename = file.getOriginalFilename(); //원본 파일명
     	
-    	if(!( filename == null || filename.trim().equals("") )) { //공지사항에 파일을 업로드 했을 때
-
+    	//공지사항 파일을 업로드한 경우
+    	if(!( filename == null || filename.trim().equals("") )) {
         	String path = request.getServletContext().getRealPath("/upload");
         	String fpath = path + "\\" + filename;
         		
@@ -300,7 +316,8 @@ public class DoController {
         	}
     	}
     	
-    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) { //일정 캘린더에 값이 있으면
+    	//공지사항 일정을 입력한 경우
+    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
     		
     		int result = scheduleService.addSchedule(sc); 
     		
@@ -318,9 +335,7 @@ public class DoController {
     			}
     			
     		}
-    		 System.out.println("둘다 잘 들어감!!");	
     	}
-    	
     	
     	
     	return "redirect:noticeList.do"; //들어주는 주소 ...
@@ -332,7 +347,7 @@ public class DoController {
     public String noticeModify(int notSeq,Model model){
     	
         NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
-        Notice notice =noticedao.noticeDetail(notSeq);
+        Notice notice =noticedao.getNotice(notSeq);
         model.addAttribute("notice",notice);
     	return "notice/noticeModify";
     }

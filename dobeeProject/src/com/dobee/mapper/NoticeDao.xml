@@ -20,31 +20,31 @@
 <!-- 공지사항 일정 내용 insert -->
 <insert id="notshceduleWrite" parameterType="com.dobee.vo.schedule.NotSchedule">
 	INSERT INTO NOTSCHEDULE(NSCONTENT, SCHSEQ, NOTSEQ) VALUES (#{nsContent},(SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ = #{schSeq}), (SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ = #{notSeq}));
-	
 </insert>
 
-<!-- <insert id="noticeWrite2" parameterType="com.dobee.vo.schedule.NotSchedule">
-   INSERT INTO NOTSCHEDULE (NSCONTENT) VALUES(#{nsContent})
-</insert>
 
-<insert id="noticeWrite3" parameterType="com.dobee.vo.schedule.Schedule">
-   INSERT INTO SCHEDULE (STARTTIME,ENDTIME) VALUES(#{startTime},#{endTime})
-</insert> -->
-
-
-<select id="noticeDetail" resultType="com.dobee.vo.notice.Notice">
-   SELECT NOTSEQ,REGDATE,TITLE, CONTENT FROM NOTICE WHERE NOTSEQ=#{notSeq}
+<!-- 공지사항 Detail 가져오기 -->
+<select id="getNotice" resultType="com.dobee.vo.notice.Notice">
+   SELECT NOTSEQ, REGDATE, TITLE, CONTENT, COUNT FROM NOTICE WHERE NOTSEQ = #{notSeq}
+</select>
+<!-- 공지사항 파일 가져오기 -->
+<select id="getNoticeFile" resultType="com.dobee.vo.notice.NoticeFile">
+	SELECT NFSEQ, ORGNAME, SAVENAME, NOTSEQ FROM NOTICEFILE WHERE NOTSEQ=(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ = #{notSeq} )
+</select>
+<!-- 공지사항 일정 내용 가져오기 -->
+<select id="getNotSchedule" resultType="com.dobee.vo.schedule.NotSchedule">
+	SELECT NSSEQ, NSCONTENT, SCHSEQ, NOTSEQ FROM NOTSCHEDULE WHERE NOTSEQ=(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ=#{notSeq})
 </select>
 
 <update id="noticeModify" parameterType="com.dobee.vo.notice.Notice">
    UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{content} WHERE NOTSEQ=#{notSeq}
 </update>
 
+<!-- 공지사항 조회수 올리기 -->
 <update id="noticeCount" parameterType="com.dobee.vo.notice.Notice">
    UPDATE NOTICE SET COUNT = COUNT+1
    WHERE NOTSEQ=#{notSeq}
 </update>
-
 <delete id="noticeDel" parameterType="integer">
 		DELETE FROM NOTICE WHERE NOTSEQ=#{notSeq}
 	</delete>
