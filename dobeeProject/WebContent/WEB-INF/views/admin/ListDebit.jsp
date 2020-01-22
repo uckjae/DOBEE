@@ -9,7 +9,11 @@
 
 <c:import url="/common/HeadTag.jsp"/>
 	
-		<script src="assets/vendor/jquery/jquery.js"></script>
+	<script src="assets/vendor/jquery/jquery.js"></script>
+	<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+<!-- 	<link href="assets/vendor/jquery-datatables-bs3/examples/css/datatables.css"/>
+	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables.min.css"/>
+	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables_themeroller.css"/> -->
 	
 <script type="text/javascript">
 		$(document).ready(function() {
@@ -72,7 +76,7 @@
 								</div> -->
 								
 								
-								<table class="table table-bordered table-striped mb-none" id="datatable-editable">
+								<table class="table display" id="datatable-editable">
 								<thead>
 										<tr>
 											<th style="width: auto">번호</th>
@@ -82,7 +86,7 @@
 											<th style="width: auto">카드별칭</th>
 											<th style="width: auto">카드구분</th>
 											<th style="width: auto">유효기간</th>
-											<th style="width: auto">수정 및 삭제</th>
+											<th style="width: 7em">수정삭제</th>
 										</tr>
 									</thead>
 									
@@ -224,28 +228,7 @@
 		<!-- 수정 유효성 모달창 끝 -->	
 			
 		
-		<!--  vendor -->
-		<!-- <script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script> -->
-		<!-- Specific Page Vendor -->
-		<!-- <script src="assets/vendor/select2/select2.js"></script>
-		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> -->
 		
-		<!-- Theme Base, Components and Settings -->
-		<!-- <script src="assets/javascripts/theme.js"></script> -->
-		
-		<!-- Theme Custom -->
-		<!-- <script src="assets/javascripts/theme.custom.js"></script>
-		 -->
-		<!-- Theme Initialization Files -->
-		<!-- <script src="assets/javascripts/theme.init.js"></script>
- -->
 		
 		
 <c:import url="/common/BottomTag.jsp"/>
