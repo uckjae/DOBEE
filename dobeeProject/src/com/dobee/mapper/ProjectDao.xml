@@ -99,12 +99,44 @@ WHERE p.pjtseq = #{pjtSeq}
 	WHERE TSKSEQ=#{tskSeq}
 </select>
 
+
+<!-- 상세업무리스트 가져오기 -->
 <select id="getTaskDetailList" resultType="com.dobee.vo.project.TaskDetail">
 	SELECT TDSEQ, TDCONTENT, TSKSEQ FROM TASKDETAIL WHERE TSKSEQ=#{tskSeq} ORDER BY TDSEQ
 </select>
+
 
 <!-- 상세업무추가 -->
 <insert id="addTaskDetail">
 	INSERT INTO TASKDETAIL (TDCONTENT, TSKSEQ) VALUES (#{tdContent}, #{tskSeq})
 </insert>
+
+
+<!-- 상세업무 수정 -->
+<update id="taskDetailEdit" parameterType="com.dobee.vo.project.TaskDetail">
+	UPDATE TASKDETAIL SET TDCONTENT=#{tdContent} WHERE TDSEQ=#{tdSeq}
+</update>
+
+
+<!-- 담당자 업무 수정 -->
+<update id="editTask">
+	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt} WHERE TSKSEQ=#{tskSeq}
+</update>
+
+
+<!-- 체크리스트 추가  -->
+<insert id="addTaskCheckList">
+	INSERT INTO CHECKLIST (CONTENT, TSKSEQ, ISCHECK) VALUES (#{content}, #{tskSeq}, 0)
+</insert>
+
+
+<!-- 체크리스트 가져오기 -->
+<select id="getTaskCheckList" resultType="com.dobee.vo.project.CheckList">
+	SELECT CHKSEQ, CONTENT, ISCHECK, TSKSEQ FROM CHECKLIST WHERE TSKSEQ=#{tskSeq}
+</select>
+
+<!-- 체크리스트 수정 -->
+<update id="taskCheckListEdit" parameterType="com.dobee.vo.project.CheckList">
+	UPDATE CHECKLIST SET CONTENT=#{content}, ISCHECK=#{isCheck} WHERE CHKSEQ=#{chkSeq}
+</update>
 </mapper>

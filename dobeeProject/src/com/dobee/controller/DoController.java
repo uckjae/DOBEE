@@ -692,9 +692,13 @@ public class DoController {
     }
 
 
-    //업무삭제
-    public String delTask(){
-        return null;
+    //업무수정
+    @RequestMapping("taskEdit.do")
+    public String taskEdit(Task task){
+        System.out.println("DoController taskEdit() in!!");
+        projectService.editTask(task);
+        
+    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
