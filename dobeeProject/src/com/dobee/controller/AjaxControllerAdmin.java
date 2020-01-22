@@ -17,12 +17,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
+import com.dobee.vo.member.User;
 
 
 @RestController
@@ -107,17 +109,27 @@ public class AjaxControllerAdmin {
 		
 	}
 	
-	
 	@RequestMapping("getTeam.do")
 	public TeamList getTeam(HttpServletRequest req, String teamCode) {
 		System.out.println("AjaxControllerAdmin getTeam()");
 		Enumeration enu = req.getParameterNames();
 		while(enu.hasMoreElements()) {
-			System.out.println(enu.nextElement());
-			
+		System.out.println(enu.nextElement());
 		}
 		System.out.println(teamCode);
 		TeamList team = memberService.getTeam(teamCode);
 		return team;
 	}
+	
+	//아이디찾기
+    @RequestMapping(value="findId.do",method=RequestMethod.GET)
+    public String findId(String name, String phone){
+    	 //System.out.println(user);
+    	 UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	 String find = userDao.findId(name,phone);
+    	 System.out.println("d"+find);
+         return find;
+    }
 }
+
+
