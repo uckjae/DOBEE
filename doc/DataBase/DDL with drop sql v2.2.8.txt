@@ -905,7 +905,8 @@ ALTER TABLE `TASK`
 		REFERENCES `PROJECTMEMBER` ( -- 프로젝트그룹
 			`MAIL`,   -- 사원메일
 			`PJTSEQ`  -- 프로젝트번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 상세업무
 ALTER TABLE `TASKDETAIL`
@@ -915,7 +916,8 @@ ALTER TABLE `TASKDETAIL`
 		)
 		REFERENCES `TASK` ( -- 업무
 			`TSKSEQ` -- 업무번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 체크리스트
 ALTER TABLE `CHECKLIST`
@@ -925,7 +927,8 @@ ALTER TABLE `CHECKLIST`
 		)
 		REFERENCES `TASK` ( -- 업무
 			`TSKSEQ` -- 업무번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 프로젝트일정
 ALTER TABLE `PROJSCHEDULE`
@@ -935,7 +938,8 @@ ALTER TABLE `PROJSCHEDULE`
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
 			`PJTSEQ` -- 프로젝트번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 프로젝트일정
 ALTER TABLE `PROJSCHEDULE`
@@ -945,7 +949,8 @@ ALTER TABLE `PROJSCHEDULE`
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
 			`SCHSEQ` -- 일정번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 근태
 ALTER TABLE `ATTEND`
@@ -965,7 +970,8 @@ ALTER TABLE `ATTEND`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 비용처리목록
 ALTER TABLE `COSTLIST`
@@ -985,7 +991,8 @@ ALTER TABLE `COSTLIST`
 		)
 		REFERENCES `DEBIT` ( -- 신용카드
 			`CARDNUM` -- 카드번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 비용처리목록
 ALTER TABLE `COSTLIST`
@@ -995,7 +1002,8 @@ ALTER TABLE `COSTLIST`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 공지사항일정
 ALTER TABLE `NOTSCHEDULE`
@@ -1005,7 +1013,8 @@ ALTER TABLE `NOTSCHEDULE`
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
 			`SCHSEQ` -- 일정번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 공지사항일정
 ALTER TABLE `NOTSCHEDULE`
@@ -1015,7 +1024,8 @@ ALTER TABLE `NOTSCHEDULE`
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
 			`NOTSEQ` -- 글번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 공지사항파일
 ALTER TABLE `NOTICEFILE`
@@ -1025,7 +1035,8 @@ ALTER TABLE `NOTICEFILE`
 		)
 		REFERENCES `NOTICE` ( -- 공지사항
 			`NOTSEQ` -- 글번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
@@ -1035,7 +1046,8 @@ ALTER TABLE `TASKSCHEDULE`
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
 			`PJTSEQ` -- 프로젝트번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
@@ -1045,7 +1057,8 @@ ALTER TABLE `TASKSCHEDULE`
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
 			`SCHSEQ` -- 일정번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 업무일정
 ALTER TABLE `TASKSCHEDULE`
@@ -1055,7 +1068,8 @@ ALTER TABLE `TASKSCHEDULE`
 		)
 		REFERENCES `TASK` ( -- 업무
 			`TSKSEQ` -- 업무번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 신청
 ALTER TABLE `APPLY`
@@ -1065,7 +1079,8 @@ ALTER TABLE `APPLY`
 		)
 		REFERENCES `APPLYCODE` ( -- 신청목록
 			`APYCODE` -- 신청항목코드
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 신청
 ALTER TABLE `APPLY`
@@ -1095,7 +1110,8 @@ ALTER TABLE `CORPSCHEDULE`
 		)
 		REFERENCES `SCHEDULE` ( -- 일정
 			`SCHSEQ` -- 일정번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 프로젝트그룹
 ALTER TABLE `PROJECTMEMBER`
@@ -1105,7 +1121,8 @@ ALTER TABLE `PROJECTMEMBER`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 프로젝트그룹
 ALTER TABLE `PROJECTMEMBER`
@@ -1115,7 +1132,8 @@ ALTER TABLE `PROJECTMEMBER`
 		)
 		REFERENCES `PROJECT` ( -- 프로젝트
 			`PJTSEQ` -- 프로젝트번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 휴가
 ALTER TABLE `BREAK`
@@ -1125,7 +1143,8 @@ ALTER TABLE `BREAK`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 휴가목록
 ALTER TABLE `BREAKLIST`
@@ -1135,7 +1154,8 @@ ALTER TABLE `BREAKLIST`
 		)
 		REFERENCES `APPLY` ( -- 신청
 			`APLSEQ` -- 신청번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 휴가목록
 ALTER TABLE `BREAKLIST`
@@ -1145,7 +1165,8 @@ ALTER TABLE `BREAKLIST`
 		)
 		REFERENCES `BREAK` ( -- 휴가
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 사원정보
 ALTER TABLE `USERINFO`
@@ -1155,7 +1176,8 @@ ALTER TABLE `USERINFO`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 채팅방
 ALTER TABLE `CHATROOM`
@@ -1175,7 +1197,8 @@ ALTER TABLE `CHATCONTENT`
 		)
 		REFERENCES `CHATROOM` ( -- 채팅방
 			`CHATSEQ` -- 채팅방 식별번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 대화 내용
 ALTER TABLE `CHATCONTENT`
@@ -1185,7 +1208,8 @@ ALTER TABLE `CHATCONTENT`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 채팅방 참여자
 ALTER TABLE `CHATUSERS`
@@ -1195,7 +1219,8 @@ ALTER TABLE `CHATUSERS`
 		)
 		REFERENCES `CHATROOM` ( -- 채팅방
 			`CHATSEQ` -- 채팅방 식별번호
-		);
+		)
+		ON DELETE CASCADE;
 
 -- 채팅방 참여자
 ALTER TABLE `CHATUSERS`
@@ -1205,4 +1230,5 @@ ALTER TABLE `CHATUSERS`
 		)
 		REFERENCES `USER` ( -- 사원
 			`MAIL` -- 사원메일
-		);
+		)
+		ON DELETE CASCADE;
