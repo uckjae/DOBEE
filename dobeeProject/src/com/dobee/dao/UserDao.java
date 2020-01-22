@@ -47,8 +47,11 @@ public interface UserDao {
     public void restWork(User member);
 
 
-    //파이페이지 정보수정
+    //마이페이지 정보수정
     public void myPage();
+    
+    //마이페이지 개인 정보 불러오기 
+    public User getUserInfo(String mail);
 
 
     // Ajax 개인_연차 불러오기

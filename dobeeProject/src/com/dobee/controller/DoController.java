@@ -215,11 +215,16 @@ public class DoController {
 
 
     //마이페이지
-    //@RequestMapping(value = "", method = RequestMethod.GET)
-    public String mypage(){
-        return null;
+    @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
+    public String mypage(Principal principal, Model model){
+    	System.out.println("프린시펄?"+principal.getName()); //회원 ID 가져오기
+    	//회원 정보 가져오기
+    	String mail = principal.getName();
+    	User user = memberService.getUserInfo(mail);
+    	model.addAttribute("user", user);
+    	System.out.println("유저 정보 가져왔어?"+user.toString());
+        return "myPage/myPage";
     }
-
 
     //@RequestMapping(value = "", method = RequestMethod.POST)
     public String mypageModi(){
