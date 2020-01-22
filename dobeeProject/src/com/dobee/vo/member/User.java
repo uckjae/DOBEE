@@ -26,7 +26,8 @@ public class User {
     private String serve;
     private String emp;
     private String position; 
-    private String phone; 
+    private String phone;
+    private String teamName;
     
 	public Date getregitDate() {
 		return this.regitDate;

@@ -135,17 +135,17 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileFirstName">이름</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileFirstName">
+													<input type="text" class="form-control" id="profileFirstName" value="${user.name}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileLastName">E-mail</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileLastName">
+													<input type="text" class="form-control" id="profileLastName" value="${user.mail}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileNewPassword">새 비밀번호</label>
+												<label class="col-md-3 control-label" for="profileNewPassword">비밀번호</label>
 												<div class="col-md-8">
 													<input type="text" class="form-control" id="profileNewPassword">
 												</div>
@@ -159,25 +159,25 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">입사일</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany">
+													<input type="text" class="form-control" id="profileCompany" value="${user.regitDate}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">직책</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany">
+													<input type="text" class="form-control" id="profileCompany" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">소속</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany">
+													<input type="text" class="form-control" id="profileCompany" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">휴대폰 번호</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany">
+													<input type="text" class="form-control" id="profileCompany" value="${user.phone}"> 
 												</div>
 											</div>
 										</fieldset>

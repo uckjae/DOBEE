@@ -5,9 +5,9 @@
 <mapper namespace="com.dobee.dao.UserDao">
 	
 	<!--아이디 찾기 -->
-	<select id = "findId" parameterType = "String" resultType="String">
+	<select id = "findId" parameterType = "com.dobee.vo.member.User">
      SELECT U.MAIL AS MAIL FROM USERINFO AS I JOIN USER AS U ON I.MAIL=U.MAIL 
-     WHERE NAME = #{param1} AND PHONE=#{param2}
+     WHERE NAME = #{name} AND PHONE=#{phone}
     </select>
 	
 	
@@ -25,16 +25,17 @@
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.User">
-		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, U.TEAMCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE 
-		FROM USER U LEFT OUTER JOIN USERINFO I ON U.MAIL = I.MAIL
+		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
 	<!-- User & UserInfo 정보 가져오기 마이페이지   01.22 알파카 -->
 	<select id="getUserInfo" resultType="com.dobee.vo.member.User">
-		SELECT U.MAIL, U.PASSWORD, U.NAME, U.MYPIC, U.TEAMCODE, I.REGITDATE, I.POSITION, I.PHONE
+		SELECT U.MAIL, U.PASSWORD, U.NAME, U.MYPIC, U.AUTHCODE, U.TEAMCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE, T.TEAMNAME
 		FROM USER U
 		JOIN USERINFO I 
 		ON U.MAIL = I.MAIL
+		JOIN TEAMLIST T
+		ON U.TEAMCODE = T.TEAMCODE
 		WHERE U.MAIL = #{mail}
 	</select>
 	
