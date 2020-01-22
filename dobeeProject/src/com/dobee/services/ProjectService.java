@@ -121,8 +121,9 @@ public class ProjectService {
 
 
     //업무수정
-    public void modiTask(){
-
+    public void editTask(Task task){
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	projectDao.editTask(task);
 
     }
 
@@ -149,8 +150,10 @@ public class ProjectService {
 
 
     //상세업무수정
-    public void modiTaskDetail(){
-
+    public int taskDetailEdit(TaskDetail taskDetail){
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.taskDetailEdit(taskDetail);
+    	return result;
     }
 
 
@@ -161,8 +164,10 @@ public class ProjectService {
 
 
     //체크리스트추가
-    public void addCheckList(){
-
+    public int addTaskCheckList(CheckList checkList){
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.addTaskCheckList(checkList);
+    	return result;
     }
 
 
@@ -173,8 +178,19 @@ public class ProjectService {
 
 
     //체크리스트 조회
-    public List<CheckList> checkLists(){
-        return null;
+    public List<CheckList> getTaskCheckList(int tskSeq){
+        System.out.println("ProjectService getTaskCheckList() in");
+        ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+        List<CheckList> taskCheckList = projectDao.getTaskCheckList(tskSeq);
+    	return taskCheckList;
+    }
+    
+    //체크리스트 수정
+    public int taskCheckListEdit(CheckList checkList) {
+    	System.out.println("ProjectService taskCheckListEdit() in");
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.taskCheckListEdit(checkList);
+    	return result;
     }
 
 

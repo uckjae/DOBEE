@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!doctype html>
-<html class="fixed">
+<!DOCTYPE html>
+<html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<c:import url="/common/HeadTag.jsp"/>
-<!-- Specific Page Vendor CSS -->
-	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-<script type="text/javascript">
-$(document).ready(function(){
+
+<meta>
+<title>Insert title here</title>
+</head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- DataTables js-->
+		<link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
+		<link rel="stylesheet" href="./css/notice.datatables.css">
+		<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
+  <!-- /DataTables js-->
+  <script type="text/javascript">
+  $(document).ready(function(){
 		$('#myTable').DataTable({
 			/*language option*/
 			"language": {
@@ -109,52 +114,19 @@ $(document).ready(function(){
 		function cancleModify(data){
 			console.log(data);
 		}
-		</script>
-</head>
-	<body>
-		<section class="body">
+		
 
-			<!-- start: header -->
-			<c:import url="/common/Top.jsp"/>
-			<!-- end: header -->
+	
+  </script>
+<body>
+	<div class="page">
+		<!-- navbar-->
+		
 
-			<div class="inner-wrapper">
-				<!-- start: sidebar -->
-				<c:import url="/common/SideAdmin.jsp"/>
-				<!-- end: sidebar -->
-				
-			<!-- start : main Content -->
-				<section role="main" class="content-body">
-					<header class="page-header">
-						<h2>팀 관리</h2>
-					
-						<div class="right-wrapper pull-right">
-							<ol class="breadcrumbs">
-								<li>
-									<a href="index.html">
-										<i class="fa fa-briefcase"></i>
-									</a>
-								</li>
-								<li><span>사원 관리</span></li>
-								<li><span>팀 관리</span></li>
-							</ol>
-					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
-						</div>
-					</header>
-					<!-- 작업 여기부터~!~!~!~~! -->
-					<section class="panel">
-					<header class="panel-heading">
-						<div class="panel-actions">
-							<a href="#" class="fa fa-caret-down"></a>
-							<a href="#" class="fa fa-times"></a>
-						</div>
-				
-						<h2 class="panel-title">팀 관리</h2>
-					</header>
-			<div class="panel-body">
+		<section class="dashboard-counts section-padding">
+			<div class="container-fluid">
 				<form action="#" method="post">
-					<table id="myTable" class="table table-bordered table-striped mb-none">
+					<table id="myTable" class="dataTable display">
 						<thead>
 							<tr>
 								
@@ -182,21 +154,7 @@ $(document).ready(function(){
 				</form>
 			</div>
 		</section>
-					<!-- start: page -->
-					<!-- end: page -->
-				</section>
-			</div>
+	</div>
 
-
-
-
-			<!-- 오른쪽 사이드바!! -->
-		<c:import url="/common/RightSide.jsp"/>
-	
-			
-			<!-- 오른쪽 사이드바 끝!! -->
-		</section>
-
-		<c:import url="/common/BottomTag.jsp"/>
-	</body>
+</body>
 </html>

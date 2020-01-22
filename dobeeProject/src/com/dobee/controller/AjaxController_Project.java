@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.services.ProjectService;
 import com.dobee.vo.member.User;
+import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
@@ -113,7 +114,7 @@ public class AjaxController_Project {
 	
 	//TaskDetail 추가
 	@RequestMapping("addTaskDetail.do")
-	public void addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+	public int addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
 		System.out.println("AjaxController_Project addTaskDetail() in");
 		System.out.println(taskDetail);
 		Enumeration enu = req.getParameterNames();
@@ -122,6 +123,53 @@ public class AjaxController_Project {
 			System.out.println(enu.nextElement());
 		}
 		projectService.addTaskDetail(taskDetail);
+		return 0;
+	}
+	
+	//TaskDetailEdit
+	@RequestMapping("taskDetailEdit.do")
+	public int taskDetailEdit(TaskDetail taskDetail) {
+		System.out.println("AjaxController_Project taskDetailEdit() in!!");
+		System.out.println(taskDetail);
+		int tdSeq = taskDetail.getTdSeq();
+		int tskSeq = taskDetail.getTskSeq();
+		int result = projectService.taskDetailEdit(taskDetail);
+		if(result<=0) {
+			System.out.println("taskDetailEdit() 에러");
+		}
+		return tskSeq;
+	}
+	
+	
+	//체크리스트 추가
+	@RequestMapping("addTaskCheckList")
+	public int addTaskCheckList(CheckList checkList) {
+		System.out.println("AjaxController_Project addTaskCheckList() in!!");
+		int result = projectService.addTaskCheckList(checkList);
+		return 0;
+	}
+	
+	
+	//특정업무의 체크리스트 가져오기
+	@RequestMapping("getTaskCheckList.do")
+	public List<CheckList> getTaskCheckList(int tskSeq){
+		System.out.println("AjaxController_Project getTaskCheckList() in!!");
+		List<CheckList> taskCheckList = projectService.getTaskCheckList(tskSeq);
+		System.out.println(taskCheckList);
+		return taskCheckList;
+	}
+	
+	//체크리스트 수정
+	@RequestMapping("taskCheckListEdit")
+	public int taskCheckListEdit(CheckList checkList,HttpServletRequest req) {
+		System.out.println("AjaxControll_Project taskCheckListEdit() in!!");
+		Enumeration<String> enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while돈다!!");
+			System.out.println(enu.nextElement());
+		}
+		int result = projectService.taskCheckListEdit(checkList);
+		return result;
 	}
 	
 	

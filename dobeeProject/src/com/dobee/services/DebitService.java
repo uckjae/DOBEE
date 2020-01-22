@@ -15,10 +15,6 @@ public class DebitService {
 	
 	@Autowired
     private SqlSession sqlSession;
-	
-    public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
 
 	   
     //법인 카드 등록

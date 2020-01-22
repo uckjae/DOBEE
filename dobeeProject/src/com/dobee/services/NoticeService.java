@@ -41,9 +41,7 @@ public class NoticeService {
     	} else { //DB에 insert 실패
     		result = 0; 
     	}
-    	
     	return result;
-
     }
     
     //공지사항 글 작성시 파일 업로드 --01.21 알파카
@@ -63,11 +61,32 @@ public class NoticeService {
     	return result;
     }
 
-    //공지사항수정
-    public void noticeModi(){
-
+    //공지사항 글 수정 --01.22 알파카
+    public int noticeModify(Notice notice){
+    	int result = 0;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.noticeModify(notice);
+    	return result;
     }
-
+    
+    
+    //공지사항 글 수정 시 파일 업로드 --01.21 알파카
+    public int noticeFileModify(NoticeFile nf){
+    	int result = 0;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.noticeFileModify(nf);
+    	return result;
+    }
+   
+    //공지사항 일정 수정 --01.22 알파카
+    public int notScheduleModify(NotSchedule ns) {
+    	int result = 0;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	result = noticedao.notshceduleModify(ns);
+    	return result;
+    }
+    
+    
 
     //공지사항삭제
     public int delNotice(int notSeq){

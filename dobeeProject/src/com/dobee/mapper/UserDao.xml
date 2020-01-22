@@ -28,6 +28,15 @@
 		SELECT MAIL, REGITDATE, SERVE, EMP, POSITION, PHONE FROM USERINFO
 	</select>
 	
+	<!-- User & UserInfo 정보 가져오기 마이페이지   01.22 알파카 -->
+	<select id="getUserInfo" resultType="com.dobee.vo.member.User">
+		SELECT U.MAIL, U.PASSWORD, U.NAME, U.MYPIC, U.TEAMCODE, I.REGITDATE, I.POSITION, I.PHONE
+		FROM USER U
+		JOIN USERINFO I 
+		ON U.MAIL = I.MAIL
+		WHERE U.MAIL = #{mail}
+	</select>
+	
 	<!-- Ajax 출근 하기 public int onWork(String mail); -->
 	<insert id="onWork">
 		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 

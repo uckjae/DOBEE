@@ -34,13 +34,14 @@
 			<!-- start : main Content -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>법인카드 관리</h2>
+					<h2>법인카드 목록</h2>
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
-							<li><a href="#"> <i class="fa fa-credit-card"></i></a></li>
-							<li><span>법인카드</span></li>
-							<li><span>법인카드 관리</span></li>
+							<li><a href="index.html"> <i class="fa fa-home"></i>
+							</a></li>
+							<li><span>법인카드관리</span></li>
+							<li><span>법인카드 목록</span></li>
 						</ol>
 
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
@@ -59,7 +60,7 @@
 									<a href="#" class="fa fa-times"></a>
 								</div>
 						
-								<h2 class="panel-title">법인카드 관리</h2>
+								<h2 class="panel-title">Default</h2>
 							</header>
 							<div class="panel-body">
 								<!-- <div class="row">
@@ -97,6 +98,7 @@
 											<td>${debitList.nickName}</td>
 											<td>${debitList.entry}</td>
 											<td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td>
+										
 											<td class="actions">
 												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
@@ -119,107 +121,33 @@
 		<c:import url="/common/RightSide.jsp" />
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
-		<!-- 모달창 (삭제시 뜨는 )-->
+		<!-- 모달창 -->
 		<div id="dialog" class="modal-block mfp-hide">
 			<section class="panel">
 				<header class="panel-heading">
-					<h2 class="panel-title">정말 실행 하시겠습니까?</h2>
+					<h2 class="panel-title">Are you sure?</h2>
 				</header>
 				<div class="panel-body">
 					<div class="modal-wrapper">
 						<div class="modal-text">
-							<p>정말로 데이타를 지우시겠습니까? 다시 복원 될 수 없습니다!!</p>
+							<p>Are you sure that you want to delete this row?</p>
 						</div>
 					</div>
 				</div>
 				<footer class="panel-footer">
 					<div class="row">
 						<div class="col-md-12 text-right">
-							<button id="dialogConfirm" class="btn btn-primary">확인</button>
-							<button id="dialogCancel" class="btn btn-default">취소</button>
+							<button id="dialogConfirm" class="btn btn-primary">Confirm</button>
+							<button id="dialogCancel" class="btn btn-default">Cancel</button>
 						</div>
 					</div>
 				</footer>
 			</section>
 		</div>
-		<!-- 삭제 모달창 끝  -->
+	
 		
-		
-		<!-- 수정 유호성 불통일때 뜨는 모달창 시작-->
-	 <div id="dialogEditDate" class="modal-block mfp-hide">
-			<section class="panel">
-				<header class="panel-heading">
-					<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
-				</header>
-				<div class="panel-body">
-					<div class="modal-wrapper">
-						<div class="modal-text">
-							<p>날짜값은 2020-02-02 형태로 입력해주세요.</p>
-						</div>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<button id="dateConfirm" class="btn btn-default">확인</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		</div>
-		
-		
-		 <div id="dialogEditCardNum" class="modal-block mfp-hide">
-			<section class="panel">
-				<header class="panel-heading">
-					<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
-				</header>
-				<div class="panel-body">
-					<div class="modal-wrapper">
-						<div class="modal-text">
-							<p>카드번호/카드구분/유효기간을 양식에 맞게 입력해주세요.</p>
-							<p>카드번호: 실제 카드번호만 입력가능합니다.</p>
-							<p>카드구분: 법인(공용)/법인(개인)/법인(체크) 중 하나만 입력가능합니다.</p>
-							<p>유효기간: "2020-02-02" 같은 형식으로 입력해주세요.</p>
-						</div>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<button id="cardConfirm" class="btn btn-default">확인</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		</div>
-		
-		
-		 <div id="dialogEditEntry" class="modal-block mfp-hide">
-			<section class="panel">
-				<header class="panel-heading">
-					<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
-				</header>
-				<div class="panel-body">
-					<div class="modal-wrapper">
-						<div class="modal-text">
-							<p>[법인(공용), 법인(개인), 법인(체크)] 중 하나만 입력 해 주세요.</p>
-						</div>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<button id="entryConfirm" class="btn btn-default">확인</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		</div>
-		
-		
-		
-		<!-- 수정 유효성 모달창 끝 -->	
+			
+			
 			
 		
 		<!--  vendor -->

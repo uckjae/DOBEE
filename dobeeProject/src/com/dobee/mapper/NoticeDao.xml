@@ -36,8 +36,19 @@
 	SELECT NSSEQ, NSCONTENT, SCHSEQ, NOTSEQ FROM NOTSCHEDULE WHERE NOTSEQ=(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ=#{notSeq})
 </select>
 
+<!-- 공지사항 글 수정하기 -->
 <update id="noticeModify" parameterType="com.dobee.vo.notice.Notice">
    UPDATE NOTICE SET TITLE=#{title}, CONTENT=#{content} WHERE NOTSEQ=#{notSeq}
+</update>
+
+<!-- 공지사항 파일 수정하기 -->
+<update id="noticeFileModify" parameterType="com.dobee.vo.notice.NoticeFile">
+	UPDATE NOTICEFILE SET ORGNAME=#{orgName}, SAVENAME=#{saveName} WHERE NOTSEQ=#{notSeq};
+</update>
+
+<!-- 공지사항 일정 수정하기 -->
+<update id="notshceduleModify" parameterType="com.dobee.vo.schedule.NotSchedule">
+	UPDATE NOTSCHEDULE SET NSCONTENT=#{nsContent} WHERE NOTSEQ=(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ = #{notSeq})
 </update>
 
 <!-- 공지사항 조회수 올리기 -->

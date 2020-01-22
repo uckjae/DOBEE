@@ -66,18 +66,25 @@ public interface ProjectDao {
 
 
     //체크리스트 조회
-    public List<CheckList> checkList();
+    public List<CheckList> getTaskCheckList(int tskSeq);
 
 
     //체크리슨트 추가
-    public void addCheckList();
-
+    public int addTaskCheckList(CheckList checkList);
+    
+    
+    //체크리스트 수정
+    public int taskCheckListEdit(CheckList checkList);
 
     //프로젝트 캘린더
     public List<Schedule> pjtSchedule();
 
 
- 
+    //상세업무수정
+    public int taskDetailEdit(TaskDetail taskDetail);
+    
+    //업무수정
+    public int editTask(Task task);
 
 
 

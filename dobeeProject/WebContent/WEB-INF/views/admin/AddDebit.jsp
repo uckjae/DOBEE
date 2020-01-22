@@ -29,100 +29,93 @@
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-credit-card"></i>
 									</a>
 								</li>
-								<li><span>법인카드관리</span></li>
+								<li><span>법인카드</span></li>
 								<li><span>법인카드 등록</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
-					<!-- 작업 여기부터~!~!~!~~! -->
 					<div class="container-fluid">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-user-edit"></i>
-                 
-                        <b>법인카드 등록</b>
-               
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <form action="AdminDebit.do" method="post" >
-                                        	<div class="form-group">
-                                                		<div class="form-row">
-                                                			<div class="col-md-6">
-                                                			<!--form-row 첫번째 컬럼에서만 보안경고문이 뜸 나중에 js,css 확인 필요 -->
-                                                        		<div class="form-label-group">
-                                                            		<input type="text" id="cardNum" name="cardNum" placeholder="1234-1234-1234-1234" class="form-control" autofocus="autofocus" autocomplete="off"/>
-                                                            		<label for="name">카드번호</label>
-                                                            		<br>
-                                                            		<br>
-                                                            		<input type="text" id="corp" name="corp" class="form-control" placeholder="국민은행" autocomplete="off"/>
-                                                            		<label for="name">카드사</label>
-                                                            		<br>
-                                                            		
-                                                        		</div>
-                                                    		</div>
-                                                    		
-                                                			<div class="col-md-6">
-                                                        		<div class="form-label-group">
-                                                            		<input type="text" id="name" name="name" class="form-control" autocomplete="off"/>
-                                                            		<label for="name">명의자이름</label>
-                                                            		<br>
-                                                            		<br>
-                                                            		<input type="text" id="nickName" name="nickName" class="form-control" autocomplete="off"/>
-                                                            		<label for="name">카드별칭</label>
-                                                            		<br>
-                                                        		</div>
-                                                    		</div>
-                                                    		
-                                                		</div>
-                                            		</div>
-                                            <div class="form-group">
-                                                <div class="form-row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                            <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  >
-                                                            <label for="position">유효기간</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-label-group">
-                                                           	<select id="entry" name="entry" class="form-control" placeholder="법인카드구분" >
-                                                           		<option hidden>선택하세요</option>
-                                                           		<option>법인(공용)</option>
-															    <option>법인(개인)</option>
-															    <option>법인(체크)</option>
-                                                           	</select>
-                                                            <label for="teamCode">카드구분</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                            
-                                            
-                                            <div class="form-row">
-                                           		 <div class="col-md-6">
-                                                    <button type="submit" class="btn btn-primary btn-block" >등록하기</button>
-                                                </div>
-                                                <div class="col-md-6"><!-- 취소하고 뒤로 가기 -->
-                                                    <input type="button" class="btn btn-danger btn-block" value="뒤로가기"
-                                                        		onClick='history.go(-1)'>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+		                <div class="card mb-3">
+		                    <div class="card-header">
+		                        <i class="fas fa-user-edit"></i>
+		                    </div>
+		                    <div class="card-body">
+		                        <div class="table-responsive">
+		                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+		                                <div class="row">
+		                                    <div class="col-sm-12">
+		                                        <form action="AdminDebit.do" method="post" >
+		                                        	<div class="form-group">
+		                                                		<div class="form-row">
+		                                                			<div class="col-md-6">
+		                                                			<!--form-row 첫번째 컬럼에서만 보안경고문이 뜸 나중에 js,css 확인 필요 -->
+		                                                        		<div class="form-label-group">
+		                                                        			<label for="name">카드번호</label>
+		                                                            		<input type="text" id="cardNum" name="cardNum" placeholder="1234-1234-1234-1234" class="form-control" autofocus="autofocus" autocomplete="off"/>
+		                                                            		<br>
+		                                                            		<label for="name">카드사</label>
+		                                                            		<input type="text" id="corp" name="corp" class="form-control" placeholder="국민은행" autocomplete="off"/>
+		                                                            		<br>
+		                                                            		
+		                                                        		</div>
+		                                                    		</div>
+		                                                    		
+		                                                			<div class="col-md-6">
+		                                                        		<div class="form-label-group">
+		                                                            		<label for="name">명의자이름</label>
+		                                                            		<input type="text" id="name" name="name" class="form-control" autocomplete="off"/>
+		                                                            		<br>
+		                                                            		<label for="name">카드별칭</label>
+		                                                            		<input type="text" id="nickName" name="nickName" class="form-control" autocomplete="off"/>
+		                                                            		<br>
+		                                                        		</div>
+		                                                    		</div>
+		                                                    		
+		                                                		</div>
+		                                            		</div>
+		                                            <div class="form-group">
+		                                                <div class="form-row">
+		                                                    <div class="col-md-6">
+		                                                        <div class="form-label-group">
+		                                                        	<label for="position">유효기간</label>
+		                                                            <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  >
+		                                                        </div>
+		                                                    </div>
+		                                                    <div class="col-md-6">
+		                                                        <div class="form-label-group">
+		                                                            <label for="teamCode">카드구분</label>
+		                                                           	<select id="entry" name="entry" class="form-control" placeholder="법인카드구분" >
+		                                                           		<option hidden>선택하세요</option>
+		                                                           		<option>법인(공용)</option>
+																	    <option>법인(개인)</option>
+																	    <option>법인(체크)</option>
+		                                                           	</select>
+		                                                        </div>
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <br>
+		                                            <div class="form-row">
+		                                           		 <div class="col-md-6">
+		                                                    <button type="submit" class="btn btn-primary btn-block" >등록하기</button>
+		                                                </div>
+		                                                <div class="col-md-6"><!-- 취소하고 뒤로 가기 -->
+		                                                    <input type="button" class="btn btn-danger btn-block" value="뒤로가기"
+		                                                        		onClick='history.go(-1)'>
+		                                                </div>
+		                                            </div>
+		                                        </form>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
             </div>	
 					<!-- start: page -->
 					<!-- end: page -->

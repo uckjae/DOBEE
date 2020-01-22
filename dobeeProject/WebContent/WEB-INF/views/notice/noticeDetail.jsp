@@ -190,9 +190,7 @@ function noticeDel () {
 							<input type="text" class="form-control mb-3" id="title" name="title" value="${notice.title}" readonly>
 							<input type="hidden" id="notSeq" value="${notice.notSeq}">
 						</div>
-						<div style="margin: 15px"></div>
-						
-						
+						<div style="margin: 15px"></div>						
 						<!-- 공지사항 일정 -->
 						<c:choose>
 							<c:when test="${ not empty ns}">

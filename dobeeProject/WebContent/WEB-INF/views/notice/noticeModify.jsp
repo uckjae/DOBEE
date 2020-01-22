@@ -76,7 +76,9 @@
 	
 	<!-- 파일 업로드 -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
-	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>s
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<!-- Sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <script>
@@ -108,6 +110,72 @@
             });
         $.summernote.interface;
 
+        $("#submitBtn").on('click', function(e){
+        	if($("#title").val() == "" || $("#summernote").val() == ""){ //글 제목 & 내용 쓰지 않은 경우
+        		swal({
+    				title: "공지사항 글",
+    				text: "제목 또는 내용을 입력해주세요", 
+    				icon: "warning", //"info,success,warning,error" 중 택1
+    				button: true
+    					}).then((YES) => {
+    							$("#title").focus();
+    							});
+        		return;
+            }
+            
+           if ($("#nsContent").val()!==""){ //공지사항 일정을 썼는데 캘린더 날짜 선택 안한경우
+				if($("#startTime").val()=="" || $("#endTime").val()=="" ){
+			        swal({
+					title: "공지사항 일정",
+					text: "일정을 달력에서 선택해주세요", 
+					icon: "warning", //"info,success,warning,error" 중 택1
+					button: true
+							}).then((YES) => {
+									$("#startTime").focus();
+									})
+					return;
+				}
+           	} else{ //공지사항 일정 쓰지 않았는데 캘린더에서 날짜 선택한 경우
+				if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
+					swal({
+						title: "공지사항 일정",
+						text: "일정 내용을 입력해주세요", 
+						icon: "warning", //"info,success,warning,error" 중 택1
+						button: true
+						}).then((YES) => {
+							$("#nsContent").focus();
+								});
+					return;
+				}
+            }
+
+           //원래 업로드 되어 있던 파일 지우고 수정할 경우 -> 서버에 값 넘기기
+           if($("#fileUpload").hasClass("fileupload fileupload-new")){ //파일 있던 거 지운 경우 또는 파일 업로드 안한 경우 
+               $("#fileNameExists").val("noFile");
+               console.log('벨류는?'+ $("#fileNameExists").val());
+            } else { //파일 업로드 한 경우
+				var fileOrgName = $("#fileOrgName").text();
+				$("#fileNameExists").val(fileOrgName);
+				console.log('파일 이름?'+$("#fileNameExists").val());
+	        }
+           
+          /*
+           var fileOrgName = $("#fileOrgName").text();  //업로드한 파일 이름
+           console.log('파일은??'+fileOrgName)
+           if(fileOrgName !== "" || fileOrgName !== null) { //파일 이름이 있는 경우
+              	console.log('파일 이름 있음')
+        	   $("#fileNameExists").val(fileOrgName);
+            } else {
+            	console.log('파일 이름 없음')
+            	  $("#fileNameExists").val("noFile");
+                  }
+           console.log('벨류?????'+$("#fileNameExists").val());
+           */
+           	$("#noticeModifyForm").submit();
+           	
+        });
+
+        
     });
 </script>
 <body>
@@ -130,7 +198,7 @@
 								</li>
 								<li><span>공지사항</span></li>
 								<li><span>글수정</span></li>
-								<li><span>Title:&nbsp;&nbsp;${notice.title}</span></li>
+								<li><span>&nbsp;&nbsp;${notice.title}</span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -147,7 +215,7 @@
 							</h2>
 						</header>
 						<div class="panel-body">
-						   <form action="noticeModify.do" method="post" enctype="multipart/form-data">
+						   <form action="noticeModify.do" method="post" enctype="multipart/form-data" id="noticeModifyForm">
 						      <!--공지사항 제목  -->
 							   <div class="form-group">
 								   	<label class="col-md-3 control-label">제목</label>
@@ -155,38 +223,88 @@
 							    	<input type="text" class="form-control mb-3" id="title" name="title" value="${notice.title}" />
 							    </div>
 						     <div style="margin:10px"></div>
-						     <!--공지사항 일정시작,종료  -->
-							   <div class="form-group">
-							     	<label class="col-md-3 control-label">공지사항 일정</label>
-									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" placeholder="일정 내용을 입력하세요" value="">
-							   </div>
-							  <div class="form-group">
-								    <div class="input-daterange input-group" data-plugin-datepicker>
-										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="form-control" name="startTime" id="datepicker" placeholder="시작일">
-										<span class="input-group-addon">to</span>
-										<input type="text" class="form-control" name="endTime" id="datepicker2" placeholder="종료일">
-									 </div> 
-							   </div>
-							 <!-- 파일 업로드  -->
-							 <div class="form-group" style="margin-bottom:3px;">
-							 	 <label class="col-md-3 control-label">파일 업로드</label>
-							 </div>
-							 <div class="form-group">
-								 <div class="fileupload fileupload-new" data-provides="fileupload">
-								 	<div class="input-append">
-								 		<div class="uneditable-input">
-								 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
-										</div>
-										<span class="btn btn-default btn-file">
-											<span class="fileupload-exists">변경</span>
-											<span class="fileupload-new">파일 선택</span>
-											<input type="file" name="file"  />
-										</span>
-										<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+						     <!--공지사항 일정  -->
+						     <c:choose> 
+								<c:when test="${ not empty ns}">
+									<div class="form-group">
+										<label class="col-md-3 control-label">공지사항 일정</label>
+										<input type="hidden" name="notScheduleExists" value="true">
+										<input type="hidden" class="form-control md-3" id="nsSeq" name="nsSeq" value="${ns.nsSeq }">
+										<input type="hidden" class="form-control md-3" id="schSeq" name="schSeq" value="${ns.schSeq }">
+										<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }">
 									</div>
-								</div>
-							</div>
+									<div class="form-group">
+										<div class="input-daterange input-group" data-plugin-datepicker>
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="<fmt:formatDate value='${sc.startTime}' pattern='yyyy-MM-dd'/>" >
+											<span class="input-group-addon">to</span>
+											<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="<fmt:formatDate value='${sc.endTime}' pattern='yyyy-MM-dd'/>" >
+										</div> 
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="form-group">
+										<label class="col-md-3 control-label">공지사항 일정</label>
+										<input type="hidden" name="notScheduleExists" value="false">
+										<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="" >
+									</div>
+									<div class="form-group">
+										<div class="input-daterange input-group" data-plugin-datepicker>
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" class="form-control" name="startTime" id="startTime" placeholder="시작일" value="" >
+											<span class="input-group-addon">to</span>
+											<input type="text" class="form-control" name="endTime" id="endTime" placeholder="종료일" value="" >
+										</div> 
+									</div>
+								</c:otherwise>
+							</c:choose>
+							 <!-- 파일 업로드  -->
+							 <c:choose> 
+								<c:when test="${ not empty nf}"> <!-- 파일이 있을 때 -->
+									<div class="form-group" style="margin-bottom:3px;">
+									 	 <label class="col-md-3 control-label">파일 업로드</label>
+									 	 <input type="hidden" name="fileExists" value="true">
+									 	 <input type="hidden" id="fileNameExists" name="fileNameExists">
+									 </div>
+									 <div class="form-group">
+										 <div id="fileUpload" class="fileupload fileupload-exists" data-provides="fileupload">
+										 	<div class="input-append">
+										 		<div class="uneditable-input" id="fileInput">
+										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview" id="fileOrgName">${nf.orgName}</span>
+												</div>
+												<span class="btn btn-default btn-file">
+													<span class="fileupload-exists">변경</span>
+													<span class="fileupload-new">파일 선택</span>
+													<input type="file" name="file"  />
+												</span>
+												<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+											</div>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise> <!-- 파일이 없을 때 -->
+									<div class="form-group" style="margin-bottom:3px;">
+									 	 <label class="col-md-3 control-label">파일 업로드</label>
+									 	 <input type="hidden" name="fileExists" value="false">
+									 	 <input type="hidden" id="fileNameExists" name="fileNameExists">
+									 </div>
+									 <div class="form-group">
+										 <div id="fileUpload" class="fileupload fileupload-new" data-provides="fileupload">
+										 	<div class="input-append">
+										 		<div class="uneditable-input">
+										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview" id="fileOrgName"></span>
+												</div>
+												<span class="btn btn-default btn-file">
+													<span class="fileupload-exists">변경</span>
+													<span class="fileupload-new">파일 선택</span>
+													<input type="file" name="file" id="fileCheck" />
+												</span>
+												<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+											</div>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<!--공지사항 일정내용  -->
 						     <div style="margin:10px"></div>
 						     <!--공지사항 내용  -->
@@ -196,7 +314,7 @@
 							</div>
 							<!--공지사항 수정,취소 버튼 -->
 						    <div class ="text-center" style="margin-top:18px;">
-						    	<input type="submit" class="btn btn-primary mr-3" value="수정">
+						    	<input type="button" id="submitBtn" class="btn btn-primary mr-3" value="수정">
 						    	<a class="btn btn-primary mr-3" href="noticeDetail.do?notSeq=${notice.notSeq}">취소</a>
 						    </div>   
 						   </form>   

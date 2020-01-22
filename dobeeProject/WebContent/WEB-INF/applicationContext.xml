@@ -25,9 +25,9 @@
         <property name="username" value="dobee" />
         <property name="password" value="1004" />
     </bean>  
+ 
 
-
-   <!-- <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+  <!--  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/tester_db?serverTimezone=Asia/Seoul&amp;characterEncoding=UTF-8" />
         <property name="username" value="tester" />
@@ -55,6 +55,7 @@
     <bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="driverManagerDataSource"/>
         <property name="mapperLocations" value="classpath*:com/dobee/mapper/*xml" />
+           
         <!-- <property name="configLocation" value="classpath:/mybatis-config.xml" />
         mybatis-config.xml을 만들어서 아래 설정을 만들수 있다
         <configuration>
