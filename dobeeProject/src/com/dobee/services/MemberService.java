@@ -142,5 +142,14 @@ public class MemberService {
     	System.out.println(team.toString());
     	return team;
     }
+    
+    
+    //사원 마이페이지 수정
+    public int mypageModify(User user) {
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.mypageModify(user);
+    	return result;
+    }
 
 }

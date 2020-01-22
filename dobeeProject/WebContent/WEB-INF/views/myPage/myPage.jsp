@@ -129,70 +129,68 @@
 								</div>
 								<!-- 정보 수정 -->
 								<div id="edit" class="tab-pane">
-									<form class="form-horizontal" method="get">
+									<form action="mypageModify.do" method="post" class="form-horizontal" name="mypageForm">
 										<h4 class="mb-xlg">정보 수정</h4>
 										<fieldset>
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileFirstName">이름</label>
+												<label class="col-md-3 control-label" for="name">이름</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileFirstName" value="${user.name}" readonly>
+													<input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileLastName">E-mail</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileLastName" value="${user.mail}" readonly>
+													<input type="text" class="form-control" id="mail" name="mail" value="${user.mail}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileNewPassword">비밀번호</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileNewPassword">
+													<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileNewPasswordRepeat">비밀번호 재입력</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileNewPasswordRepeat">
+													<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 재입력">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">입사일</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany" value="${user.regitDate}" readonly>
+												<div class="col-md-8"> <!-- ${user.regitDate} -->
+													<input type="text" class="form-control" id="regitDate" name="regitDate" value="<fmt:formatDate value='${user.regitDate}' pattern='yyyy-MM-dd'/>" >
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">직책</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany" readonly>
+													<input type="text" class="form-control" id="position" name="position" value="${user.position}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">소속</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany" readonly>
+													<input type="text" class="form-control" id="teamName" name="teamName" value="${user.teamName}" readonly>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">휴대폰 번호</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="profileCompany" value="${user.phone}"> 
+													<input type="text" class="form-control" id="phone" name="phone" value="${user.phone}"> 
 												</div>
 											</div>
 										</fieldset>
 										<div class="panel-footer">
 											<div class="row">
 												<div class="col-md-4 col-md-offset-4 text-center">
-													<button type="submit" class="btn btn-primary">수정</button>
+													<button type="button" id="mypageBtn" class="btn btn-primary">수정</button>
 													<button type="reset" class="btn btn-default">취소</button>
 												</div>
 											</div>
 										</div>
 									</form>
 								</div>
-								
-								
 							</div>
 						</div>
 					</div>
@@ -248,5 +246,39 @@
 	<c:import url="/common/BottomTag.jsp"/>
 	<!-- Specific Page Vendor -->
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
+<script>
+	$(function(){
+		/*마이페이지 수정*/
+		$("#mypageBtn").on('click', function(e){
+       			var mypageForm = $("form[name=mypageForm]").serialize() ;
+   	 			$.ajax({
+   	 	 			url:"ajax/mypage/modify.do",
+   	 				data: mypageForm,
+   	 				dataType: "text",
+   	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+   	 				type:"post",
+   	 				success:function(responsedata){
+       	 				console.log('ajax 통신 성공?');
+   	 					console.log(responsedata);
+   	 					if(responsedata == "success"){ //프로젝트 생성 완료
+   	 	 					console.log('수정 완료')
+   	 	 					swal({
+   	 						   title: "정보 수정완료",
+   	 						   text: "정보가 수정되었습니다.",
+   	 						   icon: "success" //"info,success,warning,error" 중 택1
+   	 						}).then((YES) => {
+   	 								location.reload(true); 
+   	 							})
+   	 					
+   	 	 					}
+   	 				},
+   	 				error:function(){
+   	 					
+   	 				}
+   	 			});
+    		});
+		
+		})
+</script>
 </body>
 </html>

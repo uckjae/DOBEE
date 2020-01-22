@@ -100,9 +100,16 @@ public class DoController {
     public String noAuth() {
     	return "main/noAuthority";
     }
-    
   
-   
+    //아이디찾기
+    @RequestMapping(value="findId.do",method=RequestMethod.GET)
+    public String findId(String name, String phone ,  Model model){
+    	String find;
+    	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	 find = userDao.findId(name, phone);
+    	 model.addAttribute("find",find);
+      return "main/findId";
+    }
 
     public String fidIdResult(){
         return null;
@@ -153,8 +160,10 @@ public class DoController {
     @RequestMapping("adminMain.do")
     public String adminMain(Model model) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
+    	List<User> userList = userDao.getUserList();
     	List<User> userInfoList = userDao.getUserInfoList();
-    	model.addAttribute("userList", userInfoList);
+    	model.addAttribute("userList", userList);
+    	model.addAttribute("userInfoList", userInfoList);
     	return "admin/AdminMain";
     }
     
@@ -203,7 +212,6 @@ public class DoController {
     }
 
 
-
     //마이페이지
     @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
     public String mypage(Principal principal, Model model){
@@ -215,12 +223,7 @@ public class DoController {
     	System.out.println("유저 정보 가져왔어?"+user.toString());
         return "myPage/myPage";
     }
-
-    //@RequestMapping(value = "", method = RequestMethod.POST)
-    public String mypageModi(){
-        return null;
-    }
-
+    
     
     //공지사항리스트
     @RequestMapping("noticeList.do")
