@@ -1057,6 +1057,17 @@ public class DoController {
     	return "redirect: adminMain.do";
     }
    	
+   
+   //관리자_사원 정보 수정
+   @RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)
+   public String modifyUser(@RequestParam(value="mail") String mail, Model model) {
+	   System.out.println("유저 메일"+mail);
+	   //서비스 통해서 유저 메일로 유저 정보 가져와서 뿌리기
+	   User user = memberService.getUserInfo(mail);
+	   model.addAttribute("user", user);
+	   System.out.println("유저 정보 가져왔어1111?"+user.toString());
+	   return "admin/ModifyMember";
+   }
   
    @RequestMapping(value="teamManagement.do", method= RequestMethod.GET)
    public String teamManagement(Model model) {

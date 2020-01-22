@@ -15,7 +15,6 @@ public class AjaxController_Mypage {
 	@Autowired
 	MemberService memberService;
 	
-	
 	//마이페이지 수정 ajax
     @RequestMapping(value = "modify.do", method = RequestMethod.POST)
     public String mypageModify(User user){
