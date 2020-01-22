@@ -31,12 +31,18 @@ public interface NoticeDao {
     //공지사항 일정 가져오기 --01.21 알파카
     public NotSchedule getNotSchedule(int notSeq);
     
-    //공지사항 수정
-    public void noticeModify(Notice notice);
+    //공지사항 글 수정 --01.22 알파카
+    public int noticeModify(Notice notice);
     
-    //공지사항 삭제
+    //공지사항 파일 수정 --01.21 알파카
+    public int noticeFileModify(NoticeFile nf);
+    
+    
+    
+    
+    //공지사항 삭제 --01.21 알파카
     public int delNotice(int notSeq);
     
-    //공지사항 조회수
+    //공지사항 조회수 --01.21 알파카
     public int noticeCount(int notSeq);
 }

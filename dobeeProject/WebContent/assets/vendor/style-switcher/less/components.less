@@ -1,772 +1,160 @@
-/* Blockquote */
-blockquote.primary {
-	border-color: @skinColor;
-}
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<c:import url="/common/tag.jsp" />
+<meta>
+<title>Insert title here</title>
+</head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- DataTables js-->
+		<link rel="stylesheet"href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"type="text/css"/>
+		<link rel="stylesheet" href="./css/notice.datatables.css">
+		<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"type="text/javascript"></script>
+  <!-- /DataTables js-->
+  <script type="text/javascript">
+  $(document).ready(function(){
+		$('#myTable').DataTable({
+			/*language option*/
+			"language": {
+ 	        "emptyTable": "데이터가 없습니다.",
+ 	        "lengthMenu": "페이지당 _MENU_ 개씩 보기",
+ 	        "info": "현재 _START_ - _END_ / _TOTAL_건",
+ 	        "infoEmpty": "데이터 없음",
+ 	        "infoFiltered": "( _MAX_건의 데이터에서 필터링됨 )",
+ 	        "search": "검색: ",
+ 	        "zeroRecords": "일치하는 데이터가 없습니다.",
+ 	        "loadingRecords": "로딩중...",
+ 	        "processing": "잠시만 기다려 주세요",
+ 	        "paginate": {
+ 	            "next": "다음",
+ 	            "previous": "이전"
+ 	        }
+ 	    },
+ 	    "columnDefs": [
+ 	        {
+     	      className: "dt-center", "targets": [1],
+   	        }
+ 	      ]
+			});
+	});
 
-/* Nav Pills */
-.nav-pills-primary {
-	> li {
-		a:hover,
-		a:focus {
-			color: @skinColor;
-			background-color: lighten(@skinColor, 50%);
-		}
-	}
+	function modify(data){
+		console.log("modify() in!!")
+		console.log(data);
+		var tr = $(data).closest('tr');
+		var teamCode = "";
+		teamCode = $(data).parent().prev().prev().text();
+		$(tr).empty();
+		
+		$.ajax({
+			url:"ajax/admin/getTeam.do",
+			data: {'teamCode' : teamCode},
+			type: "POST",
+			dataType: "json",
+			success: function(team){
+				console.log(team);
+				console.log(team.teamCode);
+				var firstTd = $('<td>');
+					$(firstTd).text("수정");
+				var secTd = $('<td>');
+					$(secTd).html('<input type="text" name="teamCode" id="teamCode" value="${team.teamCode}">');
+				var thirdTd = $('<td>');
+					$(thirdTd).html('<input type="text" name="teamName" id="teamName" value="${team.teamName}">');
+				var fourthTd = $('<td>');
+					$(fourthTd).html('<button class="btn btn-primary btn-block" onclick="myFormSubmit()">수정하기</button>');
+				var fifthTd = $('<td>');
+					$(fifthTd).html('<button class="btn btn-primary btn-block" onclick="removeForm(this)">취소</button>');
 
-	> li.active {
-		> a {
-			&,
-			&:hover,
-			&:active,
-			&:focus {
-				background-color: @skinColor;
+				$(tr).append(firstTd);
+				$(tr).append(secTd);
+				$(tr).append(thirdTd);
+				$(tr).append(fourthTd);
+				$(tr).append(fifthTd);
+								
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log(textStatus);
+				console.log(errorThrown);
 			}
-		}
-	}
-}
-
-/* Dropdown Menu */
-.dropdown-menu & >.active & > a,
-.dropdown-menu & >.active & > a:hover,
-.dropdown-menu & >.active & > a:focus {
-	background-color: @skinColor;
-}
-
-.open > .dropdown-toggle.btn-primary {
-	background: @skinColor;
-	border-color: darken(@skinColor, 5%);
-}
-
-body .btn-primary.dropdown-toggle {
-	border-left-color: lighten(@skinColor, 8%);
-}
-
-/* Buttons */
-body {
-
-	.btn-primary {
-		.buttonBackground(@color-primary, spin(@color-primary, 20%));
+	
+		});
 	}
 
-	.btn-success {
-		.buttonBackground(@color-success, spin(@color-success, 20%));
-	}
+		
+	  function add(data){
+		  	console.log("modify() in!!")
+			console.log(data.parentElement.parentElement);
+			var target = data.parentElement.parentElement
 
-	.btn-warning {
-		.buttonBackground(@color-warning, spin(@color-warning, 20%));
-	}
-
-	.btn-danger {
-		.buttonBackground(@color-danger, spin(@color-danger, 20%));
-	}
-
-	.btn-info {
-		.buttonBackground(@color-info, spin(@color-info, 20%));
-	}
-
-	.btn-dark {
-		.buttonBackground(@color-dark, spin(@color-dark, 20%));
-	}
-
-}
-
-/* Switch*/
-.switch {
-	&.switch-primary {
-		.ios-switch .on-background {
-			background: @skinColor;
-		}
-	}
-}
-
-/* Label */
-.label-primary {
-	background: @skinColor;
-}
-
-/* Text Primary */
-.text-primary {
-	color: @skinColor !important;
-}
-
-/* BG Primary */
-.bg-primary {
-	background: @skinColor;
-}
-
-/* Alternative Font Style */
-.alternative-font {
-	color: @skinColor;
-}
-
-/* Hightlight */
-.highlight {
-	background-color: @skinColor;
-}
-
-/* Drop Caps */
-p.drop-caps {
-	&.colored:first-child:first-letter {
-		color: @skinColor;
-	}
-	&.colored.secundary:first-child:first-letter {
-		background-color: @skinColor;
-	}
-}
-
-/* Well */
-.well.primary {
-	background: @skinColor;
-	border-color: darken( @skinColor, 10% );
-}
-
-/* Form */
-.form-control:focus {
-	border-color: lighten(@skinColor, 20%);
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@skinColor), green(@skinColor), blue(@skinColor), 0.3);
-}
-
-/* Header */
-.header {
-	.toggle-sidebar-left {
-		background: @skinColor;
-	}
-}
-
-/* Page Header */
-.page-header {
-	h2 {
-		border-bottom-color: @skinColor;
-	}
-	.sidebar-right-toggle {
-		&:hover {
-			color: @skinColor;
-		}
-	}
-}
-
-/* Navigation */
-ul.nav-main {
-
-	& > li {
-		&.nav-active {
-			> a {
-				box-shadow: 2px 0 0 @skinColor inset;
-			}
-			& > i {
-				color: @skinColor;
-			}
-		}
-	}
-
-	li {
-
-		.nav-children {
-
-			li {
-				&.nav-active {
-					> a {
-						color: @skinColor;
-					}
-
-				}
-
-			}
+				var inputRow = $('<tr style="height: 2em" role="row">');
+				
+					var info = $('<td>');
+						$(info).text("수정하기");					
+					var teamName = $('<td>');
+						$(teamName).append('<input type="text" placeholder="팀 코드 입력">');
+					var teamCode = $('<td>');
+						$(teamCode).append('<input type="text" placeholder="팀 이름 입력">');
+					var submitButton = $('<td>');
+						$(submitButton).append('<input type="submit" value="수정">');
+					var cancleButton = $('<td>');
+						var btn = $('<button onclick="cancleModify(this)">');
+							$(btn).text("취소");
+						$(cancleButton).append(btn);
+				$(inputRow).append(info);
+				$(inputRow).append(teamName);
+				$(inputRow).append(teamCode);
+				$(inputRow).append(submitButton);
+				$(inputRow).append(cancleButton);
+			$(target).after(inputRow);
 		}
 
-	}
-
-}
-
-/* Nano Scroller Plugin */
-html.no-overflowscrolling {
-	.nano {
-		> .nano-pane {
-
-			> .nano-slider {
-				background: @skinColor;
-			}
+		function cancleModify(data){
+			console.log(data);
 		}
-	}
-}
-
-/* Nav Pills */
-.nav-pills > .active {
-	a {
-		&,
-		&:hover,
-		&:focus {
-			background-color: @skinColor;
-		}
-	}
-}
-
-/* Pagination */
-.pagination {
-	> li {
-		a {
-			color: @skinColor;
-			&:hover,
-			&:focus {
-				color: lighten(@skinColor, 5%);
-			}
-		}
-
-		&.active {
-			a,
-			span {
-				&,
-				&:hover,
-				&:focus {
-					background-color: @skinColor;
-					border-color: @skinColor;
-				}
-			}
-
-			a {
-				background-color: @skinColor;
-			}
-		}
-	}
-}
-
-html,
-html.dark {
-	.pagination > li.active {
-		a,
-		span {
-			&,
-			&:hover,
-			&:focus {
-				background-color: @skinColor;
-				border-color: @skinColor;
-			}
-		}
-
-		a {
-			background-color: @skinColor;
-		}
-	}
-}
-
-/* Fullcalendar */
-.fc {
-
-	.fc-widget-header {
-		background: @skinColor;
-		border-color: @skinColor;
-	}
-
-	.fc-header-title {
-		h2 {
-
-			&:before {
-				color: @skinColor;
-			}
-		}
-	}
-}
-
-.fc-event {
-	background: @skinColor;
-	border-color: @skinColor;
-}
-
-.fc-event.fc-event-primary {
-	background: @skinColor;
-	border-color: @skinColor;
-}
-
-/* Maps */
-.jqvmap-zoomin,
-.jqvmap-zoomout {
-	background: @skinColor;
-}
-
-/* Timeline */
-.timeline {
-
-	.tm-items {
-
-		& > li {
-
-			.tm-datetime {
-
-				.tm-datetime-time {
-					color: @skinColor;
-				}
-			}
-
-			.tm-icon {
-				border-color: @skinColor;
-				color: @skinColor;
-			}
-		}
-	}
-
-	&.timeline-simple {
-
-		.tm-body {
-
-			.tm-items {
-
-				& > li {
-
-					&:before {
-						background: @skinColor;
-						box-shadow: 0 0 0 3px #FFF, 0 0 0 6px @skinColor;
-					}
-
-				}
-			}
-		}
-
-	}
-}
-
-html.dark .timeline.timeline-simple .tm-body .tm-items > li:before {
-	background: @skinColor;
-	box-shadow: 0 0 0 3px lighten(#1d2127, 8%), 0 0 0 6px @skinColor;
-}
-
-/* Princing Table */
-.pricing-table {
-	h3 {
-		span {
-			color: @skinColor;
-		}
-	}
-
-
-	.most-popular {
-		h3 {
-			background-color: @skinColor !important;
-			color: #FFF !important
-		}
-	}
-}
-
-/* Data Tables Loading */
-.dataTables_processing {
-	background-color: @skinColor;
-}
-
-/* Accordion */
-.panel-group {
-	.panel-accordion {
-		.panel-heading {
-
-			a {
-				color: @skinColor;
-			}
-
-		}
-	}
-}
-
-/* Alerts */
-.alert-primary {
-	background-color: @skinColor;
-	border-color: darken(@skinColor, 3%);
-
-	.alert-link {
-		color: darken(@skinColor, 20%);
-	}
-}
-
-/* Nestable */
-.dd-handle {
-	&:hover {
-		color: @skinColor !important;
-	}
-}
-
-.dd-placeholder {
-	background: lighten(@skinColor, 55%);
-	border-color: @skinColor;
-}
-
-/* Panels */
-.panel-highlight {
-
-	.panel-heading {
-		background-color: @skinColor;
-		border-color: @skinColor;
-	}
-
-	.panel-body {
-		background-color: @skinColor;
-	}
-}
-
-html .panel-primary {
-	.panel-heading {
-		background: @skinColor;
-		border-color: @skinColor;
-	}
-}
-
-.panel-heading {
-	&.bg-primary {
-		background: @skinColor;
-	}
-}
-
-.panel-body {
-	&.bg-primary {
-		background: @skinColor;
-	}
-}
-
-.panel-featured-primary {
-	border-color: @skinColor;
-
-	.panel-title {
-		color: @skinColor;
-	}
-}
-
-.panel-heading-icon {
-	&.bg-primary {
-		background: @skinColor;
-	}
-}
-
-.panel-group .panel-accordion-primary {
-	.panel-heading .panel-title a {
-		background: @skinColor;
-	}
-}
-
-/* Progress Bar */
-.progress-bar {
-	background-color: @skinColor;
-}
-
-.progress {
-	.progress-bar-primary {
-		background-color: @skinColor;
-	}
-}
-
-/* Toggle */
-.toggle {
-	&> {
-		label {
-			border-left-color: @skinColor;
-			color: @skinColor;
-		}
-	}
-	&.active {
-		> label {
-			background: @skinColor !important;
-			border-color: @skinColor;
-		}
-	}
-}
-
-/* Treeview */
-.jstree-default {
-	.jstree-hovered {
-		background-color: lighten(@skinColor, 55%) !important;
-	}
-	.jstree-clicked {
-		background-color: lighten(@skinColor, 45%) !important;
-	}
-	.colored {
-		color: @skinColor !important;
-		.jstree-icon {
-			color: @skinColor !important;
-		}
-	}
-	.colored-icon {
-		.jstree-icon {
-			color: @skinColor !important;
-		}
-	}
-}
-
-/* Widgets */
-.sidebar-widget {
-
-	&.widget-tasks {
-
-		ul {
-			li {
-
-				&:before {
-					border-color: @skinColor;
-				}
-
-			}
-		}
-	}
-}
-
-.widget-twitter-profile {
-	background-color: @skinColor;
-	.profile-quote {
-		background-color: lighten(@skinColor, 4%);
-		.quote-footer {
-			border-top-color: rgba(red(lighten(@skinColor, 10%)), green(lighten(@skinColor, 10%)), blue(lighten(@skinColor, 10%)), 0.7);
-		}
-	}
-}
-
-.widget-profile-info {
-	.profile-info {
-		.profile-footer {
-			border-top-color: rgba(red(lighten(@skinColor, 10%)), green(lighten(@skinColor, 10%)), blue(lighten(@skinColor, 10%)), 0.7);
-		}
-	}
-}
-
-/* Thumb Info */
-.thumb-info {
-	.thumb-info-type {
-		background-color: @skinColor;
-	}
-}
-
-/* Social Icons */
-.social-icons-list {
-	a {
-		background: @skinColor;
-	}
-}
-
-/* Notifications */
-.notifications {
-	.notification-menu {
-		.notification-title {
-			background: @skinColor;
-			.label-default {
-				background-color: darken(@skinColor, 10%);
-			}
-		}
-	}
-}
-
-.notifications .notification-menu,
-.notifications .notification-icon {
-	&:before {
-		border-bottom-color: @skinColor;
-	}
-}
-
-.ui-pnotify {
-	.notification-primary {
-		background: rgba(red(@skinColor), green(@skinColor), blue(@skinColor), 0.95);
-	}
-
-	&.stack-bar-top,
-	&.stack-bar-bottom {
-		.notification-primary {
-			background: @skinColor;
-		}
-	}
-}
-
-.ui-pnotify.notification-primary {
-	.notification,
-	.notification-primary {
-		background: rgba(red(@skinColor), green(@skinColor), blue(@skinColor), 0.95);
-	}
-
-	&.stack-bar-top,
-	&.stack-bar-bottom {
-		.notification,
-		.notification-primary {
-			background: @skinColor;
-		}
-	}
-}
-
-/* Modal */
-.modal-block-primary {
-	.fa {
-		color: @skinColor;
-	}
-	&.modal-header-color {
-		.panel-heading {
-			background-color: @skinColor;
-		}
-	}
-	&.modal-full-color {
-		.panel {
-			background-color: lighten(@skinColor, 8%);
-		}
-		.panel-heading {
-			background-color: @skinColor;
-		}
-		.panel-footer {
-			background-color: lighten(@skinColor, 8%);
-		}
-	}
-}
-
-/* Modal Icon */
-.modal-block-primary .modal-icon {
-	.fa {
-		color: @skinColor;
-	}
-}
-
-/* Tabs */
-html,
-html.dark {
-	body {
-		.tabs-primary {
-			.nav-tabs {
-				&,
-				&.nav-justified {
-					li {
-						a {
-							&,
-							&:hover {
-								color: @skinColor;
-							}
-
-							&:hover {
-								border-top-color: @skinColor;
-							}
-						}
-
-						&.active {
-							a,
-							a:hover,
-							a:focus {
-								border-top-color: @skinColor;
-								color: @skinColor;
-							}
-						}
-					}
-				}
-			}
-
-			&.tabs-bottom {
-				.nav-tabs {
-					&,
-					&.nav-justified {
-						li {
-							a {
-								&:hover {
-									border-bottom-color: @skinColor;
-								}
-							}
-
-							&.active {
-								a,
-								a:hover,
-								a:focus {
-									border-top-color: #FFF;
-									border-bottom-color: @skinColor;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			&.tabs-vertical {
-				&.tabs-left {
-					li {
-						a {
-							&:hover {
-								border-left-color: @skinColor;
-							}
-						}
-
-						&.active {
-							a,
-							a:hover,
-							a:focus {
-								border-left-color: @skinColor;
-							}
-						}
-					}
-				}
-
-				&.tabs-right {
-					li {
-						a {
-							&:hover {
-								border-right-color: @skinColor;
-							}
-						}
-
-						&.active {
-							a,
-							a:hover,
-							a:focus {
-								border-right-color: @skinColor;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-/* Simple List */
-ul.simple-bullet-list {
-	li {
-		&:before {
-			border-color: @skinColor;
-		}
-	}
-}
-
-/* Simple Card List */
-.simple-card-list {
-	li.primary {
-		background: @skinColor;
-	}
-}
-
-/* Search Results */
-.search-content {
-	.search-toolbar {
-		.nav-pills {
-			li.active {
-				a {
-					color: @skinColor;
-					border-bottom-color: @skinColor;
-				}
-			}
-		}
-	}
-}
-
-.search-results-list {
-	.result-thumb {
-		.fa {
-			background: @skinColor;
-		}
-	}
-}
-
-html.dark {
-	.search-content {
-		.search-toolbar {
-			.nav-pills {
-				li.active {
-					a {
-						&,
-						&:hover,
-						&:focus {
-							color: @skinColor;
-							border-bottom-color: @skinColor;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-/* Time Picker */
-.bootstrap-timepicker-widget table td a:hover {
-	background-color: @skinColor;
-}
+		
+
+	
+  </script>
+<body>
+	<div class="page">
+		<!-- navbar-->
+		<c:import url="/common/top.jsp" />
+
+		<section class="dashboard-counts section-padding">
+			<div class="container-fluid">
+				<form action="#" method="post">
+					<table id="myTable" class="dataTable display">
+						<thead>
+							<tr>
+								
+								<th style="width: 3em">번호</th>
+								<th style="width: auto">팀 코드</th>
+								<th style="width: auto">팀 이름</th>
+								<th style="width: auro"></th>
+								<th style="width: auro"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${teamList}" var="team" varStatus="status">
+								<tr>
+									<td>${status.index+1}</td>
+									<td>${team.teamCode}</td>
+									<td>${team.teamName}</td>
+									<td><a onclick="modify(this);"><span>수정</span></a></td>
+									<td><span>삭제</span></td>
+								</tr>
+							</c:forEach>
+	
+	
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</section>
+	</div>
+
+</body>
+</html>
