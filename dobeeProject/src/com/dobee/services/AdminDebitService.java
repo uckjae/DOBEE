@@ -20,6 +20,7 @@ public class AdminDebitService {
 	}
 
 
+	//관리자 법인카드 수정  
 	public int updateDebit(Debit debit) {
 		  int result = 0;
 		  System.out.println(debit.getCardNum());
@@ -40,4 +41,14 @@ public class AdminDebitService {
 		  return result;
 	  }
 	  
+	
+	//관리자 법인카드 삭제하기
+	public int deleteDebit(String cardNum) {
+		int result = 0 ; 
+		PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+		result = paymentDao.adminDelDebit(cardNum);
+		
+		return result;
+	}
+	
 }
