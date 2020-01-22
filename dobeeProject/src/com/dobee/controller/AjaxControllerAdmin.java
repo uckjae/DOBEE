@@ -47,6 +47,7 @@ public class AjaxControllerAdmin {
 	public List<Authority> getAuthorityList(){
 		UserDao userDao = sqlSession.getMapper(UserDao.class);
 		List<Authority> authorityList = userDao.getAuthority();
+		System.out.println(authorityList);
 		return authorityList;
 	}
 	

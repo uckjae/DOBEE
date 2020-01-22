@@ -34,14 +34,13 @@
 			<!-- start : main Content -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>법인카드 목록</h2>
+					<h2>법인카드 관리</h2>
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
-							<li><a href="index.html"> <i class="fa fa-home"></i>
-							</a></li>
-							<li><span>법인카드관리</span></li>
-							<li><span>법인카드 목록</span></li>
+							<li><a href="#"> <i class="fa fa-credit-card"></i></a></li>
+							<li><span>법인카드</span></li>
+							<li><span>법인카드 관리</span></li>
 						</ol>
 
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
@@ -60,7 +59,7 @@
 									<a href="#" class="fa fa-times"></a>
 								</div>
 						
-								<h2 class="panel-title">법인카드 수정 및 삭제</h2>
+								<h2 class="panel-title">법인카드 관리</h2>
 							</header>
 							<div class="panel-body">
 								<!-- <div class="row">
@@ -98,7 +97,6 @@
 											<td>${debitList.nickName}</td>
 											<td>${debitList.entry}</td>
 											<td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td>
-										
 											<td class="actions">
 												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>

@@ -99,29 +99,6 @@
 							</ul>
 							<div class="tab-content">
 								<div id="overview" class="tab-pane active">
-									<h4 class="mb-md">Update Status</h4>
-
-									<section class="simple-compose-box mb-xlg">
-										<form method="get" action="/">
-											<textarea name="message-text" data-plugin-textarea-autosize placeholder="What's on your mind?" rows="1"></textarea>
-										</form>
-										<div class="compose-box-footer">
-											<ul class="compose-toolbar">
-												<li>
-													<a href="#"><i class="fa fa-camera"></i></a>
-												</li>
-												<li>
-													<a href="#"><i class="fa fa-map-marker"></i></a>
-												</li>
-											</ul>
-											<ul class="compose-btn">
-												<li>
-													<a class="btn btn-primary btn-xs">Post</a>
-												</li>
-											</ul>
-										</div>
-									</section>
-
 									<h4 class="mb-xlg">Timeline</h4>
 
 									<div class="timeline timeline-simple mt-xlg mb-md">
