@@ -205,7 +205,7 @@
 									<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근/퇴근</a>
 								</li>
 								<li>
-									<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-user"></i>정보수정</a>
+									<a role="menuitem" tabindex="-1" href="mypage.do?mail=${user.mail}"><i class="fa fa-user"></i>마이페이지</a>
 								</li>
 								<li>
 									<a role="menuitem" tabindex="-1" href="#" onclick="document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>로그아웃</a>

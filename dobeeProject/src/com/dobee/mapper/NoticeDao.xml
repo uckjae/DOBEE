@@ -46,6 +46,10 @@
 	UPDATE NOTICEFILE SET ORGNAME=#{orgName}, SAVENAME=#{saveName} WHERE NOTSEQ=#{notSeq};
 </update>
 
+<!-- 공지사항 일정 수정하기 -->
+<update id="notshceduleModify" parameterType="com.dobee.vo.schedule.NotSchedule">
+	UPDATE NOTSCHEDULE SET NSCONTENT=#{nsContent} WHERE NOTSEQ=(SELECT NOTSEQ FROM NOTICE WHERE NOTSEQ = #{notSeq})
+</update>
 
 <!-- 공지사항 조회수 올리기 -->
 <update id="noticeCount" parameterType="com.dobee.vo.notice.Notice">

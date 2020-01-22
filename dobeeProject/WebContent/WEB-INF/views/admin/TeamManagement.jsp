@@ -126,17 +126,17 @@ $(document).ready(function(){
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>팀 관리</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
 									<a href="index.html">
-										<i class="fa fa-home"></i>
+										<i class="fa fa-briefcase"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>사원 관리</span></li>
+								<li><span>팀 관리</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -150,7 +150,7 @@ $(document).ready(function(){
 							<a href="#" class="fa fa-times"></a>
 						</div>
 				
-						<h2 class="panel-title">Rows with Details</h2>
+						<h2 class="panel-title">팀 관리</h2>
 					</header>
 			<div class="panel-body">
 				<form action="#" method="post">

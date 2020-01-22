@@ -45,10 +45,14 @@ public interface UserDao {
 
     //부재
     public void restWork(User member);
-
-
-    //파이페이지 정보수정
-    public void myPage();
+    
+    //마이페이지 개인 정보 불러오기
+    /* 01.22 알파카 */
+    public User getUserInfo(String mail);
+    
+    //마이페이지 정보수정
+    /* 01.22 알파카 */
+    public int mypageModify(User user);
 
 
     // Ajax 개인_연차 불러오기
@@ -189,7 +193,7 @@ public interface UserDao {
     
     
     //UserInfoList 가져오기
-    public List<UserInfo> getUserInfoList();
+    public List<User> getUserInfoList();
     
     
     //Authority 목록불러오기
@@ -205,7 +209,7 @@ public interface UserDao {
     
     
     //사원정보추가
-    public void addUserInfo(UserInfo userInfo);
+    public void addUserInfo(User user);
     
     
     //비밀번호 업데이트

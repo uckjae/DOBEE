@@ -100,7 +100,6 @@ public class DoController {
     public String noAuth() {
     	return "main/noAuthority";
     }
-    
   
     //아이디찾기
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
@@ -162,7 +161,7 @@ public class DoController {
     public String adminMain(Model model) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	List<User> userList = userDao.getUserList();
-    	List<UserInfo> userInfoList = userDao.getUserInfoList();
+    	List<User> userInfoList = userDao.getUserInfoList();
     	model.addAttribute("userList", userList);
     	model.addAttribute("userInfoList", userInfoList);
     	return "admin/AdminMain";
@@ -213,19 +212,18 @@ public class DoController {
     }
 
 
-
     //마이페이지
-    //@RequestMapping(value = "", method = RequestMethod.GET)
-    public String mypage(){
-        return null;
+    @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
+    public String mypage(Principal principal, Model model){
+    	System.out.println("프린시펄?"+principal.getName()); //회원 ID 가져오기
+    	//회원 정보 가져오기
+    	String mail = principal.getName();
+    	User user = memberService.getUserInfo(mail);
+    	model.addAttribute("user", user);
+    	System.out.println("유저 정보 가져왔어?"+user.toString());
+        return "myPage/myPage";
     }
-
-
-    //@RequestMapping(value = "", method = RequestMethod.POST)
-    public String mypageModi(){
-        return null;
-    }
-
+    
     
     //공지사항리스트
     @RequestMapping("noticeList.do")
@@ -334,13 +332,17 @@ public class DoController {
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	
+    	System.out.println("파일 어떻게 들어와?"+nf);
+    	System.out.println("파파파파일"+nf.getFile());
+    	
     	//공지사항 글 DB 넣기
     	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
     	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = nf.getFile();
     	String filename = file.getOriginalFilename(); //원본 파일명
-    	
+    	System.out.println("파일 업로드 안하면 어케 됨?"+nf);
+    	System.out.println("파일 이름?"+filename);
     	//공지사항 파일을 업로드한 경우
     	if(!( filename == null || filename.trim().equals("") )) {
         	String path = request.getServletContext().getRealPath("/upload");
@@ -410,19 +412,13 @@ public class DoController {
         } else {
         	model.addAttribute("nf", null);
         }
-        System.out.println("nf 있니?"+nf);
 
         //DB에서 공지사항 일정 가져오기
         ns = noticeService.getNotSchedule(notSeq);
-        System.out.println("sc 있니?"+sc);
-        System.out.println("ns 있니?"+ns);
 
-        
         if(ns !=null) {
-            System.out.println("공지사항 일정?"+ns.toString());
         	model.addAttribute("ns", ns);
             sc = scheduleService.getSchedule(ns.getSchSeq());
-            System.out.println("스케쥴은?"+sc.toString());
             model.addAttribute("sc", sc);
         } else {
         	model.addAttribute("ns", null);
@@ -432,11 +428,13 @@ public class DoController {
     	return "notice/noticeModify";
     }
     
-    //공지사항수정하기 처리
+  //공지사항수정하기 처리
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	
+    	System.out.println("수정 타니?");
+    	System.out.println("파일 가져와?"+nf);
     	//서비스 연결 >> 제목 & 내용 수정
+    	
     	int noticeModify = noticeService.noticeModify(n);
     	
     	CommonsMultipartFile file = nf.getFile();
@@ -445,7 +443,10 @@ public class DoController {
     	
     	//원래 있었는지 없었는지 확인 후 있으면 update, 없으면 insert
     	String fileExists = request.getParameter("fileExists");
+    	String notScheduleExists = request.getParameter("notScheduleExists");
+    	String fileNameExists = request.getParameter("fileNameExists");
     	
+    	System.out.println("스팬 테그 값 나와?"+fileNameExists);
     	//공지사항 파일 업로드 하기
     	if(!( filename == null || filename.trim().equals("") )) {
     		String path = request.getServletContext().getRealPath("/upload");
@@ -467,7 +468,6 @@ public class DoController {
         	nf.setNotSeq(n.getNotSeq());
         	
     		if(fileExists.equals("true")) { //원래 파일을 업로드했던 경우 -> update하기
-        		System.out.println("원래 파일 있었니?");
             	int result = noticeService.noticeFileModify(nf);
             	if(result > 0) {
             		System.out.println("공지사항 파일 update 완료");
@@ -480,37 +480,137 @@ public class DoController {
             	}
         		
         	}
+    	} else { //파일 업로드를 하지 않는 경우
+    		System.out.println("파일 업로드 안할거니?");
+    		
+    		
     	}
     	
-    	
-    	
-    	
-    	/*
-
     	//공지사항 일정을 입력한 경우
     	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
-    		
-    		int result = scheduleService.addSchedule(sc); 
-    		
-    		if(result > 0) { //DB에 잘 저장됨
-    			System.out.println("스케쥴 등록 완료");
-    			int schSeq = result;
-    			ns.setSchSeq(schSeq);
-    			//공지사항 일정 등록
-    			
-    			ns.setNotSeq(notSeq); //공지사항 글 번호 주입
-    			int result2 = noticeService.addNotSchedule(ns);
-    			
-    			if(result2 > 0) {
-    				System.out.println("공지사항 일정 등록 완료");
+    		if(notScheduleExists.equals("true")) { //기존 일정이 있던 경우 -> update
+    			//스케쥴 update
+    			int result = scheduleService.scheduleModify(sc);
+    			//일정 내용 update
+    			if( result > 0 ) {
+    				System.out.println("스케쥴 update 완료");
+    				int result2 = noticeService.notScheduleModify(ns);
+    				
+    				if(result2 > 0) {
+        				System.out.println("공지사항 일정 update 완료");
+        			}
     			}
     			
+    		} else { //새로 일정을 추가한 경우 -> insert
+    			int result = scheduleService.addSchedule(sc); 
+        		if(result > 0) { //DB에 잘 저장됨
+        			System.out.println("스케쥴 insert 완료");
+        			int schSeq = result;
+        			ns.setSchSeq(schSeq);
+        			//공지사항 일정 등록
+        			ns.setNotSeq(n.getNotSeq()); //공지사항 글 번호 주입
+        			int result2 = noticeService.addNotSchedule(ns);
+        			
+        			if(result2 > 0) {
+        				System.out.println("공지사항 일정 insert 등록 완료");
+        			}
+        		}
+    		}
+    	}
+		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq();
+    }
+    /*
+    
+    //공지사항수정하기 처리
+    @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
+    public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
+    	System.out.println("수정 타니?");
+    	//서비스 연결 >> 제목 & 내용 수정
+    	int noticeModify = noticeService.noticeModify(n);
+    	
+    	CommonsMultipartFile file = nf.getFile();
+    	String filename = file.getOriginalFilename(); //원본 파일명
+    	System.out.println("파일이름?"+filename);
+    	
+    	//원래 있었는지 없었는지 확인 후 있으면 update, 없으면 insert
+    	String fileExists = request.getParameter("fileExists");
+    	String notScheduleExists = request.getParameter("notScheduleExists");
+    	String fileNameExists = request.getParameter("fileNameExists");
+    	
+    	System.out.println("스팬 테그 값 나와?"+fileNameExists);
+    	//공지사항 파일 업로드 하기
+    	if(!( filename == null || filename.trim().equals("") )) {
+    		String path = request.getServletContext().getRealPath("/upload");
+        	String fpath = path + "\\" + filename;
+        		
+        	//파일 쓰기 작업
+        	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+        	fs.write(file.getBytes());
+        	fs.close();
+        		
+        	//DB에 파일 이름 저장
+        	nf.setOrgName(filename);
+        	UUID randomIdMulti = UUID.randomUUID();
+        	String saveName = filename+"_"+randomIdMulti;
+        	//System.out.println("저장될 파일 이름?"+saveName);
+        	nf.setSaveName(saveName);
+        
+        	//공지사항 글번호 주입
+        	nf.setNotSeq(n.getNotSeq());
+        	
+    		if(fileExists.equals("true")) { //원래 파일을 업로드했던 경우 -> update하기
+            	int result = noticeService.noticeFileModify(nf);
+            	if(result > 0) {
+            		System.out.println("공지사항 파일 update 완료");
+            	}
+        	} else { //새로 파일을 업로드 한 경우 -> insert 하기
+        		System.out.println("새로 파일 업로드 하니?");
+        		int result = noticeService.noticeFileWrite(nf);
+            	if(result > 0) {
+            		System.out.println("공지사항 파일 insert 완료");
+            	}
+        		
+        	}
+    	} else { //파일 업로드를 하지 않는 경우
+    		System.out.println("파일 업로드 안할거니?");
+    		
+    		
+    	}
+    	
+    	//공지사항 일정을 입력한 경우
+    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
+    		if(notScheduleExists.equals("true")) { //기존 일정이 있던 경우 -> update
+    			//스케쥴 update
+    			int result = scheduleService.scheduleModify(sc);
+    			//일정 내용 update
+    			if( result > 0 ) {
+    				System.out.println("스케쥴 update 완료");
+    				int result2 = noticeService.notScheduleModify(ns);
+    				
+    				if(result2 > 0) {
+        				System.out.println("공지사항 일정 update 완료");
+        			}
+    			}
+    			
+    		} else { //새로 일정을 추가한 경우 -> insert
+    			int result = scheduleService.addSchedule(sc); 
+        		if(result > 0) { //DB에 잘 저장됨
+        			System.out.println("스케쥴 insert 완료");
+        			int schSeq = result;
+        			ns.setSchSeq(schSeq);
+        			//공지사항 일정 등록
+        			ns.setNotSeq(n.getNotSeq()); //공지사항 글 번호 주입
+        			int result2 = noticeService.addNotSchedule(ns);
+        			
+        			if(result2 > 0) {
+        				System.out.println("공지사항 일정 insert 등록 완료");
+        			}
+        		}
     		}
     	}    
-    	*/
-		return "redirect:noticeList.do"; // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();들어주는 주소 ...
+		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();들어주는 주소 ...
     }
-    
+    */
 
 
     // 개인_부재일정신청 GET 0110           게다죽
@@ -949,9 +1049,9 @@ public class DoController {
     
     //관리자_사원추가 서비스
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
-   public String addUser(User user, UserInfo userInfo) {
+   public String addUser(User user) {
    		System.out.println("Docontroller addUser() post in");
-   		memberService.addUser(user, userInfo);
+   		memberService.addUser(user);
    		
    		
     	return "redirect: adminMain.do";

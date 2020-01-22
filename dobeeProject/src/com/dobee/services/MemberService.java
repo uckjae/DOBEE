@@ -84,10 +84,18 @@ public class MemberService {
     	return user;
     }
     
+    /* 01.22 알파카 */
+    //마이페이지 User 정보 가져오기
+    public User getUserInfo(String mail) {
+    	UserDao userdao = sqlSession.getMapper(UserDao.class);
+    	User user = userdao.getUserInfo(mail);
+    	System.out.println("유저 가져옴?"+user.toString());
+    	return user;
+    }
     
     //User 등록
     @Transactional
-    public void addUser(User user, UserInfo userInfo) {
+    public void addUser(User user) {
     	System.out.println("MemberService addUser() in!!");
     	try {
 			user.setMyPic(user.getMultiFile().getBytes());
@@ -100,7 +108,7 @@ public class MemberService {
     	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
     		userDao.addUser(user);
-    		userDao.addUserInfo(userInfo);
+    		userDao.addUserInfo(user);
     	}catch(Exception e) {
     		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
@@ -133,6 +141,15 @@ public class MemberService {
     	TeamList team = userDao.getTeam(teamCode);
     	System.out.println(team.toString());
     	return team;
+    }
+    
+    
+    //사원 마이페이지 수정
+    public int mypageModify(User user) {
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.mypageModify(user);
+    	return result;
     }
 
 }

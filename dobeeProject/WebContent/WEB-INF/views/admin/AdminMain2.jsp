@@ -75,7 +75,7 @@
 							<c:forEach items="${userList}" var="user" varStatus="status">
 							<tr>
 								<td>${status.index+1}</td>
-								<td><a href="#">${user.mail}</a></td>
+								<td>${user.mail}</td>
 								<td>${user.name}</td>
 								<td>${user.authCode}</td>
 								<td>${user.teamCode}</td>

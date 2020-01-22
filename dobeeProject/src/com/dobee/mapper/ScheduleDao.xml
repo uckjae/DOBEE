@@ -7,8 +7,13 @@
 <insert id="addSchedule" parameterType="com.dobee.vo.schedule.Schedule" useGeneratedKeys="true" keyProperty="schSeq">
 	INSERT INTO SCHEDULE(STARTTIME, ENDTIME) VALUES( #{startTime}, #{endTime} )
 </insert>
-<!-- 스케쥴 가져오기  public Schedule getSchedule(int schSeq); -->
+<!-- 스케쥴 가져오기 -->
 <select id="getSchedule" resultType="com.dobee.vo.schedule.Schedule">
 	SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=#{schSeq}
 </select>
+<!-- 스케쥴 수정하기 -->
+<update id="scheduleModify" parameterType="com.dobee.vo.schedule.Schedule">
+	UPDATE SCHEDULE SET STARTTIME=#{startTime}, ENDTIME=#{endTime} WHERE SCHSEQ=(SELECT SCHSEQ FROM NOTSCHEDULE WHERE SCHSEQ=#{schSeq})
+</update>
+
 </mapper>

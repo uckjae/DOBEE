@@ -148,7 +148,31 @@
 					return;
 				}
             }
+
+           //원래 업로드 되어 있던 파일 지우고 수정할 경우 -> 서버에 값 넘기기
+           if($("#fileUpload").hasClass("fileupload fileupload-new")){ //파일 있던 거 지운 경우 또는 파일 업로드 안한 경우 
+               $("#fileNameExists").val("noFile");
+               console.log('벨류는?'+ $("#fileNameExists").val());
+            } else { //파일 업로드 한 경우
+				var fileOrgName = $("#fileOrgName").text();
+				$("#fileNameExists").val(fileOrgName);
+				console.log('파일 이름?'+$("#fileNameExists").val());
+	        }
+           
+          /*
+           var fileOrgName = $("#fileOrgName").text();  //업로드한 파일 이름
+           console.log('파일은??'+fileOrgName)
+           if(fileOrgName !== "" || fileOrgName !== null) { //파일 이름이 있는 경우
+              	console.log('파일 이름 있음')
+        	   $("#fileNameExists").val(fileOrgName);
+            } else {
+            	console.log('파일 이름 없음')
+            	  $("#fileNameExists").val("noFile");
+                  }
+           console.log('벨류?????'+$("#fileNameExists").val());
+           */
            	$("#noticeModifyForm").submit();
+           	
         });
 
         
@@ -205,7 +229,9 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">공지사항 일정</label>
 										<input type="hidden" name="notScheduleExists" value="true">
-										<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }"readonly>
+										<input type="hidden" class="form-control md-3" id="nsSeq" name="nsSeq" value="${ns.nsSeq }">
+										<input type="hidden" class="form-control md-3" id="schSeq" name="schSeq" value="${ns.schSeq }">
+										<input type="text" class="form-control md-3" id="nsContent" name="nsContent" value="${ns.nsContent }">
 									</div>
 									<div class="form-group">
 										<div class="input-daterange input-group" data-plugin-datepicker>
@@ -238,12 +264,13 @@
 									<div class="form-group" style="margin-bottom:3px;">
 									 	 <label class="col-md-3 control-label">파일 업로드</label>
 									 	 <input type="hidden" name="fileExists" value="true">
+									 	 <input type="hidden" id="fileNameExists" name="fileNameExists">
 									 </div>
 									 <div class="form-group">
-										 <div class="fileupload fileupload-exists" data-provides="fileupload">
+										 <div id="fileUpload" class="fileupload fileupload-exists" data-provides="fileupload">
 										 	<div class="input-append">
-										 		<div class="uneditable-input">
-										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview">${nf.orgName}</span>
+										 		<div class="uneditable-input" id="fileInput">
+										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview" id="fileOrgName">${nf.orgName}</span>
 												</div>
 												<span class="btn btn-default btn-file">
 													<span class="fileupload-exists">변경</span>
@@ -259,17 +286,18 @@
 									<div class="form-group" style="margin-bottom:3px;">
 									 	 <label class="col-md-3 control-label">파일 업로드</label>
 									 	 <input type="hidden" name="fileExists" value="false">
+									 	 <input type="hidden" id="fileNameExists" name="fileNameExists">
 									 </div>
 									 <div class="form-group">
-										 <div class="fileupload fileupload-new" data-provides="fileupload">
+										 <div id="fileUpload" class="fileupload fileupload-new" data-provides="fileupload">
 										 	<div class="input-append">
 										 		<div class="uneditable-input">
-										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
+										 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview" id="fileOrgName"></span>
 												</div>
 												<span class="btn btn-default btn-file">
 													<span class="fileupload-exists">변경</span>
 													<span class="fileupload-new">파일 선택</span>
-													<input type="file" name="file"  />
+													<input type="file" name="file" id="fileCheck" />
 												</span>
 												<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
 											</div>
@@ -286,7 +314,7 @@
 							</div>
 							<!--공지사항 수정,취소 버튼 -->
 						    <div class ="text-center" style="margin-top:18px;">
-						    	<input type="submit" id="submitBtn" class="btn btn-primary mr-3" value="수정">
+						    	<input type="button" id="submitBtn" class="btn btn-primary mr-3" value="수정">
 						    	<a class="btn btn-primary mr-3" href="noticeDetail.do?notSeq=${notice.notSeq}">취소</a>
 						    </div>   
 						   </form>   

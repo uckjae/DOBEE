@@ -14,6 +14,7 @@
 				url:"ajax/admin/authorityList.do",
 				dataType: "JSON",
 				success: function(data){
+					console.log("권한코드불러오는 ajax");
 					$.each(data, function(i, elt) {
 						if(elt.authCode !=1){
 							var option = $("<option>");
@@ -57,8 +58,8 @@
 			
 		});
 
-		function sendMail (){
-			reurn new Promise(function(resolve,reject){
+		function sendMail (callback){
+			return new Promise(function(resolve,reject){
 				console.log("sendMail()");
 				console.log($('#formMail').val());
 				console.log($('#formName').val());
@@ -68,9 +69,10 @@
 							'name' : $('#formName').val()
 						},
 					dataType: "text",
-					method: "GET",
+					method: "POST",
 					success: function(response){
-						resolve(response);
+						console.log("메일보내ㅉ=졌다");
+						resolve(response)
 						
 					},
 					error: function(jqXHR, textStatus, errorThrown){
@@ -80,6 +82,7 @@
 					
 					
 				});
+
 			});
 			
 		}
