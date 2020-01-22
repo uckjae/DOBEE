@@ -101,15 +101,7 @@ public class DoController {
     }
     
   
-    //아이디찾기
-    @RequestMapping(value="findId.do",method=RequestMethod.GET)
-    public String findId(String name, String phone ,  Model model){
-    	String find;
-    	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findId(name, phone);
-    	 model.addAttribute("find",find);
-      return "main/findId";
-    }
+   
 
     public String fidIdResult(){
         return null;
