@@ -129,7 +129,7 @@
     				title: "공지사항 글",
     				text: "제목 또는 내용을 입력해주세요", 
     				icon: "warning", //"info,success,warning,error" 중 택1
-    				showConfirmButton: true
+    				button: true
     					}).then((YES) => {
     							$("#title").focus();
     							});
@@ -142,7 +142,7 @@
 					title: "공지사항 일정",
 					text: "일정을 달력에서 선택해주세요", 
 					icon: "warning", //"info,success,warning,error" 중 택1
-					showConfirmButton: true
+					button: true
 							}).then((YES) => {
 									$("#startTime").focus();
 									})
@@ -154,17 +154,14 @@
 						title: "공지사항 일정",
 						text: "일정 내용을 입력해주세요", 
 						icon: "warning", //"info,success,warning,error" 중 택1
-						showConfirmButton: true
+						button: true
 						}).then((YES) => {
 							$("#nsContent").focus();
 								});
 					return;
 				}
             }
-           	$("#notceWriteForm").submit();
-
-               
-
+           	$("#noticeWriteForm").submit();
         });
         
     });
@@ -205,7 +202,7 @@
 						</header>
 						<div class="panel-body">
 						
-						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="notceWriteForm">
+						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="noticeWriteForm">
 						      <!--공지사항 제목  -->
 							   <div class="form-group">
 								   	<label class="col-md-3 control-label">제목</label>
