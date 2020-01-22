@@ -4,6 +4,7 @@ package com.dobee.controller;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
@@ -270,10 +271,8 @@ public class DoController {
         ns = noticeService.getNotSchedule(notSeq);
         
         if(ns !=null) {
-            System.out.println("공지사항 일정?"+ns.toString());
         	model.addAttribute("ns", ns);
             sc = scheduleService.getSchedule(ns.getSchSeq());
-            System.out.println("스케쥴은?"+sc.toString());
             model.addAttribute("sc", sc);
         } else {
         	model.addAttribute("ns", null);
@@ -301,7 +300,6 @@ public class DoController {
 		// 한글 파일 깨짐 현상 해결하기
 		// String fname = new String(f.getBytes("ISO8859_1"),"UTF-8");
 		String fname = new String(f.getBytes("euc-kr"), "8859_1");
-		System.out.println(fname);
 		// 다운로드 기본 설정 (브라우져가 read 하지 않고 ... 다운 )
 		// 요청 - 응답 간에 헤더정보에 설정을 강제 다운로드
 		// response.setHeader("Content-Disposition", "attachment;filename=" +
@@ -310,7 +308,6 @@ public class DoController {
 		// 파일명 전송
 		// 파일 내용전송
 		String fullpath = request.getServletContext().getRealPath(p + "/" + f);
-		System.out.println(fullpath);
 		FileInputStream fin = new FileInputStream(fullpath);
 		// 출력 도구 얻기 :response.getOutputStream()
 		ServletOutputStream sout = response.getOutputStream();
@@ -327,13 +324,13 @@ public class DoController {
     
 
 
-    //공지사항글쓰기
+    //공지사항글쓰기 view 페이지
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
         return "notice/noticeWrite";
     }
     
-    //공지사항글쓰기
+    //공지사항글쓰기 처리 
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	
@@ -389,52 +386,131 @@ public class DoController {
     			}
     			
     		}
-    	}
-    	
-    	
+    	}    	
     	return "redirect:noticeList.do"; //들어주는 주소 ...
     }
 
 
-    //공지사항수정하기get
+    //공지사항수정하기 view
     @RequestMapping(value="noticeModify.do",method=RequestMethod.GET)
-    public String noticeModify(int notSeq,Model model){
-        NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
-        Notice notice =noticedao.getNotice(notSeq);
-        model.addAttribute("notice",notice);
+    public String noticeModify(@RequestParam(value="notSeq") int notSeq, Model model){
+    	Notice notice = null; 
+        NoticeFile nf = null;
+        NotSchedule ns = null;
+        Schedule sc = null;
+        
+        //DB에서 글 가져오기
+        notice = noticeService.getNotice(notSeq);
+        model.addAttribute("notice", notice);
+        
+        //DB에서 파일 가져오기
+        nf = noticeService.getNoticeFile(notSeq);
+        if(nf !=null) {
+            model.addAttribute("nf", nf);
+        } else {
+        	model.addAttribute("nf", null);
+        }
+        System.out.println("nf 있니?"+nf);
+
+        //DB에서 공지사항 일정 가져오기
+        ns = noticeService.getNotSchedule(notSeq);
+        System.out.println("sc 있니?"+sc);
+        System.out.println("ns 있니?"+ns);
+
+        
+        if(ns !=null) {
+            System.out.println("공지사항 일정?"+ns.toString());
+        	model.addAttribute("ns", ns);
+            sc = scheduleService.getSchedule(ns.getSchSeq());
+            System.out.println("스케쥴은?"+sc.toString());
+            model.addAttribute("sc", sc);
+        } else {
+        	model.addAttribute("ns", null);
+        	model.addAttribute("sc", null);
+        }
+        
     	return "notice/noticeModify";
     }
     
-    //공지사항수정하기post
-    /*
+    //공지사항수정하기 처리
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
-    public String noticeModify(Notice n,HttpServletRequest request,Principal principal) throws IOException {
-    	System.out.println("docontroller noticeModify() Notice.toString() : " + n.toString());
-    	List<CommonsMultipartFile> files = n.getFiles();
-    	List<String>filenames = new ArrayList<String>();
+    public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	
-    	if(files !=null && files.size()>0) {
-    		for(CommonsMultipartFile multifile: files) {
-    			String filename = multifile.getOriginalFilename();
-    			String path = request.getServletContext().getRealPath("/img");
-    			
-    		    String fpath = path + "\\" + filename;
-    		    
-    		    if(!filename.equals("")) {//실 파일 업로드
-			    	FileOutputStream fs = new FileOutputStream(fpath);
-			    	fs.write(multifile.getBytes());
-			    	fs.close();
-			    }
-			    filenames.add(filename);//파일명을 별도 관리 (DB insert)
-    		}
+    	//서비스 연결 >> 제목 & 내용 수정
+    	int noticeModify = noticeService.noticeModify(n);
+    	
+    	CommonsMultipartFile file = nf.getFile();
+    	String filename = file.getOriginalFilename(); //원본 파일명
+    	System.out.println("파일이름?"+filename);
+    	
+    	//원래 있었는지 없었는지 확인 후 있으면 update, 없으면 insert
+    	String fileExists = request.getParameter("fileExists");
+    	
+    	//공지사항 파일 업로드 하기
+    	if(!( filename == null || filename.trim().equals("") )) {
+    		String path = request.getServletContext().getRealPath("/upload");
+        	String fpath = path + "\\" + filename;
+        		
+        	//파일 쓰기 작업
+        	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+        	fs.write(file.getBytes());
+        	fs.close();
+        		
+        	//DB에 파일 이름 저장
+        	nf.setOrgName(filename);
+        	UUID randomIdMulti = UUID.randomUUID();
+        	String saveName = filename+"_"+randomIdMulti;
+        	//System.out.println("저장될 파일 이름?"+saveName);
+        	nf.setSaveName(saveName);
+        
+        	//공지사항 글번호 주입
+        	nf.setNotSeq(n.getNotSeq());
+        	
+    		if(fileExists.equals("true")) { //원래 파일을 업로드했던 경우 -> update하기
+        		System.out.println("원래 파일 있었니?");
+            	int result = noticeService.noticeFileModify(nf);
+            	if(result > 0) {
+            		System.out.println("공지사항 파일 update 완료");
+            	}
+        	} else { //새로 파일을 업로드 한 경우 -> insert 하기
+        		System.out.println("새로 파일 업로드 하니?");
+        		int result = noticeService.noticeFileWrite(nf);
+            	if(result > 0) {
+            		System.out.println("공지사항 파일 insert 완료");
+            	}
+        		
+        	}
     	}
     	
-    	n.setSaveName(filenames.get(0));
-    	NoticeDao noticedao =sqlsession.getMapper(NoticeDao.class);
-		noticedao.noticeModify(n);		
-		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); //들어주는 주소 ...
+    	
+    	
+    	
+    	/*
+
+    	//공지사항 일정을 입력한 경우
+    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
+    		
+    		int result = scheduleService.addSchedule(sc); 
+    		
+    		if(result > 0) { //DB에 잘 저장됨
+    			System.out.println("스케쥴 등록 완료");
+    			int schSeq = result;
+    			ns.setSchSeq(schSeq);
+    			//공지사항 일정 등록
+    			
+    			ns.setNotSeq(notSeq); //공지사항 글 번호 주입
+    			int result2 = noticeService.addNotSchedule(ns);
+    			
+    			if(result2 > 0) {
+    				System.out.println("공지사항 일정 등록 완료");
+    			}
+    			
+    		}
+    	}    
+    	*/
+		return "redirect:noticeList.do"; // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();들어주는 주소 ...
     }
-    */
+    
 
 
     // 개인_부재일정신청 GET 0110           게다죽

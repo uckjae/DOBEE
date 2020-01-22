@@ -123,54 +123,45 @@
         
         $.summernote.interface;
 
-        $("#notceWriteForm").on('submit', function(e){
-            e.preventDefault();
-        	if($("#title").val() == "" && $("#summernote").val() == ""){
+        $("#submitBtn").on('click', function(e){
+        	if($("#title").val() == "" || $("#summernote").val() == ""){ //글 제목 & 내용 쓰지 않은 경우
         		swal({
     				title: "공지사항 글",
     				text: "제목 또는 내용을 입력해주세요", 
     				icon: "warning", //"info,success,warning,error" 중 택1
-    				showConfirmButton: true
-    				//icon: "warning" //"info,success,warning,error" 중 택1
+    				button: true
     					}).then((YES) => {
     							$("#title").focus();
-    							})
-            	} else if ($("#nsContent").val()!==""){
-					if($("#startTime").val()=="" || $("#endTime").val()=="" ){
-			        	swal({
-							title: "공지사항 일정",
-							text: "일정을 달력에서 선택해주세요", 
-							icon: "warning", //"info,success,warning,error" 중 택1
-							showConfirmButton: true
-							//icon: "warning" //"info,success,warning,error" 중 택1
-								}).then((YES) => {
-										$("#startTime").focus();
-										})
-
-					} 
-
-            	} else if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
-					if($("#nsContent").val()==""){
-				        swal({
-							title: "공지사항 일정",
-							text: "일정 내용을 입력해주세요", 
-							icon: "warning", //"info,success,warning,error" 중 택1
-							showConfirmButton: true
-							//icon: "warning" //"info,success,warning,error" 중 택1
+    							});
+        		return;
+            }
+            
+           if ($("#nsContent").val()!==""){ //공지사항 일정을 썼는데 캘린더 날짜 선택 안한경우
+				if($("#startTime").val()=="" || $("#endTime").val()=="" ){
+			        swal({
+					title: "공지사항 일정",
+					text: "일정을 달력에서 선택해주세요", 
+					icon: "warning", //"info,success,warning,error" 중 택1
+					button: true
 							}).then((YES) => {
-								$("#nsContent").focus();
-									});
-					} 
-            	} else {
-                	console.log('이거 타???');
-            		$("#notceWriteForm").submit();
-                	}
-
-
-           	
-                 	//$("#notceWriteForm").submit();
-               
-
+									$("#startTime").focus();
+									})
+					return;
+				}
+           	} else{ //공지사항 일정 쓰지 않았는데 캘린더에서 날짜 선택한 경우
+				if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
+					swal({
+						title: "공지사항 일정",
+						text: "일정 내용을 입력해주세요", 
+						icon: "warning", //"info,success,warning,error" 중 택1
+						button: true
+						}).then((YES) => {
+							$("#nsContent").focus();
+								});
+					return;
+				}
+            }
+           	$("#noticeWriteForm").submit();
         });
         
     });
@@ -211,7 +202,7 @@
 						</header>
 						<div class="panel-body">
 						
-						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="notceWriteForm">
+						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="noticeWriteForm">
 						      <!--공지사항 제목  -->
 							   <div class="form-group">
 								   	<label class="col-md-3 control-label">제목</label>
@@ -259,7 +250,7 @@
 							</div>
 							<!--공지사항 작성,취소 버튼 -->
 						    <div class ="text-center" style="margin-top:18px;">
-						     <input type="submit" id="submitBtn" class="btn btn-primary mr-3" value="작성">
+						     <input type="button" id="submitBtn" class="btn btn-primary mr-3" value="작성">
 						     <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
 						    </div>   
 						   </form>   
