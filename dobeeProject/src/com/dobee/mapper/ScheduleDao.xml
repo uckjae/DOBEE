@@ -2,7 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="java.com.dobee.dao.ScheduleDao">
-
-
+<mapper namespace="com.dobee.dao.ScheduleDao">
+<!-- 스케쥴 insert >> insert 후 seq return 함 -->
+<insert id="addSchedule" parameterType="com.dobee.vo.schedule.Schedule" useGeneratedKeys="true" keyProperty="schSeq">
+	INSERT INTO SCHEDULE(STARTTIME, ENDTIME) VALUES( #{startTime}, #{endTime} )
+</insert>
+<!-- 스케쥴 가져오기  public Schedule getSchedule(int schSeq); -->
+<select id="getSchedule" resultType="com.dobee.vo.schedule.Schedule">
+	SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=#{schSeq}
+</select>
 </mapper>

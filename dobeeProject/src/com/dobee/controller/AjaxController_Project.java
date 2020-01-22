@@ -1,22 +1,21 @@
 package com.dobee.controller;
 
+import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dobee.dao.ProjectDao;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.Project;
-import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
+import com.dobee.vo.project.TaskDetail;
 
 
 
@@ -102,6 +101,28 @@ public class AjaxController_Project {
 		
 	}
 	
+	//특정업무의 TaskDetailList
+	@RequestMapping("getTaskDetailList.do")
+	public List<TaskDetail> getTaskDetailList(int tskSeq){
+		System.out.println("AjaxController_Project getTaskDetailList() in");
+		List<TaskDetail> taskDetailList = projectService.getTaskDetailList(tskSeq); 
+		System.out.println(taskDetailList);
+		return taskDetailList;
+	}
+	
+	
+	//TaskDetail 추가
+	@RequestMapping("addTaskDetail.do")
+	public void addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+		System.out.println("AjaxController_Project addTaskDetail() in");
+		System.out.println(taskDetail);
+		Enumeration enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while!!");
+			System.out.println(enu.nextElement());
+		}
+		projectService.addTaskDetail(taskDetail);
+	}
 	
 	
 }

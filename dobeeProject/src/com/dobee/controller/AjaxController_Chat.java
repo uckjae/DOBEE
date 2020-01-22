@@ -51,9 +51,7 @@ public class AjaxController_Chat {
     public String makeChatRoom(@RequestParam(value="newChatRoomName") String newChatRoomName, @RequestParam(value="chatUserList[]") List<String> chatUsers) {
     	String responseData = "";
     	int result = 0;
-    	int result2 = 0;
-    	System.out.println("채팅방 만들기"+newChatRoomName +"/"+chatUsers.toString());
-    	
+    	int result2 = 0;    	
     	result = chatservice.makeGroupChatRoom(newChatRoomName);
     	//유저리스트 채팅방 db에 저장하기
 		if(result > 0 ) { //채팅방 만듦
@@ -61,7 +59,6 @@ public class AjaxController_Chat {
 			result2 = chatservice.makeGroupChatUsers(newChatRoomName, chatUsers);
 			responseData = "success";
 			System.out.println("성공함");
-			
 		}
 	
     	return responseData;

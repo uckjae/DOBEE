@@ -63,6 +63,15 @@ public class AjaxControllerAdmin {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper messageHelper = null;
 		String mail = req.getParameter("mail");
+		
+		Enumeration<String> enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while");
+			System.out.println(enu.nextElement());
+		}
+		
+		System.out.println("메일주소!!!");
+		System.out.println(mail);
 		String name = req.getParameter("name");
 		String date = new SimpleDateFormat("yyyy년 MM월 dd일 E요일").format(new Date());
 		StringBuilder path = new StringBuilder();

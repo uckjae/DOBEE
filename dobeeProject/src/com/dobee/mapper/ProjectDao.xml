@@ -98,4 +98,13 @@ WHERE p.pjtseq = #{pjtSeq}
 	ON T.MAIL = U.MAIL 
 	WHERE TSKSEQ=#{tskSeq}
 </select>
+
+<select id="getTaskDetailList" resultType="com.dobee.vo.project.TaskDetail">
+	SELECT TDSEQ, TDCONTENT, TSKSEQ FROM TASKDETAIL WHERE TSKSEQ=#{tskSeq} ORDER BY TDSEQ
+</select>
+
+<!-- 상세업무추가 -->
+<insert id="addTaskDetail">
+	INSERT INTO TASKDETAIL (TDCONTENT, TSKSEQ) VALUES (#{tdContent}, #{tskSeq})
+</insert>
 </mapper>

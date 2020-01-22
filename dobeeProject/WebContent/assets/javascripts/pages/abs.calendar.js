@@ -126,15 +126,15 @@
 			
 			header: {
 				left: 'title',
-				right: 'prev,today,next,basicDay,basicWeek,month'
+				right: 'prev,today,month,dayGrid,timeGrid,list,next,basicDay,basicWeek'
 			},
 
 			timeFormat: 'h:mm',
 
 			titleFormat: {
-				month: 'MMMM YYYY',      // September 2009
-			    week: "MMM d YYYY",      // Sep 13 2009
-			    day: 'dddd, MMM d, YYYY' // Tuesday, Sep 8, 2009
+				month: 'YYYY MMMM',      // September 2009
+			    week: "YYYY MMM d",      // Sep 13 2009
+			    day: 'YYYY, dddd, MMM d' // Tuesday, Sep 8, 2009
 			},
 
 			themeButtonIcons: {

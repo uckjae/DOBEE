@@ -16,8 +16,6 @@
 	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
-	<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 	<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
 	<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
@@ -54,7 +52,6 @@
 	<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 	<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 	<script src="assets/vendor/fuelux/js/spinner.js"></script>
-	<script src="assets/vendor/dropzone/dropzone.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
 	<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
@@ -76,11 +73,15 @@
 	<!-- include Nobootstrap summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+	
+	<!-- 파일 업로드 -->
+	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+	<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>s
 </head>
 
 <script>
     $(document).ready(function() {
-        $('#summernote1').summernote({     	
+        $('#summernote').summernote({     	
         	height: 350,
         	placeholder: "글을 입력하세요.",
         	lang: 'ko-KR', /*한국어*/ 
@@ -127,8 +128,9 @@
 								<li>
 									<span><img src="img/noticeiconsub.png" style="width:32; height:35;"></span>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Notice Write</span></li>
+								<li><span>공지사항</span></li>
+								<li><span>글</span></li>
+								<li><span>Title:&nbsp;&nbsp;${notice.title}</span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -141,44 +143,52 @@
 							</div>
 						    <!--page title(공지사항 글쓰기)-->
 							<h2 class="panel-title">
-								<img src="img/noticeiconmain.png" style="width:50; height:60;">&nbsp;&nbsp;공지사항 글쓰기</h2>
+								<img src="img/noticeiconmain.png" style="width:50; height:60;">&nbsp;&nbsp;공지사항</h2>
 						</header>
 						<div class="panel-body">
-						   <!--공지사항 제목  -->
-						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
-						    <div class="form-group">
-						    	<input type="text" class="form-control mb-3" id="title" name="title" placeholder="글제목" value="">
-						    </div>
+						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" class="dropzone" id="dZUpload">
+						      <!--공지사항 제목  -->
+							   <div class="form-group">
+								   	<label class="col-md-3 control-label">제목</label>
+							    	<input type="text" class="form-control mb-3" id="title" name="title" placeholder="글제목을 입력하세요" value="">
+							    </div>
 						     <div style="margin:10px"></div>
 						     <!--공지사항 일정시작,종료  -->
-						     <div class="row">
-							     <div class="col-md-6">
-							     	<div class="form-group">
-										<input type="text" class="form-control md-3" id="nscontent" name="nsContent" placeholder="공자사항 일정 내용" value="">
-							     	</div>
-							     </div>
-							     <div class="col-md-6">
-							     	<div class="form-group">
-							     		<div class="input-daterange input-group" data-plugin-datepicker>
-											<span class="input-group-addon">
-											  <i class="fa fa-calendar"></i>
-											</span>
-											<input type="text" class="form-control" name="starttime" id="datepicker" placeholder="시작일">
-											<span class="input-group-addon">
-											  <i class="fa fa-calendar"></i>
-											</span>
-											<input type="text" class="form-control" name="endtime" id="datepicker2" placeholder="종료일">
-								 		</div> 
-							     	</div>
-							     </div>
-							</div>
-							<div class="fileupload fileupload-new">
-							    <input type="file" class="form-control" id="title" name="title" placeholder="글제목" value="">
+							   <div class="form-group">
+							     	<label class="col-md-3 control-label">공지사항 일정</label>
+									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" placeholder="일정 내용을 입력하세요" value="">
+							   </div>
+							  <div class="form-group">
+								    <div class="input-daterange input-group" data-plugin-datepicker>
+										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="form-control" name="startTime" id="datepicker" placeholder="시작일">
+										<span class="input-group-addon">to</span>
+										<input type="text" class="form-control" name="endTime" id="datepicker2" placeholder="종료일">
+									 </div> 
+							   </div>
+							 <!-- 파일 업로드  -->
+							 <div class="form-group" style="margin-bottom:3px;">
+							 	 <label class="col-md-3 control-label">파일 업로드</label>
+							 </div>
+							 <div class="form-group">
+								 <div class="fileupload fileupload-new" data-provides="fileupload">
+								 	<div class="input-append">
+								 		<div class="uneditable-input">
+								 			<i class="fa fa-file fileupload-exists"></i><span class="fileupload-preview"></span>
+										</div>
+										<span class="btn btn-default btn-file">
+											<span class="fileupload-exists">변경</span>
+											<span class="fileupload-new">파일 선택</span>
+											<input type="file" name="file"  />
+										</span>
+										<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">삭제</a>
+									</div>
+								</div>
 							</div>
 							<!--공지사항 일정내용  -->
 						     <div style="margin:10px"></div>
 						     <!--공지사항 내용  -->
-						    <textarea id="summernote1" name="content"></textarea>    
+						    <textarea id="summernote" name="content"></textarea>    
 						    <div class="text-right" id="lengthBox"> 
 							  <span id="total-characters"></span><span id="max"></span>
 							</div>
@@ -188,7 +198,7 @@
 						     <a class="btn btn-primary mr-3" href="noticeList.do">취소</a>
 						    </div>   
 						   </form>   
-						  </div>
+						 </div>
    				</section>
  			</section>
 	  	</div>
@@ -197,6 +207,6 @@
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 
-    
+   
 </body>
 </html>
