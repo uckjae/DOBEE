@@ -34,12 +34,12 @@ public interface NoticeDao {
     //공지사항 글 수정 --01.22 알파카
     public int noticeModify(Notice notice);
     
-    //공지사항 파일 수정 --01.21 알파카
+    //공지사항 파일 수정 --01.22 알파카
     public int noticeFileModify(NoticeFile nf);
     
-    
-    
-    
+    //공지사항 일정 수정 --01.22 알파카
+    public int notshceduleModify(NotSchedule ns);
+        
     //공지사항 삭제 --01.21 알파카
     public int delNotice(int notSeq);
     
