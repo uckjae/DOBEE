@@ -1,109 +1,181 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
-<html>
+<html class="fixed">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iofrm</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
-    <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
-    <link rel="stylesheet" type="text/css" href="css/iofrm-theme2.css">
-    
-    
-   <script>
-$(document).on('click','#findId',function(){
-	var name = $('#name').val();
 
- 	var phone = $('#phone').val();
+<c:import url="/common/HeadTag.jsp"/>
+<c:import url="/common/BottomTag.jsp"/>
 
- 	var postData = {'name' : name ,'phone' : phone};
+<!-- Specific Page Vendor CSS -->
+<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
+<link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+<link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
+<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />	
+<!-- Specific Page Vendor -->
+<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+<script src="assets/vendor/select2/select2.js"></script>
+<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script src="assets/vendor/fuelux/js/spinner.js"></script>
+<script src="assets/vendor/dropzone/dropzone.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script src="assets/vendor/summernote/summernote.js"></script>
+<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+<!-- Examples -->
+<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
-	$.ajax({
-        url:'/findingId.do',
-        type:'POST',
-        data: postData,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        dataType : "json",
+<style type="text/css">
+body {
+    background: #23394A;
+    width: 100%;
+}
+</style>
 
-        success:function(data){
-        	var emailLists = data.user_email;
-        	var emailLength = emailLists.length
-        	var emailfind = emailLists.substring(1, emailLength-1)
-       	 		 $("#emailList").append("<h1>"+"회원님의 정보로 등록된 이메일은 : "+emailfind+" 입니다.</h1>")
+<script type="text/javascript">
+$(function(){
+	
+ $('#idModal2').click('show.bs.modal',function(e){
+	 
+	 console.log("done???");
+	 $('#findMail').trigger('reset');
+	 var name = $('#name').val();
+     var phone = $('#phone').val();
+     
+     $.ajax({
+         url:'ajax/admin/findId.do',
+         type:'POST',
+         data: {"name":name, "phone":phone},
+         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+         dataType : "json",
+         success:function(data){
+			console.log(data);
+             var mail = data;
+        	 $('#findMail').val(mail);
+         },
+         error : function(request,status,error){
+				console.log("code" + request.status +"\n" +"message : " + request.response + "\n" + "error : " + error);
+         }
+   
+     });
+ });
+     
+ });	
 
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown){
-        	alert('정보를 다시 입력해주시길 바랍니다.' );
-        }
-    });
-});
 
 </script>
+
+
+
 </head>
 <body>
-    <div class="form-body">
-    
-        <!--시작  -->
-        <div class="website-logo">
-            <a href="#">
-                <div class="logo">
-                    <img class="logo-size" src="img/logo-light.svg" alt="">
-                </div>
-            </a>
-        </div>
-        <!--끝 -->
-        
-        <div class="row">
-        
-            <div class="img-holder">
-                <div class="bg"></div>
-                <div class="info-holder">
-                </div>
-            </div>
-            
-            <div class="form-holder">
-                <div class="form-content">
-                    <div class="form-items">
-                        <h3>도비에 오신 걸 환영합니다.</h3>
-                        <p>Dobby is free</p>
-                        <div>
-                            <p class="active">ID 찾기</p>
-                        </div>
-                        
-                        <form>
-                         <input class="form-control" type="text" name="user_name" id ="name" placeholder="이름을 입력하세요" required>
-                         <input class="form-control" type="text" name="user_phone" id ="phone"  placeholder="휴대폰번호를 입력하세요" required>
 
-                            <div class="form-button">
-                            
-                             <button type="button" id="findId"
-					           class="btn btn-block btn-primary btn-md pt-sm pb-sm text-md">완료
-				             </button>
-				             
-                                <a href="forget2.html">Forget password?</a>
-                                
-                            </div>
-                           
-                        </form>
-                         
-                       <!--  <div class="other-links">
-                            <span>Or login with</span><a href="#">Facebook</a><a href="#">Google</a><a href="#">Linkedin</a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            
-        </div>
+<!-- start: page -->
+<section class="body-sign">
+ <div class="center-sign">
+			
+			
+   <a href="/" class="logo pull-left">
+	 <img src="img/beemain2.png" height="54"/>
+   </a>
 
-    </div>
-    
+
+   <div class="panel panel-sign">
+				
+	<div class="panel-title-sign mt-xl text-right">
+	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>아이디 찾기</h2>
+	</div>
+					
+	<div class="panel-body">
+	  <form action="" method="post">
+						
+		<div class="form-group mb-lg">
+		  <label>이름</label>
+		  <div class="input-group input-group-icon">
+			 <input name="name" type="text" class="form-control input-lg" id="name"/>
+				<span class="input-group-addon">
+				 <span class="icon icon-lg">
+				  <i class="fa fa-user"></i>
+				 </span>
+				</span>
+		  </div>
+		</div>
+
+		<div class="form-group mb-lg">								
+		  <label>휴대폰번호</label>								
+		  <div class="input-group input-group-icon">
+			<input name="phone" type="text" class="form-control input-lg" id="phone"/>
+			   <span class="input-group-addon">
+				<span class="icon icon-lg">
+				 <i class="fa fa-phone"></i>
+				</span>
+			   </span>
+		  </div>
+		</div>
+
+	   </form>
+		<hr>
+
+		<div class="mb-xs text-center">
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap" href="#modalBootstrap" id="idModal2">아이디확인하기</a>
+		  <a class="btn btn-twitter mb-md ml-xs mr-xs">로그인 </a>
+		</div>
+
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호찾기</a>
+
+	  </div>
+	  	  
+	</div>
+
+				
+ </div>
+ 
+<!-- Modal -->
+<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+  <div class="modal-content">
   
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+   <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">
+	 <span aria-hidden="true">&times;</span>
+	 <span class="sr-only">Close</span>
+	</button>
+	<h4 class="modal-title" id="myModalLabel">찾은 아이디</h4>
+   </div>
+   
+   <div class="modal-body">
+	<h2><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"></h2>
+   </div>
+   
+   <div class="modal-footer">
+	<button type="button" class="btn btn-primary">확인</button>
+	
+   </div>
+   
+  </div>
+ </div>
+</div>
+<!-- /Modal -->
+ 
+</section>
+<!-- end: page -->
+
+
+
 </body>
 </html>
