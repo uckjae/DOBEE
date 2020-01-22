@@ -84,6 +84,14 @@ public class MemberService {
     	return user;
     }
     
+    /* 01.22 알파카 */
+    //마이페이지 User 정보 가져오기
+    public User getUserInfo(String mail) {
+    	UserDao userdao = sqlSession.getMapper(UserDao.class);
+    	User user = userdao.getUserInfo(mail);
+    	System.out.println("유저 가져옴?"+user.toString());
+    	return user;
+    }
     
     //User 등록
     @Transactional

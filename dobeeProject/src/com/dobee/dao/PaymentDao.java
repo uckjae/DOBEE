@@ -42,6 +42,12 @@ public interface PaymentDao {
     //비용신청 리스트(=영수증 등록) 불러오기 
     public ArrayList<CostList> listReceipt();
     
+    
     //관리자 법인카드 수정하기
     public int AdminEditDebit(Debit debit);
+    
+    
+    //관리자 법인카드 삭제하기
+    public int adminDelDebit(String cardNum);
+    
 }

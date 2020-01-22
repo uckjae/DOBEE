@@ -46,6 +46,14 @@ public class ScheduleService {
     	return sc;
     }
     
+    //일정 수정하기
+    public int scheduleModify(Schedule sc) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	int result = 0;
+    	result = scheduledao.scheduleModify(sc);
+    	return result;
+    }
+    
     //회사일정등록
     public void addCorpSchedule(){
 
