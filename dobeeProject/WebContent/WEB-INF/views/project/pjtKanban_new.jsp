@@ -118,6 +118,7 @@
 				$('#checkListForm').trigger('reset');
 				$('.progress-button').attr("style","background-color:white; color:black;");
 				$('#taskDetailTskSeq').attr("value",tskSeq);
+				$('#taskCheckListTskSeq').attr("value",tskSeq);
 				$.ajax({
 					url:"ajax/project/getTask.do",
 					data: {"tskSeq":tskSeq},
@@ -126,13 +127,16 @@
 						console.log(data);
 						var task = data;
 						$('#taskDetailTitle').val(task.title);
+						$('#taskFormTitle').val(task.title);
 						var startDate = new Date(task.startAt);
 						var formatedStartDate = date_to_str(startDate);
 						$('#taskFormStartAt').val(formatedStartDate);
 						var endDate = new Date(task.endAt);
 						var formatedEndDate = date_to_str(endDate);
 						$('#taskFormEndtAt').val(formatedEndDate);
-						$('#taskFormMail').val(task.name);
+						$('#taskFormName').val(task.name);
+						$('#taskFormMail').val(task.mail);
+						$('#taskFormPjtSeq').val(task.pjtSeq);
 						$('#listenSlider').val(task.important);
 						$('#importantShow').text(task.important);
 						$('.progress-button').each(function(index,element){
@@ -142,26 +146,17 @@
 							}
 						});
 							
+					},
+					error:function(request,status,error){
+						console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
 					}
 				});
-				console.log("getTaskDetailList() 앞!!")
 				getTaskDetailList(tskSeq);
-				console.log("getTaskDetailList() 뒤!!")
-				/* $.ajax({
-					url:"ajax/project/getTaskDetailList.do",
-					data: {"tskSeq":tskSeq},
-					dataType: "JSON",
-					success:function(data){
-						console.log("taskDetailLis Ajax Success!!!");
-						console.log(data);
-						
-					}
-				}); */
+				getTaskCheckList(tskSeq);
 					
 				$('#taskFormTskSeq').val(tskSeq);
 
-				getTaskDetailList(tskSeq);
-				console.log(tskSeq);
 			});
 
 			$('.progress-button').click(function(){
@@ -171,7 +166,7 @@
 			});
 			/* /모달띄우는 함수 */
 
-			/* 버튼에따라  value */
+			
 			
 			
 			
@@ -220,14 +215,24 @@
 			var thisForm = $('#taskContentForm');
 			console.log(thisForm);
 			var formData = thisForm.serialize();
-			console.log(formData);
+			var tskSeq = $('#taskDetailTskSeq').val();
+			console.log("Temp");
+			console.log();
 			$.ajax({
 				url: "ajax/project/addTaskDetail.do",
 				method: "post",
 				data: formData,
 				dataType: "JSON",
-				success:function(){
+				success:function(data){
+					console.log("여기야");
+					console.log(data);
 					makeContent($('#addTaskContentButton'));
+					getTaskDetailList(tskSeq);
+					
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
 				}
 									
 			});
@@ -236,7 +241,8 @@
 
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
-
+			$('#taskDetailListView').empty();
+			
 			$.ajax({
 				url:"ajax/project/getTaskDetailList.do",
 				method:"post",
@@ -244,47 +250,296 @@
 				dataType:"JSON",
 				success: function(data){
 					console.log("getTaskDetailList Ajax Success!!");
+					
 					var TaskDetailList = data;
+					console.log(TaskDetailList);
 					$(TaskDetailList).each(function(index,element){
 						console.log(index +" / " +element);
 						var tdSeq = element.tdSeq;
 						var tdContent = element.tdContent;
-						console.log(tdSeq);
-						console.log(tdContent);
-						var list = $('<li>');
+						var list = $('<li style="width: 100%">');
 						
 						var taskDetailListForm = $('<form>');
 							$(taskDetailListForm).attr("id",tdSeq);
 							$(taskDetailListForm).attr("action","ajax/project/editTaskDetail.do?tdSeq="+tdSeq);
 
-							var div = $('<div class="col-md-6>');
-								var input = $('<input disalbed class="form-control">');
+							var divList = $('<div class="col-md-12">');
+								var hiddenInput = $('<input hidden name="tdSeq">');
+									$(hiddenInput).val(tdSeq);
+							$(divList).append(hiddenInput);
+								var hiddenInput2 = $('<input hidden name="tskSeq">');
+									$(hiddenInput2).val(tskSeq);
+							$(divList).append(hiddenInput2);
+								var input = $('<input class="form-control contentData" name="tdContent" disabled="">');
 									$(input).attr("id",tdSeq+"input");
 									$(input).val(tdContent);
 									$(input).text(tdContent);
-								console.log("inputTag");
-								console.log(input);
-							$(div).append(input);
+							$(divList).append(input);
+								
 								var anchorEdit = $('<a onclick="taskDetailEdit(this)">');
 									var editIcon = $('<i class="fa fa-edit">');
 								$(anchorEdit).append(editIcon);
-							$(div).append(anchorEdit);
+							$(divList).append(anchorEdit);
 								var anchorDelete = $('<a onclick="taskDetailDelete(this)">');
 									var deleteIcon = $('<i class="fa fa-trash-o">');
 								$(anchorDelete).append(deleteIcon);
-							$(div).append(anchorDelete);
-						$(taskDetailListForm).append(div);
-
+							$(divList).append(anchorDelete);
+						$(taskDetailListForm).append(divList);
+						
 						$(list).append(taskDetailListForm);
-						console.log(list);
 						$('#taskDetailListView').append(list);
+						
 							
-						console.log(tdSeq+" / "+tdContent);
 					})
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
 				}
 				
 			});
 		}
+
+		function taskDetailEdit(data){
+			$('#taskDetailListView').find('.contentData').each(function(index,element){
+				$(element).attr("disabled","");
+			});
+			console.log($(data).prev());
+			$(data).prev().removeAttr("disabled");
+			$(data).children().removeAttr("class");
+			$(data).children().attr("class","fa fa-magic");
+			$(data).removeAttr("onclick");
+			$(data).attr("onclick","taskDetailEditSubmit(this)");
+			$(data).next().children().removeAttr("class");
+			$(data).next().children().attr("class","fa fa-times");
+			$(data).next().removeAttr("onclick");
+			$(data).next().attr("onclick","taskDetailEditCancle");
+		}
+
+		function taskDetailDelete(data){
+			console.log($(data).prev().prev());
+		}
+		
+		function taskDetailEditSubmit(data){
+			console.log(data);
+			var editForm = $(data).parent().parent();
+			var formData = $(editForm).serialize();
+			var tskSeq = $('#taskDetailTskSeq').val();
+			$.ajax({
+				url:"ajax/project/taskDetailEdit.do",
+				data: formData,
+				dataType:"JSON",
+				success:function(data){
+					getTaskDetailList(tskSeq);
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
+		}
+
+		function taskEditSubmit(data){
+			console.log("taskEditSubmit() in!!");
+			console.log($(data).parent().parent());
+		}
+
+		
+
+		function makeCheckList(data){
+			console.log("makeCheckList() in!!");
+			if($(data).attr("class") == "fa fa-plus-square before"){
+				var formDiv = $('<div class="row">');
+					var form = $('<form action="ajax/project/addTaskCheckList.do" id="addTaskCheckListForm" style="text-align:center; width: -moz-max-content;">');
+						var taskCheckListInput = $('<input type="text" form="addTaskCheckListForm" name="content" class="input-line" style="width: text-align: center; margin-left: 5em;">');
+						var taskCheckListSubmit = $('<a class="mb-xs mt-xs mr-xs btn btn-primary" onclick="taskCheckListSubmit(this)" style="margin-left:1em">');
+							$(taskCheckListSubmit).text("추가하기");
+						var taskCheckListCancle = $('<button class = "mb-xs mt-xs mr-xs btn btn-primary" style="margin-left:1em">');
+							$(taskCheckListCancle).attr("onclick","makeCheckList("+data+")");
+							$(taskCheckListCancle).text("취소하기");
+					$(form).append(taskCheckListInput);
+					$(form).append(taskCheckListSubmit);
+					$(form).append(taskCheckListCancle);
+				$(formDiv).append(form);
+				$('#taskCheckListTskSeq').after(formDiv);
+				$(data).attr("class","fa fa-minus-square after");
+			}else{
+				console.log("else 탔다");
+				$('#addTaskCheckListForm').remove();
+				$(data).attr("class","fa fa-plus-square before");
+			}
+		};
+
+		function taskCheckListSubmit(data){
+			
+			console.log(data);
+			var thisForm = $('#addTaskCheckListForm');
+			console.log(thisForm);
+			var formData = thisForm.serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log("Temp");
+			console.log(tskSeq);
+			$.ajax({
+				url: "ajax/project/addTaskCheckList.do",
+				method: "post",
+				data: formData,
+				dataType: "JSON",
+				success:function(data){
+					console.log("여기야");
+					console.log(data);
+					makeCheckList($('#addTaskCheckListButton'));
+					getTaskCheckList(tskSeq);
+					
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+									
+			});
+			
+		}
+
+		function getTaskCheckList(tskSeq){
+			console.log("getTaskChecklList() in!!");
+			console.log("뭐시여");
+			$('#taskCheckListView').empty();
+			
+			$.ajax({
+				url:"ajax/project/getTaskCheckList.do",
+				method:"post",
+				data: {"tskSeq":tskSeq},
+				dataType:"JSON",
+				success: function(data){
+					console.log("getTaskCheckList Ajax Success!!");
+					
+					var TaskCheckList = data;
+					console.log(TaskCheckList);
+					$(TaskCheckList).each(function(index,element){
+						console.log(index +" / " +element);
+						var chkSeq = element.chkSeq;
+						var content = element.content;
+						var isCheck = element.check;
+						console.log(chkSeq);
+						console.log(content);
+						var list = $('<li style="width: 100%">');
+						
+						var taskCheckListForm = $('<form>');
+							$(taskCheckListForm).attr("id",chkSeq);
+							$(taskCheckListForm).attr("action","ajax/project/editTaskCheckList.do");
+
+							var divList = $('<div class="col-md-12">');
+							console.log("0");
+							console.log(divList);
+								var hiddenInput = $('<input hidden name="chkSeq">');
+									$(hiddenInput).val(chkSeq);
+							$(divList).append(hiddenInput);
+								var hiddenInput2 = $('<input hidden name="tskSeq">');
+									$(hiddenInput2).val(tskSeq);
+							$(divList).append(hiddenInput2);
+								var checkBox = $('<input type="checkbox" class="content" disabled="disabled">');
+									
+									if(isCheck == true){
+										console.log("if check=true");
+										$(checkBox).prop("checked",true);
+										$(checkBox).val(1);
+									}else{
+										console.log("else check=false");
+										$(checkBox).prop("checked",false);
+										$(checkBox).val(0);
+									}
+							$(divList).append(checkBox);
+								var input = $('<input class="form-control content" name="content" disabled="">');
+									$(input).attr("id",chkSeq+"input");
+									$(input).val(content);
+									$(input).text(content);
+								console.log("inputTag");
+								console.log(input);
+							$(divList).append(input);
+								
+								console.log("1");
+								console.log(divList);
+								var anchorEdit = $('<a onclick="taskCheckListEdit(this)">');
+									var editIcon = $('<i class="fa fa-edit">');
+								$(anchorEdit).append(editIcon);
+							$(divList).append(anchorEdit);
+							console.log("2");
+							console.log(divList);
+								var anchorDelete = $('<a onclick="taskCheckListDelete(this)">');
+									var deleteIcon = $('<i class="fa fa-trash-o">');
+								$(anchorDelete).append(deleteIcon);
+							$(divList).append(anchorDelete);
+							console.log("3");
+							console.log(divList);
+						$(taskCheckListForm).append(divList);
+						
+						$(list).append(taskCheckListForm);
+						console.log(list);
+						$('#taskCheckListView').append(list);
+						
+					})
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+				
+			});
+		}
+
+		function taskCheckListEdit(data){
+			$('#taskCheckListView').find('.content').each(function(index,element){
+				$(element).attr("disabled","true");
+			});
+			console.log("여기야!!");
+			console.log($(data).prev());
+			$(data).prev().removeAttr("disabled");
+			$(data).prev().prev().removeAttr("disabled");
+			$(data).prev().prev().attr("onclick","checkBoxChange(this)");
+			$(data).children().removeAttr("class");
+			$(data).children().attr("class","fa fa-magic");
+			$(data).removeAttr("onclick");
+			$(data).attr("onclick","taskCheckListEditSubmit(this)");
+			$(data).next().children().removeAttr("class");
+			$(data).next().children().attr("class","fa fa-times");
+			$(data).next().removeAttr("onclick");
+			$(data).next().attr("onclick","taskCheckListEditCancle");
+		}
+
+		function taskCheckListEditSubmit(data){
+			console.log(data);
+			var editForm = $(data).parent().parent();
+			var formData = $(editForm).serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log(editForm);
+			$.ajax({
+				url:"ajax/project/taskCheckListEdit.do",
+				data: formData,
+				dataType:"JSON",
+				success:function(data){
+					getTaskCheckList(tskSeq);
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
+		}
+
+		function checkBoxChange(data){
+			console.log("checkBoxChange() in!!");
+			console.log(data)
+			if($(data).prop("checked") == true){
+				console.log("체크됐다!");
+				$(data).val(1);
+			}else{
+				console.log("체크 해제 됐다");
+				$(data).val(0);
+			}
+		}
+
+		
+		
 		
     </script>
     <style type="text/css">
@@ -667,7 +922,7 @@
 									
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
-											<form id="ajax/project/taskForm.do" class="form-horizontal mb-lg">
+											<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 												<div class="form-group">
 													<label class="col-md-3 control-label">날짜</label>
 													<div class="col-md-6">
@@ -675,31 +930,33 @@
 															<span class="input-group-addon">
 																<i class="fa fa-calendar"></i>
 															</span>
-															<input type="text" id="taskFormStartAt" name="startAt" class="form-control">
+															<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
 															<span class="input-group-addon">to</span>
-															<input type="text" id="taskFormEndAt" name="endAt" class="form-control">
+															<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+															<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
 														</div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-md-3 control-label">담장자</label>
 													<div class="col-md-6 row">
-															<i class="fa fa-reddit"></i><input type="text" id="taskFormMail" name="mail" class="input-noneborder" readonly="readonly"/>
+															<i class="fa fa-reddit"></i><input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/>
+															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
 													<div class="col-md-6">
 														<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
-															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" />
-															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" />
-															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" />
+															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
+															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
 														</div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-md-3 control-label">진행상황</label>
-													<input type="hidden" id="taskFormProgress" name="progress" value=""> 
+													<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
 													<div class="col-md-6 btn-group">
 														<button type="button" class="btn btn-default progress-button">예정</button>
 														<button type="button" class="btn btn-default progress-button">진행</button>
@@ -711,9 +968,7 @@
 												<br>
 												<hr>
 												<div class="form-group" style="text-align: center;">
-													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록">
-														&nbsp;&nbsp;
-													<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록" form="taskEditForm">
 												</div>	
 											</form>
 										</div>
@@ -727,29 +982,29 @@
 													</div>
 												</div>
 											</form>
-											<div>
-												<ul id="taskDetailListView">
+											<div id="taskDetailListDiv">
+												<ul id="taskDetailListView" style="list-style:none;">
 													
 												</ul>
 											</div>
 										</div>
 										<div class="tab-pane" id="checkList">
-											<h1>second</h1>
-											<form id="checkListForm" class="form-horizontal mb-lg" >
-													
+											<form action="ajax/project/taskCheckListForm.do" id="taskCheckListForm" class="form-horizontal mb-lg" >
+												<label>체크리스트 추가하기&nbsp;&nbsp;<a><i id="addTaskCheckListButton" class="fa fa-plus-square before" onclick="makeCheckList(this)"></i></a></label>
 												<div class="form-group">
-													<label class="col-sm-3 control-label">Comment</label>
-													<div class="col-sm-9">
-														<textarea rows="5" class="form-control" placeholder="Type your comment..." required></textarea>
+													<div class="col-md-6">
+														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq"/>
 													</div>
 												</div>
-												
 											</form>
+											<div id="taskCheckListDiv">
+												<ul id="taskCheckListView" style="list-style:none;">
+													
+												</ul>
+											</div>
 										</div>
 									</div>
 										<div class="modal-footer">
-											<input type="submit" class="btn btn-default" value="확인">
-											&nbsp;&nbsp;
 											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 										</div>
 									

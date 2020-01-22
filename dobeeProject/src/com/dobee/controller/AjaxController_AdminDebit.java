@@ -20,11 +20,12 @@ public class AjaxController_AdminDebit {
 	@Autowired
 	AdminDebitService adminDebitService;
 	
+	
+	//관리자 법인카드 수정
 	@RequestMapping("editAdminDebitList.do")
 	@ResponseBody
-	public String adminDebitUpdate(@RequestParam HashMap paramMap) {
+	public void adminDebitUpdate(@RequestParam HashMap paramMap) {
 		
-		//여기서 법인카드수정
 		int result = 0;
 		String cardNum = (String) paramMap.get("cardNum");
 		String corp = (String)paramMap.get("corp");
@@ -57,10 +58,25 @@ public class AjaxController_AdminDebit {
 		}else {
 			System.out.println("업데이트 실패");
 		}
-		
-		return null;
-		//return "redirect:ListDebit.do";
 	}
+	
+	
+	//관리자 법인카드 삭제
+	@RequestMapping("adminDelDebit.do")
+	@ResponseBody
+	public int adminDelDebit(@RequestParam(value="cardNum") String cardNum) {
+		
+		int result = 0 ; 
+		result = adminDebitService.deleteDebit(cardNum);
+		if(result > 0 ) {
+			System.out.println("법인카드 삭제 완료되었습니다.");
+		}else {
+			System.out.println("법인카드 삭제 실패");
+		}
+		return result;
+	}
+	
+	
 	
 	
 }

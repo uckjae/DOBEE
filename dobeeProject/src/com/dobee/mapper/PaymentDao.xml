@@ -39,4 +39,10 @@
 		update debit set cardnum=#{cardNum}, corp=#{corp}, name=#{name}, nickname=#{nickName}, entry=#{entry}, valdate=#{valDate}
 		where cardnum=#{cardNum}
 	</update>
+	
+	
+	<!--  관리자 법인카드 삭제하기 -->
+	<delete id="adminDelDebit" parameterType="String">
+		delete from debit where cardnum=#{cardNum}
+	</delete>
 </mapper>
