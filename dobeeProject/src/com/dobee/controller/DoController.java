@@ -161,10 +161,8 @@ public class DoController {
     @RequestMapping("adminMain.do")
     public String adminMain(Model model) {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	List<User> userList = userDao.getUserList();
     	List<User> userInfoList = userDao.getUserInfoList();
-    	model.addAttribute("userList", userList);
-    	model.addAttribute("userInfoList", userInfoList);
+    	model.addAttribute("userList", userInfoList);
     	return "admin/AdminMain";
     }
     

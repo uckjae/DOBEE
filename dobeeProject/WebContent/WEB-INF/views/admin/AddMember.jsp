@@ -58,29 +58,33 @@
 			
 		});
 
-		function sendMail (){
-			
-			console.log("sendMail()");
-			console.log($('#formMail').val());
-			console.log($('#formName').val());
-			$.ajax({
-				url:"ajax/admin/sendEmail.do",
-				data: {'mail':$('#formMail').val(),
-						'name' : $('#formName').val()
+		function sendMail (callback){
+			return new Promise(function(resolve,reject){
+				console.log("sendMail()");
+				console.log($('#formMail').val());
+				console.log($('#formName').val());
+				$.ajax({
+					url:"ajax/admin/sendEmail.do",
+					data: {'mail':$('#formMail').val(),
+							'name' : $('#formName').val()
+						},
+					dataType: "text",
+					method: "POST",
+					success: function(response){
+						console.log("메일보내ㅉ=졌다");
+						resolve(response)
+						
 					},
-				dataType: "text",
-				method: "POST",
-				success: function(response){
-					resolve(response);
+					error: function(jqXHR, textStatus, errorThrown){
+						console.log(textStatus);
+						console.log(errorThrown);
+					}
 					
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					console.log(textStatus);
-					console.log(errorThrown);
-				}
-				
-				
+					
+				});
+
 			});
+			
 		}
 
 		function myFormSubmit(){
