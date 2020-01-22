@@ -189,7 +189,7 @@ public interface UserDao {
     
     
     //UserInfoList 가져오기
-    public List<UserInfo> getUserInfoList();
+    public List<User> getUserInfoList();
     
     
     //Authority 목록불러오기
@@ -205,7 +205,7 @@ public interface UserDao {
     
     
     //사원정보추가
-    public void addUserInfo(UserInfo userInfo);
+    public void addUserInfo(User user);
     
     
     //비밀번호 업데이트

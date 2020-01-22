@@ -87,7 +87,7 @@ public class MemberService {
     
     //User 등록
     @Transactional
-    public void addUser(User user, UserInfo userInfo) {
+    public void addUser(User user) {
     	System.out.println("MemberService addUser() in!!");
     	try {
 			user.setMyPic(user.getMultiFile().getBytes());
@@ -100,7 +100,7 @@ public class MemberService {
     	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
     		userDao.addUser(user);
-    		userDao.addUserInfo(userInfo);
+    		userDao.addUserInfo(user);
     	}catch(Exception e) {
     		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
