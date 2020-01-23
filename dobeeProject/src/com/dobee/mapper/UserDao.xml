@@ -138,6 +138,16 @@
     <delete id="postDeleteExtList">
     	DELETE FROM APPLY WHERE APLSEQ = #{aplSeq}
     </delete>
+    
+    
+	<!-- 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing -->
+	<select id="getChartData" resultType="com.dobee.vo.member.ChartData">
+		SELECT '근태' AS ENTRY, DATE_FORMAT(ATTTIME, '%d') AS DAYS, DATE_FORMAT(ATTTIME, '%T') AS ATTTIME, DATE_FORMAT(OFFTIME, '%T') AS OFFTIME, MAIL 
+			FROM ATTEND WHERE DATE_FORMAT(ATTTIME, '%m') = 1 AND MAIL = 'jg@kim.com'
+		UNION
+		SELECT '연장' AS ENTRY, DATE_FORMAT(STARTAT, '%d') AS DAYS, DATE_FORMAT(STARTAT, '%T') AS ATTTIME, DATE_FORMAT(ENDAT, '%T') AS OFFTIME, DRAFTER 
+			FROM APPLY WHERE DATE_FORMAT(STARTAT, '%m') = 1 AND APYCODE = 6 AND DRAFTER = 'jg@kim.com';
+	</select>
 		
 	
 	<!-- 개인_부재 신청하기	 0112	COMPLETE -->

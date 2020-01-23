@@ -12,6 +12,7 @@ import com.dobee.vo.member.Attend;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
+import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
 import com.dobee.vo.member.UserInfo;
@@ -147,6 +148,10 @@ public interface UserDao {
     
     // 개인_근무내역 관리 - 연장근무 신청 내역 불러오기			0121	COMPLETE
     public List<Apply> getExtList(String drafter);
+    
+    
+	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
+    public List<ChartData> getChartData();
     
     
     // 개인_연장근무 수정/삭제 (GET) - 페이지 데이터 불러오기			0121	COMPLETE
