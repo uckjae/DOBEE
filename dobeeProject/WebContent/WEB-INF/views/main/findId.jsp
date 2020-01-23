@@ -50,20 +50,31 @@ body {
 <script type="text/javascript">
 $(function(){
 	
- $('#idModal2').click('show.bs.modal',function(e){
+ $('#idModal2').click(function(e){
 	 
 	 console.log("done???");
 	 $('#findMail').trigger('reset');
 
-	 if($.trim($('#name').val())==''){
+	 if(($.trim($('#name').val())=='')&&($.trim($('#phone').val())=='')){
+         alert("내용을 입력하지 않았습니다");
+         return false;
+         }
+
+	 else if($.trim($('#name').val())==''){
          alert("이름을 입력하세요");
          $('#name').focus();
-         return;
-     }else if($.trim($('#phone').val()) == ''){
+         return false;    
+     }
+     
+     else if($.trim($('#phone').val()) == ''){
 		alert("휴대폰번호를 입력하세요");
 		$('#phone').focus();
-		return;	
+		return false;
      }
+   });
+
+
+	$('#idModal2').click('show.bs.modal',function(e){
 	 var name = $('#name').val();
      var phone = $('#phone').val();
      
@@ -147,7 +158,8 @@ $(function(){
 		<hr>
 
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap" href="#modalBootstrap" id="idModal2">아이디확인하기</a>
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
+		     href="#modalBootstrap" id="idModal2">아이디확인하기</a>
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs">로그인 </a>
 		</div>
 
