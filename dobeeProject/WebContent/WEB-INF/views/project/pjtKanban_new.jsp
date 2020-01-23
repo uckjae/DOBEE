@@ -963,9 +963,8 @@
 									
 								</div>
 							</div>
-				</div>
-                
-                <!-- 상세보기모달 -->
+					</div>
+                <!-- 상세보기 모달 -->
 				<div id="taskDetailModal" class="modal fade">
 					<div class="modal-dialog modal-lg">
 								<div class="modal-content">
@@ -984,7 +983,6 @@
 											</li>
 										</ul>
 									</div>
-									
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
 											<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
@@ -1002,13 +1000,33 @@
 														</div>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="col-md-3 control-label">담장자</label>
-													<div class="col-md-6 row">
-															<i class="fa fa-reddit"></i><input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/>
-															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
-													</div>
-												</div>
+												<!-- 담당자 -->
+												
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<div class="form-group">
+															<label class="col-md-3 control-label">담당자</label>
+															<div class="col-md-6 row">
+																<i class="fa fa-reddit"></i><input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/>
+																<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
+															</div>
+														</div>
+													</c:when>
+													<c:otherwise>
+														<div class="form-group">
+															<label class="col-md-3 control-label">담당자</label>
+																<div class="col-md-6">
+																	<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
+																		<option hidden>선택하세요</option>
+																		<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																			<option value="${user.mail}">${user.name}</option>
+																		</c:forEach>
+																	</select>
+																</div>
+														</div>
+													</c:otherwise>
+												</c:choose>
+												<!-- 중요도 -->
 												<div class="form-group">
 													<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
 													<div class="col-md-6">
@@ -1019,6 +1037,8 @@
 														</div>
 													</div>
 												</div>
+												
+												
 												<div class="form-group">
 													<label class="col-md-3 control-label">진행상황</label>
 													<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
@@ -1039,7 +1059,16 @@
 										<div class="tab-pane" id="content">
 											
 											<form action="ajax/project/taskContentForm.do" id="taskContentForm" class="form-horizontal mb-lg" >
-												<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
+											
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
+													</c:when>
+													<c:otherwise>
+														<label>상세업무&nbsp;&nbsp;</label>
+													</c:otherwise>
+												</c:choose>
+												
 												<div class="form-group">
 													<div class="col-md-6">
 														<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
@@ -1054,7 +1083,14 @@
 										</div>
 										<div class="tab-pane" id="checkList">
 											<form action="ajax/project/taskCheckListForm.do" id="taskCheckListForm" class="form-horizontal mb-lg" >
-												<label>체크리스트 추가하기&nbsp;&nbsp;<a><i id="addTaskCheckListButton" class="fa fa-plus-square before" onclick="makeCheckList(this)"></i></a></label>
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<label>체크리스트 추가하기&nbsp;&nbsp;<a><i id="addTaskCheckListButton" class="fa fa-plus-square before" onclick="makeCheckList(this)"></i></a></label>
+													</c:when>
+													<c:otherwise>
+														<label>체크리스트&nbsp;&nbsp;</label>
+													</c:otherwise>
+												</c:choose>
 												<div class="form-group">
 													<div class="col-md-6">
 														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq"/>
@@ -1085,8 +1121,9 @@
     <!-- 오른쪽 사이드 끝 -->
 
 </section>
-
 		<c:import url="/common/BottomTag.jsp"/>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		
 		
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
@@ -1099,8 +1136,18 @@
 		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+		<script src="assets/vendor/summernote/summernote.js"></script>
 		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
 
 		<!-- Examples -->
 		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>

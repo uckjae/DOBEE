@@ -7,6 +7,7 @@
                 <th style="font-size:18px;">Google Drive</th>
             </tr>
             <tr>
+            <iframe src="https://drive.google.com/file/d/1hhyVyEJ9vXHxWO9AvnwjelcJsH9TSExq/preview" width="640" height="480"></iframe>
                 <td style="font-size:16px;"><a href="#" id="goGoogleDrive">All Drive items.</a></td>
             </tr>
         </tbody>
@@ -29,7 +30,7 @@
 
     //====================Create POPUP function==============
     function PopupCenter(url, title, w, h) {
-       // debugger;
+        //debugger;
         var left = (screen.width / 2) - (w / 2);
         var top = (screen.height / 2) - (h / 2);
         return window.open(url, title, 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
@@ -54,7 +55,7 @@
 
         //Load the drive API
         gapi.client.setApiKey(this.apiKey);
-        gapi.client.load('drive', 'v3', this.DriveApiLoaded.bind(this));
+        gapi.client.load('drive', 'v2', this.DriveApiLoaded.bind(this));
         gapi.load('picker', '1', { callback: this.PickerApiLoaded.bind(this) });
     }
 
@@ -126,6 +127,7 @@
                 setTitle('Google Picker API').
                 build().
                 setVisible(true);
+            
         },
 
         //====Called when a file has been selected in the Google Picker Dialog Box======
@@ -143,6 +145,7 @@
         GetFileDetails: function (file) {
             if (this.onClick) {
                 this.onClick(file);
+                console.log("방금 이거");
             }
         },
 

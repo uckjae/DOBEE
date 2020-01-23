@@ -50,20 +50,31 @@ body {
 <script type="text/javascript">
 $(function(){
 	
- $('#idModal2').click('show.bs.modal',function(e){
+ $('#idModal2').click(function(e){
 	 
 	 console.log("done???");
 	 $('#findMail').trigger('reset');
 
-	 if($.trim($('#name').val())==''){
+	 if(($.trim($('#name').val())=='')&&($.trim($('#phone').val())=='')){
+         alert("내용을 입력하지 않았습니다");
+         return false;
+         }
+
+	 else if($.trim($('#name').val())==''){
          alert("이름을 입력하세요");
          $('#name').focus();
-         return;
-     }else if($.trim($('#phone').val()) == ''){
+         return false;    
+     }
+     
+     else if($.trim($('#phone').val()) == ''){
 		alert("휴대폰번호를 입력하세요");
 		$('#phone').focus();
-		return;	
+		return false;
      }
+   });
+
+
+	$('#idModal2').click('show.bs.modal',function(e){
 	 var name = $('#name').val();
      var phone = $('#phone').val();
      
@@ -105,7 +116,7 @@ $(function(){
  <div class="center-sign">
 			
 			
-   <a href="/" class="logo pull-left">
+   <a class="logo pull-left">
 	 <img src="img/beemain2.png" height="54"/>
    </a>
 
@@ -113,7 +124,7 @@ $(function(){
    <div class="panel panel-sign">
 				
 	<div class="panel-title-sign mt-xl text-right">
-	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>아이디 찾기</h2>
+	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>메일 찾기</h2>
 	</div>
 					
 	<div class="panel-body">
@@ -147,11 +158,12 @@ $(function(){
 		<hr>
 
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap" href="#modalBootstrap" id="idModal2">아이디확인하기</a>
-		  <a class="btn btn-twitter mb-md ml-xs mr-xs">로그인 </a>
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
+		     href="#modalBootstrap" id="idModal2">Find your mail</a>
+		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
 
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호찾기</a>
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 
 	  </div>
 	  	  
@@ -170,7 +182,7 @@ $(function(){
 	 <span aria-hidden="true">&times;</span>
 	 <span class="sr-only">Close</span>
 	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 아이디</h4>
+	<h4 class="modal-title" id="myModalLabel">찾은 메일</h4>
    </div>
    
    <div class="modal-body">
