@@ -209,11 +209,11 @@ public interface UserDao {
     
 
     //사원추가
-    public void addUser(User user);
+    public int addUser(User user);
     
     
     //사원정보추가
-    public void addUserInfo(User user);
+    public int addUserInfo(User user);
     
     //사원 정보 수정 --01.23 알파카
     public int modifyUser(User user);
