@@ -343,8 +343,8 @@ console.log(path);
                         </div>
                     </div>
                 </div>
-				<a href="javascript:location.href='googleDrive.do'">고 구글 드라이브111</a>
-				<a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브222</a>
+				<!-- <a href="javascript:location.href='googleDrive.do'">고 구글 드라이브111</a> -->
+				<a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브</a>
 				<!-- start: page -->
 
 
