@@ -9,9 +9,13 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
@@ -25,6 +29,7 @@ import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
+import com.google.common.net.MediaType;
 
 
 @RestController
@@ -130,6 +135,16 @@ public class AjaxControllerAdmin {
     	 String find = userDao.findId(name,phone);
     	 System.out.println("값:"+find);
          return find;
+    }
+    
+    //사원 이미지 가져오기
+    @RequestMapping(value="getMyPic.do",method=RequestMethod.POST)
+    public ResponseEntity<byte[]> getByteImg(String mail, HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println("이미지 가져오기 컨트롤러 타니?");
+    	User user = memberService.getUserInfo(mail);
+    	byte[] myPic = user.getMyPic();
+    	response.setContentType("image/jpeg");
+    	return new ResponseEntity<byte[]>(myPic, HttpStatus.OK);
     }
 }
 

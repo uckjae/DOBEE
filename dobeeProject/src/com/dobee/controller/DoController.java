@@ -158,10 +158,12 @@ public class DoController {
     
     //관리자 메인
     @RequestMapping("adminMain.do")
-    public String adminMain(Model model) {
+    public String adminMain(HttpServletRequest request, Model model) {
+    	User user = (User) request.getSession().getAttribute("user");
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	List<User> userInfoList = userDao.getUserInfoList();
-    	model.addAttribute("user", userInfoList);
+    	model.addAttribute("user", user);
+    	model.addAttribute("userList", userInfoList);
     	return "admin/AdminMain";
     }
     
@@ -1049,9 +1051,7 @@ public class DoController {
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user) {
    		System.out.println("Docontroller addUser() post in");
-   		memberService.addUser(user);
-   		
-   		
+   		memberService.addUser(user);   		
     	return "redirect: adminMain.do";
     }
    	
@@ -1075,7 +1075,6 @@ public class DoController {
 	   return "admin/TeamManagement";
    }
   
-
     
     
 }
