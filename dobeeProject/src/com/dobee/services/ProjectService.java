@@ -129,8 +129,12 @@ public class ProjectService {
 
 
     //업무삭제
-    public void delTask(){
-
+    public int pmTaskDelete(int tskSeq){
+    	System.out.println("ProjectService pmTaskDelete() in!!");
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.pmTaskDelete(tskSeq);
+    	System.out.println(result);
+    	return result;
     }
 
 
@@ -158,8 +162,11 @@ public class ProjectService {
 
 
     //상세업무삭제
-    public void delTaskDetail(){
-
+    public int taskDetailDelete(TaskDetail taskDetail){
+    	System.out.println("ProjectService taskDetailDelete in!!");
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.taskDetailDelete(taskDetail);
+    	return result;
     }
 
 
@@ -190,6 +197,15 @@ public class ProjectService {
     	System.out.println("ProjectService taskCheckListEdit() in");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	int result = projectDao.taskCheckListEdit(checkList);
+    	return result;
+    }
+    
+    
+    //체크리스트 삭제
+    public int taskCheckListDelete(CheckList checkList) {
+    	System.out.println("ProjectService taskCheckListDelete() in!!");
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	int result = projectDao.taskCheckListDelete(checkList);
     	return result;
     }
 

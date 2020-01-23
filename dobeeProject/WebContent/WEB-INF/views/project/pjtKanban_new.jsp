@@ -93,7 +93,7 @@
 				$('#taskImportant').text(value);
 			});
 
-			/* 모달띄우는함수 */
+			/* 업무추가 모달띄우는함수 */
 			$('.addTask').click('show.bs.modal',function(e){
 				console.log("addTask class 가 눌렸어");
 				console.log($('#addTaskModal'));
@@ -108,7 +108,7 @@
 					
 			});
 				
-			
+			/* 업무상세 모달띄우는 함수 */
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
@@ -172,6 +172,7 @@
 			
 		});
 
+		/* DateFormatting  함수 */
 		function date_to_str(format)
 
 		{
@@ -184,6 +185,18 @@
 		    return year + "-" + month + "-" + date;
 		}
 
+
+		/* PM 업무삭제함수 */
+		function PMTaskDelete(tskSeq){
+			console.log("PMTaskDelete() in!!");
+			$.ajax({
+				url:"PMTaskDelete.do",
+				data: {"tskSeq":tskSeq, "pjtSeq":${requestScope.project.pjtSeq}},
+				
+			});
+		}
+		
+		/* 업무상세 추가창 띄구고/내리는 함수 */
 		function makeContent(data){
 			console.log(data);
 			console.log($(data).attr("class"));
@@ -209,6 +222,7 @@
 			}
 		}
 
+		/* 업무상세 비동기 작업입력함수 */
 		function taskDetailSubmit(data){
 			
 			console.log(data);
@@ -239,6 +253,7 @@
 			
 		}
 
+		/* 비동기로 업무상세 가져와서 뿌리는 함수 */
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
 			$('#taskDetailListView').empty();
@@ -300,6 +315,7 @@
 			});
 		}
 
+		/* 업무상세 수정창 띄우는 함수 */
 		function taskDetailEdit(data){
 			$('#taskDetailListView').find('.contentData').each(function(index,element){
 				$(element).attr("disabled","");
@@ -316,10 +332,29 @@
 			$(data).next().attr("onclick","taskDetailEditCancle");
 		}
 
+
+		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
-			console.log($(data).prev().prev());
+			var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskDetailTskSeq').val();
+			console.log(formData);
+			$.ajax({
+				url:"ajax/project/taskDetailDelete.do",
+				data: formData,
+				success: function(){
+					console.log("taskDetailDelete Ajax Success!!");
+					getTaskDetailList(tskSeq);
+				},
+				error: function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
 		}
-		
+
+
+		/* 업무상세 수정내용 비동기로 입력하는함수 */
 		function taskDetailEditSubmit(data){
 			console.log(data);
 			var editForm = $(data).parent().parent();
@@ -339,13 +374,15 @@
 			});
 		}
 
+
+		/* 업무수정하는 함수 PM */
 		function taskEditSubmit(data){
 			console.log("taskEditSubmit() in!!");
 			console.log($(data).parent().parent());
 		}
 
 		
-
+		/* 체크리스트 추가하는 창 띄우고 내리는 함수 */
 		function makeCheckList(data){
 			console.log("makeCheckList() in!!");
 			if($(data).attr("class") == "fa fa-plus-square before"){
@@ -364,12 +401,13 @@
 				$('#taskCheckListTskSeq').after(formDiv);
 				$(data).attr("class","fa fa-minus-square after");
 			}else{
-				console.log("else 탔다");
 				$('#addTaskCheckListForm').remove();
 				$(data).attr("class","fa fa-plus-square before");
 			}
 		};
 
+
+		/* 체크리스트 비동기로 입력하는 함수 */
 		function taskCheckListSubmit(data){
 			
 			var thisForm = $('#addTaskCheckListForm');
@@ -396,6 +434,8 @@
 			
 		}
 
+
+		/* 체크리스트 가져와 뿌리는 함수 */
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
 			console.log("뭐시여");
@@ -469,12 +509,12 @@
 			});
 		}
 
+
+		/* 체크리스트 수정창 띄우는 함수 */
 		function taskCheckListEdit(data){
 			$('#taskCheckListView').find('.content').each(function(index,element){
 				$(element).attr("disabled","true");
 			});
-			console.log("여기야!!");
-			console.log($(data).prev());
 			$(data).prev().removeAttr("disabled");
 			$(data).prev().prev().removeAttr("disabled");
 			$(data).prev().prev().attr("onclick","checkBoxChange(this)");
@@ -488,6 +528,8 @@
 			$(data).next().attr("onclick","taskCheckListEditCancle");
 		}
 
+
+		/* 체크리스트 비동기로 수정하는 함수 */
 		function taskCheckListEditSubmit(data){
 			console.log("taskCheckListEditSubmit() in!!");
 			var editForm = $(data).parent().parent();
@@ -508,6 +550,27 @@
 			});
 		}
 
+		/* 체크리스트 삭제하는 함수 */
+		function taskCheckListDelete(data){
+			var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log(formData);
+			$.ajax({
+				url:"ajax/project/taskCheckListDelete.do",
+				data: formData,
+				success: function(){
+					console.log("taskCheckListDelete Ajax Success!!");
+					getTaskCheckList(tskSeq);
+				},
+				error: function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
+		}
+
+		/* 체크박스변경시  value 세팅하는 함수 */
 		function checkBoxChange(data){
 			console.log("checkBoxChange() in!!");
 			console.log(data)
@@ -645,6 +708,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
@@ -703,6 +767,7 @@
 		                                                        	~
 		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        </li>
                                                         </div>
                                                        </c:if>
@@ -751,6 +816,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
@@ -804,6 +870,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~

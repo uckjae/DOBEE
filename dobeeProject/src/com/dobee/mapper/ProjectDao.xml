@@ -91,6 +91,11 @@ WHERE p.pjtseq = #{pjtSeq}
 </update>
 
 
+<!-- 업무삭제 PM -->
+<delete id="pmTaskDelete">
+	DELETE FROM TASK WHERE TSKSEQ=#{parma1}
+</delete>
+
 <!-- 특정업무 조회 -->
 <select id="getTask" resultType="com.dobee.vo.project.Task">
 	SELECT T.TSKSEQ AS TSKSEQ, T.TITLE AS TITLE, T.PROGRESS AS PROGRESS, T.IMPORTANT AS IMPORTANT, DATE_FORMAT(T.STARTAT,'%Y-%c-%d') AS STARTAT, T.ENDAT AS ENDAT, T.MAIL AS MAIL, T.PJTSEQ AS PJTSEQ, U.NAME AS NAME
@@ -118,6 +123,12 @@ WHERE p.pjtseq = #{pjtSeq}
 </update>
 
 
+<!-- 상세업무 삭제 -->
+<delete id="taskDetailDelete" parameterType="com.dobee.vo.project.TaskDetail">
+	DELETE FROM TASKDETAIL WHERE TSKSEQ = #{tskSeq} AND TDSEQ=#{tdSeq}
+</delete>
+
+
 <!-- 담당자 업무 수정 -->
 <update id="editTask">
 	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt} WHERE TSKSEQ=#{tskSeq}
@@ -139,4 +150,10 @@ WHERE p.pjtseq = #{pjtSeq}
 <update id="taskCheckListEdit" parameterType="com.dobee.vo.project.CheckList">
 	UPDATE CHECKLIST SET CONTENT=#{content}, ISCHECK=#{isCheck} WHERE CHKSEQ=#{chkSeq}
 </update>
+
+
+<!-- 체크리스트 삭제 -->
+<delete id="taskCheckListDelete">
+	DELETE FROM CHECKLIST WHERE TSKSEQ=#{tskSeq} AND CHKSEQ=#{chkSeq}
+</delete>
 </mapper>
