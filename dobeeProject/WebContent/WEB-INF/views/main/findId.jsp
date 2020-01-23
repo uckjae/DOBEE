@@ -74,7 +74,13 @@ $(function(){
          success:function(data){
 			console.log(data);
              var mail = data;
-        	 $('#findMail').val(mail);
+             
+             if(mail === ""){
+            	 $('#findMail').val("찾은 이메일 값이 없습니다.");       	 
+             }else{
+               $('#findMail').val(mail);
+             }
+        	 
          },
          error : function(request,status,error){
 				console.log("code" + request.status +"\n" +"message : " + request.response + "\n" + "error : " + error);
