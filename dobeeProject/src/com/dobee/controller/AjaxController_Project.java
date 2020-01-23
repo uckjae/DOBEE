@@ -163,6 +163,11 @@ public class AjaxController_Project {
 	@RequestMapping("taskCheckListEdit")
 	public int taskCheckListEdit(CheckList checkList,HttpServletRequest req) {
 		System.out.println("AjaxControll_Project taskCheckListEdit() in!!");
+		if(req.getParameter("isCheck").equals("0")) {
+			checkList.setCheck(false);
+		}else {
+			checkList.setCheck(true);
+		}
 		Enumeration<String> enu = req.getParameterNames();
 		while(enu.hasMoreElements()) {
 			System.out.println("while돈다!!");

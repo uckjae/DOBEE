@@ -372,13 +372,9 @@
 
 		function taskCheckListSubmit(data){
 			
-			console.log(data);
 			var thisForm = $('#addTaskCheckListForm');
-			console.log(thisForm);
 			var formData = thisForm.serialize();
 			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log("Temp");
-			console.log(tskSeq);
 			$.ajax({
 				url: "ajax/project/addTaskCheckList.do",
 				method: "post",
@@ -414,14 +410,11 @@
 					console.log("getTaskCheckList Ajax Success!!");
 					
 					var TaskCheckList = data;
-					console.log(TaskCheckList);
 					$(TaskCheckList).each(function(index,element){
 						console.log(index +" / " +element);
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
-						console.log(chkSeq);
-						console.log(content);
 						var list = $('<li style="width: 100%">');
 						
 						var taskCheckListForm = $('<form>');
@@ -429,15 +422,13 @@
 							$(taskCheckListForm).attr("action","ajax/project/editTaskCheckList.do");
 
 							var divList = $('<div class="col-md-12">');
-							console.log("0");
-							console.log(divList);
 								var hiddenInput = $('<input hidden name="chkSeq">');
 									$(hiddenInput).val(chkSeq);
 							$(divList).append(hiddenInput);
 								var hiddenInput2 = $('<input hidden name="tskSeq">');
 									$(hiddenInput2).val(tskSeq);
 							$(divList).append(hiddenInput2);
-								var checkBox = $('<input type="checkbox" class="content" disabled="disabled">');
+								var checkBox = $('<input type="checkbox" class="content" name="isCheck" disabled="disabled">');
 									
 									if(isCheck == true){
 										console.log("if check=true");
@@ -453,28 +444,19 @@
 									$(input).attr("id",chkSeq+"input");
 									$(input).val(content);
 									$(input).text(content);
-								console.log("inputTag");
-								console.log(input);
 							$(divList).append(input);
 								
-								console.log("1");
-								console.log(divList);
 								var anchorEdit = $('<a onclick="taskCheckListEdit(this)">');
 									var editIcon = $('<i class="fa fa-edit">');
 								$(anchorEdit).append(editIcon);
 							$(divList).append(anchorEdit);
-							console.log("2");
-							console.log(divList);
 								var anchorDelete = $('<a onclick="taskCheckListDelete(this)">');
 									var deleteIcon = $('<i class="fa fa-trash-o">');
 								$(anchorDelete).append(deleteIcon);
 							$(divList).append(anchorDelete);
-							console.log("3");
-							console.log(divList);
 						$(taskCheckListForm).append(divList);
 						
 						$(list).append(taskCheckListForm);
-						console.log(list);
 						$('#taskCheckListView').append(list);
 						
 					})
@@ -507,7 +489,7 @@
 		}
 
 		function taskCheckListEditSubmit(data){
-			console.log(data);
+			console.log("taskCheckListEditSubmit() in!!");
 			var editForm = $(data).parent().parent();
 			var formData = $(editForm).serialize();
 			var tskSeq = $('#taskCheckListTskSeq').val();
