@@ -134,7 +134,7 @@ public class AjaxControllerAdmin {
     	 //System.out.println(user);
     	 UserDao userDao = sqlSession.getMapper(UserDao.class);
     	 String find = userDao.findId(name,phone);
-    	 System.out.println("d"+find);
+    	 System.out.println("값:"+find);
          return find;
     }
     

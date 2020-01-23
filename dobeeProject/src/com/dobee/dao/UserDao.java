@@ -133,6 +133,10 @@ public interface UserDao {
     public List<Apply> AbsAll(String drafter);
     
     
+    // Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE		//////////////////////////////////////////////////////////////
+    public List<Apply> Calendar();
+    
+    
     // Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)		0119	COMPLETE		    
     public List<Apply> ExtAll(String drafter);
     
