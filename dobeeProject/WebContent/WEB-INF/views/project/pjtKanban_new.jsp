@@ -1099,8 +1099,18 @@
 		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
 		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+		<script src="assets/vendor/summernote/summernote.js"></script>
 		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
 
 		<!-- Examples -->
 		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>

@@ -24,7 +24,7 @@ public class ProjectService {
     private SqlSession sqlSession;
 
 
-    //프로젝트메인
+    //특정 회원 프로젝트 리스트 가져오기
     public List<Project> projectList(String mail){
     	List<Project>list = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
@@ -56,6 +56,13 @@ public class ProjectService {
     	return result;
     }
 
+    //모든 프로젝트 가져오기
+    public List<Project> getAllPjtList() {
+    	List<Project>list = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	list = projectdao.getAllPjtList();
+    	return list;
+    }
     
     //특정 프로젝트 가져오기
     public Project getProject(int pjtSeq) {
