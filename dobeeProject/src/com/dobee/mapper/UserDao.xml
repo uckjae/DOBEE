@@ -73,7 +73,7 @@
 	<!-- Ajax 출근 하기 public int onWork(String mail); -->
 	<insert id="onWork">
 		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 
-		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출근'))
+		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출/퇴근'))
 	</insert>
 	
 	

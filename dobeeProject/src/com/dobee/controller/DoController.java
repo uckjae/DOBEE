@@ -873,17 +873,6 @@ public class DoController {
         
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
-    
-    //업무 삭제
-    /*
-    @RequestMapping("PMTaskDelete.do")
-    public String pmTaskDelete(int tskSeq, int pjtSeq) {
-    	System.out.println("DoController PMTaskDelete() in!!");
-    	System.out.println("tskSeq : " + tskSeq +" pjtSeq : " + pjtSeq);
-    	int result = projectService.pmTaskDelete(tskSeq);
-    	return "redirect: pjtKanban.do?pjtSeq="+pjtSeq;
-    }
-    */
 
 
     //업무상세정보입력
