@@ -624,7 +624,7 @@ public class DoController {
         String result = applyService.absApply(apply);
         // System.out.println("봐봐  : " + result);
         
-        return "attend/breakApply";
+        return "redirect: breakApply.do";
     }
     
     
@@ -647,7 +647,7 @@ public class DoController {
         bml.setAplSeq(aplSeq);
         int results = applyService.postEditApply(bml);
         
-        return "main/main";
+        return "redirect: editApply.do";
     }
     
     
@@ -656,7 +656,7 @@ public class DoController {
     public String postDeleteApply (Integer aplSeq) {
         applyService.deleteApply(aplSeq);
         
-        return "attend/breakManage";    
+        return "reidrect: attend/breakManage";    
     }
 
 
@@ -674,7 +674,7 @@ public class DoController {
         String result = applyService.overtimeApply(apply);
         // System.out.println("봐봐 이," + result);
 
-        return "attend/extendApply";
+        return "redirect: extendApply.do";
     }
 
 
@@ -717,7 +717,7 @@ public class DoController {
         apply.setDrafter(auth.getName());
         int result = applyService.postEditExtApply(apply);
         
-        return "main/main";
+        return "redirect: workManage.do";
     }
     
     
@@ -729,7 +729,7 @@ public class DoController {
         int result = applyService.postDeleteExtList(aplSeq);
         System.out.println("이거 일단 도니?" + result);
         System.out.println("결과를 확인하는 ? " + result);
-        return "attend/workManage";
+        return "redirect: workManage.do";
     }
 
 
@@ -749,7 +749,7 @@ public class DoController {
         System.out.println("이거 봐바 : " + apply.toString());
         applyService.absReqHandle(apply);
         
-        return "attend/breakManagement_Mgr";
+        return "redirect: absManage.do";
     }
     
 
@@ -768,7 +768,7 @@ public class DoController {
     public String extReqHandle(Apply apply){
         applyService.extReqHandle(apply);
         
-        return "attend/extendManagement_Mgr";
+        return "redirect: extManage.do";
     }
 
 
@@ -830,8 +830,15 @@ public class DoController {
 
     //프로젝트메인
     @RequestMapping("pjtMain.do")
-    public String projectList(@RequestParam(value="mail") String mail, Model model){
-    	List<Project>list = projectService.projectList(mail);
+    public String projectList(Model model, HttpServletRequest request){
+    	User user = (User) request.getSession().getAttribute("user");
+    	List<Project>list = null;
+    	//권한 코드에 따라서 뿌리는 값 다르게 하기
+    	if(user.getAuthCode() == 3) { // PM 회원인 경우
+    		list = projectService.getAllPjtList();
+    	} else { //일반 회원인 경우
+    		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	}
     	model.addAttribute("list",list);
    
         return "project/pjtMain_new";
@@ -840,18 +847,21 @@ public class DoController {
 
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
-    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq, Model model, HttpServletRequest request){
     	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
+    	User user = (User) request.getSession().getAttribute("user");
+    	model.addAttribute("user",user);
     	
     	JSONArray jsonArray = new JSONArray();
     	jsonArray.addAll(taskList);
     	model.addAttribute("project", project);
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
+    	
         return "project/pjtKanban_new";
     }
 
