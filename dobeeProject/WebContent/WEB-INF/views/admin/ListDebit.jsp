@@ -113,7 +113,6 @@
 								</table>
 							</div>
 						</section>
-			
 				<!-- end: page -->
 			</section>
 		</div>
