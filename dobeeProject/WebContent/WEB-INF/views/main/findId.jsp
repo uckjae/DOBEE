@@ -59,10 +59,8 @@ $(function(){
      
      $.ajax({
          url:'ajax/admin/findId.do',
-         type:'POST',
          data: {"name":name, "phone":phone},
-         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-         dataType : "json",
+         dataType : "text",
          success:function(data){
 			console.log(data);
              var mail = data;
@@ -159,7 +157,8 @@ $(function(){
    </div>
    
    <div class="modal-body">
-	<h2><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"></h2>
+	<h4><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"
+	     style="border:none; width:100%; height:100%;"/></h4>
    </div>
    
    <div class="modal-footer">

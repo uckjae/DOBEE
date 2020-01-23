@@ -5,9 +5,9 @@
 <mapper namespace="com.dobee.dao.UserDao">
 	
 	<!--아이디 찾기 -->
-	<select id = "findId" parameterType = "com.dobee.vo.member.User">
+	<select id = "findId" parameterType = "String" resultType="String">
      SELECT U.MAIL AS MAIL FROM USERINFO AS I JOIN USER AS U ON I.MAIL=U.MAIL 
-     WHERE NAME = #{name} AND PHONE=#{phone}
+     WHERE NAME = #{param1} AND PHONE=#{param2}
     </select>
 	
 	<!--  -->
