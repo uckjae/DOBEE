@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="fixed">
 <head>
@@ -38,7 +39,6 @@
 							<li><span>사원 관리</span></li>
 							<li><span>사원 목록</span></li>
 						</ol>
-				
 						<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 					</div>
 				</header>
@@ -75,7 +75,7 @@
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
 							<td>${user.teamCode}</td>
-							<td>${user.regitDate}</td>
+							<td><fmt:formatDate value="${user.regitDate}" pattern="yyyy-MM-dd"/></td>
 							<td>${user.serve}</td>
 							<td>${user.emp}</td>
 							<td>${user.position}</td>
@@ -89,10 +89,6 @@
 				<!-- end: page -->
 			</section>
 		</div>
-
-
-
-
 		<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp"/>
 		<!-- 오른쪽 사이드바 끝!! -->

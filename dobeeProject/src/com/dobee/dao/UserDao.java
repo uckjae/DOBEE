@@ -35,7 +35,7 @@ public interface UserDao {
     public void resetPwd(User user);
 
 
-    //출근하기 
+    //출근하기
     public int onWork(String mail);
 
 
@@ -133,6 +133,10 @@ public interface UserDao {
     public List<Apply> AbsAll(String drafter);
     
     
+    // Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE		//////////////////////////////////////////////////////////////
+    public List<Apply> Calendar();
+    
+    
     // Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)		0119	COMPLETE		    
     public List<Apply> ExtAll(String drafter);
     
@@ -210,6 +214,9 @@ public interface UserDao {
     
     //사원정보추가
     public void addUserInfo(User user);
+    
+    //사원 정보 수정 --01.23 알파카
+    public int modifyUser(User user);
     
     
     //비밀번호 업데이트

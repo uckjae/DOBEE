@@ -54,10 +54,13 @@ public class MemberService {
 
     }
 
-
-    //회원수정
-    public void modiMember(){
-
+    /* 01.23 알파카 */
+    //회원수정 
+    public int modifyUser(User user){
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.modifyUser(user);
+    	return result;
     }
 
 

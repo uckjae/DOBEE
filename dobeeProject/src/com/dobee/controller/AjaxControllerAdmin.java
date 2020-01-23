@@ -22,6 +22,7 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
@@ -137,15 +138,32 @@ public class AjaxControllerAdmin {
          return find;
     }
     
-    //사원 이미지 가져오기
-    @RequestMapping(value="getMyPic.do",method=RequestMethod.POST)
-    public ResponseEntity<byte[]> getByteImg(String mail, HttpServletRequest request, HttpServletResponse response) {
+    //사원 이미지 가져오기 @RequestParam(value="mail") String mail, HttpServletRequest request, HttpServletResponse response // new ResponseEntity<byte[]>(myPic, HttpStatus.OK)
+    @RequestMapping(value="getMyPic.do", method=RequestMethod.POST)
+    public String getByteImg() {
     	System.out.println("이미지 가져오기 컨트롤러 타니?");
-    	User user = memberService.getUserInfo(mail);
-    	byte[] myPic = user.getMyPic();
-    	response.setContentType("image/jpeg");
-    	return new ResponseEntity<byte[]>(myPic, HttpStatus.OK);
+    	//System.out.println("메일 가져와?"+mail);
+    	//User user = memberService.getUserInfo(mail);
+    	//byte[] myPic = user.getMyPic();
+    	//response.setContentType("image/jpeg");
+    	return null;
     }
+    
+    
+    //사원 정보 수정 --01.23 알파카
+    @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)
+    public String modifyUser(User user) {
+    	String responseData = "";
+		int result = 0;
+		result = memberService.modifyUser(user);
+		//프로젝트 DB 저장
+		//result = 
+		if(result > 0) {
+			responseData = "success";
+		}
+    	return responseData;
+    }
+    
 }
 
 
