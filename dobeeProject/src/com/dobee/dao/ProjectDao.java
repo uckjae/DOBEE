@@ -21,7 +21,10 @@ public interface ProjectDao {
     public int mkPjtMember(Map<String,String> map);
 
 
-    //프로젝트 목록 가져오기
+    //모든 프로젝트 목록 가져오기 pm 회원용  --01.23.알파카
+    public List<Project> getAllPjtList();
+    
+    //특정 회원이 속한 프로젝트 목록 가져오기
     public List<Project> getPjtList(String mail);
     
     //특정 프로젝트 가져오기

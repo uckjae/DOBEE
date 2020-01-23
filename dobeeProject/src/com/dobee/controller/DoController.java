@@ -830,8 +830,22 @@ public class DoController {
 
     //프로젝트메인
     @RequestMapping("pjtMain.do")
-    public String projectList(@RequestParam(value="mail") String mail, Model model){
-    	List<Project>list = projectService.projectList(mail);
+    public String projectList(Model model, HttpServletRequest request){
+    	User user = (User) request.getSession().getAttribute("user");
+    	System.out.println("유저의 코드?"+user.getAuthCode());
+    	List<Project>list = null;
+    	//권한 코드에 따라서 뿌리는 값 다르게 하기
+    	if(user.getAuthCode() == 3) { // PM 회원인 경우
+    		System.out.println("PM 회원이니?");
+    		list = projectService.getAllPjtList();
+    	} else { //일반 회원인 경우
+    		System.out.println("일반 회원이니?");
+    		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	}
+    	
+        	
+    	//pm은 모든 프로젝트 리스트 가져오기
+    	
     	model.addAttribute("list",list);
    
         return "project/pjtMain_new";
