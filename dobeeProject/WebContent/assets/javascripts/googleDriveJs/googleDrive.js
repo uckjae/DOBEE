@@ -1,25 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<center>
-    <h2>Google Picker API</h2>
-    <table class="imagetable">
-        <tbody>
-            <tr id="header">
-                <th style="font-size:18px;">Google Drive</th>
-            </tr>
-            <tr>
-                <td style="font-size:16px;"><a href="#" id="goGoogleDrive">All Drive items.</a></td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <div id="down">
-    	여기 나와야함
-    </div>
-    
-</center>
 
-<script type="text/javascript">
     //=Create object of FilePicker Constructor function function & set Properties===
     function SetPicker() {
         var picker = new FilePicker(
@@ -185,7 +164,4 @@
         }
     };
 
-</script>
 
-<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
-<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>

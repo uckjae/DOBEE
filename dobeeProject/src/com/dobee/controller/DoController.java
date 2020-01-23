@@ -624,7 +624,7 @@ public class DoController {
         String result = applyService.absApply(apply);
         // System.out.println("봐봐  : " + result);
         
-        return "attend/breakApply";
+        return "redirect: breakApply.do";
     }
     
     
@@ -647,7 +647,7 @@ public class DoController {
         bml.setAplSeq(aplSeq);
         int results = applyService.postEditApply(bml);
         
-        return "main/main";
+        return "redirect: editApply.do";
     }
     
     
@@ -656,7 +656,7 @@ public class DoController {
     public String postDeleteApply (Integer aplSeq) {
         applyService.deleteApply(aplSeq);
         
-        return "attend/breakManage";    
+        return "reidrect: attend/breakManage";    
     }
 
 
@@ -674,7 +674,7 @@ public class DoController {
         String result = applyService.overtimeApply(apply);
         // System.out.println("봐봐 이," + result);
 
-        return "attend/extendApply";
+        return "redirect: extendApply.do";
     }
 
 
@@ -717,7 +717,7 @@ public class DoController {
         apply.setDrafter(auth.getName());
         int result = applyService.postEditExtApply(apply);
         
-        return "main/main";
+        return "redirect: workManage.do";
     }
     
     
@@ -729,7 +729,7 @@ public class DoController {
         int result = applyService.postDeleteExtList(aplSeq);
         System.out.println("이거 일단 도니?" + result);
         System.out.println("결과를 확인하는 ? " + result);
-        return "attend/workManage";
+        return "redirect: workManage.do";
     }
 
 
@@ -749,7 +749,7 @@ public class DoController {
         System.out.println("이거 봐바 : " + apply.toString());
         applyService.absReqHandle(apply);
         
-        return "attend/breakManagement_Mgr";
+        return "redirect: absManage.do";
     }
     
 
@@ -768,7 +768,7 @@ public class DoController {
     public String extReqHandle(Apply apply){
         applyService.extReqHandle(apply);
         
-        return "attend/extendManagement_Mgr";
+        return "redirect: extManage.do";
     }
 
 
