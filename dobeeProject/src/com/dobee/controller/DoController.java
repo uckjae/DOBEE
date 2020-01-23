@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -158,12 +159,12 @@ public class DoController {
     
     //관리자 메인
     @RequestMapping("adminMain.do")
-    public String adminMain(Model model) {
+    public String adminMain(HttpServletRequest request, Model model) {
+    	User user = (User) request.getSession().getAttribute("user");
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	List<User> userList = userDao.getUserList();
     	List<User> userInfoList = userDao.getUserInfoList();
-    	model.addAttribute("userList", userList);
-    	model.addAttribute("userInfoList", userInfoList);
+    	model.addAttribute("user", user);
+    	model.addAttribute("userList", userInfoList);
     	return "admin/AdminMain";
     }
     
@@ -215,12 +216,10 @@ public class DoController {
     //마이페이지
     @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
     public String mypage(Principal principal, Model model){
-    	System.out.println("프린시펄?"+principal.getName()); //회원 ID 가져오기
     	//회원 정보 가져오기
     	String mail = principal.getName();
     	User user = memberService.getUserInfo(mail);
     	model.addAttribute("user", user);
-    	System.out.println("유저 정보 가져왔어?"+user.toString());
         return "myPage/myPage";
     }
     
@@ -228,13 +227,11 @@ public class DoController {
     //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
-    	
-    			List<Notice>list=null;
-    	
-    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
-    		list=noticedao.noticeList(notice);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+		List<Notice>list=null;
+		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+		list=noticedao.noticeList(notice);
+		System.out.println(list);
+		model.addAttribute("list",list);
     
         return "notice/noticeList";
     }
@@ -428,7 +425,7 @@ public class DoController {
     	return "notice/noticeModify";
     }
     
-  //공지사항수정하기 처리
+    //공지사항수정하기 처리
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	System.out.println("수정 타니?");
@@ -1051,21 +1048,17 @@ public class DoController {
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user) {
    		System.out.println("Docontroller addUser() post in");
-   		memberService.addUser(user);
-   		
-   		
+   		memberService.addUser(user);   		
     	return "redirect: adminMain.do";
     }
    	
    
-   //관리자_사원 정보 수정
+   //관리자_사원 정보 수정 view
    @RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)
    public String modifyUser(@RequestParam(value="mail") String mail, Model model) {
-	   System.out.println("유저 메일"+mail);
 	   //서비스 통해서 유저 메일로 유저 정보 가져와서 뿌리기
 	   User user = memberService.getUserInfo(mail);
 	   model.addAttribute("user", user);
-	   System.out.println("유저 정보 가져왔어1111?"+user.toString());
 	   return "admin/ModifyMember";
    }
   
@@ -1076,8 +1069,11 @@ public class DoController {
 	   model.addAttribute("teamList", teamList);
 	   return "admin/TeamManagement";
    }
+   
+   
+   
+   
   
-
     
     
 }

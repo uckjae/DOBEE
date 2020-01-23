@@ -55,6 +55,10 @@ public interface ProjectDao {
 
     //업무추가 - 담당자
     public void addTask();
+    
+    
+    //업무 삭제 -PM
+    public int pmTaskDelete(int tskSeq);
 
 
     //상세업무 리스트
@@ -63,6 +67,10 @@ public interface ProjectDao {
 
     //상세업무추가
     public void addTaskDetail(TaskDetail taskDetail);
+    
+    
+    //상세업무삭제
+    public int taskDetailDelete(TaskDetail taskDetail);
 
 
     //체크리스트 조회
@@ -75,6 +83,10 @@ public interface ProjectDao {
     
     //체크리스트 수정
     public int taskCheckListEdit(CheckList checkList);
+    
+    
+    //체크리스트 삭제
+    public int taskCheckListDelete(CheckList checkList);
 
     //프로젝트 캘린더
     public List<Schedule> pjtSchedule();

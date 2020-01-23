@@ -4517,8 +4517,8 @@ body .btn-facebook:active {
 }
 
 body .btn-twitter, body .btn-twitter:focus {
-	background: #55ACEE;
-	border: 1px solid #47A5ED;
+	background: #0088cc;
+	border: 1px solid #0088cc;
 }
 
 body .btn-twitter:hover {
@@ -15912,8 +15912,13 @@ table.fc-border-separate {
 	font-size: 13px;
 	font-size: 1.3rem;
 	font-weight: 500;
-	padding: 10px 0;
+	padding: 4px 0;
 	text-transform: uppercase;
+}
+.calendarArea .fc-widget-header{
+	border-top-left-radius : 4px;
+	border-top-right-radius : 4px;
+	border-style : none;
 }
 .fc .fc-header-title h2 {
 	color: #171717;

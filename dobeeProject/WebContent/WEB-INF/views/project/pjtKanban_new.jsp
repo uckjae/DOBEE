@@ -5,20 +5,11 @@
 <!doctype html>
 <html class="fixed search-results">
 <head>
-    <c:import url="/common/HeadTag.jsp"/>
-    <c:import url="/common/BottomTag.jsp"/>
+	    <c:import url="/common/HeadTag.jsp"/>
 	
-	
-	<!-- Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
-
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
@@ -41,7 +32,7 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 	
 	
-	<!-- Vendor -->
+		<!-- Vendor -->
 		<script src="assets/vendor/jquery/jquery.js"></script>
 		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
@@ -49,36 +40,16 @@
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
 		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-		
-		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
-		<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-		<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
-		<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-		<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-		<script src="assets/vendor/fuelux/js/spinner.js"></script>
-		<script src="assets/vendor/dropzone/dropzone.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-		<script src="assets/vendor/summernote/summernote.js"></script>
-		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
-		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
-		
-		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
-		
-		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
-		
-		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
-
-		<!-- Examples -->
-	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+    
+	
+	
+	
+	<!-- Sweet Alert -->
+	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+	
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script type="text/javascript">
 		$(function(){
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -93,7 +64,7 @@
 				$('#taskImportant').text(value);
 			});
 
-			/* 모달띄우는함수 */
+			/* 업무추가 모달띄우는함수 */
 			$('.addTask').click('show.bs.modal',function(e){
 				console.log("addTask class 가 눌렸어");
 				console.log($('#addTaskModal'));
@@ -108,7 +79,7 @@
 					
 			});
 				
-			
+			/* 업무상세 모달띄우는 함수 */
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
@@ -172,6 +143,7 @@
 			
 		});
 
+		/* DateFormatting  함수 */
 		function date_to_str(format)
 
 		{
@@ -184,6 +156,64 @@
 		    return year + "-" + month + "-" + date;
 		}
 
+
+		/* PM 업무삭제함수 */
+		function PMTaskDelete(tskSeq){
+			//console.log("PMTaskDelete() in!!");
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
+			swal({
+				title: "업무 삭제",
+				text: "업무를 삭제하시겠습니까?",
+				icon: "warning", //"info,success,warning,error" 중 택1
+				button : {
+					confirm: {
+					    text: "확인",
+					    value: true,
+					    visible: true,
+					    className: "",
+					    closeModal: true
+					  },
+					 cancel: {
+						    text: "취소",
+						    value: null,
+						    visible: false,
+						    className: "",
+						    closeModal: true,
+						  }
+					}
+			}).then((YES) => {
+				if(YES){
+					$.ajax({
+		 	 			url:"ajax/project/PMTaskDelete.do",
+		 	 			data: {"tskSeq":tskSeq},
+		 				dataType: "text",
+		 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		 				type:"post",
+		 				success:function(responsedata){
+		 					if(responsedata == "success"){ //프로젝트 생성 완료
+		 	 					console.log('삭제 완료')
+		 	 					swal({
+		 						   title: "업무 삭제 완료",
+		 						   text: "업무가 삭제되었습니다.",
+		 						   icon: "success" //"info,success,warning,error" 중 택1
+		 						}).then((YES) => {
+		 							location.href="pjtKanban.do?pjtSeq="+pjtSeq;
+		 						})
+		 	 				}
+		 				},
+		 				error:function(request,status,error){
+							console.log("code : " + request.status +"\n" + "message : " 
+									+ request.responseText + "\n" + "error : " + error);
+						}
+		 			});
+
+					} 
+				})
+			
+		}
+		
+		/* 업무상세 추가창 띄구고/내리는 함수 */
 		function makeContent(data){
 			console.log(data);
 			console.log($(data).attr("class"));
@@ -209,6 +239,7 @@
 			}
 		}
 
+		/* 업무상세 비동기 작업입력함수 */
 		function taskDetailSubmit(data){
 			
 			console.log(data);
@@ -239,6 +270,7 @@
 			
 		}
 
+		/* 비동기로 업무상세 가져와서 뿌리는 함수 */
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
 			$('#taskDetailListView').empty();
@@ -300,6 +332,7 @@
 			});
 		}
 
+		/* 업무상세 수정창 띄우는 함수 */
 		function taskDetailEdit(data){
 			$('#taskDetailListView').find('.contentData').each(function(index,element){
 				$(element).attr("disabled","");
@@ -316,10 +349,29 @@
 			$(data).next().attr("onclick","taskDetailEditCancle");
 		}
 
+
+		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
-			console.log($(data).prev().prev());
+			var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskDetailTskSeq').val();
+			console.log(formData);
+			$.ajax({
+				url:"ajax/project/taskDetailDelete.do",
+				data: formData,
+				success: function(){
+					console.log("taskDetailDelete Ajax Success!!");
+					getTaskDetailList(tskSeq);
+				},
+				error: function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
 		}
-		
+
+
+		/* 업무상세 수정내용 비동기로 입력하는함수 */
 		function taskDetailEditSubmit(data){
 			console.log(data);
 			var editForm = $(data).parent().parent();
@@ -339,13 +391,15 @@
 			});
 		}
 
+
+		/* 업무수정하는 함수 PM */
 		function taskEditSubmit(data){
 			console.log("taskEditSubmit() in!!");
 			console.log($(data).parent().parent());
 		}
 
 		
-
+		/* 체크리스트 추가하는 창 띄우고 내리는 함수 */
 		function makeCheckList(data){
 			console.log("makeCheckList() in!!");
 			if($(data).attr("class") == "fa fa-plus-square before"){
@@ -364,21 +418,18 @@
 				$('#taskCheckListTskSeq').after(formDiv);
 				$(data).attr("class","fa fa-minus-square after");
 			}else{
-				console.log("else 탔다");
 				$('#addTaskCheckListForm').remove();
 				$(data).attr("class","fa fa-plus-square before");
 			}
 		};
 
+
+		/* 체크리스트 비동기로 입력하는 함수 */
 		function taskCheckListSubmit(data){
 			
-			console.log(data);
 			var thisForm = $('#addTaskCheckListForm');
-			console.log(thisForm);
 			var formData = thisForm.serialize();
 			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log("Temp");
-			console.log(tskSeq);
 			$.ajax({
 				url: "ajax/project/addTaskCheckList.do",
 				method: "post",
@@ -400,6 +451,8 @@
 			
 		}
 
+
+		/* 체크리스트 가져와 뿌리는 함수 */
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
 			console.log("뭐시여");
@@ -414,14 +467,11 @@
 					console.log("getTaskCheckList Ajax Success!!");
 					
 					var TaskCheckList = data;
-					console.log(TaskCheckList);
 					$(TaskCheckList).each(function(index,element){
 						console.log(index +" / " +element);
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
-						console.log(chkSeq);
-						console.log(content);
 						var list = $('<li style="width: 100%">');
 						
 						var taskCheckListForm = $('<form>');
@@ -429,15 +479,13 @@
 							$(taskCheckListForm).attr("action","ajax/project/editTaskCheckList.do");
 
 							var divList = $('<div class="col-md-12">');
-							console.log("0");
-							console.log(divList);
 								var hiddenInput = $('<input hidden name="chkSeq">');
 									$(hiddenInput).val(chkSeq);
 							$(divList).append(hiddenInput);
 								var hiddenInput2 = $('<input hidden name="tskSeq">');
 									$(hiddenInput2).val(tskSeq);
 							$(divList).append(hiddenInput2);
-								var checkBox = $('<input type="checkbox" class="content" disabled="disabled">');
+								var checkBox = $('<input type="checkbox" class="content" name="isCheck" disabled="disabled">');
 									
 									if(isCheck == true){
 										console.log("if check=true");
@@ -453,28 +501,19 @@
 									$(input).attr("id",chkSeq+"input");
 									$(input).val(content);
 									$(input).text(content);
-								console.log("inputTag");
-								console.log(input);
 							$(divList).append(input);
 								
-								console.log("1");
-								console.log(divList);
 								var anchorEdit = $('<a onclick="taskCheckListEdit(this)">');
 									var editIcon = $('<i class="fa fa-edit">');
 								$(anchorEdit).append(editIcon);
 							$(divList).append(anchorEdit);
-							console.log("2");
-							console.log(divList);
 								var anchorDelete = $('<a onclick="taskCheckListDelete(this)">');
 									var deleteIcon = $('<i class="fa fa-trash-o">');
 								$(anchorDelete).append(deleteIcon);
 							$(divList).append(anchorDelete);
-							console.log("3");
-							console.log(divList);
 						$(taskCheckListForm).append(divList);
 						
 						$(list).append(taskCheckListForm);
-						console.log(list);
 						$('#taskCheckListView').append(list);
 						
 					})
@@ -487,12 +526,12 @@
 			});
 		}
 
+
+		/* 체크리스트 수정창 띄우는 함수 */
 		function taskCheckListEdit(data){
 			$('#taskCheckListView').find('.content').each(function(index,element){
 				$(element).attr("disabled","true");
 			});
-			console.log("여기야!!");
-			console.log($(data).prev());
 			$(data).prev().removeAttr("disabled");
 			$(data).prev().prev().removeAttr("disabled");
 			$(data).prev().prev().attr("onclick","checkBoxChange(this)");
@@ -506,8 +545,10 @@
 			$(data).next().attr("onclick","taskCheckListEditCancle");
 		}
 
+
+		/* 체크리스트 비동기로 수정하는 함수 */
 		function taskCheckListEditSubmit(data){
-			console.log(data);
+			console.log("taskCheckListEditSubmit() in!!");
 			var editForm = $(data).parent().parent();
 			var formData = $(editForm).serialize();
 			var tskSeq = $('#taskCheckListTskSeq').val();
@@ -526,6 +567,27 @@
 			});
 		}
 
+		/* 체크리스트 삭제하는 함수 */
+		function taskCheckListDelete(data){
+			var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log(formData);
+			$.ajax({
+				url:"ajax/project/taskCheckListDelete.do",
+				data: formData,
+				success: function(){
+					console.log("taskCheckListDelete Ajax Success!!");
+					getTaskCheckList(tskSeq);
+				},
+				error: function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
+		}
+
+		/* 체크박스변경시  value 세팅하는 함수 */
 		function checkBoxChange(data){
 			console.log("checkBoxChange() in!!");
 			console.log(data)
@@ -585,12 +647,12 @@
                 <div class="right-wrapper pull-right">
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="index.html">
-                                <i class="fa fa-home"></i>
+                            <a href="#">
+                                <i class="fa fa-tasks"></i>
                             </a>
                         </li>
-                        <li><span>Pages</span></li>
-                        <li><span>Search</span></li>
+                        <li><span>프로젝트</span></li>
+                        <li><span>칸반보드</span></li>
                     </ol>
 
                     <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -606,7 +668,6 @@
                         </li>
                         <li>
                             <a href="#medias" data-toggle="tab">2020년 1분기</a>
-                            <button></button>
                         </li>
                     </ul>
                 </div>
@@ -663,6 +724,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
@@ -721,6 +783,7 @@
 		                                                        	~
 		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 	                                                        	</span>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        </li>
                                                         </div>
                                                        </c:if>
@@ -769,6 +832,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
@@ -822,6 +886,7 @@
                                                         <div class="row">
 	                                                        <li>
 	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 	                                                        	<span class="label label-primary text-normal pull-right">
 		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
 		                                                        	~
@@ -966,7 +1031,6 @@
 												</div>
 												<br>
 												<br>
-												<hr>
 												<div class="form-group" style="text-align: center;">
 													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록" form="taskEditForm">
 												</div>	
@@ -1022,8 +1086,24 @@
 
 </section>
 
+		<c:import url="/common/BottomTag.jsp"/>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+		<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+		<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+		<script src="assets/vendor/fuelux/js/spinner.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
 
-
-
+		<!-- Examples -->
+		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+		
 </body>
 </html>
