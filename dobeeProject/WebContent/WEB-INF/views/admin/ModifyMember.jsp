@@ -9,20 +9,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 		$(function(){
-
-			
-
-			
 			/* 권한 코드 select option 만들기*/
 			$.ajax({
 				url:"ajax/admin/authorityList.do",
 				dataType: "JSON",
 				success: function(data){
-					console.log("권한코드불러오는 ajax");
+					//console.log("권한코드불러오는 ajax");
+					var authSelected = $("#authCode option:selected").val(); //selected 된 것의 option 값 가져오기
+					//console.log('선택된 값111111111111'+authSelected);
+					$("#authCode").empty();
 					$.each(data, function(i, elt) {
-						if(elt.authCode !=1){
-							var option = $("<option>");
-							$(option).val(elt.authCode);
+						if(elt.authCode !=1 && authSelected !== elt.authCode){ // 권한 코드가 관리자가 아님 & 권한 코드 중 selected 된 것과 같지 않을 때만 append함
+							var option = $('<option>');
+							$(option).val(elt.authCode); 
 							if(elt.authCode == 2){
 								$(option).text("사원");
 							}
@@ -31,7 +30,8 @@
 							}
 							$('#authCode').append(option);
 						}
-					})
+					});
+
 				}
 			})
 	
@@ -40,12 +40,10 @@
 				url:"ajax/admin/teamList.do",
 				dataType:"JSON",
 				success: function(data){
-					console.log("teamList Ajax");
-					console.log(data);
 					$.each(data, function(i, elt) {
 						var option = $('<option>');
-						var selectedValue = $("#teamCode option:selected").text(); //selected 된 것의 option 값 가져오기
-						if(selectedValue !== elt.teamName) { //팀 목록 중 selected 된 것이 없을 때만 append함
+						var teamSelected = $("#teamCode option:selected").text(); //selected 된 것의 option 값 가져오기
+						if(teamSelected !== elt.teamName) { //팀 목록 중 selected 된 것과 같지 않을 때만 append함
 							//console.log('이거 타??');
 							$(option).val(elt.teamCode);
 							$(option).text(elt.teamName);
@@ -54,35 +52,26 @@
 					})
 					
 				}	
-			})
-			
-			/* 날짜 기본설정 */
-			getDate();
-
-			$('#regitDate').change(function(){
-				console.log($('#regitDate').val());
 			});
+
+			/* 이미지 blob 가져오기 */
+			$.ajax({
+				url:"ajax/admin/getMyPic.do",
+				dataType:"JSON",
+				success: function(data){
+					console.log('이미지?'+data);
+					
+				}	
+			})
+
+
+
 			
 		});
 
 		
-		function myFormSubmit(){
-			sendMail().then(function(){
-				console.log("submit()");
-				document.getElementById('addUserForm').submit();
-				$('#addUserForm').submit();
-				
-			})
-		}
 
-		/* 날짜 기본설정 */
-		function getDate(){
-		    var today = new Date();
-
-			document.getElementById("regitDate").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
-
-
-		}
+		
 	</script>
 
 </head>
@@ -123,7 +112,7 @@
 								<section class="panel">
 									<header class="panel-heading">
 																
-										<h2 class="panel-title">사원 등록</h2>
+										<h2 class="panel-title">사원 수정</h2>
 									</header>
 									<div class="panel-body">
 										<form class="form-horizontal form-bordered" action="#" id="addUserForm" method="post" enctype="multipart/form-data">
@@ -133,7 +122,6 @@
 													<input type="file" id="multiFile" name="multiFile"  class="form-control" accept="image/*" hidden="true">
 												</div>
 											</div>
-						
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="name">사원이름</label>
 												<div class="col-md-6">
@@ -183,9 +171,14 @@
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="authCode" name="authCode" required="required" autofocus="autofocus" form="addUserForm">
 														<option hidden>선택하세요</option>
-														<c:if test="${not empty user.authCode}">
-															<option value="${user.authCode}" selected >${user.auth}</option>
-														</c:if>
+														<c:choose>
+															<c:when test="${not empty user.authCode && user.authCode == '2' }">
+																<option value="${user.authCode}" selected >사원</option>
+															</c:when>
+														<c:otherwise>
+																<option value="${user.authCode}" selected >팀장</option>
+														</c:otherwise>
+														</c:choose>
 													</select>
 												</div>
 											</div>
@@ -220,17 +213,10 @@
 					<!-- end: page -->
 				</section>
 			</div>
-
-
-
-
 			<!-- 오른쪽 사이드바!! -->
-		<c:import url="/common/RightSide.jsp"/>
-	
-			
+			<c:import url="/common/RightSide.jsp"/>
 			<!-- 오른쪽 사이드바 끝!! -->
 		</section>
-
 		<c:import url="/common/BottomTag.jsp"/>
 	</body>
 </html>
