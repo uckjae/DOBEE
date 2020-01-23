@@ -124,7 +124,7 @@ $(function(){
    <div class="panel panel-sign">
 				
 	<div class="panel-title-sign mt-xl text-right">
-	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>아이디 찾기</h2>
+	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>이메일 찾기</h2>
 	</div>
 					
 	<div class="panel-body">
@@ -159,11 +159,11 @@ $(function(){
 
 		<div class="mb-xs text-center">
 		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" id="idModal2">아이디확인하기</a>
-		  <a class="btn btn-twitter mb-md ml-xs mr-xs">로그인 </a>
+		     href="#modalBootstrap" id="idModal2">Find your mail</a>
+		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
 
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호찾기</a>
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 
 	  </div>
 	  	  
@@ -182,7 +182,7 @@ $(function(){
 	 <span aria-hidden="true">&times;</span>
 	 <span class="sr-only">Close</span>
 	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 아이디</h4>
+	<h4 class="modal-title" id="myModalLabel">찾은 이메일</h4>
    </div>
    
    <div class="modal-body">
