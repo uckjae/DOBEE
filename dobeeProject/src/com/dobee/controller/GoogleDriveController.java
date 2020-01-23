@@ -25,7 +25,7 @@ public class GoogleDriveController {
 		googleDriveApiService.googleDrive();
 		System.out.println("구글 드라이브 컨트롤단 : 구글 드라이브 함수 실행 이후까지 왔음");
 		
-		return null;
+		return "payment/googleDrive";
 	}
 	
 	
