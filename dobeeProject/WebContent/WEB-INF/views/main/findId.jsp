@@ -54,6 +54,16 @@ $(function(){
 	 
 	 console.log("done???");
 	 $('#findMail').trigger('reset');
+
+	 if($.trim($('#name').val())==''){
+         alert("이름을 입력하세요");
+         $('#name').focus();
+         return;
+     }else if($.trim($('#phone').val()) == ''){
+		alert("휴대폰번호를 입력하세요");
+		$('#phone').focus();
+		return;	
+     }
 	 var name = $('#name').val();
      var phone = $('#phone').val();
      
@@ -71,6 +81,7 @@ $(function(){
          }
    
      });
+     
  });
      
  });	
@@ -162,7 +173,8 @@ $(function(){
    </div>
    
    <div class="modal-footer">
-	<button type="button" class="btn btn-primary">확인</button>
+	<button type="button" data-dismiss="modal"class="btn btn-primary">
+	 <span aria-hidden="true"></span>확인</button>
 	
    </div>
    
