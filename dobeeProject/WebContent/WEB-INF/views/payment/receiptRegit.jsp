@@ -343,8 +343,8 @@ console.log(path);
                         </div>
                     </div>
                 </div>
-				<a href="javascript:location.href='googleDrive.do'">고 구글 드라이브</a>
-				<a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브</a>
+				<a href="javascript:location.href='googleDrive.do'">고 구글 드라이브111</a>
+				<a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브222</a>
 				<!-- start: page -->
 
 
@@ -359,7 +359,6 @@ console.log(path);
 	</section>
 	
 	<c:import url="/common/BottomTag.jsp" />
-	
 	
 	 <script>
                 //영수증 업로드시 이미지 이름 올라가게하는 스크립트

@@ -46,10 +46,12 @@
 									</c:if>
 							   </div>
 							</c:if> 
-                            <input type="checkbox" id="chk1"><label for="chk1">아이디 저장</label>
+                            <input type="checkbox" id="chk1"><label for="chk1">메일 저장</label>
                             <input type="checkbox" id="chk1"><label for="chk1">로그인 유지</label>
                             <div class="form-button">
-                                <button id="submit" type="submit" class="ibtn">Login</button> <a href="findId.do">Forget password?</a>
+                                <button id="submit" type="submit" class="ibtn">Login</button>
+                                <a href="findId.do">메일 찾기 /</a>                           
+                                <a href="findId.do">비밀번호 찾기</a>
                             </div>
                         </form>
                        <!--  <div class="other-links">
