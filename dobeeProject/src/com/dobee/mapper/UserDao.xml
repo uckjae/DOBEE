@@ -49,6 +49,24 @@
 		WHERE U.MAIL = #{mail}
 	</update>
 	
+	<!-- //관리자 사원 정보 수정 01.23 알파카 public int modifyUser(User user); -->
+    
+    <update id="modifyUser" parameterType="com.dobee.vo.member.User">
+	    UPDATE USER U 
+		JOIN USERINFO I 
+		ON U.MAIL = I.MAIL
+		SET U.MAIL = #{mail},
+			U.NAME = #{name},
+			U.AUTHCODE = #{authCode},
+			U.TEAMCODE = #{teamCode},
+			I.REGITDATE = #{regitDate},
+			I.SERVE = #{serve},
+			I.EMP = #{emp},
+			I.POSITION = #{position},
+			I.PHONE = #{phone}
+		WHERE U.MAIL=#{mail}
+    </update>
+	
 	<!-- Ajax 출근 하기 public int onWork(String mail); -->
 	<insert id="onWork">
 		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 

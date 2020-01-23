@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -1056,14 +1057,12 @@ public class DoController {
     }
    	
    
-   //관리자_사원 정보 수정
+   //관리자_사원 정보 수정 view
    @RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)
    public String modifyUser(@RequestParam(value="mail") String mail, Model model) {
-	   System.out.println("유저 메일"+mail);
 	   //서비스 통해서 유저 메일로 유저 정보 가져와서 뿌리기
 	   User user = memberService.getUserInfo(mail);
 	   model.addAttribute("user", user);
-	   System.out.println("유저 정보 가져왔어1111?"+user.toString());
 	   return "admin/ModifyMember";
    }
   
@@ -1074,6 +1073,10 @@ public class DoController {
 	   model.addAttribute("teamList", teamList);
 	   return "admin/TeamManagement";
    }
+   
+   
+   
+   
   
     
     

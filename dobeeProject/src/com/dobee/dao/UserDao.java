@@ -35,7 +35,7 @@ public interface UserDao {
     public void resetPwd(User user);
 
 
-    //출근하기 
+    //출근하기
     public int onWork(String mail);
 
 
@@ -210,6 +210,9 @@ public interface UserDao {
     
     //사원정보추가
     public void addUserInfo(User user);
+    
+    //사원 정보 수정 --01.23 알파카
+    public int modifyUser(User user);
     
     
     //비밀번호 업데이트
