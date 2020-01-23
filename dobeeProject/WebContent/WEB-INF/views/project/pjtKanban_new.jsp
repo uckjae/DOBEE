@@ -984,7 +984,6 @@
 											</li>
 										</ul>
 									</div>
-									
 									<div class="tab-content">
 										<div class="tab-pane active" id="detail">
 											<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
@@ -1085,8 +1084,9 @@
     <!-- 오른쪽 사이드 끝 -->
 
 </section>
-
 		<c:import url="/common/BottomTag.jsp"/>
+		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		
 		
 		<!-- Specific Page Vendor -->
 		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>

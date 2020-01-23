@@ -832,20 +832,13 @@ public class DoController {
     @RequestMapping("pjtMain.do")
     public String projectList(Model model, HttpServletRequest request){
     	User user = (User) request.getSession().getAttribute("user");
-    	System.out.println("유저의 코드?"+user.getAuthCode());
     	List<Project>list = null;
     	//권한 코드에 따라서 뿌리는 값 다르게 하기
     	if(user.getAuthCode() == 3) { // PM 회원인 경우
-    		System.out.println("PM 회원이니?");
     		list = projectService.getAllPjtList();
     	} else { //일반 회원인 경우
-    		System.out.println("일반 회원이니?");
     		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	}
-    	
-        	
-    	//pm은 모든 프로젝트 리스트 가져오기
-    	
     	model.addAttribute("list",list);
    
         return "project/pjtMain_new";
@@ -854,18 +847,21 @@ public class DoController {
 
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
-    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq,Model model){
+    public String kanban(@RequestParam(value="pjtSeq") String pjtSeq, Model model, HttpServletRequest request){
     	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
+    	User user = (User) request.getSession().getAttribute("user");
+    	model.addAttribute("user",user);
     	
     	JSONArray jsonArray = new JSONArray();
     	jsonArray.addAll(taskList);
     	model.addAttribute("project", project);
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
+    	
         return "project/pjtKanban_new";
     }
 
