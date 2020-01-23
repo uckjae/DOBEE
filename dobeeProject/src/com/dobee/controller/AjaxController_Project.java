@@ -89,7 +89,7 @@ public class AjaxController_Project {
 	}
 	
 	
-	//특적 업무 가져오기
+	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
 	public Task getTask(int tskSeq) {
 		System.out.println("AjaxController_Project getTask() in");
@@ -97,6 +97,19 @@ public class AjaxController_Project {
 		task = projectService.getTask(tskSeq);
 		System.out.println(task.toString());
 		return task;
+		
+	}
+	
+	//업무 삭제 --01.23 알파카
+	@RequestMapping("PMTaskDelete.do")
+	public String pmTaskDelete(@RequestParam(value="tskSeq")String tskSeq) {
+		String responseData = "";
+		int result = projectService.pmTaskDelete(Integer.parseInt(tskSeq));
+		if( result > 0 ) {
+			responseData = "success";
+		}
+		return responseData;
+		
 		
 	}
 	
@@ -137,6 +150,7 @@ public class AjaxController_Project {
 		}
 		return tskSeq;
 	}
+	
 	
 	
 	//업무상세 제거

@@ -78,7 +78,10 @@
 		<script src="assets/javascripts/theme.init.js"></script>
 
 		<!-- Examples -->
-	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+		<!-- Sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
     <script type="text/javascript">
 		$(function(){
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -188,12 +191,43 @@
 
 		/* PM 업무삭제함수 */
 		function PMTaskDelete(tskSeq){
-			console.log("PMTaskDelete() in!!");
-			$.ajax({
-				url:"PMTaskDelete.do",
-				data: {"tskSeq":tskSeq, "pjtSeq":${requestScope.project.pjtSeq}},
+			//console.log("PMTaskDelete() in!!");
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
+			swal({
+				   title: "업무 삭제",
+				   text: "업무를 삭제하시겠습니까?",
+				   icon: "warning" //"info,success,warning,error" 중 택1
+				}).then((YES) => {
+				//사원 삭제 ajax+
 				
-			});
+				
+					$.ajax({
+		 	 			url:"ajax/project/PMTaskDelete.do",
+		 	 			data: {"tskSeq":tskSeq},
+		 				dataType: "text",
+		 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		 				type:"post",
+		 				success:function(responsedata){
+	    	 				
+		 					if(responsedata == "success"){ //프로젝트 생성 완료
+		 	 					console.log('삭제 완료')
+		 	 					swal({
+		 						   title: "업무 삭제 완료",
+		 						   text: "업무가 삭제되었습니다.",
+		 						   icon: "success" //"info,success,warning,error" 중 택1
+		 						}).then((YES) => {
+		 							location.href="pjtKanban.do?pjtSeq="+pjtSeq;
+		 						})
+		 	 				}
+		 				},
+		 				error:function(request,status,error){
+							console.log("code : " + request.status +"\n" + "message : " 
+									+ request.responseText + "\n" + "error : " + error);
+						}
+		 			});
+				})
+			
 		}
 		
 		/* 업무상세 추가창 띄구고/내리는 함수 */
