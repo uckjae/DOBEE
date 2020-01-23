@@ -204,14 +204,12 @@
 						
 						   <form action="noticeWrite.do" method="post" enctype="multipart/form-data" id="noticeWriteForm">
 						      <!--공지사항 제목  -->
-							   <div class="form-group">
-								   	<label class="col-md-3 control-label">제목</label>
+							   <div class="form-group">						   	
 							    	<input type="text" class="form-control mb-3" id="title" name="title" placeholder="글제목을 입력하세요" value="">
 							    </div>
 						     <div style="margin:10px"></div>
 						     <!--공지사항 일정시작,종료  -->
-							   <div class="form-group">
-							     	<label class="col-md-3 control-label">공지사항 일정</label>
+							   <div class="form-group">				     	
 									<input type="text" class="form-control md-3" id="nsContent" name="nsContent" placeholder="일정 내용을 입력하세요" value="">
 							   </div>
 							  <div class="form-group">
@@ -223,8 +221,7 @@
 									 </div> 
 							   </div>
 							 <!-- 파일 업로드  -->
-							 <div class="form-group" style="margin-bottom:3px;"> 
-							 	 <label class="col-md-3 control-label">파일 업로드</label>
+							 <div class="form-group" style="margin-bottom:3px;">				 	 
 							 </div>
 							 <div class="form-group">
 								 <div class="fileupload fileupload-new" data-provides="fileupload">
