@@ -54,10 +54,13 @@ public class MemberService {
 
     }
 
-
-    //회원수정
-    public void modiMember(){
-
+    /* 01.23 알파카 */
+    //회원수정 
+    public int modifyUser(User user){
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.modifyUser(user);
+    	return result;
     }
 
 
@@ -151,5 +154,12 @@ public class MemberService {
     	result = userDao.mypageModify(user);
     	return result;
     }
-
+    
+    //사원 삭제
+    public int deleteModify(String mail) {
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.deleteUser(mail);
+    	return result;
+    }
 }

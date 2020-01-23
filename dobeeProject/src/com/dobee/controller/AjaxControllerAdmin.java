@@ -9,15 +9,20 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
@@ -25,6 +30,7 @@ import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
+import com.google.common.net.MediaType;
 
 
 @RestController
@@ -128,9 +134,46 @@ public class AjaxControllerAdmin {
     	 //System.out.println(user);
     	 UserDao userDao = sqlSession.getMapper(UserDao.class);
     	 String find = userDao.findId(name,phone);
-    	 System.out.println("d"+find);
+    	 System.out.println("값:"+find);
          return find;
     }
+    
+    //사원 이미지 가져오기 @RequestParam(value="mail") String mail, HttpServletRequest request, HttpServletResponse response // new ResponseEntity<byte[]>(myPic, HttpStatus.OK)
+    @RequestMapping(value="getMyPic.do", method=RequestMethod.POST)
+    public String getByteImg() {
+    	System.out.println("이미지 가져오기 컨트롤러 타니?");
+    	//System.out.println("메일 가져와?"+mail);
+    	//User user = memberService.getUserInfo(mail);
+    	//byte[] myPic = user.getMyPic();
+    	//response.setContentType("image/jpeg");
+    	return null;
+    }
+    
+    
+    //사원 정보 수정 --01.23 알파카
+    @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)
+    public String modifyUser(User user) {
+    	String responseData = "";
+		int result = 0;
+		result = memberService.modifyUser(user);
+		if(result > 0) {
+			responseData = "success";
+		}
+    	return responseData;
+    }
+    
+    //사원 삭제 --01.23 알파카
+    @RequestMapping(value="deleteUser.do", method=RequestMethod.POST)
+    public String deleteUser(@RequestParam(value="mail") String mail) {
+    	String responseData = "";
+		int result = 0;
+		result = memberService.deleteModify(mail);
+		if(result > 0) {
+			responseData = "success";
+		}
+    	return responseData;
+    }
+    
 }
 
 

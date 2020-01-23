@@ -53,15 +53,7 @@ $(function(){
 	 console.log("done???");
 	 $('#findMail').trigger('reset');
 
-	 if($.trim($('#name').val())==''){
-         alert("이름을 입력하세요");
-         $('#name').focus();
-         return;
-     }else if($.trim($('#phone').val()) == ''){
-		alert("휴대폰번호를 입력하세요");
-		$('#phone').focus();
-		return;	
-     }else{
+	 "d"
      
 	 var name = $('#name').val();
      var phone = $('#phone').val();

@@ -31,8 +31,6 @@ public class AjaxController_Project {
 	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
-		
-		System.out.println("추가할 때 메일 가져오니?"+pjtMembersMail.toString());
 		String responseData = "";
 		int result = 0;
 		int result2 = 0;

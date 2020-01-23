@@ -54,6 +54,16 @@ $(function(){
 	 
 	 console.log("done???");
 	 $('#findMail').trigger('reset');
+
+	 if($.trim($('#name').val())==''){
+         alert("이름을 입력하세요");
+         $('#name').focus();
+         return;
+     }else if($.trim($('#phone').val()) == ''){
+		alert("휴대폰번호를 입력하세요");
+		$('#phone').focus();
+		return;	
+     }
 	 var name = $('#name').val();
      var phone = $('#phone').val();
      
@@ -64,13 +74,20 @@ $(function(){
          success:function(data){
 			console.log(data);
              var mail = data;
-        	 $('#findMail').val(mail);
+             
+             if(mail === ""){
+            	 $('#findMail').val("찾은 이메일 값이 없습니다.");       	 
+             }else{
+               $('#findMail').val(mail);
+             }
+        	 
          },
          error : function(request,status,error){
 				console.log("code" + request.status +"\n" +"message : " + request.response + "\n" + "error : " + error);
          }
    
      });
+     
  });
      
  });	
@@ -162,7 +179,8 @@ $(function(){
    </div>
    
    <div class="modal-footer">
-	<button type="button" class="btn btn-primary">확인</button>
+	<button type="button" data-dismiss="modal"class="btn btn-primary">
+	 <span aria-hidden="true"></span>확인</button>
 	
    </div>
    
