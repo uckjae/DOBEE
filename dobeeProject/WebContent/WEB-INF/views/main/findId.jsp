@@ -116,7 +116,7 @@ $(function(){
  <div class="center-sign">
 			
 			
-   <a href="/" class="logo pull-left">
+   <a class="logo pull-left">
 	 <img src="img/beemain2.png" height="54"/>
    </a>
 
@@ -182,7 +182,7 @@ $(function(){
 	 <span aria-hidden="true">&times;</span>
 	 <span class="sr-only">Close</span>
 	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 이메일</h4>
+	<h4 class="modal-title" id="myModalLabel">찾은 메일</h4>
    </div>
    
    <div class="modal-body">
