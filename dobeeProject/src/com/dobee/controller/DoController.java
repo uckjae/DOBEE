@@ -216,12 +216,10 @@ public class DoController {
     //마이페이지
     @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
     public String mypage(Principal principal, Model model){
-    	System.out.println("프린시펄?"+principal.getName()); //회원 ID 가져오기
     	//회원 정보 가져오기
     	String mail = principal.getName();
     	User user = memberService.getUserInfo(mail);
     	model.addAttribute("user", user);
-    	System.out.println("유저 정보 가져왔어?"+user.toString());
         return "myPage/myPage";
     }
     
@@ -229,13 +227,11 @@ public class DoController {
     //공지사항리스트
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
-    	
-    			List<Notice>list=null;
-    	
-    		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
-    		list=noticedao.noticeList(notice);
-    		System.out.println(list);
-    		model.addAttribute("list",list);
+		List<Notice>list=null;
+		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
+		list=noticedao.noticeList(notice);
+		System.out.println(list);
+		model.addAttribute("list",list);
     
         return "notice/noticeList";
     }
@@ -429,7 +425,7 @@ public class DoController {
     	return "notice/noticeModify";
     }
     
-  //공지사항수정하기 처리
+    //공지사항수정하기 처리
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	System.out.println("수정 타니?");

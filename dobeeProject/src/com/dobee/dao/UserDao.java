@@ -218,6 +218,9 @@ public interface UserDao {
     //사원 정보 수정 --01.23 알파카
     public int modifyUser(User user);
     
+    //사원 삭제 --01.23 알파카
+    public int deleteUser(String mail);
+    
     
     //비밀번호 업데이트
     public void updatePassword(String mail, String password);

@@ -154,5 +154,12 @@ public class MemberService {
     	result = userDao.mypageModify(user);
     	return result;
     }
-
+    
+    //사원 삭제
+    public int deleteModify(String mail) {
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.deleteUser(mail);
+    	return result;
+    }
 }

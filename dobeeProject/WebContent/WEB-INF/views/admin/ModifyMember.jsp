@@ -13,7 +13,6 @@
 <script type="text/javascript">
 		$(function(){
 			var mail = $("#formMail").val();
-			console.log('메일은?'+mail);
 			/* 권한 코드 select option 만들기*/
 			$.ajax({
 				url:"ajax/admin/authorityList.do",
@@ -102,6 +101,46 @@
 	 			});
 				
 			});
+
+			/*사원 삭제*/
+			$("#deleteBtn").click(function(){
+				swal({
+					   title: "사원 정보 삭제",
+					   text: "사원 정보를 삭제하시겠습니까?",
+					   icon: "warning" //"info,success,warning,error" 중 택1
+					}).then((YES) => {
+					//사원 삭제 ajax
+						$.ajax({
+			 	 			url:"ajax/admin/deleteUser.do?mail="+mail,
+			 				dataType: "text",
+			 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			 				type:"post",
+			 				success:function(responsedata){
+		    	 				console.log('ajax 통신 성공?');
+			 					console.log(responsedata);
+			 					if(responsedata == "success"){ //프로젝트 생성 완료
+			 	 					console.log('삭제 완료')
+			 	 					swal({
+			 						   title: "사원 정보 삭제 완료",
+			 						   text: "사원 삭제가 완료되었습니다.",
+			 						   icon: "success" //"info,success,warning,error" 중 택1
+			 						}).then((YES) => {
+			 							location.href="adminMain.do";
+			 						})
+			 	 				}
+			 				},
+			 				error:function(request,status,error){
+								console.log("code : " + request.status +"\n" + "message : " 
+										+ request.responseText + "\n" + "error : " + error);
+							}
+			 			});
+
+
+
+						
+					})
+
+			});
 		});
 
 	</script>
@@ -122,17 +161,17 @@
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>사원 관리</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
+									<a href="#">
+										<i class="fa fa-briefcase"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>사원</span></li>
+								<li><span>사원 관리</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -143,7 +182,7 @@
 							<div class="col-lg-12">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">사원 수정</h2>
+										<h2 class="panel-title">사원 수정 및 삭제</h2>
 									</header>
 									<div class="panel-body">
 										<form class="form-horizontal form-bordered" id="modifyUserForm" name="modifyUserForm" enctype="multipart/form-data">
@@ -231,7 +270,8 @@
                                                 </div>
                                             </div>
 											<div class="col-md-6 control-label">
-												<button type="button" class="btn btn-primary" id="modifyBtn">등록</button>
+												<button type="button" class="btn btn-primary" id="modifyBtn">수정</button>
+												<button type="button" class="btn btn-primary" id="deleteBtn">삭제</button>
 												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
 											</div>
 										</form>

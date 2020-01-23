@@ -156,8 +156,18 @@ public class AjaxControllerAdmin {
     	String responseData = "";
 		int result = 0;
 		result = memberService.modifyUser(user);
-		//프로젝트 DB 저장
-		//result = 
+		if(result > 0) {
+			responseData = "success";
+		}
+    	return responseData;
+    }
+    
+    //사원 삭제 --01.23 알파카
+    @RequestMapping(value="deleteUser.do", method=RequestMethod.POST)
+    public String deleteUser(@RequestParam(value="mail") String mail) {
+    	String responseData = "";
+		int result = 0;
+		result = memberService.deleteModify(mail);
 		if(result > 0) {
 			responseData = "success";
 		}
