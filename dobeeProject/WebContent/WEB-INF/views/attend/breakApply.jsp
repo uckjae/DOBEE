@@ -12,21 +12,26 @@
 <link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- Full Calendar -->
-<!-- <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" /> -->
+<!-- Full Calendar Octupus -->
+<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
+<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
+
+<!-- Full Calendar Original -->
+<!-- 
 <link href='assets/vendor/fullcalendar-ori/packages/core/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/bootstrap/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
-
 <script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/bootstrap/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/daygrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/timegrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
+ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/locales/ko.js"></script>
+
 
 </head>
 	<body>
@@ -151,14 +156,12 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
-	<!-- Full Calendar -->
-	<!-- 	
+	<!-- Full Calendar -->	
 	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
-	 -->
 	 
 	<!-- Examples -->
-	<!-- <script src="assets/javascripts/pages/abs.calendar.js"></script> -->
+	<script src="assets/javascripts/pages/abs.calendar.js"></script>
 	
 	
 	
@@ -295,13 +298,15 @@
 					});
 				}
 			});
+			
 			console.log('eventList: ', eventList);
 
-			
+			/* 
 			 document.addEventListener('DOMContentLoaded', function(isLoading, view) {
 			    var calendarEl = document.getElementById('calendar');
 
-			    var calendar = new FullCalendar.Calendar(calendarEl, {
+			    $('#calendar').fullCalendar({
+				  height : 100,
 			      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 			      header: {
 			        left: 'prev,next today',
@@ -314,12 +319,99 @@
 				      endTime : '18:00'
 				  },
 			      editable: false,
-			      events: eventList
+			      events: function(start, end, callback) {
+			    	  $.ajax ({
+							url : "AbsAll.do",
+							dataType : "json",
+							success : function(data) {
+								var events = {};
+								events = data.AbsAll;
+								
+								$.each(events, (index, element) => {
+									
+									console.log(element);
+									
+									if (element.isAuth ==='승인' && element.apyCode == 1 ) {
+										eventList.push({
+											title : "연차",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f28c1f"
+										})
+									} else if (element.isAuth ==='미승인' && element.apyCode == 1 ) {
+										eventList.push({
+											title : "연차 미승인",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f54242"
+										})
+									} else if (element.isAuth == '승인' && element.apyCode == 2 ) {
+										eventList.push({
+											title : "반일 연차",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f28c1f"
+										})
+									} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
+										eventList.push({
+											title : "반일 연차 미승인",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f54242"
+										})					
+									} else if (element.isAuth == '출장' && element.apyCode == 3 ) {
+										eventList.push({
+											title : "출장",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f28c1f"
+										})
+									} else if (element.isAuth ==='출장' && element.apyCode == 3 ) {
+										eventList.push({
+											title : "출장 미승인",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f54242"
+										})
+									} else if (element.isAuth == '외근' && element.apyCode == 4 ) {
+										eventList.push({
+											title : "외근",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f28c1f"
+										})
+									} else if (element.isAuth ==='외근' && element.apyCode == 4 ) {
+										eventList.push({
+											title : "외근 미승인",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f54242"
+										})
+									} else if (element.isAuth == '경조 휴가' && element.apyCode == 5 ) {
+										eventList.push({
+											title : "경조 휴가",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#3b6b7d"
+										})
+									} else if (element.isAuth ==='경조 휴가' && element.apyCode == 5 ) {
+										eventList.push({
+											title : "경조 휴가 미승인",
+											start : element.startAt,
+											end : element.endAt,
+											color : "#f54242"
+										})
+									}	
+								});
+							}
+						});
+
+				  }
 			    });
 
 			    calendar.render();
 			  });
-						
+				 */		
 	  	</script>
 		
 		

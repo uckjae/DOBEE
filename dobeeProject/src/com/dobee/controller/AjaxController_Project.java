@@ -89,7 +89,7 @@ public class AjaxController_Project {
 	}
 	
 	
-	//특적 업무 가져오기
+	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
 	public Task getTask(int tskSeq) {
 		System.out.println("AjaxController_Project getTask() in");
@@ -97,6 +97,19 @@ public class AjaxController_Project {
 		task = projectService.getTask(tskSeq);
 		System.out.println(task.toString());
 		return task;
+		
+	}
+	
+	//업무 삭제 --01.23 알파카
+	@RequestMapping("PMTaskDelete.do")
+	public String pmTaskDelete(@RequestParam(value="tskSeq")String tskSeq) {
+		String responseData = "";
+		int result = projectService.pmTaskDelete(Integer.parseInt(tskSeq));
+		if( result > 0 ) {
+			responseData = "success";
+		}
+		return responseData;
+		
 		
 	}
 	
@@ -139,12 +152,28 @@ public class AjaxController_Project {
 	}
 	
 	
+	
+	//업무상세 제거
+	@RequestMapping("taskDetailDelete.do")
+	public int taskDetailDelete(TaskDetail taskDetail,HttpServletRequest req) {
+		System.out.println("AjaxController_Project taskDetailDelete() in!!");
+		Enumeration<String> enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while문");
+			System.out.println(enu.nextElement());
+		}
+		int result = projectService.taskDetailDelete(taskDetail);
+		
+		return 0;
+	}
+	
+	
 	//체크리스트 추가
 	@RequestMapping("addTaskCheckList")
 	public int addTaskCheckList(CheckList checkList) {
 		System.out.println("AjaxController_Project addTaskCheckList() in!!");
 		int result = projectService.addTaskCheckList(checkList);
-		return 0;
+		return result;
 	}
 	
 	
@@ -174,6 +203,17 @@ public class AjaxController_Project {
 		int result = projectService.taskCheckListEdit(checkList);
 		return result;
 	}
+	
+	
+	//업무상세 제거
+		@RequestMapping("taskCheckListDelete.do")
+		public int taskDetailDelete(CheckList checkList) {
+			System.out.println("AjaxController_Project taskDetailDelete() in!!");
+			
+			int result = projectService.taskCheckListDelete(checkList);
+			
+			return result;
+		}
 	
 	
 }

@@ -5,11 +5,20 @@
 <!doctype html>
 <html class="fixed search-results">
 <head>
-	    <c:import url="/common/HeadTag.jsp"/>
+    <c:import url="/common/HeadTag.jsp"/>
+    <c:import url="/common/BottomTag.jsp"/>
 	
+	
+	<!-- Vendor CSS -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 		<link rel="stylesheet" href="assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
@@ -32,7 +41,7 @@
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
 	
 	
-		<!-- Vendor -->
+	<!-- Vendor -->
 		<script src="assets/vendor/jquery/jquery.js"></script>
 		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
@@ -40,16 +49,36 @@
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
 		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-    
-	
-	
-	
-	<!-- Sweet Alert -->
-	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-	
-	
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+		<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+		<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+		<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+		<script src="assets/vendor/fuelux/js/spinner.js"></script>
+		<script src="assets/vendor/dropzone/dropzone.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+		<script src="assets/vendor/summernote/summernote.js"></script>
+		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="assets/javascripts/theme.js"></script>
+		
+		<!-- Theme Custom -->
+		<script src="assets/javascripts/theme.custom.js"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="assets/javascripts/theme.init.js"></script>
+
+		<!-- Examples -->
+	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
     <script type="text/javascript">
 		$(function(){
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -159,58 +188,12 @@
 
 		/* PM 업무삭제함수 */
 		function PMTaskDelete(tskSeq){
-			//console.log("PMTaskDelete() in!!");
-			var pjtSeq = ${requestScope.project.pjtSeq};
-			console.log('플젝 번호?'+pjtSeq);
-			swal({
-				title: "업무 삭제",
-				text: "업무를 삭제하시겠습니까?",
-				icon: "warning", //"info,success,warning,error" 중 택1
-				button : {
-					confirm: {
-					    text: "확인",
-					    value: true,
-					    visible: true,
-					    className: "",
-					    closeModal: true
-					  },
-					 cancel: {
-						    text: "취소",
-						    value: null,
-						    visible: false,
-						    className: "",
-						    closeModal: true,
-						  }
-					}
-			}).then((YES) => {
-				if(YES){
-					$.ajax({
-		 	 			url:"ajax/project/PMTaskDelete.do",
-		 	 			data: {"tskSeq":tskSeq},
-		 				dataType: "text",
-		 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		 				type:"post",
-		 				success:function(responsedata){
-		 					if(responsedata == "success"){ //프로젝트 생성 완료
-		 	 					console.log('삭제 완료')
-		 	 					swal({
-		 						   title: "업무 삭제 완료",
-		 						   text: "업무가 삭제되었습니다.",
-		 						   icon: "success" //"info,success,warning,error" 중 택1
-		 						}).then((YES) => {
-		 							location.href="pjtKanban.do?pjtSeq="+pjtSeq;
-		 						})
-		 	 				}
-		 				},
-		 				error:function(request,status,error){
-							console.log("code : " + request.status +"\n" + "message : " 
-									+ request.responseText + "\n" + "error : " + error);
-						}
-		 			});
-
-					} 
-				})
-			
+			console.log("PMTaskDelete() in!!");
+			$.ajax({
+				url:"PMTaskDelete.do",
+				data: {"tskSeq":tskSeq, "pjtSeq":${requestScope.project.pjtSeq}},
+				
+			});
 		}
 		
 		/* 업무상세 추가창 띄구고/내리는 함수 */
@@ -647,12 +630,12 @@
                 <div class="right-wrapper pull-right">
                     <ol class="breadcrumbs">
                         <li>
-                            <a href="#">
-                                <i class="fa fa-tasks"></i>
+                            <a href="index.html">
+                                <i class="fa fa-home"></i>
                             </a>
                         </li>
-                        <li><span>프로젝트</span></li>
-                        <li><span>칸반보드</span></li>
+                        <li><span>Pages</span></li>
+                        <li><span>Search</span></li>
                     </ol>
 
                     <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -668,6 +651,7 @@
                         </li>
                         <li>
                             <a href="#medias" data-toggle="tab">2020년 1분기</a>
+                            <button></button>
                         </li>
                     </ul>
                 </div>
@@ -1031,6 +1015,7 @@
 												</div>
 												<br>
 												<br>
+												<hr>
 												<div class="form-group" style="text-align: center;">
 													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록" form="taskEditForm">
 												</div>	
@@ -1086,24 +1071,8 @@
 
 </section>
 
-		<c:import url="/common/BottomTag.jsp"/>
-		
-		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
-		<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-		<script src="assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-		<script src="assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-		<script src="assets/vendor/fuelux/js/spinner.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
-		<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-		<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
-		<script src="assets/vendor/ios7-switch/ios7-switch.js"></script>
 
-		<!-- Examples -->
-		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
-		
+
+
 </body>
 </html>
