@@ -239,7 +239,9 @@ public interface UserDao {
     public int modifyTeamCode(HashMap team);
     
     
-   
+    //팀 코드 삭제하기-성호
+    public int delTeamCode(int teamCode);
+    
     
     
 }

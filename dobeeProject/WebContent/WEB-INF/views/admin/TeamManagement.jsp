@@ -58,8 +58,8 @@
 				<section class="panel">
 					<header class="panel-heading">
 						<div class="panel-actions">
-							<a href="#" class="fa fa-caret-down"></a> <a href="#"
-								class="fa fa-times"></a>
+							<!-- <a href="#" class="fa fa-caret-down"></a> <a href="#"
+								class="fa fa-times"></a> -->
 						</div>
 
 						<h2 class="panel-title">팀 관리</h2>
@@ -135,7 +135,8 @@
 
 
 	<!-- 수정 유호성 불통일때 뜨는 모달창 시작-->
-	<div id="dialogEditDate" class="modal-block mfp-hide">
+
+	<div id="dialogOnlyNumber" class="modal-block mfp-hide">
 		<section class="panel">
 			<header class="panel-heading">
 				<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
@@ -143,14 +144,14 @@
 			<div class="panel-body">
 				<div class="modal-wrapper">
 					<div class="modal-text">
-						<p>날짜값은 2020-02-02 형태로 입력해주세요.</p>
+						<p>팀 코드는 숫자만 입력 가능합니다.</p>
 					</div>
 				</div>
 			</div>
 			<footer class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<button id="dateConfirm" class="btn btn-default">확인</button>
+						<button id="onlyNumber" class="btn btn-default">확인</button>
 					</div>
 				</div>
 			</footer>
@@ -158,53 +159,6 @@
 	</div>
 
 
-	<div id="dialogEditCardNum" class="modal-block mfp-hide">
-		<section class="panel">
-			<header class="panel-heading">
-				<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
-			</header>
-			<div class="panel-body">
-				<div class="modal-wrapper">
-					<div class="modal-text">
-						<p>카드번호/카드구분/유효기간을 양식에 맞게 입력해주세요.</p>
-						<p>카드번호: 실제 카드번호만 입력가능합니다.</p>
-						<p>카드구분: 법인(공용)/법인(개인)/법인(체크) 중 하나만 입력가능합니다.</p>
-						<p>유효기간: "2020-02-02" 같은 형식으로 입력해주세요.</p>
-					</div>
-				</div>
-			</div>
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button id="cardConfirm" class="btn btn-default">확인</button>
-					</div>
-				</div>
-			</footer>
-		</section>
-	</div>
-
-
-	<div id="dialogEditEntry" class="modal-block mfp-hide">
-		<section class="panel">
-			<header class="panel-heading">
-				<h2 class="panel-title">입력값이 올바르지 않습니다.</h2>
-			</header>
-			<div class="panel-body">
-				<div class="modal-wrapper">
-					<div class="modal-text">
-						<p>[법인(공용), 법인(개인), 법인(체크)] 중 하나만 입력 해 주세요.</p>
-					</div>
-				</div>
-			</div>
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button id="entryConfirm" class="btn btn-default">확인</button>
-					</div>
-				</div>
-			</footer>
-		</section>
-	</div>
 
 
 
@@ -217,14 +171,20 @@
 	<c:import url="/common/BottomTag.jsp" />
 	<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
 	<script src="assets/vendor/select2/select2.js"></script>
-	<script
-		src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-	<script
-		src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
-
+	<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 	<!-- Examples -->
 	<script src="assets/javascripts/tables/examples.datatables.editable_team.js"></script>
 
 
+
+	
 </body>
 </html>

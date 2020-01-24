@@ -388,9 +388,15 @@
 	</select>
 	
 	
-	<!-- 팀 수정 -->
+	<!-- 팀 코드 수정 -->
 	<update id="modifyTeamCode" parameterType="hashmap">
 		update teamlist set teamcode = #{teamCode}, teamname = #{teamName} where teamcode=#{tempTeamCode}
 	</update>
+	
+	
+	<!-- 팀 코드 삭제  -->
+	<delete id="delTeamCode" parameterType="int">
+		delete from teamlist where teamcode = #{teamCode}
+	</delete>
 	
 </mapper>

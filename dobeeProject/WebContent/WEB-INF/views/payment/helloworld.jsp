@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<script src="https://kit.fontawesome.com/21becfdcb1.js" crossorigin="anonymous"></script>
 <center>
     <h2>Google Picker API</h2>
     <table class="imagetable">
@@ -18,7 +20,13 @@
     </div>
     
 </center>
+<style type="text/css">
+.icon-googleDrive {
+	
+}
 
+
+</style>
 <script type="text/javascript">
     //=Create object of FilePicker Constructor function function & set Properties===
     function SetPicker() {
@@ -129,7 +137,7 @@
                 addView(UploadView).
                 setOAuthToken(accessToken).
                 setCallback(this.PickerResponse.bind(this)).
-                setTitle('Google Picker API').
+                setTitle('구글드라이브 UPLOAD').
                 build().
                 setVisible(true);
             
@@ -146,7 +154,7 @@
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;
 				
-                document.getElementById('down').innerHTML = "<a href="+link+ ">"+filename+ "</a>";
+                document.getElementById('down').innerHTML = "<a href="+link+ ">"+ "<i class='fab fa-google-drive'></i>"+filename+"</a>";
             }
         },
 

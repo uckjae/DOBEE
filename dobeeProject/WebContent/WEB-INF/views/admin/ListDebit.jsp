@@ -59,20 +59,13 @@
 				<section class="panel">
 							<header class="panel-heading">
 								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a>
-									<a href="#" class="fa fa-times"></a>
+							
 								</div>
 						
 								<h2 class="panel-title">법인카드 관리</h2>
 							</header>
 							<div class="panel-body">
-								<!-- <div class="row">
-									<div class="col-sm-6">
-										<div class="mb-md">
-											<button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
-										</div>
-									</div>
-								</div> -->
+								
 								
 								
 								<table class="table display" id="datatable-editable">

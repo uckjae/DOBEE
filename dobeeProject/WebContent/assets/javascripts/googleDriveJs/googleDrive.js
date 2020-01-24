@@ -1,5 +1,4 @@
-
-    //=Create object of FilePicker Constructor function function & set Properties===
+ //=Create object of FilePicker Constructor function function & set Properties===
     function SetPicker() {
         var picker = new FilePicker(
             {
@@ -108,7 +107,7 @@
                 addView(UploadView).
                 setOAuthToken(accessToken).
                 setCallback(this.PickerResponse.bind(this)).
-                setTitle('Google Picker API').
+                setTitle('구글드라이브 UPLOAD').
                 build().
                 setVisible(true);
             
@@ -120,12 +119,12 @@
                 var file = data[google.picker.Response.DOCUMENTS][0],
                     id = file[google.picker.Document.ID],
                     request = gapi.client.drive.files.get({ fileId: id });
-                /* this.ShowPicker(); */
+                //this.ShowPicker(); 
                 //request.execute(this.GetFileDetails.bind(this));
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;
 				
-                document.getElementById('down').innerHTML = "<a href="+link+ ">"+filename+ "</a>";
+                document.getElementById('down').innerHTML = "<a href="+link+ ">"+ "<i class='fab fa-google-drive'></i>"+filename+"</a>";
             }
         },
 
@@ -163,5 +162,3 @@
             }, callback);
         }
     };
-
-

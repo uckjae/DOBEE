@@ -203,6 +203,21 @@ public class AjaxControllerAdmin {
     	return result;
     }
     
+    
+    //팀 코드 삭제 -성호
+    @RequestMapping("delTeamCode.do")
+    public int delTeamCode(@RequestParam(value="teamCode")int teamCode) {
+    	int result = 0;
+    	result = memberService.delTeamCode(teamCode);
+    	if(result >0) {
+    		System.out.println("팀 코드 삭제 완료");
+    	}else {
+    		System.out.println("팀 코드 삭제 실패");
+    	}
+    	return result;
+    }
+    
+    
 }
 
 

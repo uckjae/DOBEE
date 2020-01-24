@@ -165,4 +165,15 @@ public class MemberService {
     	result = userDao.modifyTeamCode(team);
     	return result;
     }
+    
+    
+    //팀 코드 삭제 - 성호
+    public int delTeamCode(int teamCode) {
+    	int result = 0 ; 
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.delTeamCode(teamCode);
+    	
+    	return result;
+    	
+    }
 }

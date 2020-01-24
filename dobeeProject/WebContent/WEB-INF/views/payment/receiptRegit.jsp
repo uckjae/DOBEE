@@ -348,6 +348,8 @@ console.log(path);
 				<!-- start: page -->
 
 
+
+
 				<!-- end: page -->
 				
 			</section>
@@ -409,5 +411,6 @@ console.log(path);
 	console.log(regitDate)
 	$("#Input0").attr("value", regitDate);	
 	</script>
+	
 </body>
 </html>
