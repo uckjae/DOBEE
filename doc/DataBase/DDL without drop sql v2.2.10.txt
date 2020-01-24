@@ -1,9 +1,9 @@
 ﻿-- 사원
 CREATE TABLE `USER` (
 	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
-	`PASSWORD` VARCHAR(100) NULL     COMMENT '비밀번호', -- 비밀번호
+	`PASSWORD` VARCHAR(255) NULL     COMMENT '비밀번호', -- 비밀번호
 	`NAME`     VARCHAR(20)  NOT NULL COMMENT '사원이름', -- 사원이름
-	`MYPIC`    MEDIUMBLOB   NULL     COMMENT '사원사진', -- 사원사진
+	`MYPIC`    VARCHAR(255) NULL     COMMENT '사원사진', -- 사원사진
 	`AUTHCODE` INT          NOT NULL COMMENT '권한코드', -- 권한코드
 	`TEAMCODE` INT          NOT NULL COMMENT '팀코드' -- 팀코드
 )
