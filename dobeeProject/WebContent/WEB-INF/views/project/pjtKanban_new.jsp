@@ -105,7 +105,7 @@
 						var endDate = new Date(task.endAt);
 						var formatedEndDate = date_to_str(endDate);
 						$('#taskFormEndtAt').val(formatedEndDate);
-						$('#taskFormName').val(task.name);
+						$('#taskFormName').text(task.name);
 						$('#taskFormMail').val(task.mail);
 						$('#taskFormPjtSeq').val(task.pjtSeq);
 						$('#listenSlider').val(task.important);
@@ -959,17 +959,17 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-						<div class="row">
-							<div class="col-md-4">
-							</div>
-							<div class="col-md-4 text-center">
-								<button type="submit" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
-							</div>
-							<div class="col-md-4">
-							</div>
+							<div class="row">
+								<div class="col-md-4">
+								</div>
+								<div class="col-md-4 text-center">
+									<button type="submit" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
+								</div>
+								<div class="col-md-4">
+								</div>
 							</div>
 						</div>
-						</div>
+					</div>
 				</div>
 			</div>
 		
@@ -986,10 +986,10 @@
 								<div class="tabs tabs-primary">
 									<ul class="nav nav-tabs nav-justified">
 										<li class="active">
-											<a href="#detail" data-toggle="tab">상세</a>
+											<a href="#detail" data-toggle="tab">속성</a>
 										</li>
 										<li>
-											<a href="#content" data-toggle="tab">내용</a>
+											<a href="#content" data-toggle="tab">상세업무</a>
 										</li>
 										<li>
 											<a href="#checkList" data-toggle="tab">체크리스트</a>
@@ -997,10 +997,11 @@
 									</ul>
 								</div>
 							</div>
-							<!-- Modal  -->
+							<!-- 속성 Tab -->
 							
 							<div class="tab-content" style="border-bottom-width: 0px;">
 								<div class="tab-pane active" id="detail">
+								<div class="panel-body" style="padding-top: 0px;">
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 										<div class="form-group">
 											<label class="col-md-3 control-label">날짜</label>
@@ -1017,13 +1018,14 @@
 											</div>
 										</div>
 										<!-- 담당자 -->
-										
 										<div class="form-group">
 											<label class="col-md-3 control-label">담당자</label>
 											<c:choose>
 												<c:when test="${ user.authCode == '2'}">
-														<div class="col-md-7 row">
-															<i class="fa fa-reddit"></i><input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/>
+														<div class="col-md-7" style="margin-top: 8px;">
+															<i class="fa fa-user"></i>
+															<h5 id="taskFormName" name="name" form="taskEditForm" style="display:inline;"></h5>
+															<!-- <input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/> -->
 															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
 														</div>
 												</c:when>
@@ -1068,103 +1070,121 @@
 											<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="수정" form="taskEditForm">
 										</div>	
 									</form>
+									</div>
 								</div>
+								<!-- 속성 Tab 끝-->
+								
+								<!-- 상세업무 Tab-->
 								<div class="tab-pane" id="content">
-									
-									<form action="ajax/project/taskContentForm.do" id="taskContentForm" class="form-horizontal mb-lg" >
-									
-										<c:choose>
-											<c:when test="${ user.authCode == '2'}">
-												<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
-											</c:when>
-											<c:otherwise>
-												<label>상세업무&nbsp;&nbsp;</label>
-											</c:otherwise>
-										</c:choose>
-										
-										<div class="form-group">
-											<div class="col-md-6">
-												<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
-											</div>
-										</div>
-									</form>
-									<div id="taskDetailListDiv">
-										<ul id="taskDetailListView" style="list-style:none;">
-											
-										</ul>
+									<div class="panel-body" style="padding-top: 0px;">
+                                         <ul class="widget-todo-list">
+                                            <li>
+												<div style="margin-left:10px;">
+													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
+													<label class="todo-label" for="todoListItem1"><span>상세업무1111</span></label>
+												</div>
+											</li>
+											 <li>
+												<div style="margin-left:10px;">
+													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
+													<label class="todo-label" for="todoListItem2"><span>상세업무222</span></label>
+												</div>
+											</li>
+                                          </ul>
+                                       	
+                                          <!-- 상세 업무 추가(일반 회원만 보임) -->
+										<c:if test="${ user.authCode == '2'}">
+										<hr class="solid mt-sm mb-lg">
+											<form action="ajax/project/taskContentForm.do" id="taskContentForm" method="post" class="form-horizontal form-bordered">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<div class="input-group mb-md">
+															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
+															<input type="text" class="form-control" form="taskContentForm">
+															<div class="input-group-btn" style="padding:0;">
+																<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</c:if>
 									</div>
 								</div>
+								<!-- 상세업무 Tab 끝-->
 								
 								
-								<!-- 체크리스트 부분 -->
+								
+								
+								<!-- 체크리스트 Tab -->
 								<div class="tab-pane" id="checkList">
-								<div class="panel-body" style="padding-top: 0px;">
-									<ul class="widget-todo-list">
-										<li>
-											<div class="checkbox-custom checkbox-default">
-												<input type="checkbox" id="todoListItem2" class="todo-check">
-												<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-											</div>
-											<div class="todo-actions">
-												<a class="todo-remove" href="#">
-													<i class="fa fa-times"></i>
-												</a>
-											</div>
-										</li>
-										<li>
-											<div class="checkbox-custom checkbox-default">
-												<input type="checkbox" id="todoListItem3" class="todo-check">
-												<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-											</div>
-											<div class="todo-actions">
-												<a class="todo-remove" href="#">
-													<i class="fa fa-times"></i>
-												</a>
-											</div>
-										</li>
-									</ul>
-									<hr class="solid mt-sm mb-lg">
-									</div>
-									<!-- 체크리스트 추가 -->
-									<form method="get" class="form-horizontal form-bordered">
-										<div class="form-group">
-											<div class="col-sm-12">
-												<div class="input-group mb-md">
-													<input type="text" class="form-control">
-													<div class="input-group-btn" style="padding:0;">
-														<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+									<div class="panel-body" style="padding-top: 0px;">
+										<ul class="widget-todo-list">
+											<li>
+												<div class="checkbox-custom checkbox-default">
+													<input type="checkbox" id="todoListItem2" class="todo-check">
+													<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
+												</div>
+												<div class="todo-actions">
+													<a class="todo-remove" href="#">
+														<i class="fa fa-times"></i>
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="checkbox-custom checkbox-default">
+													<input type="checkbox" id="todoListItem3" class="todo-check">
+													<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
+												</div>
+												<div class="todo-actions">
+													<a class="todo-remove" href="#">
+														<i class="fa fa-times"></i>
+													</a>
+												</div>
+											</li>
+										</ul>
+									<!-- 체크리스트 추가(일반 회원만 보임) -->
+									<c:if test="${ user.authCode == '2'}">
+										<form method="get" class="form-horizontal form-bordered">
+											<hr class="solid mt-sm mb-lg">
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="input-group mb-md">
+														<input type="text" class="form-control" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
+														<div class="input-group-btn" style="padding:0;">
+															<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									</form>
-								
-									
+										</form>
+									</c:if>
 								</div>
-								
-								
-								
-								
-								
-								
 							</div>
+							
+							<!-- 체크리스트 Tab 끝-->
+							
+							<!-- Modal Content 끝 -->
+							
 							<!-- Modal Footer -->
-							
-							<div class="modal-footer" style="border-top-width: 0px;">
-								<div class="row">
-									<div class="col-md-4">
-									</div>
-									<div class="col-md-4 text-center">
-										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-									</div>
-									<div class="col-md-4">
+								<div class="modal-footer" style="border-top-width: 0px;">
+									<div class="row">
+										<div class="col-md-4">
+										</div>
+										<div class="col-md-4 text-center">
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+										<div class="col-md-4">
+										</div>
 									</div>
 								</div>
 							</div>
-							
+							<!-- Modal Footer 끝 -->
 						</div>
 					</div>
 				</div>
+				
+				
 				<!-- /Modal -->
         </section>
     </div>
