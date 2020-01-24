@@ -85,9 +85,12 @@ WHERE p.pjtseq = #{pjtSeq}
 </select>
 
 
-<!-- 업무추가 PM 업무내용, 담당자, 중요도 -->
+<!-- 업무추가 PM 업무내용, 담당자, 중요도  01.24 알파카 수정 -->
+<!-- 기존 쿼리문 	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT) VALUES(#{title},#{mail},#{important},#{pjtSeq},'예정', DATE_FORMAT(NOW(), "%Y-%c-%d"))
+ -->
 <insert id="addPMTask" parameterType="com.dobee.vo.project.Task">
-	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT) VALUES(#{title},#{mail},#{important},#{pjtSeq},'예정', DATE_FORMAT(NOW(), "%Y-%c-%d"))
+	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT) 
+	VALUES(#{title},(SELECT MAIL FROM USER WHERE MAIL=#{mail}), #{important}, (SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{pjtSeq}),'예정', DATE_FORMAT(NOW(), "%Y-%c-%d"))
 </insert>
 
 

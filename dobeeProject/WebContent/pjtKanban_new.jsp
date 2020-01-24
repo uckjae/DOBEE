@@ -913,70 +913,57 @@
                 <!-- end: page -->
                 <!-- Modal Form -->
                 <!-- PM업무추가모달 -->
-                
-                
-                
-               <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		   		<div class="modal-dialog cascading-modal" role="document">
-					<div class="modal-content">
-					<!--Header-->
-						<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-top: 25px;padding-bottom: 25px;">
-							<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square-o fa-2x"></i>&nbsp;업무추가</h4>
-						</div>
-						<!--Body-->
-						<div class="container-fluid">
-						<div class="modal-body mb-0" style="margin-top: 30px;">
-						      <form action="addPMTask.do" id="addPMTaskForm" method="post">
-						      <!-- 업무 이름 -->
-						      	<div class="form-group">
-									<label class="col-md-3 control-label"><i class="fa fa-tasks fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;업무</span></label>
-										<div class="col-md-9">
-											<input type="text" class="form-control" type="text" name="title" placeholder="업무를 입력하세요" form="addPMTaskForm" required style="height:35px;">
-										</div>
-								</div>
-							  	<br>
-							  	 <!-- 담당자 -->
-							  		<div class="form-group">
-									<label class="col-md-3 control-label" for="userList"><i class="fa fa-user fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;담당자</span></label>
-										<div class="col-md-9">
-											<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
-												<option value="" disabled selected>선택해주세요</option>
-												<c:forEach items="${pjtMember}" var="user" varStatus="status">
-													<option value="${user.mail}">${user.name}</option>
-												</c:forEach>
-											</select>
-										</div>
+                <div id="addTaskModal" class="modal fade">
+					<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2><input type="text" name="title" class="input-line" placeholder="업무를 입력하세요" form="addPMTaskForm" required/></h2>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
-							   	<br>
-							   	<!-- 중요도 -->
-							   	<div class="form-group">
-									<label class="col-md-3 control-label"><i class="fa fa-star fa-2x"></i><span style="font-size:15px">&nbsp;&nbsp;중요도</span><b id="addPMTaskImportant" style="margin-left:40px">1</b><b>/5</b></label>
-									<div class="col-md-6">
-										<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
-											<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
-											<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
+									
+									<div class="tab-content">
+										<div class="tab-pane active" id="addTaskTab">
+											<div class="form-group">
+												<div class="col-md-6" style="float: left;">
+													
+												</div>
+											</div>
+											<form action="addPMTask.do" id="addPMTaskForm" class="form-horizontal mb-lg" method="post">
+													<div class="form-group mt-lg">
+														<label class="col-md-3 control-label">담당자</label>
+														<div class="col-md-6">
+															<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
+																<option hidden>선택하세요</option>
+																<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																	<option value="${user.mail}">${user.name}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="addPMTaskImportant">1</b><b>/5</b></label>
+														<div class="col-md-6">
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
+																<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
+																<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
+															</div>
+														</div>
+													</div>
+												</form>
 										</div>
+										
 									</div>
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-default" value="업무추가" form="addPMTaskForm">
+											&nbsp;&nbsp;
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+									
+									
 								</div>
-							 </form>
 							</div>
-						</div>
-						<div class="modal-footer">
-						<div class="row">
-							<div class="col-md-4">
-							</div>
-							<div class="col-md-4 text-center">
-								<button type="submit" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
-							</div>
-							<div class="col-md-4">
-							</div>
-							</div>
-						</div>
-						</div>
-				</div>
-			</div>
-								
+					</div>
                 <!-- 상세보기 모달 -->
 				<div id="taskDetailModal" class="modal fade">
 					<div class="modal-dialog modal-lg">
