@@ -1,5 +1,8 @@
 package com.dobee.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
@@ -133,21 +137,31 @@ public class AjaxControllerAdmin {
          return find;
     }
     
-    //사원 이미지 가져오기 @RequestParam(value="mail") String mail, HttpServletRequest request, HttpServletResponse response // new ResponseEntity<byte[]>(myPic, HttpStatus.OK)
-    @RequestMapping(value="getMyPic.do", method=RequestMethod.POST)
-    public String getByteImg() {
-    	System.out.println("이미지 가져오기 컨트롤러 타니?");
-    	//System.out.println("메일 가져와?"+mail);
-    	//User user = memberService.getUserInfo(mail);
-    	//byte[] myPic = user.getMyPic();
-    	//response.setContentType("image/jpeg");
-    	return null;
-    }
-    
     
     //사원 정보 수정 --01.23 알파카
     @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)
-    public String modifyUser(User user) {
+    public String modifyUser(User user, HttpServletRequest request) throws IOException {
+    	System.out.println("수정 타니?");
+    	System.out.println("수정정보 가져오니?"+user.toString());
+    	Enumeration<String> enu = request.getParameterNames();
+    	while(enu.hasMoreElements()) {
+    		System.out.println(enu.nextElement());
+    	}
+    	
+    	//파일 업로드 파일명
+    	CommonsMultipartFile file = user.getFile();
+    	String filename = file.getOriginalFilename(); //원본 파일명
+    	
+        String path = request.getServletContext().getRealPath("/upload");
+        String fpath = path + "\\" + filename;
+        		
+        //파일 쓰기 작업
+    	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+    	fs.write(file.getBytes());
+    	fs.close();
+        //DB에 파일 이름 저장
+    	user.setMyPic(filename);
+    	
     	String responseData = "";
 		int result = 0;
 		result = memberService.modifyUser(user);
@@ -155,6 +169,8 @@ public class AjaxControllerAdmin {
 			responseData = "success";
 		}
     	return responseData;
+    	
+    	
     }
     
     //사원 삭제 --01.23 알파카

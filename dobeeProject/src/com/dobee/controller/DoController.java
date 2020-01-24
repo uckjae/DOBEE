@@ -870,7 +870,12 @@ public class DoController {
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
     	System.out.println("Docontorller addPMTask() in!!");
-    	projectService.addPMTask(task);
+    	System.out.println("업무 어떻게 넘어와?"+task.toString());
+    	String[] str = task.getMail().split(",");
+    	String mail = str[0];
+    	task.setMail(mail);
+    	int result = projectService.addPMTask(task);
+    	System.out.println("컨트롤러"+result);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
@@ -1056,9 +1061,28 @@ public class DoController {
     
     //관리자_사원추가 서비스
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
-   public String addUser(User user) {
-   		System.out.println("Docontroller addUser() post in");
-   		memberService.addUser(user);   		
+   public String addUser(User user, HttpServletRequest request) throws IOException {
+	       	
+    	//파일 업로드 파일명
+    	CommonsMultipartFile file = user.getFile();
+    	String filename = file.getOriginalFilename(); //원본 파일명
+    	
+        String path = request.getServletContext().getRealPath("/upload");
+        String fpath = path + "\\" + filename;
+        		
+        //파일 쓰기 작업
+    	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+    	fs.write(file.getBytes());
+    	fs.close();
+        		
+        //DB에 파일 이름 저장
+    	user.setMyPic(filename);
+        	
+        int result = memberService.addUser(user);
+        if(result > 0) {
+    		System.out.println("멤버 추가 완료");
+        }
+   		
     	return "redirect: adminMain.do";
     }
    	

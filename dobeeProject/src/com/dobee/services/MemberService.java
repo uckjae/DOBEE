@@ -94,16 +94,9 @@ public class MemberService {
     
     //User 등록
     @Transactional
-    public void addUser(User user) {
+    public int addUser(User user) {
+    	int result = 0;
     	System.out.println("MemberService addUser() in!!");
-    	try {
-			user.setMyPic(user.getMultiFile().getBytes());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			System.out.println("MemberService addUser() 파일바이트변환 에러");
-		}
-    	
-    	
     	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
     		userDao.addUser(user);
@@ -112,6 +105,10 @@ public class MemberService {
     		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
     	}
+    	if(result > 0) {
+    		System.out.println("멤버 추가 서비스 addUser 완료");
+    	}
+    	return result;
     }
     
     

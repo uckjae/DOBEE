@@ -52,8 +52,8 @@ public interface ProjectDao {
     public Task getTask(int tskSeq);
     
     
-    //업무추가 - PM
-    public void addPMTask(Task task);
+    //업무추가 - PM 01.24 알파카 수정
+    public int addPMTask(Task task);
 
 
     //업무추가 - 담당자

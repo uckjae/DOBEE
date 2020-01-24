@@ -97,7 +97,7 @@
 					success: function(data){
 						console.log(data);
 						var task = data;
-						$('#taskDetailTitle').text(task.title);
+						$('#taskDetailTitle').val(task.title);
 						$('#taskFormTitle').val(task.title);
 						var startDate = new Date(task.startAt);
 						var formatedStartDate = date_to_str(startDate);
@@ -105,7 +105,7 @@
 						var endDate = new Date(task.endAt);
 						var formatedEndDate = date_to_str(endDate);
 						$('#taskFormEndtAt').val(formatedEndDate);
-						$('#taskFormName').text(task.name);
+						$('#taskFormName').val(task.name);
 						$('#taskFormMail').val(task.mail);
 						$('#taskFormPjtSeq').val(task.pjtSeq);
 						$('#listenSlider').val(task.important);
@@ -674,7 +674,9 @@
 			</div>
                 <!-- 프로젝트 넣기 -->
                 <div class="tab-content">
+
                     <div class="row">
+                    	
                         <div class="col-md-12 col-lg-12">
                             <!-- 예정 -->
                             <div class="col-md-3 col-xl-3">
@@ -716,28 +718,25 @@
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
-                                                    <ul class="simple-todo-list">
-	                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
-	                                                    <c:if test="${task.progress eq '예정' }">
-		                                                    <li class="completed">
-		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																</div>
-															</li>
-	                                                     </c:if>
-	                                                    </c:forEach>
+                                                    <ul class="widget-todo-list">
+                                                    	<c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '예정' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            
                                         </div>
                                     </div>
                                 </section>
@@ -746,6 +745,7 @@
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
                                     <header class="panel-heading bg-primary">
+
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
                                                 <img src="assets/images/!logged-user.jpg">
@@ -772,23 +772,22 @@
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
-                                                
-                                                 <ul class="simple-todo-list">
-	                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
-	                                                    <c:if test="${task.progress eq '진행' }">
-		                                                    <li class="completed">
-		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																</div>
-															</li>
-	                                                     </c:if>
-	                                                    </c:forEach>
+                                                    <ul class="widget-todo-list">
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '진행' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+	                                                        	</span>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -813,6 +812,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     </header>
                                     <div id="accordion">
                                         <div class="panel panel-accordion panel-accordion-first">
@@ -826,25 +826,23 @@
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
-                                                 <ul class="simple-todo-list">
-	                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
-	                                                    <c:if test="${task.progress eq '테스트' }">
-		                                                    <li class="completed">
-		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																</div>
-															</li>
-	                                                     </c:if>
-	                                                    </c:forEach>
+                                                    <ul class="widget-todo-list">
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '테스트' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+                                                    </c:forEach>
                                                     </ul>
-                                                    
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -882,22 +880,22 @@
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
-                                                 <ul class="simple-todo-list">
-	                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
-	                                                    <c:if test="${task.progress eq '완료' }">
-		                                                    <li class="completed">
-		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																</div>
-															</li>
-	                                                     </c:if>
-	                                                    </c:forEach>
+                                                    <ul class="widget-todo-list">
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                        <c:if test="${task.progress eq '완료' }">
+                                                        <div class="row">
+	                                                        <li>
+	                                                        	<a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+	                                                        	<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+	                                                        	<span class="label label-primary text-normal pull-right">
+		                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
+		                                                        	~
+		                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+	                                                        	</span>
+	                                                        </li>
+                                                        </div>
+                                                       </c:if>
+													</c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -905,286 +903,215 @@
                                     </div>
                                 </section>
                             </div>
+
                         </div>
+                        
                     </div>
+
+
                 </div>
                 <!-- end: page -->
                 <!-- Modal Form -->
                 <!-- PM업무추가모달 -->
-                
-               <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		   		<div class="modal-dialog cascading-modal" role="document">
-					<div class="modal-content">
-					<!--Header-->
-						<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-top: 25px;padding-bottom: 25px;">
-							<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square-o fa-lg"></i>&nbsp;업무추가</h4>
-						</div>
-						<!--Body-->
-						<div class="container-fluid">
-						<div class="modal-body mb-0" style="margin-top: 30px;">
-						      <form action="addPMTask.do" id="addPMTaskForm" method="post">
-						      <!-- 업무 이름 -->
-						      	<div class="form-group">
-									<label class="col-md-3 control-label"><i class="fa fa-tasks fa-lg"></i><span style="font-size:15px">&nbsp;&nbsp;업무</span></label>
-										<div class="col-md-9">
-											<input type="text" class="form-control" type="text" name="title" placeholder="업무를 입력하세요" form="addPMTaskForm" required style="height:35px;">
-										</div>
-								</div>
-							  	<br>
-							  	 <!-- 담당자 -->
-							  		<div class="form-group">
-									<label class="col-md-3 control-label" for="userList"><i class="fa fa-user fa-lg"></i><span style="font-size:15px">&nbsp;&nbsp;담당자</span></label>
-										<div class="col-md-9">
-											<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
-												<option value="" disabled selected>선택해주세요</option>
-												<c:forEach items="${pjtMember}" var="user" varStatus="status">
-													<option value="${user.mail}">${user.name}</option>
-												</c:forEach>
-											</select>
-										</div>
+                <div id="addTaskModal" class="modal fade">
+					<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2><input type="text" name="title" class="input-line" placeholder="업무를 입력하세요" form="addPMTaskForm" required/></h2>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
-							   	<br>
-							   	<!-- 중요도 -->
-							   	<div class="form-group">
-									<label class="col-md-3 control-label"><i class="fa fa-star fa-lg"></i><span style="font-size:15px">&nbsp;&nbsp;중요도</span><b id="addPMTaskImportant" style="margin-left:40px">1</b><b>/5</b></label>
-									<div class="col-md-6">
-										<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
-											<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
-											<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
+									
+									<div class="tab-content">
+										<div class="tab-pane active" id="addTaskTab">
+											<div class="form-group">
+												<div class="col-md-6" style="float: left;">
+													
+												</div>
+											</div>
+											<form action="addPMTask.do" id="addPMTaskForm" class="form-horizontal mb-lg" method="post">
+													<div class="form-group mt-lg">
+														<label class="col-md-3 control-label">담당자</label>
+														<div class="col-md-6">
+															<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
+																<option hidden>선택하세요</option>
+																<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																	<option value="${user.mail}">${user.name}</option>
+																</c:forEach>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-md-3 control-label">중요도&nbsp;<b id="addPMTaskImportant">1</b><b>/5</b></label>
+														<div class="col-md-6">
+															<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
+																<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
+																<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
+															</div>
+														</div>
+													</div>
+												</form>
 										</div>
+										
 									</div>
-								</div>
-							 </form>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<div class="row">
-								<div class="col-md-4">
-								</div>
-								<div class="col-md-4 text-center">
-									<button type="submit" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
-								</div>
-								<div class="col-md-4">
+										<div class="modal-footer">
+											<input type="submit" class="btn btn-default" value="업무추가" form="addPMTaskForm">
+											&nbsp;&nbsp;
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+									
+									
 								</div>
 							</div>
-						</div>
 					</div>
-				</div>
-			</div>
-		
                 <!-- 상세보기 모달 -->
-                <div class="modal fade" id="taskDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		   		<div class="modal-dialog cascading-modal" role="document">
-						<div class="modal-content">
-						<!-- Modal Header -->
-							<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-bottom: 0px;border-bottom-width: 0px;">
-								<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-									<div style="margin-top: 20px;margin-bottom: 25px;">
-										<span><i class="fa fa-tasks"></i></span>&nbsp;&nbsp;<h4 class="modal-title" id="taskDetailTitle" name="title" style="display:inline"></h4>
-									</div>
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs nav-justified">
-										<li class="active">
-											<a href="#detail" data-toggle="tab">속성</a>
-										</li>
-										<li>
-											<a href="#content" data-toggle="tab">상세업무</a>
-										</li>
-										<li>
-											<a href="#checkList" data-toggle="tab">체크리스트</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<!-- 속성 Tab -->
-							
-							<div class="tab-content" style="border-bottom-width: 0px;">
-								<div class="tab-pane active" id="detail">
-								<div class="panel-body" style="padding-top: 0px;">
-									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">날짜</label>
-											<div class="col-md-7">
-												<div class="input-daterange input-group" data-plugin-datepicker>
-													<span class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-													</span>
-													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
-													<span class="input-group-addon">to</span>
-													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
-													<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
-												</div>
-											</div>
-										</div>
-										<!-- 담당자 -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">담당자</label>
-											<c:choose>
-												<c:when test="${ user.authCode == '2'}">
-														<div class="col-md-7" style="margin-top: 8px;">
-															<i class="fa fa-user"></i>
-															<h5 id="taskFormName" name="name" form="taskEditForm" style="display:inline;"></h5>
-															<!-- <input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/> -->
-															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
-														</div>
-												</c:when>
-												<c:otherwise>
-															<div class="col-md-7">
-																<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
-																	<option hidden>선택하세요</option>
-																	<c:forEach items="${pjtMember}" var="user" varStatus="status">
-																		<option value="${user.mail}">${user.name}</option>
-																	</c:forEach>
-																</select>
-															</div>
-												</c:otherwise>
-											</c:choose>
-										</div>
-										<!-- 중요도 -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
-											<div class="col-md-6">
-												<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
-													<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
-													<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
-													<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
-												</div>
-											</div>
-										</div>
-										
-										
-										<div class="form-group">
-											<label class="col-md-3 control-label">진행상황</label>
-											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
-											<div class="col-md-6 btn-group">
-												<button type="button" class="btn btn-default progress-button">예정</button>
-												<button type="button" class="btn btn-default progress-button">진행</button>
-												<button type="button" class="btn btn-default progress-button">테스트</button>
-												<button type="button" class="btn btn-default progress-button">완료</button>
-											</div>
-										</div>
-										<br>
-										<br>
-										<div class="form-group" style="text-align: center;">
-											<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="수정" form="taskEditForm">
-										</div>	
-									</form>
-									</div>
-								</div>
-								<!-- 속성 Tab 끝-->
-								
-								<!-- 상세업무 Tab-->
-								<div class="tab-pane" id="content">
-									<div class="panel-body" style="padding-top: 0px;">
-                                         <ul class="widget-todo-list">
-                                            <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem1"><span>상세업무1111</span></label>
-												</div>
+				<div id="taskDetailModal" class="modal fade">
+					<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h2><input id="taskDetailTitle" type="text" name="title" class="input-line" value="" readonly="readonly"></h2>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<ul class="list-unstyled nav nav-pills">
+											<li class="active">
+												<a href="#detail" data-toggle="tab">상세</a>
 											</li>
-											 <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem2"><span>상세업무222</span></label>
-												</div>
+											<li>
+												<a href="#content" data-toggle="tab">내용</a>
 											</li>
-                                          </ul>
-                                       	
-                                          <!-- 상세 업무 추가(일반 회원만 보임) -->
-										<c:if test="${ user.authCode == '2'}">
-										<hr class="solid mt-sm mb-lg">
-											<form action="ajax/project/taskContentForm.do" id="taskContentForm" method="post" class="form-horizontal form-bordered">
+											<li>
+												<a href="#checkList" data-toggle="tab">체크리스트</a>
+											</li>
+										</ul>
+									</div>
+									<div class="tab-content">
+										<div class="tab-pane active" id="detail">
+											<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 												<div class="form-group">
-													<div class="col-sm-12">
-														<div class="input-group mb-md">
-															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
-															<input type="text" class="form-control" form="taskContentForm">
-															<div class="input-group-btn" style="padding:0;">
-																<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+													<label class="col-md-3 control-label">날짜</label>
+													<div class="col-md-6">
+														<div class="input-daterange input-group" data-plugin-datepicker>
+															<span class="input-group-addon">
+																<i class="fa fa-calendar"></i>
+															</span>
+															<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
+															<span class="input-group-addon">to</span>
+															<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+															<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
+														</div>
+													</div>
+												</div>
+												<!-- 담당자 -->
+												
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<div class="form-group">
+															<label class="col-md-3 control-label">담당자</label>
+															<div class="col-md-6 row">
+																<i class="fa fa-reddit"></i><input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/>
+																<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
 															</div>
 														</div>
+													</c:when>
+													<c:otherwise>
+														<div class="form-group">
+															<label class="col-md-3 control-label">담당자</label>
+																<div class="col-md-6">
+																	<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
+																		<option hidden>선택하세요</option>
+																		<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																			<option value="${user.mail}">${user.name}</option>
+																		</c:forEach>
+																	</select>
+																</div>
+														</div>
+													</c:otherwise>
+												</c:choose>
+												<!-- 중요도 -->
+												<div class="form-group">
+													<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
+													<div class="col-md-6">
+														<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
+															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
+															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
+														</div>
+													</div>
+												</div>
+												
+												
+												<div class="form-group">
+													<label class="col-md-3 control-label">진행상황</label>
+													<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
+													<div class="col-md-6 btn-group">
+														<button type="button" class="btn btn-default progress-button">예정</button>
+														<button type="button" class="btn btn-default progress-button">진행</button>
+														<button type="button" class="btn btn-default progress-button">테스트</button>
+														<button type="button" class="btn btn-default progress-button">완료</button>
+													</div>
+												</div>
+												<br>
+												<br>
+												<div class="form-group" style="text-align: center;">
+													<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="변경사항등록" form="taskEditForm">
+												</div>	
+											</form>
+										</div>
+										<div class="tab-pane" id="content">
+											
+											<form action="ajax/project/taskContentForm.do" id="taskContentForm" class="form-horizontal mb-lg" >
+											
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<label>상세업무 추가하기&nbsp;&nbsp;<a><i id="addTaskContentButton" class="fa fa-plus-square before" onclick="makeContent(this)"></i></a></label>
+													</c:when>
+													<c:otherwise>
+														<label>상세업무&nbsp;&nbsp;</label>
+													</c:otherwise>
+												</c:choose>
+												
+												<div class="form-group">
+													<div class="col-md-6">
+														<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
 													</div>
 												</div>
 											</form>
-										</c:if>
-									</div>
-								</div>
-								<!-- 상세업무 Tab 끝-->
-								
-								
-								
-								
-								<!-- 체크리스트 Tab -->
-								<div class="tab-pane" id="checkList">
-									<div class="panel-body" style="padding-top: 0px;">
-										<ul class="widget-todo-list">
-											<li>
-												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem2" class="todo-check">
-													<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
-											<li>
-												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem3" class="todo-check">
-													<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
-										</ul>
-									<!-- 체크리스트 추가(일반 회원만 보임) -->
-									<c:if test="${ user.authCode == '2'}">
-										<form method="get" class="form-horizontal form-bordered">
-											<hr class="solid mt-sm mb-lg">
-											<div class="form-group">
-												<div class="col-sm-12">
-													<div class="input-group mb-md">
-														<input type="text" class="form-control" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
-														<div class="input-group-btn" style="padding:0;">
-															<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
-														</div>
+											<div id="taskDetailListDiv">
+												<ul id="taskDetailListView" style="list-style:none;">
+													
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane" id="checkList">
+											<form action="ajax/project/taskCheckListForm.do" id="taskCheckListForm" class="form-horizontal mb-lg" >
+												<c:choose>
+													<c:when test="${ user.authCode == '2'}">
+														<label>체크리스트 추가하기&nbsp;&nbsp;<a><i id="addTaskCheckListButton" class="fa fa-plus-square before" onclick="makeCheckList(this)"></i></a></label>
+													</c:when>
+													<c:otherwise>
+														<label>체크리스트&nbsp;&nbsp;</label>
+													</c:otherwise>
+												</c:choose>
+												<div class="form-group">
+													<div class="col-md-6">
+														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq"/>
 													</div>
 												</div>
+											</form>
+											<div id="taskCheckListDiv">
+												<ul id="taskCheckListView" style="list-style:none;">
+													
+												</ul>
 											</div>
-										</form>
-									</c:if>
-								</div>
-							</div>
-							
-							<!-- 체크리스트 Tab 끝-->
-							
-							<!-- Modal Content 끝 -->
-							
-							<!-- Modal Footer -->
-								<div class="modal-footer" style="border-top-width: 0px;">
-									<div class="row">
-										<div class="col-md-4">
-										</div>
-										<div class="col-md-4 text-center">
-											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-										</div>
-										<div class="col-md-4">
 										</div>
 									</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+									
+									
 								</div>
 							</div>
-							<!-- Modal Footer 끝 -->
-						</div>
-					</div>
 				</div>
-				
-				
 				<!-- /Modal -->
         </section>
     </div>

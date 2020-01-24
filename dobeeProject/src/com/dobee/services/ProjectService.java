@@ -101,10 +101,14 @@ public class ProjectService {
 
 
     //업무추가_PM
-    public void addPMTask(Task task){
+    public int addPMTask(Task task){
+    	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	projectDao.addPMTask(task);
-    	
+    	result = projectDao.addPMTask(task);
+    	if(result > 0) {
+    		System.out.println("프로젝트 서비스 pm 업무 추가 완료"+result);
+    	}
+    	return result;
     }
     
     
