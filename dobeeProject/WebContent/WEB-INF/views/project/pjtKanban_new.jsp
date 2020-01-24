@@ -716,9 +716,26 @@
 	                                                </div>
                                                 </div>
                                             </div>
+                                            
                                             <div id="collapse1One" class="accordion-body collapse in">
                                                 <div class="panel-body">
-                                                    <ul class="widget-todo-list">
+                                                    <ul class="simple-todo-list">
+                                                    <c:forEach items="${ taskList}" var="task" varStatus="status">
+                                                    <c:if test="${task.progress eq '예정' }">
+                                                    <li class="completed">
+                                                    	<div style="padding-top: 2px;">
+															<span><a class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
+	                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
+	                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
+	                                                        	~
+	                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+	                                                       	</span>
+		                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+														</div>
+													</li>
+                                                     </c:if>
+                                                    </c:forEach>
+                                                    <%-- 
                                                     	<c:forEach items="${ taskList}" var="task" varStatus="status">
                                                         <c:if test="${task.progress eq '예정' }">
                                                         <div class="row">
@@ -734,7 +751,15 @@
                                                         </div>
                                                        </c:if>
                                                     </c:forEach>
+                                                    
+                                                     --%>
+                                                    
+                                                    
+                                                    
                                                     </ul>
+                                                    
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
