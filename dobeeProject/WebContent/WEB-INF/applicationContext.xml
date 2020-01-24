@@ -19,20 +19,19 @@
 	-->
     
     <!-- 공통 DB작업  -->
-     <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+  <!--    <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://192.168.6.55:3306/dobee?serverTimezone=Asia/Seoul&amp;characterEncoding=UTF-8" />
         <property name="username" value="dobee" />
         <property name="password" value="1004" />
-    </bean>  
- 
+    </bean>  --> 
 
-  <!--  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+   <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/tester_db?serverTimezone=Asia/Seoul&amp;characterEncoding=UTF-8" />
         <property name="username" value="tester" />
         <property name="password" value="1004" />
-    </bean>   -->
+    </bean>  
 
 
     <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

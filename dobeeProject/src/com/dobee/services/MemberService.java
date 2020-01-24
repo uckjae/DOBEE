@@ -1,21 +1,17 @@
 package com.dobee.services;
 
 import java.io.IOException;
-import java.security.Principal;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dobee.dao.UserDao;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
-import com.dobee.vo.member.UserInfo;
 
 @Service
 public class MemberService {
@@ -160,6 +156,16 @@ public class MemberService {
     	int result = 0;
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	result = userDao.deleteUser(mail);
+    	return result;
+    }
+    
+    
+    
+    //팀 코드 수정 - 성호
+    public int modifyTeamCode(HashMap team) {
+    	int result = 0;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.modifyTeamCode(team);
     	return result;
     }
 }

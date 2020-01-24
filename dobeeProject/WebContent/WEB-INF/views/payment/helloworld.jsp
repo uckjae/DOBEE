@@ -141,7 +141,7 @@
                 var file = data[google.picker.Response.DOCUMENTS][0],
                     id = file[google.picker.Document.ID],
                     request = gapi.client.drive.files.get({ fileId: id });
-                /* this.ShowPicker(); */
+                //this.ShowPicker(); 
                 //request.execute(this.GetFileDetails.bind(this));
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;

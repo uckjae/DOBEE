@@ -1,10 +1,8 @@
 package com.dobee.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
@@ -14,8 +12,6 @@ import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
-import com.dobee.vo.member.UserInfo;
-import com.sun.media.jfxmedia.logging.Logger;
 
 public interface UserDao {
 
@@ -232,4 +228,13 @@ public interface UserDao {
     
     //팀 정보얻기
     public TeamList getTeam(String teamCode);
+    
+    
+    //팀 코드 수정하기-성호
+    public int modifyTeamCode(HashMap team);
+    
+    
+   
+    
+    
 }

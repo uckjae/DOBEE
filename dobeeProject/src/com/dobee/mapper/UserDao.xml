@@ -375,4 +375,11 @@
 	<select id="getTeam" resultType="com.dobee.vo.member.TeamList">
 		SELECT TEAMCODE, TEAMNAME FROM TEAMLIST WHERE TEAMCODE=#{teamCode}
 	</select>
+	
+	
+	<!-- 팀 수정 -->
+	<update id="modifyTeamCode" parameterType="hashmap">
+		update teamlist set teamcode = #{teamCode}, teamname = #{teamName} where teamcode=#{tempTeamCode}
+	</update>
+	
 </mapper>

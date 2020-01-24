@@ -9,13 +9,9 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
@@ -30,7 +26,6 @@ import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
-import com.google.common.net.MediaType;
 
 
 @RestController
@@ -172,6 +167,24 @@ public class AjaxControllerAdmin {
 			responseData = "success";
 		}
     	return responseData;
+    }
+    
+    
+    //팀 코드 수정 -성호 
+    @RequestMapping("adminTeamCodeModify.do")
+    public int modifyTeamCode(@RequestParam HashMap map) {
+    	int result = 0 ; 
+    	System.out.println("컨트롤러 도착");
+    	System.out.println("받은 데이터: " + map);
+    	result = memberService.modifyTeamCode(map);
+    	
+    	if(result > 0) {
+    		System.out.println("팀코드 수정 성공");
+    	}else {
+    		System.out.println("팀코드 수정 실패");
+    	}
+    	
+    	return result;
     }
     
 }
