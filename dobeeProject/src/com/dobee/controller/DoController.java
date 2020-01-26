@@ -864,7 +864,13 @@ public class DoController {
     	
         return "project/pjtKanban_new";
     }
-
+    
+    //프로젝트 현황 불러오기 pjtDashBoard.do
+    @RequestMapping("pjtDashBoard.do")
+    public String pjtDashBoard(@RequestParam(value="mail") String mail) {
+    	System.out.println("사용자 메일?"+mail);
+    	return "project/pjt_dashboard";
+    }
 
     //업무생성
     @RequestMapping("addPMTask.do")
