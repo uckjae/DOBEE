@@ -68,7 +68,7 @@ public interface ProjectDao {
 
 
     //상세업무추가
-    public void addTaskDetail(TaskDetail taskDetail);
+    public int addTaskDetail(TaskDetail taskDetail);
     
     
     //상세업무삭제

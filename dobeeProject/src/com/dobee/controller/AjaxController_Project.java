@@ -151,11 +151,28 @@ public class AjaxController_Project {
 	}
 	
 	
+	//TaskDetail 추가 -- 01.26 알파카
+	@RequestMapping("addTaskDetail.do")
+	public String addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+		String responseData = "";
+		int result = 0;
+		System.out.println("AjaxController_Project addTaskDetail() in");
+		System.out.println(taskDetail.toString());
+		
+		result = projectService.addTaskDetail(taskDetail);
+		
+		if(result > 0) {
+			responseData = "success";
+		}
+		return responseData;
+	}
+	/*
+	
 	//TaskDetail 추가
 	@RequestMapping("addTaskDetail.do")
 	public int addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
 		System.out.println("AjaxController_Project addTaskDetail() in");
-		System.out.println(taskDetail);
+		System.out.println(taskDetail.toString());
 		Enumeration enu = req.getParameterNames();
 		while(enu.hasMoreElements()) {
 			System.out.println("while!!");
@@ -164,7 +181,7 @@ public class AjaxController_Project {
 		projectService.addTaskDetail(taskDetail);
 		return 0;
 	}
-	
+	*/
 	//TaskDetailEdit
 	@RequestMapping("taskDetailEdit.do")
 	public int taskDetailEdit(TaskDetail taskDetail) {

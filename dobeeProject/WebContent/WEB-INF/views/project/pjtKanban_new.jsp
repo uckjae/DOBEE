@@ -137,7 +137,38 @@
 			});
 			/* /모달띄우는 함수 */
 
-			
+
+
+
+
+			/* 01.26 상세 업무 추가 -- 알파카 */
+			$("#addTaskDetailBtn").click(function(){
+				console.log('이거 타니??');
+				var formData = $("#addTaskDetailForm").serialize();
+				console.log('폼 데이터?'+formData);
+ 				console.log('이거 어케 넘어와?'+$("#tdContent").val());
+				
+				$.ajax({
+	 	 			url:"ajax/project/addTaskDetail.do",
+	 				data: formData ,
+	 				dataType: "text",
+	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+    	 				console.log('ajax 통신 성공?');
+	 					console.log(responsedata);
+	 					if(responsedata == "success"){ //업무 상세 생성 완료
+		 					$("#taskDetailList").append('<li><div style="margin-left:10px;"><span><i class="fa fa-square"></i></span>&nbsp;&nbsp;'
+				 					+'<label class="todo-label" for="todoListItem1"><span>'+$("#tdContent").val()+'</span></label></div></li>');
+		 					$("#tdContent").val("");
+	 					}
+	 				},
+	 				error:function(){
+	 					console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+	 				}
+	 			});
+			});
 			
 			
 			
@@ -999,7 +1030,7 @@
 							</div>
 							<!-- 속성 Tab -->
 							
-							<div class="tab-content" style="border-bottom-width: 0px;">
+							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
 								<div class="tab-pane active" id="detail">
 								<div class="panel-body" style="padding-top: 0px;">
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
@@ -1032,7 +1063,6 @@
 												<c:otherwise>
 															<div class="col-md-7">
 																<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
-																	<option hidden>선택하세요</option>
 																	<c:forEach items="${pjtMember}" var="user" varStatus="status">
 																		<option value="${user.mail}">${user.name}</option>
 																	</c:forEach>
@@ -1051,9 +1081,7 @@
 													<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
 												</div>
 											</div>
-										</div>
-										
-										
+										</div>										
 										<div class="form-group">
 											<label class="col-md-3 control-label">진행상황</label>
 											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
@@ -1064,7 +1092,6 @@
 												<button type="button" class="btn btn-default progress-button">완료</button>
 											</div>
 										</div>
-										<br>
 										<br>
 										<div class="form-group" style="text-align: center;">
 											<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="수정" form="taskEditForm">
@@ -1077,7 +1104,7 @@
 								<!-- 상세업무 Tab-->
 								<div class="tab-pane" id="content">
 									<div class="panel-body" style="padding-top: 0px;">
-                                         <ul class="widget-todo-list">
+                                         <ul class="widget-todo-list" id="taskDetailList">
                                             <li>
 												<div style="margin-left:10px;">
 													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
@@ -1090,25 +1117,21 @@
 													<label class="todo-label" for="todoListItem2"><span>상세업무222</span></label>
 												</div>
 											</li>
-                                          </ul>
-                                       	
-                                          <!-- 상세 업무 추가(일반 회원만 보임) -->
-										<c:if test="${ user.authCode == '2'}">
+                                          </ul>                                       	
 										<hr class="solid mt-sm mb-lg">
-											<form action="ajax/project/taskContentForm.do" id="taskContentForm" method="post" class="form-horizontal form-bordered">
+											<form action="#" id="addTaskDetailForm" method="post" class="form-horizontal form-bordered">
 												<div class="form-group">
 													<div class="col-sm-12">
 														<div class="input-group mb-md">
-															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
-															<input type="text" class="form-control" form="taskContentForm">
+															<input type="hidden" form="addTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
+															<input type="text" id="tdContent" name="tdContent"  class="form-control" form="addTaskDetailForm" placeholder="상세 업무를 추가해주세요">
 															<div class="input-group-btn" style="padding:0;">
-																<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+																<button type="button" class="btn btn-primary" tabindex="-1" id="addTaskDetailBtn"><span style="font-size:18px;">+</span></button>
 															</div>
 														</div>
 													</div>
 												</div>
 											</form>
-										</c:if>
 									</div>
 								</div>
 								<!-- 상세업무 Tab 끝-->

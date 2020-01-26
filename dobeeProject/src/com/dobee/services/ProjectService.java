@@ -153,9 +153,11 @@ public class ProjectService {
 
 
     // 상세업무입력
-    public void addTaskDetail(TaskDetail taskDetail){
+    public int addTaskDetail(TaskDetail taskDetail){
+    	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	projectDao.addTaskDetail(taskDetail);
+    	result = projectDao.addTaskDetail(taskDetail);
+    	return result;
     }
 
 
