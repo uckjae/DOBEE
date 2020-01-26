@@ -60,7 +60,7 @@
 									</div>
 								</div>
 								<div class="col-md-5">
-									<form action="extendApply.do" method="post">
+									<form id="extendApplyForm" action="#">
 										
 										<br>
 										<br>
@@ -84,7 +84,7 @@
 										<textarea name="reason" id="reason" placeholder="1000 btye 이내 내용을 입력하십시오." style="width: 100%; height: 80px;"></textarea>
 										<br>
 										<br>
-										<input type="submit" value="확인">
+										<input type="button" value="확인" id="extendApplyBtn">
 										<input type="reset" value="초기화">
 									</form>
 								</div>
@@ -159,6 +159,45 @@
 		            format : 'YYYY-MM-DD HH:mm'
 		        });
 
+		        /*부재 일정 신청 비동기 처리 --01.26 알파카 */
+		        $("#extendApplyBtn").on('click', function() {
+			        var formData = $("#extendApplyForm").serialize();
+			        console.log('폼??'+formData);
+		        	$.ajax({
+						url : "ajax/apply/extendApply.do",
+						data : formData,
+						dataType : "text",
+						contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
+		 				type:"post",
+						success : function(responseData) {
+							if(responseData == "success"){
+								swal({
+									title: "연장 근무 신청",
+									text: "연장 근무가 신청되었습니다.",
+									icon: "success", //"info,success,warning,error" 중 택1
+									button : {
+										confirm: {
+										    text: "확인",
+										    value: true,
+										    visible: true,
+										    className: "",
+										    closeModal: true
+										  }
+										}
+								}).then((YES) => {
+									if(YES){
+		 								location.reload(true); 
+										} 
+							})
+						}
+						},
+						error : function(error) {
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+			    });
+
+			    
 	
 			}
 	  	</script>

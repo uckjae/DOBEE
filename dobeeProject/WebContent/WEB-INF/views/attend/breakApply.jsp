@@ -31,6 +31,8 @@
 <script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/locales/ko.js"></script>
+<!-- sweet alert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
 
 </head>
@@ -78,7 +80,7 @@
 								</div>
 								<div class="col-md-5">
 								
-									<form action="breakApply.do" method="post">
+									<form id="breakApplyForm" action="#" method="post">
 										
 										<br>
 										<br>
@@ -115,7 +117,7 @@
 										<textarea name="reason" placeholder="연장근무 사유를 입력해주세요." style="width:100%; height: 100px;"></textarea>
 										<br>
 										<br>
-										<input type="submit" value="확인"> &nbsp;&nbsp;
+										<input id="breakApplyBtn" type="button" value="확인"> &nbsp;&nbsp;
 										<input type="reset" value="Reset">
 
 									</form>
@@ -208,6 +210,44 @@
 		        $('#datetimepickerEnd').datetimepicker({
 		            format : 'YYYY-MM-DD HH:mm' 
 		        });
+
+		        /*부재 일정 신청 비동기 처리 --01.26 알파카 */
+		        $("#breakApplyBtn").on('click', function() {
+			        var formData = $("#breakApplyForm").serialize();
+			        console.log('폼??'+formData);
+		        	$.ajax({
+						url : "ajax/apply/breakApply.do",
+						data : formData,
+						dataType : "text",
+						contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
+		 				type:"post",
+						success : function(responseData) {
+							if(responseData == "success"){
+								swal({
+									title: "부재 일정 신청",
+									text: "부재 일정이 신청되었습니다.",
+									icon: "success", //"info,success,warning,error" 중 택1
+									button : {
+										confirm: {
+										    text: "확인",
+										    value: true,
+										    visible: true,
+										    className: "",
+										    closeModal: true
+										  }
+										}
+								}).then((YES) => {
+									if(YES){
+		 								location.reload(true); 
+										} 
+							})
+						}
+						},
+						error : function(error) {
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+					});
+			    });
 	
 			}
 

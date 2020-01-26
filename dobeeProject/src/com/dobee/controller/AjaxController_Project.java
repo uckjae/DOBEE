@@ -1,6 +1,8 @@
 package com.dobee.controller;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import com.dobee.services.ProjectService;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
 import com.dobee.vo.project.Project;
+import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 
@@ -30,25 +33,50 @@ public class AjaxController_Project {
 	
 	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(Project project, @RequestParam(value="mail[]") List<String> pjtMembersMail){
+    public String addProject(@RequestParam(value="pjtName") String pjtName,@RequestParam(value="pjtStartAt") String pjtStartAt, @RequestParam(value="pjtEndAt") String pjtEndAt,@RequestParam(value="pjtMembers[]") List<String> pjtMembers ){
+		System.out.println("플젝 이름"+pjtName);
+		System.out.println("플젝11"+pjtStartAt);
+		System.out.println("플젝22"+pjtEndAt);
+		System.out.println("플젝33"+pjtMembers.toString());
+		
+		//vo 객체 주입
+		Project project = new Project();
+		project.setPjtName(pjtName);
+		project.setPjtStartAt(pjtStartAt);
+		project.setPjtEndAt(pjtEndAt);
+		//프로젝트 생성시 진행 상태를 미완료로 하기
+		project.setPjtProgress("미완료"); 
 		String responseData = "";
 		int result = 0;
 		int result2 = 0;
-		//프로젝트 생성시 진행 상태를 미완료로 하기
-		project.setPjtProgress("미완료"); 
 		
 		//프로젝트 DB 저장
 		result = projectService.addProject(project);
-		
-		String pjtName = project.getPjtName();
+	
 		
 		if(result > 0) {
+			//플젝 seq 가져오기
+			int pjtSeq = project.getPjtSeq();
 			//프로젝트 멤버 DB 저장
-			result2 = projectService.addProjectMember(pjtName, pjtMembersMail);
-			responseData = "success";
+			
+			//들어온 메일 개수만큼 vo 객체 만들어주기
+			List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
+			for (int i = 0; i < pjtMembers.size(); i ++) {
+				ProjectMember pjtMember = new ProjectMember();
+				pjtMember.setPjtSeq(pjtSeq);
+				pjtMember.setMail(pjtMembers.get(i));
+				pjtMemberList.add(pjtMember);
+			}
+			result2 = projectService.addProjectMember(pjtMemberList);
+			
+			if(result2 > 0 ) {
+				responseData = "success";				
+			}
 		}
+		
     	return responseData;
     }
+	
 	
 	//프로젝트 삭제 --01.15 알파카 (아직 완전 구현xxxx)
 	@RequestMapping(value="pjtDelete.do", method=RequestMethod.POST)
@@ -123,11 +151,28 @@ public class AjaxController_Project {
 	}
 	
 	
+	//TaskDetail 추가 -- 01.26 알파카
+	@RequestMapping("addTaskDetail.do")
+	public String addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+		String responseData = "";
+		int result = 0;
+		System.out.println("AjaxController_Project addTaskDetail() in");
+		System.out.println(taskDetail.toString());
+		
+		result = projectService.addTaskDetail(taskDetail);
+		
+		if(result > 0) {
+			responseData = "success";
+		}
+		return responseData;
+	}
+	/*
+	
 	//TaskDetail 추가
 	@RequestMapping("addTaskDetail.do")
 	public int addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
 		System.out.println("AjaxController_Project addTaskDetail() in");
-		System.out.println(taskDetail);
+		System.out.println(taskDetail.toString());
 		Enumeration enu = req.getParameterNames();
 		while(enu.hasMoreElements()) {
 			System.out.println("while!!");
@@ -136,7 +181,7 @@ public class AjaxController_Project {
 		projectService.addTaskDetail(taskDetail);
 		return 0;
 	}
-	
+	*/
 	//TaskDetailEdit
 	@RequestMapping("taskDetailEdit.do")
 	public int taskDetailEdit(TaskDetail taskDetail) {
@@ -170,10 +215,18 @@ public class AjaxController_Project {
 	
 	//체크리스트 추가
 	@RequestMapping("addTaskCheckList")
-	public int addTaskCheckList(CheckList checkList) {
+	public String addTaskCheckList(CheckList checkList) {
+		int result = 0;
+		String responseData = "";
 		System.out.println("AjaxController_Project addTaskCheckList() in!!");
-		int result = projectService.addTaskCheckList(checkList);
-		return result;
+		System.out.println("체크리스트 가져오니?"+checkList.toString());
+		result = projectService.addTaskCheckList(checkList);
+		if(result > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
+		}
+		return responseData;
 	}
 	
 	

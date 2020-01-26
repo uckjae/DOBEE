@@ -74,8 +74,6 @@
 				$('#importantShow').text('0');	
 				var pjtSeq = $(this).data('pjtseq');
 				
-
-				
 					
 			});
 				
@@ -95,6 +93,7 @@
 					data: {"tskSeq":tskSeq},
 					dataType: "JSON",
 					success: function(data){
+						console.log('getTask ajax 성공?');
 						console.log(data);
 						var task = data;
 						$('#taskDetailTitle').text(task.title);
@@ -123,6 +122,7 @@
 								+ request.responseText + "\n" + "error : " + error);
 					}
 				});
+				
 				getTaskDetailList(tskSeq);
 				getTaskCheckList(tskSeq);
 					
@@ -137,11 +137,80 @@
 			});
 			/* /모달띄우는 함수 */
 
-			
-			
-			
-			
+
+
+
+
+			/* 01.26 상세 업무 추가 -- 알파카 */
+			$("#addTaskDetailBtn").click(function(){
+				console.log('이거 타니??');
+				var formData = $("#addTaskDetailForm").serialize();
+				console.log('폼 데이터?'+formData);
+ 				console.log('이거 어케 넘어와?'+$("#tdContent").val());
+				
+				$.ajax({
+	 	 			url:"ajax/project/addTaskDetail.do",
+	 				data: formData ,
+	 				dataType: "text",
+	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+    	 				console.log('ajax 통신 성공?');
+	 					console.log(responsedata);
+	 					if(responsedata == "success"){ //업무 상세 생성 완료
+		 					$("#taskDetailList").append('<li><div style="margin-left:10px;"><span><i class="fa fa-square"></i></span>&nbsp;&nbsp;'
+				 					+'<label class="todo-label" for="todoListItem1"><span>'+$("#tdContent").val()+'</span></label></div></li>');
+		 					$("#tdContent").val("");
+	 					}
+	 				},
+	 				error:function(){
+	 					console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+	 				}
+	 			});
+			});
+			/* 01.26 체크리스트 추가 -- 알파카 addTaskCheckListForm*/
+			$("#addTaskCheckListBtn").click(function(){
+				console.log('이거 타니??');
+				var formData = $("#addTaskCheckListForm").serialize();
+				console.log('폼 데이터?'+formData);
+				var content = $("#content").text();
+				console.log('내용?'+content);
+				$.ajax({
+	 	 			url:"ajax/project/addTaskCheckList.do",
+	 				data: formData ,
+	 				dataType: "text",
+	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+    	 				console.log('ajax2222 통신 성공?');
+	 					console.log(responsedata);
+	 					if(responsedata == "success"){ //체크리스트 생성 완료 여기얌
+		 					$("#taskCheckList").append('<li><div class="checkbox-custom checkbox-default">'
+				 					+'<input type="checkbox" id="todoListItem2" class="todo-check">'
+				 					+'<label class="todo-label" for="todoListItem2"><span>'+$("#content").val()+'</span></label></div>'
+				 					+'<div class="todo-actions">'
+				 					+'<a class="todo-remove" href="#">'
+				 					+'<i class="fa fa-times"></i>'
+				 					+'</a></div></li>');
+		 					$("#content").val("");		 					
+	 					}
+	 				},
+	 				error:function(){
+	 					console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+	 				}
+	 			});
+				
+			});
+
+
 		});
+
+		
+		
+
+		
 
 		/* DateFormatting  함수 */
 		function date_to_str(format)
@@ -270,10 +339,10 @@
 			
 		}
 
-		/* 비동기로 업무상세 가져와서 뿌리는 함수 */
+		/* 비동기로 업무상세 가져와서 뿌리는 함수  -- 01.26 알파카 수정*/
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
-			$('#taskDetailListView').empty();
+			//$('#taskDetailListView').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskDetailList.do",
@@ -289,39 +358,11 @@
 						console.log(index +" / " +element);
 						var tdSeq = element.tdSeq;
 						var tdContent = element.tdContent;
-						var list = $('<li style="width: 100%">');
-						
-						var taskDetailListForm = $('<form>');
-							$(taskDetailListForm).attr("id",tdSeq);
-							$(taskDetailListForm).attr("action","ajax/project/editTaskDetail.do?tdSeq="+tdSeq);
-
-							var divList = $('<div class="col-md-12">');
-								var hiddenInput = $('<input hidden name="tdSeq">');
-									$(hiddenInput).val(tdSeq);
-							$(divList).append(hiddenInput);
-								var hiddenInput2 = $('<input hidden name="tskSeq">');
-									$(hiddenInput2).val(tskSeq);
-							$(divList).append(hiddenInput2);
-								var input = $('<input class="form-control contentData" name="tdContent" disabled="">');
-									$(input).attr("id",tdSeq+"input");
-									$(input).val(tdContent);
-									$(input).text(tdContent);
-							$(divList).append(input);
-								
-								var anchorEdit = $('<a onclick="taskDetailEdit(this)">');
-									var editIcon = $('<i class="fa fa-edit">');
-								$(anchorEdit).append(editIcon);
-							$(divList).append(anchorEdit);
-								var anchorDelete = $('<a onclick="taskDetailDelete(this)">');
-									var deleteIcon = $('<i class="fa fa-trash-o">');
-								$(anchorDelete).append(deleteIcon);
-							$(divList).append(anchorDelete);
-						$(taskDetailListForm).append(divList);
-						
-						$(list).append(taskDetailListForm);
-						$('#taskDetailListView').append(list);
-						
-							
+						//상세 업무 뿌리기
+						$("#taskDetailList").append('<li><div style="margin-left:10px;"><span><i class="fa fa-square"></i></span>&nbsp;&nbsp;'
+			 					+'<label class="todo-label" for="todoListItem1"><span>'+tdContent+'</span></label>'
+			 					+'<input type="hidden" name="tdSeq" value="'+tdSeq+'">'
+			 					+'</div></li>');
 					})
 				},
 				error:function(request,status,error){
@@ -452,11 +493,11 @@
 		}
 
 
-		/* 체크리스트 가져와 뿌리는 함수 */
+		/* 체크리스트 가져와 뿌리는 함수 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
 			console.log("뭐시여");
-			$('#taskCheckListView').empty();
+			//$('#taskCheckListView').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",
@@ -468,54 +509,36 @@
 					
 					var TaskCheckList = data;
 					$(TaskCheckList).each(function(index,element){
-						console.log(index +" / " +element);
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
-						var list = $('<li style="width: 100%">');
-						
-						var taskCheckListForm = $('<form>');
-							$(taskCheckListForm).attr("id",chkSeq);
-							$(taskCheckListForm).attr("action","ajax/project/editTaskCheckList.do");
 
-							var divList = $('<div class="col-md-12">');
-								var hiddenInput = $('<input hidden name="chkSeq">');
-									$(hiddenInput).val(chkSeq);
-							$(divList).append(hiddenInput);
-								var hiddenInput2 = $('<input hidden name="tskSeq">');
-									$(hiddenInput2).val(tskSeq);
-							$(divList).append(hiddenInput2);
-								var checkBox = $('<input type="checkbox" class="content" name="isCheck" disabled="disabled">');
-									
-									if(isCheck == true){
-										console.log("if check=true");
-										$(checkBox).prop("checked",true);
-										$(checkBox).val(1);
-									}else{
-										console.log("else check=false");
-										$(checkBox).prop("checked",false);
-										$(checkBox).val(0);
-									}
-							$(divList).append(checkBox);
-								var input = $('<input class="form-control content" name="content" disabled="">');
-									$(input).attr("id",chkSeq+"input");
-									$(input).val(content);
-									$(input).text(content);
-							$(divList).append(input);
-								
-								var anchorEdit = $('<a onclick="taskCheckListEdit(this)">');
-									var editIcon = $('<i class="fa fa-edit">');
-								$(anchorEdit).append(editIcon);
-							$(divList).append(anchorEdit);
-								var anchorDelete = $('<a onclick="taskCheckListDelete(this)">');
-									var deleteIcon = $('<i class="fa fa-trash-o">');
-								$(anchorDelete).append(deleteIcon);
-							$(divList).append(anchorDelete);
-						$(taskCheckListForm).append(divList);
-						
-						$(list).append(taskCheckListForm);
-						$('#taskCheckListView').append(list);
-						
+						var li = $('<li>');
+						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
+						var hiddenInput = $('<input hidden name="chkSeq">');
+						$(hiddenInput).val(chkSeq);
+						$(checkDiv).append(hiddenInput);
+						var hiddenInput2 = $('<input hidden name="tskSeq">');
+						$(hiddenInput2).val(tskSeq);
+						$(checkDiv).append(hiddenInput2);
+						var checkBox = $('<input type="checkbox" id="todoListItem2" class="todo-check" name="isCheck">');
+						if(isCheck == true){
+							console.log("if check=true");
+							$(checkBox).prop("checked",true);
+							$(checkBox).val(1);
+						}else{
+							console.log("else check=false");
+							$(checkBox).prop("checked",false);
+							$(checkBox).val(0);
+						}
+						$(checkDiv).append(checkBox);
+						var label = $('<label class="todo-label" for="todoListItem2"><span>');
+						label.text(content);
+						$(checkDiv).append(label);
+						var actionDiv = $('<div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
+						$(li).append(checkDiv);
+						$(li).append(actionDiv);
+						$("#taskCheckList").append(li);
 					})
 				},
 				error:function(request,status,error){
@@ -707,11 +730,14 @@
 		                                                    </a>
 	                                                	</h4>
                                                 	</div>
-                                                	<div class="col-md-2">
-	                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
-		                                                    <i class="fa fa-plus-square"></i>
-		                                                </a>
-	                                                </div>
+                                                	<!-- 업무 추가 버튼 (PM만 볼 수 있음) -->
+                                                	<c:if test="${ user.authCode == '3'}">
+														<div class="col-md-2">
+		                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
+			                                                    <i class="fa fa-plus-square"></i>
+			                                                </a>
+		                                                </div>
+													</c:if>												
                                                 </div>
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
@@ -727,7 +753,10 @@
 			                                                        	~
 			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+			                                                       	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+			                                                	<c:if test="${ user.authCode == '3'}">
+																	 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+																</c:if>		
 																</div>
 															</li>
 	                                                     </c:if>
@@ -986,10 +1015,10 @@
 								<div class="tabs tabs-primary">
 									<ul class="nav nav-tabs nav-justified">
 										<li class="active">
-											<a href="#detail" data-toggle="tab">속성</a>
+											<a href="#attribute" data-toggle="tab">속성</a>
 										</li>
 										<li>
-											<a href="#content" data-toggle="tab">상세업무</a>
+											<a href="#detail" data-toggle="tab">상세업무</a>
 										</li>
 										<li>
 											<a href="#checkList" data-toggle="tab">체크리스트</a>
@@ -999,8 +1028,8 @@
 							</div>
 							<!-- 속성 Tab -->
 							
-							<div class="tab-content" style="border-bottom-width: 0px;">
-								<div class="tab-pane active" id="detail">
+							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
+								<div class="tab-pane active" id="attribute">
 								<div class="panel-body" style="padding-top: 0px;">
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 										<div class="form-group">
@@ -1032,7 +1061,6 @@
 												<c:otherwise>
 															<div class="col-md-7">
 																<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
-																	<option hidden>선택하세요</option>
 																	<c:forEach items="${pjtMember}" var="user" varStatus="status">
 																		<option value="${user.mail}">${user.name}</option>
 																	</c:forEach>
@@ -1051,9 +1079,7 @@
 													<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
 												</div>
 											</div>
-										</div>
-										
-										
+										</div>										
 										<div class="form-group">
 											<label class="col-md-3 control-label">진행상황</label>
 											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
@@ -1065,7 +1091,6 @@
 											</div>
 										</div>
 										<br>
-										<br>
 										<div class="form-group" style="text-align: center;">
 											<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="수정" form="taskEditForm">
 										</div>	
@@ -1075,40 +1100,26 @@
 								<!-- 속성 Tab 끝-->
 								
 								<!-- 상세업무 Tab-->
-								<div class="tab-pane" id="content">
+								<div class="tab-pane" id="detail">
 									<div class="panel-body" style="padding-top: 0px;">
-                                         <ul class="widget-todo-list">
+                                         <ul class="widget-todo-list" id="taskDetailList">
                                             <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem1"><span>상세업무1111</span></label>
-												</div>
 											</li>
-											 <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem2"><span>상세업무222</span></label>
-												</div>
-											</li>
-                                          </ul>
-                                       	
-                                          <!-- 상세 업무 추가(일반 회원만 보임) -->
-										<c:if test="${ user.authCode == '2'}">
+                                          </ul>                                       	
 										<hr class="solid mt-sm mb-lg">
-											<form action="ajax/project/taskContentForm.do" id="taskContentForm" method="post" class="form-horizontal form-bordered">
+											<form action="#" id="addTaskDetailForm" method="post" class="form-horizontal form-bordered">
 												<div class="form-group">
 													<div class="col-sm-12">
 														<div class="input-group mb-md">
-															<input type="hidden" form="taskContentForm" id="taskDetailTskSeq" name="tskSeq"/>
-															<input type="text" class="form-control" form="taskContentForm">
+															<input type="hidden" form="addTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
+															<input type="text" id="tdContent" name="tdContent"  class="form-control" form="addTaskDetailForm" placeholder="상세 업무를 추가해주세요">
 															<div class="input-group-btn" style="padding:0;">
-																<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+																<button type="button" class="btn btn-primary" tabindex="-1" id="addTaskDetailBtn"><span style="font-size:18px;">+</span></button>
 															</div>
 														</div>
 													</div>
 												</div>
 											</form>
-										</c:if>
 									</div>
 								</div>
 								<!-- 상세업무 Tab 끝-->
@@ -1119,40 +1130,32 @@
 								<!-- 체크리스트 Tab -->
 								<div class="tab-pane" id="checkList">
 									<div class="panel-body" style="padding-top: 0px;">
-										<ul class="widget-todo-list">
+										<ul class="widget-todo-list" id="taskCheckList">
 											<li>
 												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem2" class="todo-check">
-													<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
-											<li>
-												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem3" class="todo-check">
-													<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
+								 					<input type="checkbox" id="todoListItem2" class="todo-check">
+								 					<label class="todo-label" for="todoListItem2"><span>체크체크</span></label>
+					 							</div>
+							 					<div class="todo-actions">
+							 						<a class="todo-remove" href="#">
+							 						<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+				 							</li>
+			 					
+			 					
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
-										<form method="get" class="form-horizontal form-bordered">
+										<form id="addTaskCheckListForm" method="get" class="form-horizontal form-bordered">
 											<hr class="solid mt-sm mb-lg">
 											<div class="form-group">
 												<div class="col-sm-12">
 													<div class="input-group mb-md">
-														<input type="text" class="form-control" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
+														<input type="text" class="form-control" form="addTaskCheckListForm" name="content" id="content">
+														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
 														<div class="input-group-btn" style="padding:0;">
-															<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+															<button type="button" class="btn btn-primary" id="addTaskCheckListBtn" tabindex="-1"><span style="font-size:18px;">+</span></button>
 														</div>
 													</div>
 												</div>

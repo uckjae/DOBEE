@@ -616,16 +616,7 @@ public class DoController {
         return "attend/breakApply";
     }
     
-    
-    // 개인_부재일정신청 POST 0112          게다죽
-    @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, Authentication auth){
-        apply.setDrafter(auth.getName());
-        String result = applyService.absApply(apply);
-        // System.out.println("봐봐  : " + result);
-        
-        return "redirect: breakApply.do";
-    }
+   
     
     
     // 개인_부재일정 수정/삭제 GET                0120    COMPLETE
@@ -668,14 +659,7 @@ public class DoController {
     }
     
     
-    // 개인_연장근무신청 POST           0112 게다죽
-    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
-    public String extendApplyPost(Apply apply) {
-        String result = applyService.overtimeApply(apply);
-        // System.out.println("봐봐 이," + result);
-
-        return "redirect: extendApply.do";
-    }
+    
 
 
     // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
@@ -864,7 +848,16 @@ public class DoController {
     	
         return "project/pjtKanban_new";
     }
-
+    
+    //프로젝트 현황 불러오기 pjtDashBoard.do
+    @RequestMapping("pjtDashBoard.do")
+    public String pjtDashBoard(Model model, HttpServletRequest request) {
+    	User user = (User) request.getSession().getAttribute("user");
+    	List<Project>list = null;
+    	list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("list",list);
+    	return "project/pjt_dashboard";
+    }
 
     //업무생성
     @RequestMapping("addPMTask.do")

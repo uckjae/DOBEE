@@ -18,21 +18,21 @@ public class ApplyService {
     SqlSession sqlSession;
 
 
-    // 개인_부재일정신청	POST		0101
-    public String absApply(Apply apply){
+    // 개인_부재일정신청	POST		0101 / 01.26 알파카 수정
+    public int absApply(Apply apply){
+    	int result = 0;
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	userDao.absApply(apply);
-    	
-    	return "다시다 요리수";
+    	result = userDao.absApply(apply);
+    	return result;
     }
 
 
     // 개인_연장근무신청	POST		0101
-    public String overtimeApply(Apply apply){
+    public int overtimeApply(Apply apply){
+    	int result = 0;
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	int results = userDao.overTimeApply(apply);
-    	
-    	return "그래! 이맛이야";
+    	result = userDao.overTimeApply(apply);
+    	return result;
     }
     
     
