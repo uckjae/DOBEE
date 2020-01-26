@@ -74,8 +74,6 @@
 				$('#importantShow').text('0');	
 				var pjtSeq = $(this).data('pjtseq');
 				
-
-				
 					
 			});
 				
@@ -304,7 +302,7 @@
 		/* 비동기로 업무상세 가져와서 뿌리는 함수 */
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
-			$('#taskDetailListView').empty();
+			//$('#taskDetailListView').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskDetailList.do",
@@ -487,7 +485,7 @@
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
 			console.log("뭐시여");
-			$('#taskCheckListView').empty();
+			//$('#taskCheckListView').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",

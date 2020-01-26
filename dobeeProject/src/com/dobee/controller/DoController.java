@@ -616,16 +616,7 @@ public class DoController {
         return "attend/breakApply";
     }
     
-    
-    // 개인_부재일정신청 POST 0112          게다죽
-    @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, Authentication auth){
-        apply.setDrafter(auth.getName());
-        String result = applyService.absApply(apply);
-        // System.out.println("봐봐  : " + result);
-        
-        return "redirect: breakApply.do";
-    }
+   
     
     
     // 개인_부재일정 수정/삭제 GET                0120    COMPLETE

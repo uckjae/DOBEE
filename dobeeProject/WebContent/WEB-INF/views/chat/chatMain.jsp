@@ -304,7 +304,7 @@
 	 	 			url:"makeChatRoom.do",
 	 				data: chatRoom ,
 	 				dataType: "text",
-	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	 				contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 	 				success:function(responsedata){
 	 					console.log(responsedata);
