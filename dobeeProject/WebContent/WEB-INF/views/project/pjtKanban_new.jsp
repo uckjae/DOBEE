@@ -169,10 +169,48 @@
 	 				}
 	 			});
 			});
-			
-			
-			
+			/* 01.26 체크리스트 추가 -- 알파카 addTaskCheckListForm*/
+			$("#addTaskCheckListBtn").click(function(){
+				console.log('이거 타니??');
+				var formData = $("#addTaskCheckListForm").serialize();
+				console.log('폼 데이터?'+formData);
+				var content = $("#content").text();
+				console.log('내용?'+content);
+				$.ajax({
+	 	 			url:"ajax/project/addTaskCheckList.do",
+	 				data: formData ,
+	 				dataType: "text",
+	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+    	 				console.log('ajax2222 통신 성공?');
+	 					console.log(responsedata);
+	 					if(responsedata == "success"){ //체크리스트 생성 완료 여기얌
+		 					$("#taskCheckList").append('<li><div class="checkbox-custom checkbox-default">'
+				 					+'<input type="checkbox" id="todoListItem2" class="todo-check">'
+				 					+'<label class="todo-label" for="todoListItem2"><span>'+$("#content").val()+'</span></label></div>'
+				 					+'<div class="todo-actions">'
+				 					+'<a class="todo-remove" href="#">'
+				 					+'<i class="fa fa-times"></i>'
+				 					+'</a></div></li>');
+		 					$("#content").val("");		 					
+	 					}
+	 				},
+	 				error:function(){
+	 					console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+	 				}
+	 			});
+				
+			});
+
+
 		});
+
+		
+		
+
+		
 
 		/* DateFormatting  함수 */
 		function date_to_str(format)
@@ -471,11 +509,21 @@
 					
 					var TaskCheckList = data;
 					$(TaskCheckList).each(function(index,element){
-						console.log(index +" / " +element);
+						console.log('체크리스트'+index +" / " +element);
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
-						var list = $('<li style="width: 100%">');
+
+						$("#taskCheckList").append('<li><div class="checkbox-custom checkbox-default">'
+			 					+'<input type="checkbox" id="todoListItem2" class="todo-check">'
+			 					+'<label class="todo-label" for="todoListItem2"><span>'+content+'</span></label>'
+			 					+'<input type="hidden" name="chkSeq" value="'+chkSeq+'">'
+			 					+'</div>'
+			 					+'<div class="todo-actions">'
+			 					+'<a class="todo-remove" href="#">'
+			 					+'<i class="fa fa-times"></i>'
+			 					+'</a></div></li>');
+					/* 	var list = $('<li style="width: 100%">');
 						
 						var taskCheckListForm = $('<form>');
 							$(taskCheckListForm).attr("id",chkSeq);
@@ -518,6 +566,9 @@
 						
 						$(list).append(taskCheckListForm);
 						$('#taskCheckListView').append(list);
+ */
+
+						
 						
 					})
 				},
@@ -995,10 +1046,10 @@
 								<div class="tabs tabs-primary">
 									<ul class="nav nav-tabs nav-justified">
 										<li class="active">
-											<a href="#detail" data-toggle="tab">속성</a>
+											<a href="#attribute" data-toggle="tab">속성</a>
 										</li>
 										<li>
-											<a href="#content" data-toggle="tab">상세업무</a>
+											<a href="#detail" data-toggle="tab">상세업무</a>
 										</li>
 										<li>
 											<a href="#checkList" data-toggle="tab">체크리스트</a>
@@ -1009,7 +1060,7 @@
 							<!-- 속성 Tab -->
 							
 							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
-								<div class="tab-pane active" id="detail">
+								<div class="tab-pane active" id="attribute">
 								<div class="panel-body" style="padding-top: 0px;">
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 										<div class="form-group">
@@ -1080,7 +1131,7 @@
 								<!-- 속성 Tab 끝-->
 								
 								<!-- 상세업무 Tab-->
-								<div class="tab-pane" id="content">
+								<div class="tab-pane" id="detail">
 									<div class="panel-body" style="padding-top: 0px;">
                                          <ul class="widget-todo-list" id="taskDetailList">
                                             <li>
@@ -1110,40 +1161,19 @@
 								<!-- 체크리스트 Tab -->
 								<div class="tab-pane" id="checkList">
 									<div class="panel-body" style="padding-top: 0px;">
-										<ul class="widget-todo-list">
-											<li>
-												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem2" class="todo-check">
-													<label class="todo-label" for="todoListItem2"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
-											<li>
-												<div class="checkbox-custom checkbox-default">
-													<input type="checkbox" id="todoListItem3" class="todo-check">
-													<label class="todo-label" for="todoListItem3"><span>Lorem ipsum dolor sit amet</span></label>
-												</div>
-												<div class="todo-actions">
-													<a class="todo-remove" href="#">
-														<i class="fa fa-times"></i>
-													</a>
-												</div>
-											</li>
+										<ul class="widget-todo-list" id="taskCheckList">
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
-										<form method="get" class="form-horizontal form-bordered">
+										<form id="addTaskCheckListForm" method="get" class="form-horizontal form-bordered">
 											<hr class="solid mt-sm mb-lg">
 											<div class="form-group">
 												<div class="col-sm-12">
 													<div class="input-group mb-md">
-														<input type="text" class="form-control" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
+														<input type="text" class="form-control" form="addTaskCheckListForm" name="content" id="content">
+														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
 														<div class="input-group-btn" style="padding:0;">
-															<button type="button" class="btn btn-primary" tabindex="-1"><span style="font-size:18px;">+</span></button>
+															<button type="button" class="btn btn-primary" id="addTaskCheckListBtn" tabindex="-1"><span style="font-size:18px;">+</span></button>
 														</div>
 													</div>
 												</div>

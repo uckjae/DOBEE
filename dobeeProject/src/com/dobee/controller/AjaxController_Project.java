@@ -215,11 +215,18 @@ public class AjaxController_Project {
 	
 	//체크리스트 추가
 	@RequestMapping("addTaskCheckList")
-	public int addTaskCheckList(CheckList checkList) {
+	public String addTaskCheckList(CheckList checkList) {
+		int result = 0;
+		String responseData = "";
 		System.out.println("AjaxController_Project addTaskCheckList() in!!");
 		System.out.println("체크리스트 가져오니?"+checkList.toString());
-		int result = projectService.addTaskCheckList(checkList);
-		return result;
+		result = projectService.addTaskCheckList(checkList);
+		if(result > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
+		}
+		return responseData;
 	}
 	
 	
