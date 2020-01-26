@@ -730,16 +730,13 @@
 		                                                    </a>
 	                                                	</h4>
                                                 	</div>
-                                                	
                                                 	<!-- 업무 추가 버튼 (PM만 볼 수 있음) -->
-                                                	
                                                 	<c:if test="${ user.authCode == '3'}">
 														<div class="col-md-2">
 		                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
 			                                                    <i class="fa fa-plus-square"></i>
 			                                                </a>
 		                                                </div>
-	                                                
 													</c:if>												
                                                 </div>
                                             </div>
@@ -756,7 +753,10 @@
 			                                                        	~
 			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
 			                                                       	</span>
-				                                                    &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+			                                                       	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+			                                                	<c:if test="${ user.authCode == '3'}">
+																	 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
+																</c:if>		
 																</div>
 															</li>
 	                                                     </c:if>
