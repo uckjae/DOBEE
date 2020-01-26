@@ -13,16 +13,6 @@
 			
 				<!-- start: search & user box -->
 				<div class="header-right">
-				<!-- search 대신에 출퇴근 버튼 넣기 -->
-					<form action="pages-search-results.html" class="search nav-form">
-						<div class="input-group input-search">
-							<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-							</span>
-						</div>
-					</form>
-					<span class="separator"></span>
 					<ul class="notifications">
 						<li>
 							<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
