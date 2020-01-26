@@ -5,10 +5,11 @@
 <!doctype html>
 <html class="fixed">
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<c:import url="/common/HeadTag.jsp"/>
-	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+	<script src="assets/vendor/jquery/jquery.js"></script>
+	<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+	<c:import url="/common/HeadTag.jsp"/>
+	<!-- <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
+	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" /> -->
 	
 	<script type="text/javascript">
 $(document).ready(function(){
@@ -75,8 +76,7 @@ $(document).ready(function(){
 									<section class="panel">
 					<header class="panel-heading">
 						<div class="panel-actions">
-							<a href="#" class="fa fa-caret-down"></a>
-							<a href="#" class="fa fa-times"></a>
+					
 						</div>
 				
 						<h2 class="panel-title">비용신청 목록</h2>
@@ -142,5 +142,11 @@ $(document).ready(function(){
 		</section>
 
 		<c:import url="/common/BottomTag.jsp"/>
+		
+		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="assets/vendor/select2/select2.js"></script>
+		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script> 
+		
 	</body>
 </html>

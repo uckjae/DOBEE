@@ -28,11 +28,13 @@
  		insert into costlist (regitReceiptDate, useDate, useAt, cost, detail, costCode, cardNum, mail) 
  		values(#{regitReceiptDate}, #{useDate},#{useAt}, #{cost}, #{detail}, #{costCode}, #{cardNum}, #{mail})
  	</insert>
+ 	
 
 	<!--  비용 신청 리스트 보여주기 (=영수증 등록 목록 보여주기)-->
 	<select id="listReceipt" resultType="com.dobee.vo.CostList">
 		select * from CostList
 	</select>
+	
 	
 	<!--  관리자 법인카드 수정 -->
 	<update id="AdminEditDebit" parameterType="com.dobee.vo.Debit">
@@ -45,4 +47,27 @@
 	<delete id="adminDelDebit" parameterType="String">
 		delete from debit where cardnum=#{cardNum}
 	</delete>
+	
+	
+	<!-- 차트 맵 만들기 -->
+	<!-- <resultMap type=com.dobee.vo.costlist" id="hashmapCostList">
+		<result column ="usedate" property="USEDATE"/>
+		<result column ="cost" property="COST"/>
+		<result column ="costcode" property="COSTCODE"/>
+	</resultMap> -->
+	
+	
+	<!-- 비용 차트 보기 -->
+	<select id="paymentChart" resultType="com.dobee.vo.ItemsCostChart">
+		select usedate, cost, costlist.costcode, costcode.entry from costlist join costcode on costlist.costcode = costcode.costcode;
+	</select>
+	
+	
+	
+	<!-- 비용 연도만 가져오기 -->
+	<select id="paymentYYYY" resultType="com.dobee.vo.ItemsCostChart">
+		select usedate, cost from costlist;
+	</select>
+	
+	
 </mapper>

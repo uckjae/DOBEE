@@ -19,8 +19,11 @@ img {
 
 
 <script>
-
+var result = null;
 var path = window.location.pathname;
+var findCheck = false;
+var useDayKey = 0;
+var costKey = 0;
 console.log(path);
                 //날짜형태 yyyy-mm-dd 형태로 바꾸는 임의 함수
                 Date.prototype.format = function(f) {
@@ -151,52 +154,73 @@ console.log(path);
                                     },
                                     type: 'POST',
                                     dataType: 'json',
-                                    success: function(result) {
+                                    success: function(data) {
                                         console.log("구글 아작스 성공!");
-                                        console.log(result);
+                                        console.log(data);
+                                        result = data;
 
-                                        // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
-                                       	for (var prop in result){
+                                        
+                                    	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
                                             if(fcost != null){
                                                 console.log("여기에서 일시불 발견" + prop);
                                                 console.log(fcost);
-                                                var costKey = prop;
+                                                costKey = prop;
                                                 }
-                                           	var fday = result[prop].match("구매");
+                                           
+                                           	var fday = result[prop].match("매]");
                                             if(fday != null){
-                                            	console.log("여기에서 구매 발견" + prop);
+                                            	console.log("여기에서 매] 발견  " + prop);
                                             	console.log(fday);
-                                            	var useDayKey = prop;
+                                            	useDayKey = prop;
+                                         		findCheck=true;
+                                            }
+                                            if(findCheck==false){
+	                                            fday = result[prop].match("I구");
+	                                            if(fday != null){
+	                                            	console.log("여기에서 I구 발견  " + prop);
+	                                            	console.log(fday);
+	                                            	useDayKey = prop;
+	                                            	findCheck=true;
+	                                            }
                                             }
                                          }
+                                    },
+                                    error: function() {
+                                        console.log("구글 아작스 요청시 에러");
+                                    },
+                                    complete:function (){
+                                    	  // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
+                                       
                                         
 										/* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
 										var maeFindIndex = result[useDayKey].indexOf("매");
 										console.log(maeFindIndex);
 										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
-										console.log("여기 확인해봐!!! " + exceptionOther);
+										//console.log("여기 확인해봐!!! " + exceptionOther);
                                        	
 										/*  일시불의 같은 라인에서 뒤에서 부터 '/' 을 찾아 절삭하는 과정 */
 										var slushIndex = result[costKey].lastIndexOf("/");
-                                       	console.log("여기인!!!!! " + slushIndex);
+                                       	//console.log("여기인!!!!! " + slushIndex);
 										var exceptionStrCost = result[costKey].substr(slushIndex+1);
-										console.log(exceptionStrCost);
-									
+										//console.log(exceptionStrCost);
+
+										
                                        	/*날짜 처리과정 */
                                         var temp = fn(exceptionOther);
                                         var usedate = calculus(temp);
+
                                         
                                         /* 뽑아 낸 텍스트 input tag에 넣기 */ 
                                         $("#Input2").attr("value", usedate);
                                         $("#Input3").attr("value", result.key1);
                                         var usecost = fn(exceptionStrCost);
+                                        console.log("여기 확인: "+ usecost);
+                                        $("#Input4").attr("value", usecost);
+
+
 
                                         
-                                        $("#Input4").attr("value", usecost);
-                                    },
-                                    error: function() {
-                                        console.log("구글 아작스 요청시 에러");
                                     },
                                 }) // 2번째 아작스끝
                         },

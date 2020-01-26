@@ -51,7 +51,6 @@ public class ReceiptService {
 					ex = saveFileName.split("\\.")[1];
 					saveFileName = ori + "_" + System.currentTimeMillis() + "." +ex;
 				}
-				
 				try {
 					mFile.transferTo(new File(uploadPath + saveFileName));
 					isSuccess = "true";				
@@ -64,17 +63,14 @@ public class ReceiptService {
 					System.out.println("서비스단 / boardService.java: try 구문 예외 발생222");
 					isSuccess = "false";
 				}
-				
 			} // if end
 			else {
 				System.out.println("서비스단 / ReceiptService: form 태그로 부터 온 데이타가 없습니다.");
 			}
-		
 			arrayList.add(isSuccess);
 			arrayList.add(uploadPath);
 			arrayList.add(saveFileName);
 		} // while end
 		return arrayList;
 	} // fileUpload end
-
 }

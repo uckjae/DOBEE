@@ -162,13 +162,7 @@
         GetFileDetails: function (file) {
             if (this.onClick) {
                 this.onClick(file);
-                
                 console.log("방금 이거");
-
-				
-
-
-
                 
             }
         },

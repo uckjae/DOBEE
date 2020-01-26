@@ -39,8 +39,8 @@
 						<a><i class="fa fa-credit-card" aria-hidden="true"></i><span>비용</span></a>
 						<ul class="nav nav-children">
 							<li><a href="receiptRegit.do">정산신청</a></li>
-							
 							<li><a href="receiptList.do">비용현황</a></li>
+							<li><a href="paymentChart.do">비용차트</a></li>
 						</ul>
 					</li>
 					<li class="nav-parent">

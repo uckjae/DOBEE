@@ -8,6 +8,7 @@ import com.dobee.vo.Apply;
 import com.dobee.vo.CostCode;
 import com.dobee.vo.CostList;
 import com.dobee.vo.Debit;
+import com.dobee.vo.ItemsCostChart;
 
 public interface PaymentDao {
 
@@ -49,5 +50,17 @@ public interface PaymentDao {
     
     //관리자 법인카드 삭제하기
     public int adminDelDebit(String cardNum);
+    
+    
+    //비용데이터 불러오기  항목 차트
+    public ArrayList<ItemsCostChart> paymentChart();
+    
+    
+    //비용 연도만 가져오기 
+    public ArrayList<ItemsCostChart> paymentYYYY();
+    
+    
+    
+    
     
 }

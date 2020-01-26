@@ -1105,9 +1105,11 @@ public class DoController {
    }
    
    
-   
-   
-  
+    //비용 차트 뷰단 가기
+	@RequestMapping(value="paymentChart.do", method=RequestMethod.GET)
+	public String paymentChart() {
+		return "payment/payChart";
+	}
     
     
 }

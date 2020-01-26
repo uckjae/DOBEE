@@ -23,7 +23,6 @@
 <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
 <!-- Specific Page Vendor CSS -->
-
 <link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 <link rel="stylesheet" href="assets/vendor/morris/morris.css" />
 
