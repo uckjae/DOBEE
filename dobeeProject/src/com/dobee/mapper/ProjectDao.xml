@@ -20,13 +20,14 @@
 	WHERE U.MAIL = #{mail};
 </select>
 
-<insert id="mkPjt" parameterType="com.dobee.vo.project.Project"> 
+<!-- 프로젝트 생성 01.26 알파카 수정 -->
+<insert id="mkPjt" parameterType="com.dobee.vo.project.Project" useGeneratedKeys="true" keyProperty="pjtSeq"> 
 	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},#{pjtProgress} )
 </insert>
 
-<!-- 프로젝트 생성시 참여 멤버 추가 01.15.알파카 -->
-<insert id="mkPjtMember" parameterType="hashMap">
-	INSERT INTO PROJECTMEMBER(PJTSEQ, MAIL) VALUES ((SELECT PJTSEQ FROM PROJECT WHERE PJTNAME=#{pjtName}), #{mail})
+<!-- 프로젝트 생성시 참여 멤버 추가 01.26.알파카 수정 -->
+<insert id="mkPjtMember" parameterType="com.dobee.vo.project.ProjectMember">
+	INSERT INTO PROJECTMEMBER(MAIL, PJTSEQ) VALUES (#{mail}, (SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{pjtSeq}))
 </insert>
 
 <!-- 프로젝트 삭제  01.15.알파카 -->

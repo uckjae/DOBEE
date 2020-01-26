@@ -18,8 +18,7 @@ public interface ProjectDao {
     public int mkPjt(Project project);
     
     //프로젝트 생성시 참여 멤버 추가 --01.15.알파카
-    public int mkPjtMember(Map<String,String> map);
-
+    public int mkPjtMember(ProjectMember pjtMember);
 
     //모든 프로젝트 목록 가져오기 pm 회원용  --01.23.알파카
     public List<Project> getAllPjtList();

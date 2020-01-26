@@ -42,17 +42,12 @@ public class ProjectService {
     }
     
     //프로젝트 멤버 추가
-    public int addProjectMember(String pjtName, List<String> pjtMembersMail) {
+    public int addProjectMember(List<ProjectMember> pjtMemberList) {
     	int result = 0;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("pjtName", pjtName);
-    	for(int i = 0; i<pjtMembersMail.size(); i++) {
-    		String mail = pjtMembersMail.get(i).toString();
-    		map.put("mail", mail);
-        	result = projectdao.mkPjtMember(map);
+    	for (int i = 0; i<pjtMemberList.size(); i ++) {
+    		result = projectdao.mkPjtMember(pjtMemberList.get(i));
     	}
-    	System.out.println("result?"+result);
     	return result;
     }
 
