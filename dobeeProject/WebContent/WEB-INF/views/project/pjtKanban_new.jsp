@@ -493,7 +493,7 @@
 		}
 
 
-		/* 체크리스트 가져와 뿌리는 함수 */
+		/* 체크리스트 가져와 뿌리는 함수 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
 			console.log("뭐시여");
@@ -509,67 +509,36 @@
 					
 					var TaskCheckList = data;
 					$(TaskCheckList).each(function(index,element){
-						console.log('체크리스트'+index +" / " +element);
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
 
-						$("#taskCheckList").append('<li><div class="checkbox-custom checkbox-default">'
-			 					+'<input type="checkbox" id="todoListItem2" class="todo-check">'
-			 					+'<label class="todo-label" for="todoListItem2"><span>'+content+'</span></label>'
-			 					+'<input type="hidden" name="chkSeq" value="'+chkSeq+'">'
-			 					+'</div>'
-			 					+'<div class="todo-actions">'
-			 					+'<a class="todo-remove" href="#">'
-			 					+'<i class="fa fa-times"></i>'
-			 					+'</a></div></li>');
-					/* 	var list = $('<li style="width: 100%">');
-						
-						var taskCheckListForm = $('<form>');
-							$(taskCheckListForm).attr("id",chkSeq);
-							$(taskCheckListForm).attr("action","ajax/project/editTaskCheckList.do");
-
-							var divList = $('<div class="col-md-12">');
-								var hiddenInput = $('<input hidden name="chkSeq">');
-									$(hiddenInput).val(chkSeq);
-							$(divList).append(hiddenInput);
-								var hiddenInput2 = $('<input hidden name="tskSeq">');
-									$(hiddenInput2).val(tskSeq);
-							$(divList).append(hiddenInput2);
-								var checkBox = $('<input type="checkbox" class="content" name="isCheck" disabled="disabled">');
-									
-									if(isCheck == true){
-										console.log("if check=true");
-										$(checkBox).prop("checked",true);
-										$(checkBox).val(1);
-									}else{
-										console.log("else check=false");
-										$(checkBox).prop("checked",false);
-										$(checkBox).val(0);
-									}
-							$(divList).append(checkBox);
-								var input = $('<input class="form-control content" name="content" disabled="">');
-									$(input).attr("id",chkSeq+"input");
-									$(input).val(content);
-									$(input).text(content);
-							$(divList).append(input);
-								
-								var anchorEdit = $('<a onclick="taskCheckListEdit(this)">');
-									var editIcon = $('<i class="fa fa-edit">');
-								$(anchorEdit).append(editIcon);
-							$(divList).append(anchorEdit);
-								var anchorDelete = $('<a onclick="taskCheckListDelete(this)">');
-									var deleteIcon = $('<i class="fa fa-trash-o">');
-								$(anchorDelete).append(deleteIcon);
-							$(divList).append(anchorDelete);
-						$(taskCheckListForm).append(divList);
-						
-						$(list).append(taskCheckListForm);
-						$('#taskCheckListView').append(list);
- */
-
-						
-						
+						var li = $('<li>');
+						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
+						var hiddenInput = $('<input hidden name="chkSeq">');
+						$(hiddenInput).val(chkSeq);
+						$(checkDiv).append(hiddenInput);
+						var hiddenInput2 = $('<input hidden name="tskSeq">');
+						$(hiddenInput2).val(tskSeq);
+						$(checkDiv).append(hiddenInput2);
+						var checkBox = $('<input type="checkbox" id="todoListItem2" class="todo-check" name="isCheck">');
+						if(isCheck == true){
+							console.log("if check=true");
+							$(checkBox).prop("checked",true);
+							$(checkBox).val(1);
+						}else{
+							console.log("else check=false");
+							$(checkBox).prop("checked",false);
+							$(checkBox).val(0);
+						}
+						$(checkDiv).append(checkBox);
+						var label = $('<label class="todo-label" for="todoListItem2"><span>');
+						label.text(content);
+						$(checkDiv).append(label);
+						var actionDiv = $('<div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
+						$(li).append(checkDiv);
+						$(li).append(actionDiv);
+						$("#taskCheckList").append(li);
 					})
 				},
 				error:function(request,status,error){
@@ -1162,6 +1131,19 @@
 								<div class="tab-pane" id="checkList">
 									<div class="panel-body" style="padding-top: 0px;">
 										<ul class="widget-todo-list" id="taskCheckList">
+											<li>
+												<div class="checkbox-custom checkbox-default">
+								 					<input type="checkbox" id="todoListItem2" class="todo-check">
+								 					<label class="todo-label" for="todoListItem2"><span>체크체크</span></label>
+					 							</div>
+							 					<div class="todo-actions">
+							 						<a class="todo-remove" href="#">
+							 						<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+				 							</li>
+			 					
+			 					
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
