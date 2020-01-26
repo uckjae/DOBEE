@@ -126,12 +126,11 @@
 						<!--Body-->
 						<div class="container-fluid">
 						<div class="modal-body mb-0" style="margin-top: 10px;margin-bottom:10px;">
-						     <form id="pjtForm" name="pjtForm" action="#">
 							<!-- 프로젝트명 -->
 								<div class="form-group">
 									<label class="col-md-3 control-label">프로젝트명</label>
 									<div class="col-md-7">
-										<input type="text" class="form-control" id="pjtName" name="pjtName">
+										<input type="text" class="form-control" id="pjtName" name="pjtName" style="height:35px;">
 									</div>
 								</div>
 							<!-- 날짜 -->
@@ -148,7 +147,6 @@
 										</div>
 									</div>
 								</div>
-								</form>
 							<!-- 담당자 -->
 								<div class="form-group">
 									<label class="col-md-3 control-label">담당자</label>
