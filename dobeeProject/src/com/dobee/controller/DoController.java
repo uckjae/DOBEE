@@ -867,8 +867,11 @@ public class DoController {
     
     //프로젝트 현황 불러오기 pjtDashBoard.do
     @RequestMapping("pjtDashBoard.do")
-    public String pjtDashBoard(@RequestParam(value="mail") String mail) {
-    	System.out.println("사용자 메일?"+mail);
+    public String pjtDashBoard(Model model, HttpServletRequest request) {
+    	User user = (User) request.getSession().getAttribute("user");
+    	List<Project>list = null;
+    	list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("list",list);
     	return "project/pjt_dashboard";
     }
 

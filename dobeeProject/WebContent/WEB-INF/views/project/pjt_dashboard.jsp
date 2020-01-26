@@ -45,11 +45,6 @@
 						<div class="col-lg-6 col-md-12">
 						<section class="panel">
 								<header class="panel-heading panel-heading-transparent">
-									<!-- <div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
- -->
 									<h2 class="panel-title">참여중인 프로젝트</h2>
 								</header>
 								<div class="panel-body">
@@ -58,96 +53,26 @@
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>Project</th>
-													<th>Status</th>
-													<th>Progress</th>
+													<th>프로젝트</th>
+													<th>상태</th>
+													<th>진행도</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td>JSOFT - Responsive HTML5 Template</td>
-													<td><span class="label label-success">Success</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																100%
+											<c:forEach items="${list}" var="n" varStatus="status">
+													<tr>
+														<td>${status.index + 1}</td>
+														<td>${n.pjtName}</td>
+														<td><span class="label label-success">${n.pjtProgress}</span></td>
+														<td>
+															<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+																<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+																	100%
+																</div>
 															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>JSOFT - Responsive Drupal 7 Theme</td>
-													<td><span class="label label-success">Success</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																100%
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Tucson - Responsive HTML5 Template</td>
-													<td><span class="label label-warning">Warning</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-																60%
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Tucson - Responsive Business WordPress Theme</td>
-													<td><span class="label label-success">Success</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-																90%
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td>JSOFT - Responsive Admin HTML5 Template</td>
-													<td><span class="label label-warning">Warning</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-																45%
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>6</td>
-													<td>JSOFT - Responsive HTML5 Template</td>
-													<td><span class="label label-danger">Danger</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-																40%
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>7</td>
-													<td>JSOFT - Responsive Drupal 7 Theme</td>
-													<td><span class="label label-success">Success</span></td>
-													<td>
-														<div class="progress progress-sm progress-half-rounded mt-xs light">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">
-																95%
-															</div>
-														</div>
-													</td>
-												</tr>
+														</td>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
