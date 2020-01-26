@@ -81,7 +81,6 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
-				console.log('몇이야??'+tskseq);
 
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
@@ -94,6 +93,7 @@
 					data: {"tskSeq":tskSeq},
 					dataType: "JSON",
 					success: function(data){
+						console.log('getTask ajax 성공?');
 						console.log(data);
 						var task = data;
 						$('#taskDetailTitle').text(task.title);
@@ -122,6 +122,7 @@
 								+ request.responseText + "\n" + "error : " + error);
 					}
 				});
+				
 				getTaskDetailList(tskSeq);
 				getTaskCheckList(tskSeq);
 					
@@ -300,7 +301,7 @@
 			
 		}
 
-		/* 비동기로 업무상세 가져와서 뿌리는 함수 */
+		/* 비동기로 업무상세 가져와서 뿌리는 함수  -- 01.26 알파카 수정*/
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
 			//$('#taskDetailListView').empty();
@@ -319,39 +320,11 @@
 						console.log(index +" / " +element);
 						var tdSeq = element.tdSeq;
 						var tdContent = element.tdContent;
-						var list = $('<li style="width: 100%">');
-						
-						var taskDetailListForm = $('<form>');
-							$(taskDetailListForm).attr("id",tdSeq);
-							$(taskDetailListForm).attr("action","ajax/project/editTaskDetail.do?tdSeq="+tdSeq);
-
-							var divList = $('<div class="col-md-12">');
-								var hiddenInput = $('<input hidden name="tdSeq">');
-									$(hiddenInput).val(tdSeq);
-							$(divList).append(hiddenInput);
-								var hiddenInput2 = $('<input hidden name="tskSeq">');
-									$(hiddenInput2).val(tskSeq);
-							$(divList).append(hiddenInput2);
-								var input = $('<input class="form-control contentData" name="tdContent" disabled="">');
-									$(input).attr("id",tdSeq+"input");
-									$(input).val(tdContent);
-									$(input).text(tdContent);
-							$(divList).append(input);
-								
-								var anchorEdit = $('<a onclick="taskDetailEdit(this)">');
-									var editIcon = $('<i class="fa fa-edit">');
-								$(anchorEdit).append(editIcon);
-							$(divList).append(anchorEdit);
-								var anchorDelete = $('<a onclick="taskDetailDelete(this)">');
-									var deleteIcon = $('<i class="fa fa-trash-o">');
-								$(anchorDelete).append(deleteIcon);
-							$(divList).append(anchorDelete);
-						$(taskDetailListForm).append(divList);
-						
-						$(list).append(taskDetailListForm);
-						$('#taskDetailListView').append(list);
-						
-							
+						//상세 업무 뿌리기
+						$("#taskDetailList").append('<li><div style="margin-left:10px;"><span><i class="fa fa-square"></i></span>&nbsp;&nbsp;'
+			 					+'<label class="todo-label" for="todoListItem1"><span>'+tdContent+'</span></label>'
+			 					+'<input type="hidden" name="tdSeq" value="'+tdSeq+'">'
+			 					+'</div></li>');
 					})
 				},
 				error:function(request,status,error){
@@ -1111,16 +1084,6 @@
 									<div class="panel-body" style="padding-top: 0px;">
                                          <ul class="widget-todo-list" id="taskDetailList">
                                             <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem1"><span>상세업무1111</span></label>
-												</div>
-											</li>
-											 <li>
-												<div style="margin-left:10px;">
-													<span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-													<label class="todo-label" for="todoListItem2"><span>상세업무222</span></label>
-												</div>
 											</li>
                                           </ul>                                       	
 										<hr class="solid mt-sm mb-lg">
