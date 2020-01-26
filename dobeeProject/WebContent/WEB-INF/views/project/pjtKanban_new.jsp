@@ -81,6 +81,7 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+				console.log('몇이야??'+tskseq);
 
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
@@ -736,11 +737,17 @@
 		                                                    </a>
 	                                                	</h4>
                                                 	</div>
-                                                	<div class="col-md-2">
-	                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
-		                                                    <i class="fa fa-plus-square"></i>
-		                                                </a>
-	                                                </div>
+                                                	
+                                                	<!-- 업무 추가 버튼 (PM만 볼 수 있음) -->
+                                                	
+                                                	<c:if test="${ user.authCode == '3'}">
+														<div class="col-md-2">
+		                                                	<a class="addTask" style="width:20%;" data-toggle="modal" data-target="#addTaskModal" data-pjtSeq="${requestScope.project.pjtSeq}">
+			                                                    <i class="fa fa-plus-square"></i>
+			                                                </a>
+		                                                </div>
+	                                                
+													</c:if>												
                                                 </div>
                                             </div>
                                             <div id="collapse1One" class="accordion-body collapse in">
