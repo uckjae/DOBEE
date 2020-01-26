@@ -17,7 +17,7 @@ public class AjaxController_Work {
 	ApplyService applyService;
 	
 	@RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-	public String absApplyPos(Apply apply, Authentication auth) {
+	public String absApply(Apply apply, Authentication auth) {
 		System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
 		String responseData = "";
 		int result = 0;
@@ -41,6 +41,31 @@ public class AjaxController_Work {
         // System.out.println("봐봐  : " + result);
         
         return "redirect: breakApply.do";
+    }
+	 */
+	@RequestMapping(value="extendApply.do", method=RequestMethod.POST)
+	public String extendApply(Apply apply) {
+		System.out.println("값 가져와?"+apply.toString());
+		String responseData = "";
+		int result = 0;
+        result = applyService.overtimeApply(apply);
+        if(result > 0) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
+        System.out.println("연장 신청"+responseData);
+		return responseData;
+	}
+	
+	/*
+	 // 개인_연장근무신청 POST           0112 게다죽
+    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
+    public String extendApplyPost(Apply apply) {
+        String result = applyService.overtimeApply(apply);
+        // System.out.println("봐봐 이," + result);
+
+        return "redirect: extendApply.do";
     }
 	 */
 	

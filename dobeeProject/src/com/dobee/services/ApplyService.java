@@ -28,11 +28,11 @@ public class ApplyService {
 
 
     // 개인_연장근무신청	POST		0101
-    public String overtimeApply(Apply apply){
+    public int overtimeApply(Apply apply){
+    	int result = 0;
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	int results = userDao.overTimeApply(apply);
-    	
-    	return "그래! 이맛이야";
+    	result = userDao.overTimeApply(apply);
+    	return result;
     }
     
     

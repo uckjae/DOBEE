@@ -211,6 +211,7 @@
 		            format : 'YYYY-MM-DD HH:mm' 
 		        });
 
+		        /*부재 일정 신청 비동기 처리 --01.26 알파카 */
 		        $("#breakApplyBtn").on('click', function() {
 			        var formData = $("#breakApplyForm").serialize();
 			        console.log('폼??'+formData);
@@ -246,8 +247,6 @@
 							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					});
-					
-
 			    });
 	
 			}

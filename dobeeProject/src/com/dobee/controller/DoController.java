@@ -659,14 +659,7 @@ public class DoController {
     }
     
     
-    // 개인_연장근무신청 POST           0112 게다죽
-    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
-    public String extendApplyPost(Apply apply) {
-        String result = applyService.overtimeApply(apply);
-        // System.out.println("봐봐 이," + result);
-
-        return "redirect: extendApply.do";
-    }
+    
 
 
     // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
