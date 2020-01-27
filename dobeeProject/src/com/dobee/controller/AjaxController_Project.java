@@ -184,16 +184,21 @@ public class AjaxController_Project {
 	*/
 	//TaskDetailEdit
 	@RequestMapping("taskDetailEdit.do")
-	public int taskDetailEdit(TaskDetail taskDetail) {
+	public String taskDetailEdit(@RequestParam(value="tdSeq") String tdSeq,@RequestParam(value="tdContent") String tdContent, @RequestParam(value="tskSeq") String tskSeq ) {
 		System.out.println("AjaxController_Project taskDetailEdit() in!!");
-		System.out.println(taskDetail);
-		int tdSeq = taskDetail.getTdSeq();
-		int tskSeq = taskDetail.getTskSeq();
+		String responseData = "";
+		//객체 주입
+		TaskDetail taskDetail = new TaskDetail();
+		taskDetail.setTdSeq(Integer.parseInt(tdSeq));
+		taskDetail.setTdContent(tdContent);
+		taskDetail.setTskSeq(Integer.parseInt(tskSeq));
+		
 		int result = projectService.taskDetailEdit(taskDetail);
-		if(result<=0) {
-			System.out.println("taskDetailEdit() 에러");
+		if(result>0) {
+			responseData = "success";
 		}
-		return tskSeq;
+		
+		return responseData;
 	}
 	
 	
