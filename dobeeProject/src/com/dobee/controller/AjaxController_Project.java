@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -153,18 +154,17 @@ public class AjaxController_Project {
 	
 	//TaskDetail 추가 -- 01.26 알파카
 	@RequestMapping("addTaskDetail.do")
-	public String addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+	public Map<String, String> addTaskDetail(TaskDetail taskDetail, HttpServletRequest req) {
+		System.out.println("상세 업무 가져와?"+taskDetail.toString());
 		String responseData = "";
-		int result = 0;
-		System.out.println("AjaxController_Project addTaskDetail() in");
-		System.out.println(taskDetail.toString());
-		
-		result = projectService.addTaskDetail(taskDetail);
-		
-		if(result > 0) {
-			responseData = "success";
+		Map<String, String> map = new HashMap<String, String>();
+		int tdSeq = 0;
+		tdSeq = projectService.addTaskDetail(taskDetail);
+		if(tdSeq > 0) {
+			map.put("result", "success");
+			map.put("tdSeq", Integer.toString(tdSeq));
 		}
-		return responseData;
+		return map;
 	}
 	/*
 	
