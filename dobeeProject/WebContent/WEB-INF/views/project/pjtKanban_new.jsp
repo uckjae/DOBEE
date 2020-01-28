@@ -730,7 +730,7 @@
 		/* 체크리스트 가져와 뿌리는 함수 쳌쳌 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
-			//$('#taskCheckList').empty();
+			$('#taskCheckList').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",
@@ -747,15 +747,87 @@
 						var isCheck = element.check;
 						
 						var li = $('<li>');
+						//체크박스
 						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
+						var checkInput = $('<input type="checkbox" id="todoListItem'+num+'" onclick="checkLine(this)" name="isCheck">');
+						var label = $('<label class="check-label" for="todoListItem'+num+'">')
+						
+						//checkLine(checkInput);
+						var span = $('<span>'+content+'</span>');
+						if(isCheck == true){
+							console.log("if check=true");
+							$(checkInput).prop("checked",true);
+							$(checkInput).val(1);
+							$(span).css('text-decoration','line-through');
+						}else{
+							console.log("else check=false");
+							$(checkInput).prop("checked",false);
+							$(checkInput).val(0);
+							$(span).css('text-decoration','none');
+						}
+						label.append(span);
+						checkDiv.append(checkInput);
+						checkDiv.append(label);
+						/*
+						var label = $(data).closest('li').find('.check-label').find('span');
+						if($(data).is(':checked')){
+							console.log('체크 되니??');
+							label.css('text-decoration','line-through');
+						} else {
+							console.log('체크 해제??');
+							label.removeAttr('style');
+						}
+						
+						*/
+
+						//수정 삭제 아이콘
+						var actionDiv = $('<div class="todo-actions">');
+						var editIcon = $('<a style="cursor: pointer" onclick="taskCheckListEdit(this)"><i class="fa  fa-pencil"></i></a>');
+						var deleteIcon = $('<a style="cursor: pointer" onclick="taskCheckListDelete(this)"><i class="fa fa-times"></i></a>');
+						actionDiv.append(editIcon);
+						actionDiv.append(deleteIcon);
+
+						//수정창 만들기
+						var editDiv = $('<div class="checkList-Edit" style="display:none">');
+						var editForm = $('<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">');
+						var formGroup = $('<div class="form-group">');
+						var div1 = $('<div class="col-sm-12">');
+						var div2 = $('<div class="input-group mb-md">');
+						var hiddenInput1 = $('<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>');
+						hiddenInput1.val(tskSeq);
+						var hiddenInput2 = $('<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>');
+						hiddenInput2.val(chkSeq);
+						var contentInput = $('<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">');
+						contentInput.val(content);
+						var btnDiv = $('<div class="input-group-btn" style="padding:0;">');
+						var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
+						btnDiv.append(btn);
+						div2.append(hiddenInput1);
+						div2.append(hiddenInput2);
+						div2.append(contentInput);
+						
+						div2.append(btnDiv);
+						div1.append(div2);
+						formGroup.append(div1);
+						
+						editForm.append(formGroup);
+						editDiv.append(editForm);
+
+						$(li).append(checkDiv);
+						$(li).append(actionDiv);
+						$(li).append(editDiv);
+						$("#taskCheckList").append(li);
+						num++;
+						/*
+						예전거
 
 						var id = 'todoListItem'+num;
-						/* var hiddenInput = $('<input hidden name="chkSeq">');
+						var hiddenInput = $('<input hidden name="chkSeq">');
 						$(hiddenInput).val(chkSeq);
 						$(checkDiv).append(hiddenInput);
 						var hiddenInput2 = $('<input hidden name="tskSeq">');
 						$(hiddenInput2).val(tskSeq);
-						$(checkDiv).append(hiddenInput2); */
+						$(checkDiv).append(hiddenInput2);
 						var checkBox = $('<input type="checkbox" class="todo-check" name="isCheck">');
 						$(checkBox).attr('id',id);
 						if(isCheck == true){
@@ -779,22 +851,7 @@
 						$(li).append(actionDiv);
 						$("#taskCheckList").append(li);
 						num++;
-
-
-						/*
-						<li>
-							<div class="checkbox-custom checkbox-default">
-			 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
-			 					<label for="todoListItem1" class="check-label">
-			 						<span>체크체크~!~!~!~!</span>
-			 					</label>
- 							</div>
-		 					<div class="todo-actions">
-		 						<a class="todo-remove" href="#">
-		 							<i class="fa fa-times"></i>
-		 						</a>
-		 					</div>
-						</li>
+						
 						*/
 					});
 				},
@@ -808,38 +865,17 @@
 
 		/*체크박스 체크하는 함수 -> 밑줄 긋기 & 체크 여부 name 값 바꾸기*/
 		function checkLine(data){
-			var label = $(data).closest('li').find('.check-label').find('span');
+			var span = $(data).closest('li').find('.check-label').find('span');
+			//console.dir(label);
 			if($(data).is(':checked')){
 				console.log('체크 되니??');
-				label.css('text-decoration','line-through')
+				span.css('text-decoration','line-through');
 			} else {
-				console.log('체크 해제??');
-				label.removeAttr('style');
+				console.log('체크 해제!!!');
+				//label.removeAttr('style');
+				span.css('text-decoration','none');
 			}
 		}
-
-
-		/* 체크리스트 수정창 띄우는 함수 */
-		/* function taskCheckListEdit(data){
-
-			
-			$('#taskCheckListView').find('.content').each(function(index,element){
-				$(element).attr("disabled","true");
-			});
-			$(data).prev().removeAttr("disabled");
-			$(data).prev().prev().removeAttr("disabled");
-			$(data).prev().prev().attr("onclick","checkBoxChange(this)");
-			$(data).children().removeAttr("class");
-			$(data).children().attr("class","fa fa-magic");
-			$(data).removeAttr("onclick");
-			$(data).attr("onclick","taskCheckListEditSubmit(this)");
-			$(data).next().children().removeAttr("class");
-			$(data).next().children().attr("class","fa fa-times");
-			$(data).next().removeAttr("onclick");
-			$(data).next().attr("onclick","taskCheckListEditCancle");
-
-			
-		} */
 
 
 		/* 체크리스트 비동기로 수정하는 함수 */
@@ -891,6 +927,8 @@
 		function taskCheckListEdit(data){
 			console.log('수정 함수 타니?');
 			/*체크리스트 수정창 띄우기*/
+			//console.dir(data);
+			var edit = $(data).parents('li').find('.checkList-Edit');
 			$(data).parents('li').find('.checkList-Edit').css('display','block');
 			$(data).parents('li').find('.checkList-Edit').css('margin-top','15px');
 			$(data).parents('li').find('.checkList-Edit').css('margin-left','15px');
@@ -1491,8 +1529,8 @@
 										<ul class="widget-todo-list" id="taskCheckList">
 											<li>
 												<div class="checkbox-custom checkbox-default">
-								 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
-								 					<label for="todoListItem1" class="check-label">
+								 					<input type="checkbox" id="todoListItem7" onclick="checkLine(this)">
+								 					<label for="todoListItem7" class="check-label">
 								 						<span>체크체크~!~!~!~!</span>
 								 					</label>
 					 							</div>
@@ -1507,14 +1545,15 @@
 							 					</div>
 							 					<!-- 수정창 -->
 							 					<div class="checkList-Edit" style="display:none">
-					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
+					 								<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
 														<div class="form-group">
 															<div class="col-sm-12">
 																<div class="input-group mb-md">
-																	<input type="hidden" form="editTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
-																	<input type="text" id="tdContent" name="tdContent"  class="form-control" form="editTaskDetailForm">
+																	<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>
+																	<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>
+																	<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">
 																	<div class="input-group-btn" style="padding:0;">
-																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
+																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
 																	</div>
 																</div>
 															</div>
