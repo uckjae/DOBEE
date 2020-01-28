@@ -57,7 +57,11 @@
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script type="text/javascript">
+
+    	
 		$(function(){
+			var wsocket;
+			connect();
 
 			var authCode = $("#authCode").val(); //현재 로그인한 회원의 권한 코드 가져오기
 
@@ -182,6 +186,7 @@
 			$("#addPMTaskBtn").click(function(){
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
+				send("addTask");
 				$("#addPMTaskForm").submit();
 			});
 
@@ -870,7 +875,49 @@
 			}
 		}
 
+		/* 알람 */
+		function getContextPath() {//contextPath 구하는 함수
+		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+		};
 		
+		
+
+		function connect(){
+			var contextPath = getContextPath();
+			wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+			wsocket.onopen = onOpen;
+			wsocket.onmessage = onMessage;
+			wsocket.onclose = onClose;
+		}
+
+		function disconnect(){
+			wsocket.close();
+		}
+		function onOpen(evt) {
+		}
+		
+		function onMessage(evt) {
+			var data = evt.data;
+			appendMessage(data);
+		}
+		
+		function onClose(evt) {
+		}
+		
+		function send(data) {
+			let mail = $('#taskMember').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+	
+		function appendMessage(msg) {
+		}
 		
 		
     </script>

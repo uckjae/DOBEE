@@ -72,7 +72,6 @@ public class ProjectService {
     	List<User> pjtMember = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	pjtMember = projectdao.getPjtMember(pjtSeq);
-    	System.out.println("db에서 어떻게 가져와?"+pjtMember.toString());
     	return pjtMember;
     }
     
@@ -101,7 +100,6 @@ public class ProjectService {
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addPMTask(task);
     	if(result > 0) {
-    		System.out.println("프로젝트 서비스 pm 업무 추가 완료"+result);
     	}
     	return result;
     }

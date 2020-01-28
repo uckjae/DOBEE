@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/common/HeadTag.jsp"/>
+<link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 <header class="header">
 				<div class="logo-container">
 					<a href="#" class="logo">
@@ -221,8 +223,67 @@
 			</header>
 			
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 <script>
+
+	window.onload = function(){
+		connect();
+	}
+
+	
+	var wsocket;
+	
+	function getContextPath() {//contextPath 구하는 함수
+		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+		};
+		
+
+	function connect(){
+		var contextPath = getContextPath();
+		wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+		wsocket.onopen = onOpen;
+		wsocket.onmessage = onMessage;
+		wsocket.onclose = onClose;
+	}
+	
+	function disconnect() {
+		wsocket.close();
+	}
+	
+	function onOpen(evt) {
+		send();
+	}
+	
+	function onMessage(evt) {
+		var data = evt.data;
+		showAlarm(data);
+	}
+	
+	function onClose(evt) {
+	}
+	
+	
+	
+	/* function appendMessage(msg) {
+		$("#alertArea").empty();
+		$("#alertArea").append(msg.substring(0,8) +"<a href='${pageContext.request.contextPath}/messageView.do'>"+ msg.substring(9,11) +"</a>");
+	} */
+
+	function showAlarm(data)  {
+		  PNotify.desktop.permission();
+		  (new PNotify({
+		    title: '알림',
+		    text: data,
+		    hide: false,
+		    desktop: {
+		      desktop: true
+		    }
+		  })).get().click(function() {
+		    alert('Hey! You clicked the desktop notification!');
+		  });
+		}
+
 	//출근하기
 	function attend() {
 		swal({
