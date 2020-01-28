@@ -358,20 +358,21 @@
 					 readOnly: true
 				 });
 			} else { //pm
+				console.log('pm 타니??');
 				$("#starBar").attr('id', 'taskImportantEdit');
-
 				$("#taskImportantEdit").rateYo({
 				    rating: important,
 				    fullStar: true,
 				    onSet: function (rating, rateYoInstance) {
 					    //var value = rating;
 					    //$('#taskImportant').text(value); //중요도 값 표시해주기
+				    	var value = rating;
+						$('#taskImportant').text(value); //중요도 값 표시해주기
+						$("#taskEditImportant").val(value); //db에 저장할 값 넣어주기
+						console.log('중요도 값 바뀌니?'+$("#taskEditImportant").val());
 				      }
 				  });
-				  
 			}
-		
-			 
 		}
 
 		
@@ -1283,7 +1284,7 @@
 												</c:when>
 												<c:otherwise>
 														<div class="col-md-7">
-															<select class="form-control" id="taskMember" name="mail" form="addPMTaskForm">
+															<select class="form-control" id="taskMember" name="mail" form="taskEditForm">
 																<c:forEach items="${pjtMember}" var="user" varStatus="status">
 																	<option value="${user.mail}">${user.name}</option>
 																</c:forEach>
@@ -1298,8 +1299,11 @@
 											<div class="col-md-6">
 												<div id="starBar">
 												</div>
+												<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+												<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
+												<input type="hidden" id="taskEditImportant" name="important" form="taskEditForm"/>
 											</div>
-										</div>										
+										</div>
 										<div class="form-group">
 											<label class="col-md-3 control-label">진행상황</label>
 											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 

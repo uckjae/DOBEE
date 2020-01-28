@@ -126,11 +126,12 @@ public class ProjectService {
     }
 
 
-    //업무수정
-    public void editTask(Task task){
+    //업무수정 --01.28 알파카 수정
+    public int editTask(Task task){
+    	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	projectDao.editTask(task);
-
+    	result = projectDao.editTask(task);
+    	return result;
     }
 
 
