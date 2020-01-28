@@ -72,7 +72,7 @@ public interface ProjectDao {
     
     
     //상세업무삭제
-    public int taskDetailDelete(TaskDetail taskDetail);
+    public int taskDetailDelete(int tdSeq);
 
 
     //체크리스트 조회

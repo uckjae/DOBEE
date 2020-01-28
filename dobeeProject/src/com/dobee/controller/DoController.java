@@ -880,13 +880,20 @@ public class DoController {
     }
 
 
-    //업무수정
+    //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task){
-        System.out.println("DoController taskEdit() in!!");
-        projectService.editTask(task);
-        
-    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	System.out.println("DoController taskEdit() in!!");
+        System.out.println("업무 수정 값!!!!"+task.toString());
+    	int result = 0;
+    	String view = "";
+        result = projectService.editTask(task);
+        if(result > 0) {
+        	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+        } else {
+        	view = "pjtMain.do";
+        }
+    	return view;
     }
 
 
