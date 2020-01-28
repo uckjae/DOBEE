@@ -8,9 +8,14 @@
 <!-- Head Tag Script -->
 <c:import url="/common/HeadTag.jsp"/>
 
+<!-- Slider -->
+<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+
 <!-- Date-time picker -->
+<!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/flatly/bootstrap.min.css"> -->
 <link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
 <!-- Full Calendar Octupus -->
 <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
@@ -33,6 +38,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/locales/ko.js"></script>
 <!-- sweet alert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+<!-- specific page vendor css form script -->
+<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
+<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
+<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+
+
 
 
 </head>
@@ -71,60 +84,80 @@
 					
 					
 					<section class="panel">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-7">
-									<div class="calendarArea" style="width:100%">
-										<div id="calendar"></div>
+						<div class="row">
+							
+							<div class="col-md-7">
+								<section class="panel">
+									<header class="panel-heading">		
+										<h2 class="panel-title">Calendar</h2>
+									</header>
+									<div class="panel-body">
+										<div class="calendarArea" style="width:100%">
+											<div id="calendar"></div>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-5">
-								
+								</section>
+							</div>
+							
+							<div class="col-md-5 panel-body">
+								<div class="col-md-12">
 									<form id="breakApplyForm" action="#" method="post">
-										
 										<br>
 										<br>
-										<br>
-										<br>
-										시작시간
+										<label class="control-label" for="textareaDefault">시작 시간</label>
 										<input type='text' class="form-control" id='datetimepickerStart' name="startAt"/>
 										<br>
-										종료시간
+										<label class="control-label" for="textareaDefault">종료 시간</label>
 										<input type='text' class="form-control" id='datetimepickerEnd' name="endAt"/>
 										<br>
-										연차 사용 일수
+										<label class="control-label" for="textareaDefault">부재 항목</label>
 										<br>
-										<input type="number" id="useBreak" name="useBreak">
+										<select name="apyCode" id="apycodelist" style="width: 100%;">
+											<option hidden=""> 항목 선택 </option>
+											<!-- Ajax -->
+										</select>
 										<br>
+										
+										<div id="inputUseBreak">
+											<br>
+											<p class="output">연차 사용 일수 : <b>0/27</b></p>
+											<div class="col-md-12">
+												<section class="panel">
+													<div class="panel-body" style="padding:5px;">
+														<div class="mt-lg mb-lg slider-primary" id="divSlider" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min", "max": 27 }' data-plugin-slider-output="#listenSlider">
+															<input name="useBreak" id="listenSlider" type="hidden" value="0" />
+														</div>	
+													</div>
+												</section>
+											</div>
+										</div>
+										
+										<br>
+										<div class="form-group">
+											<label class="control-label" for="textareaDefault">사유</label>
+											<textarea name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="사유를 입력해주세요."></textarea>
+											<p>
+												<code>max-length</code> set to 3000 byte.
+											</p>
+										</div>
 										<br>
 										결재자 
 										<br>
-										<select name="approval" id="approvalList" style="width: 60%;">
+										<select name="approval" id="approvalList" style="width:100%;">
 											<option hidden=""> 결재자 선택 </option>
 											<!-- Ajax -->
 										</select>
 										<br>
 										<br>
-										부재항목코드
 										<br>
-										<select name="apyCode" id="apycodelist" style="width: 60%;">
-											<option hidden=""> 항목 선택 </option>
-											<!-- Ajax -->
-										</select>
-										<br>
-										<br>
-										사유 <br>
-										<textarea name="reason" placeholder="연장근무 사유를 입력해주세요." style="width:100%; height: 100px;"></textarea>
-										<br>
-										<br>
-										<input id="breakApplyBtn" type="button" value="확인"> &nbsp;&nbsp;
-										<input type="reset" value="Reset">
-
+										<input id="breakApplyBtn" type="button" value="확인" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
+										<input type="reset" value="Reset" class="btn btn-default" style="width:auto;">
 									</form>
-									
 								</div>
 							</div>
+							
 						</div>
+						
 					</section>
 					
 					<div id='calendar'></div>
@@ -153,9 +186,11 @@
 	
 	<!-- Date-Time Picker -->
 		<!-- JQuery 3.4.1 min - google -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
 		<!-- Moment.js 2.24.0 min - cloudflare -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+		
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
 	<!-- Full Calendar -->	
@@ -165,10 +200,42 @@
 	<!-- Examples -->
 	<script src="assets/javascripts/pages/abs.calendar.js"></script>
 	
+	<!-- specific vendor page -->
+	<script src="assets/vendor/select2/select2.js"></script>
+	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+	<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
+	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
+	
 	
 	
 		<script>
 			window.onload = function(){
+
+				$('#listenSlider').change(function() {
+					$('.output b').text( this.value +'/'+ 27);
+				});
+
+				/*
+				$('#apycodelist').change(function() {
+					let apycode = this.value;
+					
+					$('#inputUseBreak').empty();
+					
+					if (apycode == 1) {
+						$('#inputUseBreak').append(
+								"<br> <p class='output'>연차 사용 일수 : <b>0/27</b></p>	<div class='col-md-12'>	<section class='panel'>	<div class='panel-body' style='padding:5px;'>" +
+								"<div class='mt-lg mb-lg slider-primary' id='divSlider' data-plugin-slider data-plugin-options='{ 'value': 0, 'range': 'min', 'max': 27 }' data-plugin-slider-output='#listenSlider'>"+
+								"<input name='useBreak id='listenSlider' type='hidden' value='0' ' />	</div>	</div>	</section>	</div> <br>"
+						)
+					} else if (apycode == 2) {
+						$('#inputUseBreak').append(
+								"<br> <p class='output'>연차 사용 일수 : <b>0.5</b></p> <input type='hidden' name='useBreak' value='0.5' />"
+						)
+					}
+				});
+				*/
+					
 	
 				$.ajax({
 					url : "getApyCode.do",
@@ -202,13 +269,16 @@
 					}
 				});
 				
-			 	
-			 	$('#datetimepickerStart').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
+				$('#datetimepickerEnd').datetimepicker({
+		            format : 'YYYY-MM-DD HH:mm' ,
+		            inline : true,
+		            sideBySide : true
 		        });
-		
-		        $('#datetimepickerEnd').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
+		        
+			 	$('#datetimepickerStart').datetimepicker({
+		            format : 'YYYY-MM-DD HH:mm',
+		            inline : true,
+		            sideBySide : true
 		        });
 
 		        /*부재 일정 신청 비동기 처리 --01.26 알파카 */

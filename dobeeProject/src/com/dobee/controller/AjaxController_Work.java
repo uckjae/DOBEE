@@ -18,7 +18,7 @@ public class AjaxController_Work {
 	
 	@RequestMapping(value="breakApply.do", method=RequestMethod.POST)
 	public String absApply(Apply apply, Authentication auth) {
-		System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
+		// System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
 		String responseData = "";
 		int result = 0;
 		apply.setDrafter(auth.getName());
@@ -44,10 +44,11 @@ public class AjaxController_Work {
     }
 	 */
 	@RequestMapping(value="extendApply.do", method=RequestMethod.POST)
-	public String extendApply(Apply apply) {
-		System.out.println("값 가져와?"+apply.toString());
+	public String extendApply(Apply apply, Authentication auth) {
+		// System.out.println("값 가져와?"+apply.toString());
 		String responseData = "";
 		int result = 0;
+		apply.setDrafter(auth.getName());
         result = applyService.overtimeApply(apply);
         if(result > 0) {
         	responseData = "success";

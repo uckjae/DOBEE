@@ -16,6 +16,7 @@ import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
+import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.User;
 
 @Controller
@@ -26,6 +27,7 @@ public class AjaxController_DABC {
 	
 	@Autowired
 	private SqlSession sqlsession;
+	
 	
 	// 개인_부재신청 부재항목 불러오기	COMPLETE
 	@RequestMapping("getApyCode.do")
@@ -56,6 +58,19 @@ public class AjaxController_DABC {
 		List<Apply> results = userDao.AbsAll(auth.getName());
 		System.out.println("AbsAll : "+ results);
 		map.addAttribute("AbsAll", results);
+		
+		return jsonview;
+	}
+	
+	
+	// Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	@RequestMapping("Calender.do")
+	public View CalenderEvent (Model map) {
+		System.out.println("이거 돌긴 도니? ");
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Apply> results = userDao.Calendar();
+		System.out.println("Calendar : "+ results);
+		map.addAttribute("Calendar", results);
 		
 		return jsonview;
 	}
@@ -179,6 +194,19 @@ public class AjaxController_DABC {
 		map.addAttribute("OTMList", results);
 		
 		return jsonview;
+	}
+	
+	
+	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
+	@RequestMapping("getChartData.do")
+	public View getChartData (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<ChartData> results = userDao.getChartData(auth.getName());
+		map.addAttribute("CD", results);
+		System.out.println("리스트 출력 확인 : " + results);
+		System.out.println("완료~");
+		
+		return jsonview;	
 	}
 	
 	

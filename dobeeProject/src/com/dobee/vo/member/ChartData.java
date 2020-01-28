@@ -8,8 +8,9 @@ import lombok.ToString;
 
 @ToString @Data
 public class ChartData {
-    private int attSeq;
+    private int days;
     private String attTime;
+    private String offTime;
     private String mail;
-    private int attCode;
+    private String entry;
 }
