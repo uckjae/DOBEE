@@ -245,34 +245,41 @@ public class AjaxController_Project {
 		return taskCheckList;
 	}
 	
-	//체크리스트 수정
+	//체크리스트 내용만 수정
 	@RequestMapping("taskCheckListEdit")
-	public int taskCheckListEdit(CheckList checkList,HttpServletRequest req) {
+	public String taskCheckListEdit(@RequestParam(value="chkSeq") String chkSeq, @RequestParam(value="content") String content, HttpServletRequest req) {
 		System.out.println("AjaxControll_Project taskCheckListEdit() in!!");
-		if(req.getParameter("isCheck").equals("0")) {
-			checkList.setCheck(false);
-		}else {
-			checkList.setCheck(true);
+		String responseData = "";
+		//vo 객체 주입 {'chkSeq' : chkSeq, 'content' : content }
+		CheckList checkList = new CheckList();
+		checkList.setChkSeq(Integer.parseInt(chkSeq));
+		checkList.setContent(content);
+		System.out.println("값이 오니?" + checkList.toString());
+		
+		int result = projectService.taskCheckListEditContent(checkList);
+		if(result > 0) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
 		}
-		Enumeration<String> enu = req.getParameterNames();
-		while(enu.hasMoreElements()) {
-			System.out.println("while돈다!!");
-			System.out.println(enu.nextElement());
-		}
-		int result = projectService.taskCheckListEdit(checkList);
-		return result;
+		return responseData;
 	}
 	
 	
-	//업무상세 제거
-		@RequestMapping("taskCheckListDelete.do")
-		public int taskDetailDelete(CheckList checkList) {
-			System.out.println("AjaxController_Project taskDetailDelete() in!!");
-			
-			int result = projectService.taskCheckListDelete(checkList);
-			
-			return result;
+	//업무 체크리스트 제거
+	@RequestMapping("taskCheckListDelete.do")
+	public String taskDetailDelete(@RequestParam(value="chkSeq") String chkSeq) {
+		System.out.println("AjaxController_Project taskDetailDelete() in!!");
+		System.out.println("체크 리스트 번호 가져와?"+chkSeq);
+		String responseData = "";
+		int result = projectService.taskCheckListDelete(Integer.parseInt(chkSeq));
+		if(result > 0) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
 		}
+		return responseData;
+	}
 	
 	
 }

@@ -49,6 +49,42 @@ body {
 
 <script type="text/javascript">
 $(function(){
+
+	function findPwMail(callback){
+      return new Promise(function(resolve,reject){
+          console.log("findPwMail");
+          console.log($('#mail').val());
+		  console.log($('#name').val());
+		  $.ajax({
+			  url:"ajax/admin/findPwMail.do",
+			  data:{'mail':$('#mail').val(),
+                    'name':$('name').val()
+				  },
+              dataType:"text",
+              method:"POST",
+              success: function(response){
+                  console.log("메일보내짐");
+                  resolve(response)
+
+                  },
+              error: function(jqXHR, textStatus, errorThrown){
+				   console.log(textStatus);
+				   console.log(errorThrown);
+					}
+                  myFormSubmit()
+		  
+			  })
+          });
+		}
+
+	function myFormSubmit(){
+		findPwMail().then(function(){
+			console.log("submit()");
+			document.getElementById('addUserForm').submit();
+			$('#addUserForm').submit();
+			
+		})
+	}
 	
  $('#idModal2').click(function(e){
 	 
@@ -132,7 +168,7 @@ $(function(){
 		<div class="form-group mb-lg">
 		  <label>메일</label>
 		  <div class="input-group input-group-icon">
-			 <input name="mail" type="text" class="form-control input-lg" id="mail"/>
+			 <input name="mail" type="text" class="form-control input-lg" id="mail" form="addUserForm"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-user"></i>
@@ -144,7 +180,7 @@ $(function(){
 		<div class="form-group mb-lg">								
 		  <label>이름</label>								
 		  <div class="input-group input-group-icon">
-			<input name="name" type="text" class="form-control input-lg" id="name"/>
+			<input name="name" type="text" class="form-control input-lg" id="name" form="addUserForm"/>
 			   <span class="input-group-addon">
 				<span class="icon icon-lg">
 				 <i class="fa fa-phone"></i>
@@ -158,7 +194,7 @@ $(function(){
 
 		<div class="mb-xs text-center">
 		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" id="idModal2">Find your password</a>
+		     href="#modalBootstrap" onclick="myFormSubmit()">Find your password</a>
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
 
@@ -166,39 +202,8 @@ $(function(){
 
 	  </div>
 	  	  
-	</div>
-
-				
+	</div>				
  </div>
- 
-<!-- Modal -->
-<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- <div class="modal-dialog">
-  <div class="modal-content">
-  
-   <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal">
-	 <span aria-hidden="true">&times;</span>
-	 <span class="sr-only">Close</span>
-	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 비밀번호</h4>
-   </div>
-   
-   <div class="modal-body">
-	<h4><input id="findPassWord" type="text" name="password" class="input-line" value="" readonly="readonly"
-	     style="border:none; width:100%; height:100%;"/></h4>
-   </div>
-   
-   <div class="modal-footer">
-	<button type="button" data-dismiss="modal"class="btn btn-primary">
-	 <span aria-hidden="true"></span>확인</button>
-	
-   </div>
-   
-  </div>
- </div>
-</div>
-<!-- /Modal -->
  
 </section>
 <!-- end: page -->

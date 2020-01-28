@@ -156,14 +156,14 @@ WHERE p.pjtseq = #{pjtSeq}
 	SELECT CHKSEQ, CONTENT, ISCHECK, TSKSEQ FROM CHECKLIST WHERE TSKSEQ=#{tskSeq}
 </select>
 
-<!-- 체크리스트 수정 -->
-<update id="taskCheckListEdit" parameterType="com.dobee.vo.project.CheckList">
-	UPDATE CHECKLIST SET CONTENT=#{content}, ISCHECK=#{isCheck} WHERE CHKSEQ=#{chkSeq}
+<!-- 체크리스트 내용만 수정 -->
+<update id="taskCheckListEditContent" parameterType="com.dobee.vo.project.CheckList">
+	UPDATE CHECKLIST SET CONTENT=#{content} WHERE CHKSEQ=#{chkSeq}
 </update>
 
 
 <!-- 체크리스트 삭제 -->
 <delete id="taskCheckListDelete">
-	DELETE FROM CHECKLIST WHERE TSKSEQ=#{tskSeq} AND CHKSEQ=#{chkSeq}
+	DELETE FROM CHECKLIST WHERE CHKSEQ=#{chkSeq}
 </delete>
 </mapper>

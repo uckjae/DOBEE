@@ -230,7 +230,7 @@
 		connect();
 	}
 
-	
+	/* 알람 */
 	var wsocket;
 	
 	function getContextPath() {//contextPath 구하는 함수
@@ -263,26 +263,6 @@
 	function onClose(evt) {
 	}
 	
-	
-	
-	/* function appendMessage(msg) {
-		$("#alertArea").empty();
-		$("#alertArea").append(msg.substring(0,8) +"<a href='${pageContext.request.contextPath}/messageView.do'>"+ msg.substring(9,11) +"</a>");
-	} */
-
-	function randomname ()  {
-		  PNotify.desktop.permission();
-		  (new PNotify({
-		    title: '알림',
-		    text: data,
-		    hide: false,
-		    desktop: {
-		      desktop: true
-		    }
-		  })).get().click(function() {
-		    
-		  });
-		}
 
 	function showAlarm(data) {
 		  var notice = new PNotify({
@@ -290,7 +270,7 @@
 		    text: data,
 		    type: 'success',
 		    addclass: 'click-2-close notification-primary',
-		    icon: 'fa fa-tasks',
+		    icon: 'fa fa-bell-o',
 		    hide: false,
 		    buttons: {
 		      closer: false,
@@ -302,7 +282,8 @@
 		    notice.remove();
 		  });
 		}
-
+	/* /알람  */
+	
 	//출근하기
 	function attend() {
 		swal({

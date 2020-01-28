@@ -618,7 +618,7 @@
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-left','10px');
 		}
 
-
+	
 		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
 			var tdSeq = $(data).find('input[name="tdSeq"]').val();
@@ -730,7 +730,7 @@
 		/* 체크리스트 가져와 뿌리는 함수 쳌쳌 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
-			//$('#taskCheckList').empty();
+			$('#taskCheckList').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",
@@ -747,55 +747,66 @@
 						var isCheck = element.check;
 						
 						var li = $('<li>');
+						//체크박스
 						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
-
-						var id = 'todoListItem'+num;
-						/* var hiddenInput = $('<input hidden name="chkSeq">');
-						$(hiddenInput).val(chkSeq);
-						$(checkDiv).append(hiddenInput);
-						var hiddenInput2 = $('<input hidden name="tskSeq">');
-						$(hiddenInput2).val(tskSeq);
-						$(checkDiv).append(hiddenInput2); */
-						var checkBox = $('<input type="checkbox" class="todo-check" name="isCheck">');
-						$(checkBox).attr('id',id);
+						var checkInput = $('<input type="checkbox" id="todoListItem'+num+'" onclick="checkLine(this)" name="isCheck">');
+						var label = $('<label class="check-label" for="todoListItem'+num+'">')
+						
+						//checkLine(checkInput);
+						var span = $('<span>'+content+'</span>');
 						if(isCheck == true){
 							console.log("if check=true");
-							$(checkBox).prop("checked",true);
-							$(checkBox).val(1);
+							$(checkInput).prop("checked",true);
+							$(checkInput).val(1);
+							$(span).css('text-decoration','line-through');
 						}else{
 							console.log("else check=false");
-							$(checkBox).prop("checked",false);
-							$(checkBox).val(0);
+							$(checkInput).prop("checked",false);
+							$(checkInput).val(0);
+							$(span).css('text-decoration','none');
 						}
-						$(checkDiv).append(checkBox);
-						var label = $('<label class="todo-label">');
-						$(label).attr('for',id);
-						var span = $('<span>');
-						span.text(content);
 						label.append(span);
-						$(checkDiv).append(label);
-						var actionDiv = $('<div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
+						checkDiv.append(checkInput);
+						checkDiv.append(label);
+
+						//수정 삭제 아이콘
+						var actionDiv = $('<div class="todo-actions">');
+						var editIcon = $('<a style="cursor: pointer" onclick="taskCheckListEdit(this)"><i class="fa  fa-pencil"></i></a>');
+						var deleteIcon = $('<a style="cursor: pointer" onclick="taskCheckListDelete(this)"><i class="fa fa-times"></i></a>');
+						actionDiv.append(editIcon);
+						actionDiv.append(deleteIcon);
+
+						//수정창 만들기
+						var editDiv = $('<div class="checkList-Edit" style="display:none">');
+						var editForm = $('<form action="ajax/project/taskCheckListEdit.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">');
+						var formGroup = $('<div class="form-group">');
+						var div1 = $('<div class="col-sm-12">');
+						var div2 = $('<div class="input-group mb-md">');
+						var hiddenInput1 = $('<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>');
+						hiddenInput1.val(tskSeq);
+						var hiddenInput2 = $('<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>');
+						hiddenInput2.val(chkSeq);
+						var contentInput = $('<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">');
+						contentInput.val(content);
+						var btnDiv = $('<div class="input-group-btn" style="padding:0;">');
+						var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
+						btnDiv.append(btn);
+						div2.append(hiddenInput1);
+						div2.append(hiddenInput2);
+						div2.append(contentInput);
+						
+						div2.append(btnDiv);
+						div1.append(div2);
+						formGroup.append(div1);
+						
+						editForm.append(formGroup);
+						editDiv.append(editForm);
+
 						$(li).append(checkDiv);
 						$(li).append(actionDiv);
+						$(li).append(editDiv);
 						$("#taskCheckList").append(li);
 						num++;
-
-
-						/*
-						<li>
-							<div class="checkbox-custom checkbox-default">
-			 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
-			 					<label for="todoListItem1" class="check-label">
-			 						<span>체크체크~!~!~!~!</span>
-			 					</label>
- 							</div>
-		 					<div class="todo-actions">
-		 						<a class="todo-remove" href="#">
-		 							<i class="fa fa-times"></i>
-		 						</a>
-		 					</div>
-						</li>
-						*/
 					});
 				},
 				error:function(request,status,error){
@@ -808,76 +819,91 @@
 
 		/*체크박스 체크하는 함수 -> 밑줄 긋기 & 체크 여부 name 값 바꾸기*/
 		function checkLine(data){
-			var label = $(data).closest('li').find('.check-label').find('span');
+			var span = $(data).closest('li').find('.check-label').find('span');
+			//console.dir(label);
 			if($(data).is(':checked')){
 				console.log('체크 되니??');
-				label.css('text-decoration','line-through')
+				span.css('text-decoration','line-through');
 			} else {
-				console.log('체크 해제??');
-				label.removeAttr('style');
+				console.log('체크 해제!!!');
+				//label.removeAttr('style');
+				span.css('text-decoration','none');
 			}
 		}
 
 
-		/* 체크리스트 수정창 띄우는 함수 */
-		function taskCheckListEdit(data){
-			$('#taskCheckListView').find('.content').each(function(index,element){
-				$(element).attr("disabled","true");
-			});
-			$(data).prev().removeAttr("disabled");
-			$(data).prev().prev().removeAttr("disabled");
-			$(data).prev().prev().attr("onclick","checkBoxChange(this)");
-			$(data).children().removeAttr("class");
-			$(data).children().attr("class","fa fa-magic");
-			$(data).removeAttr("onclick");
-			$(data).attr("onclick","taskCheckListEditSubmit(this)");
-			$(data).next().children().removeAttr("class");
-			$(data).next().children().attr("class","fa fa-times");
-			$(data).next().removeAttr("onclick");
-			$(data).next().attr("onclick","taskCheckListEditCancle");
-		}
-
-
-		/* 체크리스트 비동기로 수정하는 함수 */
+		/* 체크리스트 비동기로 수정하는 함수  요기요 */
 		function taskCheckListEditSubmit(data){
 			console.log("taskCheckListEditSubmit() in!!");
-			var editForm = $(data).parent().parent();
-			var formData = $(editForm).serialize();
-			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log(editForm);
+			var parents = $(data).parents('div.checkList-Edit');
+			var tskSeq = $(parents).find('input[name="tskSeq"]').val();
+			var chkSeq = $(parents).find('input[name="chkSeq"]').val();
+			var content = $(parents).find('input[name="content"]').val();
+					
 			$.ajax({
 				url:"ajax/project/taskCheckListEdit.do",
-				data: formData,
-				dataType:"JSON",
+				data: {'chkSeq' : chkSeq, 'content' : content },
+				dataType:"text",
 				success:function(data){
-					getTaskCheckList(tskSeq);
+					console.log('ajax 통신 성공');
+					if(data == "success"){
+						getTaskCheckList(tskSeq);
+					}
 				},
 				error:function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
+			
+			/* 
+			var editForm = $(data).closest('li').find('form');
+			console.log('제발!!');
+			console.dir(editForm);
+			var formData = $(editForm).serialize();
+			console.log(formData);
+			*/
 		}
 
 		/* 체크리스트 삭제하는 함수 */
 		function taskCheckListDelete(data){
-			var form = $(data).prev().prev().parent().parent();
-			var formData = $(form).serialize();
-			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log(formData);
+			var parents =  $(data).closest('li').find('.checkList-Edit');
+			var chkSeq = parents.find('input[name="chkSeq"]').val();
+			var tskSeq = parents.find('input[name="tskSeq"]').val();
+
 			$.ajax({
 				url:"ajax/project/taskCheckListDelete.do",
-				data: formData,
-				success: function(){
-					console.log("taskCheckListDelete Ajax Success!!");
-					getTaskCheckList(tskSeq);
+				data: {'chkSeq':chkSeq},
+				success: function(data){
+					if(data == "success"){
+						getTaskCheckList(tskSeq);
+					}
 				},
 				error: function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
+			
+			/* var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log(formData);
+			 */
+
 		}
+
+		/*체크리스트 수정하는 함수*/
+		function taskCheckListEdit(data){
+			console.log('수정 함수 타니?');
+			/*체크리스트 수정창 띄우기*/
+			//console.dir(data);
+			var edit = $(data).parents('li').find('.checkList-Edit');
+			$(data).parents('li').find('.checkList-Edit').css('display','block');
+			$(data).parents('li').find('.checkList-Edit').css('margin-top','15px');
+			$(data).parents('li').find('.checkList-Edit').css('margin-left','15px');
+		}
+		
 
 		/* 체크박스변경시  value 세팅하는 함수 */
 		function checkBoxChange(data){
@@ -922,6 +948,7 @@
 			
 			wsocket.send(parsedData);
 		}
+		/* /알람  */
 	
 		
 		
@@ -1473,18 +1500,38 @@
 										<ul class="widget-todo-list" id="taskCheckList">
 											<li>
 												<div class="checkbox-custom checkbox-default">
-								 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
-								 					<label for="todoListItem1" class="check-label">
+								 					<input type="checkbox" id="todoListItem7" onclick="checkLine(this)">
+								 					<label for="todoListItem7" class="check-label">
 								 						<span>체크체크~!~!~!~!</span>
 								 					</label>
 					 							</div>
+					 							<!-- 수정 & 삭제 아이콘 -->
 							 					<div class="todo-actions">
-							 						<a class="todo-remove" href="#">
+							 						<a style="cursor: pointer" onclick="taskCheckListEdit(this)">
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>&nbsp;&nbsp;&nbsp;
+							 						<a style="cursor: pointer" onclick="taskCheckListDelete(this)">
 							 							<i class="fa fa-times"></i>
 							 						</a>
 							 					</div>
+							 					<!-- 수정창 -->
+							 					<div class="checkList-Edit" style="display:none">
+					 								<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
+														<div class="form-group">
+															<div class="col-sm-12">
+																<div class="input-group mb-md">
+																	<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>
+																	<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>
+																	<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">
+																	<div class="input-group-btn" style="padding:0;">
+																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+							 					</div>
 				 							</li>
-										
 											 <!-- 템플릿 원본 
 											 <li>
 												<div class="checkbox-custom checkbox-default">

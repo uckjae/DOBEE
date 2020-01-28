@@ -207,20 +207,20 @@ public class ProjectService {
     	return taskCheckList;
     }
     
-    //체크리스트 수정
-    public int taskCheckListEdit(CheckList checkList) {
+    //체크리스트 내용 수정
+    public int taskCheckListEditContent(CheckList checkList) {
     	System.out.println("ProjectService taskCheckListEdit() in");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskCheckListEdit(checkList);
+    	int result = projectDao.taskCheckListEditContent(checkList);
     	return result;
     }
     
     
     //체크리스트 삭제
-    public int taskCheckListDelete(CheckList checkList) {
+    public int taskCheckListDelete(int chkSeq) {
     	System.out.println("ProjectService taskCheckListDelete() in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskCheckListDelete(checkList);
+    	int result = projectDao.taskCheckListDelete(chkSeq);
     	return result;
     }
 
