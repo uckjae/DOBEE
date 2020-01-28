@@ -59,7 +59,8 @@ public class AlarmHandler extends TextWebSocketHandler {
 		  String mail = (String) jsonObject.get("mail");
 		  if(users.containsKey(mail)) {
 			  if(cmd.equals("addTask")) {
-				  TextMessage msg = new TextMessage("업무가 추가 되었습니다");
+				  String content = (String)jsonObject.get("content");
+				  TextMessage msg = new TextMessage("["+content+"]\n업무가 추가 되었습니다");
 				  users.get(mail).sendMessage(msg);
 				  log(mail + " / " + message.getPayload() + " / " + msg.getPayload());
 			  }

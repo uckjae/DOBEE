@@ -270,7 +270,7 @@
 		$("#alertArea").append(msg.substring(0,8) +"<a href='${pageContext.request.contextPath}/messageView.do'>"+ msg.substring(9,11) +"</a>");
 	} */
 
-	function showAlarm(data)  {
+	function randomname ()  {
 		  PNotify.desktop.permission();
 		  (new PNotify({
 		    title: '알림',
@@ -280,7 +280,26 @@
 		      desktop: true
 		    }
 		  })).get().click(function() {
-		    alert('Hey! You clicked the desktop notification!');
+		    
+		  });
+		}
+
+	function showAlarm(data) {
+		  var notice = new PNotify({
+		    title: '알림',
+		    text: data,
+		    type: 'success',
+		    addclass: 'click-2-close notification-primary',
+		    icon: 'fa fa-tasks',
+		    hide: false,
+		    buttons: {
+		      closer: false,
+		      sticker: false
+		    }
+		  });
+
+		  notice.get().click(function() {
+		    notice.remove();
 		  });
 		}
 
