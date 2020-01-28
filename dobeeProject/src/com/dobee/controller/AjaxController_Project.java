@@ -205,16 +205,17 @@ public class AjaxController_Project {
 	
 	//업무상세 제거
 	@RequestMapping("taskDetailDelete.do")
-	public int taskDetailDelete(TaskDetail taskDetail,HttpServletRequest req) {
+	public String taskDetailDelete(@RequestParam(value="tdSeq") String tdSeq, HttpServletRequest req) {
 		System.out.println("AjaxController_Project taskDetailDelete() in!!");
-		Enumeration<String> enu = req.getParameterNames();
-		while(enu.hasMoreElements()) {
-			System.out.println("while문");
-			System.out.println(enu.nextElement());
+		System.out.println("tdSeq 가져오니?"+tdSeq);
+		String responseData = "";
+		int result = projectService.taskDetailDelete(Integer.parseInt(tdSeq));
+		if(result > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
 		}
-		int result = projectService.taskDetailDelete(taskDetail);
-		
-		return 0;
+		return responseData;
 	}
 	
 	

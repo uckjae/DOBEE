@@ -178,11 +178,11 @@ public class ProjectService {
     }
 
 
-    //상세업무삭제
-    public int taskDetailDelete(TaskDetail taskDetail){
+    //상세업무삭제 -- 01.28 알파카 수정
+    public int taskDetailDelete(int tdSeq){
     	System.out.println("ProjectService taskDetailDelete in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskDetailDelete(taskDetail);
+    	int result = projectDao.taskDetailDelete(tdSeq);
     	return result;
     }
 

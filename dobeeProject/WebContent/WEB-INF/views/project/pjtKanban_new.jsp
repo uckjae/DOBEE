@@ -105,7 +105,7 @@
 			
 
 			
-			/* 업무상세 모달띄우는 함수  모모달*/
+			/* 업무상세 모달띄우는 함수 모모달*/
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
@@ -215,7 +215,6 @@
 	 					var jsonData = JSON.parse(responsedata);
 	 					
 	 					if(jsonData.result == "success"){ //업무 상세 생성 완료
-		 					console.log('이거 타?');
 		 					var tdSeq = jsonData.tdSeq;
 	 						//상세 업무 뿌리기
 							var li = $('<li style="padding-bottom:10px;">');
@@ -224,11 +223,22 @@
 							var icon = $('<span><i class="fa fa-square"></i></span>');
 							var label = $('<label class="taskDetail-label" style="cursor:pointer">');
 							var span = $('<span>&nbsp;&nbsp;'+tdContent+'</span>');
-							var actionDiv = $(' <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
 							label.append(span);
 							tdContentDiv.append(icon);
 							tdContentDiv.append(label);
-							tdContentDiv.append(actionDiv);
+
+							//업무 삭제창
+							var deleteDiv = $('<div class="todo-actions" onclick="taskDetailDelete(this)">');
+							var hiddenInput1 = $('<input type="hidden" name="tdSeq"> ');
+							var hiddenInput2 = $('<input type="hidden" name="tskSeq"> ');
+							hiddenInput1.val(tdSeq);
+							hiddenInput2.val(tskSeq);
+							var a = $('<a style="cursor: pointer"></a>');
+							var deleteIcon = $('<i class="fa fa-times"></i>');
+							a.append(deleteIcon);
+							deleteDiv.append(hiddenInput1);
+							deleteDiv.append(hiddenInput2);
+							deleteDiv.append(a);
 
 							//업무 상세 수정창
 							var editDiv = $('<div class="taskDetail-Edit" style="display:none">');
@@ -236,29 +246,29 @@
 							var formDiv1 = $('<div class="form-group">');
 							var formDiv2 = $('<div class="col-sm-12">');
 							var formDiv3 = $('<div class="input-group mb-md">');
-							var textInput = $('<input type="text" id="tdContent" name="tdContent"class="form-control" form="editTaskDetailForm">');
-							var hiddenInput1 = $('<input type="hidden" form="editTaskDetailForm" name="tskSeq"/>')
-							var hiddenInput2 = $('<input type="hidden" form="editTaskDetailForm" name="tdSeq"/>')
+							var textInput = $('<input type="text" id="tdContent" name="tdContent" class="form-control" form="editTaskDetailForm">');
+							var hiddenInput3 = $('<input type="hidden" form="editTaskDetailForm" name="tskSeq"/>')
+							var hiddenInput4 = $('<input type="hidden" form="editTaskDetailForm" name="tdSeq"/>')
 							var btnDiv = $('<div class="input-group-btn" style="padding:0;">');
-							var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
+							var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
 							btnDiv.append(btn);
 							textInput.val(tdContent);
-							hiddenInput1.val(tskSeq);
-							hiddenInput2.val(tdSeq);
 							formDiv3.append(textInput);
-							formDiv3.append(hiddenInput1);
-							formDiv3.append(hiddenInput2);
+							hiddenInput3.val(tskSeq);
+							hiddenInput4.val(tdSeq);
+							formDiv3.append(hiddenInput3);
+							formDiv3.append(hiddenInput4);
 							formDiv3.append(btnDiv);
 							formDiv2.append(formDiv3);
 							formDiv1.append(formDiv2);
 							editForm.append(formDiv1);
 							editDiv.append(editForm);
-
+	
 							li.append(tdContentDiv);
+							li.append(deleteDiv);
 							li.append(editDiv);
 							$("#taskDetailList").append(li);
 		 					$("#addTdContent").val("");
-		 					console.log('없어져?');
 	 					}
 	 				},
 	 				error:function(){
@@ -543,11 +553,22 @@
 						var icon = $('<span><i class="fa fa-square"></i></span>');
 						var label = $('<label class="taskDetail-label" style="cursor:pointer">');
 						var span = $('<span>&nbsp;&nbsp;'+tdContent+'</span>');
-						var actionDiv = $(' <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
 						label.append(span);
 						tdContentDiv.append(icon);
 						tdContentDiv.append(label);
-						tdContentDiv.append(actionDiv);
+						
+						//업무 삭제창
+						var deleteDiv = $('<div class="todo-actions" onclick="taskDetailDelete(this)">');
+						var hiddenInput1 = $('<input type="hidden" name="tdSeq"> ');
+						var hiddenInput2 = $('<input type="hidden" name="tskSeq"> ');
+						hiddenInput1.val(tdSeq);
+						hiddenInput2.val(tskSeq);
+						var a = $('<a style="cursor: pointer"></a>');
+						var deleteIcon = $('<i class="fa fa-times"></i>');
+						a.append(deleteIcon);
+						deleteDiv.append(hiddenInput1);
+						deleteDiv.append(hiddenInput2);
+						deleteDiv.append(a);
 
 						//업무 상세 수정창
 						var editDiv = $('<div class="taskDetail-Edit" style="display:none">');
@@ -556,17 +577,17 @@
 						var formDiv2 = $('<div class="col-sm-12">');
 						var formDiv3 = $('<div class="input-group mb-md">');
 						var textInput = $('<input type="text" id="tdContent" name="tdContent" class="form-control" form="editTaskDetailForm">');
-						var hiddenInput1 = $('<input type="hidden" form="editTaskDetailForm" name="tskSeq"/>')
-						var hiddenInput2 = $('<input type="hidden" form="editTaskDetailForm" name="tdSeq"/>')
+						var hiddenInput3 = $('<input type="hidden" form="editTaskDetailForm" name="tskSeq"/>')
+						var hiddenInput4 = $('<input type="hidden" form="editTaskDetailForm" name="tdSeq"/>')
 						var btnDiv = $('<div class="input-group-btn" style="padding:0;">');
 						var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
 						btnDiv.append(btn);
 						textInput.val(tdContent);
 						formDiv3.append(textInput);
-						hiddenInput1.val(tskSeq);
-						hiddenInput2.val(tdSeq);
-						formDiv3.append(hiddenInput1);
-						formDiv3.append(hiddenInput2);
+						hiddenInput3.val(tskSeq);
+						hiddenInput4.val(tdSeq);
+						formDiv3.append(hiddenInput3);
+						formDiv3.append(hiddenInput4);
 						formDiv3.append(btnDiv);
 						formDiv2.append(formDiv3);
 						formDiv1.append(formDiv2);
@@ -574,6 +595,7 @@
 						editDiv.append(editForm);
 
 						li.append(tdContentDiv);
+						li.append(deleteDiv);
 						li.append(editDiv);
 						$("#taskDetailList").append(li);
 						
@@ -592,37 +614,23 @@
 			$(data).parents('li').find('.taskDetail-Edit').css('display','block');
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-top','8px');
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-left','10px');
-			/* 
-						
-			
-			$('#taskDetailListView').find('.contentData').each(function(index,element){
-				$(element).attr("disabled","");
-			});
-			console.log($(data).prev());
-			$(data).prev().removeAttr("disabled");
-			$(data).children().removeAttr("class");
-			$(data).children().attr("class","fa fa-magic");
-			$(data).removeAttr("onclick");
-			$(data).attr("onclick","taskDetailEditSubmit(this)");
-			$(data).next().children().removeAttr("class");
-			$(data).next().children().attr("class","fa fa-times");
-			$(data).next().removeAttr("onclick");
-			$(data).next().attr("onclick","taskDetailEditCancle"); */
 		}
 
 
 		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
-			var form = $(data).prev().prev().parent().parent();
-			var formData = $(form).serialize();
-			var tskSeq = $('#taskDetailTskSeq').val();
-			console.log(formData);
+			var tdSeq = $(data).find('input[name="tdSeq"]').val();
+			var tskSeq = $(data).find('input[name="tskSeq"]').val();
+			
 			$.ajax({
 				url:"ajax/project/taskDetailDelete.do",
-				data: formData,
-				success: function(){
+				data: {'tdSeq' : tdSeq},
+				success: function(responseData){
 					console.log("taskDetailDelete Ajax Success!!");
-					//모달창 다시 띄우고 싶다,,,, 
+					console.log(responseData);
+					if(responseData == "success"){
+						getTaskDetailList(tskSeq);
+					}
 				},
 				error: function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
@@ -1351,13 +1359,19 @@
 	                                            <div style="margin-left:10px;"  onclick="taskDetailEdit(this)">
 		                                            <span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
 		                                            <label class="taskDetail-label" style="cursor:pointer"><span>업무상세</span></label>
-		                                            <div class="todo-actions">
-									 					<a class="todo-remove" href="#">
+		                                            <!-- <div class="todo-actions">
+									 					<a  onclick="taskDetailDelete(this)">
 									 						<i class="fa fa-times"></i>
 									 					</a>
-				 									</div>
+				 									</div> -->
 					 								<input type="hidden" name="tdSeq" value="">
 				 								</div>
+			 									<div class="todo-actions" onclick="taskDetailDelete(this)">
+			 										<input type="hidden" name="tdSeq" value="">
+								 					<a style="cursor:pointer">
+								 						<i class="fa fa-times"></i>
+								 					</a>
+			 									</div>
 				 								<!-- 업무 상세 수정 창 -->
 				 								<div class="taskDetail-Edit" style="display:none">
 					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
