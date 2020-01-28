@@ -134,14 +134,14 @@ WHERE p.pjtseq = #{pjtSeq}
 
 
 <!-- 상세업무 삭제 -->
-<delete id="taskDetailDelete" parameterType="com.dobee.vo.project.TaskDetail">
-	DELETE FROM TASKDETAIL WHERE TSKSEQ = #{tskSeq} AND TDSEQ=#{tdSeq}
+<delete id="taskDetailDelete">
+	DELETE FROM TASKDETAIL WHERE TDSEQ=#{tdSeq}
 </delete>
 
 
 <!-- 담당자 업무 수정 -->
 <update id="editTask">
-	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt} WHERE TSKSEQ=#{tskSeq}
+	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt}, MAIL=#{mail} WHERE TSKSEQ=#{tskSeq}
 </update>
 
 

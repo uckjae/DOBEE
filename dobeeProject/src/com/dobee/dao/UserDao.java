@@ -22,6 +22,9 @@ public interface UserDao {
 
     //아이디찾기
     public String findId(String name, String phone);
+    
+    //비밀번호 찾기  
+    public String findPassWord(String mail, String name);
 
 
     //비밀번호재설정

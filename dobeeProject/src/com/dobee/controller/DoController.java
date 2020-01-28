@@ -115,6 +115,19 @@ public class DoController {
     public String fidIdResult(){
         return null;
     }
+    
+    //비밀번호 찾기
+    @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
+    public String findPassWord(String mail, String name,  Model model){
+    	String find;
+    	UserDao userDao =sqlsession.getMapper(UserDao.class);
+    	 find = userDao.findPassWord(mail, name);
+    	 System.out.println("비번1:"+find);
+    	 model.addAttribute("find",find);
+    	 System.out.println("비번2:"+find);
+    	return "main/findPassWord";
+    }
+    
 
     //비밀번호재설정
     //public String resetPwd(){
@@ -859,24 +872,28 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	System.out.println("Docontorller addPMTask() in!!");
-    	System.out.println("업무 어떻게 넘어와?"+task.toString());
     	String[] str = task.getMail().split(",");
     	String mail = str[0];
     	task.setMail(mail);
     	int result = projectService.addPMTask(task);
-    	System.out.println("컨트롤러"+result);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
-    //업무수정
+    //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task){
-        System.out.println("DoController taskEdit() in!!");
-        projectService.editTask(task);
-        
-    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	System.out.println("DoController taskEdit() in!!");
+        System.out.println("업무 수정 값!!!!"+task.toString());
+    	int result = 0;
+    	String view = "";
+        result = projectService.editTask(task);
+        if(result > 0) {
+        	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+        } else {
+        	view = "pjtMain.do";
+        }
+    	return view;
     }
 
 

@@ -72,7 +72,6 @@ public class ProjectService {
     	List<User> pjtMember = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	pjtMember = projectdao.getPjtMember(pjtSeq);
-    	System.out.println("db에서 어떻게 가져와?"+pjtMember.toString());
     	return pjtMember;
     }
     
@@ -101,7 +100,6 @@ public class ProjectService {
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addPMTask(task);
     	if(result > 0) {
-    		System.out.println("프로젝트 서비스 pm 업무 추가 완료"+result);
     	}
     	return result;
     }
@@ -126,11 +124,12 @@ public class ProjectService {
     }
 
 
-    //업무수정
-    public void editTask(Task task){
+    //업무수정 --01.28 알파카 수정
+    public int editTask(Task task){
+    	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	projectDao.editTask(task);
-
+    	result = projectDao.editTask(task);
+    	return result;
     }
 
 
@@ -177,11 +176,11 @@ public class ProjectService {
     }
 
 
-    //상세업무삭제
-    public int taskDetailDelete(TaskDetail taskDetail){
+    //상세업무삭제 -- 01.28 알파카 수정
+    public int taskDetailDelete(int tdSeq){
     	System.out.println("ProjectService taskDetailDelete in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskDetailDelete(taskDetail);
+    	int result = projectDao.taskDetailDelete(tdSeq);
     	return result;
     }
 
