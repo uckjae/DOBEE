@@ -59,8 +59,12 @@
     <script type="text/javascript">
 		$(function(){
 
+			var authCode = $("#authCode").val(); //현재 로그인한 회원의 권한 코드 가져오기
+
+			
+
 			$("#rateYo").rateYo({
-			    rating: 2,
+			    rating: 1,
 			    fullStar: true,
 			    onSet: function (rating, rateYoInstance) {
 				    var value = rating;
@@ -71,22 +75,6 @@
 			      }
 			  });
 
-			/* 중요도 수정하기 pm용 */
-			$("#taskImportantEdit").rateYo({
-			    rating: 2,
-			    fullStar: true,
-			    onSet: function (rating, rateYoInstance) {
-				    var value = rating;
-				    $('#taskImportant').text(value); //중요도 값 표시해주기
-			      }
-			  });
-
-			/* 중요도 확인하기 */
-			$("#taskImportantRead").rateYo({
-			    rating: 2,
-			    fullStar: true,
-			    readOnly: true
-			  });
 			
 			
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -113,11 +101,15 @@
 				$('#importantShow').text('0');	
 				var pjtSeq = $(this).data('pjtseq');					
 			});
-				
+
+			
+
+			
 			/* 업무상세 모달띄우는 함수  모모달*/
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+				
 
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
@@ -146,7 +138,13 @@
 						$('#taskFormMail').val(task.mail);
 						$('#taskFormPjtSeq').val(task.pjtSeq);
 						$('#listenSlider').val(task.important);
-						$('#importantShow').text(task.important);
+
+						
+						$('#taskImportant').text(task.important); //중요도 표시해주기
+						
+						setStar(authCode, task.important); //중요도로 별 표시해주기
+
+						
 						$('.progress-button').each(function(index,element){
 							if($(element).text() == task.progress){
 								$(element).attr("style","background-color:#34495e; color:white;");
@@ -163,7 +161,6 @@
 				
 				getTaskDetailList(tskSeq);
 				getTaskCheckList(tskSeq);
-					
 				$('#taskFormTskSeq').val(tskSeq);
 
 			});
@@ -350,7 +347,32 @@
 		});
 
 		
+		/* DB에서 가져온 중요도로 별 표시해주는 함수
+		*/
+		function setStar(authCode, important){ //권한 코드에 따라 별 플러그인 다르게 셋팅
+			if(authCode == '2'){ //일반 회원
+				$("#starBar").attr('id', 'taskImportantRead');
+				$("#taskImportantRead").rateYo({
+					 rating: important,
+					 fullStar: true,
+					 readOnly: true
+				 });
+			} else { //pm
+				$("#starBar").attr('id', 'taskImportantEdit');
+
+				$("#taskImportantEdit").rateYo({
+				    rating: important,
+				    fullStar: true,
+				    onSet: function (rating, rateYoInstance) {
+					    //var value = rating;
+					    //$('#taskImportant').text(value); //중요도 값 표시해주기
+				      }
+				  });
+				  
+			}
 		
+			 
+		}
 
 		
 
@@ -910,8 +932,8 @@
                                                     	진행도
                                                 </div>
                                             </div>
+                                            <input type="hidden" id="authCode" value="${user.authCode}">
                                         </div>
-
                                     </header>
                                     <div id="accordion">
                                         <div class="panel panel-accordion panel-accordion-first">
@@ -1274,28 +1296,9 @@
 										<div class="form-group">
 											<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
 											<div class="col-md-6">
-											<c:choose>
-												<c:when test="${ user.authCode == '3'}">
-														<div id="taskImportantEdit">
-														</div>
-														<!-- <div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
-															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
-															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
-															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
-														</div> -->
-														<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
-														<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
-													
-												</c:when>
-												<c:otherwise>
-													<div id="taskImportantRead">
-													</div>
-												</c:otherwise>
-												</c:choose>
+												<div id="starBar">
+												</div>
 											</div>
-												
-												
-											
 										</div>										
 										<div class="form-group">
 											<label class="col-md-3 control-label">진행상황</label>
