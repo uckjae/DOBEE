@@ -32,16 +32,21 @@ public interface UserDao {
     public void resetPwd(User user);
 
 
-    //출근하기
-    public int onWork(String mail);
-
-
-    //퇴근
-    public void offWork(User member);
-
-
-    //부재
+    // 출퇴근 여부 확인 (0퇴근, 1출근)		0126 게다죽  ~ing			
+    public String isWork(String mail);	
+    	
+    	
+    // 출근하기	
+    public int onWork(String mail);	
+	
+    	
+    // 퇴근하기	
+    public int offWork(Integer attSeq);	
+	
+	
+    //부재		일단 남겨놓고	
     public void restWork(User member);
+    
     
     //마이페이지 개인 정보 불러오기
     /* 01.22 알파카 */
@@ -147,7 +152,7 @@ public interface UserDao {
     
     
 	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
-    public List<ChartData> getChartData();
+    public List<ChartData> getChartData(String mail);
     
     
     // 개인_연장근무 수정/삭제 (GET) - 페이지 데이터 불러오기			0121	COMPLETE

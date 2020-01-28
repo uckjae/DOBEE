@@ -19,10 +19,6 @@
 			border-color:lightgray;
 			background-color:green;
 		}
-		
-		.btn-info.btn-sm {
-			background-color: #e0da28;
-		} 
 	</style>
 	
 <!-- Head Tag Script -->
@@ -77,6 +73,18 @@
 					
 					
 					<section class="panel">
+						<header class="panel-heading">
+							<h3 class="panel-title">근무 현황 차트</h3>
+						</header>
+						<div class="panel-body" style="min-height: 560px;">
+							<div class="col-md-12">
+								<canvas id="attChart" width="500px" height="230px"></canvas>
+							</div>
+						</div>
+					</section>
+					
+					
+					<section class="panel">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="tabs tabs-primary">
@@ -127,23 +135,10 @@
 									</div>
 								</div>
 							</div>
-							
 						</div>
 					</section>
 					
-					
-					<section class="panel">
-						<div class="panel-body" style="min-height: 560px;">
-							<div class="row">
-								<div class="col-md-12">
-									<h1>근무 현황</h1>
-									<canvas id="attChart" width="500px" height="250px"></canvas>
-								</div>
-							</div>
-						</div>
-					</section>
-					
-					
+					<%-- 
 					<section class="panel">
 						<div class="panel-body" style="min-height: 560px;">
 							<div class="row">
@@ -154,15 +149,11 @@
 							</div>
 						</div>
 					</section>
-					
+					 --%>
+					 
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h3 class="panel-title">Data Table</h3>
+							<h3 class="panel-title">연장근무 신청 현황</h3>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -188,7 +179,7 @@
 											<td class="teditdelete">
 												<c:choose>
 													<c:when test="${el.isAuth == '미승인'}">
-														<button class="btn btn-info btn-sm edit" onclick="location.href='editExtApply.do?aplSeq=${el.aplSeq}'">수정/삭제</button>
+														<button class="mb-xs mt-xs btn-sm btn-default" onclick="location.href='editExtApply.do?aplSeq=${el.aplSeq}'">수정/삭제</button>
 													</c:when>
 													<c:otherwise>
 														-
@@ -393,14 +384,7 @@
 		}
 		console.log('extTimeEnd : ', extTimeEnd);
 	
-	
-		console.log(inTime);
-		console.log(outTime);
-	
-		console.log("8시 " + moment('1970-01-02 08:00:00').valueOf());
-		console.log("9시 " + moment('1970-01-02 09:00:00').valueOf());
-		console.log("min : " + moment('1970-01-02 06:00:00').valueOf());
-		console.log("max : " + moment('1970-01-03 02:00:00').valueOf());
+
 	
 		var attChart = new Chart(ctx, {
 	
@@ -556,12 +540,64 @@
 						}
 					}			
 				});
-
 				
+				var label = [];
+
+				var minValue = moment('1970-01-01 06:00:00').valueOf();
+				
+				var attendInit = [];
+				var attendEnd = [];
+				var extendInit = [];
+				var extendEnd = [];
+
+				$.ajax({
+					url : "getChartData.do",
+					dataType : "json",
+					success : function(data) {
+						var dArray = [];
+						dArray = data.CD;
+						console.log('이거 확인 123 ', dArray);
+						for (var i = 0; i<dArray.length; i++) {
+							
+							if (dArray[i].entry === "근태") {
+								label.push(dArray[i].days);
+								attendInit.push('1970-01-01 '+dArray[i].attTime);
+								attendEnd.push('1970-01-01 '+dArray[i].offTime);
+							} else if (dArray[i].entry === "연장") {
+								extendInit.push('1970-01-01 '+dArray[i].attTime);
+								extendEnd.push('1970-01-01 '+dArray[i].offTime);
+							}
+						}
+						console.log('label : ', label);
+						console.log('attInit : ', attendInit);
+						console.log('attEnd : ', attendEnd);
+						console.log('extInit : ', extendInit);
+						console.log('extEnd : ', extendEnd);
+
+
+						var inTimeAbs = [];
+						for (let i =0; i<attendInit.length; i++) {
+							inTimeAbs.pusb(moment(attendInit[i]).valuOf());
+						}
+						console.log('inTimeAbs : ', inTimeAbs);
+
+						var inTimeRel = [];
+						for (let i = 0; i<attendInit.length; i++) {
+							inTimeRel.push(moment(attendInit[i]).valueOf()-minValue-10.8e6);
+						}
+						console.log('inTimeRel : ', inTimeRel);
+
+						var outTimeRel = [];
+						for (let i=0; i<attendEnd.length; i++) {
+							outTimeRel.push(moment(attendEnd).valueOf()-intTimeRel- )
+
+						}
+						
+					}	
+				});
+
 	
-/* 
-
-				
+/* 				
 	 			var ctx = document.getElementById('attChart').getContext('2d');
 	 			
 				var attChart = new Chart(ctx, {
