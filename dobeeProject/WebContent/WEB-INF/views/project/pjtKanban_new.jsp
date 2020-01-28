@@ -199,7 +199,7 @@
 				
 				
 
-			/* 01.26 상세 업무 추가 -- 알파카 */
+			/* 01.26 업무 상세 추가 -- 알파카 */
 			$("#addTaskDetailBtn").click(function(e){
 				var formData = $("#addTaskDetailForm").serialize();
 				var tdContent = $("#addTdContent").val();
@@ -229,7 +229,6 @@
 							tdContentDiv.append(icon);
 							tdContentDiv.append(label);
 							tdContentDiv.append(actionDiv);
-							tdContentDiv.append(hiddenInput);
 
 							//업무 상세 수정창
 							var editDiv = $('<div class="taskDetail-Edit" style="display:none">');
@@ -258,7 +257,8 @@
 							li.append(tdContentDiv);
 							li.append(editDiv);
 							$("#taskDetailList").append(li);
-		 					$("#tdContent").val("");
+		 					$("#addTdContent").val("");
+		 					console.log('없어져?');
 	 					}
 	 				},
 	 				error:function(){
@@ -521,7 +521,7 @@
 		/* 비동기로 업무상세 가져와서 뿌리는 함수  -- 01.26 알파카 수정*/
 		function getTaskDetailList(tskSeq){
 			console.log("getTaskDetailList() in!!");
-			//$('#taskDetailListView').empty();
+			$('#taskDetailList').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskDetailList.do",
@@ -635,11 +635,6 @@
 		/* 업무상세 비동기로 수정! --01.27 알파카 */
 		function taskDetailEditSubmit(data){
 			var parents = $(data).parents('div.taskDetail-Edit');
-			var editForm = parents[0].firstElementChild;
-			//console.log('폼폼폼?');
-			//console.dir(editForm);
-			//var formData = $(editForm).serialize();
-			console.log('데이터  폼 뭐니???');
 			var tdContent = $(parents).find('input[name="tdContent"]').val();
 			var tskSeq = $(parents).find('input[name="tskSeq"]').val();
 			var tdSeq = $(parents).find('input[name="tdSeq"]').val();
