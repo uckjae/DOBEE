@@ -618,7 +618,7 @@
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-left','10px');
 		}
 
-
+	
 		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
 			var tdSeq = $(data).find('input[name="tdSeq"]').val();
@@ -727,10 +727,10 @@
 		}
 
 
-		/* 체크리스트 가져와 뿌리는 함수 --01.26 알파카 수정*/
+		/* 체크리스트 가져와 뿌리는 함수 쳌쳌 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
-			$('#taskCheckList').empty();
+			//$('#taskCheckList').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",
@@ -748,13 +748,16 @@
 						
 						var li = $('<li>');
 						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
+
+						var id = 'todoListItem'+num;
 						/* var hiddenInput = $('<input hidden name="chkSeq">');
 						$(hiddenInput).val(chkSeq);
 						$(checkDiv).append(hiddenInput);
 						var hiddenInput2 = $('<input hidden name="tskSeq">');
 						$(hiddenInput2).val(tskSeq);
 						$(checkDiv).append(hiddenInput2); */
-						var checkBox = $('<input type="checkbox" id="todoListItem'+num+'" class="todo-check" name="isCheck">');
+						var checkBox = $('<input type="checkbox" class="todo-check" name="isCheck">');
+						$(checkBox).attr('id',id);
 						if(isCheck == true){
 							console.log("if check=true");
 							$(checkBox).prop("checked",true);
@@ -765,7 +768,8 @@
 							$(checkBox).val(0);
 						}
 						$(checkDiv).append(checkBox);
-						var label = $('<label class="todo-label" for="todoListItem'+num+'">');
+						var label = $('<label class="todo-label">');
+						$(label).attr('for',id);
 						var span = $('<span>');
 						span.text(content);
 						label.append(span);
@@ -778,12 +782,13 @@
 
 
 						/*
-						
 						<li>
 							<div class="checkbox-custom checkbox-default">
-			 					<input type="checkbox" id="todoListItem1" class="todo-check">
-			 					<label class="todo-label" for="todoListItem1"><span>체크체크</span></label>
-								</div>
+			 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
+			 					<label for="todoListItem1" class="check-label">
+			 						<span>체크체크~!~!~!~!</span>
+			 					</label>
+ 							</div>
 		 					<div class="todo-actions">
 		 						<a class="todo-remove" href="#">
 		 							<i class="fa fa-times"></i>
@@ -801,9 +806,23 @@
 			});
 		}
 
+		/*체크박스 체크하는 함수 -> 밑줄 긋기 & 체크 여부 name 값 바꾸기*/
+		function checkLine(data){
+			var label = $(data).closest('li').find('.check-label').find('span');
+			if($(data).is(':checked')){
+				console.log('체크 되니??');
+				label.css('text-decoration','line-through')
+			} else {
+				console.log('체크 해제??');
+				label.removeAttr('style');
+			}
+		}
+
 
 		/* 체크리스트 수정창 띄우는 함수 */
-		function taskCheckListEdit(data){
+		/* function taskCheckListEdit(data){
+
+			
 			$('#taskCheckListView').find('.content').each(function(index,element){
 				$(element).attr("disabled","true");
 			});
@@ -818,7 +837,9 @@
 			$(data).next().children().attr("class","fa fa-times");
 			$(data).next().removeAttr("onclick");
 			$(data).next().attr("onclick","taskCheckListEditCancle");
-		}
+
+			
+		} */
 
 
 		/* 체크리스트 비동기로 수정하는 함수 */
@@ -844,7 +865,9 @@
 
 		/* 체크리스트 삭제하는 함수 */
 		function taskCheckListDelete(data){
-			var form = $(data).prev().prev().parent().parent();
+
+			console.log('삭제 함수 타니?');
+			/* var form = $(data).prev().prev().parent().parent();
 			var formData = $(form).serialize();
 			var tskSeq = $('#taskCheckListTskSeq').val();
 			console.log(formData);
@@ -859,8 +882,20 @@
 					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
 				}
-			});
+			}); */
+
+			
 		}
+
+		/*체크리스트 수정하는 함수*/
+		function taskCheckListEdit(data){
+			console.log('수정 함수 타니?');
+			/*체크리스트 수정창 띄우기*/
+			$(data).parents('li').find('.checkList-Edit').css('display','block');
+			$(data).parents('li').find('.checkList-Edit').css('margin-top','15px');
+			$(data).parents('li').find('.checkList-Edit').css('margin-left','15px');
+		}
+		
 
 		/* 체크박스변경시  value 세팅하는 함수 */
 		function checkBoxChange(data){
@@ -1455,6 +1490,40 @@
 								<div class="tab-pane" id="checkList">
 									<div class="panel-body" style="padding-top: 0px;" id="taskCheckListDiv">
 										<ul class="widget-todo-list" id="taskCheckList">
+											<li>
+												<div class="checkbox-custom checkbox-default">
+								 					<input type="checkbox" id="todoListItem1" onclick="checkLine(this)">
+								 					<label for="todoListItem1" class="check-label">
+								 						<span>체크체크~!~!~!~!</span>
+								 					</label>
+					 							</div>
+					 							<!-- 수정 & 삭제 아이콘 -->
+							 					<div class="todo-actions">
+							 						<a style="cursor: pointer" onclick="taskCheckListEdit(this)">
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>&nbsp;&nbsp;&nbsp;
+							 						<a style="cursor: pointer" onclick="taskCheckListDelete(this)">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+							 					<!-- 수정창 -->
+							 					<div class="checkList-Edit" style="display:none">
+					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
+														<div class="form-group">
+															<div class="col-sm-12">
+																<div class="input-group mb-md">
+																	<input type="hidden" form="editTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
+																	<input type="text" id="tdContent" name="tdContent"  class="form-control" form="editTaskDetailForm">
+																	<div class="input-group-btn" style="padding:0;">
+																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+							 					</div>
+				 							</li>
+											 <!-- 템플릿 원본 
 											 <li>
 												<div class="checkbox-custom checkbox-default">
 								 					<input type="checkbox" id="todoListItem1" class="todo-check">
@@ -1465,7 +1534,10 @@
 							 							<i class="fa fa-times"></i>
 							 						</a>
 							 					</div>
-				 							</li>
+				 							</li> -->
+				 							
+				 							
+				 							
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
@@ -1540,9 +1612,6 @@
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
-		
-		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>

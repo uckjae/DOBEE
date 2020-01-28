@@ -59,17 +59,26 @@
 	
 	<!-- 비용 연도만 가져오기 -->
 	<select id="paymentYYYY" resultType="com.dobee.vo.ItemsCostChart">
-		select usedate, cost from costlist
+		select usedate from costlist; 
+	  	
 	</select>
 	
 	
 	<!--  비용차트 연도에 대한 데이터 보내주기 -->
 	<select id="chartByYYYY" parameterType="String"  resultType="com.dobee.vo.ItemsCostChart">
-	  select usedate, cost, costcode.entry from costlist join costcode on costlist.costcode = costcode.costcode
-	  where usedate like CONCAT('%',#{usedate},'%')
+	  	select sum(cost) as cost, costcode.entry 
+	  	from costlist join costcode on costlist.costcode = costcode.costcode 
+	  	where usedate like CONCAT('%', #{useDate}, '%') 
+	  	group by costcode.entry;
 	</select>
 	
 	
-	
+	<!--  비용 차트 연도랑 월 데이터 같이 받아서 보내주기 -->
+	<select id="chartByYYYYAndMonth" parameterType="String" resultType="com.dobee.vo.ItemsCostChart">
+		 select sum(cost) as cost, costcode.entry 
+		 from costlist join costcode on costlist.costcode = costcode.costcode 
+		 where usedate like CONCAT('%', #{useDate}, '%') 
+		 group by costcode.entry;
+	</select>
 	
 </mapper>

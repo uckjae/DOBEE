@@ -48,6 +48,7 @@
    파일 없어지고 설명파일안에서   > SqlSessionFactoryBean
    기존 java 코드 : builder 사용 > Factory 객체 > sqlsession 생성 > 사용
 
+
    두개의 클래스가 위 작업 처리
    SqlSessionFactoryBean
    SqlSessionTemplate
