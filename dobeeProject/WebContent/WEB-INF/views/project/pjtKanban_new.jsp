@@ -908,33 +908,21 @@
 			wsocket.onclose = onClose;
 		}
 
-		function disconnect(){
-			wsocket.close();
-		}
-		function onOpen(evt) {
-		}
 		
-		function onMessage(evt) {
-			var data = evt.data;
-			appendMessage(data);
-		}
-		
-		function onClose(evt) {
-		}
 		
 		function send(data) {
 			let mail = $('#taskMember').val();
+			let content = $('#addTaskTitle').val();
 			var jsonData = new Object();
 			jsonData.cmd = data;
 			jsonData.mail = mail;
+			jsonData.content = content;
 
 			var parsedData = JSON.stringify(jsonData);
 			
 			wsocket.send(parsedData);
 		}
 	
-		function appendMessage(msg) {
-		}
 		
 		
     </script>
@@ -1274,7 +1262,7 @@
 						      	<div class="form-group">
 									<label class="col-md-3 control-label"><i class="fa fa-tasks fa-lg"></i><span style="font-size:15px">&nbsp;&nbsp;업무</span></label>
 										<div class="col-md-9">
-											<input type="text" class="form-control" type="text" name="title" placeholder="업무를 입력하세요" form="addPMTaskForm" required style="height:35px;">
+											<input type="text" id="addTaskTitle" class="form-control" type="text" name="title" placeholder="업무를 입력하세요" form="addPMTaskForm" required style="height:35px;">
 										</div>
 								</div>
 							  	<br>
