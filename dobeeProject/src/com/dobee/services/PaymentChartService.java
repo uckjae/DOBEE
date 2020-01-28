@@ -49,5 +49,11 @@ public class PaymentChartService {
 		
 		
 	//아작스 월 선택하면 그에 해당하는 비용 데이터 보내주기
-
+	public ArrayList<ItemsCostChart> changeYYYYAndMonth(String usedate){
+		ArrayList<ItemsCostChart> list = new ArrayList<>();
+		PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+		list = paymentDao.chartByYYYYAndMonth(usedate);
+		
+		return list;
+	}
 }

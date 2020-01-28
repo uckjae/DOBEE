@@ -5,6 +5,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         				   http://www.springframework.org/schema/beans/spring-beans.xsd
         				   http://www.springframework.org/schema/mvc
@@ -14,7 +15,9 @@
         				   http://www.springframework.org/schema/security
         				   http://www.springframework.org/schema/security/spring-security.xsd
         				   http://www.springframework.org/schema/tx
- 						   http://www.springframework.org/schema/tx/spring-tx.xsd">
+ 						   http://www.springframework.org/schema/tx/spring-tx.xsd
+ 						   http://www.springframework.org/schema/websocket
+ 						   http://www.springframework.org/schema/websocket/spring-websocket.xsd">
         		
 <!-- 
 주석처리 일부러 한 겁니다. 일단 지우지 말아주세요 
@@ -51,10 +54,11 @@
 
     <bean id="jsonView" name="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
    
-    
-   
-    
-   
+    <!-- 웹소켓핸들러 -->
+	<websocket:handlers>
+		<websocket:mapping handler="AlarmHandler" path="/alram.do"/>
+	</websocket:handlers>    
+   	<bean id="AlarmHandler" class="com.dobee.handler.AlarmHandler"/>
     
     <!-- File Upload Resolver -->
 	<bean id="multipartResolver"

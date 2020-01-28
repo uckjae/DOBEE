@@ -870,24 +870,28 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	System.out.println("Docontorller addPMTask() in!!");
-    	System.out.println("업무 어떻게 넘어와?"+task.toString());
     	String[] str = task.getMail().split(",");
     	String mail = str[0];
     	task.setMail(mail);
     	int result = projectService.addPMTask(task);
-    	System.out.println("컨트롤러"+result);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
 
-    //업무수정
+    //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task){
-        System.out.println("DoController taskEdit() in!!");
-        projectService.editTask(task);
-        
-    	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+    	System.out.println("DoController taskEdit() in!!");
+        System.out.println("업무 수정 값!!!!"+task.toString());
+    	int result = 0;
+    	String view = "";
+        result = projectService.editTask(task);
+        if(result > 0) {
+        	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
+        } else {
+        	view = "pjtMain.do";
+        }
+    	return view;
     }
 
 

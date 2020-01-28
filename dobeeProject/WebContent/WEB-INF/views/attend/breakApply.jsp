@@ -211,7 +211,7 @@
 	
 		<script>
 			window.onload = function(){
-
+				connect();//웹소켓 연결
 				$('#listenSlider').change(function() {
 					$('.output b').text( this.value +'/'+ 27);
 				});
@@ -292,6 +292,7 @@
 						contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 		 				type:"post",
 						success : function(responseData) {
+							send("breakApply");
 							if(responseData == "success"){
 								swal({
 									title: "부재 일정 신청",
@@ -312,6 +313,7 @@
 										} 
 							})
 						}
+							
 						},
 						error : function(error) {
 							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -522,6 +524,39 @@
 			    calendar.render();
 			  });
 				 */		
+
+				 /* 알람 */
+					function getContextPath() {//contextPath 구하는 함수
+					  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+					  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+					};
+					
+					
+
+					function connect(){
+						var contextPath = getContextPath();
+						wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+						wsocket.onopen = onOpen;
+						wsocket.onmessage = onMessage;
+						wsocket.onclose = onClose;
+					}
+
+					
+					
+					function send(data) {
+						let mail = $('#approvalList').val();
+						let content = $('#apycodelist').val();
+						var jsonData = new Object();
+						jsonData.cmd = data;
+						jsonData.mail = mail;
+						jsonData.content = content;
+						jsonData.applier = '${sessionScope.user.name}';
+
+						var parsedData = JSON.stringify(jsonData);
+						
+						wsocket.send(parsedData);
+					}
+					/* /알람  */
 	  	</script>
 		
 		
