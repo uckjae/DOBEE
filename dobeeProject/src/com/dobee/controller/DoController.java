@@ -859,7 +859,6 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	System.out.println("Docontorller addPMTask() in!!");
     	System.out.println("업무 어떻게 넘어와?"+task.toString());
     	String[] str = task.getMail().split(",");
     	String mail = str[0];

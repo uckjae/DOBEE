@@ -40,7 +40,13 @@
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
 		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-    
+    	
+    	
+    	<!-- Star Rating -->
+    	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+		
+		
 	
 	
 	
@@ -53,12 +59,26 @@
     <script type="text/javascript">
 		$(function(){
 
+			$("#rateYo").rateYo({
+			    rating: 2,
+			    fullStar: true,
+			    onSet: function (rating, rateYoInstance) {
+				    var value = rating;
+				    $('#addPMTaskImportant').text(value); //중요도 값 표시해주기
+				    console.log('값은?'+$('#addPMTaskImportant').text());
+				   
+			      }
+			  });
+
+
 			/* 중요도 슬라이드 변경시 값표시 */
 			$('#addPMTaskFormBar').change(function(){
 				var value = $(this).val();
 				console.log(value);
 				$('#addPMTaskImportant').text(value);
 			});
+
+			
 			$('#taskFormBar').change(function(){
 				var value = $(this).val();
 				console.log(value);
@@ -73,9 +93,7 @@
 				$('.ui-slider-range').attr('style','width: 0%;');
 				$('.ui-slider-handle').attr('style','left:0%');
 				$('#importantShow').text('0');	
-				var pjtSeq = $(this).data('pjtseq');
-				
-					
+				var pjtSeq = $(this).data('pjtseq');					
 			});
 				
 			/* 업무상세 모달띄우는 함수  모모달*/
@@ -140,9 +158,19 @@
 			/* /모달띄우는 함수 */
 
 
+			/* 01.28 pm 업무 추가 -- 알파카 요기요*/
+			$("#addPMTaskBtn").click(function(){
+				 var important = $('#addPMTaskImportant').text();
+				 $("#addPMTaskStarImportant").val(important);
+				
+				$("#addPMTaskForm").submit();
 
 
-			/* 01.26 상세 업무 추가 -- 알파카  요기요 */
+			});
+				
+				
+
+			/* 01.26 상세 업무 추가 -- 알파카 */
 			$("#addTaskDetailBtn").click(function(e){
 				var formData = $("#addTaskDetailForm").serialize();
 				var tdContent = $("#addTdContent").val();
@@ -1133,10 +1161,14 @@
 							   	<div class="form-group">
 									<label class="col-md-3 control-label"><i class="fa fa-star fa-lg"></i><span style="font-size:15px">&nbsp;&nbsp;중요도</span><b id="addPMTaskImportant" style="margin-left:40px">1</b><b>/5</b></label>
 									<div class="col-md-6">
-										<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
+										<div id="rateYo">
+										</div>
+										<%-- <div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
 											<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
 											<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
-										</div>
+										</div> --%>
+										<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
+										<input type="hidden" id="addPMTaskStarImportant" name="important" form="addPMTaskForm" />
 									</div>
 								</div>
 							 </form>
@@ -1147,7 +1179,7 @@
 								<div class="col-md-4">
 								</div>
 								<div class="col-md-4 text-center">
-									<button type="submit" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
+									<button type="button" id="addPMTaskBtn" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
 								</div>
 								<div class="col-md-4">
 								</div>
@@ -1411,6 +1443,10 @@
 
 		<!-- Examples -->
 		<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+		
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+		
 		
 </body>
 </html>
