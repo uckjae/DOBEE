@@ -115,6 +115,19 @@ public class DoController {
     public String fidIdResult(){
         return null;
     }
+    
+    //비밀번호 찾기
+    @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
+    public String findPassWord(String mail, String name,  Model model){
+    	String find;
+    	UserDao userDao =sqlsession.getMapper(UserDao.class);
+    	 find = userDao.findPassWord(mail, name);
+    	 System.out.println("비번1:"+find);
+    	 model.addAttribute("find",find);
+    	 System.out.println("비번2:"+find);
+    	return "main/findPassWord";
+    }
+    
 
     //비밀번호재설정
     //public String resetPwd(){
