@@ -69,8 +69,8 @@
 			    onSet: function (rating, rateYoInstance) {
 				    var value = rating;
 				    $('#addPMTaskImportant').text(value); //중요도 값 표시해주기
-				    console.log('값은?'+$('#addPMTaskImportant').text());
-				    $("#addPMTaskStarImportant").val(value);
+				    //console.log('값은?'+$('#addPMTaskImportant').text());
+				    //$("#addPMTaskStarImportant").val(value);
 				   
 			      }
 			  });
@@ -109,8 +109,6 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
-				
-
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
@@ -126,23 +124,33 @@
 						console.log('getTask ajax 성공?');
 						console.log(data);
 						var task = data;
+						$('#taskDetailEditTitle').val(task.title);
 						$('#taskDetailTitle').text(task.title);
 						$('#taskFormTitle').val(task.title);
+						//날짜 셋팅
 						var startDate = new Date(task.startAt);
 						var formatedStartDate = date_to_str(startDate);
 						$('#taskFormStartAt').val(formatedStartDate);
-						var endDate = new Date(task.endAt);
-						var formatedEndDate = date_to_str(endDate);
-						$('#taskFormEndtAt').val(formatedEndDate);
-						$('#taskFormName').text(task.name);
-						$('#taskFormMail').val(task.mail);
-						$('#taskFormPjtSeq').val(task.pjtSeq);
-						$('#listenSlider').val(task.important);
+						if(task.endAt == null){ //끝나는 날짜가 없는 경우 그냥 공백으로 만들기
+							$('#taskFormEndAt').val("");
+						} else {
+							var endDate = new Date(task.endAt);
+							var formatedEndDate = date_to_str(endDate);
+							$('#taskFormEndAt').val(formatedEndDate);
+						}
 
 						
-						$('#taskImportant').text(task.important); //중요도 표시해주기
+						//담당자 셋팅
+						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
+						$('#taskFormName').text(task.name);
+						$('#taskFormMail').val(task.mail);
 						
-						setStar(authCode, task.important); //중요도로 별 표시해주기
+						//프로젝트 seq 셋팅
+						$('#taskFormPjtSeq').val(task.pjtSeq);
+						
+						//중요도 셋팅
+						$('#taskImportant').text(task.important); //중요도 표시해주기
+						setStar(authCode, task.important); //권한에 따라 별 플러그인 적용
 
 						
 						$('.progress-button').each(function(index,element){
@@ -173,15 +181,21 @@
 			/* /모달띄우는 함수 */
 
 
-			/* 01.28 pm 업무 추가 -- 알파카 요기요*/
-			/* $("#addPMTaskBtn").click(function(){
-				 var important = $('#addPMTaskImportant').text();
+			/* 01.28 pm 업무 추가 >> 추가시에 중요도를 별도로 셋팅해서 백단으로 보내야 함-- 알파카*/
+			$("#addPMTaskBtn").click(function(){
+				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
-				
 				$("#addPMTaskForm").submit();
+			});
 
 
-			}); */
+			$("#taskEditBtn").click(function(){
+				var important = $('#taskImportant').text();
+				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
+				$("#taskEditForm").submit();
+
+			});
+			
 				
 				
 
@@ -359,6 +373,7 @@
 				 });
 			} else { //pm
 				console.log('pm 타니??');
+				console.log('중요도는?'+important);
 				$("#starBar").attr('id', 'taskImportantEdit');
 				$("#taskImportantEdit").rateYo({
 				    rating: important,
@@ -368,8 +383,7 @@
 					    //$('#taskImportant').text(value); //중요도 값 표시해주기
 				    	var value = rating;
 						$('#taskImportant').text(value); //중요도 값 표시해주기
-						$("#taskEditImportant").val(value); //db에 저장할 값 넣어주기
-						console.log('중요도 값 바뀌니?'+$("#taskEditImportant").val());
+						//$("#taskEditImportant").val(value); //db에 저장할 값 넣어주기
 				      }
 				  });
 			}
@@ -1234,7 +1248,7 @@
 							<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-bottom: 0px;border-bottom-width: 0px;">
 								<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 									<div style="margin-top: 20px;margin-bottom: 25px;">
-										<span><i class="fa fa-tasks"></i></span>&nbsp;&nbsp;<h4 class="modal-title" id="taskDetailTitle" name="title" style="display:inline"></h4>
+										<span><i class="fa fa-tasks"></i></span>&nbsp;&nbsp;<h4 class="modal-title" id="taskDetailTitle" style="display:inline"></h4>
 									</div>
 								<div class="tabs tabs-primary">
 									<ul class="nav nav-tabs nav-justified">
@@ -1251,11 +1265,20 @@
 								</div>
 							</div>
 							<!-- 속성 Tab -->
-							
 							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
 								<div class="tab-pane active" id="attribute">
 								<div class="panel-body" style="padding-top: 0px;">
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
+										<!-- 업무 pm만 수정 가능-->
+										<c:if test="${ user.authCode == '3'}">
+											<div class="form-group">
+													<label class="col-md-3 control-label">업무</label>
+													<div class="col-md-7">
+														<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
+													</div>
+											</div>
+										</c:if>
+										<!-- 날짜 -->
 										<div class="form-group">
 											<label class="col-md-3 control-label">날짜</label>
 											<div class="col-md-7">
@@ -1266,7 +1289,9 @@
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>
 													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
-													<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
+													<c:if test="${ user.authCode == '2'}">
+														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
+													</c:if>
 												</div>
 											</div>
 										</div>
@@ -1284,7 +1309,7 @@
 												</c:when>
 												<c:otherwise>
 														<div class="col-md-7">
-															<select class="form-control" id="taskMember" name="mail" form="taskEditForm">
+															<select class="form-control" id="taskMemberEditSelect" name="mail" form="taskEditForm">
 																<c:forEach items="${pjtMember}" var="user" varStatus="status">
 																	<option value="${user.mail}">${user.name}</option>
 																</c:forEach>
@@ -1316,7 +1341,7 @@
 										</div>
 										<br>
 										<div class="form-group" style="text-align: center;">
-											<input type="submit" class="btn btn-default" style="background-color: #34495e; color:white;" value="수정" form="taskEditForm">
+											<button type="button" id="taskEditBtn" class="btn btn-default" style="background-color: #34495e; color:white;" form="taskEditForm">수정</button>
 										</div>	
 									</form>
 									</div>

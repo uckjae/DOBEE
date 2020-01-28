@@ -141,7 +141,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!-- 담당자 업무 수정 -->
 <update id="editTask">
-	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt} WHERE TSKSEQ=#{tskSeq}
+	UPDATE TASK SET TITLE=#{title}, PROGRESS=#{progress}, IMPORTANT=#{important}, STARTAT=#{startAt}, ENDAT=#{endAt}, MAIL=#{mail} WHERE TSKSEQ=#{tskSeq}
 </update>
 
 
