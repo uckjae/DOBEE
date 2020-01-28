@@ -166,9 +166,13 @@ a[x-apple-data-detectors=true] {
 }
 </style>
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap" rel="stylesheet"><!-- font-family: 'Black Ops One', cursive; -->
+<link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet"><!-- font-family: 'Staatliches', cursive; -->
+<link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet"><!-- font-family: 'Gamja Flower', cursive; -->
+<link href="https://fonts.googleapis.com/css?family=Hi+Melody&display=swap" rel="stylesheet">
 <style type="text/css">
+
 @import
 	url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 </style>
@@ -195,7 +199,7 @@ a[x-apple-data-detectors=true] {
 																<tr>
 																	<td style="padding-right: 0px; padding-left: 0px;"
 																		align="center"><img align="center" border="0"
-																		src="images/image-1.png" alt="Image" title="Image"
+																		src="img/beemain2.png" alt="Image" title="Image"
 																		style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; clear: both; display: block !important; border: none; height: auto; float: none; width: 100%; max-width: 200px;"
 																		width="200" /></td>
 																</tr>
@@ -227,16 +231,16 @@ a[x-apple-data-detectors=true] {
 															<div style="color: #29ffd8; line-height: 120%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 120%;">
 																	<span
-																		style="font-family: Montserrat, sans-serif; font-size: 34px; line-height: 40.8px; color: #ffffff;"><span
-																		style="line-height: 40.8px; font-size: 34px;">WELCOME!
+																		style="font-family: 'Staatliches', cursive; font-size: 34px; line-height: 40.8px; color: #ffffff;"><span
+																		style="line-height: 40.8px; font-size: 44px;">WELCOME!
 																			</span></span>
 																</p>
 																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
 																<p style="font-size: 14px; line-height: 120%;">
 																	<span
 																		style="color: #ffffff; font-size: 44px; line-height: 52.8px;"><strong><span
-																			style="font-family: Montserrat, sans-serif; line-height: 52.8px; font-size: 44px;"><span
-																				style="line-height: 52.8px; font-size: 44px;">D O B E E
+																			style="font-family: 'Black Ops One', cursive; line-height: 52.8px; font-size: 44px;"><span
+																				style="line-height: 52.8px; font-size: 54px;">D O B E E
 																					</span></span></strong></span>
 																</p>
 																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
@@ -257,7 +261,7 @@ a[x-apple-data-detectors=true] {
 															<div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 140%;">
 																	<strong><span
-																		style="font-size: 16px; line-height: 22.4px;">입사를 축하드립니다.</span></strong>
+																		style="font-size: 18px; line-height: 22.4px; font-family: 'Nanum Gothic', sans-serif;">입사를 축하드립니다.</span></strong>
 																</p>
 															</div>
 														</td>
@@ -281,52 +285,86 @@ a[x-apple-data-detectors=true] {
 									style="max-width: 320px; min-width: 650px; display: table-cell; vertical-align: top;">
 									<div style="width: 100% !important;">
 										<div style="padding: 0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent;">
-											<table id="u_content_text_3" class="u_content_text"
-												style="font-family: arial, helvetica, sans-serif;"
+											
+											<table id="u_content_text_3" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
 												role="presentation" cellpadding="0" cellspacing="0"
 												width="100%" border="0">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 40px 20px 10px; font-family: arial, helvetica, sans-serif;" align="left">
-															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word;">
-																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="font-size: 20px; line-height: 30px;">사이트이용을 위해서는 비밀번호 설정이</span>
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 40px 20px 10px; font-family: 'Gamja Flower', cursive;" align="left">
+															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word; font-family: 'Gamja Flower', cursive;">
+															    <p style="line-height: 150%; font-size: 14px;">
+																	<span style="font-size: 17px; line-height: 30px;">안녕하세요 ${name}님</span>
 																</p>
 																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="font-size: 20px; line-height: 30px;">필요합니다.</span>
+																	<span style="font-size: 17px; line-height: 30px;">귀하께서 사이트이용을 위해서는</span>
+																</p>
+																<p style="line-height: 150%; font-size: 14px;">
+																	<span style="font-size: 17px; line-height: 30px;">비밀번호 설정이 필요합니다.</span>
 																</p>
 															</div>
 														</td>
 													</tr>
 												</tbody>
 											</table>
-
-											<table id="u_content_text_4" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
-												<tbody>
-													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
-															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word;">
-																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="font-size: 20px; line-height: 30px;">During the webinar, Emily&nbsp;will discuss how to be</span>
-																</p>
-																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="font-size: 20px; line-height: 30px;">effective in a demanding and competitive market.</span>
-																</p>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-
+											
 											<table id="u_content_divider_1" class="u_content_divider" style="font-family: arial, helvetica, sans-serif;"
 												role="presentation" cellpadding="0" cellspacing="0"
 												width="100%" border="0">
 												<tbody>
 													<tr>
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
-															<table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #CCC; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
+															<table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #CCC; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
+																<tbody>
+																	<tr style="vertical-align: top">
+																		<td style="word-break: break-word; border-collapse: collapse !important; vertical-align: top; font-size: 0px; line-height: 0px; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
+																			<span>&#160;</span>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+                                             
+											<table id="u_content_text_4" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
+												role="presentation" cellpadding="0" cellspacing="0"
+												width="100%" border="0">
+												<tbody>
+													<tr>
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
+															
+															
+															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word;">
+																<p style="font-size: 14px; line-height: 150%;">
+																   <span style="color: #34495e; font-size: 14px; line-height: 21px;">
+																	<span style="font-size: 15px; line-height: 30px;">PassWord</span>
+																  </span>
+																</p>
+																<input type="text" class="form-control mb-3" id="password" name="password" value="">
+																
+																<p style="font-size: 14px; line-height: 150%;">
+																   <span style="color: #34495e; font-size: 14px; line-height: 21px;">
+																	<span style="font-size: 15px; line-height: 30px;">PassWord Check</span>
+																   </span>
+																</p>
+																<input type="text" class="form-control mb-3" id="password" name="password" value="">
+															</div>
+															
+															
+														</td>
+													</tr>
+												</tbody>
+											</table>
+
+											<table id="u_content_divider_2" class="u_content_divider" style="font-family: arial, helvetica, sans-serif;"
+												role="presentation" cellpadding="0" cellspacing="0"
+												width="100%" border="0">
+												<tbody>
+													<tr>
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
+															<table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #CCC; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
 																<tbody>
 																	<tr style="vertical-align: top">
 																		<td style="word-break: break-word; border-collapse: collapse !important; vertical-align: top; font-size: 0px; line-height: 0px; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
@@ -346,15 +384,16 @@ a[x-apple-data-detectors=true] {
 												<tbody>
 													<tr>
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
-															<div style="color: #07a88b; line-height: 150%; text-align: center; word-wrap: break-word;">
+															<div style="color: #428bca; line-height: 150%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="color: #00ccff; font-size: 14px; line-height: 21px;"><strong>
-																	<span style="font-size: 30px; line-height: 45px;">Join us on August&nbsp;27th, 11:00 AM</span></strong></span>
-																</p>
-																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="font-size: 16px; line-height: 24px; color: #000000;">
-																	   <span style="line-height: 24px; font-size: 16px;">and learn how to boost your business</span>
+																	<span style="font-size: 12px; line-height: 24px; color: #000000; font-family: 'Gamja Flower', cursive;">
+																	   <span style="line-height: 24px; font-size: 14px;">위 비밀번호로 설정 하시겠습니까?</span>
 																	</span>
+																</p>
+																
+																<p style="font-size: 14px; line-height: 150%;">
+																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Gamja Flower', cursive;"><strong>
+																	<span style="font-size: 30px; line-height: 45px;">완료버튼을 누르세요</span></strong></span>
 																</p>
 															</div>
 														</td>
@@ -370,9 +409,9 @@ a[x-apple-data-detectors=true] {
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif;" align="left">
 															<div align="center">
 																<a href="" target="_blank"
-																	style="display: inline-block; font-family: arial, helvetica, sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #28e0bf; border-radius: 50px; -webkit-border-radius: 50px; -moz-border-radius: 50px; width: auto; padding: 20px 50px; mso-border-alt: none;">
+																	style="display: inline-block; font-family: arial, helvetica, sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
 																	<span style="line-height: 150%;">
-																		<strong><span style="font-size: 30px; line-height: 45px;">완료</span></strong>
+																		<strong><span style="font-size: 20px; line-height: 20px;">완료</span></strong>
 																	</span>
 																</a>
 															</div>
