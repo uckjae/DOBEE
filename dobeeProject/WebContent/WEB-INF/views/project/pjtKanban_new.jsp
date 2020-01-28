@@ -789,7 +789,7 @@
 
 						//수정창 만들기
 						var editDiv = $('<div class="checkList-Edit" style="display:none">');
-						var editForm = $('<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">');
+						var editForm = $('<form action="ajax/project/taskCheckListEdit.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">');
 						var formGroup = $('<div class="form-group">');
 						var div1 = $('<div class="col-sm-12">');
 						var div2 = $('<div class="input-group mb-md">');
@@ -818,41 +818,6 @@
 						$(li).append(editDiv);
 						$("#taskCheckList").append(li);
 						num++;
-						/*
-						예전거
-
-						var id = 'todoListItem'+num;
-						var hiddenInput = $('<input hidden name="chkSeq">');
-						$(hiddenInput).val(chkSeq);
-						$(checkDiv).append(hiddenInput);
-						var hiddenInput2 = $('<input hidden name="tskSeq">');
-						$(hiddenInput2).val(tskSeq);
-						$(checkDiv).append(hiddenInput2);
-						var checkBox = $('<input type="checkbox" class="todo-check" name="isCheck">');
-						$(checkBox).attr('id',id);
-						if(isCheck == true){
-							console.log("if check=true");
-							$(checkBox).prop("checked",true);
-							$(checkBox).val(1);
-						}else{
-							console.log("else check=false");
-							$(checkBox).prop("checked",false);
-							$(checkBox).val(0);
-						}
-						$(checkDiv).append(checkBox);
-						var label = $('<label class="todo-label">');
-						$(label).attr('for',id);
-						var span = $('<span>');
-						span.text(content);
-						label.append(span);
-						$(checkDiv).append(label);
-						var actionDiv = $('<div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
-						$(li).append(checkDiv);
-						$(li).append(actionDiv);
-						$("#taskCheckList").append(li);
-						num++;
-						
-						*/
 					});
 				},
 				error:function(request,status,error){
@@ -878,13 +843,37 @@
 		}
 
 
-		/* 체크리스트 비동기로 수정하는 함수 */
+		/* 체크리스트 비동기로 수정하는 함수  요기요 */
 		function taskCheckListEditSubmit(data){
 			console.log("taskCheckListEditSubmit() in!!");
-			var editForm = $(data).parent().parent();
+			var parents = $(data).parents('div.checkList-Edit');
+			var tskSeq = $(parents).find('input[name="tskSeq"]').val();
+			var chkSeq = $(parents).find('input[name="chkSeq"]').val();
+			var content = $(parents).find('input[name="content"]').val();
+					
+			$.ajax({
+				url:"ajax/project/taskCheckListEdit.do",
+				data: {'chkSeq' : chkSeq, 'content' : content },
+				dataType:"text",
+				success:function(data){
+					console.log('ajax 통신 성공');
+					if(data == "success"){
+						getTaskCheckList(tskSeq);
+					}
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
+			
+			/* 
+			var editForm = $(data).closest('li').find('form');
+			console.log('제발!!');
+			console.dir(editForm);
 			var formData = $(editForm).serialize();
-			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log(editForm);
+			console.log(formData);
+			
 			$.ajax({
 				url:"ajax/project/taskCheckListEdit.do",
 				data: formData,
@@ -896,7 +885,7 @@
 					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
 				}
-			});
+			}); */
 		}
 
 		/* 체크리스트 삭제하는 함수 */

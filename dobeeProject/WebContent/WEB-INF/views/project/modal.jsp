@@ -19,7 +19,7 @@
 			</div>
 			<!-- ¼öÁ¤Ã¢ -->
 			<div class="checkList-Edit" style="display:none">
-				<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
+				<form action="ajax/project/taskCheckListEdit.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
 				<div class="form-group">
 					<div class="col-sm-12">
 						<div class="input-group mb-md">

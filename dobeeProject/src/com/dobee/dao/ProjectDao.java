@@ -83,8 +83,8 @@ public interface ProjectDao {
     public int addTaskCheckList(CheckList checkList);
     
     
-    //체크리스트 수정
-    public int taskCheckListEdit(CheckList checkList);
+    //체크리스트 내용 수정
+    public int taskCheckListEditContent(CheckList checkList);
     
     
     //체크리스트 삭제

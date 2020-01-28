@@ -207,11 +207,11 @@ public class ProjectService {
     	return taskCheckList;
     }
     
-    //체크리스트 수정
-    public int taskCheckListEdit(CheckList checkList) {
+    //체크리스트 내용 수정
+    public int taskCheckListEditContent(CheckList checkList) {
     	System.out.println("ProjectService taskCheckListEdit() in");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskCheckListEdit(checkList);
+    	int result = projectDao.taskCheckListEditContent(checkList);
     	return result;
     }
     
