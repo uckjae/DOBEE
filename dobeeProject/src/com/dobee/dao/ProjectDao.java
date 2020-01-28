@@ -88,7 +88,7 @@ public interface ProjectDao {
     
     
     //체크리스트 삭제
-    public int taskCheckListDelete(CheckList checkList);
+    public int taskCheckListDelete(int chkSeq);
 
     //프로젝트 캘린더
     public List<Schedule> pjtSchedule();

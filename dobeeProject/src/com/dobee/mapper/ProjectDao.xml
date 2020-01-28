@@ -164,6 +164,6 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!-- 체크리스트 삭제 -->
 <delete id="taskCheckListDelete">
-	DELETE FROM CHECKLIST WHERE TSKSEQ=#{tskSeq} AND CHKSEQ=#{chkSeq}
+	DELETE FROM CHECKLIST WHERE CHKSEQ=#{chkSeq}
 </delete>
 </mapper>

@@ -768,17 +768,6 @@
 						label.append(span);
 						checkDiv.append(checkInput);
 						checkDiv.append(label);
-						/*
-						var label = $(data).closest('li').find('.check-label').find('span');
-						if($(data).is(':checked')){
-							console.log('체크 되니??');
-							label.css('text-decoration','line-through');
-						} else {
-							console.log('체크 해제??');
-							label.removeAttr('style');
-						}
-						
-						*/
 
 						//수정 삭제 아이콘
 						var actionDiv = $('<div class="todo-actions">');
@@ -873,43 +862,35 @@
 			console.dir(editForm);
 			var formData = $(editForm).serialize();
 			console.log(formData);
-			
-			$.ajax({
-				url:"ajax/project/taskCheckListEdit.do",
-				data: formData,
-				dataType:"JSON",
-				success:function(data){
-					getTaskCheckList(tskSeq);
-				},
-				error:function(request,status,error){
-					console.log("code : " + request.status +"\n" + "message : " 
-							+ request.responseText + "\n" + "error : " + error);
-				}
-			}); */
+			*/
 		}
 
 		/* 체크리스트 삭제하는 함수 */
 		function taskCheckListDelete(data){
+			var parents =  $(data).closest('li').find('.checkList-Edit');
+			var chkSeq = parents.find('input[name="chkSeq"]').val();
+			var tskSeq = parents.find('input[name="tskSeq"]').val();
 
-			console.log('삭제 함수 타니?');
-			/* var form = $(data).prev().prev().parent().parent();
-			var formData = $(form).serialize();
-			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log(formData);
 			$.ajax({
 				url:"ajax/project/taskCheckListDelete.do",
-				data: formData,
-				success: function(){
-					console.log("taskCheckListDelete Ajax Success!!");
-					getTaskCheckList(tskSeq);
+				data: {'chkSeq':chkSeq},
+				success: function(data){
+					if(data == "success"){
+						getTaskCheckList(tskSeq);
+					}
 				},
 				error: function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
 				}
-			}); */
-
+			});
 			
+			/* var form = $(data).prev().prev().parent().parent();
+			var formData = $(form).serialize();
+			var tskSeq = $('#taskCheckListTskSeq').val();
+			console.log(formData);
+			 */
+
 		}
 
 		/*체크리스트 수정하는 함수*/
