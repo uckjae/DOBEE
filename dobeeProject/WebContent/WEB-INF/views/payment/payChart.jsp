@@ -9,11 +9,7 @@
 <c:import url="/common/HeadTag.jsp"/>
 
 <script>
-//같은 연도별 / 항목별 / 금액 합계 구하기 함수
-function costSum(array){
-	
-	
-}
+
 /* 날짜 포맷 함수 */
 Date.prototype.format = function(f) {
 	if (!this.valueOf()) return " ";
@@ -44,6 +40,8 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 //연도 셀렉트 체인지 함수
 function chageYYYYSelect(){
+
+	
 	//아작스로 받아온 데이터 전역변수에 담기위해 전역변수 선언
 	let completeData = [];
 	let yyyy = $('#yyyy option:selected').val();
@@ -51,21 +49,19 @@ function chageYYYYSelect(){
 	var usedate = [];
 	var usedate_yyyy =[];
 	var usedate_month = [];
-	var completeData;
-	if (month === '없음'){
+	if (month == '연도만'){
 		// 년도만 가지고 오는 아작스 쿼리문
-		let usedateData = {
+		let useDateData = {
 				"usedate":yyyy
 				};
 		$.ajax({
 			type:'POST',
 			url: 'changeYYYYSelect.do',
-			data: usedateData,
+			data: useDateData,
 			success:function(data){
 					completeData = data;
 				},
 			complete:function(){
-				
 				for(let i = 0 ; i < completeData.length; i++){
 					let temp = new Date(completeData[i].usedate).format("yyyy-MM-dd");
 					usedate.push(temp);
@@ -74,54 +70,171 @@ function chageYYYYSelect(){
 					temp = new Date(completeData[i].usedate).format("MM");
 					usedate_month.push(temp);
 				}
+					// 여기서 부터 차트 그리기
+					var xData = [];	
+					for(let i = 0 ; i<completeData.length; i++){
+						xData.push(completeData[i].entry);
+					}	
+					var yData = [];		
+					for(let i = 0 ; i<completeData.length; i++){
+						yData.push(completeData[i].cost);
+					}
+					var chartData =  {
+							xData,
+							yData
+						}
 
+					console.log("연도만 아작스 : 차트 데이터");
+					console.log(xData);
+					console.log(yData);
+					console.log(chartData);
+
+					//기존에 있던 차트 지우고 다시 새로 만들어서 뿌림
+				 	$('#myChart').remove();
+				 	var newchart = "<canvas id='myChart' width='auto' height='auto'></canvas>";
+				 	$('#chartDiv').append(newchart);
+
+
+
+					
+					var ctx = document.getElementById("myChart").getContext('2d');
+					var data = {
+						labels: xData,
+					    datasets: [{
+					        barPercentage: 0.5,
+					        barThickness: 6,
+					        maxBarThickness: 8,
+					        minBarLength: 2,
+					        data: yData
+					    }]
+					};
+					var options =  {
+					        scales: {
+					            yAxes: [{
+		 			                ticks: {
+					                    beginAtZero: true
+					                }
+					            }],
+					            xAxes:[{
+									
+						            
+						        }],
+					        },
+					    };
+					// 전에 있던 차트 지우고 다시 만들어야함
+				
+				 	
+				    var myChart = new Chart(ctx, {
+						    type: 'bar',
+						    data: data,
+						    options: options
+					});
+					
+						
+					
+					//차트 끝
 			},
-
-
 			error:function(){
 					console.log("아작스 실패");
-
-
 
 				}
 			});
 	}else{
 		// 년도와 월도 같이 가져오는 아작스 쿼리문
-		
+		// 연도데이터와 월 데이터를 같이 받기 
+		let xData1 = [];
+		let yData1 = [];
+		useDateData = {
+				"yyyy":yyyy,
+				"month":month
+				 };
+		$.ajax({
+			type:'POST',
+			url: 'changeYYYYAndMonth.do',
+			data: useDateData,
+			success:function(data){
+					completeData = data;
+					console.log("여기는 연도 + 월 나오는 차트");
+					console.log(data);
+				},
+			complete:function(){
+				for(let i = 0 ; i < completeData.length; i++){
+					let temp = new Date(completeData[i].usedate).format("yyyy-MM-dd");
+					usedate.push(temp);
+					temp = new Date(completeData[i].usedate).format("yyyy");
+					usedate_yyyy.push(temp);
+					temp = new Date(completeData[i].usedate).format("MM");
+					usedate_month.push(temp);
+				}
+						
+				// 여기서 부터 차트 그리기
+				for(let i = 0 ; i<completeData.length; i++){
+					xData1.push(completeData[i].entry);
+				}	
+				for(let i = 0 ; i<completeData.length; i++){
+					yData1.push(completeData[i].cost);
+				}
+				var chartData1 = {
+						xData1,
+						yData1
+				}
 
-	}
-	
-	
-}
+				console.log("연도 + 월 같이나오는 아작스 : 차트 데이터");
+				console.log(xData1);
+				console.log(yData1);
+				console.log(chartData1);	
+
+				//기존에 있던 차트 지우고 다시 새로 만들어서 뿌림
+			 	$('#myChart').remove();
+			 	var newchart = "<canvas id='myChart' width='auto' height='auto'></canvas>";
+			 	$('#chartDiv').append(newchart);
 
 
-//월 셀렉트 체인지 함수
-function changeMonthSelect(){
-	$.ajax({
-		type:'POST',
-		url: 'changeMonthSelect.do',
-		success:function(data){
-				console.log(data);
-
-
-
+				
+				var ctx = document.getElementById("myChart").getContext('2d');
+				var data = {
+					labels: xData1,
+				    datasets: [{
+				    	label:
+				    		['연도-월별 항복별 비용'],
+					    
+				        barPercentage: 0.5,
+				        barThickness: 6,
+				        maxBarThickness: 8,
+				        minBarLength: 2,
+				        data: yData1
+				    }]
+				};
+				var options =  {
+			        scales: {
+			            yAxes: [{
+ 			                ticks: {
+			                    beginAtZero: true
+			                }
+			            }],
+			            xAxes:[{
+				        }],
+			        },
+			    };
+			    
+				
+					
+				var myChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: data,
+				    options: options
+				});
+				
+				// 차트 끝
 			},
-		complete:function(){
+	
+			error:function(){
+					console.log("아작스 실패");
+				}
+			});
+	}//else 문 종료
+}// chageYYYYSelect()함수 종료 
 
-
-
-
-			},
-
-
-		error:function(){
-
-
-
-
-			}
-		});
-}
 </script>
 </head>
 	<body>
@@ -161,8 +274,8 @@ function changeMonthSelect(){
 					<div style="float:right;">
 						<select name="yyyy" id="yyyy" onchange="chageYYYYSelect()">
 						</select>
-						<select name="month" id="month" onchange="changeMonthSelect()">
-							<option value="" selected>연도만</option>
+						<select name="month" id="month" onchange="chageYYYYSelect()">
+							<option value="연도만" selected>연도만</option>
 							<option value="01"> 1월 </option>
 							<option value="02"> 2월 </option>
 							<option value="03"> 3월 </option>
@@ -178,9 +291,9 @@ function changeMonthSelect(){
 						</select>
 					</div>
 					
-					
+					<div id=chartDiv>
 					<canvas id="myChart" width="auto" height="auto"></canvas>
-					
+					</div>
 					<!-- start: page -->
 					
 					<!-- end: page -->
@@ -232,89 +345,113 @@ function changeMonthSelect(){
 		
 		
 		// 날짜 받아와서 포맷팅한다음에 저장하는 배열 
-		var usedate = [];
-		var usedate_yyyy =[];
-		var usedate_month = [];
-		var completeData;
+		let usedate1 = [];
+		let usedate_yyyy1 =[];
+		let usedate_month1 = [];
+		let completeData1;
 			$.ajax({
 				url:"comeHereYYYY.do",
 				type:'POST',
 				success:function(data){
 					//여기에서는 for문이 느려서 소용이 없다 밑에 complete 에 데이타를 전달하기 위해 전역변수에다 받은데이터 넣고					
-					completeData = data;
+					completeData1 = data;
 					},
 				complete:function(){
-					for(let i = 0 ; i < completeData.length; i++){
-						let temp = new Date(completeData[i].usedate).format("yyyy-MM-dd");
-						usedate.push(temp);
-						temp = new Date(completeData[i].usedate).format("yyyy");
-						usedate_yyyy.push(temp);
-						temp = new Date(completeData[i].usedate).format("MM");
-						usedate_month.push(temp);
+						
+					for(let i = 0 ; i < completeData1.length; i++){
+						let temp = new Date(completeData1[i].usedate).format("yyyy-MM-dd");
+						usedate1.push(temp);
+						temp = new Date(completeData1[i].usedate).format("yyyy");
+						usedate_yyyy1.push(temp);
+						temp = new Date(completeData1[i].usedate).format("MM");
+						usedate_month1.push(temp);
 					}
-					
-					//여기서 부터 받은 데이타 셀렉트 태그옵션에 넣자 
-					//연도 부터 넣자
-					//연도를 정렬하자
-					// 배열 중에서 가장 큰 숫자부터 정렬하기 
-					
-					var sort_usedate_yyyy =bubble_yyyy(usedate_yyyy);
-					var resultUseDate = delDuple(sort_usedate_yyyy);
-					for(let i = 0; i < resultUseDate.length; i++){
-						$('#yyyy').append("<option value=" + resultUseDate[i] +">" + resultUseDate[i]  + "</option>");
-					}
+						// 배열 중에서 가장 큰 숫자부터 정렬하기 
+						var sort_usedate_yyyy =bubble_yyyy(usedate_yyyy1);
+						var resultUseDate = delDuple(sort_usedate_yyyy);
+						// 받아온 데이터 연도 셀렉트 태그에 붙여넣기
+						for(let i = 0; i < resultUseDate.length; i++){
+							$('#yyyy').append("<option value=" + resultUseDate[i] +">" + resultUseDate[i]  + "</option>");
+						}
 
-					
-					
-					// 연도와 월별 우선 불러온 다음에 그에해당하는 값을 다시 받아서 그에 대한 데이터만 불러오는 아작스
-					var chartData = null;
-					$.ajax({
-						url:"paymentAjaxChart.do",
-						type:"POST",
-						beforeSend:function(){
-								
-							},
-						complete:function(){
-							// 차트 그리기
-							// 항목별로 뽑아서 entry가져와야함
-							// chartData 로data 가져왔고, 이제 chartData 에서가공을 한 뒤
-							/*
-								x 축에는 entry를 뿌리고 
-								y 축에는 cost를 뿌리고 
-								연도별로 정리해서, 
-								먼저 useDate 를 가져와서 useDate 별로 
-							
-							*/
-							var ctx = document.getElementById("myChart").getContext('2d');
-							var data = {
-							    datasets: [{
-							        barPercentage: 0.5,
-							        barThickness: 6,
-							        maxBarThickness: 8,
-							        minBarLength: 2,
-							        data: chartData,
-							    }]
-							};
-								var options =[];
-								var myBarChart = new Chart(ctx, {
+						// 받아온 데이터에서 가장 최신의 연도
+						var defaultYYYY = resultUseDate[0];
+					    let sendData = {
+								'usedate':defaultYYYY
+						}
+						let tempData =[];
+						// 기본값 연도에 해당하는 차트 데이터 불러오기 아작스 시작
+						$.ajax({
+							url:'changeYYYYSelect.do',
+							data:sendData,
+							type:'POST',
+							success:function(data){
+									tempData = data;
+									console.log("여기는 기본연도만 나오는 아작스");
+								},
+							complete:function(){
+								//첫 기본 차트 화면 뿌리기 시작 
+								// 여기서 부터 차트 그리기
+								var xData = [];	
+								for(let i = 0 ; i<tempData.length; i++){
+									xData.push(tempData[i].entry);
+								}	
+								console.log("여기 확인해보세여 x " + xData);
+								var yData = [];		
+								for(let i = 0 ; i<tempData.length; i++){
+									yData.push(tempData[i].cost);
+								}
+								console.log(yData);
+								var ctx = document.getElementById("myChart").getContext('2d');
+								var data = {
+									labels:xData,
+								    datasets: [{
+								        barPercentage: 0.5,
+								        barThickness: 6,
+								        maxBarThickness: 8,
+								        minBarLength: 2,
+								        data: yData,
+								    }]
+								};
+								var options =  {
+								        scales: {
+								            yAxes: [{
+					 			                ticks: {
+								                    beginAtZero: true
+								                }
+								            }],
+								            xAxes:[{
+												
+									            
+									        }],
+								        },
+								    };
+							    
+								var myChart = new Chart(ctx, {
 								    type: 'bar',
 								    data: data,
-								    options: options
+								    options: options,
 								});
-							},
-						success:function(data){
-							console.log("아작스 성공");
-							chartData = data;
-							},
-						error:function(){
-							console.log("차트 데이터 불러오는 데서 에러가 났습니다.");
-							},
-					});// 두 번째 아작스 끝
+								//차트 끝
+
+
+								},// 두번째 아작스 컴플릿트 끝
+							error:function(){
+									console.log("디폴트 연도 아작스에서 에러");
+								}	
+							}); // 두 번째 아작스 끝
+						
 					}, // 첫 번째 아작스 complete 끝
 				error:function(){
 						console.log("연도 불러오는데서 이미 에러가 났네요");
 					},
-				});
+				});// 아작스 끝 
+
+		
+
+
+
+				
 		</script>
 	</body>
 </html>

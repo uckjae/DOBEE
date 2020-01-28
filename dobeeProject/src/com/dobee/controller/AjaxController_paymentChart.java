@@ -1,7 +1,8 @@
 package com.dobee.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,12 @@ public class AjaxController_paymentChart {
 	PaymentChartService paymentChartService;
 
 	
-	//차트 뷰단에 데이터 보내기
-	@RequestMapping(value="paymentAjaxChart.do", method=RequestMethod.POST)
-	public ArrayList<ItemsCostChart> paymentChartOK() {
-		ArrayList<ItemsCostChart> list = paymentChartService.itemsCost();
-		return list;
-	}
+//	//차트 뷰단에 데이터 보내기
+//	@RequestMapping(value="paymentAjaxChart.do", method=RequestMethod.POST)
+//	public ArrayList<ItemsCostChart> paymentChartOK() {
+//		ArrayList<ItemsCostChart> list = paymentChartService.itemsCost();
+//		return list;
+//	}
 	
 	
 	//아작스로 비용 연도만 있는 거 불러오기
@@ -45,8 +46,16 @@ public class AjaxController_paymentChart {
 	}
 	
 	
-	
-	//아작스 월 선택하면 그에 해당하는 비용 데이터 보내주기
+	//아작스 월이 없음이 아니라 월이 선택되어있다면, 선택하면 그에 해당하는 비용 데이터 보내주기
+	@RequestMapping("changeYYYYAndMonth.do")
+	public ArrayList<ItemsCostChart> paymentSelectYYYYAndMonth(@RequestParam(value="yyyy") String yyyy,
+			@RequestParam(value="month") String month){
+		// 여기에서 연도랑 월 같이 스트링으로 만들어줘서 서비스단으로 보내기
+		String useDate = yyyy + "-" + month;
+		ArrayList<ItemsCostChart> list = paymentChartService.changeYYYYAndMonth(useDate);
+		
+		return list;
+	}
 	
 	
 }
