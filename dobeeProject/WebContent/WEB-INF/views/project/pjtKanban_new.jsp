@@ -66,11 +66,29 @@
 				    var value = rating;
 				    $('#addPMTaskImportant').text(value); //중요도 값 표시해주기
 				    console.log('값은?'+$('#addPMTaskImportant').text());
+				    $("#addPMTaskStarImportant").val(value);
 				   
 			      }
 			  });
 
+			/* 중요도 수정하기 pm용 */
+			$("#taskImportantEdit").rateYo({
+			    rating: 2,
+			    fullStar: true,
+			    onSet: function (rating, rateYoInstance) {
+				    var value = rating;
+				    $('#taskImportant').text(value); //중요도 값 표시해주기
+			      }
+			  });
 
+			/* 중요도 확인하기 */
+			$("#taskImportantRead").rateYo({
+			    rating: 2,
+			    fullStar: true,
+			    readOnly: true
+			  });
+			
+			
 			/* 중요도 슬라이드 변경시 값표시 */
 			$('#addPMTaskFormBar').change(function(){
 				var value = $(this).val();
@@ -159,14 +177,14 @@
 
 
 			/* 01.28 pm 업무 추가 -- 알파카 요기요*/
-			$("#addPMTaskBtn").click(function(){
+			/* $("#addPMTaskBtn").click(function(){
 				 var important = $('#addPMTaskImportant').text();
-				 $("#addPMTaskStarImportant").val(important);
+				$("#addPMTaskStarImportant").val(important);
 				
 				$("#addPMTaskForm").submit();
 
 
-			});
+			}); */
 				
 				
 
@@ -1163,10 +1181,6 @@
 									<div class="col-md-6">
 										<div id="rateYo">
 										</div>
-										<%-- <div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#addPMTaskFormBar">
-											<input id="addPMTaskFormBar" class="addPMTaskFormBar" name="important" type="hidden" value="1" form="addPMTaskForm" />
-											<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
-										</div> --%>
 										<input type="hidden" name="pjtSeq" value="${project.pjtSeq}" form="addPMTaskForm">
 										<input type="hidden" id="addPMTaskStarImportant" name="important" form="addPMTaskForm" />
 									</div>
@@ -1179,7 +1193,7 @@
 								<div class="col-md-4">
 								</div>
 								<div class="col-md-4 text-center">
-									<button type="button" id="addPMTaskBtn" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
+									<button type="submit" id="addPMTaskBtn" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
 								</div>
 								<div class="col-md-4">
 								</div>
@@ -1256,16 +1270,32 @@
 												</c:otherwise>
 											</c:choose>
 										</div>
-										<!-- 중요도 -->
+										<!-- 중요도 pm만 수정 가능! -->
 										<div class="form-group">
 											<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
 											<div class="col-md-6">
-												<div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
-													<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
-													<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
-													<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
-												</div>
+											<c:choose>
+												<c:when test="${ user.authCode == '3'}">
+														<div id="taskImportantEdit">
+														</div>
+														<!-- <div class="m-md slider-primary" data-plugin-slider data-plugin-options='{ "value": 1, "range": "min","min":1, "max": 5 }' data-plugin-slider-output="#taskFormBar">
+															<input id="taskFormBar" class="taskFormBar" name="important" type="hidden" value="1" form="taskEditForm"/>
+															<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+															<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
+														</div> -->
+														<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+														<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
+													
+												</c:when>
+												<c:otherwise>
+													<div id="taskImportantRead">
+													</div>
+												</c:otherwise>
+												</c:choose>
 											</div>
+												
+												
+											
 										</div>										
 										<div class="form-group">
 											<label class="col-md-3 control-label">진행상황</label>
