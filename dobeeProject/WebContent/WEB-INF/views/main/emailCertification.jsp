@@ -47,7 +47,7 @@ body{
 					<hr>
 					<h6> YOUR URL : 192,............. </h6>
 					<br>
-					<h6> LOGIN ID : ${mail } </h6>
+					<h6> LOGIN ID : ${mail} </h6>
 					<br>
 					<div class="container-login100-form-btn" style="height: 20%">
 						<button class="login100-form-btn">

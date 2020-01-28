@@ -117,7 +117,7 @@ $(function(){
 			
 			
    <a class="logo pull-left">
-	 <img src="img/beemain2.png" height="54"/>
+	 <img src="img/realdobee.png" height="65"/>
    </a>
 
 
@@ -163,7 +163,7 @@ $(function(){
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
 
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 
 	  </div>
 	  	  
