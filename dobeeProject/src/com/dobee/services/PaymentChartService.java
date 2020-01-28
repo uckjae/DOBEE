@@ -1,13 +1,13 @@
 package com.dobee.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.PaymentDao;
-import com.dobee.vo.CostList;
 import com.dobee.vo.ItemsCostChart;
 
 @Service
@@ -37,5 +37,17 @@ public class PaymentChartService {
 	}
 	
 	
+	//아작스 연도 선택하면 그에 해당하는 비용 데이터 보내주기
+	public ArrayList<ItemsCostChart> chartByYYYY(String usedate){
+		ArrayList<ItemsCostChart> list = new ArrayList<>();
+		PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+		list = paymentDao.chartByYYYY(usedate);
+		
+		return list;
+	}
+		
+		
+		
+	//아작스 월 선택하면 그에 해당하는 비용 데이터 보내주기
 
 }

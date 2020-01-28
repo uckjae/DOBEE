@@ -49,25 +49,27 @@
 	</delete>
 	
 	
-	<!-- 차트 맵 만들기 -->
-	<!-- <resultMap type=com.dobee.vo.costlist" id="hashmapCostList">
-		<result column ="usedate" property="USEDATE"/>
-		<result column ="cost" property="COST"/>
-		<result column ="costcode" property="COSTCODE"/>
-	</resultMap> -->
-	
 	
 	<!-- 비용 차트 보기 -->
 	<select id="paymentChart" resultType="com.dobee.vo.ItemsCostChart">
-		select usedate, cost, costlist.costcode, costcode.entry from costlist join costcode on costlist.costcode = costcode.costcode;
+		select usedate, cost, costlist.costcode, costcode.entry from costlist join costcode on costlist.costcode = costcode.costcode
 	</select>
 	
 	
 	
 	<!-- 비용 연도만 가져오기 -->
 	<select id="paymentYYYY" resultType="com.dobee.vo.ItemsCostChart">
-		select usedate, cost from costlist;
+		select usedate, cost from costlist
 	</select>
+	
+	
+	<!--  비용차트 연도에 대한 데이터 보내주기 -->
+	<select id="chartByYYYY" parameterType="String"  resultType="com.dobee.vo.ItemsCostChart">
+	  select usedate, cost, costcode.entry from costlist join costcode on costlist.costcode = costcode.costcode
+	  where usedate like CONCAT('%',#{usedate},'%')
+	</select>
+	
+	
 	
 	
 </mapper>
