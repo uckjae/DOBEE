@@ -9,7 +9,35 @@
 <c:import url="/common/HeadTag.jsp"/>
 
 <script>
+//월 배열 오름차순 정렬하기 함수 
+var bubble_month= function(array) {
+		  var length = array.length;
+		  var i, j, temp;
+			  for (i = 0; i < length - 1; i++) { // 순차적으로 비교하기 위한 반복문
+			    for (j = 0; j < length - 1 - i; j++) { // 끝까지 돌았을 때 다시 처음부터 비교하기 위한 반복문
+			      if (array[j] > array[j + 1]) { // 두 수를 비교하여 앞 수가 뒷 수보다 크면
+			        temp = array[j]; // 두 수를 서로 바꿔준다
+			        array[j] = array[j + 1];
+			        array[j + 1] = temp;
+			      }
+			    }
+			  }
+		  return array;
+	};
 
+// 월 배열 중복제거하는 함수
+function delDupleMonth(array){
+	var delComplete = [];
+	var temp
+	for(let i = 0 ; i < array.length;  i++){
+		temp = array[i];
+		// 하나씩 담아서 다음에 또 들어온 원소가 같다면 새로운 배열에 담지 않는다.
+			if(delComplete.indexOf(temp) == -1){delComplete.push(temp);}
+	}
+	return delComplete;
+}
+
+	
 /* 날짜 포맷 함수 */
 Date.prototype.format = function(f) {
 	if (!this.valueOf()) return " ";
@@ -101,6 +129,8 @@ function chageYYYYSelect(){
 					var data = {
 						labels: xData,
 					    datasets: [{
+					    	label:
+					    		['연도 전체 항목별 비용'],
 					        barPercentage: 0.5,
 					        barThickness: 6,
 					        maxBarThickness: 8,
@@ -121,18 +151,52 @@ function chageYYYYSelect(){
 						        }],
 					        },
 					    };
+				    
 					// 전에 있던 차트 지우고 다시 만들어야함
-				
-				 	
 				    var myChart = new Chart(ctx, {
 						    type: 'bar',
 						    data: data,
 						    options: options
 					});
 					
-						
-					
 					//차트 끝
+
+					
+
+					//여기서 부터 해당 연도에 따른 월 구해오기
+					var monthData = [];
+					var realmonthData = [];
+					$.ajax({
+						type:'POST',
+						url: 'giveMeMonth.do',	
+						data: useDateData,
+						success:function(data){
+							console.log("월 구해오기 아작스 성공");
+							monthData = data;
+						},
+						complete:function(){
+							console.log(monthData);
+							//monthData[i].usedate 월만 뽑아내기
+							for(let i = 0 ; i<monthData.length; i++){
+								let temp = new Date(monthData[i].usedate).format("MM");
+								realmonthData.push(temp);	
+							}
+							// 월 배열 순서대로 오름차순으로 정렬하기
+							let temp1 = bubble_month(realmonthData);
+							// 다시 정렬된 배열 중복 제거하기
+							var finalMonth = delDupleMonth(temp1);
+							// 이제 다시 이 월 배열을 월셀렉트 태그에 붙이기
+							
+							$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
+							$('#month').append("<option value=" + '연도만' +">" + '연도만'+ "</option>");
+							for(let i = 0; i < finalMonth.length; i++){
+								$('#month').append("<option value=" + finalMonth[i] +">" + finalMonth[i] +'월'+ "</option>");
+							}
+						},
+						error:function(){
+							console.log("월 구해오기 아작스에서 에러났습니다. ")
+						}
+					}); //월 구하기 아작스 종료
 			},
 			error:function(){
 					console.log("아작스 실패");
@@ -142,6 +206,7 @@ function chageYYYYSelect(){
 	}else{
 		// 년도와 월도 같이 가져오는 아작스 쿼리문
 		// 연도데이터와 월 데이터를 같이 받기 
+	
 		let xData1 = [];
 		let yData1 = [];
 		useDateData = {
@@ -195,9 +260,7 @@ function chageYYYYSelect(){
 				var data = {
 					labels: xData1,
 				    datasets: [{
-				    	label:
-				    		['연도-월별 항복별 비용'],
-					    
+				    	label:['연도-월 항목별 비용'],
 				        barPercentage: 0.5,
 				        barThickness: 6,
 				        maxBarThickness: 8,
@@ -275,19 +338,6 @@ function chageYYYYSelect(){
 						<select name="yyyy" id="yyyy" onchange="chageYYYYSelect()">
 						</select>
 						<select name="month" id="month" onchange="chageYYYYSelect()">
-							<option value="연도만" selected>연도만</option>
-							<option value="01"> 1월 </option>
-							<option value="02"> 2월 </option>
-							<option value="03"> 3월 </option>
-							<option value="04"> 4월 </option>
-							<option value="05"> 5월 </option>
-							<option value="06"> 6월 </option>
-							<option value="07"> 7월 </option>
-							<option value="08"> 8월 </option>
-							<option value="09"> 9월 </option>
-							<option value="10"> 10월 </option>
-							<option value="11"> 11월 </option>
-							<option value="12"> 12월 </option>
 						</select>
 					</div>
 					
@@ -361,8 +411,10 @@ function chageYYYYSelect(){
 					for(let i = 0 ; i < completeData1.length; i++){
 						let temp = new Date(completeData1[i].usedate).format("yyyy-MM-dd");
 						usedate1.push(temp);
+						
 						temp = new Date(completeData1[i].usedate).format("yyyy");
 						usedate_yyyy1.push(temp);
+						
 						temp = new Date(completeData1[i].usedate).format("MM");
 						usedate_month1.push(temp);
 					}
@@ -402,16 +454,39 @@ function chageYYYYSelect(){
 									yData.push(tempData[i].cost);
 								}
 								console.log(yData);
+
+								//datasets에 넣은 객체배열 만들기 
+								for(let i = 0 ; i < xData.length; i++){
+										
+
+									}
 								var ctx = document.getElementById("myChart").getContext('2d');
 								var data = {
 									labels:xData,
-								    datasets: [{
+								    datasets: [
+									{
+								    	label:
+								    		['연도 전체 항목별 비용'],
 								        barPercentage: 0.5,
-								        barThickness: 6,
+								        barThickness: 30,
+								        maxBarThickness: 50,
+								        minBarLength: 20,
+								        data: yData,
+								        backgroundColor : 'rgba(10, 12, 220, 0.5)',
+								       	borderColor : 'rgba(100,100,100,1)'
+								    },
+									{
+								    	label:
+								    		['연도 전체 항목별 비용22'],
+								        barPercentage: 20,
+								        barThickness: 20,
 								        maxBarThickness: 8,
 								        minBarLength: 2,
-								        data: yData,
-								    }]
+								        data: [2000]
+
+									},
+
+								    ]
 								};
 								var options =  {
 								        scales: {
@@ -434,6 +509,39 @@ function chageYYYYSelect(){
 								});
 								//차트 끝
 
+								//초기 디폴트 연도에 해당되는 월 데이터 받아서 셀렉트에 붙이기
+								var monthData = [];
+								var realmonthData = [];
+								$.ajax({
+									type:'POST',
+									url: 'giveMeMonth.do',	
+									data: sendData,
+									success:function(data){
+										monthData = data;
+									},
+									complete:function(){
+										//monthData[i].usedate 월만 뽑아내기
+										for(let i = 0 ; i<monthData.length; i++){
+											let temp = new Date(monthData[i].usedate).format("MM");
+											realmonthData.push(temp);	
+										}
+										// 월 배열 순서대로 오름차순으로 정렬하기
+										let temp1 = bubble_month(realmonthData);
+										// 다시 정렬된 배열 중복 제거하기
+										var finalMonth = delDupleMonth(temp1);
+										// 이제 다시 이 월 배열을 월셀렉트 태그에 붙이기
+										
+										$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
+										$('#month').append("<option value=" + '연도만' +">" + '연도만'+ "</option>");
+										for(let i = 0; i < finalMonth.length; i++){
+											$('#month').append("<option value=" + finalMonth[i] +">" + finalMonth[i] +'월'+ "</option>");
+										}
+									},
+									error:function(){
+										console.log("월 구해오기 아작스에서 에러났습니다. ")
+									}
+								});
+								//월 셀렉트 끝
 
 								},// 두번째 아작스 컴플릿트 끝
 							error:function(){
@@ -446,10 +554,6 @@ function chageYYYYSelect(){
 						console.log("연도 불러오는데서 이미 에러가 났네요");
 					},
 				});// 아작스 끝 
-
-		
-
-
 
 				
 		</script>

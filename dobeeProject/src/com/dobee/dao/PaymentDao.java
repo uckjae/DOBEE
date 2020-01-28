@@ -68,5 +68,7 @@ public interface PaymentDao {
     public ArrayList<ItemsCostChart> chartByYYYYAndMonth(String useDate);
     
     
+    //비용 월 셀렉트 받아오기
+    public ArrayList<ItemsCostChart> giveMeMonth(String yyyy);
     
 }

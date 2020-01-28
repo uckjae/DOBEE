@@ -56,4 +56,19 @@ public class PaymentChartService {
 		
 		return list;
 	}
+	
+	
+	
+	//아작스 연도 셀렉트 선택하면 그해에 데이터가 있는 월 데이터 받아서보내주기
+	public ArrayList<ItemsCostChart> giveMeMonth(String yyyy){
+		ArrayList<ItemsCostChart> list = new ArrayList<>();
+		PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+		list = paymentDao.giveMeMonth(yyyy);
+		
+		return list;
+	}
+	
+	
+	
+	
 }
