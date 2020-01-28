@@ -4,11 +4,11 @@ package com.dobee.controller;
 
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,15 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,7 +44,6 @@ import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
-import com.dobee.vo.member.UserInfo;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.project.Project;
@@ -108,6 +104,7 @@ public class DoController {
     	String find;
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	 find = userDao.findId(name, phone);
+    	 System.out.println("비번1dd:"+find);
     	 model.addAttribute("find",find);
       return "main/findId";
     }
@@ -119,6 +116,7 @@ public class DoController {
     //비밀번호 찾기
     @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
     public String findPassWord(String mail, String name,  Model model){
+    	System.out.println(mail);
     	String find;
     	UserDao userDao =sqlsession.getMapper(UserDao.class);
     	 find = userDao.findPassWord(mail, name);
@@ -1069,7 +1067,9 @@ public class DoController {
     //관리자_사원추가 서비스
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user, HttpServletRequest request) throws IOException {
-	       	
+	    
+	   
+	   
     	//파일 업로드 파일명
     	CommonsMultipartFile file = user.getFile();
     	String filename = file.getOriginalFilename(); //원본 파일명

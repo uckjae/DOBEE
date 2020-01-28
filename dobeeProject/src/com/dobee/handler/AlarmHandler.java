@@ -55,15 +55,36 @@ public class AlarmHandler extends TextWebSocketHandler {
 		  Object object = parser.parse(data);
 		  JSONObject jsonObject = (JSONObject)object;
 		  
+		  TextMessage msg = null;
 		  String cmd = (String) jsonObject.get("cmd");
 		  String mail = (String) jsonObject.get("mail");
 		  if(users.containsKey(mail)) {
 			  if(cmd.equals("addTask")) {
 				  String content = (String)jsonObject.get("content");
-				  TextMessage msg = new TextMessage("["+content+"]\n업무가 추가 되었습니다");
-				  users.get(mail).sendMessage(msg);
+				  msg = new TextMessage("["+content+"]\n업무가 추가 되었습니다");
 				  log(mail + " / " + message.getPayload() + " / " + msg.getPayload());
 			  }
+			  else if(cmd.equals("breakApply")) {
+				  String code = (String)jsonObject.get("content");
+				  String content ="";
+				  String applier = (String)jsonObject.get("applier");
+				  switch(code) {
+				  case "1": content = "연차";
+				  			break;
+				  case "2": content = "반일연차";
+				  			break;
+				  case "3": content = "출장";
+				  			break;
+				  case "4": content = "외근";
+				  			break;
+				  case "5": content = "경조휴가";
+				  			break;
+				  }
+				  msg = new TextMessage("["+applier+"]님이\n"+content+"신청 했습니다");
+				  
+				  
+			  }
+			  users.get(mail).sendMessage(msg);
 		  }
 
 

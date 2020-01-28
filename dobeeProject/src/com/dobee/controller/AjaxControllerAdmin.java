@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,12 +66,36 @@ public class AjaxControllerAdmin {
 		return teamList;
 	}
 	
+	@RequestMapping(value="findMail.do")
+	public String findMail(HttpServletRequest req){
+		String serfrom="dnjsvltm327@gmail.com";
+		String tomail =req.getParameter("mail");
+		String title =req.getParameter("title");
+		String content=req.getParameter("content");
+		
+		try {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message,true, "UTF-8");
+			messageHelper.setFrom(serfrom);
+			messageHelper.setTo(tomail);     // 받는사람 이메일
+		    messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+		    messageHelper.setText(content);  // 메일 내용
+			
+		    mailSender.send(message);
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return "redirect:/mail/mailForm";
+	}
+	
+	
 	@RequestMapping(value="sendEmail.do")
 	public void sendMail(HttpServletRequest req) {
+		
 		System.out.println("ajaxControllerAdmin sendMail() in!!!!!");
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper messageHelper = null;
-		String mail = req.getParameter("mail");
+		String mail = req.getParameter("mail"); //받는 사람 이메일
 		
 		Enumeration<String> enu = req.getParameterNames();
 		while(enu.hasMoreElements()) {
@@ -87,7 +112,7 @@ public class AjaxControllerAdmin {
 		path.append(":");
 		path.append(req.getLocalPort());
 		path.append(req.getContextPath());
-		path.append("/whatthepassword.do");
+		path.append("/password.do");
 		try {
 			
 			messageHelper = new MimeMessageHelper(message,true,"UTF-8");
@@ -102,7 +127,8 @@ public class AjaxControllerAdmin {
 			messageHelper.setFrom("admin@dobee.com");
 			messageHelper.setTo(mail);
 			StringBuilder subject = new StringBuilder();
-			subject.append(name);
+			
+			subject.append(name); 
 			subject.append("님 DOBEE에 사원등록이 되었습니다.");
 			messageHelper.setSubject(subject.toString());
 			messageHelper.setText(mailBody,true);
@@ -130,11 +156,22 @@ public class AjaxControllerAdmin {
 	//아이디찾기
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
     public String findId(String name, String phone){
-    	 //System.out.println(user);
+    	 System.out.println(name);
     	 UserDao userDao = sqlSession.getMapper(UserDao.class);
     	 String find = userDao.findId(name,phone);
     	 System.out.println("값:"+find);
          return find;
+    }
+    
+    //비밀번호 찾기
+    @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
+    public String findPassWord(String mail, String name){
+    	System.out.println(mail);
+    	System.out.println(name);
+    	UserDao userDao =sqlSession.getMapper(UserDao.class);
+    	String find = userDao.findPassWord(mail, name);
+    	System.out.println("값:"+find);
+    	return find;
     }
     
     
