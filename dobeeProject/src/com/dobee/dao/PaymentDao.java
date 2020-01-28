@@ -1,7 +1,7 @@
 package com.dobee.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 import com.dobee.vo.Apply;
@@ -59,6 +59,9 @@ public interface PaymentDao {
     //비용 연도만 가져오기 
     public ArrayList<ItemsCostChart> paymentYYYY();
     
+    
+    //비용 차트 연도에 해당되는 것만 가져오기
+    public ArrayList<ItemsCostChart> chartByYYYY(String usedate);
     
     
     

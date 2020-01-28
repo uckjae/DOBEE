@@ -122,7 +122,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 
 <!-- 상세업무추가 -->
-<insert id="addTaskDetail">
+<insert id="addTaskDetail" useGeneratedKeys="true" keyProperty="tdSeq" >
 	INSERT INTO TASKDETAIL (TDCONTENT, TSKSEQ) VALUES (#{tdContent}, #{tskSeq})
 </insert>
 

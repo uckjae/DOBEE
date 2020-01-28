@@ -12635,7 +12635,7 @@ html.dark .table .actions-hover a {
 }
 /* Filter */
 .dataTables_wrapper .dataTables_filter label {
-	width: 50%;
+	width: 100%;
 }
 
 .dataTables_wrapper .dataTables_filter input {

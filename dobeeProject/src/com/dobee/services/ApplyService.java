@@ -50,7 +50,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int result = userDao.postEditApply(bml);
     	
-    	return 5959;
+    	return result;
     }
     
     
@@ -93,7 +93,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int result = userDao.postEditExtApply(apply);
     	
-    	return 5959;
+    	return result;
     }
     
     
@@ -102,7 +102,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int result = userDao.postDeleteExtList(aplSeq);
     	
-    	return 5959;
+    	return result;
     }
     
     
@@ -127,7 +127,7 @@ public class ApplyService {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int results = userDao.absReqHandle(apply);
     	
-    	System.out.println("results 확인 : " + results);
+    	// System.out.println("results 확인 : " + results);
     }
     
 

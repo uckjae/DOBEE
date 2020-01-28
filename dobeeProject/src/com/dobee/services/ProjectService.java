@@ -155,9 +155,17 @@ public class ProjectService {
     // 상세업무입력
     public int addTaskDetail(TaskDetail taskDetail){
     	int result = 0;
+    	int tdSeq = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addTaskDetail(taskDetail);
-    	return result;
+    	System.out.println("상세 업무 저장 완료");
+    	System.out.println("저장된 tdSeq는?"+taskDetail.getTdSeq());
+    	if(result > 0) {
+        	tdSeq = taskDetail.getTdSeq();
+    	} else {
+    		tdSeq = 0;
+    	}
+    	return tdSeq;
     }
 
 

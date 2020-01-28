@@ -29,6 +29,7 @@ public class User {
     private String position; 
     private String phone;
     private String teamName;
+    private String isWork;
     
 	
     private User() {}
@@ -42,10 +43,12 @@ public class User {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	public User(String mail, String password, String name, String myPic, int authCode, int teamCode,
 			CommonsMultipartFile file, Date regitDate, String serve, String emp, String position, String phone,
-			String teamName) {
+			String teamName, String isWork) {
 		super();
 		this.mail = mail;
 		this.password = password;
@@ -60,6 +63,7 @@ public class User {
 		this.position = position;
 		this.phone = phone;
 		this.teamName = teamName;
+		this.isWork = isWork;
 	}
    
       

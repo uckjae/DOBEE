@@ -21,8 +21,8 @@
     <!-- 공통 DB작업  -->
      <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/dobee?useSSL=false&amp;serverTimezone=UTC" />
-        <property name="username" value="root" />
+        <property name="url" value="jdbc:mysql://192.168.6.55:3306/dobee?serverTimezone=Asia/Seoul&amp;characterEncoding=UTF-8" />
+        <property name="username" value="dobee" />
         <property name="password" value="1004" />
     </bean>  
  

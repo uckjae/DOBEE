@@ -71,10 +71,18 @@
 			I.PHONE = #{phone}
 		WHERE U.MAIL=#{mail}
     </update>
+    
+    
 	<!-- 관리자 사원 삭제 01.21 알파카 deleteUser(String mail); -->
 	<delete id="deleteUser">
 		DELETE FROM USER WHERE MAIL=#{mail}
 	</delete>
+	
+	<!-- 출퇴근 여부 확인 (0퇴근, 1출근)		0126 게다죽  ~ing -->	
+	<select id="isWork" parameterType="String" resultType="String">	
+		SELECT ATTSEQ FROM ATTEND WHERE MAIL = #{mail} AND OFFTIME IS NULL	
+	</select>	
+		
 	
 	<!-- Ajax 출근 하기 public int onWork(String mail); -->
 	<insert id="onWork">
@@ -82,6 +90,12 @@
 		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출/퇴근'))
 	</insert>
 	
+	
+	<!-- Ajax 퇴근 하기 public int offWork(String mail); -->	
+	<update id="offWork" parameterType="Integer">	
+		UPDATE ATTEND SET OFFTIME = CURRENT_TIMESTAMP() WHERE ATTSEQ = #{attSeq}	
+	</update>
+
 	
 	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
@@ -147,12 +161,12 @@
     
     
 	<!-- 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing -->
-	<select id="getChartData" resultType="com.dobee.vo.member.ChartData">
+	<select id="getChartData" parameterType="String" resultType="com.dobee.vo.member.ChartData">
 		SELECT '근태' AS ENTRY, DATE_FORMAT(ATTTIME, '%d') AS DAYS, DATE_FORMAT(ATTTIME, '%T') AS ATTTIME, DATE_FORMAT(OFFTIME, '%T') AS OFFTIME, MAIL 
-			FROM ATTEND WHERE DATE_FORMAT(ATTTIME, '%m') = 1 AND MAIL = 'jg@kim.com'
+			FROM ATTEND WHERE DATE_FORMAT(ATTTIME, '%m') = 1 AND MAIL = #{mail}
 		UNION
 		SELECT '연장' AS ENTRY, DATE_FORMAT(STARTAT, '%d') AS DAYS, DATE_FORMAT(STARTAT, '%T') AS ATTTIME, DATE_FORMAT(ENDAT, '%T') AS OFFTIME, DRAFTER 
-			FROM APPLY WHERE DATE_FORMAT(STARTAT, '%m') = 1 AND APYCODE = 6 AND DRAFTER = 'jg@kim.com';
+			FROM APPLY WHERE DATE_FORMAT(STARTAT, '%m') = 1 AND APYCODE = 6 AND DRAFTER = #{mail};
 	</select>
 		
 	

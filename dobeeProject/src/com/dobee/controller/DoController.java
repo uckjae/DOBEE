@@ -721,11 +721,8 @@ public class DoController {
     // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
     @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
     public String postDeleteExtList (Integer aplSeq) {
-        System.out.println("이거 일단 도니?" );
-        System.out.println("이거 일단 도니?" + aplSeq);
         int result = applyService.postDeleteExtList(aplSeq);
-        System.out.println("이거 일단 도니?" + result);
-        System.out.println("결과를 확인하는 ? " + result);
+        
         return "redirect: workManage.do";
     }
 

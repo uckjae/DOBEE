@@ -24,9 +24,7 @@
 		.btn-info.btn-sm {
 			background-color: #e0da28;
 		} 
-		.btn btn-info btn-sm.edit {
-			background-color : #000000;
-		}
+		
 	</style>
 	
 <!-- Head Tag Script -->
@@ -138,12 +136,7 @@
 					
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h3 class="panel-title">Data Table</h3>
+							<h3 class="panel-title">부재 신청 현황</h3>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -171,10 +164,10 @@
 											<td class="teditdelete">
 												<c:choose>
 													<c:when test="${bl.isAuth == '미승인'}">
-														<button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
+														<button class="mb-xs mt-xs btn-sm btn-default" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
 													</c:when>
 													<c:otherwise>
-														-
+														&nbsp;-
 													</c:otherwise>
 												</c:choose>
 											</td>
@@ -188,44 +181,57 @@
 					</section>
 					
 					
-					<!-- Modal Section -->
-					<section>
-						<div class="modal fade" id="myModal" role="dialog">
-							<div class="modal-dialog modal-lg">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">상세 사유</h4>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
-									<div class="modal-body">
-										<input type="hidden" id="modalAplSeq" name="aplSeq">
-										<h3>부재 신청 사유</h3>
-										<h4>사유</h4>
-										<input type="text" id="modalReason" name="reason" readonly="readonly">
-			
-										<div id="divRejReason" style="margin-top : 30px;">
-											<h3>부재 신청 반려 사유 </h3>
-											<input type="text" id="modalRejReason" name="rejReason" readonly="readonly">
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true"
+						style="display: none;">
+						<div class="modal-dialog modal-lg cascading-modal" role="document">
+							<div class="modal-content">
+								<!--Header-->
+								<div class="modal-header light-blue darken-3 white-text"
+									style="text-align: center; padding-top: 25px; padding-bottom: 25px;">
+									<button type="button" class="close" data-dismiss="modal"
+										style="margin-top: -9px;">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+									</h4>
+								</div>
+								<!--Body-->
+								<div class="container-fluid">
+									<div class="modal-body mb-0" style="margin-top: 30px;">
+										<div class="form-group">
+											<input type="hidden" id="modalAplSeq" name="aplSeq">
+											<label class="col-md-3 control-label"><i
+												class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
+											<div class="col-md-9">
+												<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+											</div>
 										</div>
-									</div>
-								
-								<%-- 
-									<c:if test="${not empty bl.rejReason }">
-										<div id="divRejReason">
-											<h3>부재 신청 반려 사유 </h3>
-											<h5>${bl.rejReason }</h5>
+										<br>
+										<div class="form-group">
+											<label class="col-md-3 control-label" for="userList"><i
+												class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
+											<div class="col-md-9">
+												<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" readonly="readonly">
+											</div>
 										</div>
-									</c:if>
-			 					--%>
-			 		
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">OK</button>
+										<br>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<div class="row">
+										<div class="col-md-4"></div>
+										<div class="col-md-4 text-center">
+											<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+										</div>
+										<div class="col-md-4"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</section>
+					</div>
 						
 					
 					<!-- start: page -->
@@ -265,13 +271,15 @@
 				$('.btn-sm').click('show.bs.modal', function(e) {
 						
 					aplSeq = $(this).data('aplseq');
+					console.log('이거 확인 : ' + aplSeq);
 					reason = $(this).data('reason');
-					rejReason = $(this).data('rejReason');			
+					console.log('이거 확인 : ' + reason);
+					rejReason = $(this).data('rejReason');
+					console.log('이거 확인 : ' + rejReason);			
 	
 					$('#modalAplSeq').val(aplSeq);
 					$('#modalReason').val(reason);
 					$('#modalRejReason').val(rejReason);
-	
 				});
 
 				// 연차 정보 가져오기
@@ -307,7 +315,7 @@
 					/*language option*/
 					"language" : {
 						"emptyTable" : "데이터가 없습니다.",
-						"lengthMenu" : "페이지당 _MENU_ 개씩 보기",
+						"lengthMenu" : "_MENU_ 개씩 보기",
 						"info" : "현재 _START_ - _END_ / _TOTAL_건",
 						"infoEmpty" : "데이터 없음",
 						"infoFiltered" : "( _MAX_건의 데이터에서 필터링됨 )",

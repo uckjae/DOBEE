@@ -20,10 +20,7 @@
 			border-color:lightgray;
 			background-color:green;
 		}
-		
-		.btn-info.btn-sm reason {
-			background-color: navy;
-		} 
+		 
 	</style>
 	
 <!-- Head Tag Script -->
@@ -93,7 +90,7 @@
 										<th width="8%">부재 항목</th>
 										<th width="8%">승인 여부</th>
 										<th>기간</th>
-										<td width="8%">상세보기</td>
+										<td width="8%">사유</td>
 									</tr>
 								</thead>
 				
@@ -110,9 +107,9 @@
 											</td>
 											<td class="bTerm">${el.startAt } - ${el.endAt }</td>
 											<td class="bReason">
-												<button	class="btn btn-info btn-sm reason" data-toggle="modal"
+												<button	class="btn btn-default btn-sm" data-toggle="modal"
 													data-target="#myModal" 
-													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}"> 사유 확인
+													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}">확인
 												</button>
 												
 										</tr>
@@ -126,108 +123,75 @@
 						</div>
 					</section>
 					
-					<!-- 
-					Modal Primary
-					<a class="mb-xs mt-xs mr-xs modal-basic btn btn-primary" href="#modalPrimary">Primary</a>
 					
-					<div id="myModal" class="zoom-anim-dialog modal-block modal-block-primary modal-block-lg mfp-hide">
-						<section class="panel">
-						<form action="absManage.do" method="POST">
-							<header class="panel-heading">
-								<h2 class="panel-title">부재 신청 사유</h2>
-							</header>
-							<div class="panel-body">
-								<div class="modal-wrapper">
-									<div class="modal-text">
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true"
+						style="display: none;">
+						<div class="modal-dialog modal-lg cascading-modal" role="document">
+							<div class="modal-content">
+								<!--Header-->
+								<div class="modal-header light-blue darken-3 white-text"
+									style="text-align: center; padding-top: 25px; padding-bottom: 25px;">
+									<button type="button" class="close" data-dismiss="modal"
+										style="margin-top: -9px;">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+									</h4>
+								</div>
+								
+								<!--Body-->	
+								<form action="absManage.do" method="POST">
+									<div class="container-fluid">
+										<div class="modal-body mb-0" style="margin-top: 30px;">
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
-									
-										<br>
-										<div id="divReason">
-											<h3>부재 신청 사유</h3>
-											<input type="text" id="modalReason" name="reason" readonly="readonly">
-										</div>
-										<br>
-										<select id="entrySelectorInModal" name="isAuth">
-											<option value="미승인">항목 선택</option>
-											<option value="승인">승인</option>
-											<option value="반려">반려</option>
-											<option value="미승인">보류</option>
-										</select>
-										
-										<div id="divRejReason">
-											<h3>부재 신청 반려 사유 입력</h3>
-											<input type="text" id="modalRejReason" name="rejReason" placeholder="반려 시 사유를 입력하세요.">
-										</div>
-									</div>
-								</div>
-							</div>
-							<footer class="panel-footer">
-								<div class="row">
-									<div class="col-md-12 text-right">
-										<button type="submit" class="btn btn-primary modal-confirm">확인</button>
-										<button type="reset" class="btn btn-primary modal-confirm">초기화</button>
-										<button class="btn btn-default modal-dismiss">취소</button>
-									</div>
-								</div>
-							</footer>
-							
-						</form>
-						</section>
-					</div> -->
-					
-					
-					
-					<<!-- Modal  -->
-					<section id="modal_breakreason">
-						<div class="modal fade" id="myModal" role="dialog">
-							<div class="modal-dialog modal-lg">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h2>부재 신청 사유</h2>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
-									
-									<form action="absManage.do" method="POST">
-										<div class="modal-body">
-											<div class="row">
-												<div class="col-md-1"></div>
-												<div class="col-md-10">
-												
-													<input type="hidden" id="modalAplSeq" name="aplSeq">
-													
-													<br>
-													<div id="divReason">
-														<h3>부재 신청 사유</h3>
-														<input type="text" id="modalReason" name="reason" readonly="readonly">
-													</div>
-													<br>
-													<select id="entrySelectorInModal" name="isAuth">
+											<div class="form-group">
+												<label class="col-md-3 control-label"><i
+													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 신청 사유</span></label>
+												<div class="col-md-9">
+													<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+												</div>
+											</div>
+											<br>
+											<div class="form-group">
+												<label class="col-md-3 control-label"><i
+													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;승인 여부</span></label>
+												<div class="col-md-9">
+													<select id="entrySelectorInModal" name="isAuth" style="width:100%">
 														<option value="미승인">항목 선택</option>
 														<option value="승인">승인</option>
 														<option value="반려">반려</option>
 														<option value="미승인">보류</option>
 													</select>
-													
-													<div id="divRejReason">
-														<h3>부재 신청 반려 사유 입력</h3>
-														<input type="text" id="modalRejReason" name="rejReason" placeholder="반려 시 사유를 입력하세요.">
-													</div>
 												</div>
-												<div class="col-md-1"></div>
 											</div>
+											<br>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="userList"><i
+													class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 반려 사유</span></label>
+												<div class="col-md-9">
+													<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" placeholder="반려 시 사유를 입력하세요.">
+												</div>
+											</div>
+											<br>
 										</div>
-										
-										<div class="modal-footer">
-											<input type="submit" class="btn btn-default" value="확인">
-											&nbsp;&nbsp;
-											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+									</div>
+									<div class="modal-footer">
+										<div class="row">
+											<div class="col-md-4"></div>
+											<div class="col-md-4 text-center">
+												<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+											</div>
+											<div class="col-md-4"></div>
 										</div>
-									</form>
-									
-								</div>
+									</div>
+								</form>
 							</div>
 						</div>
-					</section>
+					</div>
 						
 					
 					<!-- start: page -->

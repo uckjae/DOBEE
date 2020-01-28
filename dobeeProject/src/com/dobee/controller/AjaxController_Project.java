@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -153,18 +154,17 @@ public class AjaxController_Project {
 	
 	//TaskDetail 추가 -- 01.26 알파카
 	@RequestMapping("addTaskDetail.do")
-	public String addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
+	public Map<String, String> addTaskDetail(TaskDetail taskDetail, HttpServletRequest req) {
+		System.out.println("상세 업무 가져와?"+taskDetail.toString());
 		String responseData = "";
-		int result = 0;
-		System.out.println("AjaxController_Project addTaskDetail() in");
-		System.out.println(taskDetail.toString());
-		
-		result = projectService.addTaskDetail(taskDetail);
-		
-		if(result > 0) {
-			responseData = "success";
+		Map<String, String> map = new HashMap<String, String>();
+		int tdSeq = 0;
+		tdSeq = projectService.addTaskDetail(taskDetail);
+		if(tdSeq > 0) {
+			map.put("result", "success");
+			map.put("tdSeq", Integer.toString(tdSeq));
 		}
-		return responseData;
+		return map;
 	}
 	/*
 	
@@ -184,16 +184,21 @@ public class AjaxController_Project {
 	*/
 	//TaskDetailEdit
 	@RequestMapping("taskDetailEdit.do")
-	public int taskDetailEdit(TaskDetail taskDetail) {
+	public String taskDetailEdit(@RequestParam(value="tdSeq") String tdSeq,@RequestParam(value="tdContent") String tdContent, @RequestParam(value="tskSeq") String tskSeq ) {
 		System.out.println("AjaxController_Project taskDetailEdit() in!!");
-		System.out.println(taskDetail);
-		int tdSeq = taskDetail.getTdSeq();
-		int tskSeq = taskDetail.getTskSeq();
+		String responseData = "";
+		//객체 주입
+		TaskDetail taskDetail = new TaskDetail();
+		taskDetail.setTdSeq(Integer.parseInt(tdSeq));
+		taskDetail.setTdContent(tdContent);
+		taskDetail.setTskSeq(Integer.parseInt(tskSeq));
+		
 		int result = projectService.taskDetailEdit(taskDetail);
-		if(result<=0) {
-			System.out.println("taskDetailEdit() 에러");
+		if(result>0) {
+			responseData = "success";
 		}
-		return tskSeq;
+		
+		return responseData;
 	}
 	
 	

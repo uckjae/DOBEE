@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="header">
 				<div class="logo-container">
 					<a href="#" class="logo">
@@ -13,6 +13,8 @@
 			
 				<!-- start: search & user box -->
 				<div class="header-right">
+			
+					<span class="separator"></span>
 					<ul class="notifications">
 						<li>
 							<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
@@ -192,7 +194,15 @@
 							<ul class="list-unstyled">
 								<li class="divider"></li>
 								<li>
-									<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근/퇴근</a>
+									<c:set var="isWork" value="${sessionScope.user.isWork }"/>
+									<c:choose>
+										<c:when test="${isWork != null }">
+											<a role="menuitem" tabindex="-1" href="#" onclick="leave();"><i class="fa fa-power-off"></i>퇴근</a>
+										</c:when>
+										<c:otherwise>
+											<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근</a>
+										</c:otherwise>
+									</c:choose>
 								</li>
 								<li>
 									<a role="menuitem" tabindex="-1" href="mypage.do?mail=${user.mail}"><i class="fa fa-user"></i>마이페이지</a>
@@ -235,6 +245,46 @@
 							swal({
 								   title: "출근",
 								   text: "출근 처리 되었습니다.",
+								   icon: "success" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+									location.reload(true); 
+								});
+							}
+						
+					},
+					error:function(){
+						
+					}
+				});
+
+				
+				});
+		
+		}
+
+
+	//퇴근하기
+	function leave() {
+		swal({
+			   title: "퇴근",
+			   text: "퇴근 하시겠습니까?",
+			   icon: "warning" //"info,success,warning,error" 중 택1
+			}).then((YES) => {
+				console.log('이거 타??');
+				var attSeq = ${user.isWork}
+				console.log('seq??'+attSeq);
+				$.ajax({
+		 			url:"leave.do?attSeq="+attSeq,
+					dataType: "text",
+					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+					type:"post",
+					success:function(responsedata){
+						console.log('ajax 됨??');
+						console.log(responsedata);
+						if(responsedata == "success"){
+							swal({
+								   title: "퇴근",
+								   text: "퇴근 처리 되었습니다.",
 								   icon: "success" //"info,success,warning,error" 중 택1
 								}).then((YES) => {
 									location.reload(true); 

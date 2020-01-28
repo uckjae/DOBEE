@@ -9,6 +9,11 @@
 <c:import url="/common/HeadTag.jsp"/>
 
 <script>
+//같은 연도별 / 항목별 / 금액 합계 구하기 함수
+function costSum(array){
+	
+	
+}
 /* 날짜 포맷 함수 */
 Date.prototype.format = function(f) {
 	if (!this.valueOf()) return " ";
@@ -37,7 +42,86 @@ String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
+//연도 셀렉트 체인지 함수
+function chageYYYYSelect(){
+	//아작스로 받아온 데이터 전역변수에 담기위해 전역변수 선언
+	let completeData = [];
+	let yyyy = $('#yyyy option:selected').val();
+	let month = $('#month option:selected').val();	
+	var usedate = [];
+	var usedate_yyyy =[];
+	var usedate_month = [];
+	var completeData;
+	if (month === '없음'){
+		// 년도만 가지고 오는 아작스 쿼리문
+		let usedateData = {
+				"usedate":yyyy
+				};
+		$.ajax({
+			type:'POST',
+			url: 'changeYYYYSelect.do',
+			data: usedateData,
+			success:function(data){
+					completeData = data;
+				},
+			complete:function(){
+				
+				for(let i = 0 ; i < completeData.length; i++){
+					let temp = new Date(completeData[i].usedate).format("yyyy-MM-dd");
+					usedate.push(temp);
+					temp = new Date(completeData[i].usedate).format("yyyy");
+					usedate_yyyy.push(temp);
+					temp = new Date(completeData[i].usedate).format("MM");
+					usedate_month.push(temp);
+				}
 
+			},
+
+
+			error:function(){
+					console.log("아작스 실패");
+
+
+
+				}
+			});
+	}else{
+		// 년도와 월도 같이 가져오는 아작스 쿼리문
+		
+
+	}
+	
+	
+}
+
+
+//월 셀렉트 체인지 함수
+function changeMonthSelect(){
+	$.ajax({
+		type:'POST',
+		url: 'changeMonthSelect.do',
+		success:function(data){
+				console.log(data);
+
+
+
+			},
+		complete:function(){
+
+
+
+
+			},
+
+
+		error:function(){
+
+
+
+
+			}
+		});
+}
 </script>
 </head>
 	<body>
@@ -75,19 +159,30 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 					
 					
 					<div style="float:right;">
-						<select name="yyyy" id="yyyy">
+						<select name="yyyy" id="yyyy" onchange="chageYYYYSelect()">
 						</select>
-						
-						
-						
-						<select name="month" id="month">
+						<select name="month" id="month" onchange="changeMonthSelect()">
+							<option value="" selected>연도만</option>
+							<option value="01"> 1월 </option>
+							<option value="02"> 2월 </option>
+							<option value="03"> 3월 </option>
+							<option value="04"> 4월 </option>
+							<option value="05"> 5월 </option>
+							<option value="06"> 6월 </option>
+							<option value="07"> 7월 </option>
+							<option value="08"> 8월 </option>
+							<option value="09"> 9월 </option>
+							<option value="10"> 10월 </option>
+							<option value="11"> 11월 </option>
+							<option value="12"> 12월 </option>
 						</select>
 					</div>
 					
+					
 					<canvas id="myChart" width="auto" height="auto"></canvas>
 					
-					
 					<!-- start: page -->
+					
 					<!-- end: page -->
 				</section>
 			</div>
@@ -104,6 +199,38 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 		<c:import url="/common/BottomTag.jsp"/>
 		<script>
+		// 날짜 연도 정렬하는 함수 
+		var bubble_yyyy= function(array) {
+			  var length = array.length;
+			  var i, j, temp;
+				  for (i = 0; i < length - 1; i++) { // 순차적으로 비교하기 위한 반복문
+				    for (j = 0; j < length - 1 - i; j++) { // 끝까지 돌았을 때 다시 처음부터 비교하기 위한 반복문
+				      if (array[j] < array[j + 1]) { // 두 수를 비교하여 앞 수가 뒷 수보다 크면
+				        temp = array[j]; // 두 수를 서로 바꿔준다
+				        array[j] = array[j + 1];
+				        array[j + 1] = temp;
+				      }
+				    }
+				  }
+			  return array;
+		};
+
+
+		
+		// 정렬된 날짜 연도 배열을 다시 중복 제거하는 함수
+		function delDuple(array){
+			var delComplete = [];
+			var temp
+			for(let i = 0 ; i < array.length;  i++){
+				temp = array[i];
+				// 하나씩 담아서 다음에 또 들어온 원소가 같다면 새로운 배열에 담지 않는다.
+					if(delComplete.indexOf(temp) == -1){delComplete.push(temp);}
+			}
+			return delComplete;
+		}
+		
+		
+		
 		// 날짜 받아와서 포맷팅한다음에 저장하는 배열 
 		var usedate = [];
 		var usedate_yyyy =[];
@@ -118,7 +245,6 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 					},
 				complete:function(){
 					for(let i = 0 ; i < completeData.length; i++){
-						console.log("여기왜 안타냐");
 						let temp = new Date(completeData[i].usedate).format("yyyy-MM-dd");
 						usedate.push(temp);
 						temp = new Date(completeData[i].usedate).format("yyyy");
@@ -126,16 +252,18 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 						temp = new Date(completeData[i].usedate).format("MM");
 						usedate_month.push(temp);
 					}
+					
 					//여기서 부터 받은 데이타 셀렉트 태그옵션에 넣자 
 					//연도 부터 넣자
-					for(let i = 0; i < usedate_yyyy.length; i++){
-						$('#yyyy').append("<option value=" + usedate_yyyy[i] +">" + usedate_yyyy[i]  + "</option>");
-					}
+					//연도를 정렬하자
+					// 배열 중에서 가장 큰 숫자부터 정렬하기 
 					
-					//월을 넣자
-					for(let i = 0; i < usedate_month.length; i++){
-						$('#month').append("<option value=" + usedate_month[i] +">" + usedate_month[i]  + "</option>");
+					var sort_usedate_yyyy =bubble_yyyy(usedate_yyyy);
+					var resultUseDate = delDuple(sort_usedate_yyyy);
+					for(let i = 0; i < resultUseDate.length; i++){
+						$('#yyyy').append("<option value=" + resultUseDate[i] +">" + resultUseDate[i]  + "</option>");
 					}
+
 					
 					
 					// 연도와 월별 우선 불러온 다음에 그에해당하는 값을 다시 받아서 그에 대한 데이터만 불러오는 아작스
