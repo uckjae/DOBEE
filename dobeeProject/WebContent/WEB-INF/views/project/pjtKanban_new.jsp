@@ -69,9 +69,6 @@
 			    onSet: function (rating, rateYoInstance) {
 				    var value = rating;
 				    $('#addPMTaskImportant').text(value); //중요도 값 표시해주기
-				    //console.log('값은?'+$('#addPMTaskImportant').text());
-				    //$("#addPMTaskStarImportant").val(value);
-				   
 			      }
 			  });
 
@@ -728,8 +725,7 @@
 		/* 체크리스트 가져와 뿌리는 함수 --01.26 알파카 수정*/
 		function getTaskCheckList(tskSeq){
 			console.log("getTaskChecklList() in!!");
-			console.log("뭐시여");
-			//$('#taskCheckList').empty();
+			$('#taskCheckList').empty();
 			
 			$.ajax({
 				url:"ajax/project/getTaskCheckList.do",
@@ -738,21 +734,21 @@
 				dataType:"JSON",
 				success: function(data){
 					console.log("getTaskCheckList Ajax Success!!");
-					
 					var TaskCheckList = data;
 					var num = 1;
 					$(TaskCheckList).each(function(index,element){
 						var chkSeq = element.chkSeq;
 						var content = element.content;
 						var isCheck = element.check;
+						
 						var li = $('<li>');
 						var checkDiv = $('<div class="checkbox-custom checkbox-default">');
-						//var hiddenInput = $('<input hidden name="chkSeq">');
-						//$(hiddenInput).val(chkSeq);
-						//$(checkDiv).append(hiddenInput);
-						//var hiddenInput2 = $('<input hidden name="tskSeq">');
-						//$(hiddenInput2).val(tskSeq);
-						//$(checkDiv).append(hiddenInput2);
+						/* var hiddenInput = $('<input hidden name="chkSeq">');
+						$(hiddenInput).val(chkSeq);
+						$(checkDiv).append(hiddenInput);
+						var hiddenInput2 = $('<input hidden name="tskSeq">');
+						$(hiddenInput2).val(tskSeq);
+						$(checkDiv).append(hiddenInput2); */
 						var checkBox = $('<input type="checkbox" id="todoListItem'+num+'" class="todo-check" name="isCheck">');
 						if(isCheck == true){
 							console.log("if check=true");
@@ -774,7 +770,23 @@
 						$(li).append(actionDiv);
 						$("#taskCheckList").append(li);
 						num++;
-					})
+
+
+						/*
+						
+						<li>
+							<div class="checkbox-custom checkbox-default">
+			 					<input type="checkbox" id="todoListItem1" class="todo-check">
+			 					<label class="todo-label" for="todoListItem1"><span>체크체크</span></label>
+								</div>
+		 					<div class="todo-actions">
+		 						<a class="todo-remove" href="#">
+		 							<i class="fa fa-times"></i>
+		 						</a>
+		 					</div>
+						</li>
+						*/
+					});
 				},
 				error:function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
@@ -1355,15 +1367,10 @@
 								<div class="tab-pane" id="detail">
 									<div class="panel-body" style="padding-top: 0px;">
                                          <ul class="widget-todo-list" id="taskDetailList">
-                                            <li style="padding-bottom:10px;">
+                                           <!--  <li style="padding-bottom:10px;">
 	                                            <div style="margin-left:10px;"  onclick="taskDetailEdit(this)">
 		                                            <span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
 		                                            <label class="taskDetail-label" style="cursor:pointer"><span>업무상세</span></label>
-		                                            <!-- <div class="todo-actions">
-									 					<a  onclick="taskDetailDelete(this)">
-									 						<i class="fa fa-times"></i>
-									 					</a>
-				 									</div> -->
 					 								<input type="hidden" name="tdSeq" value="">
 				 								</div>
 			 									<div class="todo-actions" onclick="taskDetailDelete(this)">
@@ -1372,7 +1379,7 @@
 								 						<i class="fa fa-times"></i>
 								 					</a>
 			 									</div>
-				 								<!-- 업무 상세 수정 창 -->
+				 								업무 상세 수정 창
 				 								<div class="taskDetail-Edit" style="display:none">
 					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
 														<div class="form-group">
@@ -1388,7 +1395,7 @@
 														</div>
 													</form>
 							 					</div>
-			 								</li>
+			 								</li> -->
                                           </ul>                                       	
 										<hr class="solid mt-sm mb-lg">
 											<form action="#" id="addTaskDetailForm" method="post" class="form-horizontal form-bordered">
@@ -1419,18 +1426,10 @@
 					 							</div>
 							 					<div class="todo-actions">
 							 						<a class="todo-remove" href="#">
-							 						<i class="fa fa-times"></i>
+							 							<i class="fa fa-times"></i>
 							 						</a>
 							 					</div>
-							 					<!-- 체크리스트 수정 -->
-							 					<!-- <div class="edit-controls u-clearfix" style="display:none;">
-							 						<input type="text">
-							 						<input type="submit">
-							 						<a href="#"></a>
-							 					</div> -->
 				 							</li>
-			 					
-			 					
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
