@@ -105,7 +105,7 @@
 											<td class="bReason">
 												<button	class="btn btn-default btn-sm" data-toggle="modal"
 													data-target="#myModal" 
-													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}">확인
+													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}" data-mail="${el.drafter}">확인
 												</button>
 											</td>	
 											<td class="bIsAuth" style="text-align: center;">
@@ -147,6 +147,7 @@
 									<div class="container-fluid">
 										<div class="modal-body mb-0" style="margin-top: 30px;">
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
+										<input type="hidden" id="modalMail" disabled>
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 신청 사유</span></label>
@@ -182,7 +183,7 @@
 										<div class="row">
 											<div class="col-md-4"></div>
 											<div class="col-md-4 text-center">
-												<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+												<button class="btn btn-primary" onclick="modalSubmit(this)" data-dismiss="modal">확인</button>
 												<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 											</div>
 											<div class="col-md-4"></div>
@@ -228,19 +229,24 @@
 		<script>
   			
 		window.onload = function(){
+			var wsocket;//알람을 위한 웹소켓 연결
+			connect();//알람을 위한 웹소켓 연결
 			
 			let aplSeq = "";
 			let reason = "";
 			let rejReason = "";
-
+			let mail = "";
+			
 			$('.btn-sm').click('show.bs.modal', function(e) {
 				aplSeq = $(this).data('aplseq');
 				reason = $(this).data('reason');
 				rejReason = $(this).data('rejreason');
+				mail = $(this).data('mail');
 				
 				$('#modalAplSeq').val(aplSeq);
 				$('#modalReason').val(reason);
 				$('#modalRejReason').val(rejReason);
+				$('#modalMail').val(mail);
 			});
 
 			
@@ -268,6 +274,41 @@
 			});
 			
 
+		}
+
+		/* 알람 */
+		function getContextPath() {//contextPath 구하는 함수
+		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+		};
+		
+		
+
+		function connect(){
+			var contextPath = getContextPath();
+			wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+			wsocket.onopen = onOpen;
+			wsocket.onmessage = onMessage;
+			wsocket.onclose = onClose;
+		}
+		
+		
+		function send(command) {
+			var jsonData = new Object();
+			jsonData.cmd = command;
+			jsonData.content = $('#entrySelectorInModal').val();
+			jsonData.mail = $('#modalMail').val();
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
+		
+		//모달 전송함수
+		function modalSubmit(data){
+			send("extendMGR");
+			$(data).closest('form').submit();
 		}
 		
 	</script>

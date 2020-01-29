@@ -96,6 +96,10 @@ public class AlarmHandler extends TextWebSocketHandler {
 				  msg = new TextMessage("[부재신청]이 ["+content+"] 되었습니다");
 				  
 			  }
+			  else if(cmd.equals("extendMGR")) {
+				  String content = (String)jsonObject.get("content");
+				  msg = new TextMessage("[연장근무신청]이 ["+content+"] 되었습니다");
+			  }
 			  users.get(mail).sendMessage(msg);
 		  }
 
