@@ -104,105 +104,10 @@
 		border-color: #f27474;
 	}
 </style>
-   	
-</head>
-<body>
-		<section class="body">
-
-			<!-- start: header -->
-			<c:import url="/common/Top.jsp"/>
-			<!-- end: header -->
-
-			<div class="inner-wrapper">
-				<!-- start: sidebar -->
-				<c:import url="/common/Side.jsp"/>
-				<!-- end: sidebar -->
-
-				<section role="main" class="content-body">
-					<header class="page-header">
-						<h2>채팅</h2>
-						<div class="right-wrapper pull-right">
-							<ol class="breadcrumbs">
-								<li>
-									<a href="#">
-										<i class="fa fa-comments"></i>
-									</a>
-								</li>
-								<li><span>채팅</span></li>
-								<li><span>1:1채팅</span></li>
-							</ol>
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
-						</div>
-					</header>
-
-					<!-- start: page -->
-					<section class="content-with-menu mailbox">
-						<div class="content-with-menu-container">
-							<!-- 채팅 메뉴 시작 -->
-							<c:import url="/WEB-INF/views/chat/chatMenu.jsp"/>
-							<!-- 채팅 메뉴 끝 -->
-							
-							<!-- 채팅 영역 시작 -->
-							<div class="inner-body mailbox-email" style="padding-left: 30px;padding-top: 30px;height:100%;">
-								<!-- START: .mailbox-header -->
-								<header class="mailbox-header">
-               							<b class="mailbox-title text-light m-none" style="font-size:25px;" id="dmName">${requestScope.dmName}</b>
-								</header>
-								<hr class="separator" />
-								<!-- END: .mailbox-header -->
-								<!-- 채팅 대화 뿌려지는 곳 -->
-								<div class="mailbox-email-container" style="width:100%">
-									<div class="msg_history" id="msg_history">
-									</div>		
-									<!-- 채팅 보내기 -->							
-									<div class="type_msg">
-										<div class="input_msg_write">
-											<form id="sendMessage">
-												<input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
-												<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-												<input type="hidden" id="dmMail" name="dmMail" value="${requestScope.dmMail}">
-												<button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-											</form>
-										</div>
-									</div>
-								</div>							
-							</div>
-							<!-- 채팅 영역 끝 -->
-						</div>
-					</section>
-					<!-- end: page -->
-				</section>
-			</div>
-			
-			<!-- 오른쪽 사이드 시작 -->
-			<c:import url="/common/RightSide.jsp"/>
-			<!-- 오른쪽 사이드 끝 -->			
-			<!-- 채팅방 만드는 모달 -->
-			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
-			<!-- 채팅방 만드는 모달 끝 -->
-			
-		</section>
-		
-<c:import url="/common/BottomTag.jsp"/>
-<!-- Specific Page Vendor -->
-<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
-<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
-<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
-<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
-<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
-<!-- Sweet Alert -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
-<!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
 <script>
+	
 	$(function(){
-	connect();
+		console.log("onload!!!");
 	$.ajax({
 	  	url:"getUserList.do",
 	  	dataType:"json",
@@ -270,7 +175,7 @@
 	var sendMessage = function() {
 		chatContent = $('#chatContent').val();
 		var chatUsersName = [fromName, dmName];
-		send("chatting",dmName);
+		send("chatting",dmMail,fromName);
 		socket.emit('send message to dm', chatType, chatContent, chatUsersMail, chatUsersName);
 		$('#chatContent').val("");
 		$("#chatContent").focus();
@@ -372,29 +277,16 @@
 	});
 
 	/* 알람 */
-	function getContextPath() {//contextPath 구하는 함수
-	  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-	  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
-	};
-	
 	
 
-	function connect(){
-		var contextPath = getContextPath();
-		wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
-		wsocket.onopen = onOpen;
-		wsocket.onmessage = onMessage;
-		wsocket.onclose = onClose;
-	}
-
 	
 	
-	function send(command, mail) {
-		let mail = $('#approval').val();
+	function send(command, receiver, sender) {
+		let mail = receiver;
 		var jsonData = new Object();
 		jsonData.cmd = command;
 		jsonData.mail = mail;
-		jsonData.sender = '${sessionScope.user.name}';
+		jsonData.sender = sender;
 
 		var parsedData = JSON.stringify(jsonData);
 		
@@ -402,5 +294,101 @@
 	}
 	/* /알람  */
 </script>
+</head>
+<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<c:import url="/common/Top.jsp"/>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<c:import url="/common/Side.jsp"/>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>채팅</h2>
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="#">
+										<i class="fa fa-comments"></i>
+									</a>
+								</li>
+								<li><span>채팅</span></li>
+								<li><span>1:1채팅</span></li>
+							</ol>
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<section class="content-with-menu mailbox">
+						<div class="content-with-menu-container">
+							<!-- 채팅 메뉴 시작 -->
+							<c:import url="/WEB-INF/views/chat/chatMenu.jsp"/>
+							<!-- 채팅 메뉴 끝 -->
+							
+							<!-- 채팅 영역 시작 -->
+							<div class="inner-body mailbox-email" style="padding-left: 30px;padding-top: 30px;height:100%;">
+								<!-- START: .mailbox-header -->
+								<header class="mailbox-header">
+               							<b class="mailbox-title text-light m-none" style="font-size:25px;" id="dmName">${requestScope.dmName}</b>
+								</header>
+								<hr class="separator" />
+								<!-- END: .mailbox-header -->
+								<!-- 채팅 대화 뿌려지는 곳 -->
+								<div class="mailbox-email-container" style="width:100%">
+									<div class="msg_history" id="msg_history">
+									</div>		
+									<!-- 채팅 보내기 -->							
+									<div class="type_msg">
+										<div class="input_msg_write">
+											<form id="sendMessage">
+												<input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
+												<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
+												<input type="hidden" id="dmMail" name="dmMail" value="${requestScope.dmMail}">
+												<button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+											</form>
+										</div>
+									</div>
+								</div>							
+							</div>
+							<!-- 채팅 영역 끝 -->
+						</div>
+					</section>
+					<!-- end: page -->
+				</section>
+			</div>
+			
+			<!-- 오른쪽 사이드 시작 -->
+			<c:import url="/common/RightSide.jsp"/>
+			<!-- 오른쪽 사이드 끝 -->			
+			<!-- 채팅방 만드는 모달 -->
+			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
+			<!-- 채팅방 만드는 모달 끝 -->
+			
+		</section>
+		
+<c:import url="/common/BottomTag.jsp"/>
+<!-- Specific Page Vendor -->
+<script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+<script src="assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
+<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/markdown.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/to-markdown.js"></script>
+<script src="assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+<!-- socket 연결 -->
+<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
+
 	</body>
 </html>
