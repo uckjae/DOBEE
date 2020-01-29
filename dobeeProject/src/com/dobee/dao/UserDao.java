@@ -155,7 +155,7 @@ public interface UserDao {
     
     
 	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
-    public List<ChartData> getChartData(String mail);
+    public List<ChartData> getChartData(String mail, String ym);
     
     
     // 개인_연장근무 수정/삭제 (GET) - 페이지 데이터 불러오기			0121	COMPLETE
@@ -199,6 +199,9 @@ public interface UserDao {
     /* 01.10 게다죽 */
     public List<Integer> overTimeMonthList(String mail);
     
+    
+    // Ajax 개인_근무 차트 년월 Option 불러오기		0129 ~ing
+    public List<Integer> overTimeYearMonthList(String mail);
     
     //유저 리스트 가져오기
     /* 01.09 알파카 */

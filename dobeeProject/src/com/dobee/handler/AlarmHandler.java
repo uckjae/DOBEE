@@ -58,6 +58,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 		  TextMessage msg = null;
 		  String cmd = (String) jsonObject.get("cmd");
 		  String mail = (String) jsonObject.get("mail");
+
 		  if(users.containsKey(mail)) {
 			  if(cmd.equals("addTask")) {
 				  String content = (String)jsonObject.get("content");
@@ -89,6 +90,15 @@ public class AlarmHandler extends TextWebSocketHandler {
 			  else if(cmd.equals("chatting")) {
 				  String sender = (String)jsonObject.get("sender");
 				  msg = new TextMessage("["+sender+"]님으로부터 메세지가 도착하였습니다");
+			  }
+			  else if(cmd.equals("breakMGR")) {
+				  String content = (String)jsonObject.get("content");
+				  msg = new TextMessage("[부재신청]이 ["+content+"] 되었습니다");
+				  
+			  }
+			  else if(cmd.equals("extendMGR")) {
+				  String content = (String)jsonObject.get("content");
+				  msg = new TextMessage("[연장근무신청]이 ["+content+"] 되었습니다");
 			  }
 			  users.get(mail).sendMessage(msg);
 		  }
