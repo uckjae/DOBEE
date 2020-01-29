@@ -69,59 +69,59 @@
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
 
+				
+					
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h2 class="panel-title">Table</h2>
+							<h2 class="panel-title">연창근무 신청 목록</h2>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								
-								<thead id="thead">
+								<thead>
 									<tr>
 										<th width="8%">신청 번호</th>
-										<th width="15%">신청 ID</th>
 										<th width="10%">신청자명</th>
+										<th width="15%">신청 ID</th>
 										<th width="9%">신청 일자</th>
+										
 										<th width="8%">부재 항목</th>
-										<th width="8%">승인 여부</th>
 										<th>기간</th>
 										<td width="8%">사유</td>
+										<th width="8%">승인 여부</th>
 									</tr>
 								</thead>
-				
+								
 								<tbody id="tbody">
 									<c:forEach items="${extListMgr}" var="el">
 										<tr>
 											<td class="bSeq">${el.aplSeq }</td>
-											<td class="bMail">${el.drafter }</td>
 											<td class="bName">${el.name }</td>
+											<td class="bMail">${el.drafter }</td>
 											<td class="bReqDate">${el.reqDate}</td>
+											
 											<td class="bEntry">${el.entry }</td>
-											<td class="bIsAuth">
-												<button	disabled="disabled" class="btn btn-info btn-sm ${el.isAuth }"> ${el.isAuth} </button>
-											</td>
 											<td class="bTerm">${el.startAt } - ${el.endAt }</td>
 											<td class="bReason">
 												<button	class="btn btn-default btn-sm" data-toggle="modal"
 													data-target="#myModal" 
 													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}">확인
 												</button>
-												
+											</td>	
+											<td class="bIsAuth" style="text-align: center;">
+												<button	disabled="disabled" class="btn btn-info btn-sm ${el.isAuth }"> ${el.isAuth} </button>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
-				
+								
 								<tfoot>
 								</tfoot>
 								
 							</table>
 						</div>
 					</section>
+					
 					
 					
 					<!-- Modal -->
