@@ -81,8 +81,14 @@ public class AlarmHandler extends TextWebSocketHandler {
 				  			break;
 				  }
 				  msg = new TextMessage("["+applier+"]님이\n"+content+"신청 했습니다");
-				  
-				  
+			  }
+			  else if(cmd.equals("extendApply")) {
+				  String applier = (String)jsonObject.get("applier");
+				  msg = new TextMessage("["+applier+"]님이\n 연장근무를 신청 했습니다");
+			  }
+			  else if(cmd.equals("chatting")) {
+				  String sender = (String)jsonObject.get("sender");
+				  msg = new TextMessage("["+sender+"]님으로부터 메세지가 도착하였습니다");
 			  }
 			  users.get(mail).sendMessage(msg);
 		  }

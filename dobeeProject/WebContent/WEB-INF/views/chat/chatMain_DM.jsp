@@ -202,7 +202,7 @@
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script> -->
 <script>
 	$(function(){
-
+	connect();
 	$.ajax({
 	  	url:"getUserList.do",
 	  	dataType:"json",
@@ -270,6 +270,7 @@
 	var sendMessage = function() {
 		chatContent = $('#chatContent').val();
 		var chatUsersName = [fromName, dmName];
+		send("chatting",dmName);
 		socket.emit('send message to dm', chatType, chatContent, chatUsersMail, chatUsersName);
 		$('#chatContent').val("");
 		$("#chatContent").focus();
@@ -369,6 +370,37 @@
 	 			}
 			});
 	});
+
+	/* 알람 */
+	function getContextPath() {//contextPath 구하는 함수
+	  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+	};
+	
+	
+
+	function connect(){
+		var contextPath = getContextPath();
+		wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+		wsocket.onopen = onOpen;
+		wsocket.onmessage = onMessage;
+		wsocket.onclose = onClose;
+	}
+
+	
+	
+	function send(command, mail) {
+		let mail = $('#approval').val();
+		var jsonData = new Object();
+		jsonData.cmd = command;
+		jsonData.mail = mail;
+		jsonData.sender = '${sessionScope.user.name}';
+
+		var parsedData = JSON.stringify(jsonData);
+		
+		wsocket.send(parsedData);
+	}
+	/* /알람  */
 </script>
 	</body>
 </html>
