@@ -77,13 +77,28 @@
 							<h3 class="panel-title">근무 현황 차트</h3>
 						</header>
 						<div class="panel-body" style="min-height: 560px;">
-							<div class="col-md-12">
-								<div id="inputYearMonth" style="padding: 20px;"><i class="fa fa-list-alt fa-2x">&nbsp;&nbsp;2020년 01월</i></div>
+							<div id="divAttChart" class="col-md-12">
+								<div id="inputYearMonth" style="padding: 20px;">
+									<!-- input Year Month with Icon -->
+								</div>
 								<canvas id="attChart" width="500px" height="230px"></canvas>
 							</div>
+						<div id="legendColor" style="align-items: center">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="col-md-5"></div>
+									<div class="col-md-1">
+										<button id="attendColor" class="btn btn-info btn-sm" style="border:none; background-color: rgba(129, 242, 41, 1); "><b>출근/퇴근</b></button>
+									</div>
+									<div class="col-md-1">
+										<button id="extendColor" class="btn btn-info btn-sm" style="border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
+									</div>
+									<div class="col-md-5"></div>
+								</div>
+							</div>
 						</div>
+					</div>
 					</section>
-					
 					
 					<section class="panel">
 						<div class="row">
@@ -122,17 +137,23 @@
 											
 										</div>
 										<div id="recent1" class="tab-pane" style="height:50px;">
+											<!-- 
 											<select id="yearSelector">
 												<option hidden="">==년도 별==</option>
-												<!-- Ajax -->
+												Ajax
 											</select>
 											
 											<select id="monthSelector">
 												<option hidden="">==월    별==</option>
+												Ajax
+											</select>
+											 -->
+											<select id="yearMonthSelector">
+												<option hidden="">Year-Month</option>
 												<!-- Ajax -->
 											</select>
+											
 										</div>
-										
 									</div>
 								</div>
 							</div>
@@ -280,199 +301,6 @@
 	<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 	
 	
-	<script>
-		var ctx = document.getElementById('attChart').getContext('2d');
-		
-		var minValue = moment('1970-01-01 06:00:00').valueOf();
-
-		// 해당 달의 일 수 가져오기 (여기서는 2월)
-		var daySize = new Date(2020,2,0).getDate();
-		// 해당 달의 일 수 x축 레이블에 추가
-		var dLabel = [];
-		
-		var attInit = [];
-		var attEnd = [];
-		var extInit = [];
-		var extEnd = [];
-
-		var attInitAbs = [];
-		var attInitRel = [];
-		var attEndRel = [];
-		var extInitRel = [];
-		var extEndRel = [];
-
-		$.ajax({
-			url : "getChartData.do",
-			dataType : "json",
-			success : function(data) {
-				
-				var dArray = [];
-				dArray = data.CD;
-				
-				// 레이블 값, moment value 절대값, 상대값 배열 초기과
-				for (let i=1; i<=daySize; i++) {
-					dLabel[i] = i;
-					
-					attInit[i] = null;
-					attEnd[i] = null;
-					extInit[i] = null;
-					extEnd[i] = null;
-
-					attInitAbs[i] = null;
-					attInitRel[i] = null;
-					attEndRel[i] = null;
-					extInitRel[i] = null;
-					extEndRel[i] = null;
-				}
- 
-				// dArray = 11개 entry = 연장/근태 별로 있음
-				// dLabel = 29 한달의 일수가 들어가 있음
-				for (let j =0; j<dArray.length; j++) {
-					for (let i=1; i<dLabel.length; i++) {
-						if (dLabel[i] == dArray[j].days) {
-							if (dArray[j].entry === '근태') {
-								attInit[i] = '1970-01-01 '+dArray[j].attTime;
-								attInitAbs[i] = moment(attInit[i]).valueOf()+10.8e6;
-								attInitRel[i] = moment(attInit[i]).valueOf();
-								attEnd[i] = '1970-01-01 '+dArray[j].offTime;
-								attEndRel[i] = moment(attEnd[i]).valueOf()-attInitRel[i];
-							} else if (dArray[j].entry === '연장') {
-								extInit[i] = '1970-01-01 '+dArray[j].attTime;
-
-								if (attInitAbs[i] == null) {
-									extInitRel[i] = moment(extInit[i]).valueOf()+10.8e6;
-									extEnd[i] = '1970-01-01 '+dArray[j].offTime;
-									extEndRel[i] = moment(extEnd[i]).valueOf()-moment(extInit[i]).valueOf();
-								} else {
-									extInitRel[i] = moment(extInit[i]).valueOf()-attEndRel[i]-attInitRel[i];
-									extEnd[i] = '1970-01-01 '+dArray[j].offTime;
-									extEndRel[i] = moment(extEnd[i]).valueOf()-extInitRel[i]-attEndRel[i]-attInitRel[i];
-								}
-								
-							}
-						}
-					}
-				}
-			}
-		});
-
-		
-		var attChart = new Chart(ctx, {
-	
-		    type: 'bar',
-		    data: {
-		        labels: dLabel,
-		       
-		        datasets: [{
-		        	stack : 'Stack 0',
-		            label: '출근',
-		            data: attInitAbs,
-		            backgroundColor: 'rgba(255, 255, 0, 0)',
-		            borderColor: 'rgba(255, 255, 0, 0.0 )',
-		            borderWidth: 1,
-		            barTickness : 1,
-		        },
-		        {
-		        	stack : 'Stack 0',
-		            label: '퇴근',
-		            data: attEndRel,
-		            backgroundColor: 'rgba(129, 242, 41, 1)',
-		            borderColor: 'rgba(129, 242, 41, 0.5)',
-		            borderWidth: 1
-	
-		        },
-		        {
-		        	stack : 'Stack 0',
-		            label: '연장근무 시작',
-		            data: extInitRel,
-		            backgroundColor: 'rgba(255, 255, 0, 0)',
-		            borderColor: 'rgba(255, 255, 0, 0)',
-		            borderWidth: 1,
-		        },
-		        {
-		        	stack : 'Stack 0',
-		            label: '연장근무 종료',
-		            data: extEndRel,
-		            backgroundColor: 'rgba(255, 39, 0, 1)',
-		            borderColor: 'rgba(255, 39, 0, 0.5)',
-		            borderWidth: 1
-		        }]
-		    },
-	
-		    options: {
-			    legend : {
-					display : true,
-					position : 'bottom',
-					labels : {
-						fontSize : 12
-					}
-				},
-			    layout : {
-				    padding : {
-					    left : 20,
-		    			right : 20,
-						top : 10,
-						bottom : 10
-					}
-				},
-		    	responsive : true,
-				tooltips : {
-					callback: {
-						label : function(tooltipItem, data) {
-							//var label = moment(data.datasets[tooltipItem.datasetIndex].data[tooltipitem.index]);
-							/* 
-							
-							var label = moment(data.datasets[tooltipItem.datasetIndex].label);
-
-
-							if (label.diff( moment('1970-01-01 06:00:00'), 'minutes') === 0) {
-								return null;
-							}
-							 */
-							// return label.format('h A');
-							console.log(tooltipItem);
-							return "1"+ tooltipItem.yLabel;
-						}
-					}			
-				},
-				scales: {
-					x: {
-						type: 'time',
-						display: true,
-						offset: true,
-						time: {
-							unit: 'day',
-							displayFormats : {
-								day : 'MMM D'
-							}
-						}
-					},
-					yAxes : [{
-						type : 'linear',
-						beingAtZero : false,
-						stacked : true,
-						ticks : {
-							min : moment('1970-01-01 09:00:00').valueOf(),
-							max : moment('1970-01-02 04:00:00').valueOf(),
-							stepSize : 3.6e6,
-	
-							callback: value => {
-								let date = moment(value-10.8e6);
-								if(date.diff(moment('1970-01-01 00:00:00'), 'minutes') === 0) {
-									return null;
-								}
-								return date.format('h:mm A');
-							}
-	
-							
-						}
-					}]
-				},
-			}
-		});
-	</script>
-	
-	
 	<script type="text/javascript">	
 		window.onload = function(){
 
@@ -495,7 +323,7 @@
 				/*language option*/
 				"language" : {
 					"emptyTable" : "데이터가 없습니다.",
-					"lengthMenu" : "페이지당 _MENU_ 개씩 보기",
+					"lengthMenu" : "_MENU_ 개씩 보기",
 					"info" : "현재 _START_ - _END_ / _TOTAL_건",
 					"infoEmpty" : "데이터 없음",
 					"infoFiltered" : "( _MAX_건의 데이터에서 필터링됨 )",
@@ -513,56 +341,462 @@
 					"targets" : [ 1 ],
 				}]
 			});
-			
-			$.ajax({
-				url : "overTimeYearList.do",
-				dataType : "json",
-				success : function(data) {
-					var yArray = [];
-					yArray = data.OTYList;
-					for (var i = 0; i<yArray.length; i++) {
-						var option = document.createElement("option");
-						$(option).text(yArray[i]+'년');
-						$("#yearSelector").append(option);
-					}
-				}				
-			});	
 
 			$.ajax({
-				url : "overTimeMonthList.do",
+				url : "overTimeYearMonthList.do",
 				dataType : "json",
 				success : function(data) {
-					var mArray = [];
-					mArray = data.OTMList;
-					for (var i = 0; i<mArray.length; i++) {
+					var myArray = [];
+					myArray = data.OTYMList;
+					console.log('myArray : ' + myArray);
+					for (var i = 0; i<myArray.length; i++) {
 						var option = document.createElement("option");
-						$(option).text(mArray[i]+'월');
-						$("#monthSelector").append(option);
+						$('#yearMonthSelector').append("<option value="+myArray[i] + ">"+ myArray[i].substr(0,4)+"년 "+myArray[i].substr(6,2)+"월 </option>")
 					}
 				}			
 			});
-			
 
-	
-		/* 
-			#("#yearSelector").change(function() {
-				alert("뭐시여~");
-				$.ajax({
-					url : "overTimeMonthList.do",
-					dataType : "json",
-					success : function(data) {
-						console.log(data.OTMList);
-						var mArray = [];
-						mArray = data.OTMList;
-						for (var i = 0; i<mArray.length; i++) {
-							var option = document.createElement("option");
-							$(option).text(mArray[i]+'월');
-							$("#monthSelector").append(option);
+			
+			var ctx = document.getElementById('attChart').getContext('2d');
+
+			var minValue = moment('1970-01-01 06:00:00').valueOf();
+			var dArray = [];
+			let dLabel = [];
+			
+			var today = new Date();
+			var yyyy = today.getFullYear();
+			var mm = today.getMonth();
+			var month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+			
+			$('#inputYearMonth').append("<i class='fa fa-list-alt fa-2x' id='iIinputYearMonth'>&nbsp;&nbsp;"+yyyy+"년 "+month[mm]+"월</i>")
+
+			$.ajax({
+				type : 'POST',
+				url : 'getChartData.do?ym='+yyyy+"-"+month[mm],
+				dataType : "json",
+				success : function(data) {
+					dArray = data.CD;
+				},
+				complete : function() {
+					// 해당 달의 일 수 가져오기 (여기서는 2월)
+					let daySize = new Date(yyyy,mm,0).getDate();
+
+					// 해당 달의 일 수 x축 레이블에 추가
+					
+					let attInit = [];
+					let attEnd = [];
+					let extInit = [];
+					let extEnd = [];
+
+					let attInitAbs = [];
+					let attInitRel = [];
+					let attEndRel = [];
+					let extInitRel = [];
+					let extEndRel = [];
+
+					// 레이블 값, moment value 절대값, 상대값 배열 초기과
+					for (let i=1; i<=daySize; i++) {
+						dLabel[i] = i;
+						
+						attInit[i] = null;
+						attEnd[i] = null;
+						extInit[i] = null;
+						extEnd[i] = null;
+
+						attInitAbs[i] = null;
+						attInitRel[i] = null;
+						attEndRel[i] = null;
+						extInitRel[i] = null;
+						extEndRel[i] = null;
+					}
+
+					// dArray = 11개 entry = 연장/근태 별로 있음
+					// dLabel = 29 한달의 일수가 들어가 있음
+					for (let j =0; j<dArray.length; j++) {
+						for (let i=1; i<dLabel.length; i++) {
+							if (dLabel[i] == dArray[j].days) {
+								if (dArray[j].entry === '근태') {
+									attInit[i] = '1970-01-01 '+dArray[j].attTime;
+									attInitAbs[i] = moment(attInit[i]).valueOf()+10.8e6;
+									attInitRel[i] = moment(attInit[i]).valueOf();
+									attEnd[i] = '1970-01-01 '+dArray[j].offTime;
+									attEndRel[i] = moment(attEnd[i]).valueOf()-attInitRel[i];
+								} else if (dArray[j].entry === '승인') {
+									extInit[i] = '1970-01-01 '+dArray[j].attTime;
+
+									if (attInitAbs[i] == null) {
+										extInitRel[i] = moment(extInit[i]).valueOf()+10.8e6;
+										extEnd[i] = '1970-01-01 '+dArray[j].offTime;
+										extEndRel[i] = moment(extEnd[i]).valueOf()-moment(extInit[i]).valueOf();
+									} else {
+										extInitRel[i] = moment(extInit[i]).valueOf()-attEndRel[i]-attInitRel[i];
+										extEnd[i] = '1970-01-01 '+dArray[j].offTime;
+										extEndRel[i] = moment(extEnd[i]).valueOf()-extInitRel[i]-attEndRel[i]-attInitRel[i];
+									}
+								}
+
+								
+							}
 						}
-					}			
-				})		
+					}
+
+					let attChart = new Chart(ctx, {
+
+					    type: 'bar',
+					    data: {
+					        labels: dLabel,
+					       
+					        datasets: [{
+					        	stack : 'Stack 0',
+					            label: '출근',
+					            data: attInitAbs,
+					            backgroundColor: 'rgba(255, 255, 0, 0)',
+					            borderColor: 'rgba(255, 255, 0, 0.0 )',
+					            borderWidth: 1,
+					            barTickness : 1,
+					        },
+					        {
+					        	stack : 'Stack 0',
+					            label: '퇴근',
+					            data: attEndRel,
+					            backgroundColor: 'rgba(129, 242, 41, 1)',
+					            borderColor: 'rgba(129, 242, 41, 0.5)',
+					            borderWidth: 1
+
+					        },
+					        {
+					        	stack : 'Stack 0',
+					            label: '연장근무 시작',
+					            data: extInitRel,
+					            backgroundColor: 'rgba(255, 255, 0, 0)',
+					            borderColor: 'rgba(255, 255, 0, 0)',
+					            borderWidth: 1,
+					        },
+					        {
+					        	stack : 'Stack 0',
+					            label: '연장근무 종료',
+					            data: extEndRel,
+					            backgroundColor: 'rgba(255, 39, 0, 1)',
+					            borderColor: 'rgba(255, 39, 0, 0.5)',
+					            borderWidth: 1
+					        }]
+					    },
+
+					    options: {
+						    legend : {
+								display : false,
+								position : 'bottom',
+								labels : {
+									fontSize : 12
+								}
+							},
+						    layout : {
+							    padding : {
+								    left : 20,
+					    			right : 20,
+									top : 10,
+									bottom : 10
+								}
+							},
+					    	responsive : true,
+							tooltips: {
+								callbacks: {
+									title: function(tooltipItem, data) {
+										let label = tooltipItem[0].xLabel;
+										let dsi = tooltipItem[0].datasetIndex;
+
+										if (dsi == 0) {
+											return label + "일  출근 시간";
+										} else if (dsi == 1) {
+											return label + "일 근무";
+										} else if (dsi == 2) {
+											return label + "일  연장근무 시작";
+										} else if (dsi == 3) {
+											return label + "일  연장근무";
+										}		
+									},
+									label: function(tooltipItem) {
+										console.log("tooltipItem : ",tooltipItem);
+
+										let workHour = moment(tooltipItem.yLabel+10.8e6);
+										
+										if (tooltipItem.datasetIndex == 0) {
+											let absTime = moment(tooltipItem.yLabel-10.8e6);	
+											return absTime.format('HH시 mm 분 A');
+										} else if (tooltipItem.datasetIndex == 1) {
+											return workHour.format('hh시간 mm분');
+										} else if (tooltipItem.datasetIndex == 2) {
+											return "연장근무 시작";
+										} else if (tooltipItem.datasetIndex == 3) {
+											return workHour.format('hh시간 mm분');
+										}
+
+									}
+								}
+							},
+							scales: {
+								x: {
+									type: 'time',
+									display: true,
+									offset: true,
+									time: {
+										unit: 'day',
+										displayFormats : {
+											day : 'MMM D'
+										}
+									}
+								},
+								yAxes : [{
+									tooltipFormat : 'HH:mm',
+									type : 'linear',
+									beingAtZero : false,
+									stacked : true,
+									ticks : {
+										min : moment('1970-01-01 09:00:00').valueOf(),
+										max : moment('1970-01-02 04:00:00').valueOf(),
+										stepSize : 3.6e6,
+
+										callback: value => {
+											let date = moment(value-10.8e6);
+											if(date.diff(moment('1970-01-01 00:00:00'), 'minutes') === 0) {
+												return null;
+											}
+											return date.format('h:mm A');
+										}
+										
+									}
+								}]
+							},
+						}
+					});
+					
+				}
 			});
-		*/
+
+
+			$('#yearMonthSelector').change(function() {
+				let ym = $(this).val();
+				console.log('ym : '+ ym);
+
+				let yyyy = ym.substr(0,4);
+				let mm = ym.substr(6,2);
+				
+				$('#inputYearMonth').empty();
+				$('#inputYearMonth').append("<i class='fa fa-list-alt fa-2x' id='iIinputYearMonth'>&nbsp;&nbsp;"+yyyy+"년 "+mm+"월</i>")
+				
+				let dArray = [];
+				// 해당 달의 일 수 가져오기 (여기서는 2월)
+				let daySize = new Date(yyyy,mm,0).getDate();
+				// 해당 달의 일 수 x축 레이블에 추가
+				let dLabel = [];
+				
+				let attInit = [];
+				let attEnd = [];
+				let extInit = [];
+				let extEnd = [];
+
+				let attInitAbs = [];
+				let attInitRel = [];
+				let attEndRel = [];
+				let extInitRel = [];
+				let extEndRel = [];
+				
+				$.ajax({
+					type : 'POST',
+					url : 'getChartData.do?ym='+ym,
+					success : function(data) {
+						dArray = data.CD;
+						console.log("이거 확인 : ", dArray)
+					},
+					complete : function() {
+						
+						// 레이블 값, moment value 절대값, 상대값 배열 초기과
+						for (let i=1; i<=daySize; i++) {
+							dLabel[i] = i;
+							
+							attInit[i] = null;
+							attEnd[i] = null;
+							extInit[i] = null;
+							extEnd[i] = null;
+
+							attInitAbs[i] = null;
+							attInitRel[i] = null;
+							attEndRel[i] = null;
+							extInitRel[i] = null;
+							extEndRel[i] = null;
+						}
+
+						// dArray = 11개 entry = 연장/근태 별로 있음
+						// dLabel = 29 한달의 일수가 들어가 있음
+						for (let j =0; j<dArray.length; j++) {
+							for (let i=1; i<dLabel.length; i++) {
+								if (dLabel[i] == dArray[j].days) {
+									if (dArray[j].entry === '근태') {
+										attInit[i] = '1970-01-01 '+dArray[j].attTime;
+										attInitAbs[i] = moment(attInit[i]).valueOf()+10.8e6;
+										attInitRel[i] = moment(attInit[i]).valueOf();
+										attEnd[i] = '1970-01-01 '+dArray[j].offTime;
+										attEndRel[i] = moment(attEnd[i]).valueOf()-attInitRel[i];
+									} else if (dArray[j].entry === '승인') {
+										extInit[i] = '1970-01-01 '+dArray[j].attTime;
+										if (attInitAbs[i] == null) {
+											extInitRel[i] = moment(extInit[i]).valueOf()+10.8e6;
+											extEnd[i] = '1970-01-01 '+dArray[j].offTime;
+											extEndRel[i] = moment(extEnd[i]).valueOf()-moment(extInit[i]).valueOf();
+										} else {
+											extInitRel[i] = moment(extInit[i]).valueOf()-attEndRel[i]-attInitRel[i];
+											extEnd[i] = '1970-01-01 '+dArray[j].offTime;
+											extEndRel[i] = moment(extEnd[i]).valueOf()-extInitRel[i]-attEndRel[i]-attInitRel[i];
+										}	
+									}
+
+									
+								}
+							}
+						}
+
+						$('#attChart').remove();
+						let newChart = "<canvas id='attChart' width='auto' height='auto'></canvas>";
+						$('#divAttChart').append(newChart);
+						
+						let ctx = document.getElementById('attChart').getContext('2d');
+						
+						let attChart = new Chart(ctx, {
+							type: 'bar',
+						    data: {
+						        labels: dLabel,
+						        
+						        datasets: [{
+						        	stack : 'Stack 0',
+						            label: '출근',
+						            data: attInitAbs,
+						            backgroundColor: 'rgba(255, 255, 0, 0)',
+						            borderColor: 'rgba(255, 255, 0, 0.0 )',
+						            borderWidth: 1,
+						            barTickness : 1,
+						        },
+						        {
+						        	stack : 'Stack 0',
+						            label: '퇴근',
+						            data: attEndRel,
+						            backgroundColor: 'rgba(129, 242, 41, 1)',
+						            borderColor: 'rgba(129, 242, 41, 0.5)',
+						            borderWidth: 1
+					
+						        },
+						        {
+						        	stack : 'Stack 0',
+						            label: '연장근무 시작',
+						            data: extInitRel,
+						            backgroundColor: 'rgba(255, 255, 0, 0)',
+						            borderColor: 'rgba(255, 255, 0, 0)',
+						            borderWidth: 1,
+						        },
+						        {
+						        	stack : 'Stack 0',
+						            label: '연장근무 종료',
+						            data: extEndRel,
+						            backgroundColor: 'rgba(255, 39, 0, 1)',
+						            borderColor: 'rgba(255, 39, 0, 0.5)',
+						            borderWidth: 1
+						        }]
+						    },
+					
+						    options: {
+							    legend : {
+									display : false,
+									position : 'bottom',
+									labels : {
+										fontSize : 12
+									}
+								},
+							    layout : {
+								    padding : {
+									    left : 20,
+						    			right : 20,
+										top : 10,
+										bottom : 10
+									}
+								},
+						    	responsive : true,
+						    	tooltips: {
+									callbacks: {
+										title: function(tooltipItem, data) {
+											let label = tooltipItem[0].xLabel;
+											let dsi = tooltipItem[0].datasetIndex;
+
+											if (dsi == 0) {
+												return label + "일  출근 시간";
+											} else if (dsi == 1) {
+												return label + "일 근무";
+											} else if (dsi == 2) {
+												return label + "일  연장근무 시작";
+											} else if (dsi == 3) {
+												return label + "일  연장근무";
+											}		
+										},
+										label: function(tooltipItem) {
+											console.log("tooltipItem : ",tooltipItem);
+
+											let workHour = moment(tooltipItem.yLabel+10.8e6);
+											
+											if (tooltipItem.datasetIndex == 0) {
+												let absTime = moment(tooltipItem.yLabel-10.8e6);	
+												return absTime.format('HH시 mm 분 A');
+											} else if (tooltipItem.datasetIndex == 1) {
+												return workHour.format('hh시간 mm분');
+											} else if (tooltipItem.datasetIndex == 2) {
+												return "연장근무 시작";
+											} else if (tooltipItem.datasetIndex == 3) {
+												return workHour.format('hh시간 mm분');
+											}
+
+										}
+									}
+								},
+								scales: {
+									x: {
+										type: 'time',
+										display: true,
+										offset: true,
+										time: {
+											unit: 'day',
+											displayFormats : {
+												day : 'MMM D'
+											}
+										}
+									},
+									yAxes : [{
+										type : 'linear',
+										beingAtZero : false,
+										stacked : true,
+										ticks : {
+											min : moment('1970-01-01 09:00:00').valueOf(),
+											max : moment('1970-01-02 04:00:00').valueOf(),
+											stepSize : 3.6e6,
+					
+											callback: value => {
+												let date = moment(value-10.8e6);
+												if(date.diff(moment('1970-01-01 00:00:00'), 'minutes') === 0) {
+													return null;
+												}
+												return date.format('h:mm A');
+											}
+					
+											
+										}
+									}]
+								},
+							}
+
+						});
+						//차트 끝~
+						
+					}
+				})
+				
+			});
+			
 		}
 	
 	</script>
