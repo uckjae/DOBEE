@@ -38,10 +38,10 @@ public class AjaxController_Chat {
 
 	//회원 목록 가져오기
     @RequestMapping(value="getUserList.do", method=RequestMethod.POST)
-    //@JsonManagedReference
     public List<User> getUserList() {
     	UserDao userdao = sqlsession.getMapper(UserDao.class);
     	List<User> result = userdao.getUserList();
+    	System.out.println("리절트?"+result.toString());
     	return result;
     }
     

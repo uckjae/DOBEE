@@ -103,6 +103,7 @@ public class AjaxController_Project {
 	//특정 프로젝트 가져오기
 	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
 	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+		System.out.println("이거 타????");
 		Project project = null;
 		project = projectService.getProject(Integer.parseInt(pjtSeq));
 		return project;
@@ -117,6 +118,24 @@ public class AjaxController_Project {
 		return pjtMember;
 	}
 	
+	//특정 프로젝트 & 멤버 가져오기 getPjtAndMember.do
+	@RequestMapping(value="getPjtAndUser.do", method=RequestMethod.POST)
+	public Map<String, Object> getPjtAndMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//프로젝트 정보 가져오기
+		Project project = projectService.getProject(Integer.parseInt(pjtSeq));
+		map.put("project", project);
+		
+		//프로젝트에 속한 멤버 정보 가져오기
+		List<User> user = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		map.put("user", user);
+		
+		System.out.println("맵맵");
+		System.out.println(map.toString());
+		
+		return map;
+	}
 	
 	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
@@ -137,9 +156,7 @@ public class AjaxController_Project {
 		if( result > 0 ) {
 			responseData = "success";
 		}
-		return responseData;
-		
-		
+		return responseData;		
 	}
 	
 	//특정업무의 TaskDetailList
@@ -243,13 +260,9 @@ public class AjaxController_Project {
 	
 	//체크리스트 내용만 수정
 	@RequestMapping("taskCheckListEdit")
-	public String taskCheckListEdit(@RequestParam(value="chkSeq") String chkSeq, @RequestParam(value="content") String content, HttpServletRequest req) {
+	public String taskCheckListEdit(CheckList checkList) {
 		System.out.println("AjaxControll_Project taskCheckListEdit() in!!");
 		String responseData = "";
-		//vo 객체 주입 {'chkSeq' : chkSeq, 'content' : content }
-		CheckList checkList = new CheckList();
-		checkList.setChkSeq(Integer.parseInt(chkSeq));
-		checkList.setContent(content);
 		System.out.println("값이 오니?" + checkList.toString());
 		
 		int result = projectService.taskCheckListEditContent(checkList);
