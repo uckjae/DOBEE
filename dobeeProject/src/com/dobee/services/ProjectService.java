@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -207,12 +208,20 @@ public class ProjectService {
     	return taskCheckList;
     }
     
-    //체크리스트 수정
-    public int taskCheckListEdit(CheckList checkList) {
+    //체크리스트 내용 수정
+    public int taskCheckListEditContent(CheckList checkList) {
     	System.out.println("ProjectService taskCheckListEdit() in");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskCheckListEdit(checkList);
+    	int result = projectDao.taskCheckListEditContent(checkList);
     	return result;
+    }
+    
+    //체크리스트 체크 여부 수정
+    public int taskCheckListIsCheck(CheckList checkList) {
+    	int result = 0;
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	result = projectDao.taskCheckListIsCheck(checkList);
+    	return result; 
     }
     
     

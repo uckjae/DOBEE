@@ -241,6 +241,7 @@ console.log(path);
                                     url: 'cardListtoReceipt.do',
                                     type: 'POST',
                                     success: function(result) {
+                                        console.log("여기 왜 갑자기안뜨냐? ");
                                         for (let i = 0; i < result.length; i++) {
                                             $("#Select1").append("<option>" + result[i].cardNum + "</option>");
                                         }

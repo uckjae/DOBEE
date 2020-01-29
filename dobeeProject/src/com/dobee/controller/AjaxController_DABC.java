@@ -56,7 +56,7 @@ public class AjaxController_DABC {
 	public View AbsAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.AbsAll(auth.getName());
-		System.out.println("AbsAll : "+ results);
+		// System.out.println("AbsAll : "+ results);
 		map.addAttribute("AbsAll", results);
 		
 		return jsonview;
@@ -69,7 +69,7 @@ public class AjaxController_DABC {
 		System.out.println("이거 돌긴 도니? ");
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.Calendar();
-		System.out.println("Calendar : "+ results);
+		// System.out.println("Calendar : "+ results);
 		map.addAttribute("Calendar", results);
 		
 		return jsonview;
@@ -81,7 +81,7 @@ public class AjaxController_DABC {
 	public View ExtAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.ExtAll(auth.getName());
-		System.out.println("ExtAll : "+ results);
+		// System.out.println("ExtAll : "+ results);
 		map.addAttribute("ExtAll", results);
 		
 		return jsonview;
@@ -196,15 +196,26 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
+	// 개인_근무내역 확인 년 월 불러오기			0129 ~ing 	위에껀 필요없어...
+	@RequestMapping("overTimeYearMonthList.do")
+	public View overTimeYearMonthList (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Integer> results = userDao.overTimeYearMonthList(auth.getName());
+		map.addAttribute("OTYMList", results);
+		
+		return jsonview;
+	}
+	
 	
 	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
 	@RequestMapping("getChartData.do")
-	public View getChartData (Model map, Authentication auth) {
+	public View getChartData (Model map, Authentication auth, String ym) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<ChartData> results = userDao.getChartData(auth.getName());
+		System.out.println("ym 뭐 들어옴? " + ym);
+		List<ChartData> results = userDao.getChartData(auth.getName(), ym);
 		map.addAttribute("CD", results);
-		System.out.println("리스트 출력 확인 : " + results);
-		System.out.println("완료~");
+		// System.out.println("리스트 출력 확인 : " + results);
+		// System.out.println("완료~");
 		
 		return jsonview;	
 	}

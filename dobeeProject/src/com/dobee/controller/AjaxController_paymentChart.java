@@ -58,4 +58,13 @@ public class AjaxController_paymentChart {
 	}
 	
 	
+	//아작스 연도 셀렉트의 연도 받아와서 그해에 있는 데이터가있는 월 데이터만 받아서 월셀렉트에 붙여넣기
+	@RequestMapping("giveMeMonth.do")
+	public ArrayList<ItemsCostChart> giveMeMonth(@RequestParam(value="usedate") String yyyy){
+		System.out.println("여기 타냐 : " + yyyy);
+		ArrayList<ItemsCostChart> list = paymentChartService.giveMeMonth(yyyy);
+		
+		return list;
+	}
+	
 }

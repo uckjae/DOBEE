@@ -179,7 +179,7 @@
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
 		<script>
 			window.onload = function(){
-	
+				connect();//웹소켓 연결
 				$.ajax({
 					url : "getApprovalList.do",
 					dataType : "json",
@@ -220,6 +220,7 @@
 						contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 		 				type:"post",
 						success : function(responseData) {
+							send("extendApply");
 							if(responseData == "success"){
 								swal({
 									title: "연장 근무 신청",
@@ -250,6 +251,37 @@
 			    
 	
 			}
+
+			/* 알람 */
+			function getContextPath() {//contextPath 구하는 함수
+			  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+			  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+			};
+			
+			
+
+			function connect(){
+				var contextPath = getContextPath();
+				wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+				wsocket.onopen = onOpen;
+				wsocket.onmessage = onMessage;
+				wsocket.onclose = onClose;
+			}
+
+			
+			
+			function send(data) {
+				let mail = $('#approval').val();
+				var jsonData = new Object();
+				jsonData.cmd = data;
+				jsonData.mail = mail;
+				jsonData.applier = '${sessionScope.user.name}';
+
+				var parsedData = JSON.stringify(jsonData);
+				
+				wsocket.send(parsedData);
+			}
+			/* /알람  */
 	  	</script>
 		
 	</body>
