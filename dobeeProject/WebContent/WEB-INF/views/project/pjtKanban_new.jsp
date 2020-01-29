@@ -223,8 +223,8 @@
 							//업무 뿌려주는 div 
 							var tdContentDiv = $('<div style="margin-left:10px;">');
 							var icon = $('<span><i class="fa fa-square"></i></span>');
-							var label = $('<label class="taskDetail-label" style="cursor:pointer">');
-							var span = $('<span>&nbsp;&nbsp;'+tdContent+'</span>');
+							var label = $('<label class="taskDetail-label" style="cursor:pointer;margin-left: 10px;">');
+							var span = $('<span>'+tdContent+'</span>');
 							label.append(span);
 							tdContentDiv.append(icon);
 							tdContentDiv.append(label);
@@ -553,8 +553,8 @@
 						//업무 뿌려주는 div 
 						var tdContentDiv = $('<div style="margin-left:10px;"  onclick="taskDetailEdit(this)">');
 						var icon = $('<span><i class="fa fa-square"></i></span>');
-						var label = $('<label class="taskDetail-label" style="cursor:pointer">');
-						var span = $('<span>&nbsp;&nbsp;'+tdContent+'</span>');
+						var label = $('<label class="taskDetail-label" style="cursor:pointer;margin-left: 10px;">');
+						var span = $('<span>'+tdContent+'</span>');
 						label.append(span);
 						tdContentDiv.append(icon);
 						tdContentDiv.append(label);
@@ -615,34 +615,34 @@
 			});
 		}
 
-		/* 업무상세 수정창 띄우는 함수 */
+		/* 업무상세 수정창 띄우는 함수*/
 		function taskDetailEdit(data){
-			
-			$(data).parents('li').find('.taskDetail-Edit').css('display','block');
-			$(data).parents('li').find('.taskDetail-Edit').css('margin-top','8px');
-			$(data).parents('li').find('.taskDetail-Edit').css('margin-left','10px');
-
-
-			
+			var editDiv = $(data).parents('li').find('.taskDetail-Edit');
+			var state = editDiv.css('display');
+			if(state == 'none') {
+				editDiv.css('display','block');
+				editDiv.css('margin-top','15px');
+				editDiv.css('margin-left','15px');
+			} else {
+				editDiv.css('display','none');
+			}
 		}
 
-	
-		/* 업무상세 제거하는함수 */
+		/* 업무상세 삭제 하는함수 */
 		function taskDetailDelete(data){
-			var parents =  $(data).closest('li').find('.taskDetail-Edit');
-			console.log('부모');
-			console.dir(parents);
-			var tdSeq = parents.find('input[name="tdSeq"]').val();
-			var tskSeq = parents.find('input[name="tskSeq"]').val();
-			
+			var listDiv = $(data).closest('li');
+			console.dir(listDiv);
+			var tdSeq = listDiv.find('.taskDetail-Edit').find('input[name="tdSeq"]').val();
+			var tskSeq = listDiv.find('.taskDetail-Edit').find('input[name="tskSeq"]').val();
+			$(listDiv).remove();
+			console.log('삭제됨???');
 			$.ajax({
 				url:"ajax/project/taskDetailDelete.do",
 				data: {'tdSeq' : tdSeq},
 				success: function(responseData){
 					console.log("taskDetailDelete Ajax Success!!");
-					console.log(responseData);
 					if(responseData == "success"){
-						getTaskDetailList(tskSeq);
+						console.log('상세업무 삭제됨!!')
 					}
 				},
 				error: function(request,status,error){
@@ -650,23 +650,31 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
+
+
+			
 		}
 
 
-		/* 업무상세 비동기로 수정! --01.27 알파카 */
+		/* 업무상세 비동기로 수정! 요기요 --01.27 알파카 */
 		function taskDetailEditSubmit(data){
+			
 			var parents = $(data).parents('div.taskDetail-Edit');
 			var tdContent = $(parents).find('input[name="tdContent"]').val();
 			var tskSeq = $(parents).find('input[name="tskSeq"]').val();
 			var tdSeq = $(parents).find('input[name="tdSeq"]').val();
+			
+			taskDetailEdit(data); //수정창 닫기
+			var span = $(data).closest('li').find('.taskDetail-label').find('span'); //원래 입력되어 있던 내용
+			span.text(tdContent); //사용자가 수정한 내용으로 바꿔주기
+			
 			$.ajax({
 				url:"ajax/project/taskDetailEdit.do",
 				data: { 'tdSeq' : tdSeq , 'tdContent' : tdContent, 'tskSeq' : tskSeq},
 				dataType:"text",
 				success:function(data){
-					console.log('데이터??'+data);
-					if(data == "success"){ //성공 성공!
-						getTaskDetailList(tskSeq);
+					if(data == "success"){ 
+						console.log('업무 상세 수정 db 저장 완료')
 					}
 				},
 				error:function(request,status,error){
