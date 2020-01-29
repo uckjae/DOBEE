@@ -79,13 +79,15 @@ public interface ProjectDao {
     public List<CheckList> getTaskCheckList(int tskSeq);
 
 
-    //체크리슨트 추가
+    //체크리스트 추가
     public int addTaskCheckList(CheckList checkList);
     
     
     //체크리스트 내용 수정
     public int taskCheckListEditContent(CheckList checkList);
     
+    //체크리스트 체크 여부 수정
+    public int taskCheckListIsCheck(CheckList checkList);
     
     //체크리스트 삭제
     public int taskCheckListDelete(int chkSeq);

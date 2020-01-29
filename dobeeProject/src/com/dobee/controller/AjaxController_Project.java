@@ -266,6 +266,28 @@ public class AjaxController_Project {
 	}
 	
 	
+	//체크리스트 체크 여부 수정
+	@RequestMapping("taskCheckListIsCheck")
+	public String taskCheckListIsCheck(CheckList checkList, HttpServletRequest request) {
+		System.out.println("체크리스트 가져와?"+checkList.toString());
+		System.out.println("파라미터 값 어떻게 가져와?"+request.getParameter("isCheck"));
+		if(request.getParameter("isCheck") == "0") {
+			checkList.setCheck(false);
+		} else {
+			checkList.setCheck(true);
+		}
+		System.out.println("vo 객체 바뀌니?"+checkList.toString());
+		String responseData = "";
+		int result = projectService.taskCheckListIsCheck(checkList);
+		if(result > 0) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
+		}
+		return responseData;
+	}
+	
+	
 	//업무 체크리스트 제거
 	@RequestMapping("taskCheckListDelete.do")
 	public String taskDetailDelete(@RequestParam(value="chkSeq") String chkSeq) {

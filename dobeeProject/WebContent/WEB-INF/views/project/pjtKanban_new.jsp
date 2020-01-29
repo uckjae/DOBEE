@@ -279,11 +279,12 @@
 	 				}
 	 			});
 			});
-			/* 01.26 체크리스트 추가 -- 알파카 */
+			/* 01.26 체크리스트 추가 -- 쳌쳌 알파카 */
 			$("#addTaskCheckListBtn").click(function(){
+				var tskSeq = $("#taskCheckListTskSeq").val();
 				var formData = $("#addTaskCheckListForm").serialize();
-				var content = $("#content").text();
-				console.log('내용?'+content);
+				var content = $("#content").val();
+				console.log('내용1111111?'+content);
 				$.ajax({
 	 	 			url:"ajax/project/addTaskCheckList.do",
 	 				data: formData ,
@@ -292,46 +293,67 @@
 	 				type:"post",
 	 				success:function(responsedata){
 	 					if(responsedata == "success"){ //체크리스트 생성 완료 여기얌
-		 					var num = 1;
-		 					var li = $('<li>');
-		 					var checkDiv = $('<div class="checkbox-custom checkbox-default">');
-		 					var checkInput = $('<input type="checkbox" class="todo-check">');
-		 					checkInput.attr('id','todoListItem'+num);
-		 					checkDiv.append(checkInput);
-		 					var label = $('<label class="todo-label" for="todoListItem'+num+'">');
-		 					var span = $('<span>'+$("#content").val()+'</span></label></div>');
-		 					label.append(span);
-		 					checkDiv.append(label);
-		 					var actionDiv = $('<div class="todo-actions">');
-		 					var remove = $('<a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>');
-		 					actionDiv.append(remove);
-		 					li.append(checkDiv);
-		 					li.append(actionDiv);
-		 					
-		 					$("#taskCheckList").append(li);
-		 					$("#content").val("");
+ 
+	 						/* var li = $('<li>');
+							//체크박스
+							var checkDiv = $('<div class="checkbox-custom checkbox-default">');
+							var checkInput = $('<input type="checkbox" id="todoListItem" onclick="checkLine(this)" name="isCheck">');
+							$(checkInput).prop("checked",false);
+							$(checkInput).val(0);
+							var label = $('<label class="check-label" for="todoListItem">')
+							var span = $('<span>'+content+'</span>');
+							label.append(span);
+							checkDiv.append(checkInput);
+							checkDiv.append(label);
 
-		 					/*
-		 					$("#taskCheckList").append('<li><div class="checkbox-custom checkbox-default">'
-				 					+'<input type="checkbox" id="todoListItem2" class="todo-check">'
-				 					+'<label class="todo-label" for="todoListItem2"><span>'+$("#content").val()+'</span></label></div>'
-				 					+'<div class="todo-actions">'
-				 					+'<a class="todo-remove" href="#">'
-				 					+'<i class="fa fa-times"></i>'
-				 					+'</a></div></li>');
-				 					
-				 					
-		 					<div class="checkbox-custom checkbox-default">
-			 					<input type="checkbox" id="todoListItem1" class="todo-check">
-			 					<label class="todo-label" for="todoListItem1"><span>체크체크</span></label>
- 							</div>
-		 					<div class="todo-actions">
-		 						<a class="todo-remove" href="#">
-		 						<i class="fa fa-times"></i>
-		 						</a>
-		 					</div>
-		 					*/		
+							//수정 삭제 아이콘
+							var actionDiv = $('<div class="todo-actions">');
+							var editIcon = $('<a style="cursor: pointer;margin-right: 13px;" onclick="taskCheckListEdit(this)"><i class="fa  fa-pencil"></i></a>');
+							var deleteIcon = $('<a style="cursor: pointer" onclick="taskCheckListDelete(this)"><i class="fa fa-times"></i></a>');
+							actionDiv.append(editIcon);
+							actionDiv.append(deleteIcon);
+
+							//수정창 만들기
+							var editDiv = $('<div class="checkList-Edit" style="display:none">');
+							var editForm = $('<form action="ajax/project/taskCheckListEdit.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">');
+							var formGroup = $('<div class="form-group">');
+							var div1 = $('<div class="col-sm-12">');
+							var div2 = $('<div class="input-group mb-md">');
+							var hiddenInput1 = $('<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>');
+							hiddenInput1.val(tskSeq);
+							var hiddenInput2 = $('<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>');
+							//hiddenInput2.val(chkSeq);
+							var contentInput = $('<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">');
+							contentInput.val(content);
+							var btnDiv = $('<div class="input-group-btn" style="padding:0;">');
+							var btn = $('<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>');
+							btnDiv.append(btn);
+							div2.append(hiddenInput1);
+							div2.append(hiddenInput2);
+							div2.append(contentInput);
+							
+							div2.append(btnDiv);
+							div1.append(div2);
+							formGroup.append(div1);
+							
+							editForm.append(formGroup);
+							editDiv.append(editForm);
+
+							$(li).append(checkDiv);
+							$(li).append(actionDiv);
+							$(li).append(editDiv);
+							$("#taskCheckList").append(li); */
+
+							
+		 				 
+		 					$("#content").val("");
+		 					getTaskCheckList(tskSeq);
+		 					
+		 					
 	 					}
+
+
+	 					
 	 				},
 	 				error:function(){
 	 					console.log("code : " + request.status +"\n" + "message : " 
@@ -340,32 +362,6 @@
 	 			});
 			});
 
-
-			/* 01.26 업무 상세 수정 추가 -- 알파카 taskDetailEditSubmit*/
-			/*
-			function taskDetailEditSubmit(data){
-			console.log(data);
-			var editForm = $(data).parent().parent();
-			var formData = $(editForm).serialize();
-			var tskSeq = $('#taskDetailTskSeq').val();
-			$.ajax({
-				url:"ajax/project/taskDetailEdit.do",
-				data: formData,
-				dataType:"JSON",
-				success:function(data){
-					getTaskDetailList(tskSeq);
-				},
-				error:function(request,status,error){
-					console.log("code : " + request.status +"\n" + "message : " 
-							+ request.responseText + "\n" + "error : " + error);
-				}
-			});
-		}
-			
-		
-
-			*/
-			
 
 			
 
@@ -771,7 +767,7 @@
 
 						//수정 삭제 아이콘
 						var actionDiv = $('<div class="todo-actions">');
-						var editIcon = $('<a style="cursor: pointer" onclick="taskCheckListEdit(this)"><i class="fa  fa-pencil"></i></a>');
+						var editIcon = $('<a style="cursor: pointer;margin-right: 13px;" onclick="taskCheckListEdit(this)"><i class="fa  fa-pencil"></i></a>');
 						var deleteIcon = $('<a style="cursor: pointer" onclick="taskCheckListDelete(this)"><i class="fa fa-times"></i></a>');
 						actionDiv.append(editIcon);
 						actionDiv.append(deleteIcon);
@@ -817,18 +813,35 @@
 			});
 		}
 
-		/*체크박스 체크하는 함수 -> 밑줄 긋기 & 체크 여부 name 값 바꾸기*/
-		function checkLine(data){
+		/*체크박스 체크하는 함수 -> 밑줄 긋기 & 체크 여부 name 값 바꾸기 쳌쳌*/
+		function checkLine(data){			
 			var span = $(data).closest('li').find('.check-label').find('span');
-			//console.dir(label);
+			var chkSeq = $(data).closest('li').find('form').find('input[name="chkSeq"]').val();
+			console.log('값 가져오니?'+chkSeq);
+			
 			if($(data).is(':checked')){
-				console.log('체크 되니??');
+				$(data).val(1);
 				span.css('text-decoration','line-through');
 			} else {
-				console.log('체크 해제!!!');
-				//label.removeAttr('style');
+				$(data).val(0);
 				span.css('text-decoration','none');
 			}
+			var isCheck = $(data).val();
+			console.log('값!!!'+isCheck);
+			$.ajax({
+				url:"ajax/project/taskCheckListIsCheck.do",
+				data: {'chkSeq' : chkSeq, 'isCheck' : isCheck},
+				success: function(data){
+					if(data == "success"){
+						console.log('체크 여부 수정 완료');
+						//getTaskCheckList(tskSeq);
+					}
+				},
+				error: function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+			});
 		}
 
 
@@ -897,7 +910,6 @@
 		function taskCheckListEdit(data){
 			console.log('수정 함수 타니?');
 			/*체크리스트 수정창 띄우기*/
-			//console.dir(data);
 			var edit = $(data).parents('li').find('.checkList-Edit');
 			$(data).parents('li').find('.checkList-Edit').css('display','block');
 			$(data).parents('li').find('.checkList-Edit').css('margin-top','15px');
@@ -909,6 +921,8 @@
 		function checkBoxChange(data){
 			console.log("checkBoxChange() in!!");
 			console.log(data)
+			console.log('///////');
+			console.dir(data);
 			if($(data).prop("checked") == true){
 				console.log("체크됐다!");
 				$(data).val(1);
