@@ -278,9 +278,6 @@
 
 	/* 알람 */
 	
-
-	
-	
 	function send(command, receiver, sender) {
 		let mail = receiver;
 		var jsonData = new Object();
