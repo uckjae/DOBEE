@@ -609,9 +609,13 @@
 
 		/* 업무상세 수정창 띄우는 함수 */
 		function taskDetailEdit(data){
+			
 			$(data).parents('li').find('.taskDetail-Edit').css('display','block');
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-top','8px');
 			$(data).parents('li').find('.taskDetail-Edit').css('margin-left','10px');
+
+
+			
 		}
 
 	
@@ -908,14 +912,17 @@
 
 		/*체크리스트 수정하는 함수*/
 		function taskCheckListEdit(data){
-			console.log('수정 함수 타니?');
 			/*체크리스트 수정창 띄우기*/
-			var edit = $(data).parents('li').find('.checkList-Edit');
-			$(data).parents('li').find('.checkList-Edit').css('display','block');
-			$(data).parents('li').find('.checkList-Edit').css('margin-top','15px');
-			$(data).parents('li').find('.checkList-Edit').css('margin-left','15px');
+			var editDiv = $(data).parents('li').find('.checkList-Edit');
+			var state = editDiv.css('display');
+			if(state == 'none') {
+				editDiv.css('display','block');
+				editDiv.css('margin-top','15px');
+				editDiv.css('margin-left','15px');
+			} else {
+				editDiv.css('display','none');
+			}
 		}
-		
 
 		/* 체크박스변경시  value 세팅하는 함수 */
 		function checkBoxChange(data){
