@@ -156,7 +156,6 @@ public class AjaxController_Project {
 	@RequestMapping("addTaskDetail.do")
 	public Map<String, String> addTaskDetail(TaskDetail taskDetail, HttpServletRequest req) {
 		System.out.println("상세 업무 가져와?"+taskDetail.toString());
-		String responseData = "";
 		Map<String, String> map = new HashMap<String, String>();
 		int tdSeq = 0;
 		tdSeq = projectService.addTaskDetail(taskDetail);
@@ -216,18 +215,20 @@ public class AjaxController_Project {
 	
 	//체크리스트 추가
 	@RequestMapping("addTaskCheckList")
-	public String addTaskCheckList(CheckList checkList) {
+	public Map<String, String> addTaskCheckList(CheckList checkList) {
 		int result = 0;
-		String responseData = "";
+		Map<String, String> map = new HashMap<String, String>();
+		
 		System.out.println("AjaxController_Project addTaskCheckList() in!!");
 		System.out.println("체크리스트 가져오니?"+checkList.toString());
 		result = projectService.addTaskCheckList(checkList);
 		if(result > 0 ) {
-			responseData = "success";
+			map.put("result", "success");
+			map.put("chkSeq", Integer.toString(checkList.getChkSeq()));
 		} else {
-			responseData = "fail";
+			map.put("result", "fail");
 		}
-		return responseData;
+		return map;
 	}
 	
 	

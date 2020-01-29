@@ -146,7 +146,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 
 <!-- 체크리스트 추가  -->
-<insert id="addTaskCheckList">
+<insert id="addTaskCheckList" useGeneratedKeys="true" keyProperty="chkSeq">
 	INSERT INTO CHECKLIST (CONTENT, TSKSEQ, ISCHECK) VALUES (#{content}, #{tskSeq}, 0)
 </insert>
 
