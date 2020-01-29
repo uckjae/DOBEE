@@ -418,4 +418,10 @@
 		delete from teamlist where teamcode = #{teamCode}
 	</delete>
 	
+	
+	<!-- 팀 코드 등록 -->
+	<insert id="addTeamList" parameterType="com.dobee.vo.member.TeamList">
+		insert into teamlist (teamcode, teamname) values ( #{teamCode} , #{teamName} )
+	</insert>
+	
 </mapper>

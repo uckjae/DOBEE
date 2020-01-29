@@ -174,6 +174,15 @@ public class MemberService {
     	result = userDao.delTeamCode(teamCode);
     	
     	return result;
+    }
+    
+    
+    //팀 코드 등록 -성호
+    public int addTeamList(TeamList tl) {
+    	int result = 0; 
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	result = userDao.addTeamList(tl);
     	
+    	return result;
     }
 }

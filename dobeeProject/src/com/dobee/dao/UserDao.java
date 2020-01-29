@@ -251,5 +251,7 @@ public interface UserDao {
     public int delTeamCode(int teamCode);
     
     
+    //팀 코드 등록하기-성호
+    public int addTeamList(TeamList tl);
     
 }

@@ -93,13 +93,6 @@ var tempTeamCode = 0;
 
 		events : function() {
 			var _self = this;
-
-			
-
-			
-			
-		
-			
 			
 			
 			
@@ -160,20 +153,71 @@ var tempTeamCode = 0;
 									}
 								}
 							})
-
 						}// else문 종료
-
 					}) // 관리자 팀코드 수정 완료
 					
 					
 					
-					
-	 
-		
-		
-		
-		
-		
+			// 여기서 부터 팀코드 등록 시작
+			.on('click', 'a.save-row-Add', function(e) {
+				e.preventDefault();
+				console.log("여기 맞지? ");
+				
+				let ori = e.target;
+				let t = e.target;
+				let tr = t.closest('td')
+
+				let teamCode = $(tr).parents('tr').children('td:eq(1)')
+						.find('input').val();
+				let teamName = $(tr).parents('tr').children('td:eq(2)')
+						.find('input').val();
+
+				let teamData = {
+					"teamCode" : teamCode,
+					"teamName" : teamName
+				};
+				//유효성 검증
+				
+				if (onlyNumber.test(teamCode)) { // 이게 참이여만 통과
+					//   팀 코드 등록 아작스 실행
+					$.ajax({
+						url : 'ajax/admin/addTeamCode.do',
+						data : teamData,
+						type : 'POST',
+						success : function(data) {
+							console.log(" 팀 코드 아작스 성공");
+							console.log(data);
+						},
+						error : function() {
+							console.log("아작스 에러!");
+						},
+						complete : function() {
+							_self.rowSave($(ori).closest('tr'));
+						},
+					}); // 아작스 끝
+				} else { // 유효성 통과 못함
+					// 모달창으로 팀코드에는 숫자만된다고 보여줌
+					$.magnificPopup.open({
+						items : {
+							src : '#dialogOnlyNumber',
+							type : 'inline'
+						},
+						preloader : false,
+						modal : true,
+						callbacks : {
+							change : function() {
+								_self.dialog.$onlyNumber.on('click',
+										function(e) {
+											e.preventDefault();
+											// 모달창 닫기
+											$.magnificPopup.close();
+										});
+							}
+						}
+					})
+				}// else문 종료
+			})
+			// 팀코드 등록 끝
 		
 			.on('click', 'a.cancel-row', function(e) {
 				e.preventDefault();
@@ -183,8 +227,7 @@ var tempTeamCode = 0;
 				e.preventDefault();
 				var t = e.target;
 				var tr = t.closest('tr')
-				console.log(tr);
-
+				
 				tempTeamCode = $(tr).children('td:eq(1)').text();
 
 				_self.rowEdit($(this).closest('tr'));
@@ -249,9 +292,15 @@ var tempTeamCode = 0;
 							_self.dialog.$confirm.off('click');
 						}
 					}
-				});
-			});
-
+				}); // 모달창 끝
+			})
+			//인덱스 붙이기
+//			.on( 'order.dt search.dt', function () {
+//		        this.datatable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+//		            cell.innerHTML = i+1;
+//		        } );
+//		    } ).draw();
+			//인덱스 붙이기 끝
 			this.$addButton.on('click', function(e) {
 				e.preventDefault();
 				_self.rowAdd();
@@ -276,7 +325,7 @@ var tempTeamCode = 0;
 			var actions, data, $row;
 
 			actions = [
-					'<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>',
+					'<a href="#" class="hidden on-editing save-row-Add"><i class="fa fa-save"></i></a>',
 					'<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>',
 					'<a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>',
 					'<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>' ]
@@ -314,7 +363,9 @@ var tempTeamCode = 0;
 		rowEdit : function($row) {
 			var _self = this, data;
 			data = this.datatable.row($row.get(0)).data();
-
+			console.log("여기 확인해바");
+			// 여기다 여기1!!!!!
+			console.log(this.datatable.row($row.get(0)).data()[0]     );
 			$row
 					.children('td')
 					.each(
