@@ -107,12 +107,7 @@
 					
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h2 class="panel-title">Table Title</h2>
+							<h2 class="panel-title">부재 신청 목록</h2>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -123,9 +118,10 @@
 										<th width="15%">신청자명</th>
 										<th width="9%">신청 일자</th>
 										<th width="8%">부재 항목</th>
-										<th width="8%">승인 여부</th>
+										<th width="10%" style="min-width: 90px;">연차 사용 일수</th>
 										<th>기간</th>
-										<th width="10%">연차 사용 일수</th>
+										
+										<th width="8%">승인 여부</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -137,11 +133,12 @@
 											<td class="bName">		${bl.name }</td>
 											<td class="bReqDate">	${bl.reqDate}</td>
 											<td class="bEntry">		${bl.entry }</td>
+											<td class="bUsed" style="text-align: center;">		${bl.useBreak }</td>
+											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
+											
 											<td class="bIsAuth">
 												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
 											</td>
-											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
-											<td class="bUsed">		${bl.useBreak }</td>
 										</tr>
 									</c:forEach>
 									
