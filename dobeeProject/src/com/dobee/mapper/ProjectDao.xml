@@ -161,6 +161,10 @@ WHERE p.pjtseq = #{pjtSeq}
 	UPDATE CHECKLIST SET CONTENT=#{content} WHERE CHKSEQ=#{chkSeq}
 </update>
 
+<!-- 체크리스트 체크 여부 수정 -->
+<update id="taskCheckListIsCheck" parameterType="com.dobee.vo.project.CheckList">
+	UPDATE CHECKLIST SET ISCHECK=#{isCheck} WHERE CHKSEQ=#{chkSeq}
+</update>
 
 <!-- 체크리스트 삭제 -->
 <delete id="taskCheckListDelete">
