@@ -221,7 +221,7 @@
 	 						//상세 업무 뿌리기
 							var li = $('<li style="padding-bottom:10px;">');
 							//업무 뿌려주는 div 
-							var tdContentDiv = $('<div style="margin-left:10px;" onclick="taskDetailEdit(this)">');
+							var tdContentDiv = $('<div style="margin-left:10px;">');
 							var icon = $('<span><i class="fa fa-square"></i></span>');
 							var label = $('<label class="taskDetail-label" style="cursor:pointer">');
 							var span = $('<span>&nbsp;&nbsp;'+tdContent+'</span>');
@@ -229,18 +229,22 @@
 							tdContentDiv.append(icon);
 							tdContentDiv.append(label);
 
-							//업무 삭제창
-							var deleteDiv = $('<div class="todo-actions" onclick="taskDetailDelete(this)">');
+							//업무 아이콘
+							var actionDiv = $('<div class="todo-actions">');
 							var hiddenInput1 = $('<input type="hidden" name="tdSeq"> ');
 							var hiddenInput2 = $('<input type="hidden" name="tskSeq"> ');
 							hiddenInput1.val(tdSeq);
 							hiddenInput2.val(tskSeq);
-							var a = $('<a style="cursor: pointer"></a>');
+							var a1 = $('<a style="cursor: pointer;margin-right: 13px;" onclick="taskDetailEdit(this)"></a>');
+							var editIcon = $('<i class="fa  fa-pencil"></i>');
+							a1.append(editIcon);
+							var a2 = $('<a style="cursor: pointer" onclick="taskDetailDelete(this)">');
 							var deleteIcon = $('<i class="fa fa-times"></i>');
-							a.append(deleteIcon);
-							deleteDiv.append(hiddenInput1);
-							deleteDiv.append(hiddenInput2);
-							deleteDiv.append(a);
+							a2.append(deleteIcon);
+							actionDiv.append(hiddenInput1);
+							actionDiv.append(hiddenInput2);
+							actionDiv.append(a1);
+							actionDiv.append(a2);
 
 							//업무 상세 수정창
 							var editDiv = $('<div class="taskDetail-Edit" style="display:none">');
@@ -267,7 +271,7 @@
 							editDiv.append(editForm);
 	
 							li.append(tdContentDiv);
-							li.append(deleteDiv);
+							li.append(actionDiv);
 							li.append(editDiv);
 							$("#taskDetailList").append(li);
 		 					$("#addTdContent").val("");
@@ -555,18 +559,22 @@
 						tdContentDiv.append(icon);
 						tdContentDiv.append(label);
 						
-						//업무 삭제창
-						var deleteDiv = $('<div class="todo-actions" onclick="taskDetailDelete(this)">');
+						//업무 아이콘
+						var actionDiv = $('<div class="todo-actions">');
 						var hiddenInput1 = $('<input type="hidden" name="tdSeq"> ');
 						var hiddenInput2 = $('<input type="hidden" name="tskSeq"> ');
 						hiddenInput1.val(tdSeq);
 						hiddenInput2.val(tskSeq);
-						var a = $('<a style="cursor: pointer"></a>');
+						var a1 = $('<a style="cursor: pointer;margin-right: 13px;" onclick="taskDetailEdit(this)"></a>');
+						var editIcon = $('<i class="fa  fa-pencil"></i>');
+						a1.append(editIcon);
+						var a2 = $('<a style="cursor: pointer" onclick="taskDetailDelete(this)">');
 						var deleteIcon = $('<i class="fa fa-times"></i>');
-						a.append(deleteIcon);
-						deleteDiv.append(hiddenInput1);
-						deleteDiv.append(hiddenInput2);
-						deleteDiv.append(a);
+						a2.append(deleteIcon);
+						actionDiv.append(hiddenInput1);
+						actionDiv.append(hiddenInput2);
+						actionDiv.append(a1);
+						actionDiv.append(a2);
 
 						//업무 상세 수정창
 						var editDiv = $('<div class="taskDetail-Edit" style="display:none">');
@@ -593,7 +601,7 @@
 						editDiv.append(editForm);
 
 						li.append(tdContentDiv);
-						li.append(deleteDiv);
+						li.append(actionDiv);
 						li.append(editDiv);
 						$("#taskDetailList").append(li);
 						
@@ -621,8 +629,11 @@
 	
 		/* 업무상세 제거하는함수 */
 		function taskDetailDelete(data){
-			var tdSeq = $(data).find('input[name="tdSeq"]').val();
-			var tskSeq = $(data).find('input[name="tskSeq"]').val();
+			var parents =  $(data).closest('li').find('.taskDetail-Edit');
+			console.log('부모');
+			console.dir(parents);
+			var tdSeq = parents.find('input[name="tdSeq"]').val();
+			var tskSeq = parents.find('input[name="tskSeq"]').val();
 			
 			$.ajax({
 				url:"ajax/project/taskDetailDelete.do",
@@ -821,8 +832,6 @@
 		function checkLine(data){			
 			var span = $(data).closest('li').find('.check-label').find('span');
 			var chkSeq = $(data).closest('li').find('form').find('input[name="chkSeq"]').val();
-			console.log('값 가져오니?'+chkSeq);
-			
 			if($(data).is(':checked')){
 				$(data).val(1);
 				span.css('text-decoration','line-through');
@@ -831,14 +840,12 @@
 				span.css('text-decoration','none');
 			}
 			var isCheck = $(data).val();
-			console.log('값!!!'+isCheck);
 			$.ajax({
 				url:"ajax/project/taskCheckListIsCheck.do",
 				data: {'chkSeq' : chkSeq, 'isCheck' : isCheck},
 				success: function(data){
 					if(data == "success"){
 						console.log('체크 여부 수정 완료');
-						//getTaskCheckList(tskSeq);
 					}
 				},
 				error: function(request,status,error){
@@ -910,9 +917,8 @@
 
 		}
 
-		/*체크리스트 수정하는 함수*/
+		/*체크리스트 수정창 띄우는 함수 쳌쳌 */
 		function taskCheckListEdit(data){
-			/*체크리스트 수정창 띄우기*/
 			var editDiv = $(data).parents('li').find('.checkList-Edit');
 			var state = editDiv.css('display');
 			if(state == 'none') {
@@ -1468,17 +1474,23 @@
 									<div class="panel-body" style="padding-top: 0px;">
                                          <ul class="widget-todo-list" id="taskDetailList">
                                            <!--  <li style="padding-bottom:10px;">
-	                                            <div style="margin-left:10px;"  onclick="taskDetailEdit(this)">
+	                                            <div style="margin-left:10px;" >
 		                                            <span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
 		                                            <label class="taskDetail-label" style="cursor:pointer"><span>업무상세</span></label>
 					 								<input type="hidden" name="tdSeq" value="">
 				 								</div>
-			 									<div class="todo-actions" onclick="taskDetailDelete(this)">
+				 								
+				 								업무 상세 아이콘
+			 									<div class="todo-actions">
 			 										<input type="hidden" name="tdSeq" value="">
-								 					<a style="cursor:pointer">
-								 						<i class="fa fa-times"></i>
-								 					</a>
-			 									</div>
+							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskDetailEdit(this)">
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>&nbsp;&nbsp;&nbsp;
+							 						<a style="cursor: pointer" onclick="taskDetailDelete(this)">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+							 					
 				 								업무 상세 수정 창
 				 								<div class="taskDetail-Edit" style="display:none">
 					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
@@ -1528,7 +1540,7 @@
 					 							</div>
 					 							<!-- 수정 & 삭제 아이콘 -->
 							 					<div class="todo-actions">
-							 						<a style="cursor: pointer" onclick="taskCheckListEdit(this)">
+							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskCheckListEdit(this)">
 							 							<i class="fa  fa-pencil"></i>
 							 						</a>&nbsp;&nbsp;&nbsp;
 							 						<a style="cursor: pointer" onclick="taskCheckListDelete(this)">
