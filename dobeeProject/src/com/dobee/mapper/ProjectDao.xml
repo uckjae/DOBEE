@@ -167,7 +167,7 @@ WHERE p.pjtseq = #{pjtSeq}
 </update>
 
 <!-- 체크리스트 삭제 -->
-<delete id="taskCheckListDelete">
+<delete id="taskCheckListDelete" parameterType="com.dobee.vo.project.CheckList">
 	DELETE FROM CHECKLIST WHERE CHKSEQ=#{chkSeq}
 </delete>
 </mapper>

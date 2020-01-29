@@ -283,11 +283,11 @@ public class AjaxController_Project {
 	
 	//업무 체크리스트 제거
 	@RequestMapping("taskCheckListDelete.do")
-	public String taskDetailDelete(@RequestParam(value="chkSeq") String chkSeq) {
+	public String taskDetailDelete(CheckList checkList) {
 		System.out.println("AjaxController_Project taskDetailDelete() in!!");
-		System.out.println("체크 리스트 번호 가져와?"+chkSeq);
+		System.out.println("체크 리스트 번호 가져와?"+checkList.toString());
 		String responseData = "";
-		int result = projectService.taskCheckListDelete(Integer.parseInt(chkSeq));
+		int result = projectService.taskCheckListDelete(checkList);
 		if(result > 0) {
 			responseData = "success";
 		} else {

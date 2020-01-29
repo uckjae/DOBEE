@@ -226,10 +226,10 @@ public class ProjectService {
     
     
     //체크리스트 삭제
-    public int taskCheckListDelete(int chkSeq) {
+    public int taskCheckListDelete(CheckList checkList) {
     	System.out.println("ProjectService taskCheckListDelete() in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	int result = projectDao.taskCheckListDelete(chkSeq);
+    	int result = projectDao.taskCheckListDelete(checkList);
     	return result;
     }
 

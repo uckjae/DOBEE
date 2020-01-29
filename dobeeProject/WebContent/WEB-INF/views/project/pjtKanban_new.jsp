@@ -284,13 +284,11 @@
 	 			});
 			});
 			
-			/* 01.26 체크리스트 추가 -- 쳌쳌 알파카 */
+			/* 01.29 체크리스트 추가 -- 쳌쳌 알파카 */
 			$("#addTaskCheckListBtn").click(function(){
 				var tskSeq = $("#taskCheckListTskSeq").val();
 				var formData = $("#addTaskCheckListForm").serialize();
 				var content = $("#content").val();
-
-				
 
 				//일단 추가한 거 뿌려주기
 				var li = $('<li>');
@@ -361,11 +359,6 @@
 	 				}
 	 			});
 			});
-
-
-			
-
-
 		});
 
 		
@@ -620,9 +613,6 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
-
-
-			
 		}
 
 
@@ -867,18 +857,20 @@
 			*/
 		}
 
-		/* 체크리스트 삭제하는 함수 */
+		/* 체크리스트 삭제하는 함수 요기요 */
 		function taskCheckListDelete(data){
-			var parents =  $(data).closest('li').find('.checkList-Edit');
-			var chkSeq = parents.find('input[name="chkSeq"]').val();
-			var tskSeq = parents.find('input[name="tskSeq"]').val();
-
+			var listDiv = $(data).closest('li');
+			var chkSeq = listDiv.find('.checkList-Edit').find('input[name="chkSeq"]').val();
+			var tskSeq = listDiv.find('.checkList-Edit').find('input[name="tskSeq"]').val();
+			$(listDiv).remove();
+			console.log('삭제됨???');
+			
 			$.ajax({
 				url:"ajax/project/taskCheckListDelete.do",
 				data: {'chkSeq':chkSeq},
 				success: function(data){
 					if(data == "success"){
-						getTaskCheckList(tskSeq);
+						console.log('체크리스트 삭제 성공');
 					}
 				},
 				error: function(request,status,error){
@@ -886,13 +878,8 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
-			
-			/* var form = $(data).prev().prev().parent().parent();
-			var formData = $(form).serialize();
-			var tskSeq = $('#taskCheckListTskSeq').val();
-			console.log(formData);
-			 */
 
+			
 		}
 
 		/*체크리스트 수정창 띄우는 함수 쳌쳌 */
