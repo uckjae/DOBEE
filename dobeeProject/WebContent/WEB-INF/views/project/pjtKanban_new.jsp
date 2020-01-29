@@ -1186,8 +1186,6 @@
 	                                                     </c:if>
 	                                                    </c:forEach>
                                                     </ul>
-                                                    
-                                                    
                                                 </div>
                                             </div>
                                         </div>

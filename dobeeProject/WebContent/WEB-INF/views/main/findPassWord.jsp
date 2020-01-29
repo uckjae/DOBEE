@@ -153,14 +153,16 @@ $(function(){
 		  </div>
 		</div>
 
-	   </form>
+	   
 		<hr>
 
 		<div class="mb-xs text-center">
 		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
 		     href="#modalBootstrap" id="idModal2">Find your password</a>
+		     
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
+		</form>
 
 		<p class="text-center">비밀번호 변경을 하겠습니까?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호 재설정</a>
 

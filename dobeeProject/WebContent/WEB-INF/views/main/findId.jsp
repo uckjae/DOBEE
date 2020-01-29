@@ -154,7 +154,7 @@ $(function(){
 		  </div>
 		</div>
 
-	   </form>
+	   
 		<hr>
 
 		<div class="mb-xs text-center">
@@ -162,8 +162,9 @@ $(function(){
 		     href="#modalBootstrap" id="idModal2">Find your mail</a>
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
+		</form>
 
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord2.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 
 	  </div>
 	  	  

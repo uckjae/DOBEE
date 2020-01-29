@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html class="fixed">
@@ -39,6 +39,7 @@
 <!-- Examples -->
 <script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style type="text/css">
 body {
@@ -48,95 +49,45 @@ body {
 </style>
 
 <script type="text/javascript">
-$(function(){
 
-	function findPwMail(callback){
+
+	function findMail(callback){
       return new Promise(function(resolve,reject){
-          console.log("findPwMail");
+          console.log("findMail()");
           console.log($('#mail').val());
-		  console.log($('#name').val());
+          
 		  $.ajax({
-			  url:"ajax/admin/findPwMail.do",
-			  data:{'mail':$('#mail').val(),
-                    'name':$('name').val()
+			  url:"ajax/admin/findEmail.do",
+			  data:{'mail':$('#mail').val()
 				  },
-              dataType:"text",
+				  
+              dataType:"text", 
               method:"POST",
+              
               success: function(response){
                   console.log("메일보내짐");
                   resolve(response)
-
+                  
                   },
               error: function(jqXHR, textStatus, errorThrown){
 				   console.log(textStatus);
 				   console.log(errorThrown);
 					}
-                  myFormSubmit()
-		  
-			  })
+			  });
           });
 		}
 
 	function myFormSubmit(){
-		findPwMail().then(function(){
+		findMail().then(function(){
 			console.log("submit()");
-			document.getElementById('addUserForm').submit();
-			$('#addUserForm').submit();
+			document.getElementById('findPWD').submit();
+			$('#findPWD').submit();	
 			
-		})
+		});
 	}
-	
- $('#idModal2').click(function(e){
-	 
-	 console.log("done???");
-	 $('#findPassWord').trigger('reset');
 
-	 if(($.trim($('#mail').val())=='')&&($.trim($('#name').val())=='')){
-         alert("내용을 입력하지 않았습니다");
-         return false;
-         }
-
-	 else if($.trim($('#mail').val())==''){
-         alert("메일을 입력하세요");
-         $('#mail').focus();
-         return false;    
-     }
      
-     else if($.trim($('#name').val()) == ''){
-		alert("이름을 입력하세요");
-		$('#name').focus();
-		return false;
-     }
-   });
-
-
-	$('#idModal2').click('show.bs.modal',function(e){
-	 var mail = $('#mail').val();
-     var name = $('#name').val();
-     
-     $.ajax({
-         url:'ajax/admin/findPassWord.do',
-         data: {"mail":mail, "name":name},
-         dataType : "text",
-         success:function(data){
-			console.log(data);
-             var password = data;
-             if(password === ""){
-            	 $('#findPassWord').val("찾은 비밀번호가 없습니다.");       	 
-             }else{
-               $('#findPassWord').val(password);
-             }
-        	 
-         },
-         error : function(request,status,error){
-				console.log("code" + request.status +"\n" +"message : " + request.response + "\n" + "error : " + error);
-         }
-   
-     });
-     
- });
-     
- });	
+ 	
 
 
 </script>
@@ -163,40 +114,25 @@ $(function(){
 	</div>
 					
 	<div class="panel-body">
-	  <form action="" method="post">
+	  <form action="" method="post" id="findPWD" enctype="multipart/form-data">
 						
 		<div class="form-group mb-lg">
 		  <label>메일</label>
-		  <div class="input-group input-group-icon">
-			 <input name="mail" type="text" class="form-control input-lg" id="mail" form="addUserForm"/>
+		  <div class="form-group">
+			 <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-user"></i>
 				 </span>
 				</span>
 		  </div>
-		</div>
-
-		<div class="form-group mb-lg">								
-		  <label>이름</label>								
-		  <div class="input-group input-group-icon">
-			<input name="name" type="text" class="form-control input-lg" id="name" form="addUserForm"/>
-			   <span class="input-group-addon">
-				<span class="icon icon-lg">
-				 <i class="fa fa-phone"></i>
-				</span>
-			   </span>
-		  </div>
-		</div>
-
-	   </form>
+		</div>   
 		<hr>
-
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" onclick="myFormSubmit()">Find your password</a>
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">Find your password</a>
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
 		</div>
+		</form>
 
 		<p class="text-center">비밀번호 변경을 하겠습니까?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호 재설정</a>
 

@@ -3,15 +3,18 @@ package com.dobee.controller;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
@@ -66,29 +70,68 @@ public class AjaxControllerAdmin {
 		return teamList;
 	}
 	
-	@RequestMapping(value="findMail.do")
-	public String findMail(HttpServletRequest req){
-		String serfrom="dnjsvltm327@gmail.com";
-		String tomail =req.getParameter("mail");
-		String title =req.getParameter("title");
-		String content=req.getParameter("content");
-		
-		try {
-			MimeMessage message = javaMailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message,true, "UTF-8");
-			messageHelper.setFrom(serfrom);
-			messageHelper.setTo(tomail);     // 받는사람 이메일
-		    messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-		    messageHelper.setText(content);  // 메일 내용
-			
-			/* mailSender.send(message); */
-		}catch(Exception e){
-			System.out.println(e);
+	  //비밀번호찾기 메일 발송(실행안됨)
+	  @RequestMapping(value="findEmail.do",method=RequestMethod.POST)
+	  public ModelAndView findMail(HttpServletRequest request, String mail, HttpServletResponse response_mail)
+			  throws IOException{
+	 
+	  Random r = new Random();
+	  int dice =r.nextInt(157211)+48271;
+	  
+	  
+	  MimeMessage message = javaMailSender.createMimeMessage();
+	  MimeMessageHelper messageHelper = null;
+	  
+	  String tomail =request.getParameter("mail"); //받는 사람 이메일(작성한 이메일)
+	  Enumeration<String> enu = request.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while");
+			System.out.println(enu.nextElement());
 		}
-		return "redirect:/mail/mailForm";
-	}
+	  
+	  
+	  try {
+		  
+		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		  Map model = new HashMap();
+		  model.put("mail",tomail);
+		  model.put("dice", dice);
+		  
+		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  
+		  
+		  //이메일 내용은 emailTemplate2.vm이고 형식UTF-8
+		  messageHelper.setFrom("letsdobee@gmail.com");  //보내는이메일
+		  messageHelper.setTo(tomail);                     //받는이메일
+		  StringBuilder subject = new StringBuilder();
+		  
+		  subject.append("DOBEE 비밀번호 찾기");             //이메일 제목
+		  messageHelper.setSubject(subject.toString()); //이메일 제목 세팅완료
+		  messageHelper.setText(mailBody,true);              //이메일 내용 세팅완료
+		  
+		  
+		  javaMailSender.send(message);                //이메일 모든내용(메세지)보내기
+	      }catch(Exception e){
+		    e.printStackTrace();
+		  }
+	  
+		
+		  ModelAndView mv = new ModelAndView(); //보낼페이지 지정
+		  mv.setViewName("findPassWordOk.do"); //뷰이름 mv.addObject("dice",dice);
+		  mv.addObject("mail",mail);
+		  
+		  System.out.println("mv임?"+mv);
+		  
+		  response_mail.setContentType("text/html; charset=UTF-8"); PrintWriter
+		  out_mail =response_mail.getWriter();
+		  out_mail.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
+		  out_mail.flush();
+		  
+		  
+		  return mv;
+		 
+	  }
 	
-	
+	//사원메일발송
 	@RequestMapping(value="sendEmail.do")
 	public void sendMail(HttpServletRequest req) {
 		
@@ -123,8 +166,8 @@ public class AjaxControllerAdmin {
 			model.put("path",path.toString());
 	
 			
-			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm","UTF-8", model);
-			messageHelper.setFrom("admin@dobee.com");
+			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8", model);
+			messageHelper.setFrom("letsdobee@gmail.com");
 			messageHelper.setTo(mail);
 			StringBuilder subject = new StringBuilder();
 			
@@ -170,6 +213,15 @@ public class AjaxControllerAdmin {
     	System.out.println(name);
     	UserDao userDao =sqlSession.getMapper(UserDao.class);
     	String find = userDao.findPassWord(mail, name);
+    	System.out.println("값:"+find);
+    	return find;
+    }
+    //비밀번호찾기2
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
+    public String findPassWord2(String mail){
+    	System.out.println(mail);
+    	UserDao userDao =sqlSession.getMapper(UserDao.class);
+    	String find = userDao.findPassWord2(mail);
     	System.out.println("값:"+find);
     	return find;
     }
