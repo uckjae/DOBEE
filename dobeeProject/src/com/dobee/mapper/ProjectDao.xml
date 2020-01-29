@@ -146,7 +146,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 
 <!-- 체크리스트 추가  -->
-<insert id="addTaskCheckList">
+<insert id="addTaskCheckList" useGeneratedKeys="true" keyProperty="chkSeq">
 	INSERT INTO CHECKLIST (CONTENT, TSKSEQ, ISCHECK) VALUES (#{content}, #{tskSeq}, 0)
 </insert>
 
@@ -161,9 +161,13 @@ WHERE p.pjtseq = #{pjtSeq}
 	UPDATE CHECKLIST SET CONTENT=#{content} WHERE CHKSEQ=#{chkSeq}
 </update>
 
+<!-- 체크리스트 체크 여부 수정 -->
+<update id="taskCheckListIsCheck" parameterType="com.dobee.vo.project.CheckList">
+	UPDATE CHECKLIST SET ISCHECK=#{isCheck} WHERE CHKSEQ=#{chkSeq}
+</update>
 
 <!-- 체크리스트 삭제 -->
-<delete id="taskCheckListDelete">
+<delete id="taskCheckListDelete" parameterType="com.dobee.vo.project.CheckList">
 	DELETE FROM CHECKLIST WHERE CHKSEQ=#{chkSeq}
 </delete>
 </mapper>

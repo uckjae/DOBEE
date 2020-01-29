@@ -69,59 +69,59 @@
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
 
+				
+					
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h2 class="panel-title">Table</h2>
+							<h2 class="panel-title">연창근무 신청 목록</h2>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								
-								<thead id="thead">
+								<thead>
 									<tr>
 										<th width="8%">신청 번호</th>
-										<th width="15%">신청 ID</th>
 										<th width="10%">신청자명</th>
+										<th width="15%">신청 ID</th>
 										<th width="9%">신청 일자</th>
+										
 										<th width="8%">부재 항목</th>
-										<th width="8%">승인 여부</th>
 										<th>기간</th>
 										<td width="8%">사유</td>
+										<th width="8%">승인 여부</th>
 									</tr>
 								</thead>
-				
+								
 								<tbody id="tbody">
 									<c:forEach items="${extListMgr}" var="el">
 										<tr>
 											<td class="bSeq">${el.aplSeq }</td>
-											<td class="bMail">${el.drafter }</td>
 											<td class="bName">${el.name }</td>
+											<td class="bMail">${el.drafter }</td>
 											<td class="bReqDate">${el.reqDate}</td>
+											
 											<td class="bEntry">${el.entry }</td>
-											<td class="bIsAuth">
-												<button	disabled="disabled" class="btn btn-info btn-sm ${el.isAuth }"> ${el.isAuth} </button>
-											</td>
 											<td class="bTerm">${el.startAt } - ${el.endAt }</td>
 											<td class="bReason">
 												<button	class="btn btn-default btn-sm" data-toggle="modal"
 													data-target="#myModal" 
-													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}">확인
+													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}" data-mail="${el.drafter}">확인
 												</button>
-												
+											</td>	
+											<td class="bIsAuth" style="text-align: center;">
+												<button	disabled="disabled" class="btn btn-info btn-sm ${el.isAuth }"> ${el.isAuth} </button>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
-				
+								
 								<tfoot>
 								</tfoot>
 								
 							</table>
 						</div>
 					</section>
+					
 					
 					
 					<!-- Modal -->
@@ -147,6 +147,7 @@
 									<div class="container-fluid">
 										<div class="modal-body mb-0" style="margin-top: 30px;">
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
+										<input type="hidden" id="modalMail" disabled>
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 신청 사유</span></label>
@@ -182,7 +183,7 @@
 										<div class="row">
 											<div class="col-md-4"></div>
 											<div class="col-md-4 text-center">
-												<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+												<button class="btn btn-primary" onclick="modalSubmit(this)" data-dismiss="modal">확인</button>
 												<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 											</div>
 											<div class="col-md-4"></div>
@@ -228,19 +229,24 @@
 		<script>
   			
 		window.onload = function(){
+			var wsocket;//알람을 위한 웹소켓 연결
+			connect();//알람을 위한 웹소켓 연결
 			
 			let aplSeq = "";
 			let reason = "";
 			let rejReason = "";
-
+			let mail = "";
+			
 			$('.btn-sm').click('show.bs.modal', function(e) {
 				aplSeq = $(this).data('aplseq');
 				reason = $(this).data('reason');
 				rejReason = $(this).data('rejreason');
+				mail = $(this).data('mail');
 				
 				$('#modalAplSeq').val(aplSeq);
 				$('#modalReason').val(reason);
 				$('#modalRejReason').val(rejReason);
+				$('#modalMail').val(mail);
 			});
 
 			
@@ -268,6 +274,41 @@
 			});
 			
 
+		}
+
+		/* 알람 */
+		function getContextPath() {//contextPath 구하는 함수
+		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+		};
+		
+		
+
+		function connect(){
+			var contextPath = getContextPath();
+			wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+			wsocket.onopen = onOpen;
+			wsocket.onmessage = onMessage;
+			wsocket.onclose = onClose;
+		}
+		
+		
+		function send(command) {
+			var jsonData = new Object();
+			jsonData.cmd = command;
+			jsonData.content = $('#entrySelectorInModal').val();
+			jsonData.mail = $('#modalMail').val();
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
+		
+		//모달 전송함수
+		function modalSubmit(data){
+			send("extendMGR");
+			$(data).closest('form').submit();
 		}
 		
 	</script>

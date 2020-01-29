@@ -271,11 +271,8 @@
 				$('.btn-sm').click('show.bs.modal', function(e) {
 						
 					aplSeq = $(this).data('aplseq');
-					console.log('이거 확인 : ' + aplSeq);
 					reason = $(this).data('reason');
-					console.log('이거 확인 : ' + reason);
 					rejReason = $(this).data('rejReason');
-					console.log('이거 확인 : ' + rejReason);			
 	
 					$('#modalAplSeq').val(aplSeq);
 					$('#modalReason').val(reason);

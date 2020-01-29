@@ -107,12 +107,7 @@
 					
 					<section class="panel">
 						<header class="panel-heading">
-							<div class="panel-actions">
-								<a href="#" class="fa fa-caret-down"></a>
-								<a href="#" class="fa fa-times"></a>
-							</div>
-					
-							<h2 class="panel-title">Table Title</h2>
+							<h2 class="panel-title">부재 신청 목록</h2>
 						</header>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
@@ -123,9 +118,10 @@
 										<th width="15%">신청자명</th>
 										<th width="9%">신청 일자</th>
 										<th width="8%">부재 항목</th>
-										<th width="8%">승인 여부</th>
+										<th width="10%" style="min-width: 90px;">연차 사용 일수</th>
 										<th>기간</th>
-										<th width="10%">연차 사용 일수</th>
+										
+										<th width="8%">승인 여부</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -137,11 +133,12 @@
 											<td class="bName">		${bl.name }</td>
 											<td class="bReqDate">	${bl.reqDate}</td>
 											<td class="bEntry">		${bl.entry }</td>
-											<td class="bIsAuth">
-												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
-											</td>
+											<td class="bUsed" style="text-align: center;">		${bl.useBreak }</td>
 											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
-											<td class="bUsed">		${bl.useBreak }</td>
+											
+											<td class="bIsAuth">
+												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-mail="${bl.drafter}" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
+											</td>
 										</tr>
 									</c:forEach>
 									
@@ -175,6 +172,7 @@
 									<div class="container-fluid">
 										<div class="modal-body mb-0" style="margin-top: 30px;">
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
+										<input type="hidden" id="modalMail" name="mail" disabled>
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
@@ -210,7 +208,7 @@
 										<div class="row">
 											<div class="col-md-4"></div>
 											<div class="col-md-4 text-center">
-												<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
+												<button class="btn btn-primary" data-dismiss="modal" onclick="modalSubmit(this)">확인</button>
 												<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 											</div>
 											<div class="col-md-4"></div>
@@ -251,7 +249,8 @@
 	
 		<script>
 			window.onload = function(){
-	
+				var wsocket;
+				connect();//알람을위한 웹소켓 connect
 				// 부재항목 Option Ajax Loading ********************
 				$.ajax({
 					url : "breakEntryListMgr.do",
@@ -268,7 +267,8 @@
 				let aplSeq = "";
 				let reason = "";
 				let rejReason = "";
-				let isAuth = "";	
+				let isAuth = "";
+				let mail = "";
 	
 				$('.btn-sm').click('show.bs.modal', function(e) {
 						
@@ -276,12 +276,14 @@
 					console.log('시퀀스 : '+aplSeq);
 					reason = $(this).data('reason');
 					console.log('이유 ' +reason);
-					rejReason = $(this).data('rejReason');
+					rejReason = $(this).data('rejreason');
 					console.log(rejReason);			
+					mail = $(this).data('mail');
 	
 					$('#modalAplSeq').val(aplSeq);
 					$('#modalReason').val(reason);
 					$('#modalRejReason').val(rejReason);
+					$('#modalMail').val(mail);
 	
 				});
 				
@@ -345,6 +347,41 @@
 					}]
 				});
 	
+			}
+
+			/* 알람 */
+			function getContextPath() {//contextPath 구하는 함수
+			  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+			  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+			};
+			
+			
+
+			function connect(){
+				var contextPath = getContextPath();
+				wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+				wsocket.onopen = onOpen;
+				wsocket.onmessage = onMessage;
+				wsocket.onclose = onClose;
+			}
+			
+			
+			function send(command) {
+				var jsonData = new Object();
+				jsonData.cmd = command;
+				jsonData.content = $('#entrySelectorInModal').val();
+				jsonData.mail = $('#modalMail').val();
+
+				var parsedData = JSON.stringify(jsonData);
+				
+				wsocket.send(parsedData);
+			}
+			/* /알람  */
+			
+			//모달 전송함수
+			function modalSubmit(data){
+				send("breakMGR");
+				$(data).closest('form').submit();
 			}
 			
 		</script>
