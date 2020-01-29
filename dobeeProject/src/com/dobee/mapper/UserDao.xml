@@ -8,6 +8,10 @@
     <select id="findPassWord" parameterType="String" resultType="String">
     SELECT PASSWORD FROM USER WHERE MAIL = #{param1} AND NAME = #{param2}
     </select>
+    
+    <select id="findPassWord2" parameterType="String" resultType="String">
+    SELECT PASSWORD FROM USER WHERE MAIL = #{param1}
+    </select>
 	
 	<!--아이디 찾기 -->
 	<select id = "findId" parameterType = "String" resultType="String">

@@ -113,17 +113,21 @@ public class DoController {
         return null;
     }
     
+    //비밀번호찾기 view단
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
+    public String findPassWord2(){
+        return "main/findPassWord2";
+    }
     //비밀번호 찾기
-    @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
-    public String findPassWord(String mail, String name,  Model model){
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
+    public String findPassWord2(String mail,Model model){
     	System.out.println(mail);
     	String find;
     	UserDao userDao =sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findPassWord(mail, name);
-    	 System.out.println("비번1:"+find);
+    	 find = userDao.findPassWord2(mail);
     	 model.addAttribute("find",find);
     	 System.out.println("비번2:"+find);
-    	return "main/findPassWord";
+    	return "main/findId";
     }
     
 

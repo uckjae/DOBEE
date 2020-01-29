@@ -25,6 +25,9 @@ public interface UserDao {
     
     //비밀번호 찾기  
     public String findPassWord(String mail, String name);
+    
+    //비밀번호찾기2
+    public String findPassWord2(String mail);
 
 
     //비밀번호재설정
