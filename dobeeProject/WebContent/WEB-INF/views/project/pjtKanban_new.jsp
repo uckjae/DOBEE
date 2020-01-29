@@ -642,7 +642,6 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 			});
-			
 		}
 
 
@@ -831,15 +830,18 @@
 			var tskSeq = $(parents).find('input[name="tskSeq"]').val();
 			var chkSeq = $(parents).find('input[name="chkSeq"]').val();
 			var content = $(parents).find('input[name="content"]').val();
+
+			taskCheckListEdit(data); //수정창 닫기
+			var span = $(data).closest('li').find('.check-label').find('span'); //원래 입력되어 있던 내용
+			span.text(content); //사용자가 수정한 내용으로 바꿔주기
 					
 			$.ajax({
 				url:"ajax/project/taskCheckListEdit.do",
 				data: {'chkSeq' : chkSeq, 'content' : content },
 				dataType:"text",
 				success:function(data){
-					console.log('ajax 통신 성공');
 					if(data == "success"){
-						getTaskCheckList(tskSeq);
+						console.log('체크리스트 수정 완료')
 					}
 				},
 				error:function(request,status,error){
@@ -848,23 +850,14 @@
 				}
 			});
 			
-			/* 
-			var editForm = $(data).closest('li').find('form');
-			console.log('제발!!');
-			console.dir(editForm);
-			var formData = $(editForm).serialize();
-			console.log(formData);
-			*/
 		}
 
-		/* 체크리스트 삭제하는 함수 요기요 */
+		/* 체크리스트 삭제하는 함수 */
 		function taskCheckListDelete(data){
 			var listDiv = $(data).closest('li');
 			var chkSeq = listDiv.find('.checkList-Edit').find('input[name="chkSeq"]').val();
 			var tskSeq = listDiv.find('.checkList-Edit').find('input[name="tskSeq"]').val();
-			$(listDiv).remove();
-			console.log('삭제됨???');
-			
+			$(listDiv).remove(); //해당 li 삭제
 			$.ajax({
 				url:"ajax/project/taskCheckListDelete.do",
 				data: {'chkSeq':chkSeq},
