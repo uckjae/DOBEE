@@ -118,7 +118,7 @@ public class DoController {
     public String findPassWord2(){
         return "main/findPassWord2";
     }
-    //비밀번호 찾기
+    //비밀번호 찾기x
     @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
     public String findPassWord2(String mail,Model model){
     	System.out.println(mail);

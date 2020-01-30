@@ -194,7 +194,7 @@ a[x-apple-data-detectors=true] {
 												width="100%" border="0">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 30px 20px 10px; font-family: arial, helvetica, sans-serif;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 30px 20px 10px; font-family: arial, helvetica, sans-serif; border:1px solid #34495e;" align="left">
 															<table width="100%" cellpadding="0" cellspacing="0" border="0">
 																<tr>
 																	<td style="padding-right: 0px; padding-left: 0px;"
@@ -232,7 +232,7 @@ a[x-apple-data-detectors=true] {
 																<p style="font-size: 14px; line-height: 120%;">
 																	<span
 																		style="font-family: 'Staatliches', cursive; font-size: 34px; line-height: 40.8px; color: #ffffff;"><span
-																		style="line-height: 40.8px; font-size: 44px;">PASSWORD
+																		style="line-height: 40.8px; font-size: 44px;">FORGOT
 																			</span></span>
 																</p>
 																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
@@ -240,7 +240,7 @@ a[x-apple-data-detectors=true] {
 																	<span
 																		style="color: #ffffff; font-size: 44px; line-height: 52.8px;"><strong><span
 																			style="font-family: 'Black Ops One', cursive; line-height: 52.8px; font-size: 44px;"><span
-																				style="line-height: 52.8px; font-size: 54px;">D O B E E
+																				style="line-height: 52.8px; font-size: 54px;">PASSWORD
 																					</span></span></strong></span>
 																</p>
 																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
@@ -261,7 +261,7 @@ a[x-apple-data-detectors=true] {
 															<div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 140%;">
 																	<strong><span
-																		style="font-size: 18px; line-height: 22.4px; font-family: 'Nanum Gothic', sans-serif;">입사를 축하드립니다.</span></strong>
+																		style="font-size: 18px; line-height: 22.4px; font-family: 'Nanum Gothic', sans-serif;">인증번호</span></strong>
 																</p>
 															</div>
 														</td>
@@ -280,7 +280,7 @@ a[x-apple-data-detectors=true] {
 						<div
 							style="Margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;"
 							class="email-row">
-							<div style="border-collapse: collapse; display: table; width: 100%; background-color: #ffffff;">
+							<div style="border-collapse: collapse; display: table; width: 100%; background-color: #ffffff; border:1px solid #34495e;">
 								<div class="email-col email-col-100"
 									style="max-width: 320px; min-width: 650px; display: table-cell; vertical-align: top;">
 									<div style="width: 100% !important;">
@@ -334,13 +334,13 @@ a[x-apple-data-detectors=true] {
 															<div style="color: #428bca; line-height: 150%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 150%;">
 																	<span style="font-size: 12px; line-height: 24px; color: #000000; font-family: 'Gamja Flower', cursive;">
-																	   <span style="line-height: 24px; font-size: 14px;">위 비밀번호로 설정 하시겠습니까?</span>
+																	   <span style="line-height: 24px; font-size: 14px;">하단의 버튼을 클릭시 비밀번호를 변경할 수 있습니다</span>
 																	</span>
 																</p>
 																
 																<p style="font-size: 14px; line-height: 150%;">
 																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Gamja Flower', cursive;"><strong>
-																	<span style="font-size: 30px; line-height: 45px;">완료버튼을 누르세요</span></strong></span>
+																	<span style="font-size: 30px; line-height: 45px;">버튼을 클릭하세요</span></strong></span>
 																</p>
 															</div>
 														</td>
