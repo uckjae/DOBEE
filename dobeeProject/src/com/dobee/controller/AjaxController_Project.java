@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dobee.dao.UserDao;
+import com.dobee.services.MemberService;
 import com.dobee.services.ProjectService;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
@@ -30,6 +32,8 @@ public class AjaxController_Project {
 	
 	@Autowired
 	ProjectService projectService;
+	@Autowired
+	MemberService memberService;
 	
 	
 	//프로젝트 추가 --01.15 알파카
@@ -307,6 +311,33 @@ public class AjaxController_Project {
 			responseData = "fail";
 		}
 		return responseData;
+	}
+	
+	
+	//멤버 가져오기
+	@RequestMapping("getUserList.do")
+	public List<Map<String, String>> getUserList() { 
+		
+		
+		Map<String, String> map = new HashMap<String, String> ();
+		List<Map<String, String>> jsonList = new ArrayList<Map<String, String>>(); 
+		
+		List<User> users = memberService.getUserList();
+		//List<String> id = new ArrayList<String>();
+		//List<String> text = new ArrayList<String>();
+		for(int i = 0; i < users.size(); i++) {
+			System.out.println("메일??"+users.get(i).getMail());
+			map.put("id", users.get(i).getMail());
+			map.put("text", users.get(i).getName());
+			jsonList.add(map);
+		}
+		System.out.println("데이터!!!!"+map.toString());
+		
+		
+		System.out.println("jsonlist"+jsonList.toString());
+    	
+		return jsonList;
+		
 	}
 	
 	
