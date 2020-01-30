@@ -1,5 +1,6 @@
 package com.dobee.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -341,14 +342,10 @@ public class AjaxController_Project {
 	
 	/*차트*/
 	
-	//업무 담당 차트
+	//프로젝트 업무 할당 차트
 	@RequestMapping("getMemberTaskChart.do")
 	public Map<String, Integer> getMemberChart(@RequestParam(value="pjtSeq") String pjtSeq , HttpServletRequest request) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		System.out.println("이거 타니?");
-		System.out.println("플젝 번호"+pjtSeq);
-		
-		//이 프로젝트의 참여자 리스트 가져오기
 		
 		//프로젝트에 속한 멤버 정보 가져오기
 		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
@@ -362,10 +359,17 @@ public class AjaxController_Project {
 			map.put(pjtMemberName, result);
 		}
 		System.out.println("맵맵?"+map.toString());
-		
 		return map;
-		
 	}
+	
+	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
+	@RequestMapping("getMemberTask.do")
+	public List<Task> getMemberTask(@RequestParam(value="pjtSeq") String pjtSeq , Principal principal, HttpServletRequest request){
+		String mail = principal.getName();
+		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
+		return taskList;
+	}
+	
 	
 	
 }

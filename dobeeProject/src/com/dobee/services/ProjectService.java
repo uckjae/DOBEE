@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -247,6 +248,14 @@ public class ProjectService {
     	System.out.println("메일은?"+mail);
     	System.out.println("결과는?"+result);
     	return result;
+    }
+    
+    //특정 프로젝트의 개인 업무 가져오기
+    public List<Task> getMemberTask(int pjtSeq, String mail){
+    	List<Task> taskList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	taskList = projectDao.getMemberTask(pjtSeq, mail);
+    	return taskList;
     }
     
 }

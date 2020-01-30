@@ -421,30 +421,136 @@
  					
  	 			}
  			});
- 			/*
-			new Chart(document.getElementById("member-task"), {
-			    type: 'doughnut',
-			    data: {
-			      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-			      datasets: [
-			        {
-			          label: "Population (millions)",
-			          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-			          data: [2478,5267,734,784,433]
-			        }
-			      ]
-			    },
-			    options: {
-			      title: {
-			        display: true,
-			        text: 'Predicted world population (millions) in 2050'
-			      }
-			    }
+			var memberTask = new Array(); //업무
+ 			var taskScheduled = new Array(); //예정된 업무
+ 			var taskInProgress = new Array(); //진행중 업무
+ 			var taskTest = new Array(); //테스트 업무
+ 			var taskCompleted = new Array(); //완료된 업무
+ 			
+ 			/*개인 업무 현황 progress bar*/
+			$.ajax({
+ 	 			url:"ajax/project/getMemberTask.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 					console.log(responseData);
+ 					$.each(responseData, function(index, element){
+ 						memberTask.push(element.title);
+ 	 					var progress = element.progress;
+ 	 					if(progress == '예정'){
+ 	 						taskScheduled.push(element);
+ 	 	 				} else if(progress == '진행') {
+ 	 	 					taskInProgress.push(element);
+ 	 	 	 			} else if(progress == '테스트') {
+ 	 	 	 				taskTest.push(element);
+ 	 	 	 			} else {
+ 	 	 	 				taskCompleted.push(element);
+ 	 	 	 	 		}
+ 	 				});
+ 					console.log('배열 갯수?'+taskScheduled.length);
+	 				console.log('배열 갯수2?'+taskInProgress.length);
+	 				console.log('배열3?'+taskTest);
+	 				console.log('배열4?'+taskCompleted);
+ 					/* for(key in responseData){
+ 						pjtMember.push(key);
+ 						taskCount.push(responseData[key]);
+ 	 				}
+ 	 				console.log('배열은?'+pjtMember);
+ 	 				console.log('배열은?'+taskCount); */
+ 					
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
 
-			    
-			});
+ 				complete : function() {
+ 					Chart.pluginService.register({
+ 						beforeDraw: function (chart) {
+ 							if (chart.config.options.elements.center) {
+ 				        //Get ctx from string
+ 				        var ctx = chart.chart.ctx;
+ 				        
+ 								//Get options from the center object in options
+ 				        var centerConfig = chart.config.options.elements.center;
+ 				      	var fontStyle = centerConfig.fontStyle || 'Arial';
+ 								var txt = centerConfig.text;
+ 				        var color = centerConfig.color || '#000';
+ 				        var sidePadding = centerConfig.sidePadding || 20;
+ 				        var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+ 				        //Start with a base font of 30px
+ 				        ctx.font = "30px " + fontStyle;
+ 				        
+ 								//Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+ 				        var stringWidth = ctx.measureText(txt).width;
+ 				        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
 
-			*/
+ 				        // Find out how much the font can grow in width.
+ 				        var widthRatio = elementWidth / stringWidth;
+ 				        var newFontSize = Math.floor(30 * widthRatio);
+ 				        var elementHeight = (chart.innerRadius * 2);
+
+ 				        // Pick a new font size so it will not be larger than the height of label.
+ 				        var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+ 								//Set font settings to draw it correctly.
+ 				        ctx.textAlign = 'center';
+ 				        ctx.textBaseline = 'middle';
+ 				        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+ 				        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+ 				        ctx.font = fontSizeToUse+"px " + fontStyle;
+ 				        ctx.fillStyle = color;
+ 				        
+ 				        //Draw text in center
+ 				        ctx.fillText(txt, centerX, centerY);
+ 							}
+ 						}
+ 					});
+ 						var config = {
+ 							type: 'doughnut',
+ 							data: {
+ 								labels: [
+ 								  "예정",
+ 								  "진행",
+ 								  "테스트",
+ 								  "완료"
+ 								],
+ 								datasets: [{
+ 									data: [taskScheduled.length, taskInProgress.length,taskTest.length,  taskCompleted.length ],
+ 									backgroundColor: [
+ 									  "#FF6384",
+ 									  "#36A2EB",
+ 									  "#FFCE56",
+ 									  "#c45850"
+ 									],
+ 									hoverBackgroundColor: [
+ 									  "#FF6384",
+ 									  "#36A2EB",
+ 									  "#FFCE56",
+ 									  "#c45850"
+ 									]
+ 								}]
+ 							},
+ 						options: {
+ 							elements: {
+ 								center: {
+ 									text: memberTask.length/taskCompleted.length,
+ 				          color: '#FF6384', // Default is #000000
+ 				          fontStyle: 'Arial', // Default is Arial
+ 				          sidePadding: 20 // Defualt is 20 (as a percentage)
+ 								}
+ 							}
+ 						}
+ 					};
+
+
+ 					var ctx = document.getElementById("user-task").getContext("2d");
+ 					var myChart = new Chart(ctx, config);
+ 					
+ 	 			}
+ 			});
+ 		
 
 
 		}); //onload 함수 끝
@@ -477,7 +583,7 @@
 						//$("#taskEditImportant").val(value); //db에 저장할 값 넣어주기
 				      }
 				  });
-			}
+		}
 		}
 
 		
@@ -1028,6 +1134,7 @@
 		
 		
     </script>
+    
     <style type="text/css">
 	.input-line{
 	    background: transparent;
@@ -1353,7 +1460,7 @@
 						<div class="col-lg-6 col-md-12">
 						<section class="panel">
 								<header class="panel-heading panel-heading-transparent">
-									<h2 class="panel-title">참여중인 프로젝트</h2>
+									<h2 class="panel-title">프로젝트 진행률</h2>
 								</header>
 								<div class="panel-body">
 								
@@ -1443,7 +1550,6 @@
 									<h2 class="panel-title">프로젝트 업무 비중</h2>
 								</header>
 								<div class="panel-body">
-
 									<!-- Flot: Basic -->
 									<div class="chart chart-md" >
 										<canvas id="member-task" width="800" height="450"></canvas>
@@ -1454,17 +1560,14 @@
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
-									<h2 class="panel-title">Server Usage</h2>
-									<p class="panel-subtitle">It's easy to create custom graphs on JSOFT Admin Template, there are several graph types that you can use, such as lines, bars, pie charts, etc...</p>
+									<h2 class="panel-title">업무 진행 상태</h2>
 								</header>
 								<div class="panel-body">
 
 									<!-- Flot: Curves -->
-									<div class="chart chart-md" id="flotDashRealTime"></div>
+									<div class="chart chart-md" id="flotDashRealTime">
+										<canvas id="user-task" width="800" height="450"></canvas>
+									</div>
 								</div>
 							</section>
 						</div>
