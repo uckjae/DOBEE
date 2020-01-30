@@ -56,7 +56,7 @@ import com.dobee.vo.schedule.Schedule;
 public class DoController {
 	
 	public DoController() {
-		System.out.println("ì¼ë‹¨ ì»¨íŠ¸ë¡¤ ì˜¤ë‚˜ ë³´ì");
+		System.out.println("ÀÏ´Ü ÄÁÆ®·Ñ ¿À³ª º¸ÀÚ");
 	}
 	
 	
@@ -85,26 +85,26 @@ public class DoController {
     private ScheduleService scheduleService;
     
 
-    //ë¡œê·¸ì¸
+    //·Î±×ÀÎ
     @RequestMapping("login.do")
     public String login(){
         return "main/login";
     }
     
     
-    //ê¶Œí•œì—†ìŒ í˜ì´ì§€
+    //±ÇÇÑ¾øÀ½ ÆäÀÌÁö
     @RequestMapping("noAuth.do")
     public String noAuth() {
     	return "main/noAuthority";
     }
   
-    //ì•„ì´ë””ì°¾ê¸°
+    //¾ÆÀÌµğÃ£±â
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
     public String findId(String name, String phone ,  Model model){
     	String find;
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	 find = userDao.findId(name, phone);
-    	 System.out.println("ë¹„ë²ˆ1dd:"+find);
+    	 System.out.println("ºñ¹ø1dd:"+find);
     	 model.addAttribute("find",find);
       return "main/findId";
     }
@@ -113,12 +113,12 @@ public class DoController {
         return null;
     }
     
-    //ë¹„ë°€ë²ˆí˜¸ì°¾ê¸° viewë‹¨
+    //ºñ¹Ğ¹øÈ£Ã£±â view´Ü
     @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
     public String findPassWord2(){
         return "main/findPassWord2";
     }
-    //ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°x
+    //ºñ¹Ğ¹øÈ£ Ã£±â
     @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
     public String findPassWord2(String mail,Model model){
     	System.out.println(mail);
@@ -126,12 +126,12 @@ public class DoController {
     	UserDao userDao =sqlsession.getMapper(UserDao.class);
     	 find = userDao.findPassWord2(mail);
     	 model.addAttribute("find",find);
-    	 System.out.println("ë¹„ë²ˆ2:"+find);
+    	 System.out.println("ºñ¹ø2:"+find);
     	return "main/findId";
     }
     
 
-    //ë¹„ë°€ë²ˆí˜¸ì¬ì„¤ì •
+    //ºñ¹Ğ¹øÈ£Àç¼³Á¤
     //public String resetPwd(){
       //  return null;
     //}
@@ -156,23 +156,23 @@ public class DoController {
     }
 
 
-    //ë©”ì¸í˜ì´ì§€(ë¡œê·¸ì¸í›„)
+    //¸ŞÀÎÆäÀÌÁö(·Î±×ÀÎÈÄ)
     @RequestMapping("main.do")
     public String main(Principal principal , HttpServletRequest request, Model model){
-    	System.out.println("ì»¨íŠ¸ë¡¤ëŸ¬ main.do");
+    	System.out.println("ÄÁÆ®·Ñ·¯ main.do");
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
         return "main/main";
     }
 
-    //ê´€ë¦¬ì ë©”ì¸ì „ ê²½ê³ í™”ë©´
+    //°ü¸®ÀÚ ¸ŞÀÎÀü °æ°íÈ­¸é
     @RequestMapping("adminWarnig.do")
     public String adminWarning() {
     	return "admin/AdminWarning";
     }
     
     
-    //ê´€ë¦¬ì ë©”ì¸
+    //°ü¸®ÀÚ ¸ŞÀÎ
     @RequestMapping("adminMain.do")
     public String adminMain(HttpServletRequest request, Model model) {
     	User user = (User) request.getSession().getAttribute("user");
@@ -184,14 +184,14 @@ public class DoController {
     }
     
     
-    //ê´€ë¦¬ì ë²•ì¸ì¹´ë“œë“±ë¡ ë·°ë‹¨ ì´ë™
+    //°ü¸®ÀÚ ¹ıÀÎÄ«µåµî·Ï ºä´Ü ÀÌµ¿
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.GET)
     public String adminAddDebit() {
     	return "admin/AddDebit";
     }
     
 
-    //ê´€ë¦¬ì ë²•ì¸ì¹´ë“œ ëª©ë¡ ë·°ë‹¨ì´ë™ ë° ë¶ˆëŸ¬ì˜¤ê¸°
+    //°ü¸®ÀÚ ¹ıÀÎÄ«µå ¸ñ·Ï ºä´ÜÀÌµ¿ ¹× ºÒ·¯¿À±â
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
     public ModelAndView adminListDebit() {
     	ModelAndView mav = new ModelAndView();
@@ -202,36 +202,36 @@ public class DoController {
     }
     
     
-    //ê´€ë¦¬ì ë²•ì¸ì¹´ë“œ ë””ë¹„ì— ë“±ë¡
+    //°ü¸®ÀÚ ¹ıÀÎÄ«µå µğºñ¿¡ µî·Ï
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
     public String adminAddDebitOK(Debit debit) {
-    	System.out.println("ì»¨íŠ¸ë¡¤ AdminDebit.do ì‘ë‹µ í•œë‹¤.");
+    	System.out.println("ÄÁÆ®·Ñ AdminDebit.do ÀÀ´ä ÇÑ´Ù.");
     	boolean check = debitService.addDebit(debit);
     	
-    	System.out.println("ì—¬ê¸°ê¹Œì§€ ì˜¤ëŠ”ì§€ ë³´ì :" + check);
+    	System.out.println("¿©±â±îÁö ¿À´ÂÁö º¸ÀÚ :" + check);
     	if(check) {
-    		System.out.println("ì»¨íŠ¸ë¡¤ë‹¨  : ë²•ì¸ì¹´ë“œ ë“±ë¡ ì„±ê³µ");
+    		System.out.println("ÄÁÆ®·Ñ´Ü  : ¹ıÀÎÄ«µå µî·Ï ¼º°ø");
     	}else {
-    		System.out.println("ì»¨íŠ¸ë¡¤ë‹¨ : ë²•ì¸ì¹´ë“œ ë“±ë¡ ì‹¤íŒ¨");
+    		System.out.println("ÄÁÆ®·Ñ´Ü : ¹ıÀÎÄ«µå µî·Ï ½ÇÆĞ");
     		return null;
-    		//ë“±ë¡ ì‹¤íŒ¨í•˜ë©´ ì•„ë¬´ì¼ë„ ì•ˆì¼ì–´ë‚¨
+    		//µî·Ï ½ÇÆĞÇÏ¸é ¾Æ¹«ÀÏµµ ¾ÈÀÏ¾î³²
     	}
-    	//ë“±ë¡ ì„±ê³µí•˜ë©´ ì¹´ë“œ ëª©ë¡ ë·°ë‹¨ìœ¼ë¡œ ì´ë™
+    	//µî·Ï ¼º°øÇÏ¸é Ä«µå ¸ñ·Ï ºä´ÜÀ¸·Î ÀÌµ¿
     	return "redirect:ListDebit.do";
     }
     
     
-    //íšŒì‚¬ ì¼ì •ë“±ë¡
+    //È¸»ç ÀÏÁ¤µî·Ï
     //@RequestMapping(value = "", method = RequestMethod.POST)
     public String addSchedule(){
         return null;
     }
 
 
-    //ë§ˆì´í˜ì´ì§€
+    //¸¶ÀÌÆäÀÌÁö
     @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
     public String mypage(Principal principal, Model model){
-    	//íšŒì› ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+    	//È¸¿ø Á¤º¸ °¡Á®¿À±â
     	String mail = principal.getName();
     	User user = memberService.getUserInfo(mail);
     	model.addAttribute("user", user);
@@ -239,7 +239,7 @@ public class DoController {
     }
     
     
-    //ê³µì§€ì‚¬í•­ë¦¬ìŠ¤íŠ¸
+    //°øÁö»çÇ×¸®½ºÆ®
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice,Model model){
 		List<Notice>list=null;
@@ -252,7 +252,7 @@ public class DoController {
     }
 
 
-    //ê³µì§€ì‚¬í•­ìƒì„¸ë³´ê¸° value="noticeWrite.do",method=RequestMethod.POST
+    //°øÁö»çÇ×»ó¼¼º¸±â value="noticeWrite.do",method=RequestMethod.POST
     @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
     public String noticeDetail(@RequestParam(value="notSeq") int notSeq, Model model){
         Notice notice = null; 
@@ -262,14 +262,14 @@ public class DoController {
         
         int noticeCount = 0;
                         
-        //ì¡°íšŒìˆ˜ ì˜¬ë¦¬ê¸°
+        //Á¶È¸¼ö ¿Ã¸®±â
         noticeCount = noticeService.updateNoticeCount(notSeq);
         
-        //DBì—ì„œ ê¸€ ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ ±Û °¡Á®¿À±â
         notice = noticeService.getNotice(notSeq);
         model.addAttribute("notice", notice);
         
-        //DBì—ì„œ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ ÆÄÀÏ °¡Á®¿À±â
         nf = noticeService.getNoticeFile(notSeq);
         if(nf !=null) {
             model.addAttribute("nf", nf);
@@ -277,7 +277,7 @@ public class DoController {
         	model.addAttribute("nf", null);
         }
 
-        //DBì—ì„œ ê³µì§€ì‚¬í•­ ì¼ì • ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ °øÁö»çÇ× ÀÏÁ¤ °¡Á®¿À±â
         ns = noticeService.getNotSchedule(notSeq);
         
         if(ns !=null) {
@@ -293,40 +293,40 @@ public class DoController {
         return "notice/noticeDetail";
     }
     
-    //ê³µì§€ì‚¬í•­ íŒŒì¼ ë‹¤ìš´ë¡œë“œ noticeDownload.do
+    //°øÁö»çÇ× ÆÄÀÏ ´Ù¿î·Îµå noticeDownload.do
     @RequestMapping(value="noticeDownload.do")
     public void noticeDownload(@RequestParam(value="p") String p, @RequestParam(value="f") String f, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		/*
-		 * //í•œê¸€ ì²˜ë¦¬ í˜•ì‹ ì§€ì • String sEncoding = new
+		 * //ÇÑ±Û Ã³¸® Çü½Ä ÁöÁ¤ String sEncoding = new
 		 * String(filename.getBytes("euc-kr"),"8859_1");
 		 * response.setHeader("Content-Disposition","attachment;filename= " +
 		 * sEncoding);
 		 * //response.setHeader("Content-Disposition","attachment;filename= " + filename
 		 * +";");
 		 */
-		// í•œê¸€ íŒŒì¼ëª… ì²˜ë¦¬ (Filtter ì²˜ë¦¬ í™•ì¸) -> ê²½ìš° ...
-		// í•œê¸€ íŒŒì¼ ê¹¨ì§ í˜„ìƒ í•´ê²°í•˜ê¸°
+		// ÇÑ±Û ÆÄÀÏ¸í Ã³¸® (Filtter Ã³¸® È®ÀÎ) -> °æ¿ì ...
+		// ÇÑ±Û ÆÄÀÏ ±úÁü Çö»ó ÇØ°áÇÏ±â
 		// String fname = new String(f.getBytes("ISO8859_1"),"UTF-8");
 		String fname = new String(f.getBytes("euc-kr"), "8859_1");
-		// ë‹¤ìš´ë¡œë“œ ê¸°ë³¸ ì„¤ì • (ë¸Œë¼ìš°ì ¸ê°€ read í•˜ì§€ ì•Šê³  ... ë‹¤ìš´ )
-		// ìš”ì²­ - ì‘ë‹µ ê°„ì— í—¤ë”ì •ë³´ì— ì„¤ì •ì„ ê°•ì œ ë‹¤ìš´ë¡œë“œ
+		// ´Ù¿î·Îµå ±âº» ¼³Á¤ (ºê¶ó¿ìÁ®°¡ read ÇÏÁö ¾Ê°í ... ´Ù¿î )
+		// ¿äÃ» - ÀÀ´ä °£¿¡ Çì´õÁ¤º¸¿¡ ¼³Á¤À» °­Á¦ ´Ù¿î·Îµå
 		// response.setHeader("Content-Disposition", "attachment;filename=" +
 		// new String(fname.getBytes(),"ISO8859_1"));
 		response.setHeader("Content-Disposition", "attachment;filename=" + fname + ";");
-		// íŒŒì¼ëª… ì „ì†¡
-		// íŒŒì¼ ë‚´ìš©ì „ì†¡
+		// ÆÄÀÏ¸í Àü¼Û
+		// ÆÄÀÏ ³»¿ëÀü¼Û
 		String fullpath = request.getServletContext().getRealPath(p + "/" + f);
 		FileInputStream fin = new FileInputStream(fullpath);
-		// ì¶œë ¥ ë„êµ¬ ì–»ê¸° :response.getOutputStream()
+		// Ãâ·Â µµ±¸ ¾ò±â :response.getOutputStream()
 		ServletOutputStream sout = response.getOutputStream();
-		byte[] buf = new byte[1024]; // ì „ì²´ë¥¼ ë‹¤ì½ì§€ ì•Šê³  1204byteì”© ì½ì–´ì„œ
+		byte[] buf = new byte[1024]; // ÀüÃ¼¸¦ ´ÙÀĞÁö ¾Ê°í 1204byte¾¿ ÀĞ¾î¼­
 		int size = 0;
-		while ((size = fin.read(buf, 0, buf.length)) != -1) // buffer ì— 1024byte
-		// ë‹´ê³ 
-		{ // ë§ˆì§€ë§‰ ë‚¨ì•„ìˆëŠ” byte ë‹´ê³  ê·¸ë‹¤ìŒ ì—†ìœ¼ë©´ íƒˆì¶œ
-			sout.write(buf, 0, size); // 1kbyteì”© ì¶œë ¥
+		while ((size = fin.read(buf, 0, buf.length)) != -1) // buffer ¿¡ 1024byte
+		// ´ã°í
+		{ // ¸¶Áö¸· ³²¾ÆÀÖ´Â byte ´ã°í ±×´ÙÀ½ ¾øÀ¸¸é Å»Ãâ
+			sout.write(buf, 0, size); // 1kbyte¾¿ Ãâ·Â
 		}
 		fin.close();
 		sout.close();
@@ -334,78 +334,78 @@ public class DoController {
     
 
 
-    //ê³µì§€ì‚¬í•­ê¸€ì“°ê¸° view í˜ì´ì§€
+    //°øÁö»çÇ×±Û¾²±â view ÆäÀÌÁö
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(){
         return "notice/noticeWrite";
     }
     
-    //ê³µì§€ì‚¬í•­ê¸€ì“°ê¸° ì²˜ë¦¬ 
+    //°øÁö»çÇ×±Û¾²±â Ã³¸® 
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
     	
-    	System.out.println("íŒŒì¼ ì–´ë–»ê²Œ ë“¤ì–´ì™€?"+nf);
-    	System.out.println("íŒŒíŒŒíŒŒíŒŒì¼"+nf.getFile());
+    	System.out.println("ÆÄÀÏ ¾î¶»°Ô µé¾î¿Í?"+nf);
+    	System.out.println("ÆÄÆÄÆÄÆÄÀÏ"+nf.getFile());
     	
-    	//ê³µì§€ì‚¬í•­ ê¸€ DB ë„£ê¸°
-    	int notSeq = noticeService.noticeWrite(n); //ì„œë¹„ìŠ¤ ë¦¬í„´ ê°’ìœ¼ë¡œ noticeì˜ seqë¥¼ ê°€ì ¸ì˜´
+    	//°øÁö»çÇ× ±Û DB ³Ö±â
+    	int notSeq = noticeService.noticeWrite(n); //¼­ºñ½º ¸®ÅÏ °ªÀ¸·Î noticeÀÇ seq¸¦ °¡Á®¿È
     	
-    	//íŒŒì¼ ì—…ë¡œë“œ íŒŒì¼ëª…
+    	//ÆÄÀÏ ¾÷·Îµå ÆÄÀÏ¸í
     	CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //ì›ë³¸ íŒŒì¼ëª…
-    	System.out.println("íŒŒì¼ ì—…ë¡œë“œ ì•ˆí•˜ë©´ ì–´ì¼€ ë¨?"+nf);
-    	System.out.println("íŒŒì¼ ì´ë¦„?"+filename);
-    	//ê³µì§€ì‚¬í•­ íŒŒì¼ì„ ì—…ë¡œë“œí•œ ê²½ìš°
+    	String filename = file.getOriginalFilename(); //¿øº» ÆÄÀÏ¸í
+    	System.out.println("ÆÄÀÏ ¾÷·Îµå ¾ÈÇÏ¸é ¾îÄÉ µÊ?"+nf);
+    	System.out.println("ÆÄÀÏ ÀÌ¸§?"+filename);
+    	//°øÁö»çÇ× ÆÄÀÏÀ» ¾÷·ÎµåÇÑ °æ¿ì
     	if(!( filename == null || filename.trim().equals("") )) {
         	String path = request.getServletContext().getRealPath("/upload");
         	String fpath = path + "\\" + filename;
         		
-        	//íŒŒì¼ ì“°ê¸° ì‘ì—…
-        	FileOutputStream fs = new FileOutputStream(fpath); // ì—†ìœ¼ë©´ ê±°ê¸°ë‹¤ê°€ íŒŒì¼ ìƒì„±í•¨
+        	//ÆÄÀÏ ¾²±â ÀÛ¾÷
+        	FileOutputStream fs = new FileOutputStream(fpath); // ¾øÀ¸¸é °Å±â´Ù°¡ ÆÄÀÏ »ı¼ºÇÔ
         	fs.write(file.getBytes());
         	fs.close();
         		
-        	//DBì— íŒŒì¼ ì´ë¦„ ì €ì¥
+        	//DB¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
         	nf.setOrgName(filename);
         	UUID randomIdMulti = UUID.randomUUID();
         	String saveName = filename+"_"+randomIdMulti;
-        	System.out.println("ì €ì¥ë  íŒŒì¼ ì´ë¦„?"+saveName);
+        	System.out.println("ÀúÀåµÉ ÆÄÀÏ ÀÌ¸§?"+saveName);
         	nf.setSaveName(saveName);
         
-        	//ê³µì§€ì‚¬í•­ ê¸€ë²ˆí˜¸ ì£¼ì…
+        	//°øÁö»çÇ× ±Û¹øÈ£ ÁÖÀÔ
         	nf.setNotSeq(notSeq);
         	
         	int result = noticeService.noticeFileWrite(nf);
         	if(result > 0) {
-        		System.out.println("ê³µì§€ì‚¬í•­ íŒŒì¼ ì—…ë¡œë“œ ì™„ë£Œ");
+        		System.out.println("°øÁö»çÇ× ÆÄÀÏ ¾÷·Îµå ¿Ï·á");
         	}
     	}
     	
-    	//ê³µì§€ì‚¬í•­ ì¼ì •ì„ ì…ë ¥í•œ ê²½ìš°
+    	//°øÁö»çÇ× ÀÏÁ¤À» ÀÔ·ÂÇÑ °æ¿ì
     	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
     		
     		int result = scheduleService.addSchedule(sc); 
     		
-    		if(result > 0) { //DBì— ì˜ ì €ì¥ë¨
-    			System.out.println("ìŠ¤ì¼€ì¥´ ë“±ë¡ ì™„ë£Œ");
+    		if(result > 0) { //DB¿¡ Àß ÀúÀåµÊ
+    			System.out.println("½ºÄÉÁì µî·Ï ¿Ï·á");
     			int schSeq = result;
     			ns.setSchSeq(schSeq);
-    			//ê³µì§€ì‚¬í•­ ì¼ì • ë“±ë¡
+    			//°øÁö»çÇ× ÀÏÁ¤ µî·Ï
     			
-    			ns.setNotSeq(notSeq); //ê³µì§€ì‚¬í•­ ê¸€ ë²ˆí˜¸ ì£¼ì…
+    			ns.setNotSeq(notSeq); //°øÁö»çÇ× ±Û ¹øÈ£ ÁÖÀÔ
     			int result2 = noticeService.addNotSchedule(ns);
     			
     			if(result2 > 0) {
-    				System.out.println("ê³µì§€ì‚¬í•­ ì¼ì • ë“±ë¡ ì™„ë£Œ");
+    				System.out.println("°øÁö»çÇ× ÀÏÁ¤ µî·Ï ¿Ï·á");
     			}
     			
     		}
     	}    	
-    	return "redirect:noticeList.do"; //ë“¤ì–´ì£¼ëŠ” ì£¼ì†Œ ...
+    	return "redirect:noticeList.do"; //µé¾îÁÖ´Â ÁÖ¼Ò ...
     }
 
 
-    //ê³µì§€ì‚¬í•­ìˆ˜ì •í•˜ê¸° view
+    //°øÁö»çÇ×¼öÁ¤ÇÏ±â view
     @RequestMapping(value="noticeModify.do",method=RequestMethod.GET)
     public String noticeModify(@RequestParam(value="notSeq") int notSeq, Model model){
     	Notice notice = null; 
@@ -413,11 +413,11 @@ public class DoController {
         NotSchedule ns = null;
         Schedule sc = null;
         
-        //DBì—ì„œ ê¸€ ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ ±Û °¡Á®¿À±â
         notice = noticeService.getNotice(notSeq);
         model.addAttribute("notice", notice);
         
-        //DBì—ì„œ íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ ÆÄÀÏ °¡Á®¿À±â
         nf = noticeService.getNoticeFile(notSeq);
         if(nf !=null) {
             model.addAttribute("nf", nf);
@@ -425,7 +425,7 @@ public class DoController {
         	model.addAttribute("nf", null);
         }
 
-        //DBì—ì„œ ê³µì§€ì‚¬í•­ ì¼ì • ê°€ì ¸ì˜¤ê¸°
+        //DB¿¡¼­ °øÁö»çÇ× ÀÏÁ¤ °¡Á®¿À±â
         ns = noticeService.getNotSchedule(notSeq);
 
         if(ns !=null) {
@@ -440,91 +440,91 @@ public class DoController {
     	return "notice/noticeModify";
     }
     
-    //ê³µì§€ì‚¬í•­ìˆ˜ì •í•˜ê¸° ì²˜ë¦¬
+    //°øÁö»çÇ×¼öÁ¤ÇÏ±â Ã³¸®
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	System.out.println("ìˆ˜ì • íƒ€ë‹ˆ?");
-    	System.out.println("íŒŒì¼ ê°€ì ¸ì™€?"+nf);
-    	//ì„œë¹„ìŠ¤ ì—°ê²° >> ì œëª© & ë‚´ìš© ìˆ˜ì •
+    	System.out.println("¼öÁ¤ Å¸´Ï?");
+    	System.out.println("ÆÄÀÏ °¡Á®¿Í?"+nf);
+    	//¼­ºñ½º ¿¬°á >> Á¦¸ñ & ³»¿ë ¼öÁ¤
     	
     	int noticeModify = noticeService.noticeModify(n);
     	
     	CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //ì›ë³¸ íŒŒì¼ëª…
-    	System.out.println("íŒŒì¼ì´ë¦„?"+filename);
+    	String filename = file.getOriginalFilename(); //¿øº» ÆÄÀÏ¸í
+    	System.out.println("ÆÄÀÏÀÌ¸§?"+filename);
     	
-    	//ì›ë˜ ìˆì—ˆëŠ”ì§€ ì—†ì—ˆëŠ”ì§€ í™•ì¸ í›„ ìˆìœ¼ë©´ update, ì—†ìœ¼ë©´ insert
+    	//¿ø·¡ ÀÖ¾ú´ÂÁö ¾ø¾ú´ÂÁö È®ÀÎ ÈÄ ÀÖÀ¸¸é update, ¾øÀ¸¸é insert
     	String fileExists = request.getParameter("fileExists");
     	String notScheduleExists = request.getParameter("notScheduleExists");
     	String fileNameExists = request.getParameter("fileNameExists");
     	
-    	System.out.println("ìŠ¤íŒ¬ í…Œê·¸ ê°’ ë‚˜ì™€?"+fileNameExists);
-    	//ê³µì§€ì‚¬í•­ íŒŒì¼ ì—…ë¡œë“œ í•˜ê¸°
+    	System.out.println("½ºÆÒ Å×±× °ª ³ª¿Í?"+fileNameExists);
+    	//°øÁö»çÇ× ÆÄÀÏ ¾÷·Îµå ÇÏ±â
     	if(!( filename == null || filename.trim().equals("") )) {
     		String path = request.getServletContext().getRealPath("/upload");
         	String fpath = path + "\\" + filename;
         		
-        	//íŒŒì¼ ì“°ê¸° ì‘ì—…
-        	FileOutputStream fs = new FileOutputStream(fpath); // ì—†ìœ¼ë©´ ê±°ê¸°ë‹¤ê°€ íŒŒì¼ ìƒì„±í•¨
+        	//ÆÄÀÏ ¾²±â ÀÛ¾÷
+        	FileOutputStream fs = new FileOutputStream(fpath); // ¾øÀ¸¸é °Å±â´Ù°¡ ÆÄÀÏ »ı¼ºÇÔ
         	fs.write(file.getBytes());
         	fs.close();
         		
-        	//DBì— íŒŒì¼ ì´ë¦„ ì €ì¥
+        	//DB¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
         	nf.setOrgName(filename);
         	UUID randomIdMulti = UUID.randomUUID();
         	String saveName = filename+"_"+randomIdMulti;
-        	//System.out.println("ì €ì¥ë  íŒŒì¼ ì´ë¦„?"+saveName);
+        	//System.out.println("ÀúÀåµÉ ÆÄÀÏ ÀÌ¸§?"+saveName);
         	nf.setSaveName(saveName);
         
-        	//ê³µì§€ì‚¬í•­ ê¸€ë²ˆí˜¸ ì£¼ì…
+        	//°øÁö»çÇ× ±Û¹øÈ£ ÁÖÀÔ
         	nf.setNotSeq(n.getNotSeq());
         	
-    		if(fileExists.equals("true")) { //ì›ë˜ íŒŒì¼ì„ ì—…ë¡œë“œí–ˆë˜ ê²½ìš° -> updateí•˜ê¸°
+    		if(fileExists.equals("true")) { //¿ø·¡ ÆÄÀÏÀ» ¾÷·ÎµåÇß´ø °æ¿ì -> updateÇÏ±â
             	int result = noticeService.noticeFileModify(nf);
             	if(result > 0) {
-            		System.out.println("ê³µì§€ì‚¬í•­ íŒŒì¼ update ì™„ë£Œ");
+            		System.out.println("°øÁö»çÇ× ÆÄÀÏ update ¿Ï·á");
             	}
-        	} else { //ìƒˆë¡œ íŒŒì¼ì„ ì—…ë¡œë“œ í•œ ê²½ìš° -> insert í•˜ê¸°
-        		System.out.println("ìƒˆë¡œ íŒŒì¼ ì—…ë¡œë“œ í•˜ë‹ˆ?");
+        	} else { //»õ·Î ÆÄÀÏÀ» ¾÷·Îµå ÇÑ °æ¿ì -> insert ÇÏ±â
+        		System.out.println("»õ·Î ÆÄÀÏ ¾÷·Îµå ÇÏ´Ï?");
         		int result = noticeService.noticeFileWrite(nf);
             	if(result > 0) {
-            		System.out.println("ê³µì§€ì‚¬í•­ íŒŒì¼ insert ì™„ë£Œ");
+            		System.out.println("°øÁö»çÇ× ÆÄÀÏ insert ¿Ï·á");
             	}
         		
         	}
-    	} else { //íŒŒì¼ ì—…ë¡œë“œë¥¼ í•˜ì§€ ì•ŠëŠ” ê²½ìš°
-    		System.out.println("íŒŒì¼ ì—…ë¡œë“œ ì•ˆí• ê±°ë‹ˆ?");
+    	} else { //ÆÄÀÏ ¾÷·Îµå¸¦ ÇÏÁö ¾Ê´Â °æ¿ì
+    		System.out.println("ÆÄÀÏ ¾÷·Îµå ¾ÈÇÒ°Å´Ï?");
     		
     		
     	}
     	
-    	//ê³µì§€ì‚¬í•­ ì¼ì •ì„ ì…ë ¥í•œ ê²½ìš°
+    	//°øÁö»çÇ× ÀÏÁ¤À» ÀÔ·ÂÇÑ °æ¿ì
     	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
-    		if(notScheduleExists.equals("true")) { //ê¸°ì¡´ ì¼ì •ì´ ìˆë˜ ê²½ìš° -> update
-    			//ìŠ¤ì¼€ì¥´ update
+    		if(notScheduleExists.equals("true")) { //±âÁ¸ ÀÏÁ¤ÀÌ ÀÖ´ø °æ¿ì -> update
+    			//½ºÄÉÁì update
     			int result = scheduleService.scheduleModify(sc);
-    			//ì¼ì • ë‚´ìš© update
+    			//ÀÏÁ¤ ³»¿ë update
     			if( result > 0 ) {
-    				System.out.println("ìŠ¤ì¼€ì¥´ update ì™„ë£Œ");
+    				System.out.println("½ºÄÉÁì update ¿Ï·á");
     				int result2 = noticeService.notScheduleModify(ns);
     				
     				if(result2 > 0) {
-        				System.out.println("ê³µì§€ì‚¬í•­ ì¼ì • update ì™„ë£Œ");
+        				System.out.println("°øÁö»çÇ× ÀÏÁ¤ update ¿Ï·á");
         			}
     			}
     			
-    		} else { //ìƒˆë¡œ ì¼ì •ì„ ì¶”ê°€í•œ ê²½ìš° -> insert
+    		} else { //»õ·Î ÀÏÁ¤À» Ãß°¡ÇÑ °æ¿ì -> insert
     			int result = scheduleService.addSchedule(sc); 
-        		if(result > 0) { //DBì— ì˜ ì €ì¥ë¨
-        			System.out.println("ìŠ¤ì¼€ì¥´ insert ì™„ë£Œ");
+        		if(result > 0) { //DB¿¡ Àß ÀúÀåµÊ
+        			System.out.println("½ºÄÉÁì insert ¿Ï·á");
         			int schSeq = result;
         			ns.setSchSeq(schSeq);
-        			//ê³µì§€ì‚¬í•­ ì¼ì • ë“±ë¡
-        			ns.setNotSeq(n.getNotSeq()); //ê³µì§€ì‚¬í•­ ê¸€ ë²ˆí˜¸ ì£¼ì…
+        			//°øÁö»çÇ× ÀÏÁ¤ µî·Ï
+        			ns.setNotSeq(n.getNotSeq()); //°øÁö»çÇ× ±Û ¹øÈ£ ÁÖÀÔ
         			int result2 = noticeService.addNotSchedule(ns);
         			
         			if(result2 > 0) {
-        				System.out.println("ê³µì§€ì‚¬í•­ ì¼ì • insert ë“±ë¡ ì™„ë£Œ");
+        				System.out.println("°øÁö»çÇ× ÀÏÁ¤ insert µî·Ï ¿Ï·á");
         			}
         		}
     		}
@@ -533,99 +533,99 @@ public class DoController {
     }
     /*
     
-    //ê³µì§€ì‚¬í•­ìˆ˜ì •í•˜ê¸° ì²˜ë¦¬
+    //°øÁö»çÇ×¼öÁ¤ÇÏ±â Ã³¸®
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	System.out.println("ìˆ˜ì • íƒ€ë‹ˆ?");
-    	//ì„œë¹„ìŠ¤ ì—°ê²° >> ì œëª© & ë‚´ìš© ìˆ˜ì •
+    	System.out.println("¼öÁ¤ Å¸´Ï?");
+    	//¼­ºñ½º ¿¬°á >> Á¦¸ñ & ³»¿ë ¼öÁ¤
     	int noticeModify = noticeService.noticeModify(n);
     	
     	CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //ì›ë³¸ íŒŒì¼ëª…
-    	System.out.println("íŒŒì¼ì´ë¦„?"+filename);
+    	String filename = file.getOriginalFilename(); //¿øº» ÆÄÀÏ¸í
+    	System.out.println("ÆÄÀÏÀÌ¸§?"+filename);
     	
-    	//ì›ë˜ ìˆì—ˆëŠ”ì§€ ì—†ì—ˆëŠ”ì§€ í™•ì¸ í›„ ìˆìœ¼ë©´ update, ì—†ìœ¼ë©´ insert
+    	//¿ø·¡ ÀÖ¾ú´ÂÁö ¾ø¾ú´ÂÁö È®ÀÎ ÈÄ ÀÖÀ¸¸é update, ¾øÀ¸¸é insert
     	String fileExists = request.getParameter("fileExists");
     	String notScheduleExists = request.getParameter("notScheduleExists");
     	String fileNameExists = request.getParameter("fileNameExists");
     	
-    	System.out.println("ìŠ¤íŒ¬ í…Œê·¸ ê°’ ë‚˜ì™€?"+fileNameExists);
-    	//ê³µì§€ì‚¬í•­ íŒŒì¼ ì—…ë¡œë“œ í•˜ê¸°
+    	System.out.println("½ºÆÒ Å×±× °ª ³ª¿Í?"+fileNameExists);
+    	//°øÁö»çÇ× ÆÄÀÏ ¾÷·Îµå ÇÏ±â
     	if(!( filename == null || filename.trim().equals("") )) {
     		String path = request.getServletContext().getRealPath("/upload");
         	String fpath = path + "\\" + filename;
         		
-        	//íŒŒì¼ ì“°ê¸° ì‘ì—…
-        	FileOutputStream fs = new FileOutputStream(fpath); // ì—†ìœ¼ë©´ ê±°ê¸°ë‹¤ê°€ íŒŒì¼ ìƒì„±í•¨
+        	//ÆÄÀÏ ¾²±â ÀÛ¾÷
+        	FileOutputStream fs = new FileOutputStream(fpath); // ¾øÀ¸¸é °Å±â´Ù°¡ ÆÄÀÏ »ı¼ºÇÔ
         	fs.write(file.getBytes());
         	fs.close();
         		
-        	//DBì— íŒŒì¼ ì´ë¦„ ì €ì¥
+        	//DB¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
         	nf.setOrgName(filename);
         	UUID randomIdMulti = UUID.randomUUID();
         	String saveName = filename+"_"+randomIdMulti;
-        	//System.out.println("ì €ì¥ë  íŒŒì¼ ì´ë¦„?"+saveName);
+        	//System.out.println("ÀúÀåµÉ ÆÄÀÏ ÀÌ¸§?"+saveName);
         	nf.setSaveName(saveName);
         
-        	//ê³µì§€ì‚¬í•­ ê¸€ë²ˆí˜¸ ì£¼ì…
+        	//°øÁö»çÇ× ±Û¹øÈ£ ÁÖÀÔ
         	nf.setNotSeq(n.getNotSeq());
         	
-    		if(fileExists.equals("true")) { //ì›ë˜ íŒŒì¼ì„ ì—…ë¡œë“œí–ˆë˜ ê²½ìš° -> updateí•˜ê¸°
+    		if(fileExists.equals("true")) { //¿ø·¡ ÆÄÀÏÀ» ¾÷·ÎµåÇß´ø °æ¿ì -> updateÇÏ±â
             	int result = noticeService.noticeFileModify(nf);
             	if(result > 0) {
-            		System.out.println("ê³µì§€ì‚¬í•­ íŒŒì¼ update ì™„ë£Œ");
+            		System.out.println("°øÁö»çÇ× ÆÄÀÏ update ¿Ï·á");
             	}
-        	} else { //ìƒˆë¡œ íŒŒì¼ì„ ì—…ë¡œë“œ í•œ ê²½ìš° -> insert í•˜ê¸°
-        		System.out.println("ìƒˆë¡œ íŒŒì¼ ì—…ë¡œë“œ í•˜ë‹ˆ?");
+        	} else { //»õ·Î ÆÄÀÏÀ» ¾÷·Îµå ÇÑ °æ¿ì -> insert ÇÏ±â
+        		System.out.println("»õ·Î ÆÄÀÏ ¾÷·Îµå ÇÏ´Ï?");
         		int result = noticeService.noticeFileWrite(nf);
             	if(result > 0) {
-            		System.out.println("ê³µì§€ì‚¬í•­ íŒŒì¼ insert ì™„ë£Œ");
+            		System.out.println("°øÁö»çÇ× ÆÄÀÏ insert ¿Ï·á");
             	}
         		
         	}
-    	} else { //íŒŒì¼ ì—…ë¡œë“œë¥¼ í•˜ì§€ ì•ŠëŠ” ê²½ìš°
-    		System.out.println("íŒŒì¼ ì—…ë¡œë“œ ì•ˆí• ê±°ë‹ˆ?");
+    	} else { //ÆÄÀÏ ¾÷·Îµå¸¦ ÇÏÁö ¾Ê´Â °æ¿ì
+    		System.out.println("ÆÄÀÏ ¾÷·Îµå ¾ÈÇÒ°Å´Ï?");
     		
     		
     	}
     	
-    	//ê³µì§€ì‚¬í•­ ì¼ì •ì„ ì…ë ¥í•œ ê²½ìš°
+    	//°øÁö»çÇ× ÀÏÁ¤À» ÀÔ·ÂÇÑ °æ¿ì
     	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
-    		if(notScheduleExists.equals("true")) { //ê¸°ì¡´ ì¼ì •ì´ ìˆë˜ ê²½ìš° -> update
-    			//ìŠ¤ì¼€ì¥´ update
+    		if(notScheduleExists.equals("true")) { //±âÁ¸ ÀÏÁ¤ÀÌ ÀÖ´ø °æ¿ì -> update
+    			//½ºÄÉÁì update
     			int result = scheduleService.scheduleModify(sc);
-    			//ì¼ì • ë‚´ìš© update
+    			//ÀÏÁ¤ ³»¿ë update
     			if( result > 0 ) {
-    				System.out.println("ìŠ¤ì¼€ì¥´ update ì™„ë£Œ");
+    				System.out.println("½ºÄÉÁì update ¿Ï·á");
     				int result2 = noticeService.notScheduleModify(ns);
     				
     				if(result2 > 0) {
-        				System.out.println("ê³µì§€ì‚¬í•­ ì¼ì • update ì™„ë£Œ");
+        				System.out.println("°øÁö»çÇ× ÀÏÁ¤ update ¿Ï·á");
         			}
     			}
     			
-    		} else { //ìƒˆë¡œ ì¼ì •ì„ ì¶”ê°€í•œ ê²½ìš° -> insert
+    		} else { //»õ·Î ÀÏÁ¤À» Ãß°¡ÇÑ °æ¿ì -> insert
     			int result = scheduleService.addSchedule(sc); 
-        		if(result > 0) { //DBì— ì˜ ì €ì¥ë¨
-        			System.out.println("ìŠ¤ì¼€ì¥´ insert ì™„ë£Œ");
+        		if(result > 0) { //DB¿¡ Àß ÀúÀåµÊ
+        			System.out.println("½ºÄÉÁì insert ¿Ï·á");
         			int schSeq = result;
         			ns.setSchSeq(schSeq);
-        			//ê³µì§€ì‚¬í•­ ì¼ì • ë“±ë¡
-        			ns.setNotSeq(n.getNotSeq()); //ê³µì§€ì‚¬í•­ ê¸€ ë²ˆí˜¸ ì£¼ì…
+        			//°øÁö»çÇ× ÀÏÁ¤ µî·Ï
+        			ns.setNotSeq(n.getNotSeq()); //°øÁö»çÇ× ±Û ¹øÈ£ ÁÖÀÔ
         			int result2 = noticeService.addNotSchedule(ns);
         			
         			if(result2 > 0) {
-        				System.out.println("ê³µì§€ì‚¬í•­ ì¼ì • insert ë“±ë¡ ì™„ë£Œ");
+        				System.out.println("°øÁö»çÇ× ÀÏÁ¤ insert µî·Ï ¿Ï·á");
         			}
         		}
     		}
     	}    
-		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();ë“¤ì–´ì£¼ëŠ” ì£¼ì†Œ ...
+		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();µé¾îÁÖ´Â ÁÖ¼Ò ...
     }
     */
 
 
-    // ê°œì¸_ë¶€ì¬ì¼ì •ì‹ ì²­ GET 0110           ê²Œë‹¤ì£½
+    // °³ÀÎ_ºÎÀçÀÏÁ¤½ÅÃ» GET 0110           °Ô´ÙÁ×
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
     public String absApply(){
         return "attend/breakApply";
@@ -634,7 +634,7 @@ public class DoController {
    
     
     
-    // ê°œì¸_ë¶€ì¬ì¼ì • ìˆ˜ì •/ì‚­ì œ GET                0120    COMPLETE
+    // °³ÀÎ_ºÎÀçÀÏÁ¤ ¼öÁ¤/»èÁ¦ GET                0120    COMPLETE
     @RequestMapping(value="editApply.do", method=RequestMethod.GET)
     public String getEditApply (Model model, Apply apply, Authentication auth, Integer aplSeq) {
         apply.setAplSeq(aplSeq);
@@ -646,7 +646,7 @@ public class DoController {
     }
     
     
-    // ê°œì¸_ë¶€ì¬ì¼ì • ìˆ˜ì • POST      0121 COMPLETE
+    // °³ÀÎ_ºÎÀçÀÏÁ¤ ¼öÁ¤ POST      0121 COMPLETE
     @RequestMapping(value="postEditApply.do", method = RequestMethod.POST)
     public String postEditApply (BreakManageList bml, Integer aplSeq, Authentication auth) {
         bml.setDrafter(auth.getName());
@@ -657,7 +657,7 @@ public class DoController {
     }
     
     
-    // ê°œì¸_ë¶€ì¬ì¼ì • ì‚­ì œ POST          0120    COMPLETE
+    // °³ÀÎ_ºÎÀçÀÏÁ¤ »èÁ¦ POST          0120    COMPLETE
     @RequestMapping(value="deleteApply.do", method=RequestMethod.GET)
     public String postDeleteApply (Integer aplSeq) {
         applyService.deleteApply(aplSeq);
@@ -666,7 +666,7 @@ public class DoController {
     }
 
 
-    // ì—°ì¥ê·¼ë¬´ ì‹ ì²­ GET          0110 ê²Œë‹¤ì£½
+    // ¿¬Àå±Ù¹« ½ÅÃ» GET          0110 °Ô´ÙÁ×
     @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
     public String overTiemApply(){
         
@@ -677,7 +677,7 @@ public class DoController {
     
 
 
-    // ê°œì¸_ë¶€ì¬ì¼ì •ê´€ë¦¬ GET            0112 ê²Œë‹¤ì£½        COMPLETE 0116
+    // °³ÀÎ_ºÎÀçÀÏÁ¤°ü¸® GET            0112 °Ô´ÙÁ×        COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
     public String absMg(Model model, Authentication auth){
         List<BreakManageList> results = applyService.absMg(auth.getName());
@@ -687,7 +687,7 @@ public class DoController {
     }
     
 
-    // ê°œì¸_ê·¼ë¬´ë‚´ì—­ê´€ë¦¬/í™•ì¸ GET         0121 ê²Œë‹¤ì£½        ~ing....???                 &&&&&&&&&&&&&&&& ì°¨íŠ¸ ì–´ì§¸í•¨? ã„¹ã…‡ ëª¨ë¥´ê² 
+    // °³ÀÎ_±Ù¹«³»¿ª°ü¸®/È®ÀÎ GET         0121 °Ô´ÙÁ×        ~ing....???                 &&&&&&&&&&&&&&&& Â÷Æ® ¾îÂ°ÇÔ? ¤©¤· ¸ğ¸£°Ú
     @RequestMapping(value="workManage.do", method=RequestMethod.GET)
     public String getExtList(Model model, Authentication auth){
         List<Apply> results = applyService.getExtList(auth.getName());
@@ -697,7 +697,7 @@ public class DoController {
     }
     
     
-    // ê°œì¸_ì—°ì¥ê·¼ë¬´ ì‹ ì²­ ìˆ˜ì • Page GET       0121 ê²Œë‹¤ì£½        COMPLETE
+    // °³ÀÎ_¿¬Àå±Ù¹« ½ÅÃ» ¼öÁ¤ Page GET       0121 °Ô´ÙÁ×        COMPLETE
     @RequestMapping(value="editExtApply.do", method=RequestMethod.GET)
     public String getEditExtList (Model model, Apply apply, Authentication auth, Integer aplSeq) {
         apply.setAplSeq(aplSeq);
@@ -709,7 +709,7 @@ public class DoController {
     }
     
     
-    // ê°œì¸_ì—°ì¥ê·¼ë¬´ ì‹ ì²­ ìˆ˜ì • Page POST      0121 ê²Œë‹¤ì£½        COMPLETE
+    // °³ÀÎ_¿¬Àå±Ù¹« ½ÅÃ» ¼öÁ¤ Page POST      0121 °Ô´ÙÁ×        COMPLETE
     @RequestMapping(value="postEditExtApply.do", method = RequestMethod.POST)
     public String postEditExtList (Apply apply, Integer aplSeq, Authentication auth) {
         apply.setAplSeq(aplSeq);
@@ -720,7 +720,7 @@ public class DoController {
     }
     
     
-    // ê°œì¸_ì—°ì¥ê·¼ë¬´ ì‹ ì²­ ì‚­ì œ POST       0121 ê²Œë‹¤ì£½        COMPLETE
+    // °³ÀÎ_¿¬Àå±Ù¹« ½ÅÃ» »èÁ¦ POST       0121 °Ô´ÙÁ×        COMPLETE
     @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
     public String postDeleteExtList (Integer aplSeq) {
         int result = applyService.postDeleteExtList(aplSeq);
@@ -729,7 +729,7 @@ public class DoController {
     }
 
 
-    // ë§¤ë‹ˆì €_ë¶€ì¬ê´€ë¦¬ - isAuth update GET     0114 ê²Œë‹¤ì£½            // ë‚˜ì¤‘ì— ê¶Œí•œ ì½”ë“œë¡œ ìˆ˜ì • validation ì…í˜€ì¤˜ì•¼ í•˜ê³ 
+    // ¸Å´ÏÀú_ºÎÀç°ü¸® - isAuth update GET     0114 °Ô´ÙÁ×            // ³ªÁß¿¡ ±ÇÇÑ ÄÚµå·Î ¼öÁ¤ validation ÀÔÇôÁà¾ß ÇÏ°í
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(Model model){                         
         List<BreakManageList> results = applyService.breakListMgr();
@@ -739,17 +739,17 @@ public class DoController {
     }
 
 
-    // ë§¤ë‹ˆì €_ë¶€ì¬ê´€ë¦¬ - isAuth update POST        0115 ê²Œë‹¤ì£½
+    // ¸Å´ÏÀú_ºÎÀç°ü¸® - isAuth update POST        0115 °Ô´ÙÁ×
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
-        System.out.println("ì´ê±° ë´ë°” : " + apply.toString());
+        System.out.println("ÀÌ°Å ºÁ¹Ù : " + apply.toString());
         applyService.absReqHandle(apply);
         
         return "redirect: absManage.do";
     }
     
 
-    // ë§¤ë‹ˆì €_ì—°ì¥ê·¼ë¬´ê´€ë¦¬ ë¦¬ìŠ¤íŠ¸ - isAuth update GET           0115 ê²Œë‹¤ì£½
+    // ¸Å´ÏÀú_¿¬Àå±Ù¹«°ü¸® ¸®½ºÆ® - isAuth update GET           0115 °Ô´ÙÁ×
     @RequestMapping(value="extManage.do", method=RequestMethod.GET)
     public String extSign(Model model){
         List<BreakManageList> results = applyService.extListMgr();
@@ -759,7 +759,7 @@ public class DoController {
     }
     
     
-    // ë§¤ë‹ˆì €_ì—°ì¥ê·¼ë¬´ê´€ë¦¬ ë¦¬ìŠ¤íŠ¸ - isAuth update POST          0115 ê²Œë‹¤ì£½
+    // ¸Å´ÏÀú_¿¬Àå±Ù¹«°ü¸® ¸®½ºÆ® - isAuth update POST          0115 °Ô´ÙÁ×
     @RequestMapping(value="extManage.do", method=RequestMethod.POST)
     public String extReqHandle(Apply apply){
         applyService.extReqHandle(apply);
@@ -768,33 +768,33 @@ public class DoController {
     }
 
 
-    //ì¹´ë“œê´€ë¦¬ ë¦¬ìŠ¤íŠ¸
+    //Ä«µå°ü¸® ¸®½ºÆ®
     public String debitList(){
         return null;
     }
 
 
-    //ì¹´ë“œê´€ë¦¬ ì¹´ë“œì¶”ê°€
+    //Ä«µå°ü¸® Ä«µåÃß°¡
     public String addDebit(){
         return null;
     }
 
     
-    //ë¹„ìš©ì •ì‚°ì‹ ì²­ ë·°ë‹¨ í™”ë©´ ì´ë™
+    //ºñ¿ëÁ¤»ê½ÅÃ» ºä´Ü È­¸é ÀÌµ¿
     @RequestMapping("receiptRegit.do")
     public String receiptReg(){
-    	System.out.println("receiptRegit.do.do ìš”ì²­í–ˆìŒ");
+    	System.out.println("receiptRegit.do.do ¿äÃ»ÇßÀ½");
         return "payment/receiptRegit";
     }
 
 
-    //ë¹„ìš©ì •ì‚°ì‹ ì²­ ì˜ìˆ˜ì¦ì‚¬ì§„ìœ¼ë¡œ  google Vision API ìš”ì²­
+    //ºñ¿ëÁ¤»ê½ÅÃ» ¿µ¼öÁõ»çÁøÀ¸·Î  google Vision API ¿äÃ»
     @RequestMapping("goVision.do")
     public String goGoogleApi(){
-    	System.out.println("goGoogleApi í•¨ìˆ˜ìš”ì²­");
+    	System.out.println("goGoogleApi ÇÔ¼ö¿äÃ»");
     	GoogleVisionService vision = new GoogleVisionService();
     	
-    	System.out.println(" vision ì„œë¹„ìŠ¤ë‹¨ í†µê³¼");
+    	System.out.println(" vision ¼­ºñ½º´Ü Åë°ú");
     	
     	
     	
@@ -806,34 +806,34 @@ public class DoController {
     
     
     
-    //ë¹„ìš©ì •ì‚°ì‹ ì²­ vision ìœ¼ë¡œ ë¶€í„° ì½ì–´ì˜¨ textìˆ˜ì •ê¹Œì§€ í•˜ê³  ìµœì¢… í™•ì¸
+    //ºñ¿ëÁ¤»ê½ÅÃ» vision À¸·Î ºÎÅÍ ÀĞ¾î¿Â text¼öÁ¤±îÁö ÇÏ°í ÃÖÁ¾ È®ÀÎ
     public String receiptConfirm(){
         return null;
     }
 
 
-    //ë¹„ìš©ì²˜ë¦¬
+    //ºñ¿ëÃ³¸®
     public String paymentSignList(){
         return null;
     }
 
 
-    //ë¹„ìš©ì²˜ë¦¬ìŠ¹ì¸
+    //ºñ¿ëÃ³¸®½ÂÀÎ
     public String paymentSignApprov(){
         return null;
     }
 
 
-    //í”„ë¡œì íŠ¸ë©”ì¸
+    //ÇÁ·ÎÁ§Æ®¸ŞÀÎ
     @RequestMapping("pjtMain.do")
     public String projectList(Model model, HttpServletRequest request){
     	User user = (User) request.getSession().getAttribute("user");
     	List<Project>list = null;
-    	//ê¶Œí•œ ì½”ë“œì— ë”°ë¼ì„œ ë¿Œë¦¬ëŠ” ê°’ ë‹¤ë¥´ê²Œ í•˜ê¸°
-    	if(user.getAuthCode() == 3) { // PM íšŒì›ì¸ ê²½ìš°
+    	//±ÇÇÑ ÄÚµå¿¡ µû¶ó¼­ »Ñ¸®´Â °ª ´Ù¸£°Ô ÇÏ±â
+    	if(user.getAuthCode() == 3) { // PM È¸¿øÀÎ °æ¿ì
     		list = projectService.getAllPjtList();
-    	} else { //ì¼ë°˜ íšŒì›ì¸ ê²½ìš°
-    		list = projectService.projectList(user.getMail()); //íŠ¹ì • íšŒì›ì´ ì†í•œ í”„ë¡œì íŠ¸ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    	} else { //ÀÏ¹İ È¸¿øÀÎ °æ¿ì
+    		list = projectService.projectList(user.getMail()); //Æ¯Á¤ È¸¿øÀÌ ¼ÓÇÑ ÇÁ·ÎÁ§Æ® ¸®½ºÆ® °¡Á®¿À±â
     	}
     	model.addAttribute("list",list);
    
@@ -841,7 +841,7 @@ public class DoController {
     }
 
 
-    //ì¹¸ë°˜ë³´ë“œ ë©”ì¸ ë¶ˆëŸ¬ì˜¤ê¸°
+    //Ä­¹İº¸µå ¸ŞÀÎ ºÒ·¯¿À±â
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq, Model model, HttpServletRequest request){
     	
@@ -852,7 +852,8 @@ public class DoController {
     	List<User> pjtMember = projectService.getPjtMember(seq);
     	User user = (User) request.getSession().getAttribute("user");
     	
-    	//List<Project>list = projectService.projectList(user.getMail()); //ì´ íšŒì›ì´ ì†í•œ í¬ë¡œì íŠ¸ ì¤‘ í˜„ì¬ ì§„í–‰ì¤‘ì¸ í”„ë¡œì íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    	//List<Project>list = projectService.projectList(user.getMail()); //ÀÌ È¸¿øÀÌ ¼ÓÇÑ Æ÷·ÎÁ§Æ® Áß ÇöÀç ÁøÇàÁßÀÎ ÇÁ·ÎÁ§Æ® °¡Á®¿À±â
+    	
     	
 
     	model.addAttribute("user",user);
@@ -863,22 +864,22 @@ public class DoController {
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
     	
-        return "project/pjtKanban_new";
+        return "project/pjtKanban_new_mine";
         
         
     }
     
-    //í”„ë¡œì íŠ¸ í˜„í™© ë¶ˆëŸ¬ì˜¤ê¸° pjtDashBoard.do
+    //ÇÁ·ÎÁ§Æ® ÇöÈ² ºÒ·¯¿À±â pjtDashBoard.do
     @RequestMapping("pjtDashBoard.do")
     public String pjtDashBoard(Model model, HttpServletRequest request) {
     	User user = (User) request.getSession().getAttribute("user");
     	List<Project>list = null;
-    	list = projectService.projectList(user.getMail()); //íŠ¹ì • íšŒì›ì´ ì†í•œ í”„ë¡œì íŠ¸ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+    	list = projectService.projectList(user.getMail()); //Æ¯Á¤ È¸¿øÀÌ ¼ÓÇÑ ÇÁ·ÎÁ§Æ® ¸®½ºÆ® °¡Á®¿À±â
     	model.addAttribute("list",list);
     	return "project/pjt_dashboard";
     }
 
-    //ì—…ë¬´ìƒì„±
+    //¾÷¹«»ı¼º
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
     	String[] str = task.getMail().split(",");
@@ -889,11 +890,11 @@ public class DoController {
     }
 
 
-    //ì—…ë¬´ìˆ˜ì • -- 01.28 ì•ŒíŒŒì¹´ ìˆ˜ì •
+    //¾÷¹«¼öÁ¤ -- 01.28 ¾ËÆÄÄ« ¼öÁ¤
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task){
     	System.out.println("DoController taskEdit() in!!");
-        System.out.println("ì—…ë¬´ ìˆ˜ì • ê°’!!!!"+task.toString());
+        System.out.println("¾÷¹« ¼öÁ¤ °ª!!!!"+task.toString());
     	int result = 0;
     	String view = "";
         result = projectService.editTask(task);
@@ -906,82 +907,82 @@ public class DoController {
     }
 
 
-    //ì—…ë¬´ìƒì„¸ì •ë³´ì…ë ¥
+    //¾÷¹«»ó¼¼Á¤º¸ÀÔ·Â
     public String addTask(){
         return null;
     }
 
 
-    //ìƒì„¸ì—…ë¬´ì¡°íšŒ
+    //»ó¼¼¾÷¹«Á¶È¸
     public String taskDetail(){
         return null;
     }
 
 
-    //ìƒì„¸ì—…ë¬´ ì…ë ¥
+    //»ó¼¼¾÷¹« ÀÔ·Â
     public String addTaskDetail(){
         return null;
     }
 
 
-    //ìƒì„¸ì—…ë¬´ìˆ˜ì •
+    //»ó¼¼¾÷¹«¼öÁ¤
     public String modiTaskDetail(){
         return null;
     }
 
 
-    //ìƒì„¸ì—…ë¬´ ì‚­ì œ
+    //»ó¼¼¾÷¹« »èÁ¦
     public String delTaskDetail(){
         return null;
     }
 
 
-    //ì²´í¬ë¦¬ìŠ¤íŠ¸ì¡°íšŒ
+    //Ã¼Å©¸®½ºÆ®Á¶È¸
     public String checkList(){
         return null;
     }
 
 
-    //ì²´í¬ë¦¬ìŠ¤íŠ¸ ì…ë ¥
+    //Ã¼Å©¸®½ºÆ® ÀÔ·Â
     public String addCheckList(){
         return null;
     }
 
 
-    //ì²´í¬ë¦¬ìŠ¤íŠ¸ ìˆ˜ì •ì •
+    //Ã¼Å©¸®½ºÆ® ¼öÁ¤Á¤
     public String modiCheckList(){
         return null;
     }
 
 
-    //ì²´í¬ë¦¬ìŠ¤íŠ¸ì‚­ì œ
+    //Ã¼Å©¸®½ºÆ®»èÁ¦
     public String delCheckList(){
         return null;
     }
 
 
-    //í”„ë¡œì íŠ¸ ìº˜ë¦°ë”
+    //ÇÁ·ÎÁ§Æ® Ä¶¸°´õ
     public String projectCalendar(){
         return null;
     }
 
 
-    //í”„ë¡œì íŠ¸ ë¶„ì„
+    //ÇÁ·ÎÁ§Æ® ºĞ¼®
     public String projectChart(){
         return null;
     }
 
 
-    //ì±„íŒ… ë©”ì¸
+    //Ã¤ÆÃ ¸ŞÀÎ
     @RequestMapping("chat.do")
     public String chatMain(Model model, Principal principal) {
     	
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
-    	//íšŒì› ì •ë³´ ì €ì¥í•˜ê¸°
+    	//È¸¿ø Á¤º¸ ÀúÀåÇÏ±â
     	model.addAttribute("user", user);
     	
-    	//ì´ íšŒì›ì´ ì†í•œ ì±„íŒ…ë°© ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//ÀÌ È¸¿øÀÌ ¼ÓÇÑ Ã¤ÆÃ¹æ ¸ñ·Ï °¡Á®¿À±â
     	
     	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
@@ -992,25 +993,25 @@ public class DoController {
 
     	model.addAttribute("roomNameList", roomNameList);
     	
-    	//ì‚¬ì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//»ç¿ø ¸ñ·Ï °¡Á®¿À±â
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
     	
-    	//ê¸°ë³¸ ë‚˜ì—ê²Œ ì±„íŒ…ìœ¼ë¡œ ì…‹íŒ…
+    	//±âº» ³ª¿¡°Ô Ã¤ÆÃÀ¸·Î ¼ÂÆÃ
     	model.addAttribute("chatType", "SELF");
     	
     	return "chat/chatMain3";
     }
     
     
-    //ê·¸ë£¹ ì±„íŒ… ë©”ì¸
+    //±×·ì Ã¤ÆÃ ¸ŞÀÎ
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
     public String chatGroup(@RequestParam(value="roomName") String roomName, Model model, Principal principal) {
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
-    	//íšŒì› ì •ë³´ ì €ì¥í•˜ê¸°
+    	//È¸¿ø Á¤º¸ ÀúÀåÇÏ±â
     	model.addAttribute("user", user);    	
-    	//ì´ íšŒì›ì´ ì†í•œ ì±„íŒ…ë°© ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//ÀÌ È¸¿øÀÌ ¼ÓÇÑ Ã¤ÆÃ¹æ ¸ñ·Ï °¡Á®¿À±â
     	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
@@ -1021,25 +1022,25 @@ public class DoController {
     	model.addAttribute("roomNameList", roomNameList);
     	
     	
-    	//ì‚¬ì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//»ç¿ø ¸ñ·Ï °¡Á®¿À±â
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
     	
-    	//í•´ë‹¹ ê·¸ë£¹ ì±„íŒ…ë°©ìœ¼ë¡œ ì…‹íŒ…
+    	//ÇØ´ç ±×·ì Ã¤ÆÃ¹æÀ¸·Î ¼ÂÆÃ
     	model.addAttribute("roomName", roomName);
     	model.addAttribute("chatType", "GROUP");
     	
     	return "chat/chatMain_group";
     }
     
-    //DM ì±„íŒ… ë©”ì¸
+    //DM Ã¤ÆÃ ¸ŞÀÎ
     @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
     public String chatDm(@RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
-    	//íšŒì› ì •ë³´ ì €ì¥í•˜ê¸°
+    	//È¸¿ø Á¤º¸ ÀúÀåÇÏ±â
     	model.addAttribute("user", user);    	
-    	//ì´ íšŒì›ì´ ì†í•œ ì±„íŒ…ë°© ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//ÀÌ È¸¿øÀÌ ¼ÓÇÑ Ã¤ÆÃ¹æ ¸ñ·Ï °¡Á®¿À±â
     	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
@@ -1050,11 +1051,11 @@ public class DoController {
     	model.addAttribute("roomNameList", roomNameList);
     	
     	
-    	//ì‚¬ì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
+    	//»ç¿ø ¸ñ·Ï °¡Á®¿À±â
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
     	
-    	//í•´ë‹¹ DM ì±„íŒ…ë°©ìœ¼ë¡œ ì…‹íŒ…
+    	//ÇØ´ç DM Ã¤ÆÃ¹æÀ¸·Î ¼ÂÆÃ
     	model.addAttribute("dmName", dmName);
     	model.addAttribute("dmMail", dmMail);
     	model.addAttribute("chatType", "DM");
@@ -1067,7 +1068,7 @@ public class DoController {
   
     
     
-    //ê´€ë¦¬ì_ì‚¬ì›ì¶”ê°€ í˜ì´ì§€
+    //°ü¸®ÀÚ_»ç¿øÃß°¡ ÆäÀÌÁö
    @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
 	   System.out.println("Docontroller addUser() get in");
@@ -1075,40 +1076,40 @@ public class DoController {
    }
     
     
-    //ê´€ë¦¬ì_ì‚¬ì›ì¶”ê°€ ì„œë¹„ìŠ¤
+    //°ü¸®ÀÚ_»ç¿øÃß°¡ ¼­ºñ½º
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user, HttpServletRequest request) throws IOException {
 	    
 	   
 	   
-    	//íŒŒì¼ ì—…ë¡œë“œ íŒŒì¼ëª…
+    	//ÆÄÀÏ ¾÷·Îµå ÆÄÀÏ¸í
     	CommonsMultipartFile file = user.getFile();
-    	String filename = file.getOriginalFilename(); //ì›ë³¸ íŒŒì¼ëª…
+    	String filename = file.getOriginalFilename(); //¿øº» ÆÄÀÏ¸í
     	
         String path = request.getServletContext().getRealPath("/upload");
         String fpath = path + "\\" + filename;
         		
-        //íŒŒì¼ ì“°ê¸° ì‘ì—…
-    	FileOutputStream fs = new FileOutputStream(fpath); // ì—†ìœ¼ë©´ ê±°ê¸°ë‹¤ê°€ íŒŒì¼ ìƒì„±í•¨
+        //ÆÄÀÏ ¾²±â ÀÛ¾÷
+    	FileOutputStream fs = new FileOutputStream(fpath); // ¾øÀ¸¸é °Å±â´Ù°¡ ÆÄÀÏ »ı¼ºÇÔ
     	fs.write(file.getBytes());
     	fs.close();
         		
-        //DBì— íŒŒì¼ ì´ë¦„ ì €ì¥
+        //DB¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
     	user.setMyPic(filename);
         	
         int result = memberService.addUser(user);
         if(result > 0) {
-    		System.out.println("ë©¤ë²„ ì¶”ê°€ ì™„ë£Œ");
+    		System.out.println("¸â¹ö Ãß°¡ ¿Ï·á");
         }
    		
     	return "redirect: adminMain.do";
     }
    	
    
-   //ê´€ë¦¬ì_ì‚¬ì› ì •ë³´ ìˆ˜ì • view
+   //°ü¸®ÀÚ_»ç¿ø Á¤º¸ ¼öÁ¤ view
    @RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)
    public String modifyUser(@RequestParam(value="mail") String mail, Model model) {
-	   //ì„œë¹„ìŠ¤ í†µí•´ì„œ ìœ ì € ë©”ì¼ë¡œ ìœ ì € ì •ë³´ ê°€ì ¸ì™€ì„œ ë¿Œë¦¬ê¸°
+	   //¼­ºñ½º ÅëÇØ¼­ À¯Àú ¸ŞÀÏ·Î À¯Àú Á¤º¸ °¡Á®¿Í¼­ »Ñ¸®±â
 	   User user = memberService.getUserInfo(mail);
 	   model.addAttribute("user", user);
 	   return "admin/ModifyMember";
@@ -1123,7 +1124,7 @@ public class DoController {
    }
    
    
-    //ë¹„ìš© ì°¨íŠ¸ ë·°ë‹¨ ê°€ê¸°
+    //ºñ¿ë Â÷Æ® ºä´Ü °¡±â
 	@RequestMapping(value="paymentChart.do", method=RequestMethod.GET)
 	public String paymentChart() {
 		return "payment/payChart";
