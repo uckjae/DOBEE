@@ -113,19 +113,7 @@
 	</select>
 	
 	
-	<!-- Ajax 연장근무 년도 불러오기 -->
-	<select id="overTimeYearList" parameterType="String" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y') FROM ATTEND WHERE MAIL = #{param1}
-	</select>
-	
-	
-	<!-- Ajax 연장근무 월 불러오기 -->
-	<select id="overTimeMonthList" parameterType="String" resultType="Integer">
-		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%c') FROM ATTEND WHERE MAIL = #{param1}
-	</select>
-	
-	
-	<!-- Ajax 개인_근무 차트 년월 Option 불러오기		0129 ~ing -->
+	<!-- Ajax 개인_근무 차트 년월 Option 불러오기		0129 COMPLETE -->
 	<select id="overTimeYearMonthList" parameterType="String" resultType="String">
 		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y-%m') AS DT
 			FROM ATTEND AT
@@ -175,7 +163,7 @@
     </delete>
     
     
-	<!-- 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing -->
+	<!-- 개인_근무내역 확인 차트 데이터 불러오기			0129	COMEPLTE -->
 	<select id="getChartData" parameterType="String" resultType="com.dobee.vo.member.ChartData">
 		SELECT '근태' AS ENTRY, DATE_FORMAT(ATTTIME, '%d') AS DAYS, DATE_FORMAT(ATTTIME, '%T') AS ATTTIME, DATE_FORMAT(OFFTIME, '%T') AS OFFTIME, MAIL 
 			FROM ATTEND WHERE DATE_FORMAT(ATTTIME, '%Y-%m') = #{param2} AND MAIL = #{param1}

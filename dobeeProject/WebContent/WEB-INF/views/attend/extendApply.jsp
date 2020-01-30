@@ -167,7 +167,7 @@
 	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
 	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
 	
-	<!-- Examples -->
+	<!-- Calendar Data Exports -->
 	<script src="assets/javascripts/pages/ext.calendar.js"></script>
 		
 	<!-- specific vendor page -->
@@ -177,6 +177,7 @@
 	<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
 	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
+		
 		<script>
 			window.onload = function(){
 				connect();//웹소켓 연결
