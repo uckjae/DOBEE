@@ -45,9 +45,6 @@
 <link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 
-
-
-
 </head>
 	<body>
 		<section class="body">
@@ -236,7 +233,6 @@
 				});
 				*/
 					
-	
 				$.ajax({
 					url : "getApyCode.do",
 					dataType : "json",
@@ -333,9 +329,6 @@
 					events = data.AbsAll;
 					
 					$.each(events, (index, element) => {
-						
-						console.log(element);
-						
 						if (element.isAuth ==='승인' && element.apyCode == 1 ) {
 							eventList.push({
 								title : "연차",
@@ -407,156 +400,48 @@
 								color : "#f54242"
 							})
 						}	
-					});
+					})
+				},
+				complete : function () {
+					
 				}
 			});
 			
 			console.log('eventList: ', eventList);
 
-			/* 
-			 document.addEventListener('DOMContentLoaded', function(isLoading, view) {
-			    var calendarEl = document.getElementById('calendar');
 
-			    $('#calendar').fullCalendar({
-				  height : 100,
-			      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-			      header: {
-			        left: 'prev,next today',
-			        center: 'title',
-			        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-			      },
-			      navLinks: true, // can click day/week names to navigate views
-			      businessHours: {
-				      startTime : '09:00',
-				      endTime : '18:00'
-				  },
-			      editable: false,
-			      events: function(start, end, callback) {
-			    	  $.ajax ({
-							url : "AbsAll.do",
-							dataType : "json",
-							success : function(data) {
-								var events = {};
-								events = data.AbsAll;
-								
-								$.each(events, (index, element) => {
-									
-									console.log(element);
-									
-									if (element.isAuth ==='승인' && element.apyCode == 1 ) {
-										eventList.push({
-											title : "연차",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f28c1f"
-										})
-									} else if (element.isAuth ==='미승인' && element.apyCode == 1 ) {
-										eventList.push({
-											title : "연차 미승인",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f54242"
-										})
-									} else if (element.isAuth == '승인' && element.apyCode == 2 ) {
-										eventList.push({
-											title : "반일 연차",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f28c1f"
-										})
-									} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
-										eventList.push({
-											title : "반일 연차 미승인",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f54242"
-										})					
-									} else if (element.isAuth == '출장' && element.apyCode == 3 ) {
-										eventList.push({
-											title : "출장",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f28c1f"
-										})
-									} else if (element.isAuth ==='출장' && element.apyCode == 3 ) {
-										eventList.push({
-											title : "출장 미승인",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f54242"
-										})
-									} else if (element.isAuth == '외근' && element.apyCode == 4 ) {
-										eventList.push({
-											title : "외근",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f28c1f"
-										})
-									} else if (element.isAuth ==='외근' && element.apyCode == 4 ) {
-										eventList.push({
-											title : "외근 미승인",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f54242"
-										})
-									} else if (element.isAuth == '경조 휴가' && element.apyCode == 5 ) {
-										eventList.push({
-											title : "경조 휴가",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#3b6b7d"
-										})
-									} else if (element.isAuth ==='경조 휴가' && element.apyCode == 5 ) {
-										eventList.push({
-											title : "경조 휴가 미승인",
-											start : element.startAt,
-											end : element.endAt,
-											color : "#f54242"
-										})
-									}	
-								});
-							}
-						});
+		 /* 알람 */
+			function getContextPath() {//contextPath 구하는 함수
+			  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+			  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
+			};
+			
+			
 
-				  }
-			    });
+			function connect(){
+				var contextPath = getContextPath();
+				wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
+				wsocket.onopen = onOpen;
+				wsocket.onmessage = onMessage;
+				wsocket.onclose = onClose;
+			}
 
-			    calendar.render();
-			  });
-				 */		
+			
+			
+			function send(data) {
+				let mail = $('#approvalList').val();
+				let content = $('#apycodelist').val();
+				var jsonData = new Object();
+				jsonData.cmd = data;
+				jsonData.mail = mail;
+				jsonData.content = content;
+				jsonData.applier = '${sessionScope.user.name}';
 
-				 /* 알람 */
-					function getContextPath() {//contextPath 구하는 함수
-					  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-					  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
-					};
-					
-					
-
-					function connect(){
-						var contextPath = getContextPath();
-						wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
-						wsocket.onopen = onOpen;
-						wsocket.onmessage = onMessage;
-						wsocket.onclose = onClose;
-					}
-
-					
-					
-					function send(data) {
-						let mail = $('#approvalList').val();
-						let content = $('#apycodelist').val();
-						var jsonData = new Object();
-						jsonData.cmd = data;
-						jsonData.mail = mail;
-						jsonData.content = content;
-						jsonData.applier = '${sessionScope.user.name}';
-
-						var parsedData = JSON.stringify(jsonData);
-						
-						wsocket.send(parsedData);
-					}
-					/* /알람  */
+				var parsedData = JSON.stringify(jsonData);
+				
+				wsocket.send(parsedData);
+			}
+			/* /알람  */
 	  	</script>
 		
 		

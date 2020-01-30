@@ -4,6 +4,19 @@ a,
 	color: #34495E;
 }
 
+.fc-widget-header.fc-list-heading-main a {
+	color : black;
+}
+
+.fc-widget-header a {
+	color : #ffffff;
+}
+
+.fc-widget-header a:hover, a:focus {
+	color : #c2c2c2;
+}
+
+
 a:hover,
 a:focus,
 .btn-link:hover,
@@ -390,6 +403,9 @@ html.dark .pagination > li.active a {
 .fc .fc-widget-header {
 	background: #0088cc;
 	border-color: #0088cc;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border: none;
 }
 
 .fc .fc-header-title h2:before {

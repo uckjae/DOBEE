@@ -88,7 +88,7 @@
 								<div class="col-md-12">
 									<div class="col-md-5"></div>
 									<div class="col-md-1">
-										<button id="attendColor" class="btn btn-info btn-sm" style="border:none; background-color: rgba(129, 242, 41, 1); "><b>출근/퇴근</b></button>
+										<button id="attendColor" class="btn btn-info btn-sm" style="border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
 									</div>
 									<div class="col-md-1">
 										<button id="extendColor" class="btn btn-info btn-sm" style="border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
