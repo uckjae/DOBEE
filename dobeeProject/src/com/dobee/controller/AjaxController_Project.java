@@ -337,6 +337,33 @@ public class AjaxController_Project {
 		System.out.println("jsonlist"+jsonList.toString());
     	
 		return jsonList;
+	}
+	
+	/*차트*/
+	
+	//업무 담당 차트
+	@RequestMapping("getMemberTaskChart.do")
+	public Map<String, Integer> getMemberChart(@RequestParam(value="pjtSeq") String pjtSeq , HttpServletRequest request) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		System.out.println("이거 타니?");
+		System.out.println("플젝 번호"+pjtSeq);
+		
+		//이 프로젝트의 참여자 리스트 가져오기
+		
+		//프로젝트에 속한 멤버 정보 가져오기
+		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		//특정 참여자의 업무량 가져오기
+		
+		
+		for(int i = 0;i<pjtMember.size(); i++) {
+			String pjtMemberName = pjtMember.get(i).getName();
+			String pjtMemberMail = pjtMember.get(i).getMail();
+			int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
+			map.put(pjtMemberName, result);
+		}
+		System.out.println("맵맵?"+map.toString());
+		
+		return map;
 		
 	}
 	

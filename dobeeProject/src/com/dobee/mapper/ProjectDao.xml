@@ -170,4 +170,12 @@ WHERE p.pjtseq = #{pjtSeq}
 <delete id="taskCheckListDelete" parameterType="com.dobee.vo.project.CheckList">
 	DELETE FROM CHECKLIST WHERE CHKSEQ=#{chkSeq}
 </delete>
+
+<!-- //특정 프로젝트에서 특정인의 업무량 가져오기
+    public int getMemberTaskCount(int pjtSeq, String mail); -->
+<select id="getMemberTaskCount" resultType="Integer">
+	SELECT COUNT(*)
+	FROM TASK
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2}
+</select>
 </mapper>

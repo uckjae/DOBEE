@@ -238,4 +238,15 @@ public class ProjectService {
     public List<Task> projectChart(){
         return null;
     }
+    
+    //특정 프로젝트에서 특정인의 업무량 가져오기
+    public int getMemberTaskCount(int pjtSeq, String mail) {
+    	int result = 0;
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	result = projectDao.getMemberTaskCount(pjtSeq, mail);
+    	System.out.println("메일은?"+mail);
+    	System.out.println("결과는?"+result);
+    	return result;
+    }
+    
 }

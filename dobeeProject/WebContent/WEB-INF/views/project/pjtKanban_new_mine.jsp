@@ -47,7 +47,11 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 		
 		
-	
+		<!-- Chart.js -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+		
+		
 	
 	
 	<!-- Sweet Alert -->
@@ -359,8 +363,94 @@
 	 				}
 	 			});
 			});
-		});
 
+
+		/*프로젝트 현황 차트!!*/
+		
+			/*업무 담당 차트! */
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
+			var pjtMember = new Array();
+			var taskCount = new Array();
+			
+			$.ajax({
+ 	 			url:"ajax/project/getMemberTaskChart.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				
+ 					console.log(responseData);
+ 					for(key in responseData){
+ 						pjtMember.push(key);
+ 						taskCount.push(responseData[key]);
+ 	 				}
+ 	 				console.log('배열은?'+pjtMember);
+ 	 				console.log('배열은?'+taskCount);
+ 					
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+
+ 				complete : function() {
+
+ 					new Chart(document.getElementById("member-task"), {
+ 					    type: 'doughnut',
+ 					    data: {
+ 					      labels: pjtMember,
+ 					      datasets: [
+ 					        {
+ 					          label: "업무 할당 현황",
+ 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          data: taskCount
+ 					        }
+ 					      ]
+ 					    },
+ 					    options: {
+ 					      title: {
+ 					        display: true,
+ 					        text: 'Predicted world population (millions) in 2050'
+ 					      }
+ 					    }
+
+ 					    
+ 					});
+ 					
+ 	 			}
+ 			});
+ 			/*
+			new Chart(document.getElementById("member-task"), {
+			    type: 'doughnut',
+			    data: {
+			      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+			      datasets: [
+			        {
+			          label: "Population (millions)",
+			          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+			          data: [2478,5267,734,784,433]
+			        }
+			      ]
+			    },
+			    options: {
+			      title: {
+			        display: true,
+			        text: 'Predicted world population (millions) in 2050'
+			      }
+			    }
+
+			    
+			});
+
+			*/
+
+
+		}); //onload 함수 끝
+
+		
+		
 		
 		/* DB에서 가져온 중요도로 별 표시해주는 함수
 		*/
@@ -1032,6 +1122,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
+                                            <input type="hidden" id="tskSeq" value="${task.tskSeq}">
                                         </div>
                                     </header>
                                     <div id="accordion">
@@ -1265,6 +1356,8 @@
 									<h2 class="panel-title">참여중인 프로젝트</h2>
 								</header>
 								<div class="panel-body">
+								
+								
 									<div class="table-responsive">
 										<table class="table table-striped mb-none">
 											<thead>
@@ -1293,6 +1386,8 @@
 											</tbody>
 										</table>
 									</div>
+									
+									
 								</div>
 							</section>
 
@@ -1344,73 +1439,15 @@
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
-
-									<h2 class="panel-title">Best Seller</h2>
-									<p class="panel-subtitle">Customize the graphs as much as you want, there are so many options and features to display information using JSOFT Admin Template.</p>
+									<h2 class="panel-title">업무 비중</h2>
 								</header>
 								<div class="panel-body">
 
 									<!-- Flot: Basic -->
-									<div class="chart chart-md" id="flotDashBasic"></div>
-									<script>
-
-										var flotDashBasicData = [{
-											data: [
-												[0, 170],
-												[1, 169],
-												[2, 173],
-												[3, 188],
-												[4, 147],
-												[5, 113],
-												[6, 128],
-												[7, 169],
-												[8, 173],
-												[9, 128],
-												[10, 128]
-											],
-											label: "Series 1",
-											color: "#0088cc"
-										}, {
-											data: [
-												[0, 115],
-												[1, 124],
-												[2, 114],
-												[3, 121],
-												[4, 115],
-												[5, 83],
-												[6, 102],
-												[7, 148],
-												[8, 147],
-												[9, 103],
-												[10, 113]
-											],
-											label: "Series 2",
-											color: "#2baab1"
-										}, {
-											data: [
-												[0, 70],
-												[1, 69],
-												[2, 73],
-												[3, 88],
-												[4, 47],
-												[5, 13],
-												[6, 28],
-												[7, 69],
-												[8, 73],
-												[9, 28],
-												[10, 28]
-											],
-											label: "Series 3",
-											color: "#734ba9"
-										}];
-
-										// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
-
-									</script>
+									<div class="chart chart-md" >
+										<canvas id="member-task" width="800" height="450"></canvas>
+									</div>
+									
 
 								</div>
 							</section>
@@ -1782,7 +1819,10 @@
     <!-- 오른쪽 사이드 끝 -->
 
 </section>
+	
+		
 		<c:import url="/common/BottomTag.jsp"/>
+		
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		
 		

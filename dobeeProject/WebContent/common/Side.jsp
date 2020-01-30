@@ -47,16 +47,13 @@
 						<a><i class="fa fa-tasks" aria-hidden="true"></i><span>프로젝트</span></a>
 						<ul class="nav nav-children">
 							<li><a href="pjtMain.do?mail=${user.mail}"> 메인 </a></li>
-							<li><a href="forms-advanced.html"> 칸반보드 </a></li>
-							<li><a href="pjtDashBoard.do?mail=${user.mail}"> 프로젝트 현황 </a></li>
+							<li><a href="pjtDashBoard.do?mail=${user.mail}">프로젝트 현황 </a></li>
 						</ul>
 					</li>
-					
 					<li>
 						<a href="chat.do">
 						<i class="fa fa-comments" aria-hidden="true"></i><span>채팅</span></a>
 					</li>
-					
 				</ul>
 			</nav>
 
