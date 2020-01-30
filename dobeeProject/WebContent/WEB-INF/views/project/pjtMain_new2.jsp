@@ -25,11 +25,6 @@
 		}
    	</style>
   	<script>
-  	function formatRepoSelection (repo) {
-		  var $container = jQuery("<option value='"+repo.id+"'>"+repo.text+"</option>");
-		  return $container;
-		}
-		
    $(function() {
 	  
 	   $('.userSelect').select2({
@@ -53,7 +48,31 @@
 		        	}
 		      },
 		 });
-	   
+		 /*
+		 $('#userSelectEdit').select2({
+		   	placeholder: "사원 선택",
+		   	multiple: true,
+		   	ajax: {
+		          url: "getUserList.do",
+		          dataType: 'json',
+		          type:"post",
+		          processResults: function (data) {
+		        	  	var arr = []
+			          	var res = $.each(data, function(index, item) {
+			          		arr.push({
+	                            id: item.mail,
+	                            text: item.name
+	                        });
+	        	        });
+      	       			return {
+      	       				results: arr
+          	       		}
+		        	},
+		      },
+		     templateSelection: formatRepoSelection
+		 })
+		 
+		 */
 
 	 
 		$('.progressSelect').select2({
@@ -192,6 +211,7 @@
 				        type:"post",
 	 	 				success:function(responseData){
 		 	 				console.log(responseData);
+		 	 				//var data = responseData.data;
 		 	 				var id = new Array();
 		 	 				var name = new Array();
 		 	 				$.each(responseData, function(index, element){
@@ -204,9 +224,14 @@
 			 	 				placeholder: '사원 선택',
 				 	 			data : id
 				 	 		});
-
-		 	 				
-				 	 	
+				 	 		/* 
+			 	 			$("#userSelectEdit > option").each(function(){
+			 	 				
+			 	 				for (var i = 0; i < name.length; i++){
+				 	 				$("#userSelectEdit > option").text(name[i]);
+					 	 		}
+					 		});
+ */
 			 	 			$("#userSelectEdit > option").each(function(){
 
 			 	 				for (var i = 0; i < mails.length; i++){
@@ -216,6 +241,13 @@
 					 	 		}
 					 		});
 
+					 		/*
+			 	 			for (var i = 0; i < mails.length; i++){
+		 	 				if($(this).val() == mails[i]){
+				 				$(this).attr('selected','selected');
+							}
+			 	 		}
+					 		*/
 			 	 			
 			 	 			
 	 	 				},
@@ -224,8 +256,9 @@
 	 								+ request.responseText + "\n" + "error : " + error);
 	 					}
 	 				});
-		 			
-	 			
+	 				
+
+	 				
 
  				},
  				error:function(request,status,error){
@@ -236,6 +269,10 @@
 
 			  
 
+
+
+
+			 
 		});
 
 	
