@@ -12,18 +12,9 @@
 <link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 
 <!-- Date-time picker -->
-<!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/flatly/bootstrap.min.css"> -->
 <link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-
-<!-- Full Calendar Octupus -->
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
 
 <!-- Full Calendar -->
-<!-- <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" /> -->
 <link href='assets/vendor/fullcalendar-ori/packages/core/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/bootstrap/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
@@ -177,194 +168,179 @@
 <!-- SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT// -->
 	
 	<!-- Date-Time Picker -->
-		<!-- JQuery 3.4.1 min - google -->
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
 		<!-- Moment.js 2.24.0 min - cloudflare -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 		
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
-	
-	<!-- Full Calendar -->
-	<!-- 	
-	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
-	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
-	 -->
-	 
-	<!-- Examples -->
-	<!-- <script src="assets/javascripts/pages/abs.calendar.js"></script> -->
-	
 		
 	<!-- specific vendor page -->
 	<script src="assets/vendor/select2/select2.js"></script>
 	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-	<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
 	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
-	
-	
-	
-	
-		<script>
-			window.onload = function(){
 
-				$('#listenSlider').change(function() {
-					$('.output b').text( this.value +'/'+ 27);
-				});
-	
-				$.ajax({
-					url : "getApyCode.do",
-					dataType : "json",
-					success : function(data) {
-						var aArray = [];
-						aArray = data.apyCode;
-						for (var i=0; i<aArray.length-1; i++) {
-							var option = document.createElement("option")
-							$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
-						}					
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-				
-				$.ajax({
-					url : "getApprovalList.do",
-					dataType : "json",
-					success : function(data) {			
-						var dArray = [];
-						dArray = data.renewedList;
-						for (var i =0; i<dArray.length; i++) {
-							var option = document.createElement("option")
-							$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
-						}
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-				
-				$('#datetimepickerEnd').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' ,
-		            inline : true,
-		            sideBySide : true
-		        });
-		        
-			 	$('#datetimepickerStart').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm',
-		            inline : true,
-		            sideBySide : true
-		        });
-			}
 
-			var eventList = [];
+	<script>
+		window.onload = function(){
 
-			$.ajax ({
-				url : "AbsAll.do",
+			$('#listenSlider').change(function() {
+				$('.output b').text( this.value +'/'+ 27);
+			});
+
+			$.ajax({
+				url : "getApyCode.do",
 				dataType : "json",
 				success : function(data) {
-					var events = [];
-					events = data.AbsAll;
-
-					$.each(events, (index, element) => {						
-						if (element.isAuth ==='승인' && element.apyCode == 1 ) {
-							eventList.push({
-								title : "연차",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f28c1f"
-							})
-						} else if (element.isAuth ==='미승인' && element.apyCode == 1 ) {
-							eventList.push({
-								title : "연차 미승인",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f54242"
-							})
-						} else if (element.isAuth == '승인' && element.apyCode == 2 ) {
-							eventList.push({
-								title : "반일 연차",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f28c1f"
-							})
-						} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
-							eventList.push({
-								title : "반일 연차 미승인",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f54242"
-							})					
-						} else if (element.isAuth == '출장' && element.apyCode == 3 ) {
-							eventList.push({
-								title : "출장",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f28c1f"
-							})
-						} else if (element.isAuth ==='출장' && element.apyCode == 3 ) {
-							eventList.push({
-								title : "출장 미승인",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f54242"
-							})
-						} else if (element.isAuth == '외근' && element.apyCode == 4 ) {
-							eventList.push({
-								title : "외근",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f28c1f"
-							})
-						} else if (element.isAuth ==='외근' && element.apyCode == 4 ) {
-							eventList.push({
-								title : "외근 미승인",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f54242"
-							})
-						} else if (element.isAuth == '경조 휴가' && element.apyCode == 5 ) {
-							eventList.push({
-								title : "경조 휴가",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#3b6b7d"
-							})
-						} else if (element.isAuth ==='경조 휴가' && element.apyCode == 5 ) {
-							eventList.push({
-								title : "경조 휴가 미승인",
-								start : element.startAt,
-								end : element.endAt,
-								color : "#f54242"
-							})
-						}	
-					});
+					var aArray = [];
+					aArray = data.apyCode;
+					for (var i=0; i<aArray.length-1; i++) {
+						var option = document.createElement("option")
+						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
+					}					
 				},
-				complete : function () {
-					var calendarEl = document.getElementById('calendar');
-
-				    var calendar = new FullCalendar.Calendar(calendarEl, {
-				      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-				      header: {
-				    	left : 'prev,today,next',
-						center : 'title',
-						right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-				      },
-				      navLinks: true, // can click day/week names to navigate views
-				      businessHours: {
-					      startTime : '09:00',
-					      endTime : '18:00'
-					  },
-					  eventLimit : true,
-				      editable: false,
-				      events: eventList
-				    });
-				    calendar.render();
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
-						
-	  	</script>
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {			
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
+					}
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			$('#datetimepickerEnd').datetimepicker({
+	            format : 'YYYY-MM-DD HH:mm' ,
+	            inline : true,
+	            sideBySide : true
+	        });
+	        
+		 	$('#datetimepickerStart').datetimepicker({
+	            format : 'YYYY-MM-DD HH:mm',
+	            inline : true,
+	            sideBySide : true
+	        });
+		}
+
+		
+		var eventList = [];
+
+		$.ajax ({
+			url : "AbsAll.do",
+			dataType : "json",
+			success : function(data) {
+				var events = [];
+				events = data.AbsAll;
+
+				$.each(events, (index, element) => {						
+					if (element.isAuth ==='승인' && element.apyCode == 1 ) {
+						eventList.push({
+							title : "연차",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f28c1f"
+						})
+					} else if (element.isAuth ==='미승인' && element.apyCode == 1 ) {
+						eventList.push({
+							title : "연차 미승인",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f54242"
+						})
+					} else if (element.isAuth == '승인' && element.apyCode == 2 ) {
+						eventList.push({
+							title : "반일 연차",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f28c1f"
+						})
+					} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
+						eventList.push({
+							title : "반일 연차 미승인",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f54242"
+						})					
+					} else if (element.isAuth == '출장' && element.apyCode == 3 ) {
+						eventList.push({
+							title : "출장",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f28c1f"
+						})
+					} else if (element.isAuth ==='출장' && element.apyCode == 3 ) {
+						eventList.push({
+							title : "출장 미승인",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f54242"
+						})
+					} else if (element.isAuth == '외근' && element.apyCode == 4 ) {
+						eventList.push({
+							title : "외근",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f28c1f"
+						})
+					} else if (element.isAuth ==='외근' && element.apyCode == 4 ) {
+						eventList.push({
+							title : "외근 미승인",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f54242"
+						})
+					} else if (element.isAuth == '경조 휴가' && element.apyCode == 5 ) {
+						eventList.push({
+							title : "경조 휴가",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#3b6b7d"
+						})
+					} else if (element.isAuth ==='경조 휴가' && element.apyCode == 5 ) {
+						eventList.push({
+							title : "경조 휴가 미승인",
+							start : element.startAt,
+							end : element.endAt,
+							color : "#f54242"
+						})
+					}	
+				});
+			},
+			complete : function () {
+				var calendarEl = document.getElementById('calendar');
+
+			    var calendar = new FullCalendar.Calendar(calendarEl, {
+			      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+			      header: {
+			    	left : 'prev,today,next',
+					center : 'title',
+					right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+			      },
+			      navLinks: true, // can click day/week names to navigate views
+			      businessHours: {
+				      startTime : '09:00',
+				      endTime : '18:00'
+				  },
+				  eventLimit : true,
+			      editable: false,
+			      events: eventList
+			    });
+			    calendar.render();
+			}
+		});
+		
+					
+  	</script>
 		
 
 	</body>

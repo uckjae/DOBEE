@@ -33,7 +33,6 @@
 		success : function(data) {
 			var events = [];
 			events = data.ExtAll;
-			console.log("events : ", events)
 			$.each(events, (index, element) => {
 				if (element.isAuth === '승인') {
 					eventList.push({
@@ -57,7 +56,57 @@
 						color: "#fc4103"
 					})		
 				}*/
-				
+			});
+		},
+		complete : function () {
+			var calendarEl = document.getElementById('calendar');
+
+		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+		      header: {
+		    	left : 'prev,today,next',
+				center : 'title',
+				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+		      },
+		      navLinks: true, // can click day/week names to navigate views
+		      businessHours: {
+			      startTime : '09:00',
+			      endTime : '18:00'
+			  },
+			  eventLimit : true,
+		      editable: false,
+		      events: eventList
+		    });
+		    calendar.render();
+		}
+	});
+	
+	/*
+	var eventList = [];
+
+	$.ajax ({
+		url : "ExtAll.do",
+		dataType : "json",
+		success : function(data) {
+			var events = [];
+			events = data.ExtAll;
+			console.log("events : ", events)
+			$.each(events, (index, element) => {
+				if (element.isAuth === '승인') {
+					eventList.push({
+						title: "연장근무", 
+						start: element.startAt, 
+						end: element.endAt,
+						color: "#f28c1f"
+					})		
+				} else if (element.isAuth === '미승인') {
+					eventList.push({
+						title: "미승인", 
+						start: element.startAt, 
+						end: element.endAt,
+						color: "#c842f5"
+					})		
+				} 
 			});
 		},
 		complete : function () {
@@ -131,7 +180,8 @@
 				.attr({ 'class': 'btn btn-sm btn-default' });
 		}
 
-	});						
+	});
+	*/				
 	
 
 	$(function() {
