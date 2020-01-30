@@ -844,12 +844,17 @@ public class DoController {
     //칸반보드 메인 불러오기
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq, Model model, HttpServletRequest request){
+    	
     	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
     	User user = (User) request.getSession().getAttribute("user");
+    	
+    	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
+    	
+
     	model.addAttribute("user",user);
     	
     	JSONArray jsonArray = new JSONArray();
@@ -859,6 +864,8 @@ public class DoController {
     	model.addAttribute("pjtMember", pjtMember);
     	
         return "project/pjtKanban_new";
+        
+        
     }
     
     //프로젝트 현황 불러오기 pjtDashBoard.do

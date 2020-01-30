@@ -195,7 +195,6 @@
 		 	 				var id = new Array();
 		 	 				var name = new Array();
 		 	 				$.each(responseData, function(index, element){
-			 	 				//console.log('메일은??'+element.mail);
 			 	 				id.push(element.mail);
 			 	 				name.push(element.name);
 			 	 			});
@@ -204,9 +203,7 @@
 			 	 				placeholder: '사원 선택',
 				 	 			data : id
 				 	 		});
-
 		 	 				
-				 	 	
 			 	 			$("#userSelectEdit > option").each(function(){
 
 			 	 				for (var i = 0; i < mails.length; i++){
