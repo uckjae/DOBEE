@@ -1435,11 +1435,12 @@
 							</section>
 						</div>
 					</div>
-						<div class="row">
+					<!-- 프로젝트 업무 비중 -->
+					<div class="row">
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">업무 비중</h2>
+									<h2 class="panel-title">프로젝트 업무 비중</h2>
 								</header>
 								<div class="panel-body">
 
@@ -1447,8 +1448,6 @@
 									<div class="chart chart-md" >
 										<canvas id="member-task" width="800" height="450"></canvas>
 									</div>
-									
-
 								</div>
 							</section>
 						</div>
