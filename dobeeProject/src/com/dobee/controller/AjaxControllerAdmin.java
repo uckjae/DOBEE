@@ -23,6 +23,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,52 +84,81 @@ public class AjaxControllerAdmin {
 	  MimeMessageHelper messageHelper = null;
 	  
 	  String tomail =request.getParameter("mail"); //받는 사람 이메일(작성한 이메일)
+	  
 	  Enumeration<String> enu = request.getParameterNames();
 		while(enu.hasMoreElements()) {
 			System.out.println("while");
 			System.out.println(enu.nextElement());
 		}
-	  
-	  
-	  try {
-		  
+		
+	  try {		  
 		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 		  Map model = new HashMap();
 		  model.put("mail",tomail);
-		  model.put("dice", dice);
-		  
-		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  
-		  
+		  model.put("dice", dice);	  
+		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  		  
 		  //이메일 내용은 emailTemplate2.vm이고 형식UTF-8
 		  messageHelper.setFrom("letsdobee@gmail.com");  //보내는이메일
 		  messageHelper.setTo(tomail);                     //받는이메일
-		  StringBuilder subject = new StringBuilder();
-		  
+		  StringBuilder subject = new StringBuilder();  
 		  subject.append("DOBEE 비밀번호 찾기");             //이메일 제목
 		  messageHelper.setSubject(subject.toString()); //이메일 제목 세팅완료
-		  messageHelper.setText(mailBody,true);              //이메일 내용 세팅완료
-		  
-		  
+		  messageHelper.setText(mailBody,true);              //이메일 내용 세팅완료	  
 		  javaMailSender.send(message);                //이메일 모든내용(메세지)보내기
-	      }catch(Exception e){
+	      
+	  }catch(Exception e){
 		    e.printStackTrace();
 		  }
 	  
-		
 		  ModelAndView mv = new ModelAndView(); //보낼페이지 지정
-		  mv.setViewName("findPassWordOk.do"); //뷰이름 mv.addObject("dice",dice);
+		  mv.setViewName("main/findPassWordAuth"); //뷰이름 mv.addObject("dice",dice);
+		  mv.addObject("mail",mail);
+		  mv.addObject("dice",dice);
+		  
+		  System.out.println("mv나와라: "+mv);	
+		  
+		  response_mail.setContentType("text/html; charset=UTF-8"); 
+		  PrintWriter out_mail =response_mail.getWriter();	  
+		  System.out.println("out_mail:"+out_mail);	  
+		  out_mail.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
+		  out_mail.flush();//현재 버퍼에 저장되있는 내용을 클라이언트로 전송, 버퍼 비움
+			  
+		  return mv;
+	  }
+	  
+	  //비밀번호 찾기 인증
+	  @RequestMapping(value="pass_injeung.do{dice},{mail}",method=RequestMethod.POST)
+	  public ModelAndView pass_injeung(String pass_injeung, @PathVariable String dice,
+			  @PathVariable String mail, HttpServletResponse response_equals)throws IOException{
+		  
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("/main/findPassWordChange");
 		  mv.addObject("mail",mail);
 		  
-		  System.out.println("mv임?"+mv);
+		  if(pass_injeung.equals(dice)) { //인증번호 일치 => 맞다는창 출력 + 비밀번호 변경창 이동
+			  mv.setViewName("/main/findPassWordChange");
+			  mv.addObject("mail", mail);
+			  
+		     response_equals.setContentType("text/html; charset=UTF-8");
+		     PrintWriter out_equals =response_equals.getWriter();
+		     out_equals.println("<script>alert('인증번호 일치합니다. 비밀번호 변경으로 이동합니다');</script>");
+		     out_equals.flush();
+		     
+		     return mv;
 		  
-		  response_mail.setContentType("text/html; charset=UTF-8"); PrintWriter
-		  out_mail =response_mail.getWriter();
-		  out_mail.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
-		  out_mail.flush();
-		  
+		  }else if(pass_injeung!=dice) {
+			  ModelAndView mv2 = new ModelAndView();
+			  mv2.setViewName("main/findPassWordAuth");
+			  
+			  response_equals.setContentType("type/html; charset=UTF-8");
+			  PrintWriter out_equals = response_equals.getWriter();
+			  out_equals.println("<script>alert('인증번호가 일치하지 않습니다. 다시입력해주세요'); history.go(-1);</script>");
+		      out_equals.flush();
+		      
+		      return mv2;
+		  }
 		  
 		  return mv;
-		 
 	  }
 	
 	//사원메일발송

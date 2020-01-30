@@ -63,7 +63,7 @@ body {
                   console.log("리스폰스확인:"+response);
                   resolve(response)                 
                   },
-              error: function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
+              error:  function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
 				   console.log("에러"+textStatus); 
 				   console.log("에러2"+errorThrown);
 					}
@@ -71,13 +71,58 @@ body {
           });
 		}
 
-	function myFormSubmit(){
-		findMail().then(function(){
-			console.log("submit()");
-			document.getElementById('findPWD').submit();
-			$('#findPWD').submit();	
-			
-		});
+
+
+
+$("#submitBtn").on('click',function(e){
+     var mail = $("#mail").val();
+
+     $.ajax({
+         url:'ajax/admin/findPassWord2.do',
+         data:{"mail":mail},
+         dataType:"text",
+         success:function(data){
+           var mail= data;
+
+           if($.trim($('mail').val())!==mail)){
+       	    alert("존재하지 않는 이메일입니다.");
+               $('#mail').focus();
+               return false;
+       	   }
+       	   else if($.trim($('mail').val())===mail)){
+       		location.href= "findPassWordAuth.do";
+       	   }
+
+          },
+          complete:
+              function findMail(){
+        	  $.ajax({
+    			  url:"ajax/admin/findEmail.do",
+    			  data:{'mail':$('#mail').val()
+    				  },
+    				  
+                  dataType:"text", 
+                  method:"POST",
+
+                  success: function(response){
+                      console.log("메일보내짐");
+                      console.log("리스폰스확인:"+response);
+                      resolve(response)                 
+                      },
+                  error:  function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
+    				   console.log("에러"+textStatus); 
+    				   console.log("에러2"+errorThrown);
+    					}
+    			  });
+              }
+         ,error : function(request,status,error){
+				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
+          }
+          
+         });
+         $("#findPWD").submit();
+        });		
+		
 	}
 </script>
 
@@ -99,7 +144,7 @@ body {
 	</div>
 					
 	<div class="panel-body">
-	  <form action="" method="post" id="findPWD" enctype="multipart/form-data">
+	  <form action="findPassWord2.do" method="post" id="findPWD" enctype="multipart/form-data">
 						
 		<div class="form-group mb-lg">
 		  <label>메일을 작성하세요</label>
@@ -114,7 +159,7 @@ body {
 		</div>		 
 		<hr>
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">메일 전송</a>
+		  <input type="button" id="submitBtn" class="btn btn-primary mr-3" value="전송">
 		</div>
 		</form>
 

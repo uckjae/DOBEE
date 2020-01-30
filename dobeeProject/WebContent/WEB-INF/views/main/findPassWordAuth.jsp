@@ -65,12 +65,12 @@ body {
 	</div>
 					
 	<div class="panel-body">
-	  <form action="" method="post" id="findPWD" enctype="multipart/form-data">
+	  <form action="pass_injeung.do${dice},${mail}" method="post" id="" enctype="multipart/form-data">
 						
 		<div class="form-group mb-lg">
 		  <label>인증번호를 입력하세요</label>
 		  <div class="input-group input-group-icon">
-			 <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
+			 <input class="form-control input-lg" id="" name="pass_injeung" form=""/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-check-circle"></i>
@@ -80,7 +80,7 @@ body {
 		</div>		 
 		<hr>
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">확인</a>
+		  <button type="submit" name="submit">확인</button>
 		</div>
 		</form>
 
