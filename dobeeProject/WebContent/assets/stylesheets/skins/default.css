@@ -4,16 +4,14 @@ a,
 	color: #34495E;
 }
 
-.fc-widget-header.fc-list-heading-main a {
-	color : black;
-}
-
-.fc-widget-header a {
+a.fc-widget-header{
 	color : #ffffff;
 }
-
-.fc-widget-header a:hover, a:focus {
+a:hover, a:focus, .fc-widget-header {
 	color : #c2c2c2;
+}
+a.fc-list-heading-main{
+	color : black;
 }
 
 

@@ -9,29 +9,22 @@
 <c:import url="/common/HeadTag.jsp"/>
 
 <!-- Date-time picker -->
-<!-- <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/flatly/bootstrap.min.css"> -->
 <link rel="stylesheet" href="plugins/datetime-picker/css/bootstrap-datetimepicker.min.css">
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
 
 <!-- Full Calendar -->
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.css" />
-<link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.print.css" media="print" />
-
-<!--
 <link href='assets/vendor/fullcalendar-ori/packages/core/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/bootstrap/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
-
 <script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/bootstrap/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/daygrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/timegrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
--->
+
 
 </head>
 	<body>
@@ -49,7 +42,7 @@
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>부재 일정 신청 수정</h2>
+						<h2>연장 근무 신청 수정</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -148,20 +141,10 @@
 <!-- SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT// -->
 	
 	<!-- Date-Time Picker -->
-		<!-- JQuery 3.4.1 min - google -->
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
 		<!-- Moment.js 2.24.0 min - cloudflare -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 		
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
-	
-	<!-- Full Calendar -->
-	<script src="assets/vendor/fullcalendar/lib/moment.min.js"></script>
-	<script src="assets/vendor/fullcalendar/fullcalendar.js"></script>
-	 
-	<!-- Full Ext Examples -->
-	<script src="assets/javascripts/pages/ext.calendar.js"></script>
 	
 	<!-- specific vendor page -->
 	<script src="assets/vendor/select2/select2.js"></script>
@@ -171,36 +154,92 @@
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
 	
 	
-	
-		<script>
-			window.onload = function(){
-	
-				$.ajax({
-					url : "getApprovalList.do",
-					dataType : "json",
-					success : function(data) {			
-						var dArray = [];
-						dArray = data.renewedList;
-						for (var i =0; i<dArray.length; i++) {
-							var option = document.createElement("option")
-							$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
-						}
-					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	<script>
+		window.onload = function(){
+
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {			
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = document.createElement("option")
+						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
 					}
-				});
-				
-			 	$('#datetimepickerStart').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
-		        });
-		
-		        $('#datetimepickerEnd').datetimepicker({
-		            format : 'YYYY-MM-DD HH:mm' 
-		        });
-			}
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+		 	$('#datetimepickerStart').datetimepicker({
+	            format : 'YYYY-MM-DD HH:mm' 
+	        });
 	
-  		</script>
+	        $('#datetimepickerEnd').datetimepicker({
+	            format : 'YYYY-MM-DD HH:mm' 
+	        });
+
+	        var eventList = [];
+		       
+	    	$.ajax ({
+	    		url : "ExtAll.do",
+				dataType : "json",
+				success : function(data) {
+					var events = [];
+					events = data.ExtAll;
+
+	    			$.each(events, (index, element) => {
+	    				if (element.isAuth === '승인') {
+	    					eventList.push({
+	    						title: "연장근무", 
+	    						start: element.startAt, 
+	    						end: element.endAt,
+	    						color: "#f28c1f"
+	    					})		
+	    				} else if (element.isAuth === '미승인') {
+	    					eventList.push({
+	    						title: "미승인", 
+	    						start: element.startAt, 
+	    						end: element.endAt,
+	    						color: "#c842f5"
+	    					})		
+	    				} /*else if (element.isAuth === '반려') {
+	    					eventList.push({
+	    						title: "반려", 
+	    						start: element.startAt, 
+	    						end: element.endAt,
+	    						color: "#fc4103"
+	    					})		
+	    				}*/
+	    			});
+	    		},
+	    		complete : function () {
+	    			var calendarEl = document.getElementById('calendar');
+
+	    		    var calendar = new FullCalendar.Calendar(calendarEl, {
+	    		      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+	    		      header: {
+	    		    	left : 'prev,today,next',
+	    				center : 'title',
+	    				right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+	    		      },
+	    		      navLinks: true, // can click day/week names to navigate views
+	    		      businessHours: {
+	    			      startTime : '09:00',
+	    			      endTime : '18:00'
+	    			  },
+	    			  eventLimit : true,
+	    		      editable: false,
+	    		      events: eventList
+	    		    });
+	    		    calendar.render();
+	    		}
+	    	});
+		}
+
+	</script>
 		
 	</body>
 </html>

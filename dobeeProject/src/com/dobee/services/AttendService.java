@@ -22,9 +22,9 @@ public class AttendService {
 		 attSeq = userDao.isWork(mail);
 		 
 		 if ( attSeq == null) {
-			 return "off";
+			 return "퇴근 완료";
 		 } else {
-			 return "on";
+			 return "출근 완료";
 		 }
 	 }
 	 
