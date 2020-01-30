@@ -1,7 +1,5 @@
 package com.dobee.vo.member;
 
-import java.util.Date;
-
 import lombok.Data;
 import lombok.ToString;
 

@@ -1,7 +1,5 @@
 package com.dobee.services;
 
-
-
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dobee.dao.NoticeDao;
+import com.dobee.dao.ScheduleDao;
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.notice.NoticeFile;
+import com.dobee.vo.schedule.MainSchedule;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
@@ -127,6 +127,16 @@ public class NoticeService {
     	int result = 0;
     	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
     	result = noticedao.noticeCount(notSeq);    	
+    	return result;
+    }
+    
+    
+	// 공지사항 일정 캘린더 병합		0130 게다죽		~ing
+    public List<MainSchedule> noticeToCalendar() {
+    	List<MainSchedule> result = null;
+    	ScheduleDao scheduleDao = sqlSession.getMapper(ScheduleDao.class);
+    	result = scheduleDao.noticeToCalendar();
+
     	return result;
     }
     
