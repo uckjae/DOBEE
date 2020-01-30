@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html class="fixed">
@@ -39,148 +39,57 @@
 <!-- Examples -->
 <script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
 body {
     background: #23394A;
     width: 100%;
 }
 </style>
-
 <script type="text/javascript">
-$(function(){	
- $('#idModal2').click('show.bs.modal',function(e){
-	 console.log("done???");
-	 $('#findMail').trigger('reset');
-
-	 "d"
-     
-	 var name = $('#name').val();
-     var phone = $('#phone').val();
-
-     
-     
-     $.ajax({
-         url:'ajax/admin/findId.do',  
-         data: {"name":name, "phone":phone},
-         dataType : "text",
-         success:function(data){
-			console.log("ajax success!!");
-			console.log(data);
-            var mail = data;
-        	 $('#findMail').val(mail);
-         },
-         error : function(request,status,error){
-				console.log("code" + request.status +"\n" +"message : " + request.response + "\n" + "error : " + error);
-         }
-   
-     });
-     }
- });
-});
-
 </script>
-
-
-
 </head>
 <body>
-
 <!-- start: page -->
 <section class="body-sign">
  <div class="center-sign">
-			
-			
-   <a href="/" class="logo pull-left">
+						
+   <a class="logo pull-left">
 	 <img src="img/beemain2.png" height="54"/>
    </a>
-
 
    <div class="panel panel-sign">
 				
 	<div class="panel-title-sign mt-xl text-right">
-	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs" ></i>아이디 찾기</h2>
+	  <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-lock mr-xs" ></i>비밀번호 찾기</h2>
 	</div>
 					
 	<div class="panel-body">
-	  <form action="" method="post">
+	  <form action="" method="post" id="findPWD" enctype="multipart/form-data">
 						
 		<div class="form-group mb-lg">
-		  <label>이름</label>
+		  <label>인증번호를 입력하세요</label>
 		  <div class="input-group input-group-icon">
-			 <input name="name" type="text" class="form-control input-lg" id="name"/>
+			 <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
-				  <i class="fa fa-user"></i>
+				  <i class="fa fa-check-circle"></i>
 				 </span>
 				</span>
 		  </div>
-		</div>
-
-		<div class="form-group mb-lg">								
-		  <label>휴대폰번호</label>								
-		  <div class="input-group input-group-icon">
-			<input name="phone" type="text" class="form-control input-lg" id="phone"/>
-			   <span class="input-group-addon">
-				<span class="icon icon-lg">
-				 <i class="fa fa-phone"></i>
-				</span>
-			   </span>
-		  </div>
-		</div>
-
-	   </form>
+		</div>		 
 		<hr>
-
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap" 
-		  href="#modalBootstrap" id="idModal2">아이디확인</a>
-		  <a class="btn btn-twitter mb-md ml-xs mr-xs">로그인 </a>
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">확인</a>
 		</div>
-
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="pages-signup.html">&nbsp;&nbsp;&nbsp;비밀번호찾기</a>
+		</form>
 
 	  </div>
 	  	  
-	</div>
-
-				
+	</div>				
  </div>
- 
-<!-- Modal -->
-<div class="modal fade" id="modalBootstrap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- <div class="modal-dialog">
-  <div class="modal-content">
-  
-   <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal">
-	 <span aria-hidden="true">&times;</span>
-	 <span class="sr-only">Close</span>
-	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 아이디</h4>
-   </div>
-   
-   <div class="modal-body">
-	
-	<h4><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"
-	     style="border:none; width:100%; height:100%;"/></h4>
-   </div>
-   
-   <div class="modal-footer">
-	<button type="button" data-dismiss="modal"class="btn btn-primary">
-	 <span aria-hidden="true">&times;</span>확인</button>
-	
-   </div>
-   
-  </div>
- </div>
-</div>
-<!-- /Modal -->
  
 </section>
 <!-- end: page -->
-
-
-
 </body>
 </html>
