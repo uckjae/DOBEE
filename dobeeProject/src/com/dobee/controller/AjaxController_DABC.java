@@ -51,22 +51,22 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
 	@RequestMapping("AbsAll.do")
 	public View AbsAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.AbsAll(auth.getName());
-		// System.out.println("AbsAll : "+ results);
+		System.out.println("AbsAll : "+ results);
 		map.addAttribute("AbsAll", results);
 		
 		return jsonview;
 	}
 	
 	
-	// Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
 	@RequestMapping("Calender.do")
 	public View CalenderEvent (Model map) {
-		System.out.println("이거 돌긴 도니? ");
+		// System.out.println("이거 돌긴 도니? ");
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.Calendar();
 		// System.out.println("Calendar : "+ results);
@@ -76,12 +76,12 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_연장근무 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
 	@RequestMapping("ExtAll.do")
 	public View ExtAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.ExtAll(auth.getName());
-		// System.out.println("ExtAll : "+ results);
+		System.out.println("ExtAll : "+ results);
 		map.addAttribute("ExtAll", results);
 		
 		return jsonview;
@@ -173,30 +173,9 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+
 	
-	
-	// 개인_근무내역 확인 년도 불러오기			COMPLETE
-	@RequestMapping("overTimeYearList.do")
-	public View overTimeYearList (Model map, Authentication auth) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Integer> results = userDao.overTimeYearList(auth.getName());
-		map.addAttribute("OTYList", results);
-		
-		return jsonview;
-	}
-	
-	
-	// 개인_근무내역 확인 월 불러오기			COMPLETE
-	@RequestMapping("overTimeMonthList.do")
-	public View overTimeMonthList (Model map, Authentication auth) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Integer> results = userDao.overTimeMonthList(auth.getName());
-		map.addAttribute("OTMList", results);
-		
-		return jsonview;
-	}
-	
-	// 개인_근무내역 확인 년 월 불러오기			0129 ~ing 	위에껀 필요없어...
+	// 개인_근무내역 확인 년 월 불러오기			0129 COMPLETE
 	@RequestMapping("overTimeYearMonthList.do")
 	public View overTimeYearMonthList (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -207,15 +186,13 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
+	// 개인_근무내역 확인 차트 데이터 불러오기			0129 COMPLETE
 	@RequestMapping("getChartData.do")
 	public View getChartData (Model map, Authentication auth, String ym) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		System.out.println("ym 뭐 들어옴? " + ym);
 		List<ChartData> results = userDao.getChartData(auth.getName(), ym);
 		map.addAttribute("CD", results);
-		// System.out.println("리스트 출력 확인 : " + results);
-		// System.out.println("완료~");
 		
 		return jsonview;	
 	}

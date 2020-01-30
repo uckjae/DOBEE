@@ -157,7 +157,7 @@ public interface UserDao {
     public List<Apply> getExtList(String drafter);
     
     
-	// 개인_근무내역 확인 차트 데이터 불러오기			0123	~ing
+	// 개인_근무내역 확인 차트 데이터 불러오기          0129    COMPLETE
     public List<ChartData> getChartData(String mail, String ym);
     
     
@@ -203,8 +203,9 @@ public interface UserDao {
     public List<Integer> overTimeMonthList(String mail);
     
     
-    // Ajax 개인_근무 차트 년월 Option 불러오기		0129 ~ing
+    // Ajax 개인_근무 차트 년월 Option 불러오기     0129 COMPLETE
     public List<Integer> overTimeYearMonthList(String mail);
+    
     
     //유저 리스트 가져오기
     /* 01.09 알파카 */
