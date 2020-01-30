@@ -1004,7 +1004,7 @@
                             <a href="#pjtDash" data-toggle="tab">현황</a>
                         </li>
                         <li>
-                            <a href="#drive" data-toggle="tab">구글드라이브</a>
+                            <a href="#medias" data-toggle="tab">구글드라이브</a>
                         </li>
                     </ul>
                 </div>
@@ -1258,7 +1258,7 @@
                         </div>
                     </div>
                    </div>
-                   <div class="tab-pane" id="pjtDash">
+                     <div class="tab-pane" id="pjtDash">
                      <div class="row">
 						<div class="col-lg-6 col-md-12">
 						<section class="panel">
@@ -1341,6 +1341,7 @@
 							</section>
 						</div>
 					</div>
+					
 						<div class="row">
 						<div class="col-md-6">
 							<section class="panel">
@@ -1436,13 +1437,6 @@
 					</div>
 					<!-- end: page -->            
                		 </div>
-               		 
-               		<div class="tab-pane" id="drive">
-               		 구글!!
-               		</div>
-               		 
-               		 
-               		 
                 </div>
                 
                
