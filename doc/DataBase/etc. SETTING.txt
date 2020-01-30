@@ -1,0 +1,39 @@
+== 이벤트 스케쥴러
+	-부재 / 연장근무 신청 미승인 3일이상 지속시 반려로 전환됨
+		CREATE EVENT IF NOT EXISTS UPDATE_DENY_APPLY
+			ON SCHEDULE 
+			EVERY 1 DAY STARTS '2020-01-30 00:00:00'
+			DO
+				BEGIN
+					UPDATE APPLY SET ISAUTH='반려', REJREASON='승인 기한 만료' WHERE ISAUTH = '미승인' AND DATEDIFF(NOW(), REQDATE) > 3;
+		        END //
+
+
+	-근태 퇴근 안하고 갈 경우 해당 일의 출근 데이터 삭제
+		CREATE EVENT DELETE_ATTEND
+			ON SCHEDULE EVERY 1 DAY
+		    STARTS '2020-01-31 02:00:00'
+		    DO
+				DELETE FROM ATTEND WHERE OFFTIME IS NULL;
+
+== 트리거
+	-유저 생성 시 연차 테이블 데이터 생성
+	AFTER_INSERT
+		CREATE DEFINER=`dobee`@`%` TRIGGER `user_AFTER_INSERT` AFTER INSERT ON `user` FOR EACH ROW BEGIN
+			insert into break (mail, totalbreak, usedbreak) values (new.mail, 27, 0 );
+		END
+
+	-연차 사용시 사용 연차 BREAK 테이블 반연
+	AFTER_UPDATE
+		CREATE DEFINER=`dobee`@`%` TRIGGER `apply_AFTER_UPDATE` AFTER UPDATE ON `apply` FOR EACH ROW BEGIN
+			IF NEW.ISAUTH = '승인' AND NEW.APYCODE != 3 AND NEW.APYCODE != 4 AND NEW.APYCODE != 6 THEN
+				INSERT INTO BREAKLIST (USINGBREAK, APLSEQ, MAIL) VALUES (NEW.USEBREAK, NEW.APLSEQ, NEW.DRAFTER);
+		    END IF;
+		END
+
+== DEFAULT VALUE SETTING
+	- NOTICE.COUNT			0
+	- TASK.IMPORTANT		0
+	- APPLY.USINGBREAK		0
+
+== CASCADE 코드성 제외 모두 적용 (DELETE/UPDATE)
