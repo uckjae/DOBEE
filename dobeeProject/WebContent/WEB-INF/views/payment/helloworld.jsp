@@ -154,7 +154,7 @@
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;
 				
-                document.getElementById('down').innerHTML = "<a href="+link+ ">"+ "<i class='fab fa-google-drive'></i>"+filename+"</a>";
+                document.getElementById('down').innerHTML = "<a target='_blank' href=" +link+ ">"+ "<i class='fab fa-google-drive'></i>"+filename+"</a>";
             }
         },
 

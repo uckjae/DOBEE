@@ -70,9 +70,7 @@
 	<!-- Examples -->
 	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 
-	<!-- include Nobootstrap summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+	
 	
 	<!-- 파일 업로드 -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
@@ -81,103 +79,6 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({     	
-        	height: 350,
-        	placeholder: "글을 입력하세요.",
-        	lang: 'ko-KR', /*한국어*/ 
-        	toolbar: [   /*summernote 글옵션 상자*/
-        		  ['fontname'],
-        		  ['fontsize'],
-        		  ['font', ['bold', 'underline','italic','strikethrough','superscript','subscript']],  
-        		  ['color', ['forecolor','backcolor']],
-        		  ['para', ['ul', 'ol', 'paragraph','hr','height']],
-        		  ['table', ['table']],
-        		  ['insert', ['link', 'picture', 'video','file']],
-        		  ['view', ['fullscreen', 'codeview', 'help']],
-        		],
-        	spellCheck: true,  /*맞춤법 검사 */
-        	codemirror: { // codemirror options
-        		    theme: 'monokai',
-        		    htmlMode: true
-        		  },
-        	 callbacks: {
-        		    onFileUpload: function(file){
-        		    	myOwnCallBack(file[0]);
-        		        },
-        		    },    	       	
-            });
-        $.summernote.interface;
-
-        $("#submitBtn").on('click', function(e){
-        	if($("#title").val() == "" || $("#summernote").val() == ""){ //글 제목 & 내용 쓰지 않은 경우
-        		swal({
-    				title: "공지사항 글",
-    				text: "제목 또는 내용을 입력해주세요", 
-    				icon: "warning", //"info,success,warning,error" 중 택1
-    				button: true
-    					}).then((YES) => {
-    							$("#title").focus();
-    							});
-        		return;
-            }
-            
-           if ($("#nsContent").val()!==""){ //공지사항 일정을 썼는데 캘린더 날짜 선택 안한경우
-				if($("#startTime").val()=="" || $("#endTime").val()=="" ){
-			        swal({
-					title: "공지사항 일정",
-					text: "일정을 달력에서 선택해주세요", 
-					icon: "warning", //"info,success,warning,error" 중 택1
-					button: true
-							}).then((YES) => {
-									$("#startTime").focus();
-									})
-					return;
-				}
-           	} else{ //공지사항 일정 쓰지 않았는데 캘린더에서 날짜 선택한 경우
-				if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
-					swal({
-						title: "공지사항 일정",
-						text: "일정 내용을 입력해주세요", 
-						icon: "warning", //"info,success,warning,error" 중 택1
-						button: true
-						}).then((YES) => {
-							$("#nsContent").focus();
-								});
-					return;
-				}
-            }
-
-           //원래 업로드 되어 있던 파일 지우고 수정할 경우 -> 서버에 값 넘기기
-           if($("#fileUpload").hasClass("fileupload fileupload-new")){ //파일 있던 거 지운 경우 또는 파일 업로드 안한 경우 
-               $("#fileNameExists").val("noFile");
-               console.log('벨류는?'+ $("#fileNameExists").val());
-            } else { //파일 업로드 한 경우
-				var fileOrgName = $("#fileOrgName").text();
-				$("#fileNameExists").val(fileOrgName);
-				console.log('파일 이름?'+$("#fileNameExists").val());
-	        }
-           
-          /*
-           var fileOrgName = $("#fileOrgName").text();  //업로드한 파일 이름
-           console.log('파일은??'+fileOrgName)
-           if(fileOrgName !== "" || fileOrgName !== null) { //파일 이름이 있는 경우
-              	console.log('파일 이름 있음')
-        	   $("#fileNameExists").val(fileOrgName);
-            } else {
-            	console.log('파일 이름 없음')
-            	  $("#fileNameExists").val("noFile");
-                  }
-           console.log('벨류?????'+$("#fileNameExists").val());
-           */
-           	$("#noticeModifyForm").submit();
-           	
-        });
-
-        
-    });
-</script>
 <body>
 <section class="body">
 <!-- start: header -->
@@ -327,4 +228,100 @@
 		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 </body>
+<!-- include Nobootstrap summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+	<script type="text/javascript">
+	$('#summernote').summernote({     	
+    	height: 350,
+    	placeholder: "글을 입력하세요.",
+    	lang: 'ko-KR', /*한국어*/ 
+    	toolbar: [   /*summernote 글옵션 상자*/
+    		  ['fontname'],
+    		  ['fontsize'],
+    		  ['font', ['bold', 'underline','italic','strikethrough','superscript','subscript']],  
+    		  ['color', ['forecolor','backcolor']],
+    		  ['para', ['ul', 'ol', 'paragraph','hr','height']],
+    		  ['table', ['table']],
+    		  ['insert', ['link', 'picture', 'video','file']],
+    		  ['view', ['fullscreen', 'codeview', 'help']],
+    		],
+    	spellCheck: true,  /*맞춤법 검사 */
+    	codemirror: { // codemirror options
+    		    theme: 'monokai',
+    		    htmlMode: true
+    		  },
+    	 callbacks: {
+    		    onFileUpload: function(file){
+    		    	myOwnCallBack(file[0]);
+    		        },
+    		    },    	       	
+        });
+    $.summernote.interface;
+
+    $("#submitBtn").on('click', function(e){
+    	if($("#title").val() == "" || $("#summernote").val() == ""){ //글 제목 & 내용 쓰지 않은 경우
+    		swal({
+				title: "공지사항 글",
+				text: "제목 또는 내용을 입력해주세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				button: true
+					}).then((YES) => {
+							$("#title").focus();
+							});
+    		return;
+        }
+        
+       if ($("#nsContent").val()!==""){ //공지사항 일정을 썼는데 캘린더 날짜 선택 안한경우
+			if($("#startTime").val()=="" || $("#endTime").val()=="" ){
+		        swal({
+				title: "공지사항 일정",
+				text: "일정을 달력에서 선택해주세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				button: true
+						}).then((YES) => {
+								$("#startTime").focus();
+								})
+				return;
+			}
+       	} else{ //공지사항 일정 쓰지 않았는데 캘린더에서 날짜 선택한 경우
+			if($("#startTime").val()!=="" || $("#endTime").val()!=="" ){
+				swal({
+					title: "공지사항 일정",
+					text: "일정 내용을 입력해주세요", 
+					icon: "warning", //"info,success,warning,error" 중 택1
+					button: true
+					}).then((YES) => {
+						$("#nsContent").focus();
+							});
+				return;
+			}
+        }
+
+       //원래 업로드 되어 있던 파일 지우고 수정할 경우 -> 서버에 값 넘기기
+       if($("#fileUpload").hasClass("fileupload fileupload-new")){ //파일 있던 거 지운 경우 또는 파일 업로드 안한 경우 
+           $("#fileNameExists").val("noFile");
+           console.log('벨류는?'+ $("#fileNameExists").val());
+        } else { //파일 업로드 한 경우
+			var fileOrgName = $("#fileOrgName").text();
+			$("#fileNameExists").val(fileOrgName);
+			console.log('파일 이름?'+$("#fileNameExists").val());
+        }
+       
+      /*
+       var fileOrgName = $("#fileOrgName").text();  //업로드한 파일 이름
+       console.log('파일은??'+fileOrgName)
+       if(fileOrgName !== "" || fileOrgName !== null) { //파일 이름이 있는 경우
+          	console.log('파일 이름 있음')
+    	   $("#fileNameExists").val(fileOrgName);
+        } else {
+        	console.log('파일 이름 없음')
+        	  $("#fileNameExists").val("noFile");
+              }
+       console.log('벨류?????'+$("#fileNameExists").val());
+       */
+       	$("#noticeModifyForm").submit();
+       	
+    });
+	</script>
 </html>

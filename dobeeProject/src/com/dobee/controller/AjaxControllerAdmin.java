@@ -70,7 +70,7 @@ public class AjaxControllerAdmin {
 		return teamList;
 	}
 	
-	  //비밀번호찾기 메일 발송(실행안됨)
+	  //비밀번호 찾기 인증코드 발송
 	  @RequestMapping(value="findEmail.do",method=RequestMethod.POST)
 	  public ModelAndView findMail(HttpServletRequest request, String mail, HttpServletResponse response_mail)
 			  throws IOException{
