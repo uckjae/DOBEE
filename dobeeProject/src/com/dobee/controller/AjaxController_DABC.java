@@ -9,8 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 
+import com.dobee.dao.ScheduleDao;
 import com.dobee.dao.UserDao;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
@@ -18,6 +20,7 @@ import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.User;
+import com.dobee.vo.schedule.MainSchedule;
 
 @Controller
 public class AjaxController_DABC {
@@ -217,6 +220,20 @@ public class AjaxController_DABC {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> result = userDao.breakEntryListMgr();
 		map.addAttribute("breakEntryListMgr", result);
+		
+		return jsonview;
+	}
+	
+	
+	
+	////////// 공지사항 일정 캘린더에 뿌리기 //////////
+	
+	// 공지사항 일정 캘린더 병합		0130	게다죽		~ing	
+	@RequestMapping(value="notToCal.do", method=RequestMethod.GET)
+	public View noticeToCalendar (Model map) {
+		ScheduleDao sDao = sqlsession.getMapper(ScheduleDao.class);
+		List<MainSchedule> result = sDao.noticeToCalendar();
+		map.addAttribute("NTC", result);
 		
 		return jsonview;
 	}

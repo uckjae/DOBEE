@@ -2,13 +2,13 @@ package com.dobee.dao;
 
 import com.dobee.vo.notice.Notice;
 import com.dobee.vo.notice.NoticeFile;
+import com.dobee.vo.schedule.MainSchedule;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
 import java.util.List;
 
 public interface NoticeDao {
-
 
     //공지사항목록
     public List<Notice> noticeList(Notice notice);
@@ -45,4 +45,5 @@ public interface NoticeDao {
     
     //공지사항 조회수 --01.21 알파카
     public int noticeCount(int notSeq);
+    
 }

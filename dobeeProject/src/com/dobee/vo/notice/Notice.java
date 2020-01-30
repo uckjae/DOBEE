@@ -1,9 +1,6 @@
 package com.dobee.vo.notice;
 
 
-
-
-
 import java.util.Date;
 
 

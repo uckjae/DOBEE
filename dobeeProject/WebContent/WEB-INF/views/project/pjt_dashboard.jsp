@@ -5,7 +5,6 @@
 <html class="fixed">
 <head>
 <c:import url="/common/HeadTag.jsp"/>
-
 </head>
 	<body>
 		<section class="body">
@@ -37,10 +36,6 @@
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
-					
-					
-					
-					
 					<div class="row">
 						<div class="col-lg-6 col-md-12">
 						<section class="panel">
@@ -84,11 +79,6 @@
 						<div class="col-lg-6 col-md-12">
 							<section class="panel panel-transparent">
 								<header class="panel-heading">
-									<!-- <div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
- -->
 									<h2 class="panel-title">My Stats</h2>
 								</header>
 								<div class="panel-body">
@@ -144,63 +134,12 @@
 								<div class="panel-body">
 
 									<!-- Flot: Basic -->
-									<div class="chart chart-md" id="flotDashBasic"></div>
-									<script>
-
-										var flotDashBasicData = [{
-											data: [
-												[0, 170],
-												[1, 169],
-												[2, 173],
-												[3, 188],
-												[4, 147],
-												[5, 113],
-												[6, 128],
-												[7, 169],
-												[8, 173],
-												[9, 128],
-												[10, 128]
-											],
-											label: "Series 1",
-											color: "#0088cc"
-										}, {
-											data: [
-												[0, 115],
-												[1, 124],
-												[2, 114],
-												[3, 121],
-												[4, 115],
-												[5, 83],
-												[6, 102],
-												[7, 148],
-												[8, 147],
-												[9, 103],
-												[10, 113]
-											],
-											label: "Series 2",
-											color: "#2baab1"
-										}, {
-											data: [
-												[0, 70],
-												[1, 69],
-												[2, 73],
-												[3, 88],
-												[4, 47],
-												[5, 13],
-												[6, 28],
-												[7, 69],
-												[8, 73],
-												[9, 28],
-												[10, 28]
-											],
-											label: "Series 3",
-											color: "#734ba9"
-										}];
-
-										// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
-
-									</script>
-
+									<div class="chart chart-md" id="flotDashBasic">
+										<canvas id="myChart" width="400" height="400"></canvas>
+										
+									
+									</div>
+									
 								</div>
 							</section>
 						</div>
@@ -231,9 +170,32 @@
     <!-- 오른쪽 사이드 끝 -->
 		</section>
 	<!-- end : main Content -->
-	
-		<c:import url="/common/RightSide.jsp"></c:import>
+		<!-- Chart.js -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 		
 		<c:import url="/common/BottomTag.jsp"></c:import>
+	
+		<script>
+
+
+		/*프로젝트 현황 차트!!*/
+		var chartData = { datasets: [{ backgroundColor: ['red','yellow','blue'], data: [10, 20, 30] }], // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남 labels: ['red','yellow','blue'] };
+
+
+		var ctx = document.getElementById('myChart');
+
+		console.log('가져와!!')
+		console.dir(ctx)
+
+		var myDoughnutChart = new Chart(ctx, {
+		    type: 'doughnut',
+		    data: chartData,
+		    options: options
+		});
+
+		
+</script>
+		
 	</body>
 </html>

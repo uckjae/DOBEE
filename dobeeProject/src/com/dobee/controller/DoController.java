@@ -1,14 +1,10 @@
 package com.dobee.controller;
 
-
-
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,6 +47,7 @@ import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
+// 메롱메롱 ㅎ헿헤헤헤헿
 
 @Controller
 public class DoController {
@@ -58,7 +55,6 @@ public class DoController {
 	public DoController() {
 		System.out.println("일단 컨트롤 오나 보자");
 	}
-	
 	
     @Autowired
     private SqlSession sqlsession;
@@ -875,7 +871,7 @@ public class DoController {
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
     	
-        return "project/pjtKanban_new";
+        return "project/pjtKanban_new_mine";
         
         
     }
