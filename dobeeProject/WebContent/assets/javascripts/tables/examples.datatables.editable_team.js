@@ -94,8 +94,6 @@ var tempTeamCode = 0;
 		events : function() {
 			var _self = this;
 			
-			
-			
 			this.$table.on(
 					'click',
 					'a.save-row',
@@ -157,11 +155,9 @@ var tempTeamCode = 0;
 					}) // 관리자 팀코드 수정 완료
 					
 					
-					
 			// 여기서 부터 팀코드 등록 시작
 			.on('click', 'a.save-row-Add', function(e) {
 				e.preventDefault();
-				console.log("여기 맞지? ");
 				
 				let ori = e.target;
 				let t = e.target;
@@ -179,7 +175,7 @@ var tempTeamCode = 0;
 				//유효성 검증
 				
 				if (onlyNumber.test(teamCode)) { // 이게 참이여만 통과
-					//   팀 코드 등록 아작스 실행
+					// 팀 코드 등록 아작스 실행
 					$.ajax({
 						url : 'ajax/admin/addTeamCode.do',
 						data : teamData,
@@ -227,9 +223,7 @@ var tempTeamCode = 0;
 				e.preventDefault();
 				var t = e.target;
 				var tr = t.closest('tr')
-				
 				tempTeamCode = $(tr).children('td:eq(1)').text();
-
 				_self.rowEdit($(this).closest('tr'));
 
 			}) // 관리자 팀코드 삭제 시작
@@ -294,13 +288,7 @@ var tempTeamCode = 0;
 					}
 				}); // 모달창 끝
 			})
-			//인덱스 붙이기
-//			.on( 'order.dt search.dt', function () {
-//		        this.datatable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-//		            cell.innerHTML = i+1;
-//		        } );
-//		    } ).draw();
-			//인덱스 붙이기 끝
+
 			this.$addButton.on('click', function(e) {
 				e.preventDefault();
 				_self.rowAdd();
@@ -363,9 +351,12 @@ var tempTeamCode = 0;
 		rowEdit : function($row) {
 			var _self = this, data;
 			data = this.datatable.row($row.get(0)).data();
-			console.log("여기 확인해바");
 			// 여기다 여기1!!!!!
-			console.log(this.datatable.row($row.get(0)).data()[0]     );
+			//console.log(this.datatable.row($row.get(0)).data()[0]);
+			var lastNum = this.datatable.row()[0].length;
+			//console.log(this.datatable.row()[0][1]);
+			
+			//여기서 데이타테이블 
 			$row
 					.children('td')
 					.each(
@@ -378,13 +369,12 @@ var tempTeamCode = 0;
 									if (i == 0) {
 										$this
 												.html('<input type="text" readonly class="form-control input-block" value="'
-														+ data[i] + '"/>');
+														+ lastNum + '"/>');
 									} else {
 										$this
 												.html('<input type="text" class="form-control input-block" value="'
 														+ data[i] + '"/>');
 									}
-
 								}
 							});
 		},

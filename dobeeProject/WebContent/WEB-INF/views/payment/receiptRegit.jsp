@@ -10,9 +10,9 @@
 
 <style>
 /* 이미지공간 강제 조정 */
-img {
+/* img {
 	padding: 15px !important;
-}
+} */
 
 
 </style>
@@ -190,7 +190,7 @@ console.log(path);
                                         console.log("구글 아작스 요청시 에러");
                                     },
                                     complete:function (){
-                                    	  // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
+                                    	 // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
                                        
                                         
 										/* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
@@ -226,51 +226,10 @@ console.log(path);
                         },
                     });
                 }; //uploadFile() 함수 끝 
-
-		
-                // 법인카드 목록 불러오기 아작스
-                window.onload = function() {
-                    $.ajax({
-                        url: 'nowEmpEmail.do',
-                        type: 'POST',
-                        success: function(result) {
-                            $("#Input1").attr("value", result);
-                        },
-                        complete: function() {
-                            $.ajax({
-                                    url: 'cardListtoReceipt.do',
-                                    type: 'POST',
-                                    success: function(result) {
-                                        console.log("여기 왜 갑자기안뜨냐? ");
-                                        for (let i = 0; i < result.length; i++) {
-                                            $("#Select1").append("<option>" + result[i].cardNum + "</option>");
-                                        }
-                                    },
-                                    error: function() {
-                                        console.log("법인카드 목록 불러오기 아작스 에러남");
-                                    },
-                                    complete: function() {
-                                        $.ajax({
-                                            url: 'debitCodeList.do',
-                                            type: 'POST',
-                                            success: function(result) {
-                                                console.log("비용항목 아작스 성공")
-                                                console.log(result);
-                                                
-                                                for (let i = 0; i < result.length; i++) {
-                                                    $("#Select2").append("<option value="+result[i].costCode+ ">" + result[i].entry + "</option>");
-                                                }
-                                            },
-                                            error: function() {
-                                                console.log("비용항목 아작스에서 에러남")
-                                            },
-                                        })
-                                    },
-                                }) //아작스 끝
-                        }
-                    })
-                }
 </script>
+
+
+
             
             
             
@@ -396,6 +355,65 @@ console.log(path);
                     });
                 });
     </script>
+            
+            
+    <script>	
+              
+                /* window.onload = function() { */
+                    // 사원 이메일 불러오기 아작스 실행
+                    console.log("지그 여기도 안오지?");
+                    $.ajax({
+                        url: 'nowEmpEmail.do',
+                        type: 'POST',
+                        success: function(result) {
+                            console.log("사원 이메일 불러오기 아작스 성공")
+                            console.log(result);
+                            $("#Input1").attr("value", result);
+                        },
+                        complete: function() {
+                            //법인 카드 목록 불러오기 아작스 실행
+                            $.ajax({
+                                    url: 'cardListtoReceipt.do',
+                                    type: 'POST',
+                                    success: function(result) {
+                                       	console.log(result);
+                                        for (let i = 0; i < result.length; i++) {
+                                            $("#Select1").append("<option>" + result[i].cardNum + "</option>");
+                                        }
+                                    },
+                                    error: function() {
+                                        console.log("법인카드 목록 불러오기 아작스 에러남");
+                                    },
+                                    complete: function() {
+                                        // 비용항목 불러오기 아작스 실행
+                                        $.ajax({
+                                            url: 'debitCodeList.do',
+                                            type: 'POST',
+                                            success: function(result) {
+                                                console.log("비용항목 아작스 성공")
+                                                console.log(result);
+                                                
+                                                for (let i = 0; i < result.length; i++) {
+                                                    $("#Select2").append("<option value="+result[i].costCode+ ">" + result[i].entry + "</option>");
+                                                }
+                                            },
+                                            error: function() {
+                                                console.log("비용항목 아작스에서 에러남")
+                                            },
+                                        })
+                                    },
+                                    error:function(){
+											console.log("비용 항목 불러오기 아작스 에러");
+                                        }
+                                }); // 비용 항목 불러오기 아작스 끝
+                        }// 컴플릿트 끝
+                    }); // 법인 카드 목록 불러오기 아작스끝
+                //}// 온로드 함수 끝
+</script>        
+            
+            
+            
+            
             
             
     <script>
