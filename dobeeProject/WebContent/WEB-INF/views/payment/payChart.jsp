@@ -518,13 +518,8 @@ function chageYYYYSelect(){
 								for(let i = 0 ; i<tempData.length; i++){
 									yData.push(tempData[i].cost);
 								}
-								console.log(yData);
 
-								//datasets에 넣은 객체배열 만들기 
-								for(let i = 0 ; i < xData.length; i++){
-										
-
-									}
+							
 								var ctx = document.getElementById("myChart").getContext('2d');
 								var data = {
 									labels:xData,

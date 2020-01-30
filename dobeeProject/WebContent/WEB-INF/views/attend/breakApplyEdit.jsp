@@ -265,11 +265,8 @@
 				success : function(data) {
 					var events = [];
 					events = data.AbsAll;
-					
-					$.each(events, (index, element) => {
-						
-						console.log(element);
-						
+
+					$.each(events, (index, element) => {						
 						if (element.isAuth ==='승인' && element.apyCode == 1 ) {
 							eventList.push({
 								title : "연차",
@@ -342,32 +339,30 @@
 							})
 						}	
 					});
+				},
+				complete : function () {
+					var calendarEl = document.getElementById('calendar');
+
+				    var calendar = new FullCalendar.Calendar(calendarEl, {
+				      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+				      header: {
+				    	left : 'prev,today,next',
+						center : 'title',
+						right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+				      },
+				      navLinks: true, // can click day/week names to navigate views
+				      businessHours: {
+					      startTime : '09:00',
+					      endTime : '18:00'
+					  },
+					  eventLimit : true,
+				      editable: false,
+				      events: eventList
+				    });
+				    calendar.render();
 				}
 			});
 			
-			console.log('eventList: ', eventList);
-			
-			 document.addEventListener('DOMContentLoaded', function(isLoading, view) {
-			    var calendarEl = document.getElementById('calendar');
-
-			    var calendar = new FullCalendar.Calendar(calendarEl, {
-			      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-			      header: {
-			        left: 'prev,next today',
-			        center: 'title',
-			        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-			      },
-			      navLinks: true, // can click day/week names to navigate views
-			      businessHours: {
-				      startTime : '09:00',
-				      endTime : '18:00'
-				  },
-			      editable: false,
-			      events: eventList
-			    });
-
-			    calendar.render();
-			  });
 						
 	  	</script>
 		

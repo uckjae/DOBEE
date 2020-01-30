@@ -15910,16 +15910,12 @@ table.fc-border-separate {
 	border-color: #cccccc;
 	color: white;
 	font-size: 13px;
-	font-size: 1.3rem;
+	font-size: 1.7rem;
 	font-weight: 500;
 	padding: 4px 0;
 	text-transform: uppercase;
 }
-.calendarArea .fc-widget-header{
-	border-top-left-radius : 4px;
-	border-top-right-radius : 4px;
-	border-style : none;
-}
+
 .fc .fc-header-title h2 {
 	color: #171717;
 	font-size: 24px;

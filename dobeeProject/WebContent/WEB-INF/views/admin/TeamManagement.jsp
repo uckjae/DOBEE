@@ -65,6 +65,14 @@
 						<h2 class="panel-title">팀 관리</h2>
 					</header>
 					<div class="panel-body">
+					<!-- 팀 코드 추가 버튼 추가 -->					
+						<div class="row">
+								<div class="col-sm-6">
+									<div class="mb-md">
+										<button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+									</div>
+								</div>
+						</div>
 
 
 						<table class="table display" id="datatable-editable">

@@ -307,6 +307,24 @@ public class AjaxControllerAdmin {
     }
     
     
+    //팀 코드 등록 -성호
+    @RequestMapping("addTeamCode.do")
+    public int addTeamCode(@RequestParam(value="teamCode")int teamCode,
+    		@RequestParam(value="teamName") String teamName) {
+    	int result = 0;
+    	TeamList tl = new TeamList();
+    	tl.setTeamCode(teamCode);
+    	tl.setTeamName(teamName);
+    	result = memberService.addTeamList(tl);
+    	if(result >0) {
+    		System.out.println("팀 코드 등록 완료");
+    	}else {
+    		System.out.println("팀 코드 등록 실패");
+    	}
+    	
+    	return result;
+    }
+    
 }
 
 
