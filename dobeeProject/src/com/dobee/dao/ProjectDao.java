@@ -107,5 +107,8 @@ public interface ProjectDao {
     
     //특정 프로젝트의 개인 업무 가져오기
     public List<Task> getMemberTask(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인의 완료된 업무 가져오기
+    public List<Task> getCompletedTaskList(int pjtSeq, String mail);
 
 }

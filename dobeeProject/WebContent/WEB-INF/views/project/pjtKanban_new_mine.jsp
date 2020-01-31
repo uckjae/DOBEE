@@ -367,14 +367,47 @@
 
 		/*프로젝트 현황 차트!!*/
 		
+		
+		
 			/*업무 담당 차트! */
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 			var pjtMember = new Array();
 			var taskCount = new Array();
+
+			/* 담당자 별 업무 진행률 가져오기*/
+			$.ajax({
+ 	 			url:"ajax/project/getMembersTaskChart.do",
+ 				data: {'pjtSeq' : pjtSeq },
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				console.log('어이없네 수달');
+ 					console.log(responseData);
+ 					/* $.each(responseData, function(index, element){
+ 						memberTask.push(element.title);
+ 	 					var progress = element.progress;
+ 	 					if(progress == '예정'){
+ 	 						taskScheduled.push(element);
+ 	 	 				} else if(progress == '진행') {
+ 	 	 					taskInProgress.push(element);
+ 	 	 	 			} else if(progress == '테스트') {
+ 	 	 	 				taskTest.push(element);
+ 	 	 	 			} else {
+ 	 	 	 				taskCompleted.push(element);
+ 	 	 	 	 		}
+ 	 				}); */
+ 					
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+
+			});
 			
 			$.ajax({
- 	 			url:"ajax/project/getMemberTaskChart.do",
+ 	 			url:"ajax/project/getTaskAssignmentChart.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
@@ -429,7 +462,7 @@
  			
  			/*개인 업무 현황 progress bar*/
 			$.ajax({
- 	 			url:"ajax/project/getMemberTask.do",
+ 	 			url:"ajax/project/getMemberTaskChart.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				type:"post",
@@ -448,16 +481,6 @@
  	 	 	 				taskCompleted.push(element);
  	 	 	 	 		}
  	 				});
- 					console.log('배열 갯수?'+taskScheduled.length);
-	 				console.log('배열 갯수2?'+taskInProgress.length);
-	 				console.log('배열3?'+taskTest);
-	 				console.log('배열4?'+taskCompleted);
- 					/* for(key in responseData){
- 						pjtMember.push(key);
- 						taskCount.push(responseData[key]);
- 	 				}
- 	 				console.log('배열은?'+pjtMember);
- 	 				console.log('배열은?'+taskCount); */
  					
  				},
  				error:function(){
@@ -488,7 +511,7 @@
 
  				        // Find out how much the font can grow in width.
  				        var widthRatio = elementWidth / stringWidth;
- 				        var newFontSize = Math.floor(30 * widthRatio);
+ 				        var newFontSize = Math.floor(20 * widthRatio);
  				        var elementHeight = (chart.innerRadius * 2);
 
  				        // Pick a new font size so it will not be larger than the height of label.
@@ -533,12 +556,16 @@
  								}]
  							},
  						options: {
+ 	 						title : {
+ 	 							display: true,
+ 	 							text: '완료된 업무 비중'
+ 	 	 						},
  							elements: {
  								center: {
- 									text: memberTask.length/taskCompleted.length,
+ 									text: (taskCompleted.length/memberTask.length)*100 + "%",
  				          color: '#FF6384', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
- 				          sidePadding: 20 // Defualt is 20 (as a percentage)
+ 				          sidePadding: 15 // Defualt is 20 (as a percentage)
  								}
  							}
  						}
@@ -1197,6 +1224,9 @@
                             <a href="#kanban" data-toggle="tab">칸반보드</a>
                         </li>
                         <li>
+                            <a href="#myTask" data-toggle="tab">내 업무</a>
+                        </li>
+                        <li>
                             <a href="#pjtDash" data-toggle="tab">현황</a>
                         </li>
                         <li>
@@ -1455,24 +1485,24 @@
                         </div>
                     </div>
                    </div>
+                   <div class="tab-pane" id="myTask">
+                   	내 업무!!
+                   </div>
                    <div class="tab-pane" id="pjtDash">
                      <div class="row">
-						<div class="col-lg-6 col-md-12">
+						<div class="col-md-6">
 						<section class="panel">
-								<header class="panel-heading panel-heading-transparent">
-									<h2 class="panel-title">프로젝트 진행률</h2>
+								<header class="panel-heading">
+									<h2 class="panel-title">현재 프로젝트 진행률</h2>
 								</header>
 								<div class="panel-body">
-								
-								
 									<div class="table-responsive">
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>프로젝트</th>
-													<th>상태</th>
-													<th>진행도</th>
+													<th>담당자</th>
+													<th>진행률</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -1494,11 +1524,26 @@
 										</table>
 									</div>
 									
-									
 								</div>
 							</section>
-
 						</div>
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">프로젝트 업무 비중</h2>
+								</header>
+								<div class="panel-body">
+									<!-- Flot: Basic -->
+									<div class="chart chart-md" >
+										<canvas id="member-task" width="800" height="450"></canvas>
+									</div>
+								</div>
+							</section>
+						</div>
+						
+						
+						
+					<!-- 	
 						
 						<div class="col-lg-6 col-md-12">
 							<section class="panel panel-transparent">
@@ -1540,27 +1585,16 @@
 									</section>
 								</div>
 							</section>
-						</div>
+						</div> -->
+						
+						
 					</div>
 					<!-- 프로젝트 업무 비중 -->
 					<div class="row">
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">프로젝트 업무 비중</h2>
-								</header>
-								<div class="panel-body">
-									<!-- Flot: Basic -->
-									<div class="chart chart-md" >
-										<canvas id="member-task" width="800" height="450"></canvas>
-									</div>
-								</div>
-							</section>
-						</div>
-						<div class="col-md-6">
-							<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">업무 진행 상태</h2>
+									<h2 class="panel-title">나의 업무 진행 현황</h2>
 								</header>
 								<div class="panel-body">
 
@@ -1568,6 +1602,47 @@
 									<div class="chart chart-md" id="flotDashRealTime">
 										<canvas id="user-task" width="800" height="450"></canvas>
 									</div>
+								</div>
+							</section>
+						</div>
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">My Stats</h2>
+								</header>
+								<div class="panel-body">
+									<section class="panel">
+										<div class="panel-body">
+											<div class="small-chart pull-right" id="sparklineBarDash"></div>
+											<script type="text/javascript">
+												var sparklineBarDashData = [5, 6, 7, 2, 0, 4 , 2, 4, 2, 0, 4 , 2, 4, 2, 0, 4];
+											</script>
+											<div class="h4 text-bold mb-none">488</div>
+											<p class="text-xs text-muted mb-none">Average Profile Visits</p>
+										</div>
+									</section>
+									<section class="panel">
+										<div class="panel-body">
+											<div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+												<div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+													<strong>Average</strong>
+													<label><span class="percent">45</span>%</label>
+												</div>
+											</div>
+											<div class="h4 text-bold mb-none">12</div>
+											<p class="text-xs text-muted mb-none">Working Projects</p>
+										</div>
+									</section>
+									<section class="panel">
+										<div class="panel-body">
+											<div class="small-chart pull-right" id="sparklineLineDash"></div>
+											<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+											<div class="h4 text-bold mb-none">89</div>
+											<p class="text-xs text-muted mb-none">Pending Tasks</p>
+										</div>
+									</section>
 								</div>
 							</section>
 						</div>

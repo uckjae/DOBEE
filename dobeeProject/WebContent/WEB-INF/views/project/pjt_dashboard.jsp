@@ -37,9 +37,9 @@
 						</div>
 					</header>
 					<div class="row">
-						<div class="col-lg-6 col-md-12">
+						<div class="col-md-6">
 						<section class="panel">
-								<header class="panel-heading panel-heading-transparent">
+								<header class="panel-heading">
 									<h2 class="panel-title">참여중인 프로젝트</h2>
 								</header>
 								<div class="panel-body">
@@ -76,8 +76,8 @@
 
 						</div>
 						
-						<div class="col-lg-6 col-md-12">
-							<section class="panel panel-transparent">
+						<div class="col-md-6">
+							<section class="panel">
 								<header class="panel-heading">
 									<h2 class="panel-title">My Stats</h2>
 								</header>
@@ -127,7 +127,6 @@
 										<a href="#" class="fa fa-caret-down"></a>
 										<a href="#" class="fa fa-times"></a>
 									</div>
-
 									<h2 class="panel-title">Best Seller</h2>
 									<p class="panel-subtitle">Customize the graphs as much as you want, there are so many options and features to display information using JSOFT Admin Template.</p>
 								</header>

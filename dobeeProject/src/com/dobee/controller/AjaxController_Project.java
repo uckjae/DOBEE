@@ -342,9 +342,34 @@ public class AjaxController_Project {
 	
 	/*차트*/
 	
+	//프로젝트 담당자별 업무 달성도 차트
+	@RequestMapping("getMembersTaskChart.do")
+	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
+		System.out.println("여기 타니??");
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		//프로젝트 참여자 가져오기
+		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		
+		//각 참여자의 task 가져오기
+		for(int i = 0; i<pjtMember.size(); i++) {
+			String mail = pjtMember.get(i).getMail();
+			//각 참여자의 task 가져오기
+			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
+			System.out.println("리스트 가져오니?"+mail+"/"+taskList.toString());
+			
+		}
+		
+		
+		return null;
+		
+	}
+	
+	
+	
 	//프로젝트 업무 할당 차트
-	@RequestMapping("getMemberTaskChart.do")
-	public Map<String, Integer> getMemberChart(@RequestParam(value="pjtSeq") String pjtSeq , HttpServletRequest request) {
+	@RequestMapping("getTaskAssignmentChart.do")
+	public Map<String, Integer> getTaskAssignmentChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		//프로젝트에 속한 멤버 정보 가져오기
@@ -358,13 +383,12 @@ public class AjaxController_Project {
 			int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
 			map.put(pjtMemberName, result);
 		}
-		System.out.println("맵맵?"+map.toString());
 		return map;
 	}
 	
 	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
-	@RequestMapping("getMemberTask.do")
-	public List<Task> getMemberTask(@RequestParam(value="pjtSeq") String pjtSeq , Principal principal, HttpServletRequest request){
+	@RequestMapping("getMemberTaskChart.do")
+	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
 		String mail = principal.getName();
 		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 		return taskList;

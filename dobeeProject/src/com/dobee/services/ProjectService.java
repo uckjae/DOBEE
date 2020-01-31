@@ -245,8 +245,6 @@ public class ProjectService {
     	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.getMemberTaskCount(pjtSeq, mail);
-    	System.out.println("메일은?"+mail);
-    	System.out.println("결과는?"+result);
     	return result;
     }
     
@@ -258,4 +256,13 @@ public class ProjectService {
     	return taskList;
     }
     
+	/*
+	 * //특정 프로젝트의 개인의 완료된 업무 가져오기 public List<Task> getCompletedTaskList(int pjtSeq,
+	 * String mail){ List<Task> taskList = new ArrayList<Task>(); ProjectDao
+	 * projectDao = sqlSession.getMapper(ProjectDao.class);
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 }
