@@ -101,7 +101,11 @@ public interface ProjectDao {
     
     //업무수정
     public int editTask(Task task);
-
-
+    
+    //특정 프로젝트에서 특정인의 업무량 가져오기
+    public int getMemberTaskCount(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인 업무 가져오기
+    public List<Task> getMemberTask(int pjtSeq, String mail);
 
 }

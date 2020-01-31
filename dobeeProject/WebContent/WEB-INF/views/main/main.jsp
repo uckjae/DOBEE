@@ -8,6 +8,19 @@
 
 <c:import url="/common/HeadTag.jsp" />
 
+<!-- Full Calendar Original -->
+<link href='assets/vendor/fullcalendar-ori/packages/core/main.css' rel='stylesheet' />
+<link href='assets/vendor/fullcalendar-ori/packages/bootstrap/main.css' rel='stylesheet' />
+<link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
+<link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
+<link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
+<script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
+<script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
+<script src='assets/vendor/fullcalendar-ori/packages/bootstrap/main.js'></script>
+<script src='assets/vendor/fullcalendar-ori/packages/daygrid/main.js'></script>
+<script src='assets/vendor/fullcalendar-ori/packages/timegrid/main.js'></script>
+<script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
+
 </head>
 <body>
 	<section class="body">
@@ -103,6 +116,81 @@
 							</div>
 						</section>
 					</div>
+					
+					<div class="col-md-6">
+						<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a> <a href="#"
+										class="fa fa-times"></a>
+								</div>
+								<h2 class="panel-title">Calendar</h2>
+								<p class="panel-subtitle">It's easy to create custom graphs
+									on JSOFT Admin Template, there are several graph types that you
+									can use, such as lines, bars, pie charts, etc...</p>
+							</header>
+							<div class="panel-body">
+								<!-- Float Calendar div -->
+								<div class="calendarArea" style="width:100%">
+									<div id="calendar"></div>
+								</div>	
+
+							</div>
+						</section>
+					</div>
+					
+					<script>
+						window.onload = function(){
+							var eventList = [];
+
+							$.ajax ({
+								url : "notToCal.do",
+								dataType : "json",
+								success : function(data) {
+									var events = [];
+									events = data.NTC;
+
+									console.log("이것도?");
+									console.log("이거 확인",events);
+
+									$.each(events, (index, element) => {
+										console.log("element", element);
+
+										eventList.push ({
+											title : element.nsContent,
+											start : element.startTime,
+											end : element.endTime,
+											color : "#ffdd00"	
+										})
+									});
+								},
+								complete : function () {
+									var calendarEl = document.getElementById('calendar');
+
+								    var calendar = new FullCalendar.Calendar(calendarEl, {
+								      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+								      header: {
+								    	left : 'prev,today,next',
+										center : 'title',
+										right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+								      },
+								      timeFormat : 'h:mm',
+								      navLinks: true, // can click day/week names to navigate views
+								      businessHours: {
+									      startTime : '09:00',
+									      endTime : '18:00'
+									  },
+									  eventLimit : true,
+								      editable: false,
+								      events: eventList
+								    });
+								    calendar.render();
+								}
+							});		
+						}
+					</script>
+					
+					
 				</div>
 
 				<!-- start: page -->

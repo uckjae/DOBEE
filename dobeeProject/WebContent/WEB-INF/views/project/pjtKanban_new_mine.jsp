@@ -6,10 +6,7 @@
 <html class="fixed search-results">
 <head>
 	    <c:import url="/common/HeadTag.jsp"/>
-		
-		
-		
-		
+	
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
@@ -50,7 +47,11 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 		
 		
-	
+		<!-- Chart.js -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+		
+		
 	
 	
 	<!-- Sweet Alert -->
@@ -362,8 +363,200 @@
 	 				}
 	 			});
 			});
-		});
 
+
+		/*프로젝트 현황 차트!!*/
+		
+			/*업무 담당 차트! */
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
+			var pjtMember = new Array();
+			var taskCount = new Array();
+			
+			$.ajax({
+ 	 			url:"ajax/project/getMemberTaskChart.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				
+ 					console.log(responseData);
+ 					for(key in responseData){
+ 						pjtMember.push(key);
+ 						taskCount.push(responseData[key]);
+ 	 				}
+ 	 				console.log('배열은?'+pjtMember);
+ 	 				console.log('배열은?'+taskCount);
+ 					
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+
+ 				complete : function() {
+
+ 					new Chart(document.getElementById("member-task"), {
+ 					    type: 'doughnut',
+ 					    data: {
+ 					      labels: pjtMember,
+ 					      datasets: [
+ 					        {
+ 					          label: "업무 할당 현황",
+ 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          data: taskCount
+ 					        }
+ 					      ]
+ 					    },
+ 					    options: {
+ 					      title: {
+ 					        display: true,
+ 					        text: 'Predicted world population (millions) in 2050'
+ 					      }
+ 					    }
+
+ 					    
+ 					});
+ 					
+ 	 			}
+ 			});
+			var memberTask = new Array(); //업무
+ 			var taskScheduled = new Array(); //예정된 업무
+ 			var taskInProgress = new Array(); //진행중 업무
+ 			var taskTest = new Array(); //테스트 업무
+ 			var taskCompleted = new Array(); //완료된 업무
+ 			
+ 			/*개인 업무 현황 progress bar*/
+			$.ajax({
+ 	 			url:"ajax/project/getMemberTask.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 					console.log(responseData);
+ 					$.each(responseData, function(index, element){
+ 						memberTask.push(element.title);
+ 	 					var progress = element.progress;
+ 	 					if(progress == '예정'){
+ 	 						taskScheduled.push(element);
+ 	 	 				} else if(progress == '진행') {
+ 	 	 					taskInProgress.push(element);
+ 	 	 	 			} else if(progress == '테스트') {
+ 	 	 	 				taskTest.push(element);
+ 	 	 	 			} else {
+ 	 	 	 				taskCompleted.push(element);
+ 	 	 	 	 		}
+ 	 				});
+ 					console.log('배열 갯수?'+taskScheduled.length);
+	 				console.log('배열 갯수2?'+taskInProgress.length);
+	 				console.log('배열3?'+taskTest);
+	 				console.log('배열4?'+taskCompleted);
+ 					/* for(key in responseData){
+ 						pjtMember.push(key);
+ 						taskCount.push(responseData[key]);
+ 	 				}
+ 	 				console.log('배열은?'+pjtMember);
+ 	 				console.log('배열은?'+taskCount); */
+ 					
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+
+ 				complete : function() {
+ 					Chart.pluginService.register({
+ 						beforeDraw: function (chart) {
+ 							if (chart.config.options.elements.center) {
+ 				        //Get ctx from string
+ 				        var ctx = chart.chart.ctx;
+ 				        
+ 								//Get options from the center object in options
+ 				        var centerConfig = chart.config.options.elements.center;
+ 				      	var fontStyle = centerConfig.fontStyle || 'Arial';
+ 								var txt = centerConfig.text;
+ 				        var color = centerConfig.color || '#000';
+ 				        var sidePadding = centerConfig.sidePadding || 20;
+ 				        var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+ 				        //Start with a base font of 30px
+ 				        ctx.font = "30px " + fontStyle;
+ 				        
+ 								//Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+ 				        var stringWidth = ctx.measureText(txt).width;
+ 				        var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+ 				        // Find out how much the font can grow in width.
+ 				        var widthRatio = elementWidth / stringWidth;
+ 				        var newFontSize = Math.floor(30 * widthRatio);
+ 				        var elementHeight = (chart.innerRadius * 2);
+
+ 				        // Pick a new font size so it will not be larger than the height of label.
+ 				        var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+ 								//Set font settings to draw it correctly.
+ 				        ctx.textAlign = 'center';
+ 				        ctx.textBaseline = 'middle';
+ 				        var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+ 				        var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+ 				        ctx.font = fontSizeToUse+"px " + fontStyle;
+ 				        ctx.fillStyle = color;
+ 				        
+ 				        //Draw text in center
+ 				        ctx.fillText(txt, centerX, centerY);
+ 							}
+ 						}
+ 					});
+ 						var config = {
+ 							type: 'doughnut',
+ 							data: {
+ 								labels: [
+ 								  "예정",
+ 								  "진행",
+ 								  "테스트",
+ 								  "완료"
+ 								],
+ 								datasets: [{
+ 									data: [taskScheduled.length, taskInProgress.length,taskTest.length,  taskCompleted.length ],
+ 									backgroundColor: [
+ 									  "#FF6384",
+ 									  "#36A2EB",
+ 									  "#FFCE56",
+ 									  "#c45850"
+ 									],
+ 									hoverBackgroundColor: [
+ 									  "#FF6384",
+ 									  "#36A2EB",
+ 									  "#FFCE56",
+ 									  "#c45850"
+ 									]
+ 								}]
+ 							},
+ 						options: {
+ 							elements: {
+ 								center: {
+ 									text: memberTask.length/taskCompleted.length,
+ 				          color: '#FF6384', // Default is #000000
+ 				          fontStyle: 'Arial', // Default is Arial
+ 				          sidePadding: 20 // Defualt is 20 (as a percentage)
+ 								}
+ 							}
+ 						}
+ 					};
+
+
+ 					var ctx = document.getElementById("user-task").getContext("2d");
+ 					var myChart = new Chart(ctx, config);
+ 					
+ 	 			}
+ 			});
+ 		
+
+
+		}); //onload 함수 끝
+
+		
+		
 		
 		/* DB에서 가져온 중요도로 별 표시해주는 함수
 		*/
@@ -390,7 +583,7 @@
 						//$("#taskEditImportant").val(value); //db에 저장할 값 넣어주기
 				      }
 				  });
-			}
+		}
 		}
 
 		
@@ -941,6 +1134,7 @@
 		
 		
     </script>
+    
     <style type="text/css">
 	.input-line{
 	    background: transparent;
@@ -1035,6 +1229,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
+                                            <input type="hidden" id="tskSeq" value="${task.tskSeq}">
                                         </div>
                                     </header>
                                     <div id="accordion">
@@ -1265,9 +1460,11 @@
 						<div class="col-lg-6 col-md-12">
 						<section class="panel">
 								<header class="panel-heading panel-heading-transparent">
-									<h2 class="panel-title">참여중인 프로젝트</h2>
+									<h2 class="panel-title">프로젝트 진행률</h2>
 								</header>
 								<div class="panel-body">
+								
+								
 									<div class="table-responsive">
 										<table class="table table-striped mb-none">
 											<thead>
@@ -1296,6 +1493,8 @@
 											</tbody>
 										</table>
 									</div>
+									
+									
 								</div>
 							</section>
 
@@ -1343,217 +1542,46 @@
 							</section>
 						</div>
 					</div>
-						<div class="row">
+					<!-- 프로젝트 업무 비중 -->
+					<div class="row">
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
-
-									<h2 class="panel-title">Best Seller</h2>
-									<p class="panel-subtitle">Customize the graphs as much as you want, there are so many options and features to display information using JSOFT Admin Template.</p>
+									<h2 class="panel-title">프로젝트 업무 비중</h2>
 								</header>
 								<div class="panel-body">
-
 									<!-- Flot: Basic -->
-									<div class="chart chart-md" id="flotDashBasic"></div>
-									<script>
-
-										var flotDashBasicData = [{
-											data: [
-												[0, 170],
-												[1, 169],
-												[2, 173],
-												[3, 188],
-												[4, 147],
-												[5, 113],
-												[6, 128],
-												[7, 169],
-												[8, 173],
-												[9, 128],
-												[10, 128]
-											],
-											label: "Series 1",
-											color: "#0088cc"
-										}, {
-											data: [
-												[0, 115],
-												[1, 124],
-												[2, 114],
-												[3, 121],
-												[4, 115],
-												[5, 83],
-												[6, 102],
-												[7, 148],
-												[8, 147],
-												[9, 103],
-												[10, 113]
-											],
-											label: "Series 2",
-											color: "#2baab1"
-										}, {
-											data: [
-												[0, 70],
-												[1, 69],
-												[2, 73],
-												[3, 88],
-												[4, 47],
-												[5, 13],
-												[6, 28],
-												[7, 69],
-												[8, 73],
-												[9, 28],
-												[10, 28]
-											],
-											label: "Series 3",
-											color: "#734ba9"
-										}];
-
-										// See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
-
-									</script>
-
+									<div class="chart chart-md" >
+										<canvas id="member-task" width="800" height="450"></canvas>
+									</div>
 								</div>
 							</section>
 						</div>
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
-									<div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
-									</div>
-									<h2 class="panel-title">Server Usage</h2>
-									<p class="panel-subtitle">It's easy to create custom graphs on JSOFT Admin Template, there are several graph types that you can use, such as lines, bars, pie charts, etc...</p>
+									<h2 class="panel-title">업무 진행 상태</h2>
 								</header>
 								<div class="panel-body">
 
 									<!-- Flot: Curves -->
-									<div class="chart chart-md" id="flotDashRealTime"></div>
+									<div class="chart chart-md" id="flotDashRealTime">
+										<canvas id="user-task" width="800" height="450"></canvas>
+									</div>
 								</div>
 							</section>
 						</div>
 					</div>
 					<!-- end: page -->            
-               		</div>
+               		 </div>
                		 
                		<div class="tab-pane" id="drive">
-               		
-               		 <!-- 성호 - 구글 드라이브 뷰단 -->
-               		 <!--  타임 라인 시작 -->
-               		 	<script type="text/javascript">
-							/*  타임 라인 상단 추가되는 부분  */
-							
-	               		 </script>
-               		 	 <!-- 구글 드라이브  -->
-						<script src="assets/javascripts/googleDriveJs/googleDrive.js"> </script>
-               		 	
+               		 구글!!
+               		</div>
                		 
                		 
                		 
-               		 <div class="timeline">
-               		 	<!--추가 버튼  -->
-               			<div>
-               				<a id="goGoogleDrive" class="mb-xs mt-xs mr-xs modal-basic btn btn-primary" >ADD GoogleDrive</a>
-               			</div>
-						<div class="tm-body">
-						<!-- 	<div class="tm-title">
-								<h3 class="h5 text-uppercase">November 2013</h3>
-							</div> -->
-							
-						
-							
-							
-							<ol class="tm-items">
-								<li class="addTimeline">
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
-										<time class="tm-datetime" datetime="2013-11-22 19:13">
-											<div> 여기는 이메일</div>
-											<div class="tm-datetime-time">2020-02-02</div>
-										</time>
-									</div>
-										
-										
-										<div class="tm-box" >
-											<p id="down">
-												 
-											</p>
-										<div class="tm-meta">
-												
-											여기는 파일 내용 코멘트
-										
-										</div>
-									</div>
-								</li>
-							
-							
-							
-								<li>
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
-										<time class="tm-datetime" datetime="2013-11-22 19:13">
-											<div>  여기는 이메일 </div>
-											<div class="tm-datetime-time">2020-02-02</div>
-										</time>
-									</div>
-										<div class="tm-box appear-animation" data-appear-animation="fadeInRight"data-appear-animation-delay="50">
-										<p>
-											여기는 구글 드라이브 파일 링크 
-										</p>
-										<div class="tm-meta">
-											여기는 파일 내용 코멘트
-										</div>
-									</div>
-								</li>
-								
-							
-							
-								 <!--  원본 하나 남겨둠 -->
-								<!-- <li>
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-thumbs-up"></i></div>
-										<time class="tm-datetime" datetime="2013-11-19 18:13">
-											<div class="tm-datetime-date">7 months ago.</div>
-											<div class="tm-datetime-time">06:13 PM</div>
-										</time>
-									</div>
-									<div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="250">
-										<p>
-											What is your biggest developer pain point?
-										</p>
-									</div>
-								</li> -->
-								<!-- 원본 끝 -->
-								
-								
-							
-							
-							</ol> <!--타임 라인 끝 -->
-						<!-- 	<div class="tm-title">
-								<h3 class="h5 text-uppercase">September 2013</h3>
-							</div> -->
-						</div>  <!--   타임 라인 바디 끝 -->
-					</div>   <!-- 타임 라인 전체 디브 끝  -->
-               		 
-               		 
-               		 <!--   타임라인 끝  -->
-               		
-               		 
-               		 
-               		 
-               		 
-               		</div><!--  타임 라인 페이지 전체디브 끝 -->
-               		 
-               		 
-               		 
-               		 
-               		 
-               		 
-               		 
-                </div> <!-- 이건 완전 전체 페이지 디브 이거 지우면 혜리한테 개혼남 -->
+                </div>
                 
                
                 <!-- end: page -->
@@ -1893,7 +1921,10 @@
     <!-- 오른쪽 사이드 끝 -->
 
 </section>
+	
+		
 		<c:import url="/common/BottomTag.jsp"/>
+		
 		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 		
 		
@@ -1923,10 +1954,6 @@
 		
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-		
-		<!-- 구글 드라이브 -->
-		<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
-		<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>
 		
 		
 </body>

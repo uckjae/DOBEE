@@ -1,11 +1,8 @@
 package com.dobee.services;
-
-import com.dobee.dao.NoticeDao;
 import com.dobee.dao.ScheduleDao;
 import com.dobee.vo.schedule.Schedule;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +10,8 @@ import java.util.List;
 @Service
 public class ScheduleService {
 
-
     @Autowired
     private SqlSession sqlSession;
-
 
     //로그인후 Main
     public List<Schedule> mainSchedule(){

@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html class="fixed">
 <head>
+
 <c:import url="/common/HeadTag.jsp"/>
 <c:import url="/common/BottomTag.jsp"/>
+
 <!-- Specific Page Vendor CSS -->
 <link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
@@ -43,7 +47,9 @@ body {
     width: 100%;
 }
 </style>
+
 <script type="text/javascript">
+
 
 	function findMail(callback){
       return new Promise(function(resolve,reject){
@@ -57,74 +63,36 @@ body {
 				  
               dataType:"text", 
               method:"POST",
-
+              
               success: function(response){
                   console.log("메일보내짐");
-                  console.log("리스폰스확인:"+response);
-                  resolve(response)                 
+                  resolve(response)
+                  
                   },
-              error:  function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
-				   console.log("에러"+textStatus); 
-				   console.log("에러2"+errorThrown);
+              error: function(jqXHR, textStatus, errorThrown){
+				   console.log(textStatus);
+				   console.log(errorThrown);
 					}
 			  });
           });
 		}
 
-
-
-
-$("#submitBtn").on('click',function(e){
-     var mail = $("#mail").val();
-
-     $.ajax({
-         url:'ajax/admin/findPassWord2.do',
-         data:{"mail":mail},
-         dataType:"text",
-         success:function(data){
-           var mail= data;
-
-           if($.trim($('mail').val())!==mail)){
-       	    alert("존재하지 않는 이메일입니다.");
-               $('#mail').focus();
-               return false;
-       	   }
-       	   else if($.trim($('mail').val())===mail)){
-       		location.href= "findPassWordAuth.do";
-       	   }
-
-          },
-          complete:
-              function findMail(){
-        	  $.ajax({
-    			  url:"ajax/admin/findEmail.do",
-    			  data:{'mail':$('#mail').val()
-    				  },
-    				  
-                  dataType:"text", 
-                  method:"POST",
-
-                  success: function(response){
-                      console.log("메일보내짐");
-                      console.log("리스폰스확인:"+response);
-                      resolve(response)                 
-                      },
-                  error:  function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
-    				   console.log("에러"+textStatus); 
-    				   console.log("에러2"+errorThrown);
-    					}
-    			  });
-              }
-         ,error : function(request,status,error){
-				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
-          }
-          
-         });
-         $("#findPWD").submit();
-        });		
-		
+	function myFormSubmit(){
+		findMail().then(function(){
+			console.log("submit()");
+			document.getElementById('findPWD').submit();
+			$('#findPWD').submit();	
+			
+		});
 	}
+
+     
+ 	
+
+
 </script>
+
+
 
 </head>
 <body>
@@ -132,10 +100,12 @@ $("#submitBtn").on('click',function(e){
 <!-- start: page -->
 <section class="body-sign">
  <div class="center-sign">
-						
+			
+			
    <a class="logo pull-left">
 	 <img src="img/beemain2.png" height="54"/>
    </a>
+
 
    <div class="panel panel-sign">
 				
@@ -144,32 +114,36 @@ $("#submitBtn").on('click',function(e){
 	</div>
 					
 	<div class="panel-body">
-	  <form action="findPassWord2.do" method="post" id="findPWD" enctype="multipart/form-data">
+	  <form action="" method="post" id="findPWD" enctype="multipart/form-data">
 						
 		<div class="form-group mb-lg">
-		  <label>메일을 작성하세요</label>
+		  <label>인증번호를 입력하세요</label>
 		  <div class="input-group input-group-icon">
 			 <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
-				  <i class="fa fa-envelope"></i>
+				  <i class="fa fa-check-circle"></i>
 				 </span>
 				</span>
 		  </div>
-		</div>		 
+		</div>
+		 
 		<hr>
 		<div class="mb-xs text-center">
-		  <input type="button" id="submitBtn" class="btn btn-primary mr-3" value="전송">
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">확인</a>
+		  
 		</div>
 		</form>
 
-		<p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아아디 찾기</a>
-
-	  </div>	  	  
+	  </div>
+	  	  
 	</div>				
  </div>
  
 </section>
 <!-- end: page -->
+
+
+
 </body>
 </html>

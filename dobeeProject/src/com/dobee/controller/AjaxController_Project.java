@@ -1,5 +1,6 @@
 package com.dobee.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -337,8 +338,38 @@ public class AjaxController_Project {
 		System.out.println("jsonlist"+jsonList.toString());
     	
 		return jsonList;
-		
 	}
+	
+	/*차트*/
+	
+	//프로젝트 업무 할당 차트
+	@RequestMapping("getMemberTaskChart.do")
+	public Map<String, Integer> getMemberChart(@RequestParam(value="pjtSeq") String pjtSeq , HttpServletRequest request) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		//프로젝트에 속한 멤버 정보 가져오기
+		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		//특정 참여자의 업무량 가져오기
+		
+		
+		for(int i = 0;i<pjtMember.size(); i++) {
+			String pjtMemberName = pjtMember.get(i).getName();
+			String pjtMemberMail = pjtMember.get(i).getMail();
+			int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
+			map.put(pjtMemberName, result);
+		}
+		System.out.println("맵맵?"+map.toString());
+		return map;
+	}
+	
+	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
+	@RequestMapping("getMemberTask.do")
+	public List<Task> getMemberTask(@RequestParam(value="pjtSeq") String pjtSeq , Principal principal, HttpServletRequest request){
+		String mail = principal.getName();
+		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
+		return taskList;
+	}
+	
 	
 	
 }
