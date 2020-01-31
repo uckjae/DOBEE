@@ -344,6 +344,16 @@ public class AjaxController_Project {
 	
 	/*차트*/
 	
+	//프로젝트 전체 진행률 차트 getPjtProgressChart
+	
+	@RequestMapping("getPjtProgressChart.do")
+	public List<Task> getPjtProgressChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
+		//프로젝트의 전체 업무 가져오기
+		List<Task> taskList = projectService.taskList(Integer.parseInt(pjtSeq));
+		return taskList;
+	}
+	
+	
 	//프로젝트 담당자별 업무 달성도 차트
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
@@ -376,7 +386,6 @@ public class AjaxController_Project {
 	}
 	
 	
-	
 	//프로젝트 업무 할당 차트
 	@RequestMapping("getTaskAssignmentChart.do")
 	public Map<String, Integer> getTaskAssignmentChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
@@ -402,6 +411,18 @@ public class AjaxController_Project {
 		String mail = principal.getName();
 		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 		return taskList;
+	}
+	
+	
+	
+	//프로젝트 마다 해당 구글 드라이브 아작스로 불러와서 데이터 넘겨주는 함수
+	@RequestMapping("loadTimeline.do")
+	public ArrayList<GoogleDrive> getMemberTaskChart(@RequestParam(value="pjtSeq") int pjtSeq){
+		ArrayList<GoogleDrive> list = new ArrayList<>();
+		System.out.println(" 구글 드라이브 : 일단 컨트롤단 오냐");
+		list = timelineService.loadTimeline(pjtSeq);
+		
+		return list;
 	}
 	
 	

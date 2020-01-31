@@ -44,7 +44,7 @@
 			          	var res = $.each(data, function(index, item) {
 			          		arr.push({
 	                            id: item.mail,
-	                            text: item.name
+	                            text: item.name+"("+item.mail+")"
 	                        })
 	        	        });
       	       			return {
@@ -145,8 +145,15 @@
     	 			});
     	 			}
     			});
+		$('#newPjt').click('show.bs.modal',function(e){
+			$('#newPjtForm').trigger('reset');
 
+			
+		});
+
+    		
 		$(".editPjt").click('show.bs.modal', function(e) {
+			$('#editPjtForm').trigger('reset');
 			var pjtSeq = $(this).data('pjtseq');
 			
 			//pjtSeq로 프로젝트 정보 가져와서 모달창에 뿌리기
@@ -177,7 +184,7 @@
 
 	 				//담당자!! -> userSelect 중에 벨류 값이 같으면 attr로 true 넣어주기
 	 				$.each(user, function(index, element){
-		 				mails.push(element.mail);
+		 				mails.push(element.name+"("+element.mail+")");
 		 				/* $("#userSelectEdit > option").each(function(){
 		 					if($(this).val() == element.mail){
 				 				$(this).attr('selected','selected');
@@ -194,15 +201,20 @@
 		 	 				console.log(responseData);
 		 	 				var id = new Array();
 		 	 				var name = new Array();
+		 	 				var object = new Object();
 		 	 				$.each(responseData, function(index, element){
 			 	 				id.push(element.mail);
-			 	 				name.push(element.name);
+			 	 				name.push(element.name+"("+element.mail+")");
+			 	 				var option = $('<option>');
+			 	 					$(option).val(element.mail);
+			 	 					$(option).text(element.name+"("+element.mail+")");
+
+				 	 			$('#userSelectEdit').append(option);
 			 	 			});
 
-			 	 			$("#userSelectEdit").select2({
-			 	 				placeholder: '사원 선택',
-				 	 			data : id
-				 	 		});
+							$("#userSelectEdit").select2();
+							
+			 	 			
 		 	 				
 			 	 			$("#userSelectEdit > option").each(function(){
 
@@ -268,6 +280,13 @@
 	
 	*/
 
+	/* 프로젝트 수정 전송 */
+	function editPjtButton(data){
+		console.log("eidtPjtButton()");
+		console.log($('#editPjtForm').serialize());
+		console.log($('#userSelectEdit').val());
+	}
+	
 	/* DateFormatting  함수 */
 	function date_to_str(format)
 
@@ -359,7 +378,7 @@
 					<!-- 프로젝트 만들기 -->
 					<c:if test="${ user.authCode == '3'}">
 						<div class="col-md-6 col-lg-6 col-xl-3">
-							<a data-toggle="modal" href="#newPjtModal" style="text-decoration:none;color:#777">
+							<a id="newPjt" data-toggle="modal" href="#newPjtModal" style="text-decoration:none;color:#777">
 								<section class="panel">
 									<header class="panel-heading bg-secondary">
 										<div class="panel-heading-icon">
@@ -394,6 +413,7 @@
 					<!--Body-->
 					<div class="container-fluid">
 					<div class="modal-body mb-0" style="margin-top: 10px;margin-bottom:10px;">
+						<form id="newPjtForm">
 						<!-- 프로젝트명 -->
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트명</label>
@@ -423,6 +443,7 @@
 										</select>
 									</div>
 							</div>
+						</form>
 						</div>
 					</div>
 					
@@ -456,6 +477,7 @@
 					<!--Body-->
 					<div class="container-fluid">
 					<div class="modal-body mb-0" style="margin-top: 10px;margin-bottom:10px;">
+						<form id="editPjtForm">
 						<!-- 프로젝트명 -->
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트명</label>
@@ -496,6 +518,7 @@
 										</select>
 									</div>
 							</div>
+							</form>
 						</div>
 					</div>
 					
@@ -504,7 +527,7 @@
 							<div class="col-md-4">
 							</div>
 							<div class="col-md-4 text-center">
-								<button type="submit" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" form="taskEditForm"><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
+								<button onclick="editPjtButton(this)" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" form="taskEditForm"><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
 							</div>
 							<div class="col-md-4">
 							</div>
