@@ -344,6 +344,16 @@ public class AjaxController_Project {
 	
 	/*차트*/
 	
+	//프로젝트 전체 진행률 차트 getPjtProgressChart
+	
+	@RequestMapping("getPjtProgressChart.do")
+	public List<Task> getPjtProgressChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
+		//프로젝트의 전체 업무 가져오기
+		List<Task> taskList = projectService.taskList(Integer.parseInt(pjtSeq));
+		return taskList;
+	}
+	
+	
 	//프로젝트 담당자별 업무 달성도 차트
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
@@ -374,7 +384,6 @@ public class AjaxController_Project {
 		return map;
 		
 	}
-	
 	
 	
 	//프로젝트 업무 할당 차트
@@ -415,6 +424,7 @@ public class AjaxController_Project {
 		
 		return list;
 	}
+	
 	
 	
 }
