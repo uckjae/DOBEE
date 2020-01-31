@@ -115,5 +115,9 @@ public interface ProjectDao {
     
     //특정 프로젝트의 구글 드라이브 리스트 가져오기
     public ArrayList<GoogleDrive> loadTimeline(int pjtSeq);
+    
+    
+    //특정 프로젝트 구글 드라이브 업로드
+    public int addGoogleTag(GoogleDrive gd);
 
 }

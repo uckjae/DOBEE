@@ -1,34 +1,114 @@
  //=Create object of FilePicker Constructor function function & set Properties===
-function addTimeline(){
-		console.log(" 타임라인 추가 함수 작동 ");
-		$(".tm-items").prepend(
-				'<li>'+
-				'<div class="tm-info">'+
-					'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
-					'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
-						'<div>  여기는 이메일 </div>'+
-						'<div class="tm-datetime-time">2020-02-02</div>'+
-					'</time>'+
-				'</div>'+
-					'<div class="tm-box">'+
-					'<p id="down">'+
-						'여기는 구글 드라이브 파일 링크' +
-					'</p>'+
-					'<div class="tm-meta">'+
-						'여기는 파일 내용 코멘트'+
-					'</div>'+
-				'</div>'+
-			'</li>'
-		);
- }
-//함수 타임 리스트 만들기
-function createList(email, date, fileName, fileTag, comment, projectNum){
+
+//문자열에서 숫자만 가져오기
+	function fn1(str){
+	    var res;
+	    res = str.replace(/[^0-9]/g,"");
+	    var y = res.substring(0,4);
+	    var m = res.substring(4,5);
+	    var rm
+	    if(m < 10){
+		    rm = "0"+m;
+		}
+		var d = res.substring(5,8);
+		var full = y+rm+d;
+		
+	    return full;
+	}
+
+	//문자열 날짜형태로 바꾸기 함수
+	function calculus1(str){    
+	    var end_ymd = str;    
+	    var yyyy = end_ymd.substr(0,4);
+	    var mm = end_ymd.substr(4,2);
+	    var dd = end_ymd.substr(6);  
+	    var com_ymd = new Date(yyyy,mm-1,dd)
+	    var inputdate = com_ymd.format('yyyy-MM-dd');  //임의 함수 써서 포맷팅함
+	    
+	    return inputdate;
+	}
 	
 	
-}
+	
+	//날짜 포맷 함수 
+ Date.prototype.format = function(f) {
+               		 	if (!this.valueOf()) return " ";
 
+               		 	var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+               		 	var d = this;
+               		 	
+               		 	return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+               		 		switch ($1) {
+               		 			case "yyyy": return d.getFullYear();
+               		 			case "yy": return (d.getFullYear() % 1000).zf(2);
+               		 			case "MM": return (d.getMonth() + 1).zf(2);
+               		 			case "dd": return d.getDate().zf(2);
+               		 			case "E": return weekName[d.getDay()];
+               		 			case "HH": return d.getHours().zf(2);
+               		 			case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+               		 			case "mm": return d.getMinutes().zf(2);
+               		 			case "ss": return d.getSeconds().zf(2);
+               		 			case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+               		 			default: return $1;
+               		 		}
+               		 	});
+               		 };
+               		String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+               		String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+               		Number.prototype.zf = function(len){return this.toString().zf(len);};
+               		
+               		/* 타임 라인 추가 할 때 현재 날짜 집어넣기 */
+               		function nowDate(){
+               			var today = new Date();
+                   		var tempDate = today.toLocaleDateString('ko-KR');
+                   		var numberDate = fn1(tempDate);
+                   		var date = calculus1(numberDate);
+                   		return date;
+               		}
+               		//타임라인 하나만 그리기 함수
+					function paintingTimeLine(email, date, url, filename){
+						$(".tm-items").prepend(
+								'<li>'+
+								'<div class="tm-info">'+
+									'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
+									'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
+										'<div class="tm-datetime-time">'+ date +'</div>'+
+									'</time>'+
+								'</div>'+
+									'<div class="tm-box">'+
+									'<p id="down">'+ '<a style="font-size:20px;" target="_blank" href='+url+
+										'>' + '<i class="fa fa-google-plus-square"></i>' + filename + '</a>'+ 
+									'</p>'+
+									'<div class="tm-meta">'+ "올린 사원 : " +
+										email + 
+									'</div>'+
+								'</div>'+
+							'</li>'
+						);
+					}; // 함수 종료
 
-
+    /*  디비에 데이터 저장 아작스 함수  */
+	function addGoogleTag(sendData){
+		var gdAddData = sendData;
+		$.ajax({
+			
+			url:'ajax/googleDrive/addGoogleTag.do',
+			data:gdAddData,
+			type:'POST',
+			success:function(data){
+				console.log("구글 디비 저장 아작스 성공");
+				
+			},
+			complete:function(){
+				
+				
+			},
+			error:function(){
+				console.log("구글 디비 저장 아작스 실패");
+			},
+			
+		});  //아작스끝 
+	} // 디비 등록 아작스 함수 끝 
 
     function SetPicker() {
         var picker = new FilePicker(
@@ -37,7 +117,7 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
                 clientId: '742532035296-mbiasnqpksnq35hcahvceqi6clc70le8.apps.googleusercontent.com',
                 buttonEl: document.getElementById("goGoogleDrive"),
                 onClick: function (file) {
-                    PopupCenter('https://drive.google.com/file/d/' + file.id + '/view', "", 1026, 500);
+                    PopupCenter('https://drive.google.com/file/d/' + file.id + '/view', "", 1000, 500);
                 }
             });
     }
@@ -45,8 +125,8 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
     //====================Create POPUP function==============
     function PopupCenter(url, title, w, h) {
         //debugger;
-        var left = (screen.width / 1) - (w / 1);
-        var top = (screen.height / 1) - (h / 100);
+        var left = (screen.width / 1) - (w / 2);
+        var top = (screen.height / 1) - (h / 2);
         return window.open(url, title, 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
     }
 
@@ -138,6 +218,7 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
                 setOAuthToken(accessToken).
                 setCallback(this.PickerResponse.bind(this)).
                 setTitle('구글드라이브 UPLOAD').
+                setSize(700,500).
                 build().
                 setVisible(true);
             
@@ -154,8 +235,26 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;
 				
-				addTimeline(); // 타임라인 추가하는 함수
-                document.getElementById('down').innerHTML = "<a style='font-size:20px;' target='_blank' href="+link+ ">"+ "<i class='fa fa-google-plus-square'></i>"+filename+"</a>";
+				//현재 날짜 불러오기
+				var nowDateforAdd = nowDate();
+				
+				// 디비에 저장할 데이터 생성 
+				var gdAddData = {
+						"gddate":nowDateforAdd,
+						"gdurl":link,
+						"mail":nowEmail,
+						"pjtseq":pjtSeq,
+						"filename":filename
+				};
+				// 위의 데이터를 보내서 디비에 등록
+				
+				addGoogleTag(gdAddData);
+				
+				
+				// 타임라인 추가하는 함수 ( 뷰단 에만 추가되는 함수 )
+				paintingTimeLine(nowEmail, nowDateforAdd, link, filename);
+				 
+               // document.getElementById('down').innerHTML = "<a style='font-size:20px;' target='_blank' href="+link+ ">"+ "<i class='fa fa-google-plus-square'></i>"+filename+"</a>";
             }
         },
 

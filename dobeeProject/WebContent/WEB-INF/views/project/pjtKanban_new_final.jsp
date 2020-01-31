@@ -1729,6 +1729,10 @@
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
                		 	<script type="text/javascript">
+               		 // 현재 유저 이메일 불러오기
+               		 var nowEmail = '<c:out value= "${pjtMember[0].mail}"/>';
+               		 
+               		 
                		 /* 날짜 포맷 함수 */
                		 Date.prototype.format = function(f) {
                		 	if (!this.valueOf()) return " ";
@@ -1751,25 +1755,28 @@
                		 			default: return $1;
                		 		}
                		 	});
-               		 };// 날짜포맷함수 종료
-
-               		 
-						/* 타임라인 하나만 그리는 함수 */
-						function paintingTimeLine(email, date, content, url){
+               		 };
+               		String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+               		String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+               		Number.prototype.zf = function(len){return this.toString().zf(len);};
+               		// 날짜포맷함수 종료
+							
+						/* 타임라인 하나만 그리는 함수 */  //이 함수를 쓰지 않고 구글드라이브.js 에있는 함수를 사용함 여기 수정해도 반영안됨.
+						function paintingTimeLine1(email, date, url, filename){
 							$(".tm-items").prepend(
 									'<li>'+
 									'<div class="tm-info">'+
 										'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
 										'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
-											'<div>' + email + '</div>'+
 											'<div class="tm-datetime-time">'+ date +'</div>'+
 										'</time>'+
 									'</div>'+
 										'<div class="tm-box">'+
-										'<p id="down">'+ url + 
+										'<p id="down">'+ '<a style="font-size:20px;" target="_blank" href='+url+
+											'>' + '<i class="fa fa-google-plus-square"></i>' + filename + '</a>'+ 
 										'</p>'+
-										'<div class="tm-meta">'+
-											content +
+										'<div class="tm-meta">'+  
+											email +
 										'</div>'+
 									'</div>'+
 								'</li>'
@@ -1781,16 +1788,17 @@
 							function createTimeList(arrayData){
 									 for(let i = 0 ; i < arrayData.length; i++){
 											let gdSeq = arrayData[i].gdSeq;
-											let gdContent = arrayData[i].gdContent;
-											let gdUrl = letarrayData[i].gdUrl;
+											//let gdContent = arrayData[i].gdContent;
+											let gdUrl = arrayData[i].gdUrl;
 											let mail = arrayData[i].mail;
 											let pjtSeq = arrayData[i].pjtSeq;
+											let fileName = arrayData[i].fileName;
 
 											/* 데이트 타입 변환  */
 											let gdDate = new Date(arrayData[i].gdDate).format("yyyy-MM-dd");
 
 											/*  타임라인 그리기 함수 */
-											paintingTimeLine(mail, gdDate, gdContent, gdUrl);
+											paintingTimeLine(mail, gdDate, gdUrl, fileName);
 										 }
 									 
 							} // 함수 종료
@@ -1814,8 +1822,6 @@
 									data : sendData,
 									dataType: "JSON",
 									success:function(data){
-											console.log("타임라인 불러오기 아작스 성공 !");
-											console.log(data);
 											timeLineData = data;
 										},
 
@@ -1845,7 +1851,7 @@
                		 	
                		 
                		 
-               		 
+               		 <!-- 구글 드라이브 타임라인 뷰단태그 시작 -->
                		 <div class="timeline">
                		 	<!--추가 버튼  -->
                			<div>
@@ -1860,7 +1866,7 @@
 							
 							
 							<ol class="tm-items">
-								<li class="addTimeline">
+							<!-- 	<li class="addTimeline">
 									<div class="tm-info">
 										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
 										<time class="tm-datetime" datetime="2013-11-22 19:13">
@@ -1880,11 +1886,11 @@
 										
 										</div>
 									</div>
-								</li>
+								</li> -->
 							
 							
 							
-								<li>
+								<!-- <li>
 									<div class="tm-info">
 										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
 										<time class="tm-datetime" datetime="2013-11-22 19:13">
@@ -1900,7 +1906,7 @@
 											여기는 파일 내용 코멘트
 										</div>
 									</div>
-								</li>
+								</li> -->
 								
 							
 							
