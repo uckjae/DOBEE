@@ -240,15 +240,6 @@ public class ProjectService {
         return null;
     }
     
-    //특정 프로젝트에서 완료된 업무 리스트 가져오기
-    public List<Task> getPjtCompletedTaskList(int pjtSeq) {
-    	List<Task> taskList = new ArrayList<Task>();
-    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	taskList = projectDao.getPjtCompletedTaskList(pjtSeq);
-    	return taskList;
-    	
-    }
-    
     //특정 프로젝트에서 특정인의 업무량 가져오기
     public int getMemberTaskCount(int pjtSeq, String mail) {
     	int result = 0;
