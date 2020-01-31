@@ -1601,7 +1601,43 @@
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
                		 	<script type="text/javascript">
-							/*  타임 라인 상단 추가되는 부분  */
+						/* 타임라인 리스트 갯수와 데이터 받아서 그만큼 타임리스트 뷰단 만들어 주는 함수 */
+							function createTimeList(data){
+									console.log(data); // 일단 나오는지 확인
+									
+
+
+
+							} // 함수 종료
+
+               		 	
+               			/*  타임 라인 불러오는 아작스 함수 */
+               			//  프로젝트 넘버를 입력하면 그에 해당하는 타임리스트 받아오기
+							function loadTimeLine(projectNum){
+							 	$.ajax({
+									url : 'ajax/project/loadTimeline.do',
+									type : 'POTS',
+									data : projectNum,
+									success:function(data){
+											console.log("타임라인 불러오기 아작스 성공 !");
+											console.log(data);
+										},
+
+									complete : function(){
+											// 불러오기에 성공하면 리스트 수만큼 타임라인을 만들어주는 함수 
+										
+
+										},
+
+
+									error : function(){
+											console.log("타임라인 불러오기 아작스 에러!");
+											
+		
+
+										},
+								 }); // 아작스 종료
+							}//불러오기 함수 종료
 							
 	               		 </script>
                		 	 <!-- 구글 드라이브  -->
