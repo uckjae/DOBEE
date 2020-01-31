@@ -185,12 +185,13 @@ WHERE p.pjtseq = #{pjtSeq}
 	FROM TASK
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2}
 </select>
+
 <!-- 특정 프로젝트의 개인의 완료된 업무 가져오기 public List<Task> getCompletedTaskList(int pjtSeq, String mail) -->
 <select id="getCompletedTaskList" resultType="com.dobee.vo.project.Task">
 	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ
 	FROM TASK
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND PROGRESS='완료';
-
+</select>
 
 <!--  특정 프로젝트의 구글 드라이브 목록 가져오기-->
 <select id="loadTimeline"  parameterType="Integer"  resultType="com.dobee.vo.project.GoogleDrive">
