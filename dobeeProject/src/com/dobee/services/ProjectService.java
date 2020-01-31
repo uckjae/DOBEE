@@ -255,6 +255,34 @@ public class ProjectService {
     	return taskList;
     }
     
+    //특정 프로젝트의 개인의 완료일이 지난 업무 가져오기
+    public List<Task> getOverdueTask(int pjtSeq, String mail){
+    	List<Task> taskOverdueList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	taskOverdueList = projectDao.getOverdueTask(pjtSeq, mail);
+    	return taskOverdueList;
+    }
+    
+    //특정 프로젝트의 개인의 오늘까지 남은 업무 가져오기
+    public List<Task> getDeadlineTask(int pjtSeq, String mail){
+    	List<Task> deadlineTaskList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	deadlineTaskList = projectDao.getDeadlineTask(pjtSeq, mail);
+    	return deadlineTaskList;
+    }
+    
+    //특정 프로젝트의 개인의 남은 업무 가져오기
+    
+    public List<Task> getOtherTask(int pjtSeq, String mail){
+    	List<Task> otherTaskList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	otherTaskList = projectDao.getOtherTask(pjtSeq, mail);
+    	return otherTaskList;
+    }
+
+    
+    
+    
 	
 	 //특정 프로젝트의 개인의 완료된 업무 가져오기 
 	 public List<Task> getCompletedTaskList(int pjtSeq, String mail){ 

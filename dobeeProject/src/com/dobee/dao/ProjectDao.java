@@ -110,6 +110,16 @@ public interface ProjectDao {
     //특정 프로젝트의 개인 업무 가져오기
     public List<Task> getMemberTask(int pjtSeq, String mail);
     
+    //특정 프로젝트의 개인 업무 중 마감일이 지난 업무 가져오기
+    public List<Task> getOverdueTask(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인 업무 중 마감일이 3일 남은 업무 가져오기
+    public List<Task> getDeadlineTask(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인 업무 중 나머지 업무 가져오기
+    public List<Task> getOtherTask(int pjtSeq, String mail);
+    
+    
     //특정 프로젝트의 개인의 완료된 업무 가져오기
     public List<Task> getCompletedTaskList(int pjtSeq, String mail);
     

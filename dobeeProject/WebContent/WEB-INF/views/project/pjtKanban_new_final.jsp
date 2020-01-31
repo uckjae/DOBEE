@@ -366,6 +366,11 @@
 			});
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
+
+			var deadlineTask = new Array();
+			var otherTask = new Array();
+			var taskOverdueTask = new Array();
+			
 			/*내 업무*/
 			$.ajax({
  	 			url:"ajax/project/getMyTask.do",
@@ -373,6 +378,8 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
+ 	 				console.log('업무 가져와!!!')
+ 	 				console.log(responseData);
  	 				/* pjtTaskLength = responseData.length; 
  	 				$.each(responseData, function(index, element){
  	 					var progress = element.progress;
@@ -729,7 +736,7 @@
  			
  			/*개인 업무 현황 progress bar*/
 			$.ajax({
- 	 			url:"ajax/project/getMemberTask.do",
+ 	 			url:"ajax/project/getMemberTaskChart.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				type:"post",
@@ -737,31 +744,6 @@
  					console.log('개인 업무'+responseData);
  					$.each(responseData, function(index, element){
  	 					
- 	 					/*내 업무 테이블 뿌려주기*/
- 	 					var li = $('<li>');
- 	 					var a = $('<a href="#">');
- 	 					var div = $('<div class="result-data">');
-						var taskTitle = $('<p class="h3 title text-primary">'+element.title+'</p>');
-						//날짜 포맷팅
-						var startDate = new Date(element.startAt);
-						var formatedStartDate = date_to_str(startDate);
-						var endDate = new Date(element.endAt);
-						var formatedEndDate = date_to_str(endDate);
-						
-						var taskProgress = $('<p class="description">'+element.progress+'</p>');
-						var taskDate = $('<p class="description">'+formatedStartDate+'~'+formatedEndDate+'</p>');
-						
-						
-
-						div.append(taskTitle);
-						div.append(taskProgress);
-						div.append(taskDate);
-						a.append(div);
-						li.append(a);
-
-
-						
-						
 						/*차트용 데이터 넣기*/
  						memberTask.push(element.title);
  	 					var progress = element.progress;
@@ -777,8 +759,6 @@
  	 				});
 
 
- 	 				
- 					
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 

@@ -419,20 +419,32 @@ public class AjaxController_Project {
 	
 	//개인의 task 가져오기
 	@RequestMapping("getMyTask.do")
-	public List<Task> getMyTask(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
-		System.out.println("여기 타니???");
+	public Map<String, List<Task>> getMyTask(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
 		String mail = principal.getName();
-		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
+		Map<String, List<Task>> map = new HashMap<String, List<Task>>();
 				
 		//완료일 지남
+		List<Task> taskOverdueList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
+		map.put("taskOverdueList", taskOverdueList);
+		
+		//3일 남음
+		List<Task> deadlineTask = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
+		map.put("deadlineTask", deadlineTask);
 		
 		
-		//오늘까지
+		//나머지 리스트
+		List<Task> otherTask = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
+		map.put("otherTask", otherTask);
 		
 		
-		//기타
-		
-		
+		return map;
+	}
+	
+	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
+	@RequestMapping("getMemberTaskChart.do")
+	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
+		String mail = principal.getName();
+		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 		return taskList;
 	}
 	
