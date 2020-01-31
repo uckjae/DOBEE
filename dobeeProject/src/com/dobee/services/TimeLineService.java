@@ -17,12 +17,11 @@ public class TimeLineService {
 	
 	//성호 - 타임라인 불러오기 아작스 서비스 
 	public ArrayList<GoogleDrive> loadTimeline(int pjtSeq) {
-		System.out.println("구글 드라이브 서비스단 오냐 ? ");
 		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
 		ArrayList<GoogleDrive> list = new ArrayList<>(); 
 		list = projectdao.loadTimeline(pjtSeq);
 		
-		return null;
+		return list;
 	}
 	
 }

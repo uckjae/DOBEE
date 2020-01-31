@@ -1635,13 +1635,70 @@
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
                		 	<script type="text/javascript">
+               		 /* 날짜 포맷 함수 */
+               		 Date.prototype.format = function(f) {
+               		 	if (!this.valueOf()) return " ";
+
+               		 	var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+               		 	var d = this;
+               		 	
+               		 	return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+               		 		switch ($1) {
+               		 			case "yyyy": return d.getFullYear();
+               		 			case "yy": return (d.getFullYear() % 1000).zf(2);
+               		 			case "MM": return (d.getMonth() + 1).zf(2);
+               		 			case "dd": return d.getDate().zf(2);
+               		 			case "E": return weekName[d.getDay()];
+               		 			case "HH": return d.getHours().zf(2);
+               		 			case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+               		 			case "mm": return d.getMinutes().zf(2);
+               		 			case "ss": return d.getSeconds().zf(2);
+               		 			case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+               		 			default: return $1;
+               		 		}
+               		 	});
+               		 };// 날짜포맷함수 종료
+
+               		 
+						/* 타임라인 하나만 그리는 함수 */
+						function paintingTimeLine(email, date, content, url){
+							$(".tm-items").prepend(
+									'<li>'+
+									'<div class="tm-info">'+
+										'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
+										'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
+											'<div>' + email + '</div>'+
+											'<div class="tm-datetime-time">'+ date +'</div>'+
+										'</time>'+
+									'</div>'+
+										'<div class="tm-box">'+
+										'<p id="down">'+ url + 
+										'</p>'+
+										'<div class="tm-meta">'+
+											content +
+										'</div>'+
+									'</div>'+
+								'</li>'
+							);
+						}; // 함수 종료
+								
+               		 
 						/* 타임라인 리스트 갯수와 데이터 받아서 그만큼 타임리스트 뷰단 만들어 주는 함수 */
-							function createTimeList(data){
-									 console.log(data); // 일단 나오는지 확인
-									
+							function createTimeList(arrayData){
+									 for(let i = 0 ; i < arrayData.length; i++){
+											let gdSeq = arrayData[i].gdSeq;
+											let gdContent = arrayData[i].gdContent;
+											let gdUrl = letarrayData[i].gdUrl;
+											let mail = arrayData[i].mail;
+											let pjtSeq = arrayData[i].pjtSeq;
 
+											/* 데이트 타입 변환  */
+											let gdDate = new Date(arrayData[i].gdDate).format("yyyy-MM-dd");
 
-
+											/*  타임라인 그리기 함수 */
+											paintingTimeLine(mail, gdDate, gdContent, gdUrl);
+										 }
+									 
 							} // 함수 종료
 
                		 	
@@ -1654,25 +1711,29 @@
 									"pjtSeq" : pjtSeq
 									}
 							console.log("성호 : " + sendData);
-							function loadTimeLine(projectNum){
+							var timeLineData = [];
+							function loadTimeLine(){
+								
 							 	$.ajax({
-									url : 'ajax/project/loadTimeline.do',
-									type : 'POTS',
+									url : 'ajax/googleDrive/loadTimeLine.do',
+									type : 'POST',
 									data : sendData,
+									dataType: "JSON",
 									success:function(data){
 											console.log("타임라인 불러오기 아작스 성공 !");
 											console.log(data);
+											timeLineData = data;
 										},
 
 									complete : function(){
-											// 불러오기에 성공하면 리스트 수만큼 타임라인을 만들어주는 함수 
-											
+											// 불러오기에 성공하면 리스트만큼 타임라인을 만들어주는 함수 
+											createTimeList(timeLineData);
 
 										},
 
 
 									error : function(){
-											console.log("타임라인 불러오기 아작스 에러!");
+											console.log("타임라인 불러오기 아작스 에러!!!!");
 											
 		
 
@@ -1682,7 +1743,7 @@
 							
 							console.log("성호 : " + pjtSeq);
 							// 타임리스트 뿌리기 아작스 실행
-							loadTimeLine(pjtSeq);
+							loadTimeLine();
 							
 	               		 </script>
                		 	 <!-- 구글 드라이브  -->
