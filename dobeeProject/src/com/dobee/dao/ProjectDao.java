@@ -10,6 +10,7 @@ import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
+import com.dobee.vo.project.UpcomingTask;
 import com.dobee.vo.schedule.Schedule;
 
 public interface ProjectDao {
@@ -115,5 +116,9 @@ public interface ProjectDao {
     
     //특정 프로젝트의 구글 드라이브 리스트 가져오기
     public ArrayList<GoogleDrive> loadTimeline(int pjtSeq);
+    
+    
+	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
+    public List<UpcomingTask> getUpcomingTask(String mail);
 
 }

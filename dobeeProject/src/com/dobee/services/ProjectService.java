@@ -7,16 +7,15 @@ import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
+import com.dobee.vo.project.UpcomingTask;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProjectService {
@@ -264,5 +263,13 @@ public class ProjectService {
 		 taskList = projectDao.getCompletedTaskList(pjtSeq, mail);
 		 return taskList;
 
+	 }
+	 
+	 // 마감임박 업무 리스트 GET			0131 게다죽 	~ing
+	 public List<UpcomingTask> getUpcomingTask(String mail) {
+		 ProjectDao pDao = sqlSession.getMapper(ProjectDao.class);
+		 List<UpcomingTask> utList = pDao.getUpcomingTask(mail);
+		 
+		 return utList;
 	 }
 }
