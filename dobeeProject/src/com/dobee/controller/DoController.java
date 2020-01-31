@@ -871,7 +871,7 @@ public class DoController {
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
     	
-        return "project/pjtKanban_new_mine";
+        return "project/pjtKanban_new_final";
         
         
     }
