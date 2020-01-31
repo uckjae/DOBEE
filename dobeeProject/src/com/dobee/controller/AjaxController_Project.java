@@ -417,7 +417,7 @@ public class AjaxController_Project {
 	
 	//프로젝트 마다 해당 구글 드라이브 아작스로 불러와서 데이터 넘겨주는 함수
 	@RequestMapping("loadTimeline.do")
-	public ArrayList<GoogleDrive> getMemberTaskChart(@RequestParam(value="projectNum") int pjtSeq){
+	public ArrayList<GoogleDrive> getMemberTaskChart(@RequestParam(value="pjtSeq") int pjtSeq){
 		ArrayList<GoogleDrive> list = new ArrayList<>();
 		System.out.println(" 구글 드라이브 : 일단 컨트롤단 오냐");
 		list = timelineService.loadTimeline(pjtSeq);
