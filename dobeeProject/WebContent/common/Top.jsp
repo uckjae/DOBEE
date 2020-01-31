@@ -289,38 +289,33 @@
 		swal({
 			   title: "출근",
 			   text: "출근 하시겠습니까?",
-			   icon: "info" //"info,success,warning,error" 중 택1
-			}).then((YES) => {
-				console.log('이거 타??');
-				var mail = $("#mail").text();
-				console.log('메일은??'+mail);
-				$.ajax({
-		 			url:"attend.do?mail="+mail,
-					dataType: "text",
-					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-					type:"post",
-					success:function(responsedata){
-						console.log('ajax 됨??');
-						console.log(responsedata);
-						if(responsedata == "success"){
-							swal({
-								   title: "출근",
-								   text: "출근 처리 되었습니다.",
-								   icon: "success" //"info,success,warning,error" 중 택1
-								}).then((YES) => {
-									location.reload(true); 
-								});
-							}
-						
-					},
-					error:function(){
-						
-					}
-				});
-
-				
-				});
-		
+			   icon: "info", //"info,success,warning,error" 중 택1
+				buttons : ["Cancle", true]
+			}).then((result) => {
+				if (result) {
+					var mail = $("#mail").text();
+					$.ajax({
+			 			url:"attend.do?mail="+mail,
+						dataType: "text",
+						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+						type:"post",
+						success:function(responsedata){
+							if(responsedata == "success"){
+								swal({
+									   title: "출근",
+									   text: "출근 처리 되었습니다.",
+									   icon: "success"
+									}).then((YES) => {
+										location.reload(true); 
+									});
+								}
+						},
+						error:function(){
+							
+						}
+					});
+				}
+			});
 		}
 
 
@@ -329,37 +324,37 @@
 		swal({
 			   title: "퇴근",
 			   text: "퇴근 하시겠습니까?",
-			   icon: "warning" //"info,success,warning,error" 중 택1
-			}).then((YES) => {
-				console.log('이거 타??');
-				var attSeq = ${user.isWork}
-				console.log('seq??'+attSeq);
-				$.ajax({
-		 			url:"leave.do?attSeq="+attSeq,
-					dataType: "text",
-					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-					type:"post",
-					success:function(responsedata){
-						console.log('ajax 됨??');
-						console.log(responsedata);
-						if(responsedata == "success"){
-							swal({
+			   icon: "warning",
+			   buttons : ["Cancle", true]
+			}).then((result) => {
+				if (result) {
+					console.log('이거 타??');
+					var attSeq = ${user.isWork}
+					console.log('seq??'+attSeq);
+					$.ajax({
+			 			url:"leave.do?attSeq="+attSeq,
+						dataType: "text",
+						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+						type:"post",
+						success:function(responsedata){
+							console.log('ajax 됨??');
+							console.log(responsedata);
+							if(responsedata == "success"){
+								swal({
 								   title: "퇴근",
 								   text: "퇴근 처리 되었습니다.",
-								   icon: "success" //"info,success,warning,error" 중 택1
+								   icon: "success"
 								}).then((YES) => {
 									location.reload(true); 
 								});
 							}
-						
-					},
-					error:function(){
-						
-					}
-				});
-
-				
-				});
-		
+						},
+						error:function(){
+							
+						}
+					});
+				}				
+			});
 		}
+	
 </script>

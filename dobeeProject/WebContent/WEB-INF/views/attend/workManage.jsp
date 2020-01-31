@@ -576,7 +576,6 @@
 
 			$('#yearMonthSelector').change(function() {
 				let ym = $(this).val();
-				console.log('ym : '+ ym);
 
 				let yyyy = ym.substr(0,4);
 				let mm = ym.substr(6,2);
@@ -782,7 +781,6 @@
 												}
 												return date.format('h:mm A');
 											}
-					
 											
 										}
 									}]

@@ -225,18 +225,16 @@ public class AjaxController_DABC {
 	}
 	
 	
-	
 	////////// 공지사항 일정 캘린더에 뿌리기 //////////
-	
-	// 공지사항 일정 캘린더 병합		0130	게다죽		~ing	
-	@RequestMapping(value="notToCal.do", method=RequestMethod.GET)
-	public View noticeToCalendar (Model map) {
+		
+	// 공지,업무,프로젝트 일정 캘린더 병합		0131	게다죽		COMPELTE	
+	@RequestMapping(value="ntpToCal.do", method=RequestMethod.GET)
+	public View prjectToCalendar (Model map, Authentication auth) {
 		ScheduleDao sDao = sqlsession.getMapper(ScheduleDao.class);
-		List<MainSchedule> result = sDao.noticeToCalendar();
-		map.addAttribute("NTC", result);
+		List<MainSchedule> result = sDao.ntpToCalendar(auth.getName());
+		map.addAttribute("NTPTC", result);
 		
 		return jsonview;
 	}
-	
 	
 }
