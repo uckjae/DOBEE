@@ -190,6 +190,12 @@ WHERE p.pjtseq = #{pjtSeq}
 	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ
 	FROM TASK
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND PROGRESS='완료';
+
+
+<!--  특정 프로젝트의 구글 드라이브 목록 가져오기-->
+<select id="loadTimeline"  parameterType="Integer"  resultType="com.dobee.vo.project.GoogleDrive">
+	select * from googledrive where pjtseq = #{pjtSeq}
 </select>
+
 
 </mapper>

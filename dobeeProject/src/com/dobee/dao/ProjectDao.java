@@ -1,10 +1,11 @@
 package com.dobee.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
+import com.dobee.vo.project.GoogleDrive;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
@@ -110,5 +111,9 @@ public interface ProjectDao {
     
     //특정 프로젝트의 개인의 완료된 업무 가져오기
     public List<Task> getCompletedTaskList(int pjtSeq, String mail);
+    
+    
+    //특정 프로젝트의 구글 드라이브 리스트 가져오기
+    public ArrayList<GoogleDrive> loadTimeline(int pjtSeq);
 
 }
