@@ -166,23 +166,26 @@ a[x-apple-data-detectors=true] {
 }
 </style>
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap" rel="stylesheet"><!-- font-family: 'Black Ops One', cursive; -->
-<link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet"><!-- font-family: 'Staatliches', cursive; -->
-<link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap" rel="stylesheet"><!-- font-family: 'Gamja Flower', cursive; -->
-<link href="https://fonts.googleapis.com/css?family=Hi+Melody&display=swap" rel="stylesheet">
+
 <style type="text/css">
 
-@import
-	url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
 </style>
 </head>
 <body class="clean-body" style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #f2f2f2">
+	<div style = "border : 3px solid lightgray; padding : 5em;">
 	<table class="nl-container" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; min-width: 320px; Margin: 0 auto; background-color: #f2f2f2; width: 100%" cellpadding="0" cellspacing="0">
 		<tbody>
 			<tr style="vertical-align: top">
 				<td style="word-break: break-word; border-collapse: collapse !important; vertical-align: top">
+					
+					
+					
+					
+					
 					<div class="email-row-container" style="padding: 25px 10px 0px; background-color: rgba(255, 255, 255, 0)">
+					
+					
 						<div style="Margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;" class="email-row">
 							<div style="border-collapse: collapse; display: table; width: 100%; background-color: #ffffff;">
 								<div class="email-col email-col-100" style="max-width: 320px; min-width: 650px; display: table-cell; vertical-align: top;">
@@ -194,12 +197,12 @@ a[x-apple-data-detectors=true] {
 												width="100%" border="0">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 30px 20px 10px; font-family: arial, helvetica, sans-serif; border:1px solid #34495e;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 30px 20px 10px; align:left;">
 															<table width="100%" cellpadding="0" cellspacing="0" border="0">
 																<tr>
 																	<td style="padding-right: 0px; padding-left: 0px;"
 																		align="center"><img align="center" border="0"
-																		src="img/beemain2.png" alt="Image" title="Image"
+																		src="https://i.imgur.com/7UkFup2.png?2" alt="Image" title="Image"
 																		style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; clear: both; display: block !important; border: none; height: auto; float: none; width: 100%; max-width: 200px;"
 																		width="200" /></td>
 																</tr>
@@ -213,28 +216,27 @@ a[x-apple-data-detectors=true] {
 								</div>
 							</div>
 						</div>
+						
 					</div>
 
 					<div class="email-row-container" style="padding: 0px; background-color: rgba(255, 255, 255, 0)">
+					
 						<div style="Margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;" class="email-row">
 							<div style="border-collapse: collapse; display: table; width: 100%; background-image: url(''); background-repeat: repeat; background-position: center top; background-color: transparent;">
 								<div class="email-col email-col-100" style="max-width: 320px; min-width: 650px; display: table-cell; vertical-align: top;">
 									<div style="width: 100% !important;">
 										<div style="padding: 0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent; background-color:#FFFFFF;">
-											<table id="u_content_text_1" class="u_content_text"
-												style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
+											<table id="u_content_text_1" class="u_content_text"	role="presentation"
+											 style="cellpadding:0; cellspacing:0; width:100%; border:0;">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 0px 20px 0px; font-family: arial, helvetica, sans-serif;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 0px 20px 0px; font-family: arial, helvetica, sans-serif; align:left;">
 															<div style="color: #29ffd8; line-height: 120%; text-align: center; word-wrap: break-word;">
 																
-																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
+																
 																<img src="https://i.imgur.com/Iqc7cJ9.png?2">
 																
-																<p style="font-size: 14px; sline-height: 120%;">&nbsp;</p>
-																<p style="font-size: 14px; line-height: 120%;">&nbsp;</p>
+																
 															</div>
 														</td>
 													</tr>
@@ -249,29 +251,35 @@ a[x-apple-data-detectors=true] {
 							</div>
 						</div>
 					</div>
+					
 
 					<div class="email-row-container" style="padding: 0px 10px; background-color: rgba(255, 255, 255, 0)">
 						<div
 							style="Margin: 0 auto; min-width: 320px; max-width: 650px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;"
 							class="email-row">
-							<div style="border-collapse: collapse; display: table; width: 100%; background-color: #ffffff; border:1px solid #34495e;">
+							<div style="border-collapse: collapse; display: table; width: 100%; background-color: #ffffff; ">
 								<div class="email-col email-col-100"
 									style="max-width: 320px; min-width: 650px; display: table-cell; vertical-align: top;">
 									<div style="width: 100% !important;">
 										<div style="padding: 0px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent;">
 											
-											<table id="u_content_text_3" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
+											<table id="u_content_text_3" class="u_content_text" role="presentation"
+												style="cellpadding:0; cellspacing:0; width:100%; border:0;">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 40px 20px 10px; font-family: 'Gamja Flower', cursive;" align="left">
-															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word; font-family: 'Gamja Flower', cursive;">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 40px 20px 10px; font-family: 'Sunflower', sans-serif; align:left;">
+															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word; font-family: 'Sunflower', sans-serif;">
 																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="font-size: 17px; line-height: 30px;">비밀번호 찾기 인증번호 </span>
+																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">안녕하세요 DOBEE입니다.</span>
 																</p>
 																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="font-size: 22px; line-height: 30px;">${dice}</span>
+																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">사원님의 비밀번호 찾기 신청으로 인해</span>
+																</p>
+																<p style="line-height: 150%; font-size: 14px;">
+																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">비밀번호 찾기 인증번호를 발송하였습니다.</span>
+																</p>
+																<p style="line-height: 150%; font-size: 14px;">
+																	<span style="color: #34495e;font-size: 22px; line-height: 30px;">[ ${dice} ]</span>
 																</p>
 															</div>
 														</td>
@@ -279,12 +287,11 @@ a[x-apple-data-detectors=true] {
 												</tbody>
 											</table>
 											
-											<table id="u_content_divider_1" class="u_content_divider" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
+											<table id="u_content_divider_1" class="u_content_divider" role="presentation"
+												    style="cellpadding:0; cellspacing:0; width:100%; border:0;">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif; align:left;">
 															<table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #CCC; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
 																<tbody>
 																	<tr style="vertical-align: top">
@@ -299,21 +306,20 @@ a[x-apple-data-detectors=true] {
 												</tbody>
 											</table>
                                              
-											<table id="u_content_text_5" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
+											<table id="u_content_text_4" class="u_content_text" role="presentation"
+												style="cellpadding:0; cellspacing:0; width:100%; border:0;">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif; align:left;">
 															<div style="color: #428bca; line-height: 150%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="font-size: 12px; line-height: 24px; color: #000000; font-family: 'Gamja Flower', cursive;">
+																	<span style="font-size: 12px; line-height: 24px; color: #000000; font-family: 'Sunflower', sans-serif;">
 																	   <span style="line-height: 24px; font-size: 14px;">하단의 버튼을 클릭시 비밀번호를 변경할 수 있습니다</span>
 																	</span>
 																</p>
 																
 																<p style="font-size: 14px; line-height: 150%;">
-																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Gamja Flower', cursive;"><strong>
+																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Sunflower', sans-serif;"><strong>
 																	<span style="font-size: 30px; line-height: 45px;">버튼을 클릭하세요</span></strong></span>
 																</p>
 															</div>
@@ -322,15 +328,14 @@ a[x-apple-data-detectors=true] {
 												</tbody>
 											</table>
 
-											<table id="u_content_button_1" class="u_content_button" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
+											<table id="u_content_button_1" class="u_content_button" role="presentation"
+											       style="cellpadding:0; cellspacing:0; width:100%; border:0;">
 												<tbody>
 													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif;" align="left">
+														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif; align:left;">
 															<div align="center">
 																<a href="" target="_blank"
-																	style="display: inline-block; font-family: arial, helvetica, sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
+																	style="display: inline-block; font-family: 'Sunflower', sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
 																	<span style="line-height: 150%;">
 																		<strong><span style="font-size: 20px; line-height: 20px;">클릭</span></strong>
 																	</span>
@@ -345,10 +350,13 @@ a[x-apple-data-detectors=true] {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>			
+				
+				
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	</div>
 </body>
 </html>
