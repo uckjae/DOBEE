@@ -2,7 +2,6 @@ package com.dobee.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
 import com.dobee.services.ProjectService;
+import com.dobee.services.TimeLineService;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
+import com.dobee.vo.project.GoogleDrive;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
@@ -35,6 +35,8 @@ public class AjaxController_Project {
 	ProjectService projectService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	TimeLineService timelineService;
 	
 	
 	//프로젝트 추가 --01.15 알파카
@@ -342,10 +344,19 @@ public class AjaxController_Project {
 	
 	/*차트*/
 	
+	//프로젝트 전체 진행률 차트 getPjtProgressChart
+	
+	@RequestMapping("getPjtProgressChart.do")
+	public List<Task> getPjtProgressChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
+		//프로젝트의 전체 업무 가져오기
+		List<Task> taskList = projectService.taskList(Integer.parseInt(pjtSeq));
+		return taskList;
+	}
+	
+	
 	//프로젝트 담당자별 업무 달성도 차트
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
-		System.out.println("여기 타니??");
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		//프로젝트 참여자 가져오기
@@ -354,17 +365,25 @@ public class AjaxController_Project {
 		//각 참여자의 task 가져오기
 		for(int i = 0; i<pjtMember.size(); i++) {
 			String mail = pjtMember.get(i).getMail();
-			//각 참여자의 task 가져오기
+			String name = pjtMember.get(i).getName();
+			//각 참여자의 할당된 모든 task 가져오기
 			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
-			System.out.println("리스트 가져오니?"+mail+"/"+taskList.toString());
+			//각 참여자의 완료된 task 가져오기
+			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
+			System.out.println("전체 업무 사이즈!!"+taskList.size());
+			System.out.println("완료된 업무 사이즈!!"+completedTaskList.size());
 			
+			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
+			int result = (completedTaskList.size()*100/taskList.size());
+			System.out.println("결과는요???"+result);
+			map.put(name, result);
 		}
 		
+		System.out.println("맵맵!"+map.toString());
 		
-		return null;
+		return map;
 		
 	}
-	
 	
 	
 	//프로젝트 업무 할당 차트
@@ -393,6 +412,7 @@ public class AjaxController_Project {
 		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 		return taskList;
 	}
+	
 	
 	
 	
