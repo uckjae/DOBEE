@@ -293,7 +293,7 @@ public class ProjectService {
 
 	 }
 	 
-	 // 마감임박 업무 리스트 GET			0131 게다죽 	~ing
+	 // 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE
 	 public List<UpcomingTask> getUpcomingTask(String mail) {
 		 ProjectDao pDao = sqlSession.getMapper(ProjectDao.class);
 		 List<UpcomingTask> utList = pDao.getUpcomingTask(mail);
