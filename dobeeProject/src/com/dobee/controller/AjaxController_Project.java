@@ -344,9 +344,8 @@ public class AjaxController_Project {
 	
 	//프로젝트 담당자별 업무 달성도 차트
 	@RequestMapping("getMembersTaskChart.do")
-	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
-		System.out.println("여기 타니??");
-		Map<String, Integer> map = new HashMap<String, Integer>();
+	public Map<String, String> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
+		Map<String, String> map = new HashMap<String, String>();
 		
 		//프로젝트 참여자 가져오기
 		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
@@ -354,14 +353,23 @@ public class AjaxController_Project {
 		//각 참여자의 task 가져오기
 		for(int i = 0; i<pjtMember.size(); i++) {
 			String mail = pjtMember.get(i).getMail();
-			//각 참여자의 task 가져오기
+			String name = pjtMember.get(i).getName();
+			//각 참여자의 할당된 모든 task 가져오기
 			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
-			System.out.println("리스트 가져오니?"+mail+"/"+taskList.toString());
+			//각 참여자의 완료된 task 가져오기
+			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
+			System.out.println("전체 업무 사이즈!!"+taskList.size());
+			System.out.println("완료된 업무 사이즈!!"+completedTaskList.size());
 			
+			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
+			int result = (completedTaskList.size()*100/taskList.size());
+			System.out.println("결과는요???"+result);
+			map.put(name, result + "%");
 		}
 		
+		System.out.println("맵맵!"+map.toString());
 		
-		return null;
+		return map;
 		
 	}
 	

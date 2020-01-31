@@ -367,23 +367,26 @@
 
 			/*프로젝트 현황 차트!!*/
 			
-			
-			
 			/*업무 담당 차트! */
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 			var pjtMember = new Array();
 			var taskCount = new Array();
+			var pjtMemberTask = new Array();
 
-			/* 담당자 별 업무 진행률 가져오기*/
+			/* 담당자별 프로젝트 업무 진행률 가져오기*/
 			$.ajax({
  	 			url:"ajax/project/getMembersTaskChart.do",
  				data: {'pjtSeq' : pjtSeq },
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('어이없네 수달');
- 					console.log(responseData);
+ 					for(key in responseData){
+ 						pjtMemberTask.push(responseData[key]);
+ 	 				}
+
+ 	 				
+ 					//console.log(responseData);
  					/* $.each(responseData, function(index, element){
  						memberTask.push(element.title);
  	 					var progress = element.progress;
@@ -396,6 +399,7 @@
  	 	 	 			} else {
  	 	 	 				taskCompleted.push(element);
  	 	 	 	 		}
+ 	 	 	 	 		pjtMember-task
  	 				}); */
  					
  				},
@@ -403,6 +407,66 @@
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
+ 				complete : function() {
+
+ 					var ctx = document.getElementById("pjtMember-task");
+ 					var myChart = new Chart(ctx, {
+ 					  type: 'bar',
+ 					  data: {
+ 					    labels: pjtMember,
+ 					    datasets: [{
+ 					      label: '# of Tomatoes',
+ 					      data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
+ 					      backgroundColor: [
+ 					        'rgba(255, 99, 132, 0.2)',
+ 					        'rgba(54, 162, 235, 0.2)',
+ 					        'rgba(255, 206, 86, 0.2)',
+ 					        'rgba(75, 192, 192, 0.2)',
+ 					        'rgba(153, 102, 255, 0.2)',
+ 					        'rgba(255, 159, 64, 0.2)',
+ 					        'rgba(255, 99, 132, 0.2)',
+ 					        'rgba(54, 162, 235, 0.2)',
+ 					        'rgba(255, 206, 86, 0.2)',
+ 					        'rgba(75, 192, 192, 0.2)',
+ 					        'rgba(153, 102, 255, 0.2)',
+ 					        'rgba(255, 159, 64, 0.2)'
+ 					      ],
+ 					      borderColor: [
+ 					        'rgba(255,99,132,1)',
+ 					        'rgba(54, 162, 235, 1)',
+ 					        'rgba(255, 206, 86, 1)',
+ 					        'rgba(75, 192, 192, 1)',
+ 					        'rgba(153, 102, 255, 1)',
+ 					        'rgba(255, 159, 64, 1)',
+ 					        'rgba(255,99,132,1)',
+ 					        'rgba(54, 162, 235, 1)',
+ 					        'rgba(255, 206, 86, 1)',
+ 					        'rgba(75, 192, 192, 1)',
+ 					        'rgba(153, 102, 255, 1)',
+ 					        'rgba(255, 159, 64, 1)'
+ 					      ],
+ 					      borderWidth: 1
+ 					    }]
+ 					  },
+ 					  options: {
+ 					    responsive: false,
+ 					    scales: {
+ 					      xAxes: [{
+ 					        ticks: {
+ 					          maxRotation: 90,
+ 					          minRotation: 80
+ 					        }
+ 					      }],
+ 					      yAxes: [{
+ 					        ticks: {
+ 					          beginAtZero: true
+ 					        }
+ 					      }]
+ 					    }
+ 					  }
+ 					});
+ 	 				
+ 				}
 
 			});
 			
@@ -413,15 +477,10 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
- 	 				
- 					console.log(responseData);
  					for(key in responseData){
  						pjtMember.push(key);
  						taskCount.push(responseData[key]);
  	 				}
- 	 				console.log('배열은?'+pjtMember);
- 	 				console.log('배열은?'+taskCount);
- 					
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1490,34 +1549,9 @@
 									<h2 class="panel-title">현재 프로젝트 진행률</h2>
 								</header>
 								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped mb-none">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>담당자</th>
-													<th>진행률</th>
-												</tr>
-											</thead>
-											<tbody>
-											<c:forEach items="${list}" var="n" varStatus="status">
-													<tr>
-														<td>${status.index + 1}</td>
-														<td>${n.pjtName}</td>
-														<td><span class="label label-success">${n.pjtProgress}</span></td>
-														<td>
-															<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-																<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	100%
-																</div>
-															</div>
-														</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
+									<div class="chart chart-md" >
+										<canvas id="pjtMember-task" width="800" height="450"></canvas>
 									</div>
-									
 								</div>
 							</section>
 						</div>
