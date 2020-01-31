@@ -384,24 +384,6 @@
  					for(key in responseData){
  						pjtMemberTask.push(responseData[key]);
  	 				}
-
- 	 				
- 					//console.log(responseData);
- 					/* $.each(responseData, function(index, element){
- 						memberTask.push(element.title);
- 	 					var progress = element.progress;
- 	 					if(progress == '예정'){
- 	 						taskScheduled.push(element);
- 	 	 				} else if(progress == '진행') {
- 	 	 					taskInProgress.push(element);
- 	 	 	 			} else if(progress == '테스트') {
- 	 	 	 				taskTest.push(element);
- 	 	 	 			} else {
- 	 	 	 				taskCompleted.push(element);
- 	 	 	 	 		}
- 	 	 	 	 		pjtMember-task
- 	 				}); */
- 					
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -411,60 +393,53 @@
 
  					var ctx = document.getElementById("pjtMember-task");
  					var myChart = new Chart(ctx, {
- 					  type: 'bar',
- 					  data: {
- 					    labels: pjtMember,
- 					    datasets: [{
- 					      label: '# of Tomatoes',
- 					      data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
- 					      backgroundColor: [
- 					        'rgba(255, 99, 132, 0.2)',
- 					        'rgba(54, 162, 235, 0.2)',
- 					        'rgba(255, 206, 86, 0.2)',
- 					        'rgba(75, 192, 192, 0.2)',
- 					        'rgba(153, 102, 255, 0.2)',
- 					        'rgba(255, 159, 64, 0.2)',
- 					        'rgba(255, 99, 132, 0.2)',
- 					        'rgba(54, 162, 235, 0.2)',
- 					        'rgba(255, 206, 86, 0.2)',
- 					        'rgba(75, 192, 192, 0.2)',
- 					        'rgba(153, 102, 255, 0.2)',
- 					        'rgba(255, 159, 64, 0.2)'
- 					      ],
- 					      borderColor: [
- 					        'rgba(255,99,132,1)',
- 					        'rgba(54, 162, 235, 1)',
- 					        'rgba(255, 206, 86, 1)',
- 					        'rgba(75, 192, 192, 1)',
- 					        'rgba(153, 102, 255, 1)',
- 					        'rgba(255, 159, 64, 1)',
- 					        'rgba(255,99,132,1)',
- 					        'rgba(54, 162, 235, 1)',
- 					        'rgba(255, 206, 86, 1)',
- 					        'rgba(75, 192, 192, 1)',
- 					        'rgba(153, 102, 255, 1)',
- 					        'rgba(255, 159, 64, 1)'
- 					      ],
- 					      borderWidth: 1
- 					    }]
- 					  },
- 					  options: {
- 					    responsive: false,
- 					    scales: {
- 					      xAxes: [{
- 					        ticks: {
- 					          maxRotation: 90,
- 					          minRotation: 80
+ 					    type: 'bar',
+ 					   data:{
+ 					   labels: pjtMember,
+ 					        datasets: [{
+ 					            label: 'Percentage',
+ 					            data: pjtMemberTask,
+ 					            backgroundColor: [
+ 					                'rgba(255, 99, 132, 0.2)',
+ 					                'rgba(54, 162, 235, 0.2)',
+ 					                'rgba(255, 206, 86, 0.2)',
+ 					                'rgba(75, 192, 192, 0.2)',
+ 					                'rgba(153, 102, 255, 0.2)',
+ 					                'rgba(255, 159, 64, 0.2)'
+ 					            ],
+ 					            borderColor: [
+ 					                'rgba(255,99,132,1)',
+ 					                'rgba(54, 162, 235, 1)',
+ 					                'rgba(255, 206, 86, 1)',
+ 					                'rgba(75, 192, 192, 1)',
+ 					                'rgba(153, 102, 255, 1)',
+ 					                'rgba(255, 159, 64, 1)'
+ 					            ],
+ 					            borderWidth: 1
+ 					        }]
+ 					},
+ 					    options: {
+ 					    	responsive: false,
+ 					        scales: {
+ 					            
+ 					            yAxes: [{
+ 					            ticks: {
+ 					                   min: 0,
+ 					                   max: 100,
+ 					                   callback: function(value){return value+ "%"}
+ 					                },  
+ 									   scaleLabel: {
+ 					                   display: true,
+ 					                   labelString: "Percentage"
+ 					                }
+ 					            }]
  					        }
- 					      }],
- 					      yAxes: [{
- 					        ticks: {
- 					          beginAtZero: true
- 					        }
- 					      }]
  					    }
- 					  }
  					});
+
+
+
+ 					
  	 				
  				}
 
@@ -1269,7 +1244,6 @@
                     <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
                 </div>
             </header>
-
             <!-- start: page -->
             <div class="search-content">
                 <div class="search-toolbar">
@@ -1543,31 +1517,20 @@
                    </div>
                    <div class="tab-pane" id="pjtDash">
  					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 						<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">현재 프로젝트 진행률</h2>
+									<h2 class="panel-title">담당자별 업무 진행률</h2>
 								</header>
 								<div class="panel-body">
-									<div class="chart chart-md" >
-										<canvas id="pjtMember-task" width="800" height="450"></canvas>
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
 									</div>
 								</div>
 							</section>
 						</div>
-						<div class="col-md-6">
-							<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">프로젝트 업무 비중</h2>
-								</header>
-								<div class="panel-body">
-									<!-- Flot: Basic -->
-									<div class="chart chart-md" >
-										<canvas id="member-task" width="800" height="450"></canvas>
-									</div>
-								</div>
-							</section>
-						</div>
+						
+						
 					</div>
 					<!-- 프로젝트 업무 비중 -->
 					<div class="row">
@@ -1585,6 +1548,41 @@
 								</div>
 							</section>
 						</div>
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">프로젝트 업무 비중</h2>
+								</header>
+								<div class="panel-body">
+									<!-- Flot: Basic -->
+									<div class="chart chart-md" >
+										<canvas id="member-task" width="800" height="450"></canvas>
+									</div>
+								</div>
+							</section>
+						</div>
+						
+						
+						
+						
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">나의 업무 진행 현황</h2>
+								</header>
+								<div class="panel-body">
+
+									<!-- Flot: Curves -->
+									<div class="chart chart-md" id="flotDashRealTime">
+										<canvas id="user-task" width="800" height="450"></canvas>
+									</div>
+								</div>
+							</section>
+						</div>
+						
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
@@ -1627,6 +1625,8 @@
 							</section>
 						</div>
 					</div>
+					
+					
 					
                		</div>
                		<!-- 프로젝트 현황 끝 -->       
