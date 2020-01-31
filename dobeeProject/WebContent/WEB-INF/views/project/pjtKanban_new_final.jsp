@@ -367,9 +367,10 @@
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 
-			var deadlineTask = new Array();
-			var otherTask = new Array();
-			var taskOverdueTask = new Array();
+			var taskOverdueTask = new Array(); //마감일 지난 업무
+			var deadlineTask = new Array(); //3일 남은 업무
+			var otherTask = new Array(); //기타 업무
+
 			
 			/*내 업무*/
 			$.ajax({
@@ -378,21 +379,54 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('업무 가져와!!!')
+ 	 				console.log('넘어온 값');
  	 				console.log(responseData);
- 	 				/* pjtTaskLength = responseData.length; 
- 	 				$.each(responseData, function(index, element){
- 	 					var progress = element.progress;
- 	 					if(progress == '예정'){
- 	 						pjtTaskScheduled.push(element);
- 	 	 				} else if(progress == '진행') {
- 	 	 					pjtTaskInProgress.push(element);
- 	 	 	 			} else if(progress == '테스트') {
- 	 	 	 				pjtTaskTest.push(element);
- 	 	 	 			} else {
- 	 	 	 				pjtTaskCompleted.push(element);
- 	 	 	 	 		}
- 	 	 			}); */
+ 	 				for(var i=0; responseData.deadlineTask.length; i++){
+//  	 					console.log(responseData.deadlineTask[i])
+ 	 	 			}
+
+//  	 				$.each(responseData.deadlineTask, function(index) {
+ 	 	 				
+//  	 				    $.each(responseData.deadlineTask[index], function(key, value) {
+//  	 				        console.log(key + ": " + value);
+//  	 				        console.log('벨류!'+title.value);
+//  	 				    })
+ 	 	 				             
+//  	 		        });     
+
+ 	 				var title1 = $('<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>');
+ 	 				
+ 	 				
+ 	 				/* 
+ 	 				<div class="col-md-12" id="overdueTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-xs">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-life-ring"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">Support Questions</h4>
+													<div class="info">
+														<strong class="amount">1281</strong>
+														<span class="text-primary">(14 unread)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+								
+								
+								
+							</div>
+ 	 				
+ 	 				
+ 	 				 */
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -741,7 +775,6 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 					console.log('개인 업무'+responseData);
  					$.each(responseData, function(index, element){
  	 					
 						/*차트용 데이터 넣기*/
@@ -1756,8 +1789,11 @@
                    <!-- 내 업무 시작 -->
                    <div class="tab-pane" id="myTask">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-12" id="overdueTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
+								
+								
+								
 								<section class="panel panel-featured-left panel-featured-primary">
 									<div class="panel-body">
 										<div class="widget-summary widget-summary-xs">
@@ -1778,6 +1814,9 @@
 										</div>
 									</div>
 								</section>
+								
+								
+								
 							</div>
 							<div class="col-md-12">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>

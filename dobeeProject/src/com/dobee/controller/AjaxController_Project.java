@@ -417,7 +417,15 @@ public class AjaxController_Project {
 		return map;
 	}
 	
-	//개인의 task 가져오기
+	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
+	@RequestMapping("getMemberTaskChart.do")
+	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
+		String mail = principal.getName();
+		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
+		return taskList;
+	}
+	
+	//내 업무 현황
 	@RequestMapping("getMyTask.do")
 	public Map<String, List<Task>> getMyTask(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
 		String mail = principal.getName();
@@ -440,13 +448,7 @@ public class AjaxController_Project {
 		return map;
 	}
 	
-	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
-	@RequestMapping("getMemberTaskChart.do")
-	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
-		String mail = principal.getName();
-		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
-		return taskList;
-	}
+	
 	
 	
 	
