@@ -15,8 +15,8 @@ public interface ScheduleDao {
     
     //일정 수정하기 -- 01.22 알파카
     public int scheduleModify(Schedule sc);
-    
-    // 공지사항 일정 캘린더 병합		0130	게다죽		~ing
-    public List<MainSchedule> noticeToCalendar();
+
+    // 공지사항,업무,프로젝트 일정 캘린더 병합		0130	게다죽		COMPELTE
+    public List<MainSchedule> ntpToCalendar(String mail);
     
 }

@@ -14,6 +14,7 @@
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
+
 <script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/bootstrap/main.js'></script>
@@ -53,6 +54,179 @@
 				</header>
 
 				<div class="row">
+				
+					<div class="col-md-9">
+						<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a> <a href="#"
+										class="fa fa-times"></a>
+								</div>
+								<h2 class="panel-title">Calendar</h2>
+							</header>
+							<div class="panel-body">
+								<!-- Float Calendar div -->
+								<div class="calendarArea" style="width:100%">
+									<div id="calendar"></div>
+								</div>	
+
+							</div>
+						</section>
+					</div>
+					
+					<script>
+						window.onload = function(){
+							var eventList = [];
+
+							$.ajax ({
+								url : "ntpToCal.do",
+								dataType : "json",
+								success : function(data) {
+									var events = [];
+									events = data.NTPTC;
+
+									$.each(events, (index, element) => {
+										if(element.entry == "NOTICE") {
+											eventList.push ({
+												title : element.title,
+												start : element.startTime,
+												end : element.endTime,
+												color : "#f54c4c"	
+											})
+										} else if (element.entry == "TASK") {
+											eventList.push ({
+												title : element.title,
+												start : element.startTime,
+												end : element.endTime,
+												color : "#ffc107"	
+											})
+										} else if (element.entry == "PROJECT") {
+											eventList.push ({
+												title : element.title,
+												start : element.startTime,
+												end : element.endTime,
+												color : "#69a854"	
+											})
+										}
+									});
+								},
+								complete : function () {
+									var calendarEl = document.getElementById('calendar');
+
+								    var calendar = new FullCalendar.Calendar(calendarEl, {
+								      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+								      header: {
+								    	left : 'prev,today,next',
+										center : 'title',
+										right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
+								      },
+								      timeFormat : 'h:mm',
+								      navLinks: true, // can click day/week names to navigate views
+								      businessHours: {
+									      startTime : '09:00',
+									      endTime : '18:00'
+									  },
+									  eventLimit : true,
+								      editable: false,
+								      events: eventList
+								    });
+								    calendar.render();
+								}
+							});		
+						}
+					</script>
+					
+					<div class="col-md-3">
+						<section class="panel panel-transparent">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a> <a href="#"
+										class="fa fa-times"></a>
+								</div>
+
+								<h2 class="panel-title">My Stats</h2>
+							</header>
+							<div class="panel-body">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineBarDash"></div>
+										<script type="text/javascript">
+												var sparklineBarDashData = [5, 6, 7, 2, 0, 4 , 2, 4, 2, 0, 4 , 2, 4, 2, 0, 4];
+											</script>
+										<div class="h4 text-bold mb-none">488</div>
+										<p class="text-xs text-muted mb-none">Average Profile
+											Visits</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div
+											class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+											<div class="circular-bar-chart" data-percent="45"
+												data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+												<strong>Average</strong> <label><span
+													class="percent">45</span>%</label>
+											</div>
+										</div>
+										<div class="h4 text-bold mb-none">12</div>
+										<p class="text-xs text-muted mb-none">Working Projects</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineLineDash"></div>
+										<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+										<div class="h4 text-bold mb-none">89</div>
+										<p class="text-xs text-muted mb-none">Pending Tasks</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineLineDash"></div>
+										<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+										<div class="h4 text-bold mb-none">89</div>
+										<p class="text-xs text-muted mb-none">Pending Tasks</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineLineDash"></div>
+										<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+										<div class="h4 text-bold mb-none">89</div>
+										<p class="text-xs text-muted mb-none">Pending Tasks</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineLineDash"></div>
+										<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+										<div class="h4 text-bold mb-none">89</div>
+										<p class="text-xs text-muted mb-none">Pending Tasks</p>
+									</div>
+								</section>
+								<section class="panel">
+									<div class="panel-body">
+										<div class="small-chart pull-right" id="sparklineLineDash"></div>
+										<script type="text/javascript">
+												var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+											</script>
+										<div class="h4 text-bold mb-none">89</div>
+										<p class="text-xs text-muted mb-none">Pending Tasks</p>
+									</div>
+								</section>
+							</div>
+						</section>
+					</div>
+					
+					
 					<div class="col-md-6">
 						<section class="panel">
 							<header class="panel-heading">
@@ -116,81 +290,6 @@
 							</div>
 						</section>
 					</div>
-					
-					<div class="col-md-6">
-						<section class="panel">
-							<header class="panel-heading">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a> <a href="#"
-										class="fa fa-times"></a>
-								</div>
-								<h2 class="panel-title">Calendar</h2>
-								<p class="panel-subtitle">It's easy to create custom graphs
-									on JSOFT Admin Template, there are several graph types that you
-									can use, such as lines, bars, pie charts, etc...</p>
-							</header>
-							<div class="panel-body">
-								<!-- Float Calendar div -->
-								<div class="calendarArea" style="width:100%">
-									<div id="calendar"></div>
-								</div>	
-
-							</div>
-						</section>
-					</div>
-					
-					<script>
-						window.onload = function(){
-							var eventList = [];
-
-							$.ajax ({
-								url : "notToCal.do",
-								dataType : "json",
-								success : function(data) {
-									var events = [];
-									events = data.NTC;
-
-									console.log("이것도?");
-									console.log("이거 확인",events);
-
-									$.each(events, (index, element) => {
-										console.log("element", element);
-
-										eventList.push ({
-											title : element.nsContent,
-											start : element.startTime,
-											end : element.endTime,
-											color : "#ffdd00"	
-										})
-									});
-								},
-								complete : function () {
-									var calendarEl = document.getElementById('calendar');
-
-								    var calendar = new FullCalendar.Calendar(calendarEl, {
-								      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-								      header: {
-								    	left : 'prev,today,next',
-										center : 'title',
-										right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-								      },
-								      timeFormat : 'h:mm',
-								      navLinks: true, // can click day/week names to navigate views
-								      businessHours: {
-									      startTime : '09:00',
-									      endTime : '18:00'
-									  },
-									  eventLimit : true,
-								      editable: false,
-								      events: eventList
-								    });
-								    calendar.render();
-								}
-							});		
-						}
-					</script>
-					
-					
 				</div>
 
 				<!-- start: page -->
@@ -658,5 +757,14 @@
 	<c:import url="/common/RightSide.jsp"></c:import>
 
 	<c:import url="/common/BottomTag.jsp"></c:import>
+	
+	<script>
+	var isWork = ${sessionScope.user.isWork }
+		if (isWork != null) {
+			window.onbeforeunload = function() {
+			    return "페이지 넘어갈때마다 팝업창이 뜨는거는 정말 거지같은데???";
+			}
+	}
+	</script>
 </body>
 </html>
