@@ -199,13 +199,10 @@ WHERE p.pjtseq = #{pjtSeq}
 </select>
 
 
-<!-- 마감임박 업무 리스트 GET			0131 게다죽 	~ing -->
-<select id="getUpcomingTask" parameterType="String" resultType="com.dobee.vo.project.UpcomingTask">
-	SELECT P.PJTSEQ, DATE_FORMAT(T.ENDAT, '%m-%d') AS DATE, T.TITLE, T.PROGRESS, T.IMPORTANT, P.PJTNAME
-		FROM TASK T
-			JOIN PROJECT P ON T.PJTSEQ = P.PJTSEQ
-		WHERE  MAIL=#{mail} AND T.PROGRESS !='완료' AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 5
-		ORDER BY DATE
-</select>
+<!--  특정 프로젝트 구글드라이브 업로드  -->
+<insert id="addGoogleTag" parameterType="com.dobee.vo.project.GoogleDrive">
+	insert into googledrive (gddate, gdurl, mail, pjtseq, filename) 
+	values (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName})
+</insert>
 
 </mapper>

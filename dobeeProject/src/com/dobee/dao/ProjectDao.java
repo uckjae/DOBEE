@@ -120,5 +120,9 @@ public interface ProjectDao {
     
 	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     public List<UpcomingTask> getUpcomingTask(String mail);
+    
+    
+    //특정 프로젝트 구글 드라이브 업로드
+    public int addGoogleTag(GoogleDrive gd);
 
 }

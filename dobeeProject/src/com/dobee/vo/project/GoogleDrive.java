@@ -14,9 +14,10 @@ public class GoogleDrive {
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date gdDate;
-	private String gdContent;
+	//private String gdContent;
 	private String gdUrl; 
 	private String mail;
-	private String pjtSeq;
+	private int pjtSeq;
+	private String fileName;
 	
 }
