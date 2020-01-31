@@ -6,7 +6,10 @@
 <html class="fixed search-results">
 <head>
 	    <c:import url="/common/HeadTag.jsp"/>
-	
+		
+		
+		
+		
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
@@ -1434,15 +1437,123 @@
 						</div>
 					</div>
 					<!-- end: page -->            
-               		 </div>
-               		 
-               		<div class="tab-pane" id="drive">
-               		 구글!!
                		</div>
                		 
+               		<div class="tab-pane" id="drive">
+               		
+               		 <!-- 성호 - 구글 드라이브 뷰단 -->
+               		 <!--  타임 라인 시작 -->
+               		 	<script type="text/javascript">
+							/*  타임 라인 상단 추가되는 부분  */
+							
+	               		 </script>
+               		 	 <!-- 구글 드라이브  -->
+						<script src="assets/javascripts/googleDriveJs/googleDrive.js"> </script>
+               		 	
                		 
                		 
-                </div>
+               		 
+               		 <div class="timeline">
+               		 	<!--추가 버튼  -->
+               			<div>
+               				<a id="goGoogleDrive" class="mb-xs mt-xs mr-xs modal-basic btn btn-primary" >ADD GoogleDrive</a>
+               			</div>
+						<div class="tm-body">
+						<!-- 	<div class="tm-title">
+								<h3 class="h5 text-uppercase">November 2013</h3>
+							</div> -->
+							
+						
+							
+							
+							<ol class="tm-items">
+								<li class="addTimeline">
+									<div class="tm-info">
+										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
+										<time class="tm-datetime" datetime="2013-11-22 19:13">
+											<div> 여기는 이메일</div>
+											<div class="tm-datetime-time">2020-02-02</div>
+										</time>
+									</div>
+										
+										
+										<div class="tm-box" >
+											<p id="down">
+												 
+											</p>
+										<div class="tm-meta">
+												
+											여기는 파일 내용 코멘트
+										
+										</div>
+									</div>
+								</li>
+							
+							
+							
+								<li>
+									<div class="tm-info">
+										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
+										<time class="tm-datetime" datetime="2013-11-22 19:13">
+											<div>  여기는 이메일 </div>
+											<div class="tm-datetime-time">2020-02-02</div>
+										</time>
+									</div>
+										<div class="tm-box appear-animation" data-appear-animation="fadeInRight"data-appear-animation-delay="50">
+										<p>
+											여기는 구글 드라이브 파일 링크 
+										</p>
+										<div class="tm-meta">
+											여기는 파일 내용 코멘트
+										</div>
+									</div>
+								</li>
+								
+							
+							
+								 <!--  원본 하나 남겨둠 -->
+								<!-- <li>
+									<div class="tm-info">
+										<div class="tm-icon"><i class="fa fa-thumbs-up"></i></div>
+										<time class="tm-datetime" datetime="2013-11-19 18:13">
+											<div class="tm-datetime-date">7 months ago.</div>
+											<div class="tm-datetime-time">06:13 PM</div>
+										</time>
+									</div>
+									<div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="250">
+										<p>
+											What is your biggest developer pain point?
+										</p>
+									</div>
+								</li> -->
+								<!-- 원본 끝 -->
+								
+								
+							
+							
+							</ol> <!--타임 라인 끝 -->
+						<!-- 	<div class="tm-title">
+								<h3 class="h5 text-uppercase">September 2013</h3>
+							</div> -->
+						</div>  <!--   타임 라인 바디 끝 -->
+					</div>   <!-- 타임 라인 전체 디브 끝  -->
+               		 
+               		 
+               		 <!--   타임라인 끝  -->
+               		
+               		 
+               		 
+               		 
+               		 
+               		</div><!--  타임 라인 페이지 전체디브 끝 -->
+               		 
+               		 
+               		 
+               		 
+               		 
+               		 
+               		 
+                </div> <!-- 이건 완전 전체 페이지 디브 이거 지우면 혜리한테 개혼남 -->
                 
                
                 <!-- end: page -->
@@ -1812,6 +1923,10 @@
 		
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+		
+		<!-- 구글 드라이브 -->
+		<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
+		<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>
 		
 		
 </body>

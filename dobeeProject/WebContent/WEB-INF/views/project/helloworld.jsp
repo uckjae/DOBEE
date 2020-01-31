@@ -1,34 +1,34 @@
- //=Create object of FilePicker Constructor function function & set Properties===
-function addTimeline(){
-		console.log(" 타임라인 추가 함수 작동 ");
-		$(".tm-items").prepend(
-				'<li>'+
-				'<div class="tm-info">'+
-					'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
-					'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
-						'<div>  여기는 이메일 </div>'+
-						'<div class="tm-datetime-time">2020-02-02</div>'+
-					'</time>'+
-				'</div>'+
-					'<div class="tm-box">'+
-					'<p id="down">'+
-						'여기는 구글 드라이브 파일 링크' +
-					'</p>'+
-					'<div class="tm-meta">'+
-						'여기는 파일 내용 코멘트'+
-					'</div>'+
-				'</div>'+
-			'</li>'
-		);
- }
-//함수 타임 리스트 만들기
-function createList(email, date, fileName, fileTag, comment, projectNum){
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<script src="https://kit.fontawesome.com/21becfdcb1.js" crossorigin="anonymous"></script>
+<center>
+    <h2>Google Picker API</h2>
+    <table class="imagetable">
+        <tbody>
+            <tr id="header">
+                <th style="font-size:18px;">Google Drive</th>
+            </tr>
+            <tr>
+                <td style="font-size:16px;"><a href="#" id="goGoogleDrive">All Drive items.</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div id="down">
+    	여기 나와야함
+    </div>
+    
+</center>
+<style type="text/css">
+.icon-googleDrive {
 	
 }
 
 
-
+</style>
+<script type="text/javascript">
+    //=Create object of FilePicker Constructor function function & set Properties===
     function SetPicker() {
         var picker = new FilePicker(
             {
@@ -44,8 +44,8 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
     //====================Create POPUP function==============
     function PopupCenter(url, title, w, h) {
         //debugger;
-        var left = (screen.width / 1) - (w / 1);
-        var top = (screen.height / 1) - (h / 100);
+        var left = (screen.width / 2) - (w / 2);
+        var top = (screen.height / 2) - (h / 2);
         return window.open(url, title, 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
     }
 
@@ -74,6 +74,7 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
 
     FilePicker.prototype = {
         //==========Check Authentication & Call ShowPicker() function=======
+
         open: function () {
             // Check if the user has already authenticated
             var token = gapi.auth.getToken();
@@ -153,8 +154,7 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
                 var link = "https://drive.google.com/open?id="+id;
 				var filename = file.name;
 				
-				addTimeline(); // 타임라인 추가하는 함수
-                document.getElementById('down').innerHTML = "<a style='font-size:20px;' target='_blank' href="+link+ ">"+ "<i class='fa fa-google-plus-square'></i>"+filename+"</a>";
+                document.getElementById('down').innerHTML = "<a target='_blank' href=" +link+ ">"+ "<i class='fab fa-google-drive'></i>"+filename+"</a>";
             }
         },
 
@@ -162,6 +162,7 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
         GetFileDetails: function (file) {
             if (this.onClick) {
                 this.onClick(file);
+                console.log("방금 이거");
                 
             }
         },
@@ -185,3 +186,8 @@ function createList(email, date, fileName, fileTag, comment, projectNum){
             }, callback);
         }
     };
+
+</script>
+
+<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
+<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>
