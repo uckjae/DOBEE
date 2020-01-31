@@ -256,13 +256,13 @@ public class ProjectService {
     	return taskList;
     }
     
-	/*
-	 * //특정 프로젝트의 개인의 완료된 업무 가져오기 public List<Task> getCompletedTaskList(int pjtSeq,
-	 * String mail){ List<Task> taskList = new ArrayList<Task>(); ProjectDao
-	 * projectDao = sqlSession.getMapper(ProjectDao.class);
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+	
+	 //특정 프로젝트의 개인의 완료된 업무 가져오기 
+	 public List<Task> getCompletedTaskList(int pjtSeq, String mail){ 
+		 List<Task> taskList = new ArrayList<Task>(); 
+		 ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+		 taskList = projectDao.getCompletedTaskList(pjtSeq, mail);
+		 return taskList;
+
+	 }
 }

@@ -367,42 +367,81 @@
 
 			/*프로젝트 현황 차트!!*/
 			
-			
-			
 			/*업무 담당 차트! */
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 			var pjtMember = new Array();
 			var taskCount = new Array();
+			var pjtMemberTask = new Array();
 
-			/* 담당자 별 업무 진행률 가져오기*/
+			/* 담당자별 프로젝트 업무 진행률 가져오기*/
 			$.ajax({
  	 			url:"ajax/project/getMembersTaskChart.do",
  				data: {'pjtSeq' : pjtSeq },
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('어이없네 수달');
- 					console.log(responseData);
- 					/* $.each(responseData, function(index, element){
- 						memberTask.push(element.title);
- 	 					var progress = element.progress;
- 	 					if(progress == '예정'){
- 	 						taskScheduled.push(element);
- 	 	 				} else if(progress == '진행') {
- 	 	 					taskInProgress.push(element);
- 	 	 	 			} else if(progress == '테스트') {
- 	 	 	 				taskTest.push(element);
- 	 	 	 			} else {
- 	 	 	 				taskCompleted.push(element);
- 	 	 	 	 		}
- 	 				}); */
- 					
+ 					for(key in responseData){
+ 						pjtMemberTask.push(responseData[key]);
+ 	 				}
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
+ 				complete : function() {
+
+ 					var ctx = document.getElementById("pjtMember-task");
+ 					var myChart = new Chart(ctx, {
+ 					    type: 'bar',
+ 					   data:{
+ 					   labels: pjtMember,
+ 					        datasets: [{
+ 					            label: 'Percentage',
+ 					            data: pjtMemberTask,
+ 					            backgroundColor: [
+ 					                'rgba(255, 99, 132, 0.2)',
+ 					                'rgba(54, 162, 235, 0.2)',
+ 					                'rgba(255, 206, 86, 0.2)',
+ 					                'rgba(75, 192, 192, 0.2)',
+ 					                'rgba(153, 102, 255, 0.2)',
+ 					                'rgba(255, 159, 64, 0.2)'
+ 					            ],
+ 					            borderColor: [
+ 					                'rgba(255,99,132,1)',
+ 					                'rgba(54, 162, 235, 1)',
+ 					                'rgba(255, 206, 86, 1)',
+ 					                'rgba(75, 192, 192, 1)',
+ 					                'rgba(153, 102, 255, 1)',
+ 					                'rgba(255, 159, 64, 1)'
+ 					            ],
+ 					            borderWidth: 1
+ 					        }]
+ 					},
+ 					    options: {
+ 					    	responsive: false,
+ 					        scales: {
+ 					            
+ 					            yAxes: [{
+ 					            ticks: {
+ 					                   min: 0,
+ 					                   max: 100,
+ 					                   callback: function(value){return value+ "%"}
+ 					                },  
+ 									   scaleLabel: {
+ 					                   display: true,
+ 					                   labelString: "Percentage"
+ 					                }
+ 					            }]
+ 					        }
+ 					    }
+ 					});
+
+
+
+ 					
+ 	 				
+ 				}
 
 			});
 			
@@ -413,15 +452,10 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
- 	 				
- 					console.log(responseData);
  					for(key in responseData){
  						pjtMember.push(key);
  						taskCount.push(responseData[key]);
  	 				}
- 	 				console.log('배열은?'+pjtMember);
- 	 				console.log('배열은?'+taskCount);
- 					
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1210,7 +1244,6 @@
                     <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
                 </div>
             </header>
-
             <!-- start: page -->
             <div class="search-content">
                 <div class="search-toolbar">
@@ -1484,56 +1517,20 @@
                    </div>
                    <div class="tab-pane" id="pjtDash">
  					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 						<section class="panel">
 								<header class="panel-heading">
-									<h2 class="panel-title">현재 프로젝트 진행률</h2>
+									<h2 class="panel-title">담당자별 업무 진행률</h2>
 								</header>
 								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped mb-none">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>담당자</th>
-													<th>진행률</th>
-												</tr>
-											</thead>
-											<tbody>
-											<c:forEach items="${list}" var="n" varStatus="status">
-													<tr>
-														<td>${status.index + 1}</td>
-														<td>${n.pjtName}</td>
-														<td><span class="label label-success">${n.pjtProgress}</span></td>
-														<td>
-															<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-																<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	100%
-																</div>
-															</div>
-														</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-									
-								</div>
-							</section>
-						</div>
-						<div class="col-md-6">
-							<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">프로젝트 업무 비중</h2>
-								</header>
-								<div class="panel-body">
-									<!-- Flot: Basic -->
-									<div class="chart chart-md" >
-										<canvas id="member-task" width="800" height="450"></canvas>
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
 									</div>
 								</div>
 							</section>
 						</div>
+						
+						
 					</div>
 					<!-- 프로젝트 업무 비중 -->
 					<div class="row">
@@ -1551,6 +1548,41 @@
 								</div>
 							</section>
 						</div>
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">프로젝트 업무 비중</h2>
+								</header>
+								<div class="panel-body">
+									<!-- Flot: Basic -->
+									<div class="chart chart-md" >
+										<canvas id="member-task" width="800" height="450"></canvas>
+									</div>
+								</div>
+							</section>
+						</div>
+						
+						
+						
+						
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">나의 업무 진행 현황</h2>
+								</header>
+								<div class="panel-body">
+
+									<!-- Flot: Curves -->
+									<div class="chart chart-md" id="flotDashRealTime">
+										<canvas id="user-task" width="800" height="450"></canvas>
+									</div>
+								</div>
+							</section>
+						</div>
+						
 						<div class="col-md-6">
 							<section class="panel">
 								<header class="panel-heading">
@@ -1594,6 +1626,8 @@
 						</div>
 					</div>
 					
+					
+					
                		</div>
                		<!-- 프로젝트 현황 끝 -->       
                		<div class="tab-pane" id="drive">
@@ -1601,7 +1635,54 @@
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
                		 	<script type="text/javascript">
-							/*  타임 라인 상단 추가되는 부분  */
+						/* 타임라인 리스트 갯수와 데이터 받아서 그만큼 타임리스트 뷰단 만들어 주는 함수 */
+							function createTimeList(data){
+									 console.log(data); // 일단 나오는지 확인
+									
+
+
+
+							} // 함수 종료
+
+               		 	
+               			/*  타임 라인 불러오는 아작스 함수 */
+               			//  프로젝트 넘버를 입력하면 그에 해당하는 타임리스트 받아오기
+               			
+               				// 해당 프로젝트 번호 받아오기
+							let pjtSeq = ${requestScope.project.pjtSeq};
+							let sendData = {
+									"pjtSeq" : pjtSeq
+									}
+							console.log("성호 : " + sendData);
+							function loadTimeLine(projectNum){
+							 	$.ajax({
+									url : 'ajax/project/loadTimeline.do',
+									type : 'POTS',
+									data : sendData,
+									success:function(data){
+											console.log("타임라인 불러오기 아작스 성공 !");
+											console.log(data);
+										},
+
+									complete : function(){
+											// 불러오기에 성공하면 리스트 수만큼 타임라인을 만들어주는 함수 
+											
+
+										},
+
+
+									error : function(){
+											console.log("타임라인 불러오기 아작스 에러!");
+											
+		
+
+										},
+								 }); // 아작스 종료
+							}//불러오기 함수 종료
+							
+							console.log("성호 : " + pjtSeq);
+							// 타임리스트 뿌리기 아작스 실행
+							loadTimeLine(pjtSeq);
 							
 	               		 </script>
                		 	 <!-- 구글 드라이브  -->
