@@ -134,6 +134,7 @@
 	var dmMail = $("#dmMail").val();
 	console.log('지그 ㅁ유저 메일?'+userMail);
 	console.log('메일 가져와?'+dmMail);
+	console.log('이름 가져와?'+dmName);
 	//채팅방 이름 : 발신자 - 수신자
 	//var chatRoomName = userMail + "-" + dmMail;
 	var chatUsersMail = [userMail, dmMail];
