@@ -150,7 +150,24 @@
 							</header>
 									
 							<div class="panel-body">
-								<ul class="widget-todo-list">									
+								<ul class="widget-todo-list">	
+									
+									<c:forEach items="${utList}" var="utl">
+										<li>
+											<div class="checkbox-custom checkbox-default">
+												<label class="todo-label" for="todoListItem1">
+													<span>${utl.title }</span></a>
+													<p class="text-xs text-muted mb-none">${utl.pjtName }</p>
+												</label>
+												
+											</div>
+											<div class="todo-actions">
+												<a class="todo-remove" href="pjtKanban.do?pjtSeq=${utl.pjtSeq}"> <i class="fa-chevron-right"></i>
+												</a>
+											</div>
+										</li>
+									</c:forEach>	
+									
 									<li>
 										<div class="checkbox-custom checkbox-default">
 											<input type="checkbox" checked="" id="todoListItem1"
@@ -164,71 +181,7 @@
 											</a>
 										</div>
 									</li>
-									<li>
-										<div class="checkbox-custom checkbox-default">
-											<input type="checkbox" id="todoListItem2"
-												class="todo-check"> <label class="todo-label"
-												for="todoListItem2"><span>Lorem ipsum
-													dolor sit amet</span></label>
-										</div>
-										<div class="todo-actions">
-											<a class="todo-remove" href="#"> <i
-												class="fa fa-times"></i>
-											</a>
-										</div>
-									</li>
-									<li>
-										<div class="checkbox-custom checkbox-default">
-											<input type="checkbox" id="todoListItem3"
-												class="todo-check"> <label class="todo-label"
-												for="todoListItem3"><span>Lorem ipsum
-													dolor sit amet</span></label>
-										</div>
-										<div class="todo-actions">
-											<a class="todo-remove" href="#"> <i
-												class="fa fa-times"></i>
-											</a>
-										</div>
-									</li>
-									<li>
-										<div class="checkbox-custom checkbox-default">
-											<input type="checkbox" id="todoListItem4"
-												class="todo-check"> <label class="todo-label"
-												for="todoListItem4"><span>Lorem ipsum
-													dolor sit amet</span></label>
-										</div>
-										<div class="todo-actions">
-											<a class="todo-remove" href="#"> <i
-												class="fa fa-times"></i>
-											</a>
-										</div>
-									</li>
-									<li>
-										<div class="checkbox-custom checkbox-default">
-											<input type="checkbox" id="todoListItem5"
-												class="todo-check"> <label class="todo-label"
-												for="todoListItem5"><span>Lorem ipsum
-													dolor sit amet</span></label>
-										</div>
-										<div class="todo-actions">
-											<a class="todo-remove" href="#"> <i
-												class="fa fa-times"></i>
-											</a>
-										</div>
-									</li>
-									<li>
-										<div class="checkbox-custom checkbox-default">
-											<input type="checkbox" id="todoListItem6"
-												class="todo-check"> <label class="todo-label"
-												for="todoListItem6"><span>Lorem ipsum
-													dolor sit amet</span></label>
-										</div>
-										<div class="todo-actions">
-											<a class="todo-remove" href="#"> <i
-												class="fa fa-times"></i>
-											</a>
-										</div>
-									</li>
+																		
 								</ul>
 							</div>
 																

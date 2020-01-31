@@ -205,7 +205,7 @@ WHERE p.pjtseq = #{pjtSeq}
 	values (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName})
 </insert>
 
-<!-- 마감임박 업무 리스트 GET			0131 게다죽 	~ing -->
+<!-- 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE -->
 <select id="getUpcomingTask" parameterType="String" resultType="com.dobee.vo.project.UpcomingTask">
 	SELECT P.PJTSEQ, DATE_FORMAT(T.ENDAT, '%m-%d') AS DATE, T.TITLE, T.PROGRESS, T.IMPORTANT, P.PJTNAME
 		FROM TASK T
