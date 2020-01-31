@@ -365,6 +365,35 @@
 	 			});
 			});
 
+			/*내 업무*/
+			$.ajax({
+ 	 			url:"ajax/project/getPjtProgressChart.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				pjtTaskLength = responseData.length; 
+ 	 				$.each(responseData, function(index, element){
+ 	 					var progress = element.progress;
+ 	 					if(progress == '예정'){
+ 	 						pjtTaskScheduled.push(element);
+ 	 	 				} else if(progress == '진행') {
+ 	 	 					pjtTaskInProgress.push(element);
+ 	 	 	 			} else if(progress == '테스트') {
+ 	 	 	 				pjtTaskTest.push(element);
+ 	 	 	 			} else {
+ 	 	 	 				pjtTaskCompleted.push(element);
+ 	 	 	 	 		}
+ 	 	 			});
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				}
+
+			});
+			
+
 			/*프로젝트 현황 차트!!*/
 			
 			/*업무 담당 차트! */
@@ -467,7 +496,7 @@
  						options: {
  	 						title : {
  	 							display: true,
- 	 							text: '전체 프로젝트 중 완료된 업무 비중'
+ 	 							text: '완료된 업무 비중'
  	 	 						},
  							elements: {
  								center: {
@@ -516,16 +545,7 @@
  					                'rgba(75, 192, 192, 0.2)',
  					                'rgba(153, 102, 255, 0.2)',
  					                'rgba(255, 159, 64, 0.2)'
- 					            ],
- 					            borderColor: [
- 					                'rgba(255,99,132,1)',
- 					                'rgba(54, 162, 235, 1)',
- 					                'rgba(255, 206, 86, 1)',
- 					                'rgba(75, 192, 192, 1)',
- 					                'rgba(153, 102, 255, 1)',
- 					                'rgba(255, 159, 64, 1)'
- 					            ],
- 					            borderWidth: 1
+ 					            ]
  					        }]
  					},
  					    options: {
@@ -558,6 +578,8 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
+
+ 	 				console.log('데이터는?'+responseData);
  					for(key in responseData){
  						pjtMember.push(key);
  						taskCount.push(responseData[key]);
@@ -590,6 +612,122 @@
  					});
  	 			}
  			});
+ 			
+			/* 업무 중요도별 담당자 비중*/
+			$.ajax({
+ 	 			url:"ajax/project/getTaskImportantChart.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				console.log('중요도');
+ 	 				console.log(responseData);
+ 	 				console.log('프로젝트 참여자?'+pjtMember);
+
+ 	 				
+ 					/* for(key in responseData){
+ 						pjtMember.push(key);
+ 						taskCount.push(responseData[key]);
+ 						
+ 						member-Important
+ 						
+ 						
+ 	 				} */
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+ 				complete : function() {
+
+ 					var ctx = document.getElementById("member-Important");
+ 					var myChart = new Chart(ctx, {
+ 					    type: 'horizontalBar',
+ 					    data: {
+ 					        labels: ["5", "4", "3", "2", "1"],
+ 					        
+ 					        datasets: [{
+ 					            data: [727, 589, 537, 543, 574],
+ 					            backgroundColor: "rgba(63,103,126,1)",
+ 					            hoverBackgroundColor: "rgba(50,90,100,1)"
+ 					        },{
+ 					            data: [238, 553, 746, 884, 903],
+ 					            backgroundColor: "rgba(163,103,126,1)",
+ 					            hoverBackgroundColor: "rgba(140,85,100,1)"
+ 					        },{
+ 					            data: [1238, 553, 746, 884, 903],
+ 					            backgroundColor: "rgba(63,203,226,1)",
+ 					            hoverBackgroundColor: "rgba(46,185,235,1)"
+ 					        }]
+ 					    },
+
+ 					    options: {
+ 					       tooltips: {
+ 					          enabled: false
+ 					      },
+ 					      hover :{
+ 					          animationDuration:0
+ 					      },
+ 					      scales: {
+ 					          xAxes: [{
+ 					              ticks: {
+ 					                  beginAtZero:true,
+ 					                  fontFamily: "'Open Sans Bold', sans-serif",
+ 					                  fontSize:11
+ 					              },
+ 					              scaleLabel:{
+ 					                  display:false
+ 					              },
+ 					              gridLines: {
+ 					              }, 
+ 					              stacked: true
+ 					          }],
+ 					          yAxes: [{
+ 					              gridLines: {
+ 					                  display:false,
+ 					                  color: "#fff",
+ 					                  zeroLineColor: "#fff",
+ 					                  zeroLineWidth: 0
+ 					              },
+ 					              ticks: {
+ 					                  fontFamily: "'Open Sans Bold', sans-serif",
+ 					                  fontSize:11
+ 					              },
+ 					              stacked: true
+ 					          }]
+ 					      },
+ 					      legend:{
+ 					          display:false
+ 					      },
+ 					      
+ 					      animation: {
+ 					          onComplete: function () {
+ 					              var chartInstance = this.chart;
+ 					              var ctx = chartInstance.ctx;
+ 					              ctx.textAlign = "left";
+ 					              ctx.font = "9px Open Sans";
+ 					              ctx.fillStyle = "#fff";
+
+ 					              Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+ 					                  var meta = chartInstance.controller.getDatasetMeta(i);
+ 					                  Chart.helpers.each(meta.data.forEach(function (bar, index) {
+ 					                      data = dataset.data[index];
+ 					                      if(i==0){
+ 					                          ctx.fillText(data, 50, bar._model.y+4);
+ 					                      } else {
+ 					                          ctx.fillText(data, bar._model.x-25, bar._model.y+4);
+ 					                      }
+ 					                  }),this)
+ 					              }),this);
+ 					          }
+ 					      },
+ 					      pointLabelFontFamily : "Quadon Extra Bold",
+ 					      scaleFontFamily : "Quadon Extra Bold",
+ 					  }
+ 					});
+ 	 			}
+ 			});
 
  		
 			var memberTask = new Array(); //업무
@@ -600,13 +738,38 @@
  			
  			/*개인 업무 현황 progress bar*/
 			$.ajax({
- 	 			url:"ajax/project/getMemberTaskChart.do",
+ 	 			url:"ajax/project/getMemberTask.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 					console.log(responseData);
+ 					console.log('개인 업무'+responseData);
  					$.each(responseData, function(index, element){
+ 	 					/*내 업무 테이블 뿌려주기*/
+ 	 					var tr = $('<tr>');
+						var taskTitle = $('<td>'+element.title+'</td>');
+						var taskProgress = $('<td>'+element.progress+'</td>');
+						//날짜 포맷팅
+						var startDate = new Date(element.startAt);
+						var formatedStartDate = date_to_str(startDate);
+						var taskstartDate = $('<td>'+formatedStartDate+'</td>');
+						
+						var endDate = new Date(element.endAt);
+						var formatedEndDate = date_to_str(endDate);
+						var taskEndDate = $('<td>'+formatedEndDate+'</td>');
+
+						var action = $('<td class="actions"><a href=""><i class="fa fa-pencil"></i></a></td>');
+
+						tr.append(taskTitle);
+						tr.append(taskProgress);
+						tr.append(taskstartDate);
+						tr.append(taskEndDate);
+						tr.append(action);
+
+						$("#myTaskTable").append(tr);
+
+						
+						/*차트용 데이터 넣기*/
  						memberTask.push(element.title);
  	 					var progress = element.progress;
  	 					if(progress == '예정'){
@@ -619,6 +782,9 @@
  	 	 	 				taskCompleted.push(element);
  	 	 	 	 		}
  	 				});
+
+
+ 	 				
  					
  				},
  				error:function(){
@@ -1370,8 +1536,6 @@
                 <!-- 칸반보드 넣기 -->
                 <div class="tab-content">
                 	<div class="tab-pane active" id="kanban">
-                	
-                	
                     <div class="row">
                         <div class="col-md-12 col-lg-12">
                             <!-- 예정 -->
@@ -1616,16 +1780,44 @@
                         </div>
                     </div>
                    </div>
+                   
+                   <!-- 내 업무 시작 -->
                    <div class="tab-pane" id="myTask">
-                   	내 업무!!
+                   <div class="row">
+							<div class="col-md-12">
+								<section class="panel">
+									<header class="panel-heading">
+										<h2 class="panel-title">나에게 할당된 업무</h2>
+									</header>
+									<div class="panel-body">
+										<div class="table-responsive">
+											<table class="table mb-none">
+												<thead>
+													<tr>
+														<th>업무</th>
+														<th>진행 상태</th>
+														<th>시작일</th>
+														<th>완료일</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody id="myTaskTable">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
                    </div>
+                   <!-- 내 업무 끝 -->
                    <!-- 프로젝트 현황 -->
                    <div class="tab-pane" id="pjtDash">
 	                   <div class="row">
 							<div class="col-md-6">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 전체 진행률</h2>
+										<h2 class="panel-title">전체 프로젝트 진행률</h2>
 									</header>
 									<div class="panel-body">
 										<!-- Flot: Curves -->
@@ -1638,7 +1830,7 @@
 							<div class="col-md-6">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 업무 비중</h2>
+										<h2 class="panel-title">전체 프로젝트 업무 비중</h2>
 									</header>
 									<div class="panel-body">
 										<!-- Flot: Basic -->
@@ -1649,21 +1841,29 @@
 								</section>
 							</div>
 						</div>
-	 					<div class="row">
-							<div class="col-md-12">
-							<section class="panel">
-									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 담당자별 업무 진행률</h2>
-									</header>
-									<div class="panel-body">
-										<div class="chart chart-md" style="height:350px">
-											<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
-										</div>
+						<div class="col-md-12">
+						<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">전체 프로젝트 담당자별 업무 진행률</h2>
+								</header>
+								<div class="panel-body">
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
 									</div>
-								</section>
-							</div>
-							
-							
+								</div>
+							</section>
+						</div>
+						<div class="col-md-12">
+						<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">업무 중요도별 담당자 비중</h2>
+								</header>
+								<div class="panel-body">
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="member-Important" style="width:1000px;height:350px;"></canvas>
+									</div>
+								</div>
+							</section>
 						</div>
 						<!-- 프로젝트 업무 비중 -->
 						<div class="row">

@@ -1,4 +1,4 @@
-== 이벤트 스케쥴러
+﻿== 이벤트 스케쥴러
 	-부재 / 연장근무 신청 미승인 3일이상 지속시 반려로 전환됨
 		CREATE EVENT IF NOT EXISTS UPDATE_DENY_APPLY
 			ON SCHEDULE 
@@ -14,7 +14,17 @@
 			ON SCHEDULE EVERY 1 DAY
 		    STARTS '2020-01-31 02:00:00'
 		    DO
+			BEGIN
 				DELETE FROM ATTEND WHERE OFFTIME IS NULL;
+
+
+	-매년 1월 1일 연차 초기화	27일 0일
+	CREATE EVENT IF NOT EXISTS INSERT_NEWYEAR_BREAK
+		ON SCHEDULE EVERY 1 YEAR STARTS '2020-01-01 00:00:00'
+		DO
+			BEGIN
+				UPDATE APPLY SET TOTALBREAK = 27, USEDBREAK = 0;
+        		END //
 
 == 트리거
 	-유저 생성 시 연차 테이블 데이터 생성

@@ -15719,11 +15719,23 @@ thead th.fc-last {
 	display: none;
 }
 
+
 .fc-event {
 	border-style: solid;
 	border-width: 0;
 	font-size: 0.85em;
 	cursor: default;
+}
+.fc-content .fc-time {
+	font-size : 1.0em;
+	font-weight: 500;
+}
+span.fc-event {
+	fot-size : 1.0em;
+}
+.fc-title{
+	font-size : 1.05em;
+	font-weight: 600;
 }
 
 a.fc-event, .fc-event-draggable {

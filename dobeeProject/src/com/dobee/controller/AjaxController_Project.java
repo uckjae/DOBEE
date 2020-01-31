@@ -354,7 +354,7 @@ public class AjaxController_Project {
 	}
 	
 	
-	//프로젝트 담당자별 업무 달성도 차트
+	//프로젝트 담당자별 업무 진행도 차트
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -385,6 +385,25 @@ public class AjaxController_Project {
 		
 	}
 	
+	///* 업무 중요도별 담당자 비중*/
+	@RequestMapping("getTaskImportantChart.do")
+	public Map<String, List<Integer>> getTaskImportantChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
+		Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
+		//프로젝트에 속한 멤버 정보 가져오기
+		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		for(int i = 0;i<pjtMember.size(); i++) {
+			String pjtMemberName = pjtMember.get(i).getName();
+			String pjtMemberMail = pjtMember.get(i).getMail();
+			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), pjtMemberMail);
+			List<Integer> result = new ArrayList<Integer>();
+			
+			//int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
+			//map.put(pjtMemberName, taskList);
+		}
+		
+		return null;
+	}
+	
 	
 	//프로젝트 업무 할당 차트
 	@RequestMapping("getTaskAssignmentChart.do")
@@ -394,8 +413,6 @@ public class AjaxController_Project {
 		//프로젝트에 속한 멤버 정보 가져오기
 		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		//특정 참여자의 업무량 가져오기
-		
-		
 		for(int i = 0;i<pjtMember.size(); i++) {
 			String pjtMemberName = pjtMember.get(i).getName();
 			String pjtMemberMail = pjtMember.get(i).getMail();
@@ -405,8 +422,8 @@ public class AjaxController_Project {
 		return map;
 	}
 	
-	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
-	@RequestMapping("getMemberTaskChart.do")
+	//개인의 task 가져오기
+	@RequestMapping("getMemberTask.do")
 	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
 		String mail = principal.getName();
 		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
