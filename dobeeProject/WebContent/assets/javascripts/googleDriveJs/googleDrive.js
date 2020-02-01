@@ -28,8 +28,7 @@
 	    return inputdate;
 	}
 	
-	
-	
+
 	//날짜 포맷 함수 
  Date.prototype.format = function(f) {
                		 	if (!this.valueOf()) return " ";
@@ -90,6 +89,7 @@
     /*  디비에 데이터 저장 아작스 함수  */
 	function addGoogleTag(sendData){
 		var gdAddData = sendData;
+		var result = 0;
 		$.ajax({
 			
 			url:'ajax/googleDrive/addGoogleTag.do',
@@ -97,19 +97,20 @@
 			type:'POST',
 			success:function(data){
 				console.log("구글 디비 저장 아작스 성공");
-				
+				result = 1;
 			},
 			complete:function(){
-				
-				
+				result = 1;
 			},
 			error:function(){
 				console.log("구글 디비 저장 아작스 실패");
+				result = 0;
 			},
-			
-		});  //아작스끝 
-	} // 디비 등록 아작스 함수 끝 
-
+		});  //아작스끝
+		return result;
+	}; // 디비 등록 아작스 함수 끝 
+	
+	
     function SetPicker() {
         var picker = new FilePicker(
             {
@@ -218,10 +219,9 @@
                 setOAuthToken(accessToken).
                 setCallback(this.PickerResponse.bind(this)).
                 setTitle('구글드라이브 UPLOAD').
-                setSize(700,500).
+                setSize(650,400).
                 build().
                 setVisible(true);
-            
         },
 
         //====Called when a file has been selected in the Google Picker Dialog Box======
@@ -247,13 +247,21 @@
 						"filename":filename
 				};
 				// 위의 데이터를 보내서 디비에 등록
+				// 비디 등록 되었는지 확인해보기
+				let result = 0;
+				console.log("아작스 전"+result);
+				result = setTimeout(function(){
+					addGoogleTag(gdAddData); //여기서 디비등록하고 성공해야만 뷰단 그려짐
+				}, 1500);
 				
-				addGoogleTag(gdAddData);
-				
-				
-				// 타임라인 추가하는 함수 ( 뷰단 에만 추가되는 함수 )
-				paintingTimeLine(nowEmail, nowDateforAdd, link, filename);
-				 
+				console.log("확인해봐" +result);
+				if(result == 1){
+					console.log("비디 등록 성공 하였습니다.");
+					// 타임라인 추가하는 함수 ( 뷰단 에만 추가되는 함수  디비등록 성공하면 실행)
+					paintingTimeLine(nowEmail, nowDateforAdd, link, filename);
+				}else{
+					alert("데이터베이스 등록에 실패하여 업로드되지 않습니다.");
+				}
                // document.getElementById('down').innerHTML = "<a style='font-size:20px;' target='_blank' href="+link+ ">"+ "<i class='fa fa-google-plus-square'></i>"+filename+"</a>";
             }
         },
@@ -262,7 +270,6 @@
         GetFileDetails: function (file) {
             if (this.onClick) {
                 this.onClick(file);
-                
             }
         },
 
