@@ -114,27 +114,37 @@
             		$("#startTime").val($("#pjtStartAt").val());
             		$("#endTime").val($("#pjtEndAt").val());
             		var formData = $("#newPjtForm").serialize();
-            		
-        			var pjt = {
-							"pjtName" : $("#pjtName").val(),
-							"pjtStartAt" : $("#pjtStartAt").val(),
-							"pjtEndAt" : $("#pjtEndAt").val(),
-							"pjtMembers" : pjtMembers
-                		}
+            	
     	 			$.ajax({
     	 	 			url:"ajax/project/pjtAdd.do",
     	 				data: formData,
-    	 				dataType: "text",
+    	 				dataType: "json",
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
     	 				success:function(responsedata){
+        	 				console.log('데이터??'+responsedata);
+        	 				//var data = JSON.parse(responsedata);
+        	 				//console.log(data);
+    	 					/* if(responsedata == "success"){ //프로젝트 & 프로젝트 일정 생성 완료
+
+        	 					$.ajax({
+        	 						url:"ajax/project/addPjtMember.do",
+        	    	 				data: formData,
+        	    	 				dataType: "text",
+        	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+        	    	 				type:"post",
+        	    	 				success:function(responsedata){
+            	    	 				
+        	    	 				},
+        	    	 				error:function(request,status,error){
+        	    						console.log("code : " + request.status +"\n" + "message : " 
+        	    								+ request.responseText + "\n" + "error : " + error);
+        	    					}
 
 
-        	 				
-        	 				console.log('ajax 통신 성공?');
-    	 					console.log(responsedata);
-    	 					if(responsedata == "success"){ //프로젝트 생성 완료
+            	 				}); //ajax 끝
 
+        	 					
         	 					
     	 	 					swal({
     	 						   title: "프로젝트 생성 완료",
@@ -145,7 +155,7 @@
     	 								location.reload(true); 
     	 							     }
     	 							})
-    	 	 					}
+    	 	 					} */
 
 
 	 	 					

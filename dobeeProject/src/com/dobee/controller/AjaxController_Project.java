@@ -50,9 +50,11 @@ public class AjaxController_Project {
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
     public String addProject(Project project, Schedule sc){
 		String responseData = "";
+		String result = "";
 		int result1 = 0;
 		int result2 = 0;
 		int result3 = 0;
+		int pjtSeq = 0;
 		System.out.println("객체 주입!");
 		System.out.println("플젝!"+project.toString());
 		System.out.println("스케쥴!"+sc.toString());
@@ -65,32 +67,50 @@ public class AjaxController_Project {
 		
 		if(result1 > 0 && result2 > 0) {
 			//플젝 seq 가져오기
-			int pjtSeq = project.getPjtSeq();
+			pjtSeq = project.getPjtSeq();
 			int schSeq = sc.getSchSeq();
 						
 			//프로젝트 일정 추가
 			result3 = scheduleService.addPjtSchedule(pjtSeq, schSeq);
-			
 			if(result3 > 0) {
-				responseData = "success";
+				result = "success";
 			}
-			/*
-			//프로젝트 멤버 DB 저장
-			//들어온 메일 개수만큼 vo 객체 만들어주기
-			List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
-			for (int i = 0; i < pjtMembers.size(); i ++) {
-				ProjectMember pjtMember = new ProjectMember();
-				pjtMember.setPjtSeq(pjtSeq);
-				pjtMember.setMail(pjtMembers.get(i));
-				pjtMemberList.add(pjtMember);
-			}
-			result2 = projectService.addProjectMember(pjtMemberList);
-			*/
-				responseData = "success";
+		} else {
+			result = "'fail'";
 		}
+		
+		responseData = "{ result : '"+result+"', pjtSeq : '"+pjtSeq+"'}";
+		
+		System.out.println("제"+responseData);
 		
     	return responseData;
     }
+	
+	//프로젝트 참여자 추가
+	@RequestMapping(value="addPjtMember.do", method=RequestMethod.POST)
+	public String addPjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
+		int result = 0;
+		String responseData = "";
+		//들어온 메일 개수만큼 vo 객체 만들어주기
+		List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
+		for (int i = 0; i < pjtMembers.size(); i ++) {
+			ProjectMember pjtMember = new ProjectMember();
+			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
+			pjtMember.setMail(pjtMembers.get(i));
+			pjtMemberList.add(pjtMember);
+		}
+		result = projectService.addProjectMember(pjtMemberList);
+		
+		if(result > 0 ) {
+			responseData = "success";
+			
+		} else {
+			responseData = "fail";
+		}
+	 	
+		return responseData;
+		
+	}
 	
 	
 	//프로젝트 삭제 --01.15 알파카 (아직 완전 구현xxxx)
