@@ -113,7 +113,7 @@ public class AjaxController_Project {
 	}
 	
 	
-	//프로젝트 삭제 --01.15 알파카 (아직 완전 구현xxxx)
+	//프로젝트 삭제 --01.15 알파카
 	@RequestMapping(value="pjtDelete.do", method=RequestMethod.POST)
 	public String deleteProject(@RequestParam(value="pjtSeq") String pjtSeq) {
 		String responseData = "";
@@ -130,7 +130,12 @@ public class AjaxController_Project {
 	
 	//프로젝트 수정 --01.15 알파카
 	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
-	public String updateProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+	public String updateProject(Project project,  Schedule sc) {
+		System.out.println("객체 가져와?"+project.toString());
+		System.out.println("스케쥴 가져와?"+sc.toString());
+		//업데이트!
+		
+		
 		return null;
 	}
 	

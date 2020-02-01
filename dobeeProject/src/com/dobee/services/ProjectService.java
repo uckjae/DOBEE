@@ -82,10 +82,10 @@ public class ProjectService {
     @Transactional
     public int delProject(int pjtSeq){
     	
-//    	int result = 0;
-//    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-//    	result = projectdao.delete(pjtSeq);
-    	return 0;
+    	int result = 0;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	result = projectdao.deletePjt(pjtSeq);
+    	return result;
     }
 
 

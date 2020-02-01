@@ -919,7 +919,6 @@ public class DoController {
         //프로젝트 업무 일정 추가하기
         result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq());
         
-        
         if(result1 > 0 && result2 > 0 && result3 > 0) {
         	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
         } else {

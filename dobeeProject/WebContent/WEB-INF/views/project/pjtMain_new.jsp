@@ -179,6 +179,8 @@
  				data: { 'pjtSeq' : pjtSeq},
  				type:"post",
  				success:function(responseData){
+
+ 	 				$("#pjtEditPjtSeq").val(pjtSeq);
 	 				//console.log(responseData);
  					var project = responseData.project;
 
@@ -197,16 +199,15 @@
 	 				var pjtProgress = project.pjtProgress;
 	 				$("#progressSelect > option[value='pjtProgress']").attr('selected','true');
 
-	 				//담당자!! -> userSelect 중에 벨류 값이 같으면 attr로 true 넣어주기
+	 				/* //담당자!! -> userSelect 중에 벨류 값이 같으면 attr로 true 넣어주기
 	 				$.each(user, function(index, element){
 		 				mails.push(element.name+"("+element.mail+")");
-		 				/* $("#userSelectEdit > option").each(function(){
+		 				$("#userSelectEdit > option").each(function(){
 		 					if($(this).val() == element.mail){
 				 				$(this).attr('selected','selected');
 							}
-				 		}); */
-				 		
-		 			});
+				 		});
+		 			}); */
 
 	 				$.ajax({
 	 	 	 			url:"getUserList.do",
@@ -229,10 +230,7 @@
 
 							$("#userSelectEdit").select2();
 							
-			 	 			
-		 	 				
 			 	 			$("#userSelectEdit > option").each(function(){
-
 			 	 				for (var i = 0; i < mails.length; i++){
 				 	 				if($(this).val() == mails[i]){
 						 				$(this).attr('selected','selected');
@@ -263,12 +261,63 @@
 	
 		
     });
-   /*프로젝트 수정 함수*/
-   /* function pjtEdit(data){
+   /*프로젝트 삭제 함수*/
+    function pjtDelete(data){
 	   console.log('이거 타??');
+	   var pjtSeq = $(data).find('input[type=hidden]').val();
 
+	   swal({
+			title: "프로젝트 삭제",
+			text: "프로젝트를 삭제하시겠습니까?",
+			icon: "warning", //"info,success,warning,error" 중 택1
+			button : {
+				confirm: {
+				    text: "확인",
+				    value: true,
+				    visible: true,
+				    className: "",
+				    closeModal: true
+				  },
+				 cancel: {
+					    text: "취소",
+					    value: null,
+					    visible: false,
+					    className: "",
+					    closeModal: true,
+					  }
+				}
+		}).then((YES) => {
+			if(YES){
+				$.ajax({
+	 	 			url:"ajax/project/pjtDelete.do",
+	 	 			data: {"pjtSeq":pjtSeq},
+	 				dataType: "text",
+	 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+	 				success:function(responsedata){
+	 					if(responsedata == "success"){ //프로젝트 생성 완료
+	 	 					console.log('삭제 완료')
+	 	 					swal({
+	 						   title: "프로젝트 삭제 완료",
+	 						   text: "프로젝트가 삭제되었습니다.",
+	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						}).then((YES) => {
+	 							location.href="pjtMain.do";
+	 						})
+	 	 				}
+	 				},
+	 				error:function(request,status,error){
+						console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+					}
+	 			});
+
+				} 
+			})
+
+	   
 	} 
-	
+	/*
 	$('#userSelectEdit').select2({
 			   placeholder: "사원 선택",
 			   multiple: true,
@@ -295,9 +344,39 @@
 
 	/* 프로젝트 수정 전송 */
 	function editPjtButton(data){
-		console.log("eidtPjtButton()");
-		console.log($('#editPjtForm').serialize());
-		console.log($('#userSelectEdit').val());
+		console.log('플젝 수정 탄다!!');
+		var formData = $('#editPjtForm').serialize();
+		var pjtSeq = $('#pjtEditPjtSeq').val();
+		console.log('플젝 번호?'+pjtSeq);
+
+		//스케쥴 객체 값 넣어주기
+		var startTime = $("#pjtEditStartAt").val();
+		var endTime = $("#pjtEditEndAt").val();
+		console.log('값은?'+startTime+"/"+endTime);
+		$("#pjtEditStartTime").val(startTime);
+        $("#pjtEditEndTime").val(endTime);
+        console.log('값 들어갔어?'+$("#pjtEditStartTime").val()+"/"+$("#pjtEditEndTime").val())
+		console.log('어떻게 넘어감?'+formData);
+		
+		$.ajax({
+	 			url:"ajax/project/pjtUpdate.do",
+	 			data : formData,
+	 			dataType: 'json',
+	        	type:"post",
+				success:function(responseData){
+	 				console.log(responseData);
+
+
+	 				//플젝 담당자 추가
+	 				
+				},
+				error:function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+
+							+ request.responseText + "\n" + "error : " + error);
+				},
+			});
+		
 	}
 	
 	/* DateFormatting  함수 */
@@ -352,10 +431,10 @@
 					<div class="search-toolbar">
 						<ul class="list-unstyled nav nav-pills">
 							<li class="active">
-								<a href="#everything" data-toggle="tab">2019년 4분기</a>
+								<a href="#everything" data-toggle="tab">진행</a>
 							</li>
 							<li>
-								<a href="#medias" data-toggle="tab">2020년 1분기</a>
+								<a href="#medias" data-toggle="tab">완료</a>
 							</li>
 						</ul>
 					</div>
@@ -377,7 +456,8 @@
 					 						<a style="cursor: pointer;text-decoration:none;margin-right: 10px;" class="editPjt" data-toggle="modal" data-target="#editPjtModal"  data-pjtSeq="${n.pjtSeq}" >
 					 							<i class="fa  fa-pencil"></i>
 					 						</a>
-					 						<a style="cursor: pointer" onclick="taskDetailDelete(this)">
+					 						<a style="cursor: pointer" onclick="pjtDelete(this)">
+					 							<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
 					 							<i class="fa fa-times"></i>
 					 						</a>
 					 					</div>
@@ -497,8 +577,9 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트명</label>
 								<div class="col-md-7">
-									<input type="text" class="form-control" id="pjtEditName" name="pjtName" style="height:35px;">
-								</div>
+									<input type="text" class="form-control" id="pjtEditName" name="pjtName" style="height:35px;" form="editPjtForm">
+ 									<input type="hidden" class="form-control" id="pjtEditPjtSeq" name="pjtSeq" style="height:35px;" form="editPjtForm">
+ 								</div>
 							</div>
 						<!-- 날짜 -->
 							<div class="form-group">
@@ -508,9 +589,11 @@
 										<span class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</span>
-										<input type="text" id="pjtEditStartAt" name="pjtStartAt" class="form-control" form="pjtForm">
+										<input type="text" id="pjtEditStartAt" name="pjtStartAt" class="form-control" form="editPjtForm">
+										<input type="hidden" id="pjtEditStartTime" name="startTime" class="form-control" form="editPjtForm">
 										<span class="input-group-addon">to</span>
-										<input type="text" id="pjtEditEndAt" name="pjtEndAt" class="form-control" form="pjtForm">
+										<input type="text" id="pjtEditEndAt" name="pjtEndAt" class="form-control" form="editPjtForm">
+										<input type="hidden" id="pjtEditEndTime" name="endTime" class="form-control" form="editPjtForm">
 									</div>
 								</div>
 							</div>
@@ -526,8 +609,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">진행 상태</label>
 									<div class="col-md-7">
-										<select data-plugin-selectOne class="form-control populate" id="progressSelect" name="pjtProgress" style="width:100%;">
-											<option value="미완료">미완료</option>
+										<select data-plugin-selectOne class="form-control populate" id="progressSelect" name="pjtProgress" style="width:100%;" form="editPjtForm">
 											<option value="진행">진행</option>
 											<option value="완료">완료</option>
 										</select>
