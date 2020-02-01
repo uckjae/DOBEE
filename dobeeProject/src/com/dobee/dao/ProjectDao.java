@@ -10,6 +10,7 @@ import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
+import com.dobee.vo.project.UpcomingTask;
 import com.dobee.vo.schedule.Schedule;
 
 public interface ProjectDao {
@@ -109,6 +110,16 @@ public interface ProjectDao {
     //특정 프로젝트의 개인 업무 가져오기
     public List<Task> getMemberTask(int pjtSeq, String mail);
     
+    //특정 프로젝트의 개인 업무 중 마감일이 지난 업무 가져오기
+    public List<Task> getOverdueTask(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인 업무 중 마감일이 3일 남은 업무 가져오기
+    public List<Task> getDeadlineTask(int pjtSeq, String mail);
+    
+    //특정 프로젝트의 개인 업무 중 나머지 업무 가져오기
+    public List<Task> getOtherTask(int pjtSeq, String mail);
+    
+    
     //특정 프로젝트의 개인의 완료된 업무 가져오기
     public List<Task> getCompletedTaskList(int pjtSeq, String mail);
     
@@ -119,5 +130,9 @@ public interface ProjectDao {
     
     //특정 프로젝트 구글 드라이브 업로드
     public int addGoogleTag(GoogleDrive gd);
+    
+    
+	// 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE
+    public List<UpcomingTask> getUpcomingTask(String mail);
 
 }

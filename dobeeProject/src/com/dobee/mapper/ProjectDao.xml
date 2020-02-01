@@ -179,14 +179,34 @@ WHERE p.pjtseq = #{pjtSeq}
 </select>
 
 <!-- 특정 프로젝트의 개인 업무 가져오기 -->
-    
 <select id="getMemberTask" resultType="com.dobee.vo.project.Task">
 	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ
 	FROM TASK
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2}
 </select>
 
-<!-- 특정 프로젝트의 개인의 완료된 업무 가져오기 public List<Task> getCompletedTaskList(int pjtSeq, String mail) -->
+<!-- 특정 프로젝트의 개인 업무 중 마감일이 지난 업무 가져오기-->
+<select id="getOverdueTask" resultType="com.dobee.vo.project.Task">
+	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	FROM TASK 
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[>]]> 0
+</select>
+
+<!-- 특정 프로젝트의 개인 업무 중 마감일이 3일 남은 업무 가져오기 -->
+<select id="getDeadlineTask" resultType="com.dobee.vo.project.Task">
+	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	FROM TASK 
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 3
+</select>
+
+<!-- 특정 프로젝트의 개인 업무 중 나머지 업무 가져오기 -->
+<select id="getOtherTask" resultType="com.dobee.vo.project.Task">
+	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	FROM TASK 
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(ENDAT, NOW()) <![CDATA[>=]]> 4
+</select>
+
+<!-- 특정 프로젝트의 개인의 완료된 업무 가져오기 -->
 <select id="getCompletedTaskList" resultType="com.dobee.vo.project.Task">
 	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ
 	FROM TASK
@@ -204,5 +224,14 @@ WHERE p.pjtseq = #{pjtSeq}
 	insert into googledrive (gddate, gdurl, mail, pjtseq, filename) 
 	values (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName})
 </insert>
+
+<!-- 마감임박 업무 리스트 GET			0131 게다죽 	~ing -->
+<select id="getUpcomingTask" parameterType="String" resultType="com.dobee.vo.project.UpcomingTask">
+	SELECT P.PJTSEQ, DATE_FORMAT(T.ENDAT, '%m-%d') AS DATE, T.TITLE, T.PROGRESS, T.IMPORTANT, P.PJTNAME
+		FROM TASK T
+			JOIN PROJECT P ON T.PJTSEQ = P.PJTSEQ
+		WHERE  MAIL=#{mail} AND T.PROGRESS !='완료' AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 5
+		ORDER BY DATE
+</select>
 
 </mapper>

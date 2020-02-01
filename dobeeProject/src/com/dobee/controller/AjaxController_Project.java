@@ -2,6 +2,7 @@ package com.dobee.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,6 @@ public class AjaxController_Project {
 		List<User> user = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		map.put("user", user);
 		
-		System.out.println("맵맵");
 		System.out.println(map.toString());
 		
 		return map;
@@ -370,17 +370,12 @@ public class AjaxController_Project {
 			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 			//각 참여자의 완료된 task 가져오기
 			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
-			System.out.println("전체 업무 사이즈!!"+taskList.size());
-			System.out.println("완료된 업무 사이즈!!"+completedTaskList.size());
 			
 			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
 			int result = (completedTaskList.size()*100/taskList.size());
-			System.out.println("결과는요???"+result);
 			map.put(name, result);
 		}
-		
-		System.out.println("맵맵!"+map.toString());
-		
+				
 		return map;
 		
 	}
@@ -422,13 +417,38 @@ public class AjaxController_Project {
 		return map;
 	}
 	
-	//개인의 task 가져오기
-	@RequestMapping("getMemberTask.do")
+	//개인별 업무 달성도 차트 >> 개인의 task 가져오기
+	@RequestMapping("getMemberTaskChart.do")
 	public List<Task> getMemberTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
 		String mail = principal.getName();
 		List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), mail);
 		return taskList;
 	}
+	
+	//내 업무 현황
+	@RequestMapping("getMyTask.do")
+	public Map<String, List<Task>> getMyTask(@RequestParam(value="pjtSeq") String pjtSeq, Principal principal, HttpServletRequest request){
+		String mail = principal.getName();
+		Map<String, List<Task>> map = new HashMap<String, List<Task>>();
+				
+		//완료일 지남
+		List<Task> taskOverdueList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
+		map.put("taskOverdueList", taskOverdueList);
+		
+		//3일 남음
+		List<Task> deadlineTask = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
+		map.put("deadlineTask", deadlineTask);
+		
+		
+		//나머지 리스트
+		List<Task> otherTask = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
+		map.put("otherTask", otherTask);
+		
+		
+		return map;
+	}
+	
+	
 	
 	
 	

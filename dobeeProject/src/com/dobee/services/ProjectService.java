@@ -7,16 +7,15 @@ import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
+import com.dobee.vo.project.UpcomingTask;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProjectService {
@@ -256,6 +255,34 @@ public class ProjectService {
     	return taskList;
     }
     
+    //특정 프로젝트의 개인의 완료일이 지난 업무 가져오기
+    public List<Task> getOverdueTask(int pjtSeq, String mail){
+    	List<Task> taskOverdueList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	taskOverdueList = projectDao.getOverdueTask(pjtSeq, mail);
+    	return taskOverdueList;
+    }
+    
+    //특정 프로젝트의 개인의 오늘까지 남은 업무 가져오기
+    public List<Task> getDeadlineTask(int pjtSeq, String mail){
+    	List<Task> deadlineTaskList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	deadlineTaskList = projectDao.getDeadlineTask(pjtSeq, mail);
+    	return deadlineTaskList;
+    }
+    
+    //특정 프로젝트의 개인의 남은 업무 가져오기
+    
+    public List<Task> getOtherTask(int pjtSeq, String mail){
+    	List<Task> otherTaskList = new ArrayList<Task>();
+    	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
+    	otherTaskList = projectDao.getOtherTask(pjtSeq, mail);
+    	return otherTaskList;
+    }
+
+    
+    
+    
 	
 	 //특정 프로젝트의 개인의 완료된 업무 가져오기 
 	 public List<Task> getCompletedTaskList(int pjtSeq, String mail){ 
@@ -264,5 +291,13 @@ public class ProjectService {
 		 taskList = projectDao.getCompletedTaskList(pjtSeq, mail);
 		 return taskList;
 
+	 }
+	 
+	 // 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE
+	 public List<UpcomingTask> getUpcomingTask(String mail) {
+		 ProjectDao pDao = sqlSession.getMapper(ProjectDao.class);
+		 List<UpcomingTask> utList = pDao.getUpcomingTask(mail);
+		 
+		 return utList;
 	 }
 }

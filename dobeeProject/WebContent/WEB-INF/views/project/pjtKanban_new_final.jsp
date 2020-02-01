@@ -364,27 +364,69 @@
 	 				}
 	 			});
 			});
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
 
+			var taskOverdueTask = new Array(); //마감일 지난 업무
+			var deadlineTask = new Array(); //3일 남은 업무
+			var otherTask = new Array(); //기타 업무
+
+			
 			/*내 업무*/
 			$.ajax({
- 	 			url:"ajax/project/getPjtProgressChart.do",
- 				data: {'pjtSeq' : pjtSeq } ,
+ 	 			url:"ajax/project/getMyTask.do",
+ 				data: {'pjtSeq' : pjtSeq },
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				pjtTaskLength = responseData.length; 
- 	 				$.each(responseData, function(index, element){
- 	 					var progress = element.progress;
- 	 					if(progress == '예정'){
- 	 						pjtTaskScheduled.push(element);
- 	 	 				} else if(progress == '진행') {
- 	 	 					pjtTaskInProgress.push(element);
- 	 	 	 			} else if(progress == '테스트') {
- 	 	 	 				pjtTaskTest.push(element);
- 	 	 	 			} else {
- 	 	 	 				pjtTaskCompleted.push(element);
- 	 	 	 	 		}
- 	 	 			});
+ 	 				console.log('넘어온 값');
+ 	 				console.log(responseData);
+ 	 				for(var i=0; responseData.deadlineTask.length; i++){
+//  	 					console.log(responseData.deadlineTask[i])
+ 	 	 			}
+
+//  	 				$.each(responseData.deadlineTask, function(index) {
+ 	 	 				
+//  	 				    $.each(responseData.deadlineTask[index], function(key, value) {
+//  	 				        console.log(key + ": " + value);
+//  	 				        console.log('벨류!'+title.value);
+//  	 				    })
+ 	 	 				             
+//  	 		        });     
+
+ 	 				var title1 = $('<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>');
+ 	 				
+ 	 				
+ 	 				/* 
+ 	 				<div class="col-md-12" id="overdueTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-xs">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-life-ring"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">Support Questions</h4>
+													<div class="info">
+														<strong class="amount">1281</strong>
+														<span class="text-primary">(14 unread)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+								
+								
+								
+							</div>
+ 	 				
+ 	 				
+ 	 				 */
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -397,8 +439,8 @@
 			/*프로젝트 현황 차트!!*/
 			
 			/*업무 담당 차트! */
-			var pjtSeq = ${requestScope.project.pjtSeq};
-			console.log('플젝 번호?'+pjtSeq);
+			
+			
 			var pjtMember = new Array();
 			var taskCount = new Array(); //담당자별 업무 할당량
 			var pjtMemberTask = new Array();
@@ -624,16 +666,6 @@
  	 				console.log('중요도');
  	 				console.log(responseData);
  	 				console.log('프로젝트 참여자?'+pjtMember);
-
- 	 				
- 					/* for(key in responseData){
- 						pjtMember.push(key);
- 						taskCount.push(responseData[key]);
- 						
- 						member-Important
- 						
- 						
- 	 				} */
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -738,37 +770,13 @@
  			
  			/*개인 업무 현황 progress bar*/
 			$.ajax({
- 	 			url:"ajax/project/getMemberTask.do",
+ 	 			url:"ajax/project/getMemberTaskChart.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 					console.log('개인 업무'+responseData);
  					$.each(responseData, function(index, element){
- 	 					/*내 업무 테이블 뿌려주기*/
- 	 					var tr = $('<tr>');
-						var taskTitle = $('<td>'+element.title+'</td>');
-						var taskProgress = $('<td>'+element.progress+'</td>');
-						//날짜 포맷팅
-						var startDate = new Date(element.startAt);
-						var formatedStartDate = date_to_str(startDate);
-						var taskstartDate = $('<td>'+formatedStartDate+'</td>');
-						
-						var endDate = new Date(element.endAt);
-						var formatedEndDate = date_to_str(endDate);
-						var taskEndDate = $('<td>'+formatedEndDate+'</td>');
-
-						var action = $('<td class="actions"><a href=""><i class="fa fa-pencil"></i></a></td>');
-
-						tr.append(taskTitle);
-						tr.append(taskProgress);
-						tr.append(taskstartDate);
-						tr.append(taskEndDate);
-						tr.append(action);
-
-						$("#myTaskTable").append(tr);
-
-						
+ 	 					
 						/*차트용 데이터 넣기*/
  						memberTask.push(element.title);
  	 					var progress = element.progress;
@@ -784,8 +792,6 @@
  	 				});
 
 
- 	 				
- 					
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1780,35 +1786,96 @@
                         </div>
                     </div>
                    </div>
-                   
                    <!-- 내 업무 시작 -->
                    <div class="tab-pane" id="myTask">
-                   <div class="row">
-							<div class="col-md-12">
-								<section class="panel">
-									<header class="panel-heading">
-										<h2 class="panel-title">나에게 할당된 업무</h2>
-									</header>
+						<div class="row">
+							<div class="col-md-12" id="overdueTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
+								
+								
+								
+								<section class="panel panel-featured-left panel-featured-primary">
 									<div class="panel-body">
-										<div class="table-responsive">
-											<table class="table mb-none">
-												<thead>
-													<tr>
-														<th>업무</th>
-														<th>진행 상태</th>
-														<th>시작일</th>
-														<th>완료일</th>
-														<th>Actions</th>
-													</tr>
-												</thead>
-												<tbody id="myTaskTable">
-												</tbody>
-											</table>
+										<div class="widget-summary widget-summary-xs">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-life-ring"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">Support Questions</h4>
+													<div class="info">
+														<strong class="amount">1281</strong>
+														<span class="text-primary">(14 unread)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+								
+								
+								
+							</div>
+							<div class="col-md-12">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-xs">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-life-ring"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">Support Questions</h4>
+													<div class="info">
+														<strong class="amount">1281</strong>
+														<span class="text-primary">(14 unread)</span>
+													</div>
+												</div>
+												
+											</div>
 										</div>
 									</div>
 								</section>
 							</div>
+							<div class="col-md-12">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-xs">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-life-ring"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">Support Questions</h4>
+													<div class="info">
+														<strong class="amount">1281</strong>
+														<span class="text-primary">(14 unread)</span>
+													</div>
+												</div>
+											
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							
+							
+							
+							
+							
+							
+							
 						</div>
+                   
+                   
                    </div>
                    <!-- 내 업무 끝 -->
                    <!-- 프로젝트 현황 -->

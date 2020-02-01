@@ -44,6 +44,7 @@ import com.dobee.vo.notice.Notice;
 import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
+import com.dobee.vo.project.UpcomingTask;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
@@ -170,6 +171,12 @@ public class DoController {
     	System.out.println("컨트롤러 main.do");
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
+    	
+    	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
+    	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
+    	System.out.println("utList : "+ utList);
+    	model.addAttribute("utList", utList);
+    	
         return "main/main";
     }
 
