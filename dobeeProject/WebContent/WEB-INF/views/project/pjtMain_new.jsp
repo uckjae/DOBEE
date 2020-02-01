@@ -110,6 +110,11 @@
         				pjtMembers.push(value[i]);
             		}
 
+            		//일정 객체 주입을 위해서 값 셋팅해주기
+            		$("#startTime").val($("#pjtStartAt").val());
+            		$("#endTime").val($("#pjtEndAt").val());
+            		var formData = $("#newPjtForm").serialize();
+            		
         			var pjt = {
 							"pjtName" : $("#pjtName").val(),
 							"pjtStartAt" : $("#pjtStartAt").val(),
@@ -118,14 +123,19 @@
                 		}
     	 			$.ajax({
     	 	 			url:"ajax/project/pjtAdd.do",
-    	 				data: pjt ,
+    	 				data: formData,
     	 				dataType: "text",
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
     	 				success:function(responsedata){
+
+
+        	 				
         	 				console.log('ajax 통신 성공?');
     	 					console.log(responsedata);
     	 					if(responsedata == "success"){ //프로젝트 생성 완료
+
+        	 					
     	 	 					swal({
     	 						   title: "프로젝트 생성 완료",
     	 						   text: "프로젝트가 만들어졌습니다.",
@@ -135,8 +145,11 @@
     	 								location.reload(true); 
     	 							     }
     	 							})
-    	 					
     	 	 					}
+
+
+	 	 					
+	 	 					
     	 				},
     	 				error:function(request,status,error){
     						console.log("code : " + request.status +"\n" + "message : " 
@@ -224,14 +237,12 @@
 									}
 					 	 		}
 					 		});
-
-			 	 			
-			 	 			
 	 	 				},
 	 	 				error:function(request,status,error){
 	 						console.log("code : " + request.status +"\n" + "message : " 
-	 								+ request.responseText + "\n" + "error : " + error);
-	 					}
+
+		 							+ request.responseText + "\n" + "error : " + error);
+	 					},
 	 				});
 		 			
 	 			
@@ -418,7 +429,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">프로젝트명</label>
 								<div class="col-md-7">
-									<input type="text" class="form-control" id="pjtName" name="pjtName" style="height:35px;">
+									<input type="text" class="form-control" id="pjtName" name="pjtName" form="newPjtForm" style="height:35px;">
 								</div>
 							</div>
 						<!-- 날짜 -->
@@ -429,9 +440,11 @@
 										<span class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</span>
-										<input type="text" id="pjtStartAt" name="pjtStartAt" class="form-control" form="pjtForm">
+										<input type="text" id="pjtStartAt" name="pjtStartAt" class="form-control" form="newPjtForm">
+										<input type="hidden" id="startTime" name="startTime" class="form-control" form="newPjtForm">
 										<span class="input-group-addon">to</span>
-										<input type="text" id="pjtEndAt" name="pjtEndAt" class="form-control" form="pjtForm">
+										<input type="text" id="pjtEndAt" name="pjtEndAt" class="form-control" form="newPjtForm">
+										<input type="hidden" id="endTime" name="endTime" class="form-control" form="newPjtForm">
 									</div>
 								</div>
 							</div>

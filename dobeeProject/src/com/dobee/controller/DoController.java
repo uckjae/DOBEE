@@ -896,9 +896,6 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	String[] str = task.getMail().split(",");
-    	String mail = str[0];
-    	task.setMail(mail);
     	int result = projectService.addPMTask(task);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }

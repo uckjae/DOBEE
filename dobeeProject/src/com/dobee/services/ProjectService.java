@@ -8,6 +8,7 @@ import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import com.dobee.vo.project.UpcomingTask;
+import com.dobee.vo.schedule.ProjectSchedule;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class ProjectService {
     	result = projectdao.mkPjt(project);
     	return result;
     }
+   
     
     //프로젝트 멤버 추가
     public int addProjectMember(List<ProjectMember> pjtMemberList) {
@@ -100,8 +102,8 @@ public class ProjectService {
     	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addPMTask(task);
-    	if(result > 0) {
-    	}
+    	//프로젝트 추가 후 tskSeq 반환함
+    	
     	return result;
     }
     
