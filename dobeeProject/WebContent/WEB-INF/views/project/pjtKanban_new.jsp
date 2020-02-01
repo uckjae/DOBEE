@@ -190,7 +190,7 @@
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				$("#addPMTaskForm").submit();
+				/* $("#addPMTaskForm").submit(); */
 			});
 
 
@@ -925,15 +925,18 @@
 		
 		
 		function send(data) {
+			console.log("send() 실행")
 			let mail = $('#taskMember').val();
+			console.log(mail);
 			let content = $('#addTaskTitle').val();
+			console.log(content);
 			var jsonData = new Object();
 			jsonData.cmd = data;
 			jsonData.mail = mail;
 			jsonData.content = content;
 
 			var parsedData = JSON.stringify(jsonData);
-			
+			console.log(parsedData);
 			wsocket.send(parsedData);
 		}
 		/* /알람  */

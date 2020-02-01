@@ -124,6 +124,7 @@
     	 				type:"post",
     	 				success:function(responsedata){
         	 				console.log('ajax 통신 성공?');
+        	 				send("addPjt",pjtMembers,$("#pjtName").val());
     	 					console.log(responsedata);
     	 					if(responsedata == "success"){ //프로젝트 생성 완료
     	 	 					swal({
@@ -299,6 +300,25 @@
 	
 	    return year + "-" + month + "-" + date;
 	}
+
+	/* 알람 */
+	function send(data, member, title) {
+		console.log("send message 실행");
+		console.log(data);
+		console.log(member);
+		console.log(title);
+		var jsonData = new Object();
+		jsonData.cmd = data;
+		console.log("data");
+		jsonData.mail = member;
+		console.log("member");
+		jsonData.content = title;
+		console.log("title");
+
+		var parsedData = JSON.stringify(jsonData);
+		console.log(parsedData);
+		wsocket.send(parsedData);
+	}
 </script>
 </head>
 <body>
@@ -360,6 +380,7 @@
 											</div>
 									</header>
 									<div class="panel-body text-center">
+										<c:if test="${ user.authCode == '3'}">
 										<div class="todo-actions" style="margin-left: 170px;">
 					 						<a style="cursor: pointer;text-decoration:none;margin-right: 10px;" class="editPjt" data-toggle="modal" data-target="#editPjtModal"  data-pjtSeq="${n.pjtSeq}" >
 					 							<i class="fa  fa-pencil"></i>
@@ -368,6 +389,7 @@
 					 							<i class="fa fa-times"></i>
 					 						</a>
 					 					</div>
+					 					</c:if>
 					 					<h3 class="text-semibold mt-sm text-center">${n.pjtName}</h3>
 										<p class="text-center">${n.pjtProgress}</p>
 									</div>
