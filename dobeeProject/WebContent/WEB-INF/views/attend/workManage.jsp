@@ -516,19 +516,26 @@
 										}		
 									},
 									label: function(tooltipItem) {
-										console.log("tooltipItem : ",tooltipItem);
 
 										let workHour = moment(tooltipItem.yLabel+10.8e6);
 										
 										if (tooltipItem.datasetIndex == 0) {
 											let absTime = moment(tooltipItem.yLabel-10.8e6);	
-											return absTime.format('HH시 mm 분 A');
+											return absTime.format('hh시 mm 분 A');
 										} else if (tooltipItem.datasetIndex == 1) {
-											return workHour.format('hh시간 mm분');
+											if (tooltipItem.yLabel < 3.6e6) {
+												return workHour.format(' mm분');
+											} else {
+												return workHour.format('hh시간 mm분');
+											}
 										} else if (tooltipItem.datasetIndex == 2) {
 											return "연장근무 시작";
 										} else if (tooltipItem.datasetIndex == 3) {
-											return workHour.format('hh시간 mm분');
+											if (tooltipItem.yLabel < 3.6e6) {
+												return workHour.format(' mm분');
+											} else {
+												return workHour.format('hh시간 mm분');
+											}
 										}
 
 									}
@@ -735,19 +742,26 @@
 											}		
 										},
 										label: function(tooltipItem) {
-											console.log("tooltipItem : ",tooltipItem);
 
 											let workHour = moment(tooltipItem.yLabel+10.8e6);
 											
 											if (tooltipItem.datasetIndex == 0) {
 												let absTime = moment(tooltipItem.yLabel-10.8e6);	
-												return absTime.format('HH시 mm 분 A');
+												return absTime.format('HH시 mm 분');
 											} else if (tooltipItem.datasetIndex == 1) {
-												return workHour.format('hh시간 mm분');
+												if (tooltipItem.yLabel < 3.6e6) {
+													return workHour.format(' mm분');
+												} else {
+													return workHour.format('hh시간 mm분');
+												}
 											} else if (tooltipItem.datasetIndex == 2) {
 												return "연장근무 시작";
 											} else if (tooltipItem.datasetIndex == 3) {
-												return workHour.format('hh시간 mm분');
+												if (tooltipItem.yLabel < 3.6e6) {
+													return workHour.format(' mm분');
+												} else {
+													return workHour.format('hh시간 mm분');
+												}
 											}
 
 										}

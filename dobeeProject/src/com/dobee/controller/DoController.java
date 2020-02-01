@@ -44,6 +44,7 @@ import com.dobee.vo.notice.Notice;
 import com.dobee.vo.notice.NoticeFile;
 import com.dobee.vo.project.Project;
 import com.dobee.vo.project.Task;
+import com.dobee.vo.project.UpcomingTask;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
@@ -170,6 +171,12 @@ public class DoController {
     	System.out.println("컨트롤러 main.do");
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
+    	
+    	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
+    	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
+    	System.out.println("utList : "+ utList);
+    	model.addAttribute("utList", utList);
+    	
         return "main/main";
     }
 
@@ -889,9 +896,6 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	String[] str = task.getMail().split(",");
-    	String mail = str[0];
-    	task.setMail(mail);
     	int result = projectService.addPMTask(task);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
@@ -899,13 +903,23 @@ public class DoController {
 
     //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
-    public String taskEdit(Task task){
+    public String taskEdit(Task task, Schedule sc){
     	System.out.println("DoController taskEdit() in!!");
         System.out.println("업무 수정 값!!!!"+task.toString());
-    	int result = 0;
+        System.out.println("스케쥴 값!!"+sc.toString());
+    	int result1 = 0;
+    	int result2 = 0;
+    	int result3 = 0;
     	String view = "";
-        result = projectService.editTask(task);
-        if(result > 0) {
+        result1 = projectService.editTask(task); //업무 수정
+        
+        //일정 추가하기
+        result2 = scheduleService.addSchedule(sc);
+        
+        //프로젝트 업무 일정 추가하기
+        result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq());
+        
+        if(result1 > 0 && result2 > 0 && result3 > 0) {
         	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
         } else {
         	view = "pjtMain.do";

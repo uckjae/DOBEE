@@ -144,7 +144,6 @@
 							var formatedEndDate = date_to_str(endDate);
 							$('#taskFormEndAt').val(formatedEndDate);
 						}
-
 						
 						//담당자 셋팅
 						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
@@ -200,6 +199,11 @@
 			$("#taskEditBtn").click(function(){
 				var important = $('#taskImportant').text();
 				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
+
+				//schedule 객체에 줄 값 넣어주기
+				$("#startTime").val($("#taskFormStartAt").val());
+            	$("#endTime").val($("#taskFormEndAt").val());
+				
 				$("#taskEditForm").submit();
 
 			});
@@ -365,12 +369,109 @@
 	 				}
 	 			});
 			});
+			var pjtSeq = ${requestScope.project.pjtSeq};
+			console.log('플젝 번호?'+pjtSeq);
+
+			
+			/*내 업무*/
+			$.ajax({
+ 	 			url:"ajax/project/getMyTask.do",
+ 				data: {'pjtSeq' : pjtSeq },
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				console.log(responseData)
+ 	 				$.each(responseData.overdueTaskList, function(key, obj) {
+ 	 	 				console.log('obj!!', obj.title);
+ 	 	 				console.log('seq?'+obj.tskSeq);
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-secondary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#overdueTaskList").append(a);
+ 	 	 				});
+
+	 	 				
+ 	 				$.each(responseData.deadlineTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 					var section = $('<section class="panel panel-featured-left panel-featured-primary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-primary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#deadlineTaskList").append(a);
+ 	 	 				});
+ 	 				$.each(responseData.otherTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-tertiary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#otherTaskList").append(a);
+ 	 	 				});
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				}
+
+			});
+			
 
 			/*프로젝트 현황 차트!!*/
 			
 			/*업무 담당 차트! */
-			var pjtSeq = ${requestScope.project.pjtSeq};
-			console.log('플젝 번호?'+pjtSeq);
+			
+			
 			var pjtMember = new Array();
 			var taskCount = new Array(); //담당자별 업무 할당량
 			var pjtMemberTask = new Array();
@@ -468,7 +569,7 @@
  						options: {
  	 						title : {
  	 							display: true,
- 	 							text: '전체 프로젝트 중 완료된 업무 비중'
+ 	 							text: '완료된 업무 비중'
  	 	 						},
  							elements: {
  								center: {
@@ -517,16 +618,7 @@
  					                'rgba(75, 192, 192, 0.2)',
  					                'rgba(153, 102, 255, 0.2)',
  					                'rgba(255, 159, 64, 0.2)'
- 					            ],
- 					            borderColor: [
- 					                'rgba(255,99,132,1)',
- 					                'rgba(54, 162, 235, 1)',
- 					                'rgba(255, 206, 86, 1)',
- 					                'rgba(75, 192, 192, 1)',
- 					                'rgba(153, 102, 255, 1)',
- 					                'rgba(255, 159, 64, 1)'
- 					            ],
- 					            borderWidth: 1
+ 					            ]
  					        }]
  					},
  					    options: {
@@ -559,6 +651,8 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
+
+ 	 				console.log('데이터는?'+responseData);
  					for(key in responseData){
  						pjtMember.push(key);
  						taskCount.push(responseData[key]);
@@ -591,6 +685,112 @@
  					});
  	 			}
  			});
+ 			
+			/* 업무 중요도별 담당자 비중*/
+			$.ajax({
+ 	 			url:"ajax/project/getTaskImportantChart.do",
+ 				data: {'pjtSeq' : pjtSeq } ,
+ 				dataType: "json",
+ 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				console.log('중요도');
+ 	 				console.log(responseData);
+ 	 				console.log('프로젝트 참여자?'+pjtMember);
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				},
+ 				complete : function() {
+
+ 					var ctx = document.getElementById("member-Important");
+ 					var myChart = new Chart(ctx, {
+ 					    type: 'horizontalBar',
+ 					    data: {
+ 					        labels: ["5", "4", "3", "2", "1"],
+ 					        
+ 					        datasets: [{
+ 					            data: [727, 589, 537, 543, 574],
+ 					            backgroundColor: "rgba(63,103,126,1)",
+ 					            hoverBackgroundColor: "rgba(50,90,100,1)"
+ 					        },{
+ 					            data: [238, 553, 746, 884, 903],
+ 					            backgroundColor: "rgba(163,103,126,1)",
+ 					            hoverBackgroundColor: "rgba(140,85,100,1)"
+ 					        },{
+ 					            data: [1238, 553, 746, 884, 903],
+ 					            backgroundColor: "rgba(63,203,226,1)",
+ 					            hoverBackgroundColor: "rgba(46,185,235,1)"
+ 					        }]
+ 					    },
+
+ 					    options: {
+ 					       tooltips: {
+ 					          enabled: false
+ 					      },
+ 					      hover :{
+ 					          animationDuration:0
+ 					      },
+ 					      scales: {
+ 					          xAxes: [{
+ 					              ticks: {
+ 					                  beginAtZero:true,
+ 					                  fontFamily: "'Open Sans Bold', sans-serif",
+ 					                  fontSize:11
+ 					              },
+ 					              scaleLabel:{
+ 					                  display:false
+ 					              },
+ 					              gridLines: {
+ 					              }, 
+ 					              stacked: true
+ 					          }],
+ 					          yAxes: [{
+ 					              gridLines: {
+ 					                  display:false,
+ 					                  color: "#fff",
+ 					                  zeroLineColor: "#fff",
+ 					                  zeroLineWidth: 0
+ 					              },
+ 					              ticks: {
+ 					                  fontFamily: "'Open Sans Bold', sans-serif",
+ 					                  fontSize:11
+ 					              },
+ 					              stacked: true
+ 					          }]
+ 					      },
+ 					      legend:{
+ 					          display:false
+ 					      },
+ 					      
+ 					      animation: {
+ 					          onComplete: function () {
+ 					              var chartInstance = this.chart;
+ 					              var ctx = chartInstance.ctx;
+ 					              ctx.textAlign = "left";
+ 					              ctx.font = "9px Open Sans";
+ 					              ctx.fillStyle = "#fff";
+
+ 					              Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
+ 					                  var meta = chartInstance.controller.getDatasetMeta(i);
+ 					                  Chart.helpers.each(meta.data.forEach(function (bar, index) {
+ 					                      data = dataset.data[index];
+ 					                      if(i==0){
+ 					                          ctx.fillText(data, 50, bar._model.y+4);
+ 					                      } else {
+ 					                          ctx.fillText(data, bar._model.x-25, bar._model.y+4);
+ 					                      }
+ 					                  }),this)
+ 					              }),this);
+ 					          }
+ 					      },
+ 					      pointLabelFontFamily : "Quadon Extra Bold",
+ 					      scaleFontFamily : "Quadon Extra Bold",
+ 					  }
+ 					});
+ 	 			}
+ 			});
 
  		
 			var memberTask = new Array(); //업무
@@ -606,8 +806,9 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 					console.log(responseData);
  					$.each(responseData, function(index, element){
+ 	 					
+						/*차트용 데이터 넣기*/
  						memberTask.push(element.title);
  	 					var progress = element.progress;
  	 					if(progress == '예정'){
@@ -620,7 +821,8 @@
  	 	 	 				taskCompleted.push(element);
  	 	 	 	 		}
  	 				});
- 					
+
+
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1371,8 +1573,6 @@
                 <!-- 칸반보드 넣기 -->
                 <div class="tab-content">
                 	<div class="tab-pane active" id="kanban">
-                	
-                	
                     <div class="row">
                         <div class="col-md-12 col-lg-12">
                             <!-- 예정 -->
@@ -1617,16 +1817,28 @@
                         </div>
                     </div>
                    </div>
+                   <!-- 내 업무 시작 -->
                    <div class="tab-pane" id="myTask">
-                   	내 업무!!
+						<div class="row">
+							<div class="col-md-12" id="overdueTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
+							</div>
+							<div class="col-md-12" id="deadlineTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>
+							</div>
+							<div class="col-md-12" id="otherTaskList">
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
+							</div>
+						</div>
                    </div>
+                   <!-- 내 업무 끝 -->
                    <!-- 프로젝트 현황 -->
                    <div class="tab-pane" id="pjtDash">
 	                   <div class="row">
 							<div class="col-md-6">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 전체 진행률</h2>
+										<h2 class="panel-title">전체 프로젝트 진행률</h2>
 									</header>
 									<div class="panel-body">
 										<!-- Flot: Curves -->
@@ -1639,7 +1851,7 @@
 							<div class="col-md-6">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 업무 비중</h2>
+										<h2 class="panel-title">전체 프로젝트 업무 비중</h2>
 									</header>
 									<div class="panel-body">
 										<!-- Flot: Basic -->
@@ -1650,21 +1862,29 @@
 								</section>
 							</div>
 						</div>
-	 					<div class="row">
-							<div class="col-md-12">
-							<section class="panel">
-									<header class="panel-heading">
-										<h2 class="panel-title">프로젝트 담당자별 업무 진행률</h2>
-									</header>
-									<div class="panel-body">
-										<div class="chart chart-md" style="height:350px">
-											<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
-										</div>
+						<div class="col-md-12">
+						<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">전체 프로젝트 담당자별 업무 진행률</h2>
+								</header>
+								<div class="panel-body">
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="pjtMember-task" style="width:1000px;height:350px;"></canvas>
 									</div>
-								</section>
-							</div>
-							
-							
+								</div>
+							</section>
+						</div>
+						<div class="col-md-12">
+						<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">업무 중요도별 담당자 비중</h2>
+								</header>
+								<div class="panel-body">
+									<div class="chart chart-md" style="height:350px">
+										<canvas id="member-Important" style="width:1000px;height:350px;"></canvas>
+									</div>
+								</div>
+							</section>
 						</div>
 						<!-- 프로젝트 업무 비중 -->
 						<div class="row">
@@ -1730,6 +1950,10 @@
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
                		 	<script type="text/javascript">
+               		 // 현재 유저 이메일 불러오기
+               		 var nowEmail = '<c:out value= "${pjtMember[0].mail}"/>';
+               		 
+               		 
                		 /* 날짜 포맷 함수 */
                		 Date.prototype.format = function(f) {
                		 	if (!this.valueOf()) return " ";
@@ -1752,25 +1976,28 @@
                		 			default: return $1;
                		 		}
                		 	});
-               		 };// 날짜포맷함수 종료
-
-               		 
-						/* 타임라인 하나만 그리는 함수 */
-						function paintingTimeLine(email, date, content, url){
+               		 };
+               		String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+               		String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+               		Number.prototype.zf = function(len){return this.toString().zf(len);};
+               		// 날짜포맷함수 종료
+							
+						/* 타임라인 하나만 그리는 함수 */  //이 함수를 쓰지 않고 구글드라이브.js 에있는 함수를 사용함 여기 수정해도 반영안됨.
+						function paintingTimeLine1(email, date, url, filename){
 							$(".tm-items").prepend(
 									'<li>'+
 									'<div class="tm-info">'+
 										'<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>'+
 										'<time class="tm-datetime" datetime="2013-11-22 19:13">'+
-											'<div>' + email + '</div>'+
 											'<div class="tm-datetime-time">'+ date +'</div>'+
 										'</time>'+
 									'</div>'+
 										'<div class="tm-box">'+
-										'<p id="down">'+ url + 
+										'<p id="down">'+ '<a style="font-size:20px;" target="_blank" href='+url+
+											'>' + '<i class="fa fa-google-plus-square"></i>' + filename + '</a>'+ 
 										'</p>'+
-										'<div class="tm-meta">'+
-											content +
+										'<div class="tm-meta">'+  
+											email +
 										'</div>'+
 									'</div>'+
 								'</li>'
@@ -1782,16 +2009,17 @@
 							function createTimeList(arrayData){
 									 for(let i = 0 ; i < arrayData.length; i++){
 											let gdSeq = arrayData[i].gdSeq;
-											let gdContent = arrayData[i].gdContent;
-											let gdUrl = letarrayData[i].gdUrl;
+											//let gdContent = arrayData[i].gdContent;
+											let gdUrl = arrayData[i].gdUrl;
 											let mail = arrayData[i].mail;
 											let pjtSeq = arrayData[i].pjtSeq;
+											let fileName = arrayData[i].fileName;
 
 											/* 데이트 타입 변환  */
 											let gdDate = new Date(arrayData[i].gdDate).format("yyyy-MM-dd");
 
 											/*  타임라인 그리기 함수 */
-											paintingTimeLine(mail, gdDate, gdContent, gdUrl);
+											paintingTimeLine(mail, gdDate, gdUrl, fileName);
 										 }
 									 
 							} // 함수 종료
@@ -1815,8 +2043,6 @@
 									data : sendData,
 									dataType: "JSON",
 									success:function(data){
-											console.log("타임라인 불러오기 아작스 성공 !");
-											console.log(data);
 											timeLineData = data;
 										},
 
@@ -1846,7 +2072,7 @@
                		 	
                		 
                		 
-               		 
+               		 <!-- 구글 드라이브 타임라인 뷰단태그 시작 -->
                		 <div class="timeline">
                		 	<!--추가 버튼  -->
                			<div>
@@ -1861,7 +2087,7 @@
 							
 							
 							<ol class="tm-items">
-								<li class="addTimeline">
+							<!-- 	<li class="addTimeline">
 									<div class="tm-info">
 										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
 										<time class="tm-datetime" datetime="2013-11-22 19:13">
@@ -1881,11 +2107,11 @@
 										
 										</div>
 									</div>
-								</li>
+								</li> -->
 							
 							
 							
-								<li>
+								<!-- <li>
 									<div class="tm-info">
 										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
 										<time class="tm-datetime" datetime="2013-11-22 19:13">
@@ -1901,7 +2127,7 @@
 											여기는 파일 내용 코멘트
 										</div>
 									</div>
-								</li>
+								</li> -->
 								
 							
 							
@@ -2062,8 +2288,10 @@
 														<i class="fa fa-calendar"></i>
 													</span>
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>
 													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="endTime" name="endTime" class="form-control" form="taskEditForm">
 													<c:if test="${ user.authCode == '2'}">
 														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
 													</c:if>
@@ -2231,9 +2459,6 @@
 							 						</a>
 							 					</div>
 				 							</li> -->
-				 							
-				 							
-				 							
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">

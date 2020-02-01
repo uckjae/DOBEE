@@ -24,4 +24,14 @@ public class TimeLineService {
 		return list;
 	}
 	
+	
+	//성호 - 타임라인 디비 등록
+	public int addGoogleTag(GoogleDrive gd) {
+		int result = 0;
+		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+		result = projectdao.addGoogleTag(gd);
+		
+		return result;
+	}
+	
 }

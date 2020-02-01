@@ -9,6 +9,17 @@
 		INSERT INTO SCHEDULE(STARTTIME, ENDTIME) VALUES( #{startTime}, #{endTime} )
 	</insert>
 	
+	<!-- 프로젝트 일정 추가 public int addPjtSchedule(int pjtSeq, int schSeq); 02.01 알파카 -->
+	<insert id="addPjtSchedule">
+		INSERT INTO PROJSCHEDULE(PJTSEQ, SCHSEQ) VALUES((SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{param1}), (SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ=#{param2}))
+	</insert>
+	
+	<!-- 프로젝트 업무 추가    public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq);
+	 -->
+	 <insert id="addTaskSchedule">
+	 	INSERT INTO TASKSCHEDULE(PJTSEQ, SCHSEQ, TSKSEQ) VALUES(#{param1},#{param2},#{param3} )
+	 </insert>
+	
 	<!-- 스케쥴 가져오기 -->
 	<select id="getSchedule" resultType="com.dobee.vo.schedule.Schedule">
 		SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=#{schSeq}

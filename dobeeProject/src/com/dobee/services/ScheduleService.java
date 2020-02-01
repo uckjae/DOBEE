@@ -1,5 +1,6 @@
 package com.dobee.services;
 import com.dobee.dao.ScheduleDao;
+import com.dobee.vo.schedule.ProjectSchedule;
 import com.dobee.vo.schedule.Schedule;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,24 @@ public class ScheduleService {
     	result = scheduledao.scheduleModify(sc);
     	return result;
     }
+    
+    //프로젝트 일정 등록 -- 02.01 알파카
+    public int addPjtSchedule(int pjtSeq, int schSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	int result = 0;
+    	result = scheduledao.addPjtSchedule(pjtSeq, schSeq);
+    	return result;
+    }
+    
+    //프로젝트 업무 일정 등록 -- 02.01 알파카
+    public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	int result = 0;
+    	result = scheduledao.addTaskSchedule(pjtSeq, schSeq, tskSeq);
+    	return result;
+    	
+    }
+    
     
     //회사일정등록
     public void addCorpSchedule(){
