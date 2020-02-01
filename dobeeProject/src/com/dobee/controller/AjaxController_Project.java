@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -432,17 +433,20 @@ public class AjaxController_Project {
 		Map<String, List<Task>> map = new HashMap<String, List<Task>>();
 				
 		//완료일 지남
-		List<Task> taskOverdueList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
-		map.put("taskOverdueList", taskOverdueList);
+		List<Task> overdueTaskList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
+		map.put("overdueTaskList", overdueTaskList);
 		
 		//3일 남음
-		List<Task> deadlineTask = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
-		map.put("deadlineTask", deadlineTask);
+		List<Task> deadlineTaskList = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
+		map.put("deadlineTaskList", deadlineTaskList);
 		
 		
 		//나머지 리스트
-		List<Task> otherTask = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
-		map.put("otherTask", otherTask);
+		List<Task> otherTaskList = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
+		map.put("otherTaskList", otherTaskList);
+		
+		//JSONArray jsonArray = new JSONArray();
+    	//jsonArray.addAll(taskList);
 		
 		
 		return map;

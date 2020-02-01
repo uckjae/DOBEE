@@ -367,10 +367,6 @@
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 
-			var taskOverdueTask = new Array(); //마감일 지난 업무
-			var deadlineTask = new Array(); //3일 남은 업무
-			var otherTask = new Array(); //기타 업무
-
 			
 			/*내 업무*/
 			$.ajax({
@@ -379,54 +375,90 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('넘어온 값');
  	 				console.log(responseData);
- 	 				for(var i=0; responseData.deadlineTask.length; i++){
-//  	 					console.log(responseData.deadlineTask[i])
- 	 	 			}
-
-//  	 				$.each(responseData.deadlineTask, function(index) {
+ 	 				
+ 	 				$.each(responseData.overdueTaskList, function(key, obj) {
+ 	 	 				console.log('obj!!', obj.title);
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-secondary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
  	 	 				
-//  	 				    $.each(responseData.deadlineTask[index], function(key, value) {
-//  	 				        console.log(key + ": " + value);
-//  	 				        console.log('벨류!'+title.value);
-//  	 				    })
- 	 	 				             
-//  	 		        });     
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
 
- 	 				var title1 = $('<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				$("#overdueTaskList").append(section);
+ 	 	 				
+ 	 	 				});
+	 	 				
+ 	 				$.each(responseData.deadlineTaskList, function(key, obj) {
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-primary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-primary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				$("#deadlineTaskList").append(section);
+ 	 	 				
+ 	 	 				});
+
+ 	 				$.each(responseData.otherTaskList, function(key, obj) {
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-tertiary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				$("#otherTaskList").append(section);
+ 	 	 				
+ 	 	 				});
+
  	 				
  	 				
- 	 				/* 
- 	 				<div class="col-md-12" id="overdueTaskList">
-								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-								
-								
-								
-							</div>
+
  	 				
- 	 				
- 	 				 */
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1791,88 +1823,13 @@
 						<div class="row">
 							<div class="col-md-12" id="overdueTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
-								
-								
-								
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-								
-								
-								
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-12" id="deadlineTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</section>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-12" id="otherTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											
-											</div>
-										</div>
-									</div>
-								</section>
 							</div>
-							
-							
-							
-							
-							
-							
-							
 						</div>
                    
                    

@@ -192,18 +192,23 @@ WHERE p.pjtseq = #{pjtSeq}
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[>]]> 0
 </select>
 
-<!-- 특정 프로젝트의 개인 업무 중 마감일이 3일 남은 업무 가져오기 -->
+<!-- 특정 프로젝트의 개인 업무 중 마감일이 3일 이하 남은 업무 가져오기 -->
 <select id="getDeadlineTask" resultType="com.dobee.vo.project.Task">
-	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL 
 	FROM TASK 
-	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 3
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2}
+	AND PROGRESS !='완료'
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[<=]]> 3 
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[>]]> 0
 </select>
 
 <!-- 특정 프로젝트의 개인 업무 중 나머지 업무 가져오기 -->
 <select id="getOtherTask" resultType="com.dobee.vo.project.Task">
 	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
 	FROM TASK 
-	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(ENDAT, NOW()) <![CDATA[>=]]> 4
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} 
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[>=]]> 4 
+	AND PROGRESS !='완료';
 </select>
 
 <!-- 특정 프로젝트의 개인의 완료된 업무 가져오기 -->
