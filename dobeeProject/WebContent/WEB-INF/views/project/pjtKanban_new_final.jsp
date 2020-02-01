@@ -144,7 +144,6 @@
 							var formatedEndDate = date_to_str(endDate);
 							$('#taskFormEndAt').val(formatedEndDate);
 						}
-
 						
 						//담당자 셋팅
 						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
@@ -375,21 +374,20 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log(responseData);
- 	 				
+ 	 				console.log(responseData)
  	 				$.each(responseData.overdueTaskList, function(key, obj) {
  	 	 				console.log('obj!!', obj.title);
+ 	 	 				console.log('seq?'+obj.tskSeq);
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
  	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
  	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
  	 	 				var iconDiv = $('<div class="summary-icon bg-secondary">');
  	 	 				var icon = $('<i class="fa fa-check"></i>');
- 	 	 				
  	 	 				var div2 = $('<div class="widget-summary-col">');
  	 	 				var summaryDiv = $('<div class="summary">');
  	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
-
  	 	 				//첫번째 div
  	 	 				iconDiv.append(icon);
  	 	 				div1.append(iconDiv);
@@ -400,12 +398,14 @@
  	 	 				bigDiv.append(div2);
  	 	 				panelBody.append(bigDiv);
  	 	 				section.append(panelBody);
- 	 	 				$("#overdueTaskList").append(section);
- 	 	 				
+ 	 	 				a.append(section);
+ 	 	 				$("#overdueTaskList").append(a);
  	 	 				});
+
 	 	 				
  	 				$.each(responseData.deadlineTaskList, function(key, obj) {
- 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-primary">');
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 					var section = $('<section class="panel panel-featured-left panel-featured-primary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
  	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
@@ -425,22 +425,20 @@
  	 	 				bigDiv.append(div2);
  	 	 				panelBody.append(bigDiv);
  	 	 				section.append(panelBody);
- 	 	 				$("#deadlineTaskList").append(section);
- 	 	 				
+ 	 	 				a.append(section);
+ 	 	 				$("#deadlineTaskList").append(a);
  	 	 				});
-
  	 				$.each(responseData.otherTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
  	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
  	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
  	 	 				var iconDiv = $('<div class="summary-icon bg-tertiary">');
  	 	 				var icon = $('<i class="fa fa-check"></i>');
- 	 	 				
  	 	 				var div2 = $('<div class="widget-summary-col">');
  	 	 				var summaryDiv = $('<div class="summary">');
  	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
-
  	 	 				//첫번째 div
  	 	 				iconDiv.append(icon);
  	 	 				div1.append(iconDiv);
@@ -451,14 +449,9 @@
  	 	 				bigDiv.append(div2);
  	 	 				panelBody.append(bigDiv);
  	 	 				section.append(panelBody);
- 	 	 				$("#otherTaskList").append(section);
- 	 	 				
+ 	 	 				a.append(section);
+ 	 	 				$("#otherTaskList").append(a);
  	 	 				});
-
- 	 				
- 	 				
-
- 	 				
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1831,8 +1824,6 @@
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
 							</div>
 						</div>
-                   
-                   
                    </div>
                    <!-- 내 업무 끝 -->
                    <!-- 프로젝트 현황 -->
@@ -2460,9 +2451,6 @@
 							 						</a>
 							 					</div>
 				 							</li> -->
-				 							
-				 							
-				 							
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
