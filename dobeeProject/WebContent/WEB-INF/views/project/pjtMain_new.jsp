@@ -114,6 +114,7 @@
             		$("#startTime").val($("#pjtStartAt").val());
             		$("#endTime").val($("#pjtEndAt").val());
             		var formData = $("#newPjtForm").serialize();
+            		var pjtSeq;
             	
     	 			$.ajax({
     	 	 			url:"ajax/project/pjtAdd.do",
@@ -122,44 +123,35 @@
     	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
     	 				type:"post",
     	 				success:function(responsedata){
-        	 				console.log('데이터??'+responsedata);
-        	 				//var data = JSON.parse(responsedata);
-        	 				//console.log(data);
-    	 					/* if(responsedata == "success"){ //프로젝트 & 프로젝트 일정 생성 완료
-
+    	 					if(responsedata !== "" || responsedata !== null){ //프로젝트 & 프로젝트 일정 생성 완료
+    	 						pjtSeq = responsedata;
+    	 						
         	 					$.ajax({
         	 						url:"ajax/project/addPjtMember.do",
-        	    	 				data: formData,
+        	    	 				data: {'pjtMembers' : pjtMembers, 'pjtSeq' : pjtSeq},
         	    	 				dataType: "text",
         	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
         	    	 				type:"post",
         	    	 				success:function(responsedata){
-            	    	 				
+            	    	 				if(responsedata == "success"){
+            	    	 					swal({
+            	    	 						   title: "프로젝트 생성 완료",
+            	    	 						   text: "프로젝트가 만들어졌습니다.",
+            	    	 						   icon: "success" //"info,success,warning,error" 중 택1
+            	    	 						}).then((YES) => {
+            	    	 							if (YES) {
+            	    	 								location.reload(true); 
+            	    	 							     }
+            	    	 							});
+
+                	    	 				}
         	    	 				},
         	    	 				error:function(request,status,error){
         	    						console.log("code : " + request.status +"\n" + "message : " 
         	    								+ request.responseText + "\n" + "error : " + error);
         	    					}
-
-
             	 				}); //ajax 끝
-
-        	 					
-        	 					
-    	 	 					swal({
-    	 						   title: "프로젝트 생성 완료",
-    	 						   text: "프로젝트가 만들어졌습니다.",
-    	 						   icon: "success" //"info,success,warning,error" 중 택1
-    	 						}).then((YES) => {
-    	 							if (YES) {
-    	 								location.reload(true); 
-    	 							     }
-    	 							})
-    	 	 					} */
-
-
-	 	 					
-	 	 					
+    	 					}
     	 				},
     	 				error:function(request,status,error){
     						console.log("code : " + request.status +"\n" + "message : " 

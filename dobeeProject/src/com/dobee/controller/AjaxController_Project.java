@@ -29,6 +29,7 @@ import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import com.dobee.vo.schedule.Schedule;
+import com.google.common.net.MediaType;
 
 
 
@@ -73,22 +74,22 @@ public class AjaxController_Project {
 			//프로젝트 일정 추가
 			result3 = scheduleService.addPjtSchedule(pjtSeq, schSeq);
 			if(result3 > 0) {
-				result = "success";
+				responseData = Integer.toString(pjtSeq);
 			}
+			
 		} else {
-			result = "'fail'";
+			responseData = "ajax fail";
 		}
-		
-		responseData = "{ result : '"+result+"', pjtSeq : '"+pjtSeq+"'}";
-		
-		System.out.println("제"+responseData);
-		
-    	return responseData;
+				
+    	return responseData; //ajax 통신 성공시 pjtSeq를 던져줌
     }
 	
 	//프로젝트 참여자 추가
 	@RequestMapping(value="addPjtMember.do", method=RequestMethod.POST)
 	public String addPjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
+		
+		System.out.println("값 넘어오니?"+pjtMembers.toString());
+		System.out.println("값 넘어오니111?"+pjtSeq.toString());
 		int result = 0;
 		String responseData = "";
 		//들어온 메일 개수만큼 vo 객체 만들어주기
@@ -107,7 +108,6 @@ public class AjaxController_Project {
 		} else {
 			responseData = "fail";
 		}
-	 	
 		return responseData;
 		
 	}

@@ -903,13 +903,24 @@ public class DoController {
 
     //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
-    public String taskEdit(Task task){
+    public String taskEdit(Task task, Schedule sc){
     	System.out.println("DoController taskEdit() in!!");
         System.out.println("업무 수정 값!!!!"+task.toString());
-    	int result = 0;
+        System.out.println("스케쥴 값!!"+sc.toString());
+    	int result1 = 0;
+    	int result2 = 0;
+    	int result3 = 0;
     	String view = "";
-        result = projectService.editTask(task);
-        if(result > 0) {
+        result1 = projectService.editTask(task); //업무 수정
+        
+        //일정 추가하기
+        result2 = scheduleService.addSchedule(sc);
+        
+        //프로젝트 업무 일정 추가하기
+        result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq());
+        
+        
+        if(result1 > 0 && result2 > 0 && result3 > 0) {
         	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
         } else {
         	view = "pjtMain.do";

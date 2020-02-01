@@ -58,6 +58,15 @@ public class ScheduleService {
     	return result;
     }
     
+    //프로젝트 업무 일정 등록 -- 02.01 알파카
+    public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	int result = 0;
+    	result = scheduledao.addTaskSchedule(pjtSeq, schSeq, tskSeq);
+    	return result;
+    	
+    }
+    
     
     //회사일정등록
     public void addCorpSchedule(){

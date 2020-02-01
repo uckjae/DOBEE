@@ -198,6 +198,11 @@
 			$("#taskEditBtn").click(function(){
 				var important = $('#taskImportant').text();
 				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
+
+				//schedule 객체에 줄 값 넣어주기
+				$("#startTime").val($("#taskFormStartAt").val());
+            	$("#endTime").val($("#taskFormEndAt").val());
+				
 				$("#taskEditForm").submit();
 
 			});
@@ -2282,8 +2287,10 @@
 														<i class="fa fa-calendar"></i>
 													</span>
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>
 													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="endTime" name="endTime" class="form-control" form="taskEditForm">
 													<c:if test="${ user.authCode == '2'}">
 														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
 													</c:if>
