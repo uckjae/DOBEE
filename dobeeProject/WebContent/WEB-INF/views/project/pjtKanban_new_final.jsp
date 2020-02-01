@@ -189,10 +189,11 @@
 
 			/* 01.28 pm 업무 추가 >> 추가시에 중요도를 별도로 셋팅해서 백단으로 보내야 함-- 알파카*/
 			$("#addPMTaskBtn").click(function(){
+				console.log("버튼클릭");
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				$("#addPMTaskForm").submit();
+				/* $("#addPMTaskForm").submit(); */
 			});
 
 
@@ -1287,7 +1288,7 @@
 			jsonData.content = content;
 
 			var parsedData = JSON.stringify(jsonData);
-			
+			console.log(parsedData);
 			wsocket.send(parsedData);
 		}
 		/* /알람  */
@@ -2004,7 +2005,7 @@
 								<div class="col-md-4">
 								</div>
 								<div class="col-md-4 text-center">
-									<button type="submit" id="addPMTaskBtn" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
+									<button id="addPMTaskBtn" class="btn btn-primary modal-confirm" >추가</button>
 								</div>
 								<div class="col-md-4">
 								</div>

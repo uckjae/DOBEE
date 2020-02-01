@@ -4,6 +4,10 @@
 <c:import url="/common/HeadTag.jsp"/>
 <link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 <header class="header">
+<script type="text/javascript">
+console.log("TOP!!!!");
+
+</script>
 				<div class="logo-container">
 					<a href="#" class="logo">
 						<img src="./img/beemain2.png" height="44" alt="로고" />
@@ -226,9 +230,10 @@
 <script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 <script>
 
-	window.onload = function(){
+	
+		console.log("top onload");
 		connect();
-	}
+	
 
 	/* 알람 */
 	var wsocket;
@@ -240,20 +245,22 @@
 		
 
 	function connect(){
+		console.log("웹소켓 커넥트!!!!!");
 		var contextPath = getContextPath();
 		wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
-		wsocket.onopen = onOpen;
 		wsocket.onmessage = onMessage;
 		wsocket.onclose = onClose;
+		wsocket.onerror = onError;
 	}
 	
 	function disconnect() {
 		wsocket.close();
 	}
-	
-	function onOpen(evt) {
-		send();
+
+	function onError(){
+		console.log("웹소켓 에ㅓㄹ");
 	}
+	
 	
 	function onMessage(evt) {
 		var data = evt.data;

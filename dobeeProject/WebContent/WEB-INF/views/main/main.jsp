@@ -21,7 +21,9 @@
 <script src='assets/vendor/fullcalendar-ori/packages/daygrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/timegrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
-
+<script type="text/javascript">
+console.log("MAIN!!");
+</script>
 </head>
 <body>
 	<section class="body">
@@ -759,12 +761,12 @@
 	<c:import url="/common/BottomTag.jsp"></c:import>
 	
 	<script>
-	var isWork = ${sessionScope.user.isWork }
+	/* var isWork = ${sessionScope.user.isWork }
 		if (isWork != null) {
 			window.onbeforeunload = function() {
 			    return "페이지 넘어갈때마다 팝업창이 뜨는거는 정말 거지같은데???";
 			}
-	}
+	} */
 	</script>
 </body>
 </html>
