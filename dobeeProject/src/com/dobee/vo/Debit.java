@@ -1,8 +1,6 @@
 package com.dobee.vo;
 
-import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.ToString;
@@ -15,8 +13,6 @@ public class Debit {
     private String name;
     private String nickName;
     private String entry;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date valDate;
-    
+    private String valDate;
     
 }

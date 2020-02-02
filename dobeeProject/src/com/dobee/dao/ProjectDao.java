@@ -2,6 +2,7 @@ package com.dobee.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
@@ -134,6 +135,10 @@ public interface ProjectDao {
     
 	// 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE
     public List<UpcomingTask> getUpcomingTask(String mail);
+    
+    
+    //성호 구글드라이브 검색 
+    public ArrayList<GoogleDrive> gdSearch(Map data);
     
     
 	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING

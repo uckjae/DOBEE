@@ -1,6 +1,8 @@
 package com.dobee.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,16 @@ public class TimeLineService {
 		result = projectdao.addGoogleTag(gd);
 		
 		return result;
+	}
+	
+	
+	//타임라인 검색
+	public ArrayList<GoogleDrive> gdSearch(Map data){
+		ArrayList<GoogleDrive> list = new ArrayList<GoogleDrive>();
+		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+		list = projectdao.gdSearch(data);
+		
+		return list;
 	}
 	
 }

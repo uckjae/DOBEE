@@ -58,7 +58,7 @@
           								                                ON U.AUTHCODE = A.AUTHCODE
            								                                WHERE U.MAIL=?"/>
            								                                <!-- &ndash;&gt; -->
-            <!-- <security:password-encoder ref="bCryptPasswordEncoder"/> -->
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
 	

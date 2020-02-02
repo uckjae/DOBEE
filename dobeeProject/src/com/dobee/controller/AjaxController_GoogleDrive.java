@@ -2,6 +2,8 @@ package com.dobee.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,4 +57,29 @@ public class AjaxController_GoogleDrive {
 		
 		return result;
 	}
+	
+	
+	
+	//검색
+	@RequestMapping("gdSearch.do")
+	public ArrayList<GoogleDrive> searchGd(@RequestParam(value="option") String option,
+			@RequestParam(value="searchText") String searchText,
+			@RequestParam(value="pjtSeq") int pjtSeq){
+		Map data = new HashMap();
+		data.put("option", option);
+		data.put("searchText", searchText);
+		data.put("pjtSeq", pjtSeq);
+		ArrayList<GoogleDrive> result = new ArrayList<>();
+		System.out.println("검색 컨트롤러 안오나??");
+		System.out.println(data);
+		result = timelineService.gdSearch(data);
+		if(result != null ) {
+			System.out.println("검색 완료");
+		}else {
+			System.out.println("검색 실패");
+		}
+		
+		return result;
+	}
+	
 }
