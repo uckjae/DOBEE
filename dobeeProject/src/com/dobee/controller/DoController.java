@@ -905,8 +905,13 @@ public class DoController {
     	String view = "";
         result1 = projectService.editTask(task); //업무 수정
         
+        
+        
+        
         //일정 추가하기
         result2 = scheduleService.addSchedule(sc);
+        
+        
         
         //프로젝트 업무 일정 추가하기
         result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq());

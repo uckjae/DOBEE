@@ -131,6 +131,7 @@ public class ProjectService {
     public Task getTask(int tskSeq) {
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	Task task = projectDao.getTask(tskSeq);
+    	System.out.println("task 어떻게 가져와?"+task.toString());
     	return task;
     }
 
