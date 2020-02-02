@@ -328,55 +328,9 @@ a[x-apple-data-detectors=true] {
 												</tbody>
 											</table>
                                              
-											<table id="u_content_text_4" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
-												<tbody>
-													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
-															
-															
-															<div style="color: #000; line-height: 150%; text-align: center; word-wrap: break-word;">
-																<p style="font-size: 14px; line-height: 150%;">
-																   <span style="color: #34495e; font-size: 14px; line-height: 21px;">
-																	<span style="font-size: 15px; line-height: 30px;">PassWord</span>
-																  </span>
-																</p>
-																<input type="text" class="form-control mb-3" id="password" name="password" value="">
-																
-																<p style="font-size: 14px; line-height: 150%;">
-																   <span style="color: #34495e; font-size: 14px; line-height: 21px;">
-																	<span style="font-size: 15px; line-height: 30px;">PassWord Check</span>
-																   </span>
-																</p>
-																<input type="text" class="form-control mb-3" id="password" name="password" value="">
-															</div>
-															
-															
-														</td>
-													</tr>
-												</tbody>
-											</table>
+											
 
-											<table id="u_content_divider_2" class="u_content_divider" style="font-family: arial, helvetica, sans-serif;"
-												role="presentation" cellpadding="0" cellspacing="0"
-												width="100%" border="0">
-												<tbody>
-													<tr>
-														<td style="overflow-wrap: break-word; word-break: break-word; padding: 10px 20px; font-family: arial, helvetica, sans-serif;" align="left">
-															<table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border-collapse: collapse; table-layout: fixed; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top; border-top: 1px solid #CCC; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
-																<tbody>
-																	<tr style="vertical-align: top">
-																		<td style="word-break: break-word; border-collapse: collapse !important; vertical-align: top; font-size: 0px; line-height: 0px; mso-line-height-rule: exactly; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%">
-																			<span>&#160;</span>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+											
 
 											<table id="u_content_text_5" class="u_content_text" style="font-family: arial, helvetica, sans-serif;"
 												role="presentation" cellpadding="0" cellspacing="0"
@@ -387,13 +341,13 @@ a[x-apple-data-detectors=true] {
 															<div style="color: #428bca; line-height: 150%; text-align: center; word-wrap: break-word;">
 																<p style="font-size: 14px; line-height: 150%;">
 																	<span style="font-size: 12px; line-height: 24px; color: #000000; font-family: 'Gamja Flower', cursive;">
-																	   <span style="line-height: 24px; font-size: 14px;">위 비밀번호로 설정 하시겠습니까?</span>
+																	   <span style="line-height: 24px; font-size: 14px;">비밀번호를 설정 하시겠습니까?</span>
 																	</span>
 																</p>
 																
 																<p style="font-size: 14px; line-height: 150%;">
 																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Gamja Flower', cursive;"><strong>
-																	<span style="font-size: 30px; line-height: 45px;">완료버튼을 누르세요</span></strong></span>
+																	<span style="font-size: 30px; line-height: 45px;">아래 버튼을 누르세요</span></strong></span>
 																</p>
 															</div>
 														</td>
@@ -408,10 +362,10 @@ a[x-apple-data-detectors=true] {
 													<tr>
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif;" align="left">
 															<div align="center">
-																<a href="" target="_blank"
+																<a href="http://localhost:8090/dobeeProject/findPassWordChange.do" target="_blank"
 																	style="display: inline-block; font-family: arial, helvetica, sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
 																	<span style="line-height: 150%;">
-																		<strong><span style="font-size: 20px; line-height: 20px;">완료</span></strong>
+																		<strong><span style="font-size: 20px; line-height: 20px;">클릭</span></strong>
 																	</span>
 																</a>
 															</div>
