@@ -24,7 +24,6 @@ var path = window.location.pathname;
 var findCheck = false;
 var useDayKey = 0;
 var costKey = 0;
-console.log(path);
                 //날짜형태 yyyy-mm-dd 형태로 바꾸는 임의 함수
                 Date.prototype.format = function(f) {
                     if (!this.valueOf()) return " ";
@@ -131,8 +130,7 @@ console.log(path);
                         data: formData,
                         type: 'POST',
                         success: function(result) {
-                            console.log(result);
-                            alert("업로드 성공!!");
+                            alert("업로드 완료 잠시후 구글 비전이 값을 찾아서 입력합니다.");
                             uploadPath = result.uploadPath;
                             saveFileName = result.saveFileName;
                             console.log(saveFileName);
@@ -163,23 +161,17 @@ console.log(path);
                                     	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
                                             if(fcost != null){
-                                                console.log("여기에서 일시불 발견" + prop);
-                                                console.log(fcost);
                                                 costKey = prop;
                                                 }
                                            
                                            	var fday = result[prop].match("매]");
                                             if(fday != null){
-                                            	console.log("여기에서 매] 발견  " + prop);
-                                            	console.log(fday);
                                             	useDayKey = prop;
                                          		findCheck=true;
                                             }
                                             if(findCheck==false){
 	                                            fday = result[prop].match("I구");
 	                                            if(fday != null){
-	                                            	console.log("여기에서 I구 발견  " + prop);
-	                                            	console.log(fday);
 	                                            	useDayKey = prop;
 	                                            	findCheck=true;
 	                                            }
@@ -195,15 +187,11 @@ console.log(path);
                                         
 										/* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
 										var maeFindIndex = result[useDayKey].indexOf("매");
-										console.log(maeFindIndex);
 										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
-										//console.log("여기 확인해봐!!! " + exceptionOther);
                                        	
 										/*  일시불의 같은 라인에서 뒤에서 부터 '/' 을 찾아 절삭하는 과정 */
 										var slushIndex = result[costKey].lastIndexOf("/");
-                                       	//console.log("여기인!!!!! " + slushIndex);
 										var exceptionStrCost = result[costKey].substr(slushIndex+1);
-										//console.log(exceptionStrCost);
 
 										
                                        	/*날짜 처리과정 */
@@ -215,7 +203,6 @@ console.log(path);
                                         $("#Input2").attr("value", usedate);
                                         $("#Input3").attr("value", result.key1);
                                         var usecost = fn(exceptionStrCost);
-                                        console.log("여기 확인: "+ usecost);
                                         $("#Input4").attr("value", usecost);
 
 
@@ -327,8 +314,7 @@ console.log(path);
                         </div>
                     </div>
                 </div>
-				<!-- <a href="javascript:location.href='googleDrive.do'">고 구글 드라이브111</a> -->
-				<a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브</a>
+				<!-- <a href="javascript:location.href='googleDrivePicker.do'">고 구글 드라이브</a> -->
 				<!-- start: page -->
 
 
@@ -359,15 +345,10 @@ console.log(path);
             
     <script>	
               
-                /* window.onload = function() { */
-                    // 사원 이메일 불러오기 아작스 실행
-                    console.log("지그 여기도 안오지?");
                     $.ajax({
                         url: 'nowEmpEmail.do',
                         type: 'POST',
                         success: function(result) {
-                            console.log("사원 이메일 불러오기 아작스 성공")
-                            console.log(result);
                             $("#Input1").attr("value", result);
                         },
                         complete: function() {
@@ -376,7 +357,6 @@ console.log(path);
                                     url: 'cardListtoReceipt.do',
                                     type: 'POST',
                                     success: function(result) {
-                                       	console.log(result);
                                         for (let i = 0; i < result.length; i++) {
                                             $("#Select1").append("<option>" + result[i].cardNum + "</option>");
                                         }
@@ -390,8 +370,6 @@ console.log(path);
                                             url: 'debitCodeList.do',
                                             type: 'POST',
                                             success: function(result) {
-                                                console.log("비용항목 아작스 성공")
-                                                console.log(result);
                                                 
                                                 for (let i = 0; i < result.length; i++) {
                                                     $("#Select2").append("<option value="+result[i].costCode+ ">" + result[i].entry + "</option>");
@@ -447,11 +425,8 @@ console.log(path);
 	}
 	var today = new Date();
 	var date = today.toLocaleDateString('ko-KR');
-	console.log(date);
 	var numberDate = fn1(date);
-	console.log(numberDate);
 	var regitDate = calculus1(numberDate);
-	console.log(regitDate)
 	$("#Input0").attr("value", regitDate);	
 	</script>
 	

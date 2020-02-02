@@ -1866,18 +1866,11 @@
 									</div>
 								</section>
 							</div>
-							
-							
-							
-							
-							
-							
-							
 						</div>
-                   
-                   
                    </div>
                    <!-- 내 업무 끝 -->
+                   
+                   
                    <!-- 프로젝트 현황 -->
                    <div class="tab-pane" id="pjtDash">
 	                   <div class="row">
@@ -1995,10 +1988,12 @@
                		
                		 <!-- 성호 - 구글 드라이브 뷰단 -->
                		 <!--  타임 라인 시작 -->
-               		 	<script type="text/javascript">
+               		 <script type="text/javascript">
+
+            		 // 현재 프로젝트 번호 불러오기 
+            		 let pjtSeq = ${requestScope.project.pjtSeq};
                		 // 현재 유저 이메일 불러오기
                		 var nowEmail = '<c:out value= "${pjtMember[0].mail}"/>';
-               		 
                		 
                		 /* 날짜 포맷 함수 */
                		 Date.prototype.format = function(f) {
@@ -2067,159 +2062,131 @@
 											/*  타임라인 그리기 함수 */
 											paintingTimeLine(mail, gdDate, gdUrl, fileName);
 										 }
-									 
 							} // 함수 종료
 
-               		 	
+						// 검색태그에 있는 값들 불러오는 불러와서 아작스로 보내는 제이슨형태로 만들어주는 함수
+						function giveMeSearchData(){
+							let option = $("#searchSelect option:selected").val();
+							let searchText = $("#searchInput").val();
+							let pjtNum = pjtSeq;
+							let sendData={
+								"option": option,
+								"searchText":searchText,
+								"pjtSeq":pjtNum
+								};
+							console.log("여기는 검색 데이터 만들기 함수 : "+ sendData);
+							return sendData;
+						}	
+						// 검색해서 불러오기
+						function searchGd(sendData){
+								let timeList = sendData;
+								$.ajax({
+										url:"ajax/googleDrive/gdSearch.do",
+										type:"POST",
+										data:sendData,
+										success:function(data){
+												console.log("아작스 검색  성공");
+												console.log(data);
+												timeList = data;
+											},
+										complete:function(){
+												// 먼저 기존 뷰단 지우고
+												$('.tm-items').empty();
+												// 여기서 다시 뿌려준다  
+												createTimeList(timeList);
+											},
+
+										error:function(){
+												console.log("아작스 검색 실패");
+
+											}
+									});
+							};
+
+	               		 	
                			/*  타임 라인 불러오는 아작스 함수 */
                			//  프로젝트 넘버를 입력하면 그에 해당하는 타임리스트 받아오기
                			
                				// 해당 프로젝트 번호 받아오기
-							let pjtSeq = ${requestScope.project.pjtSeq};
+							//let pjtSeq = ${requestScope.project.pjtSeq};
 							let sendData = {
 									"pjtSeq" : pjtSeq
 									}
-							console.log("성호 : " + sendData);
-							var timeLineData = [];
-							function loadTimeLine(){
-								
-							 	$.ajax({
-									url : 'ajax/googleDrive/loadTimeLine.do',
-									type : 'POST',
-									data : sendData,
-									dataType: "JSON",
-									success:function(data){
-											timeLineData = data;
-										},
-
-									complete : function(){
-											// 불러오기에 성공하면 리스트만큼 타임라인을 만들어주는 함수 
-											createTimeList(timeLineData);
-
-										},
-
-
-									error : function(){
-											console.log("타임라인 불러오기 아작스 에러!!!!");
-											
-		
-
-										},
-								 }); // 아작스 종료
-							}//불러오기 함수 종료
+						var timeLineData = [];
+						function loadTimeLine(){
 							
-							console.log("성호 : " + pjtSeq);
+						 	$.ajax({
+								url : 'ajax/googleDrive/loadTimeLine.do',
+								type : 'POST',
+								data : sendData,
+								dataType: "JSON",
+								success:function(data){
+										timeLineData = data;
+									},
+
+								complete : function(){
+										// 불러오기에 성공하면 리스트만큼 타임라인을 만들어주는 함수 
+										createTimeList(timeLineData);
+									},
+
+								error : function(){
+										console.log("타임라인 불러오기 아작스 에러!!!!");
+
+									},
+							 }); // 아작스 종료
+						}//불러오기 함수 종료
+							
 							// 타임리스트 뿌리기 아작스 실행
 							loadTimeLine();
+
+							//검색 함수
+							function searchDo(){
+								let sendData = giveMeSearchData();
+								searchGd(sendData);
+							}
+
 							
 	               		 </script>
-               		 	 <!-- 구글 드라이브  -->
+               		 	 <!-- 구글 드라이브 -->
 						<script src="assets/javascripts/googleDriveJs/googleDrive.js"> </script>
-               		 	
-               		 
                		 
                		 <!-- 구글 드라이브 타임라인 뷰단태그 시작 -->
                		 <div class="timeline">
                		 	<!--추가 버튼  -->
                			<div>
                				<a id="goGoogleDrive" class="mb-xs mt-xs mr-xs modal-basic btn btn-primary" >ADD GoogleDrive</a>
+           						<!--검색창  -->
+							
+           						<div class="input-group" style="width:auto; float:right;">
+									<select class="form-control mb-md btn btn-primary" id="searchSelect" style="width:7vw;" >
+										<option value="mail">Email</option>
+										<option value="gddate">Date</option>
+										<option value="filename">FileName</option>
+									</select>
+									<input type="text" id="searchInput" style="width:13vw" class="form-control" placeholder="Search" onKeypress="javascript:if(event.keyCode==13) {searchDo()}">
+								</div>
+									
+								<!--  검색 창 끝 -->
                			</div>
 						<div class="tm-body">
-						<!-- 	<div class="tm-title">
-								<h3 class="h5 text-uppercase">November 2013</h3>
-							</div> -->
-							
-						
 							
 							
 							<ol class="tm-items">
-							<!-- 	<li class="addTimeline">
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
-										<time class="tm-datetime" datetime="2013-11-22 19:13">
-											<div> 여기는 이메일</div>
-											<div class="tm-datetime-time">2020-02-02</div>
-										</time>
-									</div>
-										
-										
-										<div class="tm-box" >
-											<p id="down">
-												 
-											</p>
-										<div class="tm-meta">
-												
-											여기는 파일 내용 코멘트
-										
-										</div>
-									</div>
-								</li> -->
-							
-							
-							
-								<!-- <li>
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-google-plus-square"></i></div>
-										<time class="tm-datetime" datetime="2013-11-22 19:13">
-											<div>  여기는 이메일 </div>
-											<div class="tm-datetime-time">2020-02-02</div>
-										</time>
-									</div>
-										<div class="tm-box appear-animation" data-appear-animation="fadeInRight"data-appear-animation-delay="50">
-										<p>
-											여기는 구글 드라이브 파일 링크 
-										</p>
-										<div class="tm-meta">
-											여기는 파일 내용 코멘트
-										</div>
-									</div>
-								</li> -->
-								
-							
-							
-								 <!--  원본 하나 남겨둠 -->
-								<!-- <li>
-									<div class="tm-info">
-										<div class="tm-icon"><i class="fa fa-thumbs-up"></i></div>
-										<time class="tm-datetime" datetime="2013-11-19 18:13">
-											<div class="tm-datetime-date">7 months ago.</div>
-											<div class="tm-datetime-time">06:13 PM</div>
-										</time>
-									</div>
-									<div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="250">
-										<p>
-											What is your biggest developer pain point?
-										</p>
-									</div>
-								</li> -->
-								<!-- 원본 끝 -->
-								
-								
-							
+									<!-- 여기에 타임라인 생길거임  -->
 							
 							</ol> <!--타임 라인 끝 -->
-						<!-- 	<div class="tm-title">
-								<h3 class="h5 text-uppercase">September 2013</h3>
-							</div> -->
+							
+							
+						
 						</div>  <!--   타임 라인 바디 끝 -->
 					</div>   <!-- 타임 라인 전체 디브 끝  -->
-               		 
-               		 
                		 <!--   타임라인 끝  -->
                		
                		 
                		 
+               	</div><!--  타임 라인 페이지 전체디브 끝 -->
                		 
-               		 
-               		</div><!--  타임 라인 페이지 전체디브 끝 -->
-               		 
-               		 
-               		 
-               		 
-               		 
-               		 
-               		 
-                </div> <!-- 이건 완전 전체 페이지 디브 이거 지우면 혜리한테 개혼남 -->
+              </div> <!-- 이건 완전 전체 페이지 디브 이거 지우면 혜리한테 개혼남 -->
                 
                
                 <!-- end: page -->
