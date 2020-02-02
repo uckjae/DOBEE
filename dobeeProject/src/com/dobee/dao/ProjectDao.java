@@ -22,7 +22,7 @@ public interface ProjectDao {
     
     //프로젝트 생성시 참여 멤버 추가 --01.15.알파카
     public int mkPjtMember(ProjectMember pjtMember);
-
+    
     //모든 프로젝트 목록 가져오기 pm 회원용  --01.23.알파카
     public List<Project> getAllPjtList();
     
@@ -38,9 +38,11 @@ public interface ProjectDao {
     //프로젝트 삭제 -- 1.13 추가
     public int deletePjt(int pjtSeq); 
     
-    //프로젝트 그룹 삭제 --01.15.알파카
-    public int deletePjtMember(int pjtSeq);
+    //프로젝트 수정 -- 02.02 알파카
+    public int updatePjt(Project project);
     
+    //프로젝트 참여자 수정 -- 02.02 알파카
+    public int deletePjtMember(int pjtSeq);
     
     // 프로젝트 가져오기 --1.14 추가
  	public List<Task> getProject(int seq);
@@ -52,6 +54,9 @@ public interface ProjectDao {
     
     //특정업무조회
     public Task getTask(int tskSeq);
+    
+    //특정업무와 업무 일정 조회
+    public Task getTaskAndSchedule(int tskSeq);
     
     
     //업무추가 - PM 01.24 알파카 수정
@@ -139,5 +144,9 @@ public interface ProjectDao {
     
     //성호 구글드라이브 검색 
     public ArrayList<GoogleDrive> gdSearch(Map data);
+    
+    
+	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING
+    public List<Task> getProjChartData();
 
 }

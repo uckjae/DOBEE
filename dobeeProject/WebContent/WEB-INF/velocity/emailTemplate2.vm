@@ -269,7 +269,7 @@ a[x-apple-data-detectors=true] {
 																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">사원님의 비밀번호 찾기 신청으로 인해</span>
 																</p>
 																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">비밀번호 찾기 인증번호를 발송하였습니다.</span>
+																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">비밀번호 찾기 메일을 발송하였습니다.</span>
 																</p>
 																<p style="line-height: 150%; font-size: 14px;">
 																	<span style="color: #34495e;font-size: 22px; line-height: 30px;"></span>
@@ -313,7 +313,7 @@ a[x-apple-data-detectors=true] {
 																
 																<p style="font-size: 14px; line-height: 150%;">
 																	<span style="color: #34495e; font-size: 14px; line-height: 21px; font-family: 'Sunflower', sans-serif;"><strong>
-																	<span style="font-size: 30px; line-height: 45px;">버튼을 클릭하세요</span></strong></span>
+																	<span style="font-size: 30px; line-height: 45px;">지금 바로 변경하세요</span></strong></span>
 																</p>
 															</div>
 														</td>
@@ -327,12 +327,10 @@ a[x-apple-data-detectors=true] {
 													<tr>
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif; align:left;">
 															<div align="center">
-																<a href="" target="_blank"
+																<a href="http://localhost:8090/dobeeProject/findPassWordChange.do" target="_blank"
 																	style="display: inline-block; font-family: 'Sunflower', sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
 																	<span style="line-height: 150%;">
-																		<strong><span style="font-size: 20px; line-height: 20px;">
-																		  <a class="btn-write button" href="http://localhost:8090/dobeeProject/findPassWordChange.do">글쓰기</a>
-																		      클릭</span></strong>
+																		<strong><span style="font-size: 20px; line-height: 20px;">클릭</span></strong>
 																	</span>
 																</a>
 															</div>

@@ -14,8 +14,19 @@
 		INSERT INTO PROJSCHEDULE(PJTSEQ, SCHSEQ) VALUES((SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{param1}), (SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ=#{param2}))
 	</insert>
 	
-	<!-- 프로젝트 업무 추가    public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq);
-	 -->
+	<!-- 프로젝트 업무일정 테이블에서 업무 일정 번호 가져오기 ublic int getTsSeq(int tskSeq); -->
+	<select id="getTsSeq" resultType="Integer">
+		SELECT COUNT(TSSEQ) 
+		FROM TASKSCHEDULE 
+		WHERE TSKSEQ = #{tskSeq}
+	</select>
+	
+	<!-- 프로젝트 일정 가져오기 02.02 알파카 -->
+	<select id="getPjtSchedule" resultType="com.dobee.vo.schedule.Schedule">
+		SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=(SELECT SCHSEQ FROM PROJSCHEDULE WHERE PJTSEQ=#{param1})
+	</select>
+	
+	<!-- 프로젝트 업무 추가 -->
 	 <insert id="addTaskSchedule">
 	 	INSERT INTO TASKSCHEDULE(PJTSEQ, SCHSEQ, TSKSEQ) VALUES(#{param1},#{param2},#{param3} )
 	 </insert>
@@ -27,7 +38,7 @@
 	
 	<!-- 스케쥴 수정하기 -->
 	<update id="scheduleModify" parameterType="com.dobee.vo.schedule.Schedule">
-		UPDATE SCHEDULE SET STARTTIME=#{startTime}, ENDTIME=#{endTime} WHERE SCHSEQ=(SELECT SCHSEQ FROM NOTSCHEDULE WHERE SCHSEQ=#{schSeq})
+		UPDATE SCHEDULE SET STARTTIME=#{startTime}, ENDTIME=#{endTime} WHERE SCHSEQ=#{schSeq}
 	</update>
 
 	

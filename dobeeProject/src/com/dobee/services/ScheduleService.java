@@ -57,14 +57,33 @@ public class ScheduleService {
     	result = scheduledao.addPjtSchedule(pjtSeq, schSeq);
     	return result;
     }
-    
+        
     //프로젝트 업무 일정 등록 -- 02.01 알파카
     public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq) {
     	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
     	int result = 0;
     	result = scheduledao.addTaskSchedule(pjtSeq, schSeq, tskSeq);
     	return result;
+    }
+    
+    //프로젝트 업무 일정 있는지 없는지 체크 --02.02 알파카
+    public boolean getTsSeq(int tskSeq) {
+    	boolean checkTsseq = false;
+    	int tsseq = 0;
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	tsseq = scheduledao.getTsSeq(tskSeq);
+    	if(tsseq > 0 ) { //기존에 등록된 업무 일정 번호가 있다면
+    		checkTsseq = true;
+    	}
+    	return checkTsseq;
     	
+    }
+    
+    //프로젝트 일정 가져오기 --02.02 알파카
+    public Schedule getPjtSchedule(int pjtSeq) {
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	Schedule sc = scheduledao.getPjtSchedule(pjtSeq);
+    	return sc;
     }
     
     

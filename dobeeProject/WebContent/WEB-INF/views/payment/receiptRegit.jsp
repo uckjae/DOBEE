@@ -255,7 +255,7 @@ var costKey = 0;
                     <div class="row">
                         <div class="col-lg-6 imgshow">
                             <div id="uploadImg">
-                                <img src="assets/images/noimg.jpg" width="100%">
+                                <img src="assets/images/receiptmain.jpg" width="100%">
                                 <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
                             </div>
                             <!-- 파일 업로드  부분 -->

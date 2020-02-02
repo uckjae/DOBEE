@@ -743,25 +743,21 @@ console.log("MAIN!!");
 														</div>
 													</form>
 												</div>
+												<div class="summary-footer">
+													<a class="text-muted text-uppercase">(report)</a>
+												</div>
 											</div>
 										</div>
 									</div>
 								</section>
-
 							</div>
-						</section>
+						</div>
 					</div>
 					
-					
-					<div class="col-xl-6 col-lg-12">
+					<div class="col-md-6">
 						<section class="panel">
-							<header class="panel-heading panel-heading-transparent">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a> <a href="#"
-										class="fa fa-times"></a>
-								</div>
-
-								<h2 class="panel-title">Company Activity</h2>
+							<header class="panel-heading">
+								<h2 class="panel-title">참여중인 프로젝트</h2>
 							</header>
 							<div class="panel-body">
 								<div class="timeline timeline-simple mt-xlg mb-md">
@@ -819,11 +815,73 @@ console.log("MAIN!!");
 	
 	<script>
 	/* var isWork = ${sessionScope.user.isWork }
+			var eventList = [];
+	
+			$.ajax ({
+				url : "ntpToCal.do",
+				dataType : "json",
+				success : function(data) {
+					var events = [];
+					events = data.NTPTC;
+	
+					$.each(events, (index, element) => {
+						if(element.entry == "NOTICE") {
+							eventList.push ({
+								title : element.title,
+								start : element.startTime,
+								end : element.endTime,
+								color : "#f54c4c"	
+							})
+						} else if (element.entry == "TASK") {
+							eventList.push ({
+								title : element.title,
+								start : element.startTime,
+								end : element.endTime,
+								color : "#ffc107"	
+							})
+						} else if (element.entry == "PROJECT") {
+							eventList.push ({
+								title : element.title,
+								start : element.startTime,
+								end : element.endTime,
+								color : "#69a854"	
+							})
+						}
+					});
+				},
+				complete : function () {
+					var calendarEl = document.getElementById('calendar');
+	
+				    var calendar = new FullCalendar.Calendar(calendarEl, {
+				      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+				      header: {
+				    	left : 'prev,today,next',
+						center : 'title',
+						right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
+				      },
+				      timeFormat : 'h:mm',
+				      navLinks: true, // can click day/week names to navigate views
+				      businessHours: {
+					      startTime : '09:00',
+					      endTime : '18:00'
+					  },
+					  eventLimit : true,
+				      editable: false,
+				      events: eventList
+				    });
+				    calendar.render();
+				}
+			});		
+		}
+		
+/* 
+		var isWork = ${sessionScope.user.isWork }
 		if (isWork != null) {
 			window.onbeforeunload = function() {
 			    return "페이지 넘어갈때마다 팝업창이 뜨는거는 정말 거지같은데???";
 			}
 	} */
 	</script>
+	
 </body>
 </html>

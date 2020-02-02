@@ -13,6 +13,7 @@
  -->	
 	<!-- Sweet Alert -->
    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   	
    	<style>
 	   	.swal-button {
 	    	background: #34495E;
@@ -120,8 +121,10 @@
             		$("#endTime").val($("#pjtEndAt").val());
             		var formData = $("#newPjtForm").serialize();
             		var pjtSeq;
+
+            		console.log('플젝 만드는 중'+pjtMembers);
             	
-    	 			$.ajax({
+    	 		$.ajax({
     	 	 			url:"ajax/project/pjtAdd.do",
     	 				data: formData,
     	 				dataType: "json",
@@ -130,6 +133,7 @@
     	 				success:function(responsedata){
     	 					if(responsedata !== "" || responsedata !== null){ //프로젝트 & 프로젝트 일정 생성 완료
     	 						pjtSeq = responsedata;
+    	 						console.log('플젝 번호 ajax로 가져오니??'+pjtSeq);
     	 						
         	 					$.ajax({
         	 						url:"ajax/project/addPjtMember.do",
@@ -139,7 +143,7 @@
         	    	 				type:"post",
         	    	 				success:function(responsedata){
             	    	 				if(responsedata == "success"){
-        	 				send("addPjt",pjtMembers,$("#pjtName").val());
+        	 								send("addPjt",pjtMembers,$("#pjtName").val());
             	    	 					swal({
             	    	 						   title: "프로젝트 생성 완료",
             	    	 						   text: "프로젝트가 만들어졌습니다.",
@@ -185,12 +189,15 @@
  				data: { 'pjtSeq' : pjtSeq},
  				type:"post",
  				success:function(responseData){
-
+ 	 				
  	 				$("#pjtEditPjtSeq").val(pjtSeq);
-	 				//console.log(responseData);
+	 				console.log(responseData);
  					var project = responseData.project;
-
 	 				var user = responseData.user;
+	 				var schedule = responseData.schedule;
+
+	 				//스케쥴 셋팅
+	 				$("#pjtEditSchSeq").val(schedule.schSeq);
 
 	 				$('#pjtEditName').val(project.pjtName);
 	 				//날짜 셋팅
@@ -214,7 +221,6 @@
 							}
 				 		});
 		 			}); */
-
 	 				$.ajax({
 	 	 	 			url:"getUserList.do",
 	 	 	 			dataType: 'json',
@@ -350,31 +356,54 @@
 
 	/* 프로젝트 수정 전송 */
 	function editPjtButton(data){
-		console.log('플젝 수정 탄다!!');
-		var formData = $('#editPjtForm').serialize();
+		
 		var pjtSeq = $('#pjtEditPjtSeq').val();
-		console.log('플젝 번호?'+pjtSeq);
+
+		var pjtMembers = new Array();
+		var value = $('#userSelectEdit').select2().val(); //선택된 것의 value 값 가져오기
+		var arrLength = value.length;
+		for(var i = 0; i < arrLength; i++){
+			pjtMembers.push(value[i]);
+		}
 
 		//스케쥴 객체 값 넣어주기
-		var startTime = $("#pjtEditStartAt").val();
-		var endTime = $("#pjtEditEndAt").val();
-		console.log('값은?'+startTime+"/"+endTime);
-		$("#pjtEditStartTime").val(startTime);
-        $("#pjtEditEndTime").val(endTime);
-        console.log('값 들어갔어?'+$("#pjtEditStartTime").val()+"/"+$("#pjtEditEndTime").val())
-		console.log('어떻게 넘어감?'+formData);
+		$("#pjtEditStartTime").val($("#pjtEditStartAt").val());
+		$("#pjtEditEndTime").val($("#pjtEditEndAt").val());
+		var formData = $('#editPjtForm').serialize();
+
 		
 		$.ajax({
 	 			url:"ajax/project/pjtUpdate.do",
 	 			data : formData,
-	 			dataType: 'json',
+	 			dataType: 'text',
 	        	type:"post",
 				success:function(responseData){
-	 				console.log(responseData);
-
-
-	 				//플젝 담당자 추가
-	 				
+	 				if(responseData == "success"){
+		 				$.ajax({
+     	 						url:"ajax/project/updatePjtMember.do",
+     	    	 				data: {'pjtMembers' : pjtMembers, 'pjtSeq' : pjtSeq},
+     	    	 				dataType: "text",
+     	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+     	    	 				type:"post",
+     	    	 				success:function(responsedata){
+         	    	 				if(responsedata == "success"){
+     	 								//send("addPjt",pjtMembers,$("#pjtName").val());
+     	 								swal({
+     	 		 						   title: "프로젝트 수정 완료",
+     	 		 						   text: "프로젝트가 수정되었습니다.",
+     	 		 						   icon: "success" //"info,success,warning,error" 중 택1
+     	 		 						}).then((YES) => {
+     	 		 							location.href="pjtMain.do";
+     	 		 						});
+             	    	 			}
+         	    	 				
+     	    	 				},
+     	    	 				error:function(request,status,error){
+     	    						console.log("code : " + request.status +"\n" + "message : " 
+     	    								+ request.responseText + "\n" + "error : " + error);
+     	    					}
+         	 				}); //ajax 끝
+			 			}
 				},
 				error:function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
@@ -574,7 +603,7 @@
 							<div class="col-md-4">
 							</div>
 							<div class="col-md-4 text-center">
-								<button type="submit" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" form="taskEditForm"><i class="fa fa-send"></i>&nbsp;프로젝트 만들기</button>
+								<button type="submit" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;"><i class="fa fa-send"></i>&nbsp;프로젝트 만들기</button>
 							</div>
 							<div class="col-md-4">
 							</div>
@@ -621,6 +650,7 @@
 										<span class="input-group-addon">to</span>
 										<input type="text" id="pjtEditEndAt" name="pjtEndAt" class="form-control" form="editPjtForm">
 										<input type="hidden" id="pjtEditEndTime" name="endTime" class="form-control" form="editPjtForm">
+										<input type="hidden" id="pjtEditSchSeq" name="schSeq" class="form-control" form="editPjtForm">
 									</div>
 								</div>
 							</div>
@@ -651,7 +681,7 @@
 							<div class="col-md-4">
 							</div>
 							<div class="col-md-4 text-center">
-								<button onclick="editPjtButton(this)" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" form="taskEditForm"><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
+								<button onclick="editPjtButton(this)" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" ><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
 							</div>
 							<div class="col-md-4">
 							</div>

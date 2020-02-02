@@ -22,7 +22,7 @@
 
 <!-- 프로젝트 생성 01.26 알파카 수정 -->
 <insert id="mkPjt" parameterType="com.dobee.vo.project.Project" useGeneratedKeys="true" keyProperty="pjtSeq"> 
-	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},'미완료' )
+	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},'진행' )
 </insert>
 
 <!-- 프로젝트 생성시 참여 멤버 추가 01.26.알파카 수정 -->
@@ -34,6 +34,21 @@
 <delete id="deletePjt" parameterType="integer">
 	DELETE FROM PROJECT WHERE pjtSeq = #{pjtSeq}
 </delete>
+
+<!-- 프로젝트 수정 02.02 알파카 -->
+<update id="updatePjt">
+	UPDATE PROJECT
+	SET PJTNAME = #{pjtName},
+	PJTSTARTAT = #{pjtStartAt},
+	PJTENDAT = #{pjtEndAt},
+	PJTPROGRESS = #{pjtProgress}
+	WHERE PJTSEQ = #{pjtSeq}
+</update>
+
+<!-- 프로젝트 참여자 삭제 02.02 알파카-->
+<update id="deletePjtMember">
+	DELETE FROM PROJECTMEMBER WHERE PJTSEQ = #{pjtSeq}
+</update>
 
 <!-- 프로젝트참여 멤버 삭제  01.15.알파카  -->
 <delete id="deleteMember" parameterType="integer">
@@ -110,8 +125,18 @@ WHERE p.pjtseq = #{pjtSeq}
 <select id="getTask" resultType="com.dobee.vo.project.Task">
 	SELECT T.TSKSEQ AS TSKSEQ, T.TITLE AS TITLE, T.PROGRESS AS PROGRESS, T.IMPORTANT AS IMPORTANT, DATE_FORMAT(T.STARTAT,'%Y-%c-%d') AS STARTAT, T.ENDAT AS ENDAT, T.MAIL AS MAIL, T.PJTSEQ AS PJTSEQ, U.NAME AS NAME
 	FROM TASK T JOIN USER U
-	ON T.MAIL = U.MAIL 
-	WHERE TSKSEQ=#{tskSeq}
+	ON T.MAIL = U.MAIL
+	WHERE T.TSKSEQ=#{tskSeq}
+</select>
+
+<!-- 특정업무 & 업무 일정 조회 -->
+<select id="getTaskAndSchedule" resultType="com.dobee.vo.project.Task">
+	SELECT T.TSKSEQ AS TSKSEQ, T.TITLE AS TITLE, T.PROGRESS AS PROGRESS, T.IMPORTANT AS IMPORTANT, DATE_FORMAT(T.STARTAT,'%Y-%c-%d') AS STARTAT, T.ENDAT AS ENDAT, T.MAIL AS MAIL, T.PJTSEQ AS PJTSEQ, U.NAME AS NAME, S.TSSEQ AS TSSEQ
+	FROM TASK T JOIN USER U
+	ON T.MAIL = U.MAIL
+	JOIN TASKSCHEDULE S 
+	ON T.TSKSEQ = S.TSKSEQ
+	WHERE T.TSKSEQ=#{tskSeq}
 </select>
 
 
@@ -230,12 +255,13 @@ WHERE p.pjtseq = #{pjtSeq}
 	values (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName})
 </insert>
 
+
 <!-- 마감임박 업무 리스트 GET			0131 게다죽 	~ing -->
 <select id="getUpcomingTask" parameterType="String" resultType="com.dobee.vo.project.UpcomingTask">
 	SELECT P.PJTSEQ, DATE_FORMAT(T.ENDAT, '%m-%d') AS DATE, T.TITLE, T.PROGRESS, T.IMPORTANT, P.PJTNAME
 		FROM TASK T
 			JOIN PROJECT P ON T.PJTSEQ = P.PJTSEQ
-		WHERE  MAIL=#{mail} AND T.PROGRESS !='완료' AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 5
+		WHERE  MAIL=#{mail} AND T.PROGRESS !='완료' AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 5 AND DATEDIFF(ENDAT, NOW()) <![CDATA[>]]> 0 
 		ORDER BY DATE
 </select>
 
@@ -244,6 +270,5 @@ WHERE p.pjtseq = #{pjtSeq}
 <select id="gdSearch" parameterType="hashmap" resultType="com.dobee.vo.project.GoogleDrive">
 	select * from googledrive where ${option} = #{searchText} and pjtSeq = #{pjtSeq}
 </select>
-
 
 </mapper>
