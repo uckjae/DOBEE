@@ -1968,8 +1968,8 @@
 
             		 // 현재 프로젝트 번호 불러오기 
             		 let pjtSeq = ${requestScope.project.pjtSeq};
-               		 // 현재 유저 이메일 불러오기
-               		 var nowEmail = '<c:out value= "${pjtMember[0].mail}"/>';
+               		 // 현재 유저 이메일 불러오기 >> 수정!!  user
+               		 var nowEmail = '<c:out value= "${requestScope.user.mail}"/>';
                		 
                		 /* 날짜 포맷 함수 */
                		 Date.prototype.format = function(f) {

@@ -857,7 +857,9 @@ public class DoController {
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
-    	User user = (User) request.getSession().getAttribute("user");
+    	User user = (User) request.getSession().getAttribute("user"); //로그인한 사람!
+    	
+    	System.out.println("로그인한 사람 나와!"+user.toString());
     	
     	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
     	
