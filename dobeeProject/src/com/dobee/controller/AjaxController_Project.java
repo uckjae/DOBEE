@@ -372,7 +372,7 @@ public class AjaxController_Project {
 			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
 			
 			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
-			int result = (completedTaskList.size()*100/taskList.size());
+			int result = (completedTaskList.size()*100/taskList.size());		// 이거 try catch 걸어야 할것 같습니다. size() null 인경우 터짐
 			map.put(name, result);
 		}
 				

@@ -134,5 +134,9 @@ public interface ProjectDao {
     
 	// 마감임박 업무 리스트 GET			0131 게다죽 	COMPLETE
     public List<UpcomingTask> getUpcomingTask(String mail);
+    
+    
+	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING
+    public List<Task> getProjChartData();
 
 }
