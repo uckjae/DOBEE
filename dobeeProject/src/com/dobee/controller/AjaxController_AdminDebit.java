@@ -32,18 +32,18 @@ public class AjaxController_AdminDebit {
 		String name = (String)paramMap.get("name");
 		String nickName = (String)paramMap.get("nickName");
 		String entry = (String)paramMap.get("entry");
-		String tempDate = (String)paramMap.get("valDate");
+		String valDate = (String)paramMap.get("valDate");
 		
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date valDate = null;
-		try {
-			valDate = transFormat.parse(tempDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("String to Date Error");
-		}
+		//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date valDate = null;
+//		try {
+//			valDate = transFormat.parse(tempDate);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			System.out.println("String to Date Error");
+//		}
 		
-		System.out.println("잘 바뀌었는지? " + valDate);
+		//System.out.println("잘 바뀌었는지? " + valDate);
 		Debit debit = new Debit();
 		debit.setCardNum(cardNum);
 		debit.setCorp(corp);
@@ -75,8 +75,5 @@ public class AjaxController_AdminDebit {
 		}
 		return result;
 	}
-	
-	
-	
 	
 }

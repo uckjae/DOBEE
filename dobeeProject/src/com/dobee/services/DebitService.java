@@ -21,6 +21,7 @@ public class DebitService {
     public boolean addDebit(Debit debit) {
     	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
     	boolean check = false;
+    	System.out.println("서비스단 : 받은 데이터 : " + debit);
     	try {
     		
     		int result = paymentDao.addDebit(debit);

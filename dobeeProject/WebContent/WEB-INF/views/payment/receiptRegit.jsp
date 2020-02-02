@@ -204,9 +204,6 @@ var costKey = 0;
                                         $("#Input3").attr("value", result.key1);
                                         var usecost = fn(exceptionStrCost);
                                         $("#Input4").attr("value", usecost);
-
-
-
                                         
                                     },
                                 }) // 2번째 아작스끝

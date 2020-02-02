@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -194,21 +195,36 @@ public class DoController {
     
     
     //관리자 법인카드 디비에 등록
+    @ResponseBody
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
-    public String adminAddDebitOK(Debit debit) {
-    	System.out.println("컨트롤 AdminDebit.do 응답 한다.");
-    	boolean check = debitService.addDebit(debit);
+    public int adminAddDebitOK(@RequestParam(value="cardNum") String cardNum,
+    		@RequestParam(value="corp") String corp,
+    		@RequestParam(value="name") String name,
+    		@RequestParam(value="nickName") String nickName,
+    		@RequestParam(value="entry") String entry,
+    		@RequestParam(value="valDate") String valDate) {
+    	System.out.println("일단 컨트롤러 타는지 확인 ");
+    	int result = 0;
+    	Debit list = new Debit();
+    	list.setCardNum(cardNum);
+    	list.setCorp(corp);
+    	list.setEntry(entry);
+    	list.setName(nickName);
+    	list.setNickName(nickName);
+    	list.setValDate(valDate);
     	
-    	System.out.println("여기까지 오는지 보자 :" + check);
+    	
+    	System.out.println("컨트롤단 : 받은 데이터 : " + list);
+    	boolean check = debitService.addDebit(list);
+    	
     	if(check) {
     		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    		result = 1;
     	}else {
     		System.out.println("컨트롤단 : 법인카드 등록 실패");
-    		return null;
-    		//등록 실패하면 아무일도 안일어남
     	}
-    	//등록 성공하면 카드 목록 뷰단으로 이동
-    	return "redirect:ListDebit.do";
+    	//return "redirect:ListDebit.do";
+    	return result;
     }
     
     
@@ -868,7 +884,7 @@ public class DoController {
     	model.addAttribute("list",list);
     	return "project/pjt_dashboard";
     }
-
+    
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
