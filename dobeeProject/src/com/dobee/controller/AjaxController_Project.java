@@ -56,9 +56,6 @@ public class AjaxController_Project {
 		int result2 = 0;
 		int result3 = 0;
 		int pjtSeq = 0;
-		System.out.println("객체 주입!");
-		System.out.println("플젝!"+project.toString());
-		System.out.println("스케쥴!"+sc.toString());
 		
 		//프로젝트 DB 저장
 		result1 = projectService.addProject(project);
@@ -87,9 +84,6 @@ public class AjaxController_Project {
 	//프로젝트 참여자 추가
 	@RequestMapping(value="addPjtMember.do", method=RequestMethod.POST)
 	public String addPjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
-		
-		System.out.println("값 넘어오니?"+pjtMembers.toString());
-		System.out.println("값 넘어오니111?"+pjtSeq.toString());
 		int result = 0;
 		String responseData = "";
 		//들어온 메일 개수만큼 vo 객체 만들어주기
@@ -131,13 +125,58 @@ public class AjaxController_Project {
 	//프로젝트 수정 --01.15 알파카
 	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
 	public String updateProject(Project project,  Schedule sc) {
-		System.out.println("객체 가져와?"+project.toString());
-		System.out.println("스케쥴 가져와?"+sc.toString());
-		//업데이트!
+		String responseData = "";
+		//프로젝트 수정
+		int result1 = projectService.updatePjt(project);
+		//일정 수정
+		int result2 = scheduleService.scheduleModify(sc);
 		
-		
-		return null;
+		if(result1 > 0 && result2 > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "failure";
+		}
+		return responseData;
 	}
+	
+	//프로젝트 수정 -> 참여자 수정
+	@RequestMapping(value="updatePjtMember.do", method=RequestMethod.POST)
+	public String updatePjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
+		int result1 = 0;
+		int result2 = 0;
+		String responseData = "";
+		
+		//일단 원래 있던 projectmember 테이블의 컬럼 삭제하기
+		result1 = projectService.deletePjtMember(Integer.parseInt(pjtSeq));
+		
+		if(result1 > 0) {
+			//들어온 메일 개수만큼 vo 객체 만들어주기
+			List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
+			for (int i = 0; i < pjtMembers.size(); i ++) {
+				ProjectMember pjtMember = new ProjectMember();
+				pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
+				pjtMember.setMail(pjtMembers.get(i));
+				pjtMemberList.add(pjtMember);
+			}
+			result2 = projectService.addProjectMember(pjtMemberList);
+		}
+		
+		
+		System.out.println("서비스는?"+result2);
+		
+		if(result2 > 0 ) {
+			responseData = "success";
+			
+		} else {
+			responseData = "failure";
+		}
+		
+		return responseData;
+		
+	}
+	
+	
+	
 	
 	//특정 프로젝트 가져오기
 	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
@@ -169,6 +208,10 @@ public class AjaxController_Project {
 		//프로젝트에 속한 멤버 정보 가져오기
 		List<User> user = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		map.put("user", user);
+		
+		Schedule sc = scheduleService.getPjtSchedule(Integer.parseInt(pjtSeq));
+		System.out.println("스케쥴은 가져오니?"+sc.toString());
+		map.put("schedule", sc);
 		
 		System.out.println(map.toString());
 		
@@ -403,7 +446,7 @@ public class AjaxController_Project {
 			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
 			
 			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
-			int result = (completedTaskList.size()*100/taskList.size());
+			int result = (completedTaskList.size()*100/taskList.size());		// 이거 try catch 걸어야 할것 같습니다. size() null 인경우 터짐
 			map.put(name, result);
 		}
 				

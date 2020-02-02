@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
@@ -21,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -97,52 +99,27 @@ public class DoController {
   
     //아이디찾기
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
-    public String findId(String name, String phone ,  Model model){
-    	String find;
-    	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findId(name, phone);
-    	 System.out.println("비번찾기:"+find);
-    	 model.addAttribute("find",find);
+    public String findId(){
       return "main/findId";
     }
-
-    public String fidIdResult(){
-        return null;
-    }
     
-    //비밀번호이메일 view단
-    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
+    //비밀번호 찾기(이메일 보내기)
+    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
     public String findPassWord2(){
         return "main/findPassWord2";
     }
-    //비밀번호 찾기x
-    @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
-    public String findPassWord2(String mail,Model model){
-    	System.out.println(mail);
-    	String find;
-    	UserDao userDao =sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findPassWord2(mail);
-    	 model.addAttribute("find",find);
-    	 System.out.println("find:"+find);
-    	return "main/findPassWord2";
-    }
-    
-    //비밀번호 인증코드 view 단
-    @RequestMapping(value="findPassWordAuth.do",method=RequestMethod.GET)
-    public String findPassWordAuth(){
-        return "main/findPassWordAuth";
-    }
-    
-    //비밀번호변경 view단
-    @RequestMapping(value="findPassWordChange.do",method=RequestMethod.GET)
-    public String findPassWordChange(){
+    //비밀번호 찾기(변경)
+    @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
+    public String findPassWordChange(HttpSession session){
+    	String mail = (String) session.getAttribute("mail");
+    	System.out.println("메일?"+mail);
         return "main/findPassWordChange";
     }
     
 
     //비밀번호재설정
     //public String resetPwd(){
-      //  return null;
+    //  return null;
     //}
     
     @RequestMapping("password.do")
@@ -218,21 +195,36 @@ public class DoController {
     
     
     //관리자 법인카드 디비에 등록
+    @ResponseBody
     @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
-    public String adminAddDebitOK(Debit debit) {
-    	System.out.println("컨트롤 AdminDebit.do 응답 한다.");
-    	boolean check = debitService.addDebit(debit);
+    public int adminAddDebitOK(@RequestParam(value="cardNum") String cardNum,
+    		@RequestParam(value="corp") String corp,
+    		@RequestParam(value="name") String name,
+    		@RequestParam(value="nickName") String nickName,
+    		@RequestParam(value="entry") String entry,
+    		@RequestParam(value="valDate") String valDate) {
+    	System.out.println("일단 컨트롤러 타는지 확인 ");
+    	int result = 0;
+    	Debit list = new Debit();
+    	list.setCardNum(cardNum);
+    	list.setCorp(corp);
+    	list.setEntry(entry);
+    	list.setName(nickName);
+    	list.setNickName(nickName);
+    	list.setValDate(valDate);
     	
-    	System.out.println("여기까지 오는지 보자 :" + check);
+    	
+    	System.out.println("컨트롤단 : 받은 데이터 : " + list);
+    	boolean check = debitService.addDebit(list);
+    	
     	if(check) {
     		System.out.println("컨트롤단  : 법인카드 등록 성공");
+    		result = 1;
     	}else {
     		System.out.println("컨트롤단 : 법인카드 등록 실패");
-    		return null;
-    		//등록 실패하면 아무일도 안일어남
     	}
-    	//등록 성공하면 카드 목록 뷰단으로 이동
-    	return "redirect:ListDebit.do";
+    	//return "redirect:ListDebit.do";
+    	return result;
     }
     
     
@@ -892,7 +884,7 @@ public class DoController {
     	model.addAttribute("list",list);
     	return "project/pjt_dashboard";
     }
-
+    
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){

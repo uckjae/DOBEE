@@ -7,6 +7,103 @@
 
 <c:import url="/common/HeadTag.jsp"/>
 
+<script type="text/javascript">
+    function inputValidThru(period) {
+
+        // replace 함수를 사용하여 슬래시( / )을 공백으로 치환한다.
+        var replaceCard = period.value.replace(/\//g, "");
+
+        // 텍스트박스의 입력값이 4~5글자 사이가 되는 경우에만 실행한다.
+        if(replaceCard.length >= 4 && replaceCard.length < 5) {
+
+            var inputMonth = replaceCard.substring(0, 2);    // 선언한 변수 month에 월의 정보값을 담는다.
+            var inputYear = replaceCard.substring(2, 4);       // 선언한 변수 year에 년의 정보값을 담는다.
+
+
+            // 현재 날짜 값을 구한다.
+
+            var nowDate = new Date();
+
+            var nowMonth = autoLeftPad(nowDate.getMonth() + 1, 2);
+
+            var nowYear = autoLeftPad(nowDate.getFullYear().toString().substr(2, 2), 2);
+
+
+            // isFinite함수를 사용하여 문자가 선언되었는지 확인한다.
+            if(isFinite(inputMonth + inputYear) == false) {
+                alert("문자는 입력하실 수 없습니다.");
+                period.value = autoLeftPad((Number(nowMonth) + 1), 2) + "/" + nowYear;
+                return false;
+            }
+
+            // 입력한 월이 12월 보다 큰 경우
+            if(inputMonth > 12) {
+                alert("12월보다 큰 월수는 입력하실 수 없습니다. ");
+                period.value = "12/" + inputYear;
+                return false;
+            }
+
+
+            // 입력한 유효기간을 현재날짜와 비교하여 사용 가능 여부를 판단한다.
+            if((inputYear + inputMonth) <= (nowYear + nowMonth)) {
+                alert("유효기간이 만료된 카드는 사용하실 수 없습니다.");
+                period.value = inputMonth + "/" + autoLeftPad((Number(nowYear) + 1), 2);
+                return false;
+            }
+
+            period.value = inputMonth + "/" + inputYear;
+        };
+    };
+
+
+
+    // 1자리 문자열의 경우 앞자리에 숫자 0을 자동으로 채워 00형태로 출력하기위한 함수
+    function autoLeftPad(num, digit) {
+        if(String(num).length < digit) {
+            num = new Array(digit - String(num).length + 1).join('0') + num;
+        }
+        return num;
+    };
+
+    // 법인 카드등록 아작스함수 
+    
+   function addDebit(){
+	   var form = $('#debitForm');
+	   console.log(" 폼 데이터 확인 " +form);
+       var formData = new FormData(form);
+       let result = 0;
+		$.ajax({
+			url:"AdminDebit.do",
+			type:'POST',
+            data: formData,
+			success:function(data){
+					console.log("등록 아작스 성공");
+					console.log(data);
+					result = data;
+				},
+
+			complete:function(){
+					console.log("등록 아작스 컴플릿트 함수 : " + result);
+					// result가 0이면 디비 등록 실패
+					if(result == 0){
+						alert("데이터 베이스 등록에 실패하여 등록되지 않습니다.");
+						}else{
+							//디비등록 성공 목록 페이지로 자동 이동
+							alert("데이터 베이스 등록 성공 페이지 이동");
+							location.href="ListDebit.do";
+						}
+				},
+			error:function(){
+					//아작스 실패
+					console.log("법인카드 등록 실패");
+					alert("데이터 베이스 등록에 실패하여 등록되지 않습니다.");
+				},
+			});
+	   };
+</script>
+
+
+
 </head>
 	<body>
 		<section class="body">
@@ -49,7 +146,7 @@
 		                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 		                                <div class="row">
 		                                    <div class="col-sm-12">
-		                                        <form action="AdminDebit.do" method="post" >
+		                                        <form id="debitForm" method="post" >
 		                                        	<div class="form-group">
 		                                                		<div class="form-row">
 		                                                			<div class="col-md-6">
@@ -83,7 +180,8 @@
 		                                                    <div class="col-md-6">
 		                                                        <div class="form-label-group">
 		                                                        	<label for="position">유효기간</label>
-		                                                            <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 ( ex)2020-02-02~2030-02-02 )"  >
+		                                                        	<input type="text" id="valDate" name="valDate" class="validThru form-control" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/>
+		                                                           <!--  <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 (ex)MM-yy)"  > -->
 		                                                        </div>
 		                                                    </div>
 		                                                    <div class="col-md-6">
@@ -102,7 +200,7 @@
 		                                            <br>
 		                                            <div class="form-row">
 		                                           		 <div class="col-md-6">
-		                                                    <button type="submit" class="btn btn-primary btn-block" >등록하기</button>
+		                                                    <a href="javascript:addDebit()" class="btn btn-primary btn-block" >등록하기</a>
 		                                                </div>
 		                                                <div class="col-md-6"><!-- 취소하고 뒤로 가기 -->
 		                                                    <input type="button" class="btn btn-danger btn-block" value="뒤로가기"

@@ -20,6 +20,9 @@ public interface ScheduleDao {
     //프로젝트 일정 추가하기 --02.01 알파카
     public int addPjtSchedule(int pjtSeq, int schSeq);
     
+    //프로젝트 일정 가져오기
+    public Schedule getPjtSchedule(int pjtSeq);
+    
     //프로젝트 업무 추가하기 --02.01 알파카
     public int addTaskSchedule(int pjtSeq, int schSeq, int tskSeq);
 

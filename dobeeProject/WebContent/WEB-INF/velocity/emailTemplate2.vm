@@ -272,7 +272,7 @@ a[x-apple-data-detectors=true] {
 																	<span style="color: #34495e; font-size: 17px; line-height: 30px;">비밀번호 찾기 인증번호를 발송하였습니다.</span>
 																</p>
 																<p style="line-height: 150%; font-size: 14px;">
-																	<span style="color: #34495e;font-size: 22px; line-height: 30px;">[ ${dice} ]</span>
+																	<span style="color: #34495e;font-size: 22px; line-height: 30px;"></span>
 																</p>
 															</div>
 														</td>
@@ -330,7 +330,9 @@ a[x-apple-data-detectors=true] {
 																<a href="" target="_blank"
 																	style="display: inline-block; font-family: 'Sunflower', sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
 																	<span style="line-height: 150%;">
-																		<strong><span style="font-size: 20px; line-height: 20px;">클릭</span></strong>
+																		<strong><span style="font-size: 20px; line-height: 20px;">
+																		  <a class="btn-write button" href="http://localhost:8090/dobeeProject/findPassWordChange.do">글쓰기</a>
+																		      클릭</span></strong>
 																	</span>
 																</a>
 															</div>
