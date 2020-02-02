@@ -225,7 +225,6 @@ public class AjaxController_Project {
 		System.out.println("AjaxController_Project getTask() in");
 		Task task = new Task();
 		task = projectService.getTask(tskSeq);
-		System.out.println(task.toString());
 		return task;
 		
 	}
