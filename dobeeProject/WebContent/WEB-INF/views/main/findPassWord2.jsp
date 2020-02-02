@@ -82,7 +82,7 @@ body {
       </div>
       </form>
 
-      <p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아아디 찾기</a>
+      <p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아이디 찾기</a>
 
      </div>          
    </div>            
