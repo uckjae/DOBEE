@@ -884,7 +884,7 @@ public class DoController {
     	model.addAttribute("list",list);
     	return "project/pjt_dashboard";
     }
-
+    
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){

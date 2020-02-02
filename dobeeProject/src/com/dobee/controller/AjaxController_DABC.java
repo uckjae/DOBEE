@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 
+import com.dobee.dao.ProjectDao;
 import com.dobee.dao.ScheduleDao;
 import com.dobee.dao.UserDao;
 import com.dobee.vo.Apply;
@@ -20,6 +21,7 @@ import com.dobee.vo.member.Break;
 import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.User;
+import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.MainSchedule;
 
 @Controller
@@ -236,5 +238,20 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+	
+	
+	////////// 프로젝트 현황 차트 맹글기 ///////////////
+	
+	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING			pjtseq param 추가
+	@RequestMapping(value="projChartData.do", method=RequestMethod.GET)
+	public View projChartData (Model map) {
+		ProjectDao pDao = sqlsession.getMapper(ProjectDao.class);
+		List<Task> result = pDao.getProjChartData();
+		
+		map.addAttribute("PCD", result);
+		
+		return jsonview;
+	}
+	
 	
 }

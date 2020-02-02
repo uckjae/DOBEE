@@ -407,21 +407,6 @@
 		});
 
 		/* 알람 */
-		function getContextPath() {//contextPath 구하는 함수
-		  var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-		  return location.href.substring(6, location.href.indexOf('/', hostIndex + 1) );
-		};
-		
-		
-
-		function connect(){
-			var contextPath = getContextPath();
-			wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
-			wsocket.onopen = onOpen;
-			wsocket.onmessage = onMessage;
-			wsocket.onclose = onClose;
-		}
-
 		
 		
 		function send(data) {
