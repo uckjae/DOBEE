@@ -111,7 +111,7 @@ public class AjaxControllerAdmin {
 			model.put("path",path.toString());
 	
 			
-			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8", model);
+			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm","UTF-8", model);
 			messageHelper.setFrom("letsdobee@gmail.com");
 			messageHelper.setTo(mail);
 			StringBuilder subject = new StringBuilder();

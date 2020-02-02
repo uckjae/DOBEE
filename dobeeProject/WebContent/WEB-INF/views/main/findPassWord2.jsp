@@ -43,72 +43,7 @@ body {
     width: 100%;
 }
 </style>
-<script type="text/javascript">
 
-   function findMail(callback){
-      return new Promise(function(resolve,reject){
-          console.log("findMail()");
-          console.log($('#mail').val());
-
-          if($.trim($('#mail').val())==''){
-        		alert("메일을 입력해주세요");
-        		$('#mail').focus();
-        		return false;
-               }
-
-          var mail = $('#mail').val();
-
-          $.ajax({
-              url:'ajax/admin/mailCheck.do',
-              data: {"mail":mail},
-              dataType : "text",
-              success:function(data){
-     			console.log("find 메일찾기:"+data);
-                  var mail = data;
-                  if(mail ===""){
-                     alert("찾은 이메일 값이 없습니다.");
-                     return false;
-                     }else{
-                         
-                    	 $.ajax({
-                             url:"ajax/admin/findEmail.do",
-                             data:{'mail':$('#mail').val()
-                                },
-                                
-                                dataType:"text", 
-                                method:"POST",
-
-                                success: function(response){
-                                    console.log("메일보내짐");
-                                    console.log("리스폰스확인:"+response);
-                                    resolve(response)                 
-                                    },
-                                error: function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
-                                 console.log("에러"+textStatus); 
-                                 console.log("에러2"+errorThrown);
-                                 }
-                             });
-
-
-                         }
-              },
-              error : function(request,status,error){
-     				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
-              }
-          });
-
-          });
-      }
-
-   function myFormSubmit(){
-      findMail().then(function(){
-         console.log("submit()");
-         document.getElementById('findPWD').submit();
-         $('#findPWD').submit();   
-         
-      });
-   }
-</script>
 
 </head>
 <body>
@@ -156,4 +91,77 @@ body {
 </section>
 <!-- end: page -->
 </body>
+<script type="text/javascript">
+
+   function findMail(callback){
+      return new Promise(function(resolve,reject){
+          console.log("findMail()");
+          console.log($('#mail').val());
+
+          if($.trim($('#mail').val())==''){
+        		alert("메일을 입력해주세요");
+        		$('#mail').focus();
+        		return false;
+               }
+
+          var mail = $('#mail').val();
+
+          $.ajax({
+              url:'ajax/admin/mailCheck.do',
+              data: {"mail":mail},
+              dataType : "text",
+              success:function(data){
+     			console.log("find 메일찾기:"+data);
+                  var mail = data;
+                  if(mail ===""){
+                     alert("찾은 이메일 값이 없습니다.");
+                     return false;
+                     }
+                  else{
+                   	 $.ajax({
+                            url:"ajax/admin/findEmail.do",
+                            data:{'mail':$('#mail').val()
+                               },
+                               
+                               dataType:"text",
+                               method:"POST",
+
+                               success: function(response){
+                                   console.log("메일보내짐");
+                                   console.log("리스폰스확인:"+response);
+                                   
+                                   resolve(response)
+                                   
+                                    
+                                   },
+                               error: function(jqXHR, textStatus, errorThrown){ //현상태 에러로 들어감
+                                console.log("에러"+textStatus); 
+                                console.log("에러2"+errorThrown);
+                                }
+                            }); //findEmail ajax end
+                         }
+                 /*  window.open("about:blank","_self").close(); */
+
+              },
+              error : function(request,status,error){
+     				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
+              }
+              
+          }); //mailCheck ajax end
+          window.close();
+          });//Promise end
+      } //findMail end
+
+   function myFormSubmit(){
+	  
+      findMail().then(function(){
+         console.log("submit()");       
+         document.getElementById('findPWD').submit();
+         $('#findPWD').submit();
+
+      });
+      
+   }
+
+</script>
 </html>
