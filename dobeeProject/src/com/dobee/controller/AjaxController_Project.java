@@ -125,6 +125,7 @@ public class AjaxController_Project {
 	//프로젝트 수정 --01.15 알파카
 	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
 	public String updateProject(Project project,  Schedule sc) {
+		System.out.println("플젝 어케 나와?"+project.toString());
 		String responseData = "";
 		//프로젝트 수정
 		int result1 = projectService.updatePjt(project);

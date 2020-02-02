@@ -22,7 +22,7 @@
 
 <!-- 프로젝트 생성 01.26 알파카 수정 -->
 <insert id="mkPjt" parameterType="com.dobee.vo.project.Project" useGeneratedKeys="true" keyProperty="pjtSeq"> 
-	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},'미완료' )
+	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},'진행' )
 </insert>
 
 <!-- 프로젝트 생성시 참여 멤버 추가 01.26.알파카 수정 -->
@@ -41,7 +41,7 @@
 	SET PJTNAME = #{pjtName},
 	PJTSTARTAT = #{pjtStartAt},
 	PJTENDAT = #{pjtEndAt},
-	PJTPROGRESS = #{pjtName}
+	PJTPROGRESS = #{pjtProgress}
 	WHERE PJTSEQ = #{pjtSeq}
 </update>
 

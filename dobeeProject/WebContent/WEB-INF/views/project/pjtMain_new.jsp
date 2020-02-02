@@ -361,9 +361,6 @@
 			pjtMembers.push(value[i]);
 		}
 
-		console.log('담당자 가져오니?'+pjtMembers);
-
-		
 		//스케쥴 객체 값 넣어주기
 		$("#pjtEditStartTime").val($("#pjtEditStartAt").val());
 		$("#pjtEditEndTime").val($("#pjtEditEndAt").val());
@@ -377,7 +374,6 @@
 	        	type:"post",
 				success:function(responseData){
 	 				if(responseData == "success"){
-		 				
 		 				$.ajax({
      	 						url:"ajax/project/updatePjtMember.do",
      	    	 				data: {'pjtMembers' : pjtMembers, 'pjtSeq' : pjtSeq},
@@ -385,12 +381,7 @@
      	    	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
      	    	 				type:"post",
      	    	 				success:function(responsedata){
-         	    	 				console.log('값은?'+responsedata);
-
-         	    	 			
          	    	 				if(responsedata == "success"){
-
-             	    	 				
      	 								//send("addPjt",pjtMembers,$("#pjtName").val());
      	 								swal({
      	 		 						   title: "프로젝트 수정 완료",
@@ -407,12 +398,7 @@
      	    								+ request.responseText + "\n" + "error : " + error);
      	    					}
          	 				}); //ajax 끝
-		 				
- 						
 			 			}
-
-
-		 			
 				},
 				error:function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 
