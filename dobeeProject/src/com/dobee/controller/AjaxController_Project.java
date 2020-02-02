@@ -224,9 +224,15 @@ public class AjaxController_Project {
 	public Task getTask(int tskSeq) {
 		System.out.println("AjaxController_Project getTask() in");
 		Task task = new Task();
-		task = projectService.getTask(tskSeq);
-		return task;
 		
+		boolean checkTsseq = scheduleService.getTsSeq(tskSeq); //업무 일정 번호가 있는지 없는지 체크
+		System.out.println("업무 일정 번호 있니?"+checkTsseq);
+		if(checkTsseq) { //업무 일정 번호가 있다면
+			task = projectService.getTaskAndSchedule(tskSeq);
+		} else {
+			task = projectService.getTask(tskSeq);
+		}
+		return task;
 	}
 	
 	//업무 삭제 --01.23 알파카

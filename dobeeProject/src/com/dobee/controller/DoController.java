@@ -857,7 +857,9 @@ public class DoController {
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
-    	User user = (User) request.getSession().getAttribute("user");
+    	User user = (User) request.getSession().getAttribute("user"); //로그인한 사람!
+    	
+    	System.out.println("로그인한 사람 나와!"+user.toString());
     	
     	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
     	
@@ -897,26 +899,30 @@ public class DoController {
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task, Schedule sc){
     	System.out.println("DoController taskEdit() in!!");
-        System.out.println("업무 수정 값!!!!"+task.toString());
-        System.out.println("스케쥴 값!!"+sc.toString());
+    	System.out.println("수정 타자!!!");
+    	System.out.println(task.toString());
+    	int editTaskResult = 0;
     	int result1 = 0;
     	int result2 = 0;
     	int result3 = 0;
     	String view = "";
-        result1 = projectService.editTask(task); //업무 수정
+    	String result = "";
+    	
+    	editTaskResult = projectService.editTask(task); //업무 수정
+    	
+    	//기존에 일정이 있으면 -> UPDATE / 기존에 일정이 없으면 -> INSERT
+    	//프로젝트 업무 일정 테이블에 업무 일정 번호가 있는지 없는지 체크
+    	if(task.getTsSeq() != 0) { //업무 일정 번호가 있으면 -> update
+    		//일정 업데이트
+    		result1 = scheduleService.scheduleModify(sc);
+    		result = "success";
+    	} else {
+    		result2 = scheduleService.addSchedule(sc); //일정 추가하기
+    		result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq()); //프로젝트 업무 일정 추가하기
+    		result = "success";
+    	}
         
-        
-        
-        
-        //일정 추가하기
-        result2 = scheduleService.addSchedule(sc);
-        
-        
-        
-        //프로젝트 업무 일정 추가하기
-        result3 = scheduleService.addTaskSchedule(task.getPjtSeq(), sc.getSchSeq(), task.getTskSeq());
-        
-        if(result1 > 0 && result2 > 0 && result3 > 0) {
+        if(editTaskResult > 0 && result == "success") {
         	view = "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
         } else {
         	view = "pjtMain.do";

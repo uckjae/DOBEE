@@ -129,6 +129,16 @@ WHERE p.pjtseq = #{pjtSeq}
 	WHERE T.TSKSEQ=#{tskSeq}
 </select>
 
+<!-- 특정업무 & 업무 일정 조회 -->
+<select id="getTaskAndSchedule" resultType="com.dobee.vo.project.Task">
+	SELECT T.TSKSEQ AS TSKSEQ, T.TITLE AS TITLE, T.PROGRESS AS PROGRESS, T.IMPORTANT AS IMPORTANT, DATE_FORMAT(T.STARTAT,'%Y-%c-%d') AS STARTAT, T.ENDAT AS ENDAT, T.MAIL AS MAIL, T.PJTSEQ AS PJTSEQ, U.NAME AS NAME, S.TSSEQ AS TSSEQ
+	FROM TASK T JOIN USER U
+	ON T.MAIL = U.MAIL
+	JOIN TASKSCHEDULE S 
+	ON T.TSKSEQ = S.TSKSEQ
+	WHERE T.TSKSEQ=#{tskSeq}
+</select>
+
 
 <!-- 상세업무리스트 가져오기 -->
 <select id="getTaskDetailList" resultType="com.dobee.vo.project.TaskDetail">
