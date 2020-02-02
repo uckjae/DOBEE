@@ -15,11 +15,13 @@ import java.util.Random;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -55,6 +57,9 @@ public class AjaxControllerAdmin {
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	
 	@RequestMapping("authorityList.do")
 	public List<Authority> getAuthorityList(){
@@ -70,96 +75,6 @@ public class AjaxControllerAdmin {
 		List<TeamList> teamList = userDao.getTeamList();
 		return teamList;
 	}
-	
-	  //비밀번호 찾기 인증코드 발송
-	  @RequestMapping(value="findEmail.do",method=RequestMethod.POST)
-	  public ModelAndView findMail(HttpServletRequest request, String mail, HttpServletResponse response_mail)
-			  throws IOException{
-	 
-	  Random r = new Random();
-	  int dice =r.nextInt(157211)+48271;
-	  
-	  
-	  MimeMessage message = javaMailSender.createMimeMessage();
-	  MimeMessageHelper messageHelper = null;
-	  
-	  String tomail =request.getParameter("mail"); //받는 사람 이메일(작성한 이메일)
-	  
-	  Enumeration<String> enu = request.getParameterNames();
-		while(enu.hasMoreElements()) {
-			System.out.println("while");
-			System.out.println(enu.nextElement());
-		}
-		
-	  try {		  
-		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-		  Map model = new HashMap();
-		  model.put("mail",tomail);
-		  model.put("dice", dice);	  
-		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  		  
-		  //이메일 내용은 emailTemplate2.vm이고 형식UTF-8
-		  messageHelper.setFrom("letsdobee@gmail.com");  //보내는이메일
-		  messageHelper.setTo(tomail);                     //받는이메일
-		  StringBuilder subject = new StringBuilder();  
-		  subject.append("DOBEE 비밀번호 찾기");             //이메일 제목
-		  messageHelper.setSubject(subject.toString()); //이메일 제목 세팅완료
-		  messageHelper.setText(mailBody,true);              //이메일 내용 세팅완료	  
-		  javaMailSender.send(message);                //이메일 모든내용(메세지)보내기
-	      
-	  }catch(Exception e){
-		    e.printStackTrace();
-		  }
-	  
-		  ModelAndView mv = new ModelAndView(); //보낼페이지 지정
-		  mv.setViewName("main/findPassWordAuth"); //뷰이름 mv.addObject("dice",dice);
-		  mv.addObject("mail",mail);
-		  mv.addObject("dice",dice);
-		  
-		  System.out.println("mv나와라: "+mv);	
-		  
-		  response_mail.setContentType("text/html; charset=UTF-8"); 
-		  PrintWriter out_mail =response_mail.getWriter();	  
-		  System.out.println("out_mail:"+out_mail);	  
-		  out_mail.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
-		  out_mail.flush();//현재 버퍼에 저장되있는 내용을 클라이언트로 전송, 버퍼 비움
-			  
-		  return mv;
-	  }
-	  
-	  //비밀번호 찾기 인증
-	  @RequestMapping(value="pass_injeung.do{dice},{mail}",method=RequestMethod.POST)
-	  public ModelAndView pass_injeung(String pass_injeung, @PathVariable String dice,
-			  @PathVariable String mail, HttpServletResponse response_equals)throws IOException{
-		  
-		  ModelAndView mv = new ModelAndView();
-		  mv.setViewName("/main/findPassWordChange");
-		  mv.addObject("mail",mail);
-		  
-		  if(pass_injeung.equals(dice)) { //인증번호 일치 => 맞다는창 출력 + 비밀번호 변경창 이동
-			  mv.setViewName("/main/findPassWordChange");
-			  mv.addObject("mail", mail);
-			  
-		     response_equals.setContentType("text/html; charset=UTF-8");
-		     PrintWriter out_equals =response_equals.getWriter();
-		     out_equals.println("<script>alert('인증번호 일치합니다. 비밀번호 변경으로 이동합니다');</script>");
-		     out_equals.flush();
-		     
-		     return mv;
-		  
-		  }else if(pass_injeung!=dice) {
-			  ModelAndView mv2 = new ModelAndView();
-			  mv2.setViewName("main/findPassWordAuth");
-			  
-			  response_equals.setContentType("type/html; charset=UTF-8");
-			  PrintWriter out_equals = response_equals.getWriter();
-			  out_equals.println("<script>alert('인증번호가 일치하지 않습니다. 다시입력해주세요'); history.go(-1);</script>");
-		      out_equals.flush();
-		      
-		      return mv2;
-		  }
-		  
-		  return mv;
-	  }
 	
 	//사원메일발송
 	@RequestMapping(value="sendEmail.do")
@@ -214,6 +129,96 @@ public class AjaxControllerAdmin {
 		
 	}
 	
+	//비밀번호 찾기 메일 발송
+	  @RequestMapping(value="findEmail.do",method=RequestMethod.POST)
+	  public void findMail(HttpServletRequest req, HttpSession session){
+	 
+	 
+	  /*session.setAttribute("dice", dice);
+	 String di = (String)session.getAttribute("dice"); */
+	  
+	  MimeMessage message = javaMailSender.createMimeMessage();
+	  MimeMessageHelper messageHelper = null;
+	  String mail =req.getParameter("mail"); //받는 사람 이메일(작성한 이메일)
+	  
+	  session.setAttribute("mail", mail);
+	  
+	  Enumeration<String> enu = req.getParameterNames();
+		while(enu.hasMoreElements()) {
+			System.out.println("while");
+			System.out.println(enu.nextElement());
+		}
+	  
+	  try {		  
+		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		  Map model = new HashMap();
+		  model.put("mail",mail); 
+		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  		  
+		  //이메일 내용은 emailTemplate2.vm이고 형식UTF-8
+		  messageHelper.setFrom("letsdobee@gmail.com");//보내는이메일
+		  messageHelper.setTo(mail); 
+		  //받는이메일
+		  StringBuilder subject = new StringBuilder();  
+		  subject.append("DOBEE 사원비밀번호 찾기 입니다");             //이메일 제목
+		  messageHelper.setSubject(subject.toString()); //이메일 제목 세팅완료
+		  messageHelper.setText(mailBody,true);         //이메일 내용 세팅완료	
+		  System.getProperty("line.separator");
+		  javaMailSender.send(message);                //이메일 모든내용(메세지)보내기
+	      
+	  }catch(Exception e){
+		    e.printStackTrace();
+		  }
+	  
+	  }
+	  
+	//메일입력 DB 확인
+	@RequestMapping(value="mailCheck.do",method=RequestMethod.GET)
+	 public String findPassWord(String mail){
+	   System.out.println(mail);
+	   UserDao userDao =sqlSession.getMapper(UserDao.class);
+	   String find = userDao.mailCheck(mail);
+	   System.out.println("값:"+find);
+	   return find;
+	    }
+	//비밀번호찾기2
+	@RequestMapping(value="findPassWord2.do",method= {RequestMethod.GET, RequestMethod.POST})
+	 public String findPassWord2(String mail){
+	     System.out.println("mail"+mail);
+	     UserDao userDao =sqlSession.getMapper(UserDao.class);
+	     String find = userDao.findPassWord2(mail);
+	     System.out.println("값:"+find);
+	     return find;
+	    }
+	//비밀번호 변경
+	@RequestMapping(value="passwordChange.do",method=RequestMethod.POST)
+	public String passwordChange(User user,HttpSession session) {
+	    System.out.println("비밀번호 들어오나?: ");
+	    
+	    String mail = (String) session.getAttribute("mail");
+	    System.out.println("메일"+mail);
+	    
+	    UserDao userDao =sqlSession.getMapper(UserDao.class);
+	    
+	    String inputpass =user.getPassword();
+	    String password = bCryptPasswordEncoder.encode(inputpass);
+	    user.setPassword(password);
+	    
+	    String find =userDao.passwordChange(password, mail);
+	    
+	    System.out.println("find 비밀번호 변경: "+find);
+	    return find;
+	    }
+	    
+	//아이디찾기
+	@RequestMapping(value="findId.do",method=RequestMethod.GET)
+	public String findId(String name, String phone){
+	    System.out.println(name);
+	    UserDao userDao = sqlSession.getMapper(UserDao.class);
+	    String find = userDao.findId(name,phone);
+	    System.out.println("값:"+find);
+	    return find;
+	}
+	
 	@RequestMapping("getTeam.do")
 	public TeamList getTeam(HttpServletRequest req, String teamCode) {
 		System.out.println("AjaxControllerAdmin getTeam()");
@@ -224,38 +229,7 @@ public class AjaxControllerAdmin {
 		System.out.println(teamCode);
 		TeamList team = memberService.getTeam(teamCode);
 		return team;
-	}
-	
-	//아이디찾기
-    @RequestMapping(value="findId.do",method=RequestMethod.GET)
-    public String findId(String name, String phone){
-    	 System.out.println(name);
-    	 UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	 String find = userDao.findId(name,phone);
-    	 System.out.println("값:"+find);
-         return find;
-    }
-    
-    //비밀번호 찾기
-    @RequestMapping(value="findPassWord.do",method=RequestMethod.GET)
-    public String findPassWord(String mail, String name){
-    	System.out.println(mail);
-    	System.out.println(name);
-    	UserDao userDao =sqlSession.getMapper(UserDao.class);
-    	String find = userDao.findPassWord(mail, name);
-    	System.out.println("값:"+find);
-    	return find;
-    }
-    //비밀번호찾기2
-    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
-    public String findPassWord2(String mail){
-    	System.out.println(mail);
-    	UserDao userDao =sqlSession.getMapper(UserDao.class);
-    	String find = userDao.findPassWord2(mail);
-    	System.out.println("값:"+find);
-    	return find;
-    }
-    
+	}   
     
     //사원 정보 수정 --01.23 알파카
     @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)

@@ -23,15 +23,19 @@ public interface UserDao {
     //아이디찾기
     public String findId(String name, String phone);
     
-    //비밀번호 찾기  
-    public String findPassWord(String mail, String name);
-    
-    //비밀번호찾기2
+    //비밀번호찾기
     public String findPassWord2(String mail);
+    
+    //메일값 확인
+    public String mailCheck(String mail);
+    
+    //비밀번호 업데이트
+    public String passwordChange(String password, String mail);
 
 
     //비밀번호재설정
     //public void resetPwd(String mail, String phone, String newPwd);
+    ;
     
     
     //비밀번호 설정
