@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
@@ -97,52 +98,27 @@ public class DoController {
   
     //아이디찾기
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
-    public String findId(String name, String phone ,  Model model){
-    	String find;
-    	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findId(name, phone);
-    	 System.out.println("비번찾기:"+find);
-    	 model.addAttribute("find",find);
+    public String findId(){
       return "main/findId";
     }
-
-    public String fidIdResult(){
-        return null;
-    }
     
-    //비밀번호이메일 view단
-    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
+    //비밀번호 찾기(이메일 보내기)
+    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
     public String findPassWord2(){
         return "main/findPassWord2";
     }
-    //비밀번호 찾기x
-    @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
-    public String findPassWord2(String mail,Model model){
-    	System.out.println(mail);
-    	String find;
-    	UserDao userDao =sqlsession.getMapper(UserDao.class);
-    	 find = userDao.findPassWord2(mail);
-    	 model.addAttribute("find",find);
-    	 System.out.println("find:"+find);
-    	return "main/findPassWord2";
-    }
-    
-    //비밀번호 인증코드 view 단
-    @RequestMapping(value="findPassWordAuth.do",method=RequestMethod.GET)
-    public String findPassWordAuth(){
-        return "main/findPassWordAuth";
-    }
-    
-    //비밀번호변경 view단
-    @RequestMapping(value="findPassWordChange.do",method=RequestMethod.GET)
-    public String findPassWordChange(){
+    //비밀번호 찾기(변경)
+    @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
+    public String findPassWordChange(HttpSession session){
+    	String mail = (String) session.getAttribute("mail");
+    	System.out.println("메일?"+mail);
         return "main/findPassWordChange";
     }
     
 
     //비밀번호재설정
     //public String resetPwd(){
-      //  return null;
+    //  return null;
     //}
     
     @RequestMapping("password.do")
