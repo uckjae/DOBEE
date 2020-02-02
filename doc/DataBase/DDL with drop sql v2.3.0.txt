@@ -1,4 +1,4 @@
-﻿-- 사원
+-- 사원
 ALTER TABLE `USER`
 	DROP FOREIGN KEY `FK_AUTHORITY_TO_USER`; -- 권한 -> 사원
 
@@ -448,7 +448,7 @@ ALTER TABLE `TASKDETAIL`
 
 -- 신용카드
 CREATE TABLE `DEBIT` (
-	`CARDNUM`  INT         NOT NULL COMMENT '카드번호', -- 카드번호
+	`CARDNUM`  varchar(60) NOT NULL COMMENT '카드번호', -- 카드번호
 	`CORP`     VARCHAR(60) NOT NULL COMMENT '카드사', -- 카드사
 	`NAME`     VARCHAR(60) NOT NULL COMMENT '명의자이름', -- 명의자이름
 	`NICKNAME` VARCHAR(60) NOT NULL COMMENT '카드별칭', -- 카드별칭
@@ -544,7 +544,7 @@ CREATE TABLE `COSTLIST` (
 	`COST`     INT           NOT NULL COMMENT '사용금액', -- 사용금액
 	`DETAIL`   VARCHAR(1000) NULL     COMMENT '상세내용', -- 상세내용
 	`COSTCODE` INT           NOT NULL COMMENT '비용처리코드', -- 비용처리코드
-	`CARDNUM`  INT           NOT NULL COMMENT '카드번호', -- 카드번호
+	`CARDNUM`  varchar(60)   NOT NULL COMMENT '카드번호', -- 카드번호
 	`MAIL`     VARCHAR(60)   NOT NULL COMMENT '사원메일' -- 사원메일
 )
 COMMENT '비용처리목록';
