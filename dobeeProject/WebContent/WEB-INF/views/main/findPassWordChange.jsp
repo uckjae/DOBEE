@@ -43,6 +43,56 @@ body {
 }
 </style>
 <script type="text/javascript">
+$(function(){
+ $('#idModal2').click(function(e){
+	  
+	 if(($.trim($('#password').val())=='')&&($.trim($('#passwordOk').val())=='')){
+        alert("내용을 입력해주세요");
+        return false;
+        }
+	 else if($.trim($('#password').val())==''){
+        alert("비밀번호를 입력해주세요");
+        $('#name').focus();
+        return false;    
+       }    
+    else if($.trim($('#passwordOk').val())==''){
+		alert("비밀번호 확인을 입력해주세요");
+		$('#phone').focus();
+		return false;
+       }
+    else if( ($('#password').val())!==($('#passwordOk').val())){
+        alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
+        return false;
+        }
+    else if( ($('#password').val())==($('#passwordOk').val())){
+        var password = $('#password').val();
+        console.log("password:"+password);
+         
+        $.ajax({
+
+            url:'ajax/admin/passwordChange.do',
+            data:{"password":password},
+            dataType:"text",
+            type : "post",
+            success:function(data){
+                var pwChange = data;
+                console.log("변경비밀번호:"+pwChange);
+                alert("비밀번호가 변경되었습니다.");
+                document.location.href="login.do";
+                },
+            error:function(request,status,error){
+				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
+            }
+            
+
+            });
+
+       
+
+    }
+	    
+  });
+});
 
 </script>
 
@@ -68,7 +118,7 @@ body {
 		<div class="form-group mb-lg">
 		  <label>새 비밀번호</label>
 		  <div class="input-group input-group-icon">
-			 <input name="name" type="text" class="form-control input-lg" id="name"/>
+			 <input name="password" type="text" class="form-control input-lg" id="password"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-lock"></i>
@@ -80,7 +130,7 @@ body {
 		<div class="form-group mb-lg">								
 		  <label>비밀번호 확인</label>								
 		  <div class="input-group input-group-icon">
-			<input name="phone" type="text" class="form-control input-lg" id="phone"/>
+			<input name="passwordOk" type="text" class="form-control input-lg" id="passwordOk"/>
 			   <span class="input-group-addon">
 				<span class="icon icon-lg">
 				 <i class="fa fa-lock"></i>
@@ -90,8 +140,7 @@ body {
 		</div>	   
 		<hr>
 		<div class="mb-xs text-center">
-		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" id="idModal2">비밀번호 변경</a>
+		  <a class="btn btn-facebook mb-md ml-xs mr-xs" id="idModal2">비밀번호 변경</a>
 		</div>
 		</form>
 		<p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아아디 찾기</a>
