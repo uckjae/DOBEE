@@ -1,6 +1,7 @@
 package com.dobee.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.services.MemberService;
 import com.dobee.services.ProjectService;
+import com.dobee.services.ScheduleService;
 import com.dobee.services.TimeLineService;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
@@ -25,6 +28,8 @@ import com.dobee.vo.project.Project;
 import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
+import com.dobee.vo.schedule.Schedule;
+import com.google.common.net.MediaType;
 
 
 
@@ -38,56 +43,77 @@ public class AjaxController_Project {
 	MemberService memberService;
 	@Autowired
 	TimeLineService timelineService;
+	@Autowired
+	ScheduleService scheduleService;
 	
 	
 	//프로젝트 추가 --01.15 알파카
 	@RequestMapping(value="pjtAdd.do", method=RequestMethod.POST)
-    public String addProject(@RequestParam(value="pjtName") String pjtName,@RequestParam(value="pjtStartAt") String pjtStartAt, @RequestParam(value="pjtEndAt") String pjtEndAt,@RequestParam(value="pjtMembers[]") List<String> pjtMembers ){
-		System.out.println("플젝 이름"+pjtName);
-		System.out.println("플젝11"+pjtStartAt);
-		System.out.println("플젝22"+pjtEndAt);
-		System.out.println("플젝33"+pjtMembers.toString());
-		
-		//vo 객체 주입
-		Project project = new Project();
-		project.setPjtName(pjtName);
-		project.setPjtStartAt(pjtStartAt);
-		project.setPjtEndAt(pjtEndAt);
-		//프로젝트 생성시 진행 상태를 미완료로 하기
-		project.setPjtProgress("미완료"); 
+    public String addProject(Project project, Schedule sc){
 		String responseData = "";
-		int result = 0;
+		String result = "";
+		int result1 = 0;
 		int result2 = 0;
+		int result3 = 0;
+		int pjtSeq = 0;
+		System.out.println("객체 주입!");
+		System.out.println("플젝!"+project.toString());
+		System.out.println("스케쥴!"+sc.toString());
 		
 		//프로젝트 DB 저장
-		result = projectService.addProject(project);
-	
+		result1 = projectService.addProject(project);
 		
-		if(result > 0) {
+		//일정 추가
+		result2 = scheduleService.addSchedule(sc);
+		
+		if(result1 > 0 && result2 > 0) {
 			//플젝 seq 가져오기
-			int pjtSeq = project.getPjtSeq();
-			//프로젝트 멤버 DB 저장
-			
-			//들어온 메일 개수만큼 vo 객체 만들어주기
-			List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
-			for (int i = 0; i < pjtMembers.size(); i ++) {
-				ProjectMember pjtMember = new ProjectMember();
-				pjtMember.setPjtSeq(pjtSeq);
-				pjtMember.setMail(pjtMembers.get(i));
-				pjtMemberList.add(pjtMember);
+			pjtSeq = project.getPjtSeq();
+			int schSeq = sc.getSchSeq();
+						
+			//프로젝트 일정 추가
+			result3 = scheduleService.addPjtSchedule(pjtSeq, schSeq);
+			if(result3 > 0) {
+				responseData = Integer.toString(pjtSeq);
 			}
-			result2 = projectService.addProjectMember(pjtMemberList);
 			
-			if(result2 > 0 ) {
-				responseData = "success";				
-			}
+		} else {
+			responseData = "ajax fail";
 		}
-		
-    	return responseData;
+				
+    	return responseData; //ajax 통신 성공시 pjtSeq를 던져줌
     }
 	
+	//프로젝트 참여자 추가
+	@RequestMapping(value="addPjtMember.do", method=RequestMethod.POST)
+	public String addPjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
+		
+		System.out.println("값 넘어오니?"+pjtMembers.toString());
+		System.out.println("값 넘어오니111?"+pjtSeq.toString());
+		int result = 0;
+		String responseData = "";
+		//들어온 메일 개수만큼 vo 객체 만들어주기
+		List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
+		for (int i = 0; i < pjtMembers.size(); i ++) {
+			ProjectMember pjtMember = new ProjectMember();
+			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
+			pjtMember.setMail(pjtMembers.get(i));
+			pjtMemberList.add(pjtMember);
+		}
+		result = projectService.addProjectMember(pjtMemberList);
+		
+		if(result > 0 ) {
+			responseData = "success";
+			
+		} else {
+			responseData = "fail";
+		}
+		return responseData;
+		
+	}
 	
-	//프로젝트 삭제 --01.15 알파카 (아직 완전 구현xxxx)
+	
+	//프로젝트 삭제 --01.15 알파카
 	@RequestMapping(value="pjtDelete.do", method=RequestMethod.POST)
 	public String deleteProject(@RequestParam(value="pjtSeq") String pjtSeq) {
 		String responseData = "";
@@ -104,7 +130,12 @@ public class AjaxController_Project {
 	
 	//프로젝트 수정 --01.15 알파카
 	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
-	public String updateProject(@RequestParam(value="pjtSeq") String pjtSeq) {
+	public String updateProject(Project project,  Schedule sc) {
+		System.out.println("객체 가져와?"+project.toString());
+		System.out.println("스케쥴 가져와?"+sc.toString());
+		//업데이트!
+		
+		
 		return null;
 	}
 	
@@ -432,17 +463,20 @@ public class AjaxController_Project {
 		Map<String, List<Task>> map = new HashMap<String, List<Task>>();
 				
 		//완료일 지남
-		List<Task> taskOverdueList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
-		map.put("taskOverdueList", taskOverdueList);
+		List<Task> overdueTaskList = projectService.getOverdueTask(Integer.parseInt(pjtSeq), mail);
+		map.put("overdueTaskList", overdueTaskList);
 		
 		//3일 남음
-		List<Task> deadlineTask = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
-		map.put("deadlineTask", deadlineTask);
+		List<Task> deadlineTaskList = projectService.getDeadlineTask(Integer.parseInt(pjtSeq), mail);
+		map.put("deadlineTaskList", deadlineTaskList);
 		
 		
 		//나머지 리스트
-		List<Task> otherTask = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
-		map.put("otherTask", otherTask);
+		List<Task> otherTaskList = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
+		map.put("otherTaskList", otherTaskList);
+		
+		//JSONArray jsonArray = new JSONArray();
+    	//jsonArray.addAll(taskList);
 		
 		
 		return map;

@@ -22,7 +22,7 @@
 
 <!-- 프로젝트 생성 01.26 알파카 수정 -->
 <insert id="mkPjt" parameterType="com.dobee.vo.project.Project" useGeneratedKeys="true" keyProperty="pjtSeq"> 
-	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},#{pjtProgress} )
+	INSERT INTO PROJECT(PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS) VALUES ( #{pjtName},#{pjtStartAt},#{pjtEndAt},'미완료' )
 </insert>
 
 <!-- 프로젝트 생성시 참여 멤버 추가 01.26.알파카 수정 -->
@@ -89,7 +89,7 @@ WHERE p.pjtseq = #{pjtSeq}
 <!-- 업무추가 PM 업무내용, 담당자, 중요도  01.24 알파카 수정 -->
 <!-- 기존 쿼리문 	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT) VALUES(#{title},#{mail},#{important},#{pjtSeq},'예정', DATE_FORMAT(NOW(), "%Y-%c-%d"))
  -->
-<insert id="addPMTask" parameterType="com.dobee.vo.project.Task">
+<insert id="addPMTask" parameterType="com.dobee.vo.project.Task" useGeneratedKeys="true" keyProperty="tskSeq">
 	INSERT INTO TASK (TITLE, MAIL, IMPORTANT, PJTSEQ, PROGRESS, STARTAT) 
 	VALUES(#{title},(SELECT MAIL FROM USER WHERE MAIL=#{mail}), #{important}, (SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{pjtSeq}),'예정', DATE_FORMAT(NOW(), "%Y-%c-%d"))
 </insert>
@@ -187,23 +187,28 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!-- 특정 프로젝트의 개인 업무 중 마감일이 지난 업무 가져오기-->
 <select id="getOverdueTask" resultType="com.dobee.vo.project.Task">
-	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
 	FROM TASK 
 	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[>]]> 0
 </select>
 
-<!-- 특정 프로젝트의 개인 업무 중 마감일이 3일 남은 업무 가져오기 -->
+<!-- 특정 프로젝트의 개인 업무 중 마감일이 3일 이하 남은 업무 가져오기 -->
 <select id="getDeadlineTask" resultType="com.dobee.vo.project.Task">
-	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL 
 	FROM TASK 
-	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(NOW(), ENDAT) <![CDATA[<]]> 3
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2}
+	AND PROGRESS !='완료'
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[<=]]> 3 
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[>]]> 0
 </select>
 
 <!-- 특정 프로젝트의 개인 업무 중 나머지 업무 가져오기 -->
 <select id="getOtherTask" resultType="com.dobee.vo.project.Task">
-	SELECT PJTSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
+	SELECT TSKSEQ, TITLE, PROGRESS, IMPORTANT, STARTAT, ENDAT, MAIL, PJTSEQ 
 	FROM TASK 
-	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} AND DATEDIFF(ENDAT, NOW()) <![CDATA[>=]]> 4
+	WHERE PJTSEQ=#{param1} AND MAIL=#{param2} 
+	AND DATEDIFF(ENDAT, NOW()) <![CDATA[>=]]> 4 
+	AND PROGRESS !='완료';
 </select>
 
 <!-- 특정 프로젝트의 개인의 완료된 업무 가져오기 -->

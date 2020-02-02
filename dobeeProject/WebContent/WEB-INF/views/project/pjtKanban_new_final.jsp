@@ -144,7 +144,6 @@
 							var formatedEndDate = date_to_str(endDate);
 							$('#taskFormEndAt').val(formatedEndDate);
 						}
-
 						
 						//담당자 셋팅
 						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
@@ -189,16 +188,22 @@
 
 			/* 01.28 pm 업무 추가 >> 추가시에 중요도를 별도로 셋팅해서 백단으로 보내야 함-- 알파카*/
 			$("#addPMTaskBtn").click(function(){
+				console.log("버튼클릭");
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				$("#addPMTaskForm").submit();
+				/* $("#addPMTaskForm").submit(); */
 			});
 
 
 			$("#taskEditBtn").click(function(){
 				var important = $('#taskImportant').text();
 				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
+
+				//schedule 객체에 줄 값 넣어주기
+				$("#startTime").val($("#taskFormStartAt").val());
+            	$("#endTime").val($("#taskFormEndAt").val());
+				
 				$("#taskEditForm").submit();
 
 			});
@@ -367,10 +372,6 @@
 			var pjtSeq = ${requestScope.project.pjtSeq};
 			console.log('플젝 번호?'+pjtSeq);
 
-			var taskOverdueTask = new Array(); //마감일 지난 업무
-			var deadlineTask = new Array(); //3일 남은 업무
-			var otherTask = new Array(); //기타 업무
-
 			
 			/*내 업무*/
 			$.ajax({
@@ -379,54 +380,84 @@
  				dataType: "json",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('넘어온 값');
- 	 				console.log(responseData);
- 	 				for(var i=0; responseData.deadlineTask.length; i++){
-//  	 					console.log(responseData.deadlineTask[i])
- 	 	 			}
+ 	 				console.log(responseData)
+ 	 				$.each(responseData.overdueTaskList, function(key, obj) {
+ 	 	 				console.log('obj!!', obj.title);
+ 	 	 				console.log('seq?'+obj.tskSeq);
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-secondary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#overdueTaskList").append(a);
+ 	 	 				});
 
-//  	 				$.each(responseData.deadlineTask, function(index) {
- 	 	 				
-//  	 				    $.each(responseData.deadlineTask[index], function(key, value) {
-//  	 				        console.log(key + ": " + value);
-//  	 				        console.log('벨류!'+title.value);
-//  	 				    })
- 	 	 				             
-//  	 		        });     
+	 	 				
+ 	 				$.each(responseData.deadlineTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 					var section = $('<section class="panel panel-featured-left panel-featured-primary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-primary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
 
- 	 				var title1 = $('<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>');
- 	 				
- 	 				
- 	 				/* 
- 	 				<div class="col-md-12" id="overdueTaskList">
-								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-								
-								
-								
-							</div>
- 	 				
- 	 				
- 	 				 */
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#deadlineTaskList").append(a);
+ 	 	 				});
+ 	 				$.each(responseData.otherTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-tertiary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#otherTaskList").append(a);
+ 	 	 				});
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -1459,7 +1490,7 @@
 			jsonData.content = content;
 
 			var parsedData = JSON.stringify(jsonData);
-			
+			console.log(parsedData);
 			wsocket.send(parsedData);
 		}
 		/* /알람  */
@@ -1791,80 +1822,12 @@
 						<div class="row">
 							<div class="col-md-12" id="overdueTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
-								
-								
-								
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-								
-								
-								
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-12" id="deadlineTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</section>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-12" id="otherTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
-								<section class="panel panel-featured-left panel-featured-primary">
-									<div class="panel-body">
-										<div class="widget-summary widget-summary-xs">
-											<div class="widget-summary-col widget-summary-col-icon">
-												<div class="summary-icon bg-primary">
-													<i class="fa fa-life-ring"></i>
-												</div>
-											</div>
-											<div class="widget-summary-col">
-												<div class="summary">
-													<h4 class="title">Support Questions</h4>
-													<div class="info">
-														<strong class="amount">1281</strong>
-														<span class="text-primary">(14 unread)</span>
-													</div>
-												</div>
-											
-											</div>
-										</div>
-									</div>
-								</section>
 							</div>
 						</div>
                    </div>
@@ -2244,7 +2207,7 @@
 								<div class="col-md-4">
 								</div>
 								<div class="col-md-4 text-center">
-									<button type="submit" id="addPMTaskBtn" class="btn btn-primary modal-confirm" form="addPMTaskForm">추가</button>
+									<button id="addPMTaskBtn" class="btn btn-primary modal-confirm" >추가</button>
 								</div>
 								<div class="col-md-4">
 								</div>
@@ -2301,8 +2264,10 @@
 														<i class="fa fa-calendar"></i>
 													</span>
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>
 													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="endTime" name="endTime" class="form-control" form="taskEditForm">
 													<c:if test="${ user.authCode == '2'}">
 														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
 													</c:if>
@@ -2470,9 +2435,6 @@
 							 						</a>
 							 					</div>
 				 							</li> -->
-				 							
-				 							
-				 							
 										</ul>
 									<!-- 체크리스트 추가(일반 회원만 보임) -->
 									<c:if test="${ user.authCode == '2'}">
