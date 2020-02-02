@@ -55,6 +55,9 @@ public interface ProjectDao {
     //특정업무조회
     public Task getTask(int tskSeq);
     
+    //특정업무와 업무 일정 조회
+    public Task getTaskAndSchedule(int tskSeq);
+    
     
     //업무추가 - PM 01.24 알파카 수정
     public int addPMTask(Task task);

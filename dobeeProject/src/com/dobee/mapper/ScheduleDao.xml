@@ -14,6 +14,13 @@
 		INSERT INTO PROJSCHEDULE(PJTSEQ, SCHSEQ) VALUES((SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{param1}), (SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ=#{param2}))
 	</insert>
 	
+	<!-- 프로젝트 업무일정 테이블에서 업무 일정 번호 가져오기 ublic int getTsSeq(int tskSeq); -->
+	<select id="getTsSeq" resultType="Integer">
+		SELECT COUNT(TSSEQ) 
+		FROM TASKSCHEDULE 
+		WHERE TSKSEQ = #{tskSeq}
+	</select>
+	
 	<!-- 프로젝트 일정 가져오기 02.02 알파카 -->
 	<select id="getPjtSchedule" resultType="com.dobee.vo.schedule.Schedule">
 		SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=(SELECT SCHSEQ FROM PROJSCHEDULE WHERE PJTSEQ=#{param1})

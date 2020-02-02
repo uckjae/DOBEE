@@ -115,6 +115,7 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+				console.log('가져오니?'+tskSeq);
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
@@ -133,6 +134,18 @@
 						$('#taskDetailEditTitle').val(task.title);
 						$('#taskDetailTitle').text(task.title);
 						$('#taskFormTitle').val(task.title);
+
+
+						//업무 일정 여부 셋팅 id=tsSeq
+						//기존에 업무 일정 seq가 있는지 없는지 판단 -> 있으면 input type=hidden에 넣기 없으면 안 넣기
+						if(task.tsSeq !== null || task.tsSeq !== ""){ //업무 일정 seq가 있다면
+							$("#tsSeq").val(task.tsSeq);
+							console.log('값 넣어졌니?'+$("#tsSeq").val());
+						} else {
+							$("#tsSeq").val("");
+						}
+						
+						
 						//날짜 셋팅
 						var startDate = new Date(task.startAt);
 						var formatedStartDate = date_to_str(startDate);
@@ -192,7 +205,7 @@
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				/* $("#addPMTaskForm").submit(); */
+				$("#addPMTaskForm").submit();
 			});
 
 
@@ -2263,6 +2276,7 @@
 													<span class="input-group-addon">
 														<i class="fa fa-calendar"></i>
 													</span>
+													<input type="hidden" id="tsSeq" name="tsSeq" class="form-control" form="taskEditForm">
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
 													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>
