@@ -21,6 +21,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -55,6 +56,9 @@ public class AjaxControllerAdmin {
 	
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	
 	@RequestMapping("authorityList.do")
@@ -187,12 +191,20 @@ public class AjaxControllerAdmin {
 	    }
 	//비밀번호 변경
 	@RequestMapping(value="passwordChange.do",method=RequestMethod.POST)
-	public String passwordChange(String password, HttpSession session) {
-	    System.out.println("비밀번호 들어오나?: "+password);
+	public String passwordChange(User user,HttpSession session) {
+	    System.out.println("비밀번호 들어오나?: ");
+	    
 	    String mail = (String) session.getAttribute("mail");
 	    System.out.println("메일"+mail);
+	    
 	    UserDao userDao =sqlSession.getMapper(UserDao.class);
+	    
+	    String inputpass =user.getPassword();
+	    String password = bCryptPasswordEncoder.encode(inputpass);
+	    user.setPassword(password);
+	    
 	    String find =userDao.passwordChange(password, mail);
+	    
 	    System.out.println("find 비밀번호 변경: "+find);
 	    return find;
 	    }

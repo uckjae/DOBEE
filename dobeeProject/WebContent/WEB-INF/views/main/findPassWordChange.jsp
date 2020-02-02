@@ -84,16 +84,12 @@ $(function(){
 				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
             }
             
-
             });
-
-       
 
     }
 	    
   });
 });
-
 </script>
 
 </head>
