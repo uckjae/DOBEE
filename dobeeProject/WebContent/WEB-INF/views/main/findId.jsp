@@ -142,8 +142,8 @@ $(function(){
 
 		<div class="mb-xs text-center">
 		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" id="idModal2">Find your mail</a>
-		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">Login </a>
+		     href="#modalBootstrap" id="idModal2">아이디 찾기</a>
+		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">로그인 </a>
 		</div>
 		</form>
 
