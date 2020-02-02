@@ -192,7 +192,7 @@
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				/* $("#addPMTaskForm").submit(); */
+				$("#addPMTaskForm").submit();
 			});
 
 
@@ -287,7 +287,7 @@
 		 					$("#addTdContent").val("");
 	 					}
 	 				},
-	 				error:function(){
+	 				error:function(request,status,error){
 	 					console.log("code : " + request.status +"\n" + "message : " 
 								+ request.responseText + "\n" + "error : " + error);
 	 				}
@@ -363,7 +363,7 @@
 		 					hiddenInput2.val(responseData.chkSeq);
 	 					}
 	 				},
-	 				error:function(){
+	 				error:function(request,status,error){
 	 					console.log("code : " + request.status +"\n" + "message : " 
 								+ request.responseText + "\n" + "error : " + error);
 	 				}
@@ -459,7 +459,7 @@
  	 	 				$("#otherTaskList").append(a);
  	 	 				});
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				}
@@ -505,7 +505,7 @@
  	 	 	 	 		}
  	 	 			});
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
@@ -597,7 +597,7 @@
  						pjtMemberTask.push(responseData[key]);
  	 				}
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
@@ -658,7 +658,7 @@
  						taskCount.push(responseData[key]);
  	 				}
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
@@ -698,7 +698,7 @@
  	 				console.log(responseData);
  	 				console.log('프로젝트 참여자?'+pjtMember);
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
@@ -824,7 +824,7 @@
 
 
  				},
- 				error:function(){
+ 				error:function(request,status,error){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},

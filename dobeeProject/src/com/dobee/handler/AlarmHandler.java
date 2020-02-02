@@ -50,17 +50,6 @@ public class AlarmHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		  System.out.println("AlarmHandler in!!");
 		  
-//****************************		  
-		  System.out.println("*********************");
-		  for(int i=0; i<users.size();i++) {
-			  System.out.println(users.get(i));
-		  }
-		  
-		  System.out.println("*********************");
-		  //****************************		  
-		  
-		  
-		  
 		  System.out.println(message.getPayload());
 		  String data = message.getPayload();
 		  
@@ -76,7 +65,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 			  System.out.println(jsonObject.get("mail").toString());
 			  System.out.println(jsonObject.get("mail").getClass());
 			  JSONArray mails = (JSONArray) jsonObject.get("mail");
-			  String title = (String) jsonObject.get("title");
+			  String title = (String) jsonObject.get("content");
 			  System.out.println(mails.size());
 			  for(int i=0; i<mails.size(); i++) {
 				  String mail = (String) mails.get(i);
