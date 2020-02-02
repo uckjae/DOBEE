@@ -2343,7 +2343,7 @@ ul.nav-main > li.nav-active > i {
 }
 
 ul.nav-main > li.nav-expanded > a {
-	background: #FFC107;
+	background: #3B5998;
 }
 
 ul.nav-main li a {
@@ -6097,7 +6097,7 @@ html .panel-dark .panel-actions a {
 }
 
 html .panel-transparent > .panel-heading {
-	background: none;
+	background: #f6f6f6;
 	border: 0;
 	padding-left: 0;
 	padding-right: 0;
