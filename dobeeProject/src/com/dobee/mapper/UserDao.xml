@@ -11,7 +11,7 @@
     </select>
     
     <!--비밀번호 찾기()  -->
-    <select id="findPassWord2" parameterType="String" resultType="String">
+    <select id="findPassWord" parameterType="String" resultType="String">
     SELECT MAIL FROM USER WHERE MAIL = #{param1}
     </select>
     

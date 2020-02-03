@@ -147,7 +147,7 @@ $(function(){
 		</div>
 		</form>
 
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord2.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
+		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 
 	  </div>
 	  	  

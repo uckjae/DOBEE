@@ -55,7 +55,6 @@ import com.dobee.vo.schedule.Schedule;
 public class DoController {
 	
 	public DoController() {
-		System.out.println("일단 컨트롤 오나 보자");
 	}
 	
     @Autowired
@@ -103,9 +102,9 @@ public class DoController {
     }
     
     //비밀번호 찾기(이메일 보내기)
-    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
-    public String findPassWord2(){
-        return "main/findPassWord2";
+    @RequestMapping(value="findPassWord.do",method={RequestMethod.GET, RequestMethod.POST})
+    public String findPassWord(){
+        return "main/findPassWord";
     }
     //비밀번호 찾기(변경)
     @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
@@ -115,11 +114,6 @@ public class DoController {
         return "main/findPassWordChange";
     }
     
-
-    //비밀번호재설정
-    //public String resetPwd(){
-    //  return null;
-    //}
     
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
