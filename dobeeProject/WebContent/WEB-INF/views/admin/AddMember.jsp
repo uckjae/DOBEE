@@ -75,6 +75,38 @@
 						resolve(response)
 						
 					},
+					beforeSend: function () {
+			              var width = 0;
+			              var height = 0;
+			              var left = 0;
+			              var top = 0;
+
+			              width = 500;
+			              height = 500;
+
+
+			              top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+			              left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+			 
+
+			              if($("#div_ajax_load_image").length != 0) {
+			                     $("#div_ajax_load_image").css({
+			                            "top": top+"px",
+			                            "left": left+"px"
+			                     });
+			                     $("#div_ajax_load_image").show();
+			              }
+			              else {
+			                     $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loading.gif" style="width:500px; height:500px;"></div>');
+			              }
+
+			       }
+			       , complete: function () {
+			                     $("#div_ajax_load_image").hide();
+			       },
+
+
 					error: function(jqXHR, textStatus, errorThrown){
 						console.log(textStatus);
 						console.log(errorThrown);
