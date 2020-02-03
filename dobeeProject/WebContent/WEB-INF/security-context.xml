@@ -43,7 +43,7 @@
   		 <security:session-management invalid-session-url="/login.do" session-fixation-protection="migrateSession">
         	<security:concurrency-control max-sessions="1" expired-url="/login.do"/>
         </security:session-management>
-        <security:access-denied-handler error-page="/main/noAuthority.jsp"/>
+        <security:access-denied-handler error-page="/login.do"/>
 	</security:http>
 	
 	<!-- <bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
