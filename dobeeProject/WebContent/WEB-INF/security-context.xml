@@ -20,17 +20,17 @@
 							authentication-success-handler-ref="loginHandler"
 							authentication-failure-url="/login.do?error"/>
 		
-		<security:intercept-url pattern="/login.do" access="permitAll"/>					
+		<security:intercept-url pattern="/login.do" access="permitAll"/>	
 		<security:intercept-url pattern="/findPassWord.do" access="permitAll"/>					
 		<security:intercept-url pattern="/findId.do" access="permitAll"/>					
 		<security:intercept-url pattern="/noAuthority.jsp" access="permitAll"/>					
   		<security:intercept-url pattern="/main.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/attend/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/chat/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/mypage/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/notice/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/payment/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/project/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/attend*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/chat*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/mypage*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/notice*.do*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/payment*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/project*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/schedule/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/admin*.do" access="hasRole('ROLE_ADMIN')"/>
   		
@@ -43,6 +43,7 @@
   		 <security:session-management invalid-session-url="/login.do" session-fixation-protection="migrateSession">
         	<security:concurrency-control max-sessions="1" expired-url="/login.do"/>
         </security:session-management>
+        <security:access-denied-handler error-page="/main/noAuthority.jsp"/>
 	</security:http>
 	
 	<!-- <bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
