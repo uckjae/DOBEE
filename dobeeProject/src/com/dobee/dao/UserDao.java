@@ -24,7 +24,7 @@ public interface UserDao {
     public String findId(String name, String phone);
     
     //비밀번호찾기
-    public String findPassWord2(String mail);
+    public String findPassWord(String mail);
     
     //메일값 확인
     public String mailCheck(String mail);

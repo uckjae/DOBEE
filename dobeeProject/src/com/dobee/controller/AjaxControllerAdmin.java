@@ -180,12 +180,12 @@ public class AjaxControllerAdmin {
 	   System.out.println("값:"+find);
 	   return find;
 	    }
-	//비밀번호찾기2
-	@RequestMapping(value="findPassWord2.do",method= {RequestMethod.GET, RequestMethod.POST})
-	 public String findPassWord2(String mail){
+	//비밀번호찾기
+	@RequestMapping(value="findPassWord.do",method= {RequestMethod.GET, RequestMethod.POST})
+	 public String findPassWord(String mail){
 	     System.out.println("mail"+mail);
 	     UserDao userDao =sqlSession.getMapper(UserDao.class);
-	     String find = userDao.findPassWord2(mail);
+	     String find = userDao.findPassWord(mail);
 	     System.out.println("값:"+find);
 	     return find;
 	    }
