@@ -4,77 +4,66 @@
 <c:import url="/common/HeadTag.jsp"/>
 <link rel="stylesheet" href="assets/vendor/pnotify/pnotify.custom.css" />
 <header class="header">
-<script type="text/javascript">
-console.log("TOP!!!!");
-
-</script>
-				<div class="logo-container">
-					<a href="#" class="logo">
-						<img src="./img/beemain2.png" height="44" alt="로고" />
-					</a>
-					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+		<div class="logo-container">
+			<a href="main.do" class="logo">
+				<img src="./img/beemain2.png" height="44" alt="로고" />
+			</a>
+			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+			</div>
+		</div>
+		<!-- start: search & user box -->
+		<div class="header-right">
+			<span class="separator"></span>
+			<div id="userbox" class="userbox">
+				<a href="#" data-toggle="dropdown">
+					<figure class="profile-picture">
+					<!-- 등록된 사원 사진 뿌려주기!!! -->
+						<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+					</figure>
+					<div class="profile-info">
+						<span class="name" id="name">${user.name}</span>
+						<span class="role" id="mail">${user.mail}</span>
 					</div>
+					<i class="fa custom-caret"></i>
+				</a>
+	
+				<div class="dropdown-menu">
+					<ul class="list-unstyled">
+						<li class="divider"></li>
+						<li>
+							<c:set var="isWork" value="${sessionScope.user.isWork }"/>
+							<c:choose>
+								<c:when test="${isWork != null }">
+									<a role="menuitem" tabindex="-1" href="#" onclick="leave();"><i class="fa fa-power-off"></i>퇴근</a>
+								</c:when>
+								<c:otherwise>
+									<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+						<li>
+							<a role="menuitem" tabindex="-1" href="mypage.do?mail=${user.mail}"><i class="fa fa-user"></i>마이페이지</a>
+						</li>
+						<li>
+							<a role="menuitem" tabindex="-1" href="#" onclick="document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>로그아웃</a>
+							<form id="logout-form" action='<c:url value='/logout'/>' method="POST">
+ 										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							</form>
+						</li>
+					</ul>
 				</div>
-			
-				<!-- start: search & user box -->
-				<div class="header-right">
-			
-					
-			
-					<span class="separator"></span>
-					<div id="userbox" class="userbox">
-						<a href="#" data-toggle="dropdown">
-							<figure class="profile-picture">
-								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
-							</figure>
-							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								<span class="name" id="name">${user.name}</span>
-								<span class="role" id="mail">${user.mail}</span>
-							</div>
-			
-							<i class="fa custom-caret"></i>
-						</a>
-			
-						<div class="dropdown-menu">
-							<ul class="list-unstyled">
-								<li class="divider"></li>
-								<li>
-									<c:set var="isWork" value="${sessionScope.user.isWork }"/>
-									<c:choose>
-										<c:when test="${isWork != null }">
-											<a role="menuitem" tabindex="-1" href="#" onclick="leave();"><i class="fa fa-power-off"></i>퇴근</a>
-										</c:when>
-										<c:otherwise>
-											<a role="menuitem" tabindex="-1" href="#" onclick="attend();"><i class="fa fa-power-off"></i>출근</a>
-										</c:otherwise>
-									</c:choose>
-								</li>
-								<li>
-									<a role="menuitem" tabindex="-1" href="mypage.do?mail=${user.mail}"><i class="fa fa-user"></i>마이페이지</a>
-								</li>
-								<li>
-									<a role="menuitem" tabindex="-1" href="#" onclick="document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>로그아웃</a>
-									<form id="logout-form" action='<c:url value='/logout'/>' method="POST">
-   										<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-									</form>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- end: search & user box -->
-			</header>
+			</div>
+		</div>
+		<!-- end: search & user box -->
+	</header>
 			
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 <script>
-
-	
 		console.log("top onload");
 		connect();
 	
-
 	/* 알람 */
 	var wsocket;
 	

@@ -8,6 +8,113 @@
 <c:import url="/common/HeadTag.jsp"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
+		// email 유효성 검사 함수
+		// 이메일 최종 유효성 결과값 전역 변수
+		var finalCheckEmail = false;
+		function vailEmail(sendData){
+			jsonData = {
+				"mail":sendData
+					};
+			
+			$.ajax({
+				url:"ajax/admin/checkEmail.do",
+				type:"POST",
+				data:jsonData,
+				success:function(data){
+						//데이타 받을 후 email 중복되었는지 글씨로 표시해줌
+						//보낸 데이터의 길이가 0 보다 크면 중복임
+						if(data.length > 0){
+								$('#emailVail').empty();
+								$('#emailVail').append("해당 이메일은 이미 사원으로 등록되어있습니다.");
+								 // 이메일 최종 유효성 결과값 전역 변수
+								finalCheckEmail = false; 
+								console.log(data.length);
+							}else{  // 여기로 오면 일단 중복은 아님
+								let result = false;
+								let email = $("#formMail").val();
+								result = inputVailEmail(email); // 이 함수가 유효성 검사하는 함수
+								console.log("else문 " + data.length);
+								if(result){// 유효성 검사도 통과하면 등록가능 표시
+									$('#emailVail').empty();
+									$('#emailVail').append("해당 이메일은 등록 가능합니다.");
+									finalCheckEmail = true;
+								}else{  //중복은 아니나 유효성 통과 못하면 뜨는 메시지
+									$('#emailVail').empty();
+									$('#emailVail').append("이메일을 'abc@gmail.com' 형태로 입력해주세요.");
+									finalCheckEmail = false;
+								}
+							}
+					},
+				complete:function(){
+
+						
+					},
+
+				error:function(){
+						console.log("이메일 중복 확인 아작스 실패");
+
+					}
+			});
+		};
+		
+
+		// 유효성 검사
+		var numberReg = /^\d{3}-\d{4}-\d{4}$/;
+		var numberCheck;
+		
+		// 이메일 검사( 맨 밑에 있는 스크립트랑 연동됨)
+		var emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		var emailCheck;
+
+		var fourCheck;
+		// 고용상태 / 고용 / 권한코드 / 팀 선택 빈 칸이나 "선택하세요" 상태로 등록되지 않게 하기
+		function emptySelectCheck(){
+			if($("#emp").val() =='' || $("#serve").val() ==''|| $("#authCode").val() =='' || $("#teamCode").val() ==''){
+				 fourCheck = false;
+				}else{
+				 fourCheck = true;
+				}
+		};
+
+		//이름 빈칸 검사
+		var nameCheck;
+		//이름 검사 함수
+		function emptyNameCheck(){
+				if($("#formName").val() != ''){
+						nameCheck = true;
+					}else{
+						nameCheck = false;
+					}
+			};
+			
+		
+		function inputVailPhone(number){
+				if(number.length == 13) {
+	    			var check = numberReg.test(number);  //true or false
+					if(check){
+						console.log("휴대폰넘버 유효성 통과");
+						numberCheck = true;
+					}else{
+						console.log("휴대폰넘버 유효성 불통");
+						alert("전화번호를 '010-1234-1234' 형식으로 적어주세요.");
+						numberCheck = false;
+					}
+	    		}
+			};
+			
+			function inputVailEmail(email){
+		    			var check = emailReg.test(email);  //true or false
+						if(check){
+							console.log("메일 유효성 통과");
+							emailCheck = true;
+						}else{
+							console.log("메일 유효성 불통");
+							emailCheck = false;
+						}
+						return emailCheck;
+				};
+
+			
 		$(function(){
 			/* 권한 코드 select option 만들기*/
 			$.ajax({
@@ -45,7 +152,6 @@
 
 						$('#teamCode').append(option);
 					})
-					
 				}	
 			})
 			
@@ -57,24 +163,25 @@
 			});
 			
 		});
-
+		let count = 0 ;
 		function sendMail (callback){
-			return new Promise(function(resolve,reject){
-				console.log("sendMail()");
-				console.log($('#formMail').val());
-				console.log($('#formName').val());
-				$.ajax({
-					url:"ajax/admin/sendEmail.do",
-					data: {'mail':$('#formMail').val(),
-							'name' : $('#formName').val()
+			
+				return new Promise(function(resolve,reject){
+					console.log("sendMail()");
+					console.log($('#formMail').val());
+					console.log($('#formName').val());
+					$.ajax({
+						url:"ajax/admin/sendEmail.do",
+						data: {'mail':$('#formMail').val(),
+								'name' : $('#formName').val()
+							},
+						dataType: "text",
+						method: "POST",
+						success: function(response){
+							console.log("메일 발송 완료");
+							console.log(count++);
+							resolve(response)
 						},
-					dataType: "text",
-					method: "POST",
-					success: function(response){
-						console.log("메일보내ㅉ=졌다");
-						resolve(response)
-						
-					},
 					beforeSend: function () {
 			              var width = 0;
 			              var height = 0;
@@ -107,26 +214,60 @@
 			       },
 
 
-					error: function(jqXHR, textStatus, errorThrown){
-						console.log(textStatus);
-						console.log(errorThrown);
-					}
-					
-					
-				});
-
-			});
-			
-		}
+						error: function(jqXHR, textStatus, errorThrown){
+							console.log(textStatus);
+							console.log(errorThrown);
+						}
+					});
+				}); // 아작스 구문 종료
+		};
 
 		function myFormSubmit(){
+			emptySelectCheck(); // 셀렉트 유효성 검사 하고
+			emptyNameCheck();	// 이름 칸 빈칸인지 확인하고
+
+
+			//이름 검사
+			if(nameCheck == true){
+				console.log("이름 유효성 통과");
+				}else{
+					console.log("이름 유효성 불통과");
+					alert("이름을 입력해주세요.");
+					return;
+					}
+		 	
+		
+			//셀렉트 태그들 유효성 검사
+			if(fourCheck == true){
+					console.log("셀렉트 유호성 통과");
+				}else{
+					console.log("셀렉트 유효성에서 불통과");
+					alert("고용상태, 고용, 권한코드, 팀을 선택해주세요.");
+					return;
+				}
+			//메일 유효성 검사
+			if(finalCheckEmail==true){
+					console.log("메일 유효성 통과");
+				}else{
+					console.log("메일 유효성 불통");
+					alert("메일을 다시 입력해주세요.");
+					return;
+				}
+			//전화번호 유효성 검사
+			if(numberCheck == true){
+				console.log("전화번호 통과");
+			}else{
+				console.log("전화번호 불통 ");
+				alert("전화번호를 다시 입력해주세요.");
+				return;
+			}
+			// 이제 메일 보낸다 			
 			sendMail().then(function(){
 				console.log("submit()");
 				document.getElementById('addUserForm').submit();
 				$('#addUserForm').submit();
-				
-			})
-		}
+			});
+		};
 
 		/* 날짜 기본설정 */
 		function getDate(){
@@ -154,7 +295,7 @@
 			<!-- start : main Content -->
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Blank Page</h2>
+						<h2>사원</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -163,8 +304,8 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Pages</span></li>
-								<li><span>Blank Page</span></li>
+								<li><span>사원</span></li>
+								<li><span>사원등록</span></li>
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -196,14 +337,15 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="mail">사원&nbsp;E-mail</label>
 												<div class="col-md-6">
-													<input class="form-control" id="formMail" name="mail" type="email" form="addUserForm">
+													<input class="form-control" id="formMail" name="mail" onKeyup="vailEmail($(this).val());" type="email" autocomplete=”off” form="addUserForm" >
+													<span id="emailVail" style="color:red"></span>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="emp">고용상태</label>
 												<div class="col-md-6">
-													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus" form="addUserForm">
-														<option hidden>선택하세요</option>
+													<select class="form-control mb-md" id="emp" name="emp"  autofocus="autofocus" form="addUserForm" required="true">
+														<option hidden value=''>선택하세요</option>
 														<option value="재직">재직</option>
                                                         <option value="고용예정">고용예정</option>
 													</select>
@@ -219,7 +361,7 @@
 												<label class="col-md-3 control-label" for="serve">고용</label>
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="serve" name="serve" required="required" autofocus="autofocus">
-														<option hidden>선택하세요</option>
+														<option hidden value=''>선택하세요</option>
 														<option value="정규직">정규직</option>
                                                         <option value="인턴">인턴</option>
 													</select>
@@ -235,7 +377,7 @@
 												<label class="col-md-3 control-label" for="authCode">권한코드</label>
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="authCode" name="authCode" required="required" autofocus="autofocus" form="addUserForm">
-														<option hidden>선택하세요</option>
+														<option hidden value=''>선택하세요</option>
 													</select>
 												</div>
 											</div>
@@ -243,14 +385,15 @@
 												<label class="col-md-3 control-label" for="teamCode">팀 선택</label>
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="teamCode" name="teamCode" required="required" autofocus="autofocus" form="addUserForm">
-														<option hidden>선택하세요</option>
+														<option value='' hidden>선택하세요</option>
 													</select>
 												</div>
 											</div>
 											<div class="form-group">
                                                 <label class="col-md-3 control-label" for="phone">전화번호</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" id="phone" name="phone" class="form-control" form="addUserForm">
+                                               		<input type="text" id="phone" name="phone" class="form-control" form="addUserForm" onKeyup="inputVailPhone($(this).val());" placeholder="010-5233-3208"  maxlength="13"/>
+                                                    <!-- <input type="text" id="phone" name="phone" class="form-control" form="addUserForm"> -->
                                                 </div>
                                             </div>
 											<div class="col-md-6 control-label">
@@ -273,12 +416,13 @@
 
 			<!-- 오른쪽 사이드바!! -->
 		<c:import url="/common/RightSide.jsp"/>
-	
-			
 			<!-- 오른쪽 사이드바 끝!! -->
+			
 		</section>
 
 		<c:import url="/common/BottomTag.jsp"/>
+		
+
 	</body>
 	<script type="text/javascript">
 	$("#multiFile").change(function(){
@@ -292,6 +436,7 @@
 	    // read the image file as a data URL.
 	    reader.readAsDataURL(this.files[0]);
 	});
+
 
 	
 	</script>

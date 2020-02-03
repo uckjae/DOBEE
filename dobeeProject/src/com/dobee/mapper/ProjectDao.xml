@@ -4,9 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.ProjectDao">
 
-<!-- 모든 프로젝트 리스트 가져오기 pm 회원용 -->
-<select id="getAllPjtList" resultType="com.dobee.vo.project.Project">
-	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS FROM PROJECT
+<!-- 모든 진행중인 프로젝트 리스트 가져오기 pm 회원용 -->
+<select id="getAllInProgressPjtList" resultType="com.dobee.vo.project.Project">
+	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS 
+	FROM PROJECT 
+	WHERE PJTPROGRESS='진행'
+	ORDER BY PJTSEQ DESC
+</select>
+
+<!-- 모든 완료된 프로젝트 목록 가져오기 pm 회원용 02.03.알파카  -->
+<select id="getAllCompletedPjtList" resultType="com.dobee.vo.project.Project">
+	SELECT PJTSEQ, PJTNAME, PJTSTARTAT, PJTENDAT, PJTPROGRESS 
+	FROM PROJECT 
+	WHERE PJTPROGRESS='완료'
+	ORDER BY PJTSEQ DESC
 </select>
 
 <!-- 특정 회원이 속한 프로젝트 리스트 가져오기 -->
@@ -17,7 +28,8 @@
 	ON U.MAIL = PM.MAIL
 	JOIN PROJECT P
 	ON PM.PJTSEQ = P.PJTSEQ
-	WHERE U.MAIL = #{mail};
+	WHERE U.MAIL = #{mail}
+	ORDER BY PJTSEQ DESC
 </select>
 
 <!-- 특정 회원이 속한 진행중인 프로젝트 목록 가져오기 -->
@@ -29,6 +41,34 @@
 	JOIN PROJECT P
 	ON PM.PJTSEQ = P.PJTSEQ
 	WHERE U.MAIL = #{mail} AND P.PJTPROGRESS = '진행'
+	ORDER BY PJTSEQ DESC
+</select>
+
+<select id="getCompletedPjtList" resultType="com.dobee.vo.project.Project">
+	SELECT P.PJTSEQ, P.PJTNAME, P.PJTSTARTAT, PJTENDAT, PJTPROGRESS
+	FROM USER U
+	JOIN PROJECTMEMBER PM
+	ON U.MAIL = PM.MAIL
+	JOIN PROJECT P
+	ON PM.PJTSEQ = P.PJTSEQ
+	WHERE U.MAIL = #{mail} AND P.PJTPROGRESS = '완료'
+	ORDER BY PJTSEQ DESC
+</select>
+
+<!-- 특정 프로젝트의 전체 task 개수 가져오기 02.03 알파카 -->
+<select id="getAllTaskCount" resultType="Integer">
+	SELECT COUNT(*) 
+	FROM PROJECT P JOIN TASK T 
+	ON P.PJTSEQ = T.PJTSEQ 
+	WHERE P.PJTSEQ = #{param1}
+</select>
+
+<!-- 특정 프로젝트의 전체 task 중 완료된 개수 가져오기 02.03 알파카 -->
+<select id="getCompletedTaskCount" resultType="Integer">
+	SELECT COUNT(*) 
+	FROM PROJECT P JOIN TASK T 
+	ON P.PJTSEQ = T.PJTSEQ 
+	WHERE P.PJTSEQ = #{param1} AND T.PROGRESS='완료'
 </select>
 
 <!-- 프로젝트 생성 01.26 알파카 수정 -->

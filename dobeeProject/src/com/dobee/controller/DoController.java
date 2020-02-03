@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletOutputStream;
@@ -166,6 +168,16 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행률 가져오기
+    	Map<String, Integer> progressRate = new HashMap<String, Integer>(); //프로젝트 이름이 key, 진행률이 value
+    	//List<Task> allTaskList = null;
+    	int result = 0;
+    	for(int i = 0; i<pjtList.size(); i++) {
+    		result = projectService.getPjtProgressRate(pjtList.get(i).getPjtSeq());
+    		progressRate.put(pjtList.get(i).getPjtName(), result);
+    	}
+    	System.out.println("맵은요?"+progressRate);
+    	model.addAttribute("progressRate",progressRate);
     	
         return "main/main";
     }
@@ -881,17 +893,22 @@ public class DoController {
     @RequestMapping("pjtMain.do")
     public String projectList(Model model, HttpServletRequest request){
     	User user = (User) request.getSession().getAttribute("user");
-    	List<Project>list = null;
+    	List<Project> inProgressPjtList = null;
+    	List<Project> completedPjtList = null;
     	//권한 코드에 따라서 뿌리는 값 다르게 하기
     	if(user.getAuthCode() == 3) { // PM 회원인 경우
-    		list = projectService.getAllPjtList();
+    		inProgressPjtList = projectService.getAllInProgressPjtList(); //진행중인 모든 프로젝트 리스트
+    		completedPjtList = projectService.getAllCompletedPjtList(); //완료된 모든 프로젝트 리스트
+    		
     	} else { //일반 회원인 경우
-    		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    		inProgressPjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 진행중인 프로젝트 리스트 가져오기
+    		completedPjtList = projectService.getCompletedPjtList(user.getMail()); //특정 회원의 완료된 프로젝트 리스트 가져오기
     	}
-    	model.addAttribute("list",list);
+    	model.addAttribute("inProgressPjtList", inProgressPjtList);
+    	model.addAttribute("completedPjtList", completedPjtList);
     	
-    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
    
         return "project/pjtMain_new";

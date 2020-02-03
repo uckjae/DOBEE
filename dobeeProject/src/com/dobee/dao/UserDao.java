@@ -13,6 +13,7 @@ import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
+import com.dobee.vo.member.UserInfo;
 
 public interface UserDao {
 
@@ -268,5 +269,9 @@ public interface UserDao {
     
     //팀 코드 등록하기-성호
     public int addTeamList(TeamList tl);
+    
+    
+    //사원 등록 이메일 중복 확인 - 성호
+    public ArrayList<UserInfo> checkEmail(String mail);
     
 }

@@ -76,20 +76,89 @@
 								<h6 class="text-muted">About</h6>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis vulputate quam. Interdum et malesuada</p>
 								<hr class="dotted short">
-
 								<div class="social-icons-list">
 									<a rel="tooltip" data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
 									<a rel="tooltip" data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
 									<a rel="tooltip" data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
 								</div>
-
 							</div>
 						</section>
-
 					</div>
-					<div class="col-md-8 col-lg-6">
-
-						<div class="tabs">
+					<div class="col-md-8 col-lg-8" data-plugin-portlet id="portlet-1">
+							<section class="panel panel-primary" id="panel-1" data-portlet-item>
+								<header class="panel-heading portlet-handler">
+									<h2 class="panel-title">정보 수정</h2>
+								</header>
+								<div class="panel-body">
+								<form action="mypageModify.do" method="post" class="form-horizontal" name="mypageForm">
+										<fieldset>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="name">이름</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileLastName">E-mail</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" id="mail" name="mail" value="${user.mail}" readonly>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileNewPassword">비밀번호</label>
+												<div class="col-md-8">
+													<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileNewPasswordRepeat">비밀번호 재입력</label>
+												<div class="col-md-8">
+													<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 재입력">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileCompany">입사일</label>
+												<div class="col-md-8"> <!-- ${user.regitDate} -->
+													<input type="text" class="form-control" id="regitDate" name="regitDate" value="<fmt:formatDate value='${user.regitDate}' pattern='yyyy-MM-dd'/>" >
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileCompany">직책</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" id="position" name="position" value="${user.position}" readonly>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileCompany">소속</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" id="teamName" name="teamName" value="${user.teamName}" readonly>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="profileCompany">휴대폰 번호</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" id="phone" name="phone" value="${user.phone}"> 
+												</div>
+											</div>
+										</fieldset>
+										<div class="panel-footer">
+											<div class="row">
+												<div class="col-md-4 col-md-offset-4 text-center">
+													<button type="button" id="mypageBtn" class="btn btn-primary">수정</button>
+													<button type="reset" class="btn btn-default">취소</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								
+								
+								
+								
+								
+								</div>
+							</section>
+							
+						<%-- <div class="tabs">
 							<ul class="nav nav-tabs tabs-primary">
 								<li class="active">
 									<a href="#overview" data-toggle="tab">Overview</a>
@@ -99,35 +168,7 @@
 								</li>
 							</ul>
 							<div class="tab-content">
-								<div id="overview" class="tab-pane active">
-									<h4 class="mb-xlg">Timeline</h4>
-
-									<div class="timeline timeline-simple mt-xlg mb-md">
-										<div class="tm-body">
-											<div class="tm-title">
-												<h3 class="h5 text-uppercase">November 2013</h3>
-											</div>
-											<ol class="tm-items">
-												<li>
-													<div class="tm-box">
-														<p class="text-muted mb-none">7 months ago.</p>
-														<p>
-															It's awesome when we find a good solution for our projects, Porto Admin is <span class="text-primary">#awesome</span>
-														</p>
-													</div>
-												</li>
-												<li>
-													<div class="tm-box">
-														<p class="text-muted mb-none">7 months ago.</p>
-														<p>
-															What is your biggest developer pain point?
-														</p>
-													</div>
-												</li>
-											</ol>
-										</div>
-									</div>
-								</div>
+								
 								<!-- 정보 수정 -->
 								<div id="edit" class="tab-pane">
 									<form action="mypageModify.do" method="post" class="form-horizontal" name="mypageForm">
@@ -193,46 +234,12 @@
 									</form>
 								</div>
 							</div>
-						</div>
+						</div> --%>
+						
+						
+						
 					</div>
-					<div class="col-md-12 col-lg-3">
 
-						<h4 class="mb-md">Sale Stats</h4>
-						<ul class="simple-card-list mb-xlg">
-							<li class="primary">
-								<h3>488</h3>
-								<p>Nullam quris ris.</p>
-							</li>
-							<li class="primary">
-								<h3>$ 189,000.00</h3>
-								<p>Nullam quris ris.</p>
-							</li>
-							<li class="primary">
-								<h3>16</h3>
-								<p>Nullam quris ris.</p>
-							</li>
-						</ul>
-
-						<h4 class="mb-md">Projects</h4>
-						<ul class="simple-bullet-list mb-xlg">
-							<li class="red">
-								<span class="title">Porto Template</span>
-								<span class="description truncate">Lorem ipsom dolor sit.</span>
-							</li>
-							<li class="green">
-								<span class="title">Tucson HTML5 Template</span>
-								<span class="description truncate">Lorem ipsom dolor sit amet</span>
-							</li>
-							<li class="blue">
-								<span class="title">Porto HTML5 Template</span>
-								<span class="description truncate">Lorem ipsom dolor sit.</span>
-							</li>
-							<li class="orange">
-								<span class="title">Tucson Template</span>
-								<span class="description truncate">Lorem ipsom dolor sit.</span>
-							</li>
-						</ul>
-					</div>
 
 				</div>
 				<!-- end: page -->

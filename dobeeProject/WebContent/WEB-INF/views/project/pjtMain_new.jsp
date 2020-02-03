@@ -37,20 +37,16 @@
 		   placeholder: "사원 선택",
 		   multiple: true,
 		   ajax: {
-		          url: "getUserList.do",
+		          url: "ajax/project/getUserList.do",
 		          dataType: 'json',
 		          type:"post",
-		          processResults: function (data) {
+		          processResults: function (data) {			          
 		        	  	var arr = []
 			          	var res = $.each(data, function(index, item) {
-							if(item.mail=="admin@gmail.com"){
-									index++;  // 어드민만 목록에서 제외시키기
-							}else{
 								arr.push({
 		                            id: item.mail,
 		                            text: item.name+"("+item.mail+")"
 		                        });
-							};
 	        	        });
       	       			return {
       	       				results: arr
@@ -63,37 +59,7 @@
 	 
 		$('.progressSelect').select2({
 		 });
-		 
-    /* 	$.ajax({
-      		url:"getUserList.do",
-      		dataType:"json",
-      		type:"post",
-      		success:function(data){
-          		console.log('과연?'+data);
-      			$.each(data, function(index, element){
-    				let option = $("<option></option>");
-    				$(option).text(element.name+"("+element.mail+")");
-    				$(option).val(element.mail);
-    				$(".userSelect").append(option);
-    			})
-      		}
-      	});
- */
-    	
-
-		 
-
-    	/* $("#userSelect").change(function(){
-    		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
-    		var userName = userInfo[0]			
-    		var userMail = userInfo[1];
-    		$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fa fa-user'><span name='name'>"
-    						+userName+"</span><input type='hidden' name='mail[]' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
-    	
-    		$("#pjtUserList").css("display","block");
-    	
-    		}); */
-
+		
 		/* 프로젝트 생성 */
     	$("#makePjtBtn").on('click', function(e){
     		if($("#pjtName").val() == "" || $("#pjtName").val() == null){
@@ -179,6 +145,7 @@
 		$(".editPjt").click('show.bs.modal', function(e) {
 			$('#editPjtForm').trigger('reset');
 			var pjtSeq = $(this).data('pjtseq');
+			console.log('값은?'+pjtSeq);
 			
 			//pjtSeq로 프로젝트 정보 가져와서 모달창에 뿌리기
 			var mails = [];
@@ -484,69 +451,101 @@
 					<div class="search-toolbar">
 						<ul class="list-unstyled nav nav-pills">
 							<li class="active">
-								<a href="#everything" data-toggle="tab">진행</a>
+								<a href="#inProgress" data-toggle="tab">진행</a>
 							</li>
 							<li>
-								<a href="#medias" data-toggle="tab">완료</a>
+								<a href="#completed" data-toggle="tab">완료</a>
 							</li>
 						</ul>
 					</div>
-				</div>
+				
 				<!-- 프로젝트 리스트 -->
 				<div class="tab-content">
+				<div class="tab-pane active" id="inProgress">
 					<div class="row">
-					<c:forEach items="${list}" var="n">
-						<div class="col-md-6 col-lg-6 col-xl-3">
-							<a href="pjtKanban.do?pjtSeq=${n.pjtSeq}" style="text-decoration:none;color:#777">
-								<section class="panel">
-									<header class="panel-heading bg-primary">
+						<c:forEach items="${requestScope.inProgressPjtList}" var="pjtList">
+							<div class="col-md-6 col-lg-6 col-xl-3">
+								<a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration:none;color:#777">
+									<section class="panel">
+										<header class="panel-heading bg-primary">
+												<div class="panel-heading-icon">
+													<i class="fa fa-globe"></i>
+												</div>
+										</header>
+										<div class="panel-body text-center">
+											<c:if test="${ user.authCode == '3'}">
+											<div class="todo-actions" style="margin-left: 170px;">
+						 						<a style="cursor: pointer;text-decoration:none;margin-right: 10px;" class="editPjt" data-toggle="modal" data-target="#editPjtModal"  data-pjtSeq="${pjtList.pjtSeq}" >
+						 							<i class="fa  fa-pencil"></i>
+						 						</a>
+						 						<a style="cursor: pointer" onclick="pjtDelete(this)">
+						 							<input type="hidden" id="pjtSeq" value="${pjtList.pjtSeq}">
+						 							<i class="fa fa-times"></i>
+						 						</a>
+						 					</div>
+						 					</c:if>
+						 					<h3 class="text-semibold mt-sm text-center">${pjtList.pjtName}</h3>
+											<p class="text-center">${pjtList.pjtProgress}</p>
+										</div>
+									</section>
+								</a>
+							</div>
+						</c:forEach>
+						<!-- 프로젝트 만들기 -->
+						<c:if test="${ user.authCode == '3'}">
+							<div class="col-md-6 col-lg-6 col-xl-3">
+								<a id="newPjt" data-toggle="modal" href="#newPjtModal" style="text-decoration:none;color:#777">
+									<section class="panel">
+										<header class="panel-heading bg-secondary">
 											<div class="panel-heading-icon">
 												<i class="fa fa-globe"></i>
 											</div>
-									</header>
-									<div class="panel-body text-center">
-										<c:if test="${ user.authCode == '3'}">
-										<div class="todo-actions" style="margin-left: 170px;">
-					 						<a style="cursor: pointer;text-decoration:none;margin-right: 10px;" class="editPjt" data-toggle="modal" data-target="#editPjtModal"  data-pjtSeq="${n.pjtSeq}" >
-					 							<i class="fa  fa-pencil"></i>
-					 						</a>
-					 						<a style="cursor: pointer" onclick="pjtDelete(this)">
-					 							<input type="hidden" id="pjtSeq" value="${n.pjtSeq}">
-					 							<i class="fa fa-times"></i>
-					 						</a>
-					 					</div>
-					 					</c:if>
-					 					<h3 class="text-semibold mt-sm text-center">${n.pjtName}</h3>
-										<p class="text-center">${n.pjtProgress}</p>
-									</div>
-								</section>
-							</a>
-						</div>
-					</c:forEach>
-					<!-- 프로젝트 만들기 -->
-					<c:if test="${ user.authCode == '3'}">
-						<div class="col-md-6 col-lg-6 col-xl-3">
-							<a id="newPjt" data-toggle="modal" href="#newPjtModal" style="text-decoration:none;color:#777">
-								<section class="panel">
-									<header class="panel-heading bg-secondary">
-										<div class="panel-heading-icon">
-											<i class="fa fa-globe"></i>
+										</header>
+										<div class="panel-body text-center">
+											<h3 class="text-semibold mt-sm text-center">프로젝트 생성</h3>
+											<p class="text-center">새로만들기</p>
 										</div>
-									</header>
-									<div class="panel-body text-center">
-										<h3 class="text-semibold mt-sm text-center">프로젝트 생성</h3>
-										<p class="text-center">새로만들기</p>
-									</div>
-								</section>
-							</a>
+									</section>
+								</a>
+							</div>
+						</c:if>
 						</div>
-					</c:if>
 					</div>
+					<div class="tab-pane" id="completed">
+							<c:forEach items="${requestScope.completedPjtList}" var="pjtList">
+								<div class="col-md-6 col-lg-6 col-xl-3">
+									<a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration:none;color:#777">
+										<section class="panel">
+											<header class="panel-heading bg-primary">
+													<div class="panel-heading-icon">
+														<i class="fa fa-globe"></i>
+													</div>
+											</header>
+											<div class="panel-body text-center">
+												<c:if test="${ user.authCode == '3'}">
+												<div class="todo-actions" style="margin-left: 170px;">
+							 						<a style="cursor: pointer;text-decoration:none;margin-right: 10px;" class="editPjt" data-toggle="modal" data-target="#editPjtModal"  data-pjtSeq="${pjtList.pjtSeq}" >
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>
+							 						<a style="cursor: pointer" onclick="pjtDelete(this)">
+							 							<input type="hidden" id="pjtSeq" value="${pjtList.pjtSeq}">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+							 					</c:if>
+							 					<h3 class="text-semibold mt-sm text-center">${pjtList.pjtName}</h3>
+												<p class="text-center">${pjtList.pjtProgress}</p>
+											</div>
+										</section>
+									</a>
+								</div>
+							</c:forEach>
+					</div>
+				</div>
 				</div>
 				<!-- end: page -->
 			</section>
 		</div>
-		
 		<!-- 새 프로젝트 만드는 Modal -->
 		<div class="modal fade" id="newPjtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	   		<div class="modal-dialog cascading-modal" role="document">

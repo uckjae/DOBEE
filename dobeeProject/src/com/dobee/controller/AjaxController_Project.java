@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
 import com.dobee.services.ProjectService;
 import com.dobee.services.ScheduleService;
@@ -200,6 +201,10 @@ public class AjaxController_Project {
 	//특정 프로젝트 & 멤버 가져오기 getPjtAndMember.do
 	@RequestMapping(value="getPjtAndUser.do", method=RequestMethod.POST)
 	public Map<String, Object> getPjtAndMember(@RequestParam(value="pjtSeq") String pjtSeq) {
+		
+		System.out.println("에이젝스 타니?");
+		System.out.println("PJTSEQ!!!"+pjtSeq);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		//프로젝트 정보 가져오기
@@ -396,8 +401,16 @@ public class AjaxController_Project {
 		return responseData;
 	}
 	
-	
-	//멤버 가져오기
+	//회원 목록 가져오기(관리자 x)
+    @RequestMapping(value="getUserList.do", method=RequestMethod.POST)
+    public List<User> getUserList() {
+    	List<User> userList = null;
+    	userList = memberService.getUserList();
+    	return userList;
+    }
+		
+	/*
+	//멤버 가져오기 -> 보류
 	@RequestMapping("getUserList.do")
 	public List<Map<String, String>> getUserList() { 
 		
@@ -421,6 +434,7 @@ public class AjaxController_Project {
     	
 		return jsonList;
 	}
+	*/
 	
 	/*차트*/
 	
