@@ -11,7 +11,7 @@
     </select>
     
     <!--비밀번호 찾기()  -->
-    <select id="findPassWord" parameterType="String" resultType="String">
+    <select id="findPassWord2" parameterType="String" resultType="String">
     SELECT MAIL FROM USER WHERE MAIL = #{param1}
     </select>
     
@@ -33,11 +33,9 @@
 	
 	<!-- User 정보 가져오기 -->
 	<select id="getUser" resultType="com.dobee.vo.member.User">
-		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, U.TEAMCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE
-		FROM USER U JOIN USERINFO I
-		ON U.MAIL=I.MAIL
-		WHERE U.MAIL=#{mail}
+		SELECT MAIL, PASSWORD, NAME, MYPIC, AUTHCODE FROM USER WHERE MAIL=#{mail}
 	</select>
+	
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.User">
@@ -107,14 +105,7 @@
 	<update id="offWork" parameterType="Integer">	
 		UPDATE ATTEND SET OFFTIME = CURRENT_TIMESTAMP() WHERE ATTSEQ = #{attSeq}	
 	</update>
-	
-	<!-- 출근한 팀원 가져오기 02.03 알파카  -->
-	<select id="getOnWorkTeamMember" resultType="com.dobee.vo.member.User">
-		SELECT U.MAIL, U.NAME, U.MYPIC
-		FROM USER U JOIN ATTEND A 
-		ON U.MAIL=A.MAIL
-		WHERE U.TEAMCODE=#{teamCode} AND A.ATTCODE=1 AND OFFTIME IS NULL AND U.MAIL!=#{mail}
-	</select>
+
 	
 	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">

@@ -24,7 +24,7 @@ public interface UserDao {
     public String findId(String name, String phone);
     
     //비밀번호찾기
-    public String findPassWord(String mail);
+    public String findPassWord2(String mail);
     
     //메일값 확인
     public String mailCheck(String mail);
@@ -35,7 +35,7 @@ public interface UserDao {
 
     //비밀번호재설정
     //public void resetPwd(String mail, String phone, String newPwd);
-    
+    ;
     
     
     //비밀번호 설정
@@ -52,14 +52,10 @@ public interface UserDao {
     	
     // 퇴근하기	
     public int offWork(Integer attSeq);	
-    
-    
-    //자신을 제외하고 출근한 팀원 가져오기
-    public List<User> getOnWorkTeamMember(User user);
+	
 	
     //부재		일단 남겨놓고	
     public void restWork(User member);
-    
     
     
     //마이페이지 개인 정보 불러오기

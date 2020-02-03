@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +55,7 @@ import com.dobee.vo.schedule.Schedule;
 public class DoController {
 	
 	public DoController() {
+		System.out.println("일단 컨트롤 오나 보자");
 	}
 	
     @Autowired
@@ -103,9 +103,9 @@ public class DoController {
     }
     
     //비밀번호 찾기(이메일 보내기)
-    @RequestMapping(value="findPassWord.do",method={RequestMethod.GET, RequestMethod.POST})
-    public String findPassWord(){
-        return "main/findPassWord";
+    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
+    public String findPassWord2(){
+        return "main/findPassWord2";
     }
     //비밀번호 찾기(변경)
     @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
@@ -115,6 +115,11 @@ public class DoController {
         return "main/findPassWordChange";
     }
     
+
+    //비밀번호재설정
+    //public String resetPwd(){
+    //  return null;
+    //}
     
     @RequestMapping("password.do")
     public String resetPwd(HttpServletRequest req, Model model){
@@ -143,24 +148,10 @@ public class DoController {
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
     	
-    	//출근한 팀원 가져오기~!~! 02.03 알파카
-    	List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
-    	model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
-    	
-    	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
     	System.out.println("utList : "+ utList);
     	model.addAttribute("utList", utList);
-    	
-    	//공지사항 최신글 가져오기 02.03 알파카
-    	List<Notice> recentNoticeList = noticeService.getRecentNotice();
-    	model.addAttribute("recentNoticeList", recentNoticeList);
-    	
-    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project>list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
-    	model.addAttribute("list",list);
-    	
     	
         return "main/main";
     }
