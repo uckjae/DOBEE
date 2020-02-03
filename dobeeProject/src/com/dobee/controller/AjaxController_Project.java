@@ -460,26 +460,6 @@ public class AjaxController_Project {
 		
 	}
 	
-	///* 업무 중요도별 담당자 비중*/
-	@RequestMapping("getTaskImportantChart.do")
-	public Map<String, List<Integer>> getTaskImportantChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
-		Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
-		//프로젝트에 속한 멤버 정보 가져오기
-		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
-		for(int i = 0;i<pjtMember.size(); i++) {
-			String pjtMemberName = pjtMember.get(i).getName();
-			String pjtMemberMail = pjtMember.get(i).getMail();
-			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), pjtMemberMail);
-			List<Integer> result = new ArrayList<Integer>();
-			
-			//int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
-			//map.put(pjtMemberName, taskList);
-		}
-		
-		return null;
-	}
-	
-	
 	//프로젝트 업무 할당 차트
 	@RequestMapping("getTaskAssignmentChart.do")
 	public Map<String, Integer> getTaskAssignmentChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request) {
