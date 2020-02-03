@@ -115,6 +115,7 @@
 			$('.taskDetail').click('show.bs.modal', function(e) {
 				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
+				console.log('가져오니?'+tskSeq);
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
@@ -133,6 +134,18 @@
 						$('#taskDetailEditTitle').val(task.title);
 						$('#taskDetailTitle').text(task.title);
 						$('#taskFormTitle').val(task.title);
+
+
+						//업무 일정 여부 셋팅 id=tsSeq
+						//기존에 업무 일정 seq가 있는지 없는지 판단 -> 있으면 input type=hidden에 넣기 없으면 안 넣기
+						if(task.tsSeq !== null || task.tsSeq !== ""){ //업무 일정 seq가 있다면
+							$("#tsSeq").val(task.tsSeq);
+							console.log('값 넣어졌니?'+$("#tsSeq").val());
+						} else {
+							$("#tsSeq").val("");
+						}
+						
+						
 						//날짜 셋팅
 						var startDate = new Date(task.startAt);
 						var formatedStartDate = date_to_str(startDate);
@@ -175,8 +188,18 @@
 				getTaskDetailList(tskSeq);
 				getTaskCheckList(tskSeq);
 				$('#taskFormTskSeq').val(tskSeq);
-
+				$(this).off('shown.bs.modal');
 			});
+
+			$('.taskDetail').on('hidden.bs.modal', function () {
+				  document.location.reload();
+				  
+			})
+
+
+			
+			
+			
 
 			$('.progress-button').click(function(){
 				$('.progress-button').attr("style","background-color:white; color:black;");
@@ -294,6 +317,7 @@
 	 			});
 			});
 			
+			
 			/* 01.29 체크리스트 추가 -- 쳌쳌 알파카 */
 			$("#addTaskCheckListBtn").click(function(){
 				var tskSeq = $("#taskCheckListTskSeq").val();
@@ -374,6 +398,93 @@
 
 			
 			/*내 업무*/
+			
+			/*내 업무 모달*/
+			$('.myTask').click('show.bs.modal', function(e) {
+				console.log("내 업무!!! 모달이 눌렸어");
+
+				$("#myTaskDetailModal").modal('show');
+
+				var tskSeq = $(this).data('tskseq');
+				console.log('가져오니?'+tskSeq);
+				
+				$('#taskForm').trigger('reset');
+				$('#taskDetailForm').trigger('reset');
+				$('#checkListForm').trigger('reset');
+				$('.progress-button').attr("style","background-color:white; color:black;");
+				$('#taskDetailTskSeq').attr("value",tskSeq);
+				$('#taskCheckListTskSeq').attr("value",tskSeq);
+				$('#addTaskDetailTskSeq').attr("value",tskSeq);
+				$.ajax({
+					url:"ajax/project/getTask.do",
+					data: {"tskSeq":tskSeq},
+					dataType: "JSON",
+					success: function(data){
+						console.log('getTask ajax 성공?');
+						console.log(data);
+						var task = data;
+						$('#taskDetailEditTitle').val(task.title);
+						$('#taskDetailTitle').text(task.title);
+						$('#taskFormTitle').val(task.title);
+
+
+						//업무 일정 여부 셋팅 id=tsSeq
+						//기존에 업무 일정 seq가 있는지 없는지 판단 -> 있으면 input type=hidden에 넣기 없으면 안 넣기
+						if(task.tsSeq !== null || task.tsSeq !== ""){ //업무 일정 seq가 있다면
+							$("#tsSeq").val(task.tsSeq);
+							console.log('값 넣어졌니?'+$("#tsSeq").val());
+						} else {
+							$("#tsSeq").val("");
+						}
+						
+						
+						//날짜 셋팅
+						var startDate = new Date(task.startAt);
+						var formatedStartDate = date_to_str(startDate);
+						$('#taskFormStartAt').val(formatedStartDate);
+						if(task.endAt == null){ //끝나는 날짜가 없는 경우 그냥 공백으로 만들기
+							$('#taskFormEndAt').val("");
+						} else {
+							var endDate = new Date(task.endAt);
+							var formatedEndDate = date_to_str(endDate);
+							$('#taskFormEndAt').val(formatedEndDate);
+						}
+						
+						//담당자 셋팅
+						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
+						$('#taskFormName').text(task.name);
+						$('#taskFormMail').val(task.mail);
+						
+						//프로젝트 seq 셋팅
+						$('#taskFormPjtSeq').val(task.pjtSeq);
+						
+						//중요도 셋팅
+						$('#taskImportant').text(task.important); //중요도 표시해주기
+						setStar(authCode, task.important); //권한에 따라 별 플러그인 적용
+
+						
+						$('.progress-button').each(function(index,element){
+							if($(element).text() == task.progress){
+								$(element).attr("style","background-color:#34495e; color:white;");
+								$('#taskFormProgress').val($(element).text());
+							}
+						});
+							
+					},
+					error:function(request,status,error){
+						console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+					}
+				});
+				
+				getTaskDetailList(tskSeq);
+				getTaskCheckList(tskSeq);
+				$('#taskFormTskSeq').val(tskSeq);
+
+			});
+			
+			
+			
 			$.ajax({
  	 			url:"ajax/project/getMyTask.do",
  				data: {'pjtSeq' : pjtSeq },
@@ -382,9 +493,7 @@
  				success:function(responseData){
  	 				console.log(responseData)
  	 				$.each(responseData.overdueTaskList, function(key, obj) {
- 	 	 				console.log('obj!!', obj.title);
- 	 	 				console.log('seq?'+obj.tskSeq);
- 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="myTask" data-toggle="modal" data-target="#myTaskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
  	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
@@ -410,7 +519,7 @@
 
 	 	 				
  	 				$.each(responseData.deadlineTaskList, function(key, obj) {
- 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="myTask" data-toggle="modal" data-target="#myTaskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
  	 					var section = $('<section class="panel panel-featured-left panel-featured-primary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
@@ -435,7 +544,7 @@
  	 	 				$("#deadlineTaskList").append(a);
  	 	 				});
  	 				$.each(responseData.otherTaskList, function(key, obj) {
- 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="myTask" data-toggle="modal" data-target="#myTaskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
  	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
  	 	 				var panelBody = $('<div class="panel-body">');
  	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
@@ -465,8 +574,10 @@
  				}
 
 			});
+
 			
 
+			
 			/*프로젝트 현황 차트!!*/
 			
 			/*업무 담당 차트! */
@@ -686,109 +797,67 @@
  	 			}
  			});
  			
-			/* 업무 중요도별 담당자 비중*/
+			/* 중요도별 업무 비중*/
+			
+			var important1 = new Array();
+			var important2 = new Array();
+			var important3 = new Array();
+			var important4 = new Array();
+			var important5 = new Array();
+			var importance = new Array();
+			
+			
 			$.ajax({
- 	 			url:"ajax/project/getTaskImportantChart.do",
+ 	 			url:"ajax/project/getMemberTaskChart.do",
  				data: {'pjtSeq' : pjtSeq } ,
  				dataType: "json",
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
- 	 				console.log('중요도');
  	 				console.log(responseData);
- 	 				console.log('프로젝트 참여자?'+pjtMember);
+ 	 				$.each(responseData, function(index, element){
+ 	 					if(element.important == 1){
+ 	 	 					important1.push(element);
+ 	 	 	 			} else if(element.important == 2){
+ 	 	 	 				important2.push(element);
+ 	 	 	 	 		} else if(element.important == 3){
+ 	 	 	 				important3.push(element);
+ 	 	 	 	 		} else if(element.important == 4){
+ 	 	 	 				important4.push(element);
+ 	 	 	 	 		} else {
+ 	 	 	 	 			important5.push(element);
+ 	 	 	 	 	 	}
+ 	 	 			});
+
+ 	 				importance = [important5.length, important4.length, important3.length, important2.length, important1.length];
+ 	 				console.log('중요도 array'+importance);
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
 							+ request.responseText + "\n" + "error : " + error);
  				},
  				complete : function() {
-
- 					var ctx = document.getElementById("member-Important");
- 					var myChart = new Chart(ctx, {
+ 					new Chart(document.getElementById("user-Important"), {
  					    type: 'horizontalBar',
  					    data: {
- 					        labels: ["5", "4", "3", "2", "1"],
- 					        
- 					        datasets: [{
- 					            data: [727, 589, 537, 543, 574],
- 					            backgroundColor: "rgba(63,103,126,1)",
- 					            hoverBackgroundColor: "rgba(50,90,100,1)"
- 					        },{
- 					            data: [238, 553, 746, 884, 903],
- 					            backgroundColor: "rgba(163,103,126,1)",
- 					            hoverBackgroundColor: "rgba(140,85,100,1)"
- 					        },{
- 					            data: [1238, 553, 746, 884, 903],
- 					            backgroundColor: "rgba(63,203,226,1)",
- 					            hoverBackgroundColor: "rgba(46,185,235,1)"
- 					        }]
+ 					      labels: ["★★★★★", "★★★★", "★★★", "★★", "★"],
+ 					      datasets: [
+ 					        {
+ 					          label: "업무 개수",
+ 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          data: importance
+ 					        }
+ 					      ]
  					    },
-
  					    options: {
- 					       tooltips: {
- 					          enabled: false
- 					      },
- 					      hover :{
- 					          animationDuration:0
- 					      },
- 					      scales: {
- 					          xAxes: [{
- 					              ticks: {
- 					                  beginAtZero:true,
- 					                  fontFamily: "'Open Sans Bold', sans-serif",
- 					                  fontSize:11
- 					              },
- 					              scaleLabel:{
- 					                  display:false
- 					              },
- 					              gridLines: {
- 					              }, 
- 					              stacked: true
- 					          }],
- 					          yAxes: [{
- 					              gridLines: {
- 					                  display:false,
- 					                  color: "#fff",
- 					                  zeroLineColor: "#fff",
- 					                  zeroLineWidth: 0
- 					              },
- 					              ticks: {
- 					                  fontFamily: "'Open Sans Bold', sans-serif",
- 					                  fontSize:11
- 					              },
- 					              stacked: true
- 					          }]
- 					      },
- 					      legend:{
- 					          display:false
- 					      },
- 					      
- 					      animation: {
- 					          onComplete: function () {
- 					              var chartInstance = this.chart;
- 					              var ctx = chartInstance.ctx;
- 					              ctx.textAlign = "left";
- 					              ctx.font = "9px Open Sans";
- 					              ctx.fillStyle = "#fff";
-
- 					              Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
- 					                  var meta = chartInstance.controller.getDatasetMeta(i);
- 					                  Chart.helpers.each(meta.data.forEach(function (bar, index) {
- 					                      data = dataset.data[index];
- 					                      if(i==0){
- 					                          ctx.fillText(data, 50, bar._model.y+4);
- 					                      } else {
- 					                          ctx.fillText(data, bar._model.x-25, bar._model.y+4);
- 					                      }
- 					                  }),this)
- 					              }),this);
- 					          }
- 					      },
- 					      pointLabelFontFamily : "Quadon Extra Bold",
- 					      scaleFontFamily : "Quadon Extra Bold",
- 					  }
+ 					      legend: { display: false },
+ 					      title: {
+ 					        display: true,
+ 					        text: '중요도별 나의 업무 비중'
+ 					      }
+ 					    }
  					});
+ 					 	 				
  	 			}
  			});
 
@@ -1876,18 +1945,6 @@
 								</div>
 							</section>
 						</div>
-						<div class="col-md-12">
-						<section class="panel">
-								<header class="panel-heading">
-									<h2 class="panel-title">업무 중요도별 담당자 비중</h2>
-								</header>
-								<div class="panel-body">
-									<div class="chart chart-md" style="height:350px">
-										<canvas id="member-Important" style="width:1000px;height:350px;"></canvas>
-									</div>
-								</div>
-							</section>
-						</div>
 						<!-- 프로젝트 업무 비중 -->
 						<div class="row">
 							<div class="col-md-6">
@@ -1906,41 +1963,13 @@
 							<div class="col-md-6">
 								<section class="panel">
 									<header class="panel-heading">
-										<h2 class="panel-title">My Stats</h2>
+										<h2 class="panel-title">중요도별 나의 업무 비중</h2>
 									</header>
 									<div class="panel-body">
-										<section class="panel">
-											<div class="panel-body">
-												<div class="small-chart pull-right" id="sparklineBarDash"></div>
-												<script type="text/javascript">
-													var sparklineBarDashData = [5, 6, 7, 2, 0, 4 , 2, 4, 2, 0, 4 , 2, 4, 2, 0, 4];
-												</script>
-												<div class="h4 text-bold mb-none">488</div>
-												<p class="text-xs text-muted mb-none">Average Profile Visits</p>
-											</div>
-										</section>
-										<section class="panel">
-											<div class="panel-body">
-												<div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-													<div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
-														<strong>Average</strong>
-														<label><span class="percent">45</span>%</label>
-													</div>
-												</div>
-												<div class="h4 text-bold mb-none">12</div>
-												<p class="text-xs text-muted mb-none">Working Projects</p>
-											</div>
-										</section>
-										<section class="panel">
-											<div class="panel-body">
-												<div class="small-chart pull-right" id="sparklineLineDash"></div>
-												<script type="text/javascript">
-													var sparklineLineDashData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
-												</script>
-												<div class="h4 text-bold mb-none">89</div>
-												<p class="text-xs text-muted mb-none">Pending Tasks</p>
-											</div>
-										</section>
+										<!-- Flot: Curves -->
+										<div class="chart chart-md" id="flotDashRealTime">
+											<canvas id="user-Important" width="800" height="450"></canvas>
+										</div>
 									</div>
 								</section>
 							</div>
@@ -1955,8 +1984,8 @@
 
             		 // 현재 프로젝트 번호 불러오기 
             		 let pjtSeq = ${requestScope.project.pjtSeq};
-               		 // 현재 유저 이메일 불러오기
-               		 var nowEmail = '<c:out value= "${pjtMember[0].mail}"/>';
+               		 // 현재 유저 이메일 불러오기 >> 
+               		 var nowEmail = '<c:out value= "${requestScope.user.mail}"/>';
                		 
                		 /* 날짜 포맷 함수 */
                		 Date.prototype.format = function(f) {
@@ -2263,6 +2292,270 @@
 													<span class="input-group-addon">
 														<i class="fa fa-calendar"></i>
 													</span>
+													<input type="hidden" id="tsSeq" name="tsSeq" class="form-control" form="taskEditForm">
+													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
+													<span class="input-group-addon">to</span>
+													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
+													<input type="hidden" id="endTime" name="endTime" class="form-control" form="taskEditForm">
+													<c:if test="${ user.authCode == '2'}">
+														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
+													</c:if>
+												</div>
+											</div>
+										</div>
+										<!-- 담당자 -->
+										<div class="form-group">
+											<label class="col-md-3 control-label">담당자</label>
+											<c:choose>
+												<c:when test="${ user.authCode == '2'}">
+														<div class="col-md-7" style="margin-top: 8px;">
+															<i class="fa fa-user"></i>
+															<h5 id="taskFormName" name="name" form="taskEditForm" style="display:inline;"></h5>
+															<!-- <input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/> -->
+															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
+														</div>
+												</c:when>
+												<c:otherwise>
+														<div class="col-md-7">
+															<select class="form-control" id="taskMemberEditSelect" name="mail" form="taskEditForm">
+																<c:forEach items="${pjtMember}" var="user" varStatus="status">
+																	<option value="${user.mail}">${user.name}</option>
+																</c:forEach>
+															</select>
+														</div>
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<!-- 중요도 pm만 수정 가능! -->
+										<div class="form-group">
+											<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
+											<div class="col-md-6">
+												<div id="starBar">
+												</div>
+												<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
+												<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
+												<input type="hidden" id="taskEditImportant" name="important" form="taskEditForm"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label">진행상황</label>
+											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
+											<div class="col-md-6 btn-group">
+												<button type="button" class="btn btn-default progress-button">예정</button>
+												<button type="button" class="btn btn-default progress-button">진행</button>
+												<button type="button" class="btn btn-default progress-button">테스트</button>
+												<button type="button" class="btn btn-default progress-button">완료</button>
+											</div>
+										</div>
+										<br>
+										<div class="form-group" style="text-align: center;">
+											<button type="button" id="taskEditBtn" class="btn btn-default" style="background-color: #34495e; color:white;" form="taskEditForm">수정</button>
+										</div>	
+									</form>
+									</div>
+								</div>
+								<!-- 속성 Tab 끝-->
+								
+								<!-- 상세업무 Tab-->
+								<div class="tab-pane" id="detail">
+									<div class="panel-body" style="padding-top: 0px;">
+                                         <ul class="widget-todo-list" id="taskDetailList">
+                                           <!--  <li style="padding-bottom:10px;">
+	                                            <div style="margin-left:10px;" >
+		                                            <span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
+		                                            <label class="taskDetail-label" style="cursor:pointer"><span>업무상세</span></label>
+					 								<input type="hidden" name="tdSeq" value="">
+				 								</div>
+				 								
+				 								업무 상세 아이콘
+			 									<div class="todo-actions">
+			 										<input type="hidden" name="tdSeq" value="">
+							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskDetailEdit(this)">
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>&nbsp;&nbsp;&nbsp;
+							 						<a style="cursor: pointer" onclick="taskDetailDelete(this)">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+							 					
+				 								업무 상세 수정 창
+				 								<div class="taskDetail-Edit" style="display:none">
+					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
+														<div class="form-group">
+															<div class="col-sm-12">
+																<div class="input-group mb-md">
+																	<input type="hidden" form="editTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
+																	<input type="text" id="tdContent" name="tdContent"  class="form-control" form="editTaskDetailForm">
+																	<div class="input-group-btn" style="padding:0;">
+																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+							 					</div>
+			 								</li> -->
+                                          </ul>                                       	
+										<hr class="solid mt-sm mb-lg">
+											<form action="#" id="addTaskDetailForm" method="post" class="form-horizontal form-bordered">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<div class="input-group mb-md">
+															<input type="hidden" form="addTaskDetailForm" id="addTaskDetailTskSeq" name="tskSeq"/>
+															<input type="text" id="addTdContent" name="tdContent"  class="form-control" form="addTaskDetailForm" placeholder="상세 업무를 추가해주세요">
+															<div class="input-group-btn" style="padding:0;">
+																<button type="button" class="btn btn-primary" tabindex="-1" id="addTaskDetailBtn" form="addTaskDetailForm"><span style="font-size:18px;">+</span></button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+									</div>
+								</div>
+								<!-- 상세업무 Tab 끝-->
+								
+								<!-- 체크리스트 Tab -->
+								<div class="tab-pane" id="checkList">
+									<div class="panel-body" style="padding-top: 0px;" id="taskCheckListDiv">
+										<ul class="widget-todo-list" id="taskCheckList">
+											<li>
+												<div class="checkbox-custom checkbox-default">
+								 					<input type="checkbox" id="todoListItem7" onclick="checkLine(this)">
+								 					<label for="todoListItem7" class="check-label">
+								 						<span>체크체크~!~!~!~!</span>
+								 					</label>
+					 							</div>
+					 							<!-- 수정 & 삭제 아이콘 -->
+							 					<div class="todo-actions">
+							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskCheckListEdit(this)">
+							 							<i class="fa  fa-pencil"></i>
+							 						</a>&nbsp;&nbsp;&nbsp;
+							 						<a style="cursor: pointer" onclick="taskCheckListDelete(this)">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+							 					<!-- 수정창 -->
+							 					<div class="checkList-Edit" style="display:none">
+					 								<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
+														<div class="form-group">
+															<div class="col-sm-12">
+																<div class="input-group mb-md">
+																	<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>
+																	<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>
+																	<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">
+																	<div class="input-group-btn" style="padding:0;">
+																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+							 					</div>
+				 							</li>
+											 <!-- 템플릿 원본 
+											 <li>
+												<div class="checkbox-custom checkbox-default">
+								 					<input type="checkbox" id="todoListItem1" class="todo-check">
+								 					<label class="todo-label" for="todoListItem1"><span>체크체크</span></label>
+					 							</div>
+							 					<div class="todo-actions">
+							 						<a class="todo-remove" href="#">
+							 							<i class="fa fa-times"></i>
+							 						</a>
+							 					</div>
+				 							</li> -->
+										</ul>
+									<!-- 체크리스트 추가(일반 회원만 보임) -->
+									<c:if test="${ user.authCode == '2'}">
+										<form id="addTaskCheckListForm" method="get" class="form-horizontal form-bordered">
+											<hr class="solid mt-sm mb-lg">
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="input-group mb-md">
+														<input type="text" class="form-control" form="addTaskCheckListForm" name="content" id="content">
+														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
+														<div class="input-group-btn" style="padding:0;">
+															<button type="button" class="btn btn-primary" id="addTaskCheckListBtn" tabindex="-1"><span style="font-size:18px;">+</span></button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</c:if>
+								</div>
+							</div>
+							
+							<!-- 체크리스트 Tab 끝-->
+							
+							<!-- Modal Content 끝 -->
+							
+							<!-- Modal Footer -->
+								<div class="modal-footer" style="border-top-width: 0px;">
+									<div class="row">
+										<div class="col-md-4">
+										</div>
+										<div class="col-md-4 text-center">
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+										<div class="col-md-4">
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal Footer 끝 -->
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- 내 업무 모달 -->
+				<div class="modal fade" id="myTaskDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		   		<div class="modal-dialog cascading-modal" role="document">
+						<div class="modal-content">
+						<!-- Modal Header -->
+							<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-bottom: 0px;border-bottom-width: 0px;">
+								<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+									<div style="margin-top: 20px;margin-bottom: 25px;">
+										<span><i class="fa fa-tasks"></i></span>&nbsp;&nbsp;<h4 class="modal-title" id="taskDetailTitle" style="display:inline"></h4>
+									</div>
+								<div class="tabs tabs-primary">
+									<ul class="nav nav-tabs nav-justified">
+										<li class="active">
+											<a href="#attribute" data-toggle="tab">속성</a>
+										</li>
+										<li>
+											<a href="#detail" data-toggle="tab">상세업무</a>
+										</li>
+										<li>
+											<a href="#checkList" data-toggle="tab">체크리스트</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- 속성 Tab -->
+							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
+								<div class="tab-pane active" id="attribute">
+								<div class="panel-body" style="padding-top: 0px;">
+									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
+										<!-- 업무 pm만 수정 가능-->
+										<c:if test="${ user.authCode == '3'}">
+											<div class="form-group">
+													<label class="col-md-3 control-label">업무</label>
+													<div class="col-md-7">
+														<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
+													</div>
+											</div>
+										</c:if>
+										<!-- 날짜 -->
+										<div class="form-group">
+											<label class="col-md-3 control-label">날짜</label>
+											<div class="col-md-7">
+												<div class="input-daterange input-group" data-plugin-datepicker>
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="hidden" id="tsSeq" name="tsSeq" class="form-control" form="taskEditForm">
 													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
 													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
 													<span class="input-group-addon">to</span>

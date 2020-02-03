@@ -23,7 +23,7 @@ public class Task {
     private String mail;
     private int pjtSeq;
     private String name;//담당자 이름  vo에만 추가
-    private int schSeq; //스케쥴 seq vo에만 추가
+    private int tsSeq; //업무 일정 테이블seq vo 에만 추가
     
     public void setStartAt(String startAt) {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

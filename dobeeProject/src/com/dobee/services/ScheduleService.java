@@ -64,6 +64,18 @@ public class ScheduleService {
     	int result = 0;
     	result = scheduledao.addTaskSchedule(pjtSeq, schSeq, tskSeq);
     	return result;
+    }
+    
+    //프로젝트 업무 일정 있는지 없는지 체크 --02.02 알파카
+    public boolean getTsSeq(int tskSeq) {
+    	boolean checkTsseq = false;
+    	int tsseq = 0;
+    	ScheduleDao scheduledao = sqlSession.getMapper(ScheduleDao.class);
+    	tsseq = scheduledao.getTsSeq(tskSeq);
+    	if(tsseq > 0 ) { //기존에 등록된 업무 일정 번호가 있다면
+    		checkTsseq = true;
+    	}
+    	return checkTsseq;
     	
     }
     

@@ -224,9 +224,15 @@ public class AjaxController_Project {
 	public Task getTask(int tskSeq) {
 		System.out.println("AjaxController_Project getTask() in");
 		Task task = new Task();
-		task = projectService.getTask(tskSeq);
-		return task;
 		
+		boolean checkTsseq = scheduleService.getTsSeq(tskSeq); //업무 일정 번호가 있는지 없는지 체크
+		System.out.println("업무 일정 번호 있니?"+checkTsseq);
+		if(checkTsseq) { //업무 일정 번호가 있다면
+			task = projectService.getTaskAndSchedule(tskSeq);
+		} else {
+			task = projectService.getTask(tskSeq);
+		}
+		return task;
 	}
 	
 	//업무 삭제 --01.23 알파카
@@ -453,26 +459,6 @@ public class AjaxController_Project {
 		return map;
 		
 	}
-	
-	///* 업무 중요도별 담당자 비중*/
-	@RequestMapping("getTaskImportantChart.do")
-	public Map<String, List<Integer>> getTaskImportantChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
-		Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
-		//프로젝트에 속한 멤버 정보 가져오기
-		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
-		for(int i = 0;i<pjtMember.size(); i++) {
-			String pjtMemberName = pjtMember.get(i).getName();
-			String pjtMemberMail = pjtMember.get(i).getMail();
-			List<Task> taskList = projectService.getMemberTask(Integer.parseInt(pjtSeq), pjtMemberMail);
-			List<Integer> result = new ArrayList<Integer>();
-			
-			//int result = projectService.getMemberTaskCount(Integer.parseInt(pjtSeq), pjtMemberMail);
-			//map.put(pjtMemberName, taskList);
-		}
-		
-		return null;
-	}
-	
 	
 	//프로젝트 업무 할당 차트
 	@RequestMapping("getTaskAssignmentChart.do")
