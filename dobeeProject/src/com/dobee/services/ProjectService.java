@@ -43,6 +43,14 @@ public class ProjectService {
         return pjtList;
     }
     
+    //특정 회원의 완료된 프로젝트 리스트 가져오기
+    public List<Project> getCompletedPjtList(String mail){
+    	List<Project> pjtList = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	pjtList = projectdao.getCompletedPjtList(mail);
+        return pjtList;
+    }
+    
     //특정 프로젝트의 진행률 구하기
     public int getPjtProgressRate(int pjtSeq) {
     	int allTaskCount = 0;
@@ -79,13 +87,20 @@ public class ProjectService {
     	return result;
     }
 
-    
-    //모든 프로젝트 가져오기
-    public List<Project> getAllPjtList() {
-    	List<Project>list = null;
+    //모든 진행중인 프로젝트 리스트 가져오기 pm 회원용
+    public List<Project> getAllInProgressPjtList() {
+    	List<Project> pjtList = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	list = projectdao.getAllPjtList();
-    	return list;
+    	pjtList = projectdao.getAllInProgressPjtList();
+    	return pjtList;
+    }
+    
+    //모든 진행중인 프로젝트 리스트 가져오기 pm 회원용
+    public List<Project> getAllCompletedPjtList() {
+    	List<Project> pjtList = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	pjtList = projectdao.getAllCompletedPjtList();
+    	return pjtList;
     }
     
     //특정 프로젝트 가져오기

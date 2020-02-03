@@ -242,10 +242,11 @@ function noticeDel () {
 							<span id="total-characters"></span> <span id="max"></span>
 						</div>
 						<div class="text-right" style="margin:30px">
-							<a class="btn btn-primary mr-3" href="noticeModify.do?notSeq=${notice.notSeq}">수정</a>
-							<span class="btn btn-primary mr-3" style="cursor:pointer" onclick="noticeDel();">삭제</span>
-							<!-- <a id="noticeDel" class="btn btn-primary mr-3" href="#">삭제</a>  -->
-							<!-- noticeDel.do?notSeq=${notice.notSeq} -->
+							<!-- 관리자만 버튼 추가해주기 -->
+							<c:if test="${ user.authCode == '1'}">
+								<a class="btn btn-primary mr-3" href="noticeModify.do?notSeq=${notice.notSeq}">수정</a>
+								<span class="btn btn-primary mr-3" style="cursor:pointer" onclick="noticeDel();">삭제</span>
+							</c:if>
 							<a class="btn btn-primary mr-3" href="noticeList.do">목록</a>
 						</div>
 						</div>

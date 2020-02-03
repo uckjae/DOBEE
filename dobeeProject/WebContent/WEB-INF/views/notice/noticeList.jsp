@@ -114,12 +114,12 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	
-	
-	<p class="article-comment margin-small">
-		<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
-	</p>
-	
+	<!-- 관리자만 글쓰기 버튼 추가해주기 -->
+	<c:if test="${ user.authCode == '1'}">
+		<p class="article-comment margin-small">
+			<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
+		</p>
+	</c:if>
 	
 		</div> <!--테이블 div종료  -->
 		</section>
