@@ -38,16 +38,12 @@ public class MemberService {
     	userDao.resetPwd(user);
     }
 
-
-    //출근
-    public void onWork(){
-
-    }
-
-
-    //퇴근
-    public void offWork(){
-
+    //출근한 팀원 목록 가져오기 02.02 알파카
+    public List<User> getOnWorkTeamMember(User user){
+    	List<User> onWorkTeamMemberList = null;
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	onWorkTeamMemberList = userDao.getOnWorkTeamMember(user);
+    	return onWorkTeamMemberList;
     }
 
     /* 01.23 알파카 */
