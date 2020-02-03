@@ -148,11 +148,28 @@ public class DoController {
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
     	
+    	//출근한 팀원 가져오기 ~!~! 02.03 알파카
+    	System.out.println("너의 정보는?" + user.toString());
+    	System.out.println("너의 팀코드는?" + user.getTeamCode());
+    	List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
+    	
+    	model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
+    	
+    	System.out.println("팀우너 가져오니?" + onWorkTeamMemberList.toString());
+    	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
     	System.out.println("utList : "+ utList);
     	model.addAttribute("utList", utList);
     	
+    	
+    	//공지사항 최신글 가져오기 02.03 알파카
+    	List<Notice> recentNoticeList = noticeService.getRecentNotice();
+    	model.addAttribute("recentNoticeList", recentNoticeList);
+    	
+    	//로그인한 회원이 참여중인 프로젝트 목록 가져9오기
+    	List<Project>list = projectService.projectList(user.getMail());
+    	model.addAttribute("list", list);
         return "main/main";
     }
 

@@ -106,6 +106,13 @@
 		UPDATE ATTEND SET OFFTIME = CURRENT_TIMESTAMP() WHERE ATTSEQ = #{attSeq}	
 	</update>
 
+	<!-- 출근한 팀뤈 가져오기 02.03 알파카 -->
+	<select id="getOnWorkTeamMember" resultType="com.dobee.vo.member.User">
+		SELECT U.MAIL, U.NAME, U.MYPIC 
+		FROM USER U JOIN ATTEND A 
+		ON U.MAIL=A.MAIL 
+		WHERE U.TEAMCODE={teamCode} AND A.ATTCODE=1 AND OFFTIME IS NULL AND U.MAIL!=#{mail}
+	</select>
 	
 	<!-- Ajax 신청코드 불러오기 -->
 	<select id="getApyCode" resultType="com.dobee.vo.ApplyCode">
