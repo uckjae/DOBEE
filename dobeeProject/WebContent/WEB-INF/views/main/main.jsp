@@ -228,7 +228,7 @@ console.log("MAIN!!");
 													<tr>
 														<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
 														<td class="nsContent" style="text-align: center;">
-														<a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
+														<a href="noticeDetail.do?notSeq=${n.notSeq}" style="text-decoration: none;">${n.title}</a>
 														</td>
 														<td class="startTime" style="text-align: center;">
 														  <fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
@@ -261,19 +261,19 @@ console.log("MAIN!!");
 												</tr>
 											</thead>
 											<tbody>
-											<c:forEach items="${list}" var="n" varStatus="status">
-													<tr>
-														<td>${status.index + 1}</td>
-														<td>${n.pjtName}</td>
-														<td><span class="label label-success">${n.pjtProgress}</span></td>
-														<td>
-															<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-																<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	100%
+												<c:forEach items="${requestScope.pjtList}" var="pjtList" varStatus="status">
+														<tr>
+															<td>${status.index + 1}</td>
+															<td><a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
+															<td><span class="label label-success">${pjtList.pjtProgress}</span></td>
+															<td>
+																<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+																	<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+																		100%
+																	</div>
 																</div>
-															</div>
-														</td>
-													</tr>
+															</td>
+														</tr>
 												</c:forEach>
 											</tbody>
 										</table>
