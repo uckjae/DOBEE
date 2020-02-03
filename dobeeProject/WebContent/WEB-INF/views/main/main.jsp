@@ -143,7 +143,6 @@ console.log("MAIN!!");
 									<a href="#" class="fa fa-caret-down"></a>
 									<a href="#" class="fa fa-times"></a>
 								</div>
-	
 								<h2 class="panel-title">
 									<span class="va-middle"><i class="fa fa-check"></i>&nbsp;마감이 임박한 업무</span>
 								</h2>
@@ -151,22 +150,16 @@ console.log("MAIN!!");
 									
 							<div class="panel-body">
 								<ul class="widget-todo-list">	
-									
 									<c:forEach items="${utList}" var="utl">
 										<li>
 											<div class="checkbox-custom checkbox-default">
-												<label class="todo-label" for="todoListItem1">
-													<span>${utl.title }</span></a>
+												<label class="todo-label">
+													<span>${utl.title }</span>
 													<p class="text-xs text-muted mb-none">${utl.pjtName }</p>
 												</label>
-												
-											</div>
-											<div class="todo-actions">
-												<a class="todo-remove" href="pjtKanban.do?pjtSeq=${utl.pjtSeq}"> <i class="fa-chevron-right"></i>
-												</a>
 											</div>
 										</li>
-									</c:forEach>	
+									</c:forEach>
 								</ul>
 							</div>
 							<div class="panel-footer" style="height:55px;">
@@ -192,7 +185,7 @@ console.log("MAIN!!");
 													<%-- <img src="img/${teamMember.myPic}" alt="Joseph Doe Junior" class="img-circle"> --%>
 												</figure>
 												<span class="title">${teamMember.name}</span>
-												<span class="message truncate">${teamMember.name}</span>
+												<span class="message truncate">${teamMember.mail}</span>
 											</li>
 										</c:forEach>
 										</ul>
@@ -266,13 +259,18 @@ console.log("MAIN!!");
 															<td>${status.index + 1}</td>
 															<td><a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
 															<td><span class="label label-success">${pjtList.pjtProgress}</span></td>
-															<td>
-																<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-																	<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																		100%
-																	</div>
-																</div>
-															</td>
+															<c:forEach items="${requestScope.progressRate }" var="progressRate" varStatus="status">
+																<c:if test="${pjtList.pjtName == progressRate.key }">
+																	<td>
+																		<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+																			<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:${progressRate.value}%";">
+																				${progressRate.value}%
+																			</div>
+																			
+																		</div>
+																	</td>
+																</c:if>
+															</c:forEach>	
 														</tr>
 												</c:forEach>
 											</tbody>
