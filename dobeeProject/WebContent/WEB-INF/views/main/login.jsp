@@ -51,7 +51,7 @@
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                                 <a href="findId.do">메일 찾기 /</a>                           
-                                <a href="findPassWord2.do">비밀번호 찾기</a>
+                                <a href="findPassWord.do">비밀번호 찾기</a>
                             </div>
                         </form>
                        <!--  <div class="other-links">
