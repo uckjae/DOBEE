@@ -192,7 +192,7 @@
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
-				/* $("#addPMTaskForm").submit(); */
+				$("#addPMTaskForm").submit();
 			});
 
 
