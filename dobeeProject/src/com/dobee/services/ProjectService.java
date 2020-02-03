@@ -43,6 +43,21 @@ public class ProjectService {
         return pjtList;
     }
     
+    //특정 프로젝트의 진행률 구하기
+    public int getPjtProgressRate(int pjtSeq) {
+    	int allTaskCount = 0;
+    	int completedTaskCount = 0;
+    	int result = 0;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	allTaskCount = projectdao.getAllTaskCount(pjtSeq);
+    	completedTaskCount = projectdao.getCompletedTaskCount(pjtSeq);
+    	System.out.println("전체 갯수?"+allTaskCount);
+    	System.out.println("완료된 갯수?"+completedTaskCount);
+    	result = (completedTaskCount *100 /allTaskCount);
+    	System.out.println("진행률 서비스 탄다~!~!"+result);
+    	return result;
+    }
+    
 
 
     //프로젝트추가
