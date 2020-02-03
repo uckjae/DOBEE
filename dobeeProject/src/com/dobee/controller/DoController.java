@@ -153,7 +153,6 @@ public class DoController {
     	List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
     	model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
     	
-    	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
     	System.out.println("utList : "+ utList);
@@ -163,8 +162,8 @@ public class DoController {
     	List<Notice> recentNoticeList = noticeService.getRecentNotice();
     	model.addAttribute("recentNoticeList", recentNoticeList);
     	
-    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
     	
@@ -272,7 +271,7 @@ public class DoController {
 		model.addAttribute("list",list);
 		
 		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     
         return "notice/noticeList";
@@ -289,7 +288,7 @@ public class DoController {
         
         User user = (User) request.getSession().getAttribute("user");
         //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+        List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
         int noticeCount = 0;
@@ -371,7 +370,7 @@ public class DoController {
     public String noticeWrite(HttpServletRequest request, Model model){
     	User user = (User) request.getSession().getAttribute("user");
         //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
         return "notice/noticeWrite";
@@ -452,7 +451,7 @@ public class DoController {
         
         User user = (User) request.getSession().getAttribute("user");
         //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+        List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
     	
@@ -674,7 +673,7 @@ public class DoController {
     public String absApply(HttpServletRequest request, Model model){
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	User user = (User) request.getSession().getAttribute("user");
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
         return "attend/breakApply";
     }
@@ -687,7 +686,7 @@ public class DoController {
     public String getEditApply (HttpServletRequest request, Model model, Apply apply, Authentication auth, Integer aplSeq) {
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	User user = (User) request.getSession().getAttribute("user");
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
     	apply.setAplSeq(aplSeq);
@@ -722,6 +721,7 @@ public class DoController {
     // 연장근무 신청 GET          0110 게다죽
     @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
     public String overTiemApply(){
+    	
         
         return "attend/extendApply";
     }
@@ -914,7 +914,7 @@ public class DoController {
     	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
     	
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
 
@@ -931,19 +931,11 @@ public class DoController {
         
     }
     
-    //프로젝트 현황 불러오기 pjtDashBoard.do
-    @RequestMapping("pjtDashBoard.do")
-    public String pjtDashBoard(Model model, HttpServletRequest request) {
-    	User user = (User) request.getSession().getAttribute("user");
-    	List<Project>list = null;
-    	list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
-    	model.addAttribute("list",list);
-    	return "project/pjt_dashboard";
-    }
     
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
+    	
     	int result = projectService.addPMTask(task);
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }

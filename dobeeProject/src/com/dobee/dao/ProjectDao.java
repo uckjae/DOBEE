@@ -29,6 +29,9 @@ public interface ProjectDao {
     //특정 회원이 속한 프로젝트 목록 가져오기
     public List<Project> getPjtList(String mail);
     
+    //특정 회원이 속한 진행중인 프로젝트 목록 가져오기
+    public List<Project> getInProgressPjtList(String mail);
+    
     //특정 프로젝트 가져오기
     public Project getPjt(int pjtSeq);
     
