@@ -1,6 +1,6 @@
 package com.dobee.services;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dobee.dao.UserDao;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
+import com.dobee.vo.member.UserInfo;
 
 @Service
 public class MemberService {
@@ -180,5 +181,15 @@ public class MemberService {
     	result = userDao.addTeamList(tl);
     	
     	return result;
-    }
+    };
+    
+    
+    //사원 등록시 이메일 중복 확인 아작스
+    public ArrayList<UserInfo>checkEmail(String mail) {
+    	ArrayList<UserInfo> list = new ArrayList<>();
+    	UserDao userDao = sqlSession.getMapper(UserDao.class);
+    	list = userDao.checkEmail(mail);
+    	
+    	return list;
+    };
 }

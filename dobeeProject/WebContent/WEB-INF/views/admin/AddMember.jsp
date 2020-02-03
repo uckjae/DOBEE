@@ -8,7 +8,54 @@
 <c:import url="/common/HeadTag.jsp"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-		// 모든 inputTag 빈칸 없나 검사
+		// email 유효성 검사 함수
+		// 이메일 최종 유효성 결과값 전역 변수
+		var finalCheckEmail = false;
+		function vailEmail(sendData){
+			jsonData = {
+				"mail":sendData
+					};
+			
+			$.ajax({
+				url:"ajax/admin/checkEmail.do",
+				type:"POST",
+				data:jsonData,
+				success:function(data){
+						//데이타 받을 후 email 중복되었는지 글씨로 표시해줌
+						//보낸 데이터의 길이가 0 보다 크면 중복임
+						if(data.length > 0){
+								$('#emailVail').empty();
+								$('#emailVail').append("해당 이메일은 이미 사원으로 등록되어있습니다.");
+								 // 이메일 최종 유효성 결과값 전역 변수
+								finalCheckEmail = false; 
+								console.log(data.length);
+							}else{  // 여기로 오면 일단 중복은 아님
+								let result = false;
+								let email = $("#formMail").val();
+								result = inputVailEmail(email); // 이 함수가 유효성 검사하는 함수
+								console.log("else문 " + data.length);
+								if(result){// 유효성 검사도 통과하면 등록가능 표시
+									$('#emailVail').empty();
+									$('#emailVail').append("해당 이메일은 등록 가능합니다.");
+									finalCheckEmail = true;
+								}else{  //중복은 아니나 유효성 통과 못하면 뜨는 메시지
+									$('#emailVail').empty();
+									$('#emailVail').append("이메일을 'abc@gmail.com' 형태로 입력해주세요.");
+									finalCheckEmail = false;
+								}
+							}
+					},
+				complete:function(){
+
+						
+					},
+
+				error:function(){
+						console.log("이메일 중복 확인 아작스 실패");
+
+					}
+			});
+		};
 		
 
 		// 유효성 검사
@@ -23,11 +70,6 @@
 		// 고용상태 / 고용 / 권한코드 / 팀 선택 빈 칸이나 "선택하세요" 상태로 등록되지 않게 하기
 		function emptySelectCheck(){
 			if($("#emp").val() =='' || $("#serve").val() ==''|| $("#authCode").val() =='' || $("#teamCode").val() ==''){
-			 	console.log($("#emp").val());
-			 	console.log($("#serve").val());
-			 	console.log($("#authCode").val());
-			 	console.log($("#teamCode").val());
-			 	
 				 fourCheck = false;
 				}else{
 				 fourCheck = true;
@@ -67,9 +109,9 @@
 							emailCheck = true;
 						}else{
 							console.log("메일 유효성 불통");
-							alert("메일을 'abc@google.com' 형식으로 적어주세요.");
 							emailCheck = false;
 						}
+						return emailCheck;
 				};
 
 			
@@ -121,8 +163,9 @@
 			});
 			
 		});
-
+		let count = 0 ;
 		function sendMail (callback){
+			
 				return new Promise(function(resolve,reject){
 					console.log("sendMail()");
 					console.log($('#formMail').val());
@@ -136,6 +179,7 @@
 						method: "POST",
 						success: function(response){
 							console.log("메일 발송 완료");
+							console.log(count++);
 							resolve(response)
 						},
 						error: function(jqXHR, textStatus, errorThrown){
@@ -150,8 +194,6 @@
 			emptySelectCheck(); // 셀렉트 유효성 검사 하고
 			emptyNameCheck();	// 이름 칸 빈칸인지 확인하고
 
-			console.log("다음 확인");
-			console.log($("#forName").val());
 
 			//이름 검사
 			if(nameCheck == true){
@@ -172,7 +214,7 @@
 					return;
 				}
 			//메일 유효성 검사
-			if(emailCheck==true){
+			if(finalCheckEmail==true){
 					console.log("메일 유효성 통과");
 				}else{
 					console.log("메일 유효성 불통");
@@ -263,7 +305,8 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="mail">사원&nbsp;E-mail</label>
 												<div class="col-md-6">
-													<input class="form-control" id="formMail" name="mail" type="email" form="addUserForm" >
+													<input class="form-control" id="formMail" name="mail" onKeyup="vailEmail($(this).val());" type="email" autocomplete=”off” form="addUserForm" >
+													<span id="emailVail" style="color:red"></span>
 												</div>
 											</div>
 											<div class="form-group">
@@ -363,11 +406,6 @@
 	});
 
 
-	//email포커스 아웃 되면 유효성 검사하기
-	var mailInput = $("#formMail");
-	mailInput.blur(function(){
-		  inputVailEmail($("#formMail").val());
-	});
 	
 	</script>
 </html>
