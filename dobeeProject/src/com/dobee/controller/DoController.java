@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -148,10 +149,21 @@ public class DoController {
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
     	
+    	//출근한 팀원 가져오기~!~! 02.03 알파카
+    	System.out.println("너의 정보는?"+user.toString());
+    	System.out.println("너의 팀코드는?"+user.getTeamCode());
+    	List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
+    	
+    	model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
+    	
+    	System.out.println("팀원 가져오니?"+onWorkTeamMemberList.toString());
+    	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
     	System.out.println("utList : "+ utList);
     	model.addAttribute("utList", utList);
+    	
+    	//공지사항 최신글 가져오기
     	
         return "main/main";
     }
