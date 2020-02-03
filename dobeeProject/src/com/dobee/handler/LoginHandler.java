@@ -47,11 +47,11 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
         String mail = auth.getName();
         System.out.println("loginHandler auth.getName()" + mail);
         User user = userDao.getUser(mail);
-        
         // 로그인 시 출 퇴근 여부확인 (null => 퇴근 완료 // attSeq not null => 출근 완료)		0126 게다죽
-        String isWork = userDao.isWork(auth.getName());
-        user.setIsWork(isWork);
-        
+        if(user.getAuthCode() != 1) {
+	        String isWork = userDao.isWork(auth.getName());
+	        user.setIsWork(isWork);
+        }
         System.out.println("user.toString() 확인 : " + user.toString());
         
         request.getSession().setAttribute("user", user);
