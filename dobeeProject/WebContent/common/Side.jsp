@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <aside id="sidebar-left" class="sidebar-left">
 	<div class="sidebar-header">
@@ -43,12 +44,8 @@
 							<li><a href="paymentChart.do">비용차트</a></li>
 						</ul>
 					</li>
-					<li class="nav-parent">
-						<a><i class="fa fa-tasks" aria-hidden="true"></i><span>프로젝트</span></a>
-						<ul class="nav nav-children">
-							<li><a href="pjtMain.do?mail=${user.mail}"> 메인 </a></li>
-							<li><a href="pjtDashBoard.do?mail=${user.mail}">프로젝트 현황 </a></li>
-						</ul>
+					<li>
+						<a href="pjtMain.do?mail=${user.mail}"><i class="fa fa-tasks" aria-hidden="true"></i><span>프로젝트</span></a>
 					</li>
 					<li>
 						<a href="chat.do">
@@ -66,9 +63,9 @@
 				</div>
 				<div class="widget-content">
 					<ul class="list-unstyled m-none">
-						<li><a href="#">JSOFT HTML5 Template</a></li>
-						<li><a href="#">Tucson Template</a></li>
-						<li><a href="#">JSOFT Admin</a></li>
+						<c:forEach items="${requestScope.pjtList}" var="pjtList" varStatus="status">
+							<li><a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}">${pjtList.pjtName}</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

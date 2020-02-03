@@ -164,8 +164,8 @@ public class DoController {
     	model.addAttribute("recentNoticeList", recentNoticeList);
     	
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project>list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
-    	model.addAttribute("list",list);
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
     	
         return "main/main";
@@ -263,12 +263,17 @@ public class DoController {
     
     //공지사항리스트
     @RequestMapping("noticeList.do")
-    public String noticeList(Notice notice,Model model){
+    public String noticeList(Notice notice, HttpServletRequest request, Model model){
+    	User user = (User) request.getSession().getAttribute("user");
 		List<Notice>list=null;
 		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
 		list=noticedao.noticeList(notice);
 		System.out.println(list);
 		model.addAttribute("list",list);
+		
+		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     
         return "notice/noticeList";
     }
@@ -858,6 +863,10 @@ public class DoController {
     		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	}
     	model.addAttribute("list",list);
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
    
         return "project/pjtMain_new";
     }
@@ -877,6 +886,10 @@ public class DoController {
     	System.out.println("로그인한 사람 나와!"+user.toString());
     	
     	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
 
     	model.addAttribute("user",user);
@@ -1022,7 +1035,6 @@ public class DoController {
     	model.addAttribute("user", user);
     	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	
     	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
@@ -1038,6 +1050,10 @@ public class DoController {
     	
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
     	return "chat/chatMain3";
     }
