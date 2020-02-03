@@ -28,11 +28,21 @@ public class ProjectService {
 
     //특정 회원 프로젝트 리스트 가져오기
     public List<Project> projectList(String mail){
-    	List<Project>list = null;
+    	List<Project> pjtList = null;
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-    	list = projectdao.getPjtList(mail);    	
-        return list;
+    	pjtList = projectdao.getPjtList(mail);    	
+        return pjtList;
     }
+    
+    
+    //특정 회원의 진행중인 프로젝트 리스트 가져오기
+    public List<Project> getInProgressPjtList(String mail){
+    	List<Project> pjtList = null;
+    	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
+    	pjtList = projectdao.getInProgressPjtList(mail);
+        return pjtList;
+    }
+    
 
 
     //프로젝트추가
