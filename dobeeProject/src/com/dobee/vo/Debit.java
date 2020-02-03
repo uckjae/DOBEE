@@ -1,7 +1,6 @@
 package com.dobee.vo;
 
 
-
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,5 +13,4 @@ public class Debit {
     private String nickName;
     private String entry;
     private String valDate;
-    
 }

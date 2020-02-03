@@ -15,11 +15,7 @@
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables.min.css"/>
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables_themeroller.css"/> -->
 	
-<script type="text/javascript">
-		$(document).ready(function() {
-		
-	});
-</script>
+
 
 </head>
 
@@ -27,7 +23,7 @@
 	<section class="body">
 
 		<!-- start: header -->
-		<c:import url="/common/Top.jsp" />
+		<c:import url="/common/TopAdmin.jsp"/>
 		<!-- end: header -->
 
 		<div class="inner-wrapper">
@@ -93,7 +89,8 @@
 											<td>${debitList.name}</td>
 											<td>${debitList.nickName}</td>
 											<td>${debitList.entry}</td>
-											<td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td>
+											<td>${debitList.valDate}</td>
+											<%-- <td><fmt:formatDate value="${debitList.valDate}" pattern="yyyy-MM-dd" /></td> --%>
 											<td class="actions">
 												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>

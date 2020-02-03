@@ -8,6 +8,10 @@
 <c:import url="/common/HeadTag.jsp"/>
 
 <script type="text/javascript">
+	//카드 번호 정규식 
+	var cardReg = new RegExp("^[1-9]{1}[0-9]{3}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
+
+	//날짜 유효성 검사 함수
     function inputValidThru(period) {
 
         // replace 함수를 사용하여 슬래시( / )을 공백으로 치환한다.
@@ -16,7 +20,7 @@
         // 텍스트박스의 입력값이 4~5글자 사이가 되는 경우에만 실행한다.
         if(replaceCard.length >= 4 && replaceCard.length < 5) {
 
-            var inputMonth = replaceCard.substring(0, 2);    // 선언한 변수 month에 월의 정보값을 담는다.
+            var inputMonth = replaceCard.substring(0, 2);      // 선언한 변수 month에 월의 정보값을 담는다.
             var inputYear = replaceCard.substring(2, 4);       // 선언한 변수 year에 년의 정보값을 담는다.
 
 
@@ -65,33 +69,64 @@
         return num;
     };
 
-    // 법인 카드등록 아작스함수 
+	// 카드 번호 유효성 검사 
+    function inputVailCardNum(cardNum){
+    		//최소 19 글자는 적어야 함수가 작동함
+    		if(cardNum.length == 19) {
+    			var cardNumCheck = cardReg.test(cardNum);  //true or false
+				if(cardNumCheck){
+					console.log("카드넘버 유효성 통과");
+				}else{
+					console.log("카드넘버 유효성 불통");
+					alert("카드 번호를 1234-1234-1234-1234 형식으로 입력 해 주세요.");
+				}
+    		}
+        };
+
     
-   function addDebit(){
-	   var form = $('#debitForm');
-	   console.log(" 폼 데이터 확인 " +form);
-       var formData = new FormData(form);
-       let result = 0;
+     //아작스로 보낼 데이타 만들어주는 함수
+   function inputData(){
+		var cardNum  = $("#cardNum").val();
+		var corp  = $("#corp").val();
+		var name  = $("#name1").val();
+		var nickName  = $("#nickName").val();
+		var entry  = $("#entry").val();
+		var valDate  = $("#valDate").val();
+		let sendData = {
+			"cardNum":cardNum,
+			"corp":corp,
+			"name":name,
+			"nickName":nickName,
+			"entry":entry,
+			"valDate":valDate
+		};
+		return sendData;
+	};
+	
+	// 법인 카드등록 아작스함수
+   function addDebit(sendData = inputData()){
+	   var sendData = inputData();
+	  
+       let result = 0;  // 컨트롤단으로 부터 디비등록 되었는지 확인 받는 자료 
 		$.ajax({
 			url:"AdminDebit.do",
 			type:'POST',
-            data: formData,
+            data: sendData,
 			success:function(data){
 					console.log("등록 아작스 성공");
 					console.log(data);
 					result = data;
+					if(result == 0){
+						console.log("아작스는 성공했으나 디비 등록에는 실패");
+					}else{
+						console.log("등록 아작스 성공 && 디비 등록도 성공");
+						// 디비 등록 까지 다 성공했다면, 목록 보여주는 페이지로 이동
+						location.href="ListDebit.do";
+					};
 				},
 
 			complete:function(){
-					console.log("등록 아작스 컴플릿트 함수 : " + result);
-					// result가 0이면 디비 등록 실패
-					if(result == 0){
-						alert("데이터 베이스 등록에 실패하여 등록되지 않습니다.");
-						}else{
-							//디비등록 성공 목록 페이지로 자동 이동
-							alert("데이터 베이스 등록 성공 페이지 이동");
-							location.href="ListDebit.do";
-						}
+					
 				},
 			error:function(){
 					//아작스 실패
@@ -109,7 +144,7 @@
 		<section class="body">
 
 			<!-- start: header -->
-			<c:import url="/common/Top.jsp"/>
+			<c:import url="/common/TopAdmin.jsp"/>
 			<!-- end: header -->
 
 			<div class="inner-wrapper">
@@ -153,19 +188,18 @@
 		                                                			<!--form-row 첫번째 컬럼에서만 보안경고문이 뜸 나중에 js,css 확인 필요 -->
 		                                                        		<div class="form-label-group">
 		                                                        			<label for="name">카드번호</label>
-		                                                            		<input type="text" id="cardNum" name="cardNum" placeholder="1234-1234-1234-1234" class="form-control" autofocus="autofocus" autocomplete="off"/>
+		                                                            		<input type="text" id="cardNum" name="cardNum" class="form-control" onKeyup="inputVailCardNum($(this).val());" placeholder="1234-1234-1234-1234" autofocus="autofocus" autocomplete="off" maxlength="19"/>
 		                                                            		<br>
 		                                                            		<label for="name">카드사</label>
 		                                                            		<input type="text" id="corp" name="corp" class="form-control" placeholder="국민은행" autocomplete="off"/>
 		                                                            		<br>
-		                                                            		
 		                                                        		</div>
 		                                                    		</div>
 		                                                    		
 		                                                			<div class="col-md-6">
 		                                                        		<div class="form-label-group">
 		                                                            		<label for="name">명의자이름</label>
-		                                                            		<input type="text" id="name" name="name" class="form-control" autocomplete="off"/>
+		                                                            		<input type="text" id="name1" name="name" class="form-control" autocomplete="off"/>
 		                                                            		<br>
 		                                                            		<label for="name">카드별칭</label>
 		                                                            		<input type="text" id="nickName" name="nickName" class="form-control" autocomplete="off"/>
@@ -180,7 +214,7 @@
 		                                                    <div class="col-md-6">
 		                                                        <div class="form-label-group">
 		                                                        	<label for="position">유효기간</label>
-		                                                        	<input type="text" id="valDate" name="valDate" class="validThru form-control" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/>
+		                                                        	<input type="text" id="valDate" name="valDate" class="form-control" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/>
 		                                                           <!--  <input type="date" id="valDate" name="valDate" class="form-control" placeholder="유효기간 (ex)MM-yy)"  > -->
 		                                                        </div>
 		                                                    </div>

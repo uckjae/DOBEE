@@ -43,10 +43,15 @@
 		          processResults: function (data) {
 		        	  	var arr = []
 			          	var res = $.each(data, function(index, item) {
-			          		arr.push({
-	                            id: item.mail,
-	                            text: item.name+"("+item.mail+")"
-	                        })
+				          	//성호 - 프로젝트 생성시 사원 선택 할 때 관리자는 안보이게 하기
+				          	if(item.mail=="admin@gmail.com" || item.mail=="Admin@gmail.com"){
+									continue;
+					          	}else{
+					          		arr.push({
+			                            id: item.mail,
+			                            text: item.name+"("+item.mail+")"
+			                        });
+						        };
 	        	        });
       	       			return {
       	       				results: arr

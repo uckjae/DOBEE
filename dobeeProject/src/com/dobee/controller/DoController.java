@@ -50,7 +50,6 @@ import com.dobee.vo.project.UpcomingTask;
 import com.dobee.vo.schedule.NotSchedule;
 import com.dobee.vo.schedule.Schedule;
 
-// 메롱메롱 ㅎ헿헤헤헤헿
 
 @Controller
 public class DoController {
@@ -186,6 +185,7 @@ public class DoController {
     //관리자 법인카드 목록 뷰단이동 및 불러오기
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
     public ModelAndView adminListDebit() {
+    	System.out.println("카드 리스트 컨트롤단: 왜 갑자기 안되냐 ");
     	ModelAndView mav = new ModelAndView();
     	ArrayList debitList = debitService.listDebit();
     	mav.addObject("debitList", debitList);
