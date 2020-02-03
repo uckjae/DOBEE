@@ -1,20 +1,17 @@
 package com.dobee.controller;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,22 +19,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.MemberService;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
+import com.dobee.vo.member.UserInfo;
 
 
 @RestController
@@ -329,6 +324,16 @@ public class AjaxControllerAdmin {
     	return result;
     }
     
+    
+    // 팀 등록에서 이메일 중복 확인 해주는 아작스
+    @RequestMapping("checkEmail.do")
+    public ArrayList<UserInfo> checkEmail(@RequestParam(value="mail") String mail) {
+    	System.out.println(" 이메일 중복 컨트롤로 오냐 : " + mail);
+    	ArrayList<UserInfo> list = new ArrayList<>();
+    	list = memberService.checkEmail(mail);
+    	
+    	return list;
+    };
 }
 
 

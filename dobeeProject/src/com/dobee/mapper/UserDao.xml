@@ -444,4 +444,9 @@
 		insert into teamlist (teamcode, teamname) values ( #{teamCode} , #{teamName} )
 	</insert>
 	
+	<!-- 사원 등록 Email 중복 확인 -->
+	<select id="checkEmail" parameterType="String" resultType="com.dobee.vo.member.UserInfo">
+		select mail from userinfo where mail = #{mail}
+	</select>
+	
 </mapper>
