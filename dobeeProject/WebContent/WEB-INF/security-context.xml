@@ -21,8 +21,18 @@
 							authentication-failure-url="/login.do?error"/>
 		
 		<security:intercept-url pattern="/login.do" access="permitAll"/>					
+		<security:intercept-url pattern="/findPassWord.do" access="permitAll"/>					
+		<security:intercept-url pattern="/findId.do" access="permitAll"/>					
+		<security:intercept-url pattern="/noAuthority.jsp" access="permitAll"/>					
   		<security:intercept-url pattern="/main.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
-  		<security:intercept-url pattern="/admin/*" access="ROLE_ADMIN"/>
+  		<security:intercept-url pattern="/attend/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/chat/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/mypage/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/notice/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/payment/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/project/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/schedule/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/admin*.do" access="hasRole('ROLE_ADMIN')"/>
   		
   		<security:logout 
   			

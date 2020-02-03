@@ -52,6 +52,10 @@ public interface UserDao {
     	
     // 퇴근하기	
     public int offWork(Integer attSeq);	
+    
+    
+    //자신을 제외하고 출근한 팀원 가져오기
+    public List<User> getOnWorkTeamMember(User user);
 	
 	
     //부재		일단 남겨놓고	

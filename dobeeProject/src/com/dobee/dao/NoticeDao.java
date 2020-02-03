@@ -46,4 +46,7 @@ public interface NoticeDao {
     //공지사항 조회수 --01.21 알파카
     public int noticeCount(int notSeq);
     
+    //공지사항 최신글 가져오기 (메인용) --02.03 알파카 getRecentNotice
+    public List<Notice> getRecentNotice();
+    
 }

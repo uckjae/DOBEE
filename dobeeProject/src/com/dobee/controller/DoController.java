@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -148,10 +149,24 @@ public class DoController {
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
     	
+    	//출근한 팀원 가져오기~!~! 02.03 알파카
+    	List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
+    	model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
+    	
+    	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
     	System.out.println("utList : "+ utList);
     	model.addAttribute("utList", utList);
+    	
+    	//공지사항 최신글 가져오기 02.03 알파카
+    	List<Notice> recentNoticeList = noticeService.getRecentNotice();
+    	model.addAttribute("recentNoticeList", recentNoticeList);
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
     	
         return "main/main";
     }
@@ -248,12 +263,17 @@ public class DoController {
     
     //공지사항리스트
     @RequestMapping("noticeList.do")
-    public String noticeList(Notice notice,Model model){
+    public String noticeList(Notice notice, HttpServletRequest request, Model model){
+    	User user = (User) request.getSession().getAttribute("user");
 		List<Notice>list=null;
 		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
 		list=noticedao.noticeList(notice);
 		System.out.println(list);
 		model.addAttribute("list",list);
+		
+		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     
         return "notice/noticeList";
     }
@@ -261,12 +281,17 @@ public class DoController {
 
     //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
     @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
-    public String noticeDetail(@RequestParam(value="notSeq") int notSeq, Model model){
+    public String noticeDetail(@RequestParam(value="notSeq") int notSeq, HttpServletRequest request, Model model){
         Notice notice = null; 
         NoticeFile nf = null;
         NotSchedule ns = null;
         Schedule sc = null;
         
+        User user = (User) request.getSession().getAttribute("user");
+        //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
         int noticeCount = 0;
                         
         //조회수 올리기
@@ -343,7 +368,12 @@ public class DoController {
 
     //공지사항글쓰기 view 페이지
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
-    public String noticeWrite(){
+    public String noticeWrite(HttpServletRequest request, Model model){
+    	User user = (User) request.getSession().getAttribute("user");
+        //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
         return "notice/noticeWrite";
     }
     
@@ -414,11 +444,18 @@ public class DoController {
 
     //공지사항수정하기 view
     @RequestMapping(value="noticeModify.do",method=RequestMethod.GET)
-    public String noticeModify(@RequestParam(value="notSeq") int notSeq, Model model){
+    public String noticeModify(@RequestParam(value="notSeq") int notSeq, HttpServletRequest request, Model model){
     	Notice notice = null; 
         NoticeFile nf = null;
         NotSchedule ns = null;
         Schedule sc = null;
+        
+        User user = (User) request.getSession().getAttribute("user");
+        //로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
+    	
         
         //DB에서 글 가져오기
         notice = noticeService.getNotice(notSeq);
@@ -634,7 +671,11 @@ public class DoController {
 
     // 개인_부재일정신청 GET 0110           게다죽
     @RequestMapping(value="breakApply.do", method=RequestMethod.GET)
-    public String absApply(){
+    public String absApply(HttpServletRequest request, Model model){
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	User user = (User) request.getSession().getAttribute("user");
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         return "attend/breakApply";
     }
     
@@ -643,8 +684,13 @@ public class DoController {
     
     // 개인_부재일정 수정/삭제 GET                0120    COMPLETE
     @RequestMapping(value="editApply.do", method=RequestMethod.GET)
-    public String getEditApply (Model model, Apply apply, Authentication auth, Integer aplSeq) {
-        apply.setAplSeq(aplSeq);
+    public String getEditApply (HttpServletRequest request, Model model, Apply apply, Authentication auth, Integer aplSeq) {
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	User user = (User) request.getSession().getAttribute("user");
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
+    	apply.setAplSeq(aplSeq);
         apply.setDrafter(auth.getName());
         BreakManageList results = applyService.getBMLforEdit(apply);
         model.addAttribute("editApplyList", results);
@@ -843,6 +889,10 @@ public class DoController {
     		list = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	}
     	model.addAttribute("list",list);
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
    
         return "project/pjtMain_new";
     }
@@ -862,6 +912,10 @@ public class DoController {
     	System.out.println("로그인한 사람 나와!"+user.toString());
     	
     	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
 
     	model.addAttribute("user",user);
@@ -1007,7 +1061,6 @@ public class DoController {
     	model.addAttribute("user", user);
     	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	
     	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
     	List<String> roomNameList = new ArrayList<String>();
     	
@@ -1023,6 +1076,10 @@ public class DoController {
     	
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
     	return "chat/chatMain3";
     }

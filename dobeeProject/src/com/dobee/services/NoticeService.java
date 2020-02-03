@@ -129,6 +129,15 @@ public class NoticeService {
     	result = noticedao.noticeCount(notSeq);    	
     	return result;
     }
-        
+    
+    
+    //공지사항 최신글 가져오기 (메인용) --02.03 알파카
+    public List<Notice> getRecentNotice(){
+    	List<Notice> recentNoticeList = null;
+    	NoticeDao noticedao =sqlSession.getMapper(NoticeDao.class);
+    	recentNoticeList = noticedao.getRecentNotice();
+    	return recentNoticeList;
+    }
+    
     
 }
