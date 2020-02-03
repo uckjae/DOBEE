@@ -907,8 +907,8 @@ public class DoController {
     	model.addAttribute("inProgressPjtList", inProgressPjtList);
     	model.addAttribute("completedPjtList", completedPjtList);
     	
-    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
    
         return "project/pjtMain_new";

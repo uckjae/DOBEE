@@ -37,20 +37,16 @@
 		   placeholder: "사원 선택",
 		   multiple: true,
 		   ajax: {
-		          url: "getUserList.do",
+		          url: "ajax/project/getUserList.do",
 		          dataType: 'json',
 		          type:"post",
-		          processResults: function (data) {
+		          processResults: function (data) {			          
 		        	  	var arr = []
 			          	var res = $.each(data, function(index, item) {
-							if(item.mail=="admin@gmail.com"){
-									index++;  // 어드민만 목록에서 제외시키기
-							}else{
 								arr.push({
 		                            id: item.mail,
 		                            text: item.name+"("+item.mail+")"
 		                        });
-							};
 	        	        });
       	       			return {
       	       				results: arr
@@ -63,37 +59,7 @@
 	 
 		$('.progressSelect').select2({
 		 });
-		 
-    /* 	$.ajax({
-      		url:"getUserList.do",
-      		dataType:"json",
-      		type:"post",
-      		success:function(data){
-          		console.log('과연?'+data);
-      			$.each(data, function(index, element){
-    				let option = $("<option></option>");
-    				$(option).text(element.name+"("+element.mail+")");
-    				$(option).val(element.mail);
-    				$(".userSelect").append(option);
-    			})
-      		}
-      	});
- */
-    	
-
-		 
-
-    	/* $("#userSelect").change(function(){
-    		var userInfo = $("select[name='userSelect'] option:selected").val().split(":");
-    		var userName = userInfo[0]			
-    		var userMail = userInfo[1];
-    		$("#pjtUserList").append("<div style='display:inline' class='list'><i class='fa fa-user'><span name='name'>"
-    						+userName+"</span><input type='hidden' name='mail[]' value='"+userMail+"'>&nbsp;&nbsp;</i></div>");
-    	
-    		$("#pjtUserList").css("display","block");
-    	
-    		}); */
-
+		
 		/* 프로젝트 생성 */
     	$("#makePjtBtn").on('click', function(e){
     		if($("#pjtName").val() == "" || $("#pjtName").val() == null){
@@ -179,6 +145,7 @@
 		$(".editPjt").click('show.bs.modal', function(e) {
 			$('#editPjtForm').trigger('reset');
 			var pjtSeq = $(this).data('pjtseq');
+			console.log('값은?'+pjtSeq);
 			
 			//pjtSeq로 프로젝트 정보 가져와서 모달창에 뿌리기
 			var mails = [];

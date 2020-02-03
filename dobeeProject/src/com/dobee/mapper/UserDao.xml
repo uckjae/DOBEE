@@ -25,10 +25,11 @@
     UPDATE USER SET PASSWORD = #{param1} WHERE MAIL = #{param2}
     </select>
 	
-	<!--  -->
+	<!-- 관리자 빼고 나머지 회원 가져오기 -->
 	<select id="getUserList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
 		FROM USER
+		WHERE AUTHCODE!=1
 	</select>
 	
 	<!-- User 정보 가져오기 -->

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.dao.UserDao;
 import com.dobee.services.ChatService;
+import com.dobee.services.MemberService;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.chat.ChatUsers;
 import com.dobee.vo.member.User;
@@ -22,27 +23,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @RestController
 public class AjaxController_Chat {
 	
-	private SqlSession sqlsession;
+	@Autowired
 	private ChatService chatservice;
-	
-
 	@Autowired
-	public void setSqlsession(SqlSession sqlsession) {
-		this.sqlsession = sqlsession;
-	}
+	private MemberService memberService;
 
-	@Autowired
-	public void setChatservice(ChatService chatservice) {
-		this.chatservice = chatservice;
-	}
-
-	//회원 목록 가져오기
+	//회원 목록 가져오기(관리자 x)
     @RequestMapping(value="getUserList.do", method=RequestMethod.POST)
     public List<User> getUserList() {
-    	UserDao userdao = sqlsession.getMapper(UserDao.class);
-    	List<User> result = userdao.getUserList();
-    	System.out.println("리절트?"+result.toString());
-    	return result;
+    	List<User> userList = null;
+    	userList = memberService.getUserList();
+    	return userList;
     }
     
     
