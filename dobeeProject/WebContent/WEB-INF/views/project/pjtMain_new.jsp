@@ -43,15 +43,14 @@
 		          processResults: function (data) {
 		        	  	var arr = []
 			          	var res = $.each(data, function(index, item) {
-				          	//성호 - 프로젝트 생성시 사원 선택 할 때 관리자는 안보이게 하기
-				          	if(item.mail=="admin@gmail.com" || item.mail=="Admin@gmail.com"){
-									continue;
-					          	}else{
-					          		arr.push({
-			                            id: item.mail,
-			                            text: item.name+"("+item.mail+")"
-			                        });
-						        };
+							if(item.mail=="admin@gmail.com"){
+									index++;  // 어드민만 목록에서 제외시키기
+							}else{
+								arr.push({
+		                            id: item.mail,
+		                            text: item.name+"("+item.mail+")"
+		                        });
+							};
 	        	        });
       	       			return {
       	       				results: arr
