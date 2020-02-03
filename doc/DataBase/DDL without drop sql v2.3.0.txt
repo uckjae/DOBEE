@@ -541,7 +541,7 @@ ALTER TABLE `CHATUSERS`
 CREATE TABLE `GOOGLEDRIVE` (
 	`GDSEQ`     INT          NOT NULL COMMENT '파일번호', -- 파일번호
 	`GDDATE`    DATE         NOT NULL COMMENT '작성일자', -- 작성일자
-	`GDCONTENT` VARCHAR(512) NULL     COMMENT '파일내용', -- 파일내용
+	`FILENAME`  VARCHAR(512) NULL     COMMENT '파일이름', -- 파일이름
 	`GDURL`     VARCHAR(512) NOT NULL COMMENT '파일주소', -- 파일주소
 	`MAIL`      VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
 	`PJTSEQ`    INT          NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
