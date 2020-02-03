@@ -60,4 +60,12 @@
 <delete id="delNotice" parameterType="integer">
 	DELETE FROM NOTICE WHERE NOTSEQ=#{notSeq}
 </delete>
+
+<!-- //공지사항 최신글 가져오기 (메인용) 02.03 알파카 -->
+<select id="getRecentNotice" resultType="com.dobee.vo.notice.Notice">
+	SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT 
+	FROM NOTICE 
+	ORDER BY NOTSEQ DESC 
+	LIMIT 5
+</select>
 </mapper>

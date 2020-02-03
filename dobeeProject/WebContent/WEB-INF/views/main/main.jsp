@@ -202,48 +202,85 @@ console.log("MAIN!!");
 								</div>
 							</section>
 					</div>
-					
-					<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-6">
+							<section class="panel">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a> <a href="#"
+											class="fa fa-times"></a>
+									</div>
+									<h2 class="panel-title">공지사항</h2>
+								</header>
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped mb-none">
+											<thead>
+												<tr>
+													<th class="notSeq" style="width: 20%; text-align: center;">#</th>
+													<th class="nsContent" style="width: 30%; text-align: center;">제목</th>
+													<th class="startTime" style="width: 25%; text-align: center;">작성일</th>
+													<th class="count" style="width: 25%; text-align: center;">조회수</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${requestScope.recentNoticeList}" var="n">
+													<tr>
+														<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
+														<td class="nsContent" style="text-align: center;">
+														<a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
+														</td>
+														<td class="startTime" style="text-align: center;">
+														  <fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+														</td>
+														<td class="count" style="text-align: center;">${n.count}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+	
+								</div>
+							</section>
+						</div>
+						<div class="col-md-6">
+						
 						<section class="panel">
 							<header class="panel-heading">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a> <a href="#"
-										class="fa fa-times"></a>
-								</div>
-								<h2 class="panel-title">공지사항</h2>
+								<h2 class="panel-title">참여중인 프로젝트</h2>
 							</header>
-							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-striped mb-none">
-										<thead>
-											<tr>
-												<th class="notSeq" style="width: 20%; text-align: center;">#</th>
-												<th class="nsContent" style="width: 30%; text-align: center;">일정</th>
-												<th class="startTime" style="width: 25%; text-align: center;">시작일</th>
-												<th class="endTime" style="width: 25%; text-align: center;">종료일</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${list}" var="n">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table class="table table-striped mb-none">
+											<thead>
 												<tr>
-													<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
-													<td class="nsContent" style="text-align: center;">
-													<a href="noticeDetail.do?notSeq=${n.notSeq}">${n.nsContent}</a>
-													</td>
-													<td class="startTime" style="text-align: center;">
-													  <fmt:formatDate value="${n.startTime}" pattern="yyyy-MM-dd HH:mm"/>
-													</td>
-													<td class="startTime" style="text-align: center;">
-													  <fmt:formatDate value="${n.endTime}" pattern="yyyy-MM-dd HH:mm"/>
-													</td>
+													<th>#</th>
+													<th>프로젝트</th>
+													<th>상태</th>
+													<th>진행도</th>
 												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
+											</thead>
+											<tbody>
+											<c:forEach items="${list}" var="n" varStatus="status">
+													<tr>
+														<td>${status.index + 1}</td>
+														<td>${n.pjtName}</td>
+														<td><span class="label label-success">${n.pjtProgress}</span></td>
+														<td>
+															<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+																<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+																	100%
+																</div>
+															</div>
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
-
-							</div>
-						</section>
+							</section>
+						</div>
 					</div>
 				</div>
 
