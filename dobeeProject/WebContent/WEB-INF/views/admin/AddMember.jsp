@@ -265,7 +265,7 @@
 			sendMail().then(function(){
 				console.log("submit()");
 				document.getElementById('addUserForm').submit();
-				$('#addUserForm').submit();
+				//$('#addUserForm').submit();
 			});
 		};
 
