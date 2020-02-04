@@ -183,7 +183,7 @@ public interface UserDao {
     
     
     // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114
-    public List<BreakManageList> breakListMgr();
+    public List<BreakManageList> breakListMgr(Integer teamCode);
     
     
     // 매니저_부재관리 - isAuth update (POST)		0115
@@ -195,7 +195,7 @@ public interface UserDao {
     
 
     // 매니저_연장근무관리 - 데이터 테이블 출력 (GET)		0115
-    public List<BreakManageList> extListMgr();
+    public List<BreakManageList> extListMgr(Integer teamCode);
     
     
     // 매니저_연장근무관리 - isAuth update (POST)		0115
