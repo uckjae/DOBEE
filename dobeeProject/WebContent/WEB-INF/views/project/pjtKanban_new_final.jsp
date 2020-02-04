@@ -81,6 +81,14 @@
 			      }
 			  });
 
+			$('.progress-button').click(function(){
+				console.log('이거 찍히니?');
+				$('.progress-button').attr("style","background-color:white; color:black;");
+				$(this).attr("style","background-color:#34495e; color:white;");
+				console.log('값은?'+$(this).text());
+				$('#taskFormProgress').val($(this).text());
+				console.log($('#taskFormProgress').val());
+			});
 			
 			
 			/* 중요도 슬라이드 변경시 값표시 */
@@ -198,14 +206,6 @@
 
 
 			
-			
-			
-
-			$('.progress-button').click(function(){
-				$('.progress-button').attr("style","background-color:white; color:black;");
-				$(this).attr("style","background-color:#34495e; color:white;");
-				$('#taskFormProgress').val($(this).text());
-			});
 			/* /모달띄우는 함수 */
 
 
@@ -226,8 +226,9 @@
 				//schedule 객체에 줄 값 넣어주기
 				$("#startTime").val($("#taskFormStartAt").val());
             	$("#endTime").val($("#taskFormEndAt").val());
-				
-				$("#taskEditForm").submit();
+
+				console.log($("#taskEditForm"));
+				$("#taskEditForm")[0].submit();
 
 			});
 			
@@ -397,93 +398,7 @@
 			console.log('플젝 번호?'+pjtSeq);
 
 			
-			/*내 업무*/
-			
-			/*내 업무 모달*/
-			$('.myTask').click('show.bs.modal', function(e) {
-				console.log("내 업무!!! 모달이 눌렸어");
-
-				$("#myTaskDetailModal").modal('show');
-
-				var tskSeq = $(this).data('tskseq');
-				console.log('가져오니?'+tskSeq);
-				
-				$('#taskForm').trigger('reset');
-				$('#taskDetailForm').trigger('reset');
-				$('#checkListForm').trigger('reset');
-				$('.progress-button').attr("style","background-color:white; color:black;");
-				$('#taskDetailTskSeq').attr("value",tskSeq);
-				$('#taskCheckListTskSeq').attr("value",tskSeq);
-				$('#addTaskDetailTskSeq').attr("value",tskSeq);
-				$.ajax({
-					url:"ajax/project/getTask.do",
-					data: {"tskSeq":tskSeq},
-					dataType: "JSON",
-					success: function(data){
-						console.log('getTask ajax 성공?');
-						console.log(data);
-						var task = data;
-						$('#taskDetailEditTitle').val(task.title);
-						$('#taskDetailTitle').text(task.title);
-						$('#taskFormTitle').val(task.title);
-
-
-						//업무 일정 여부 셋팅 id=tsSeq
-						//기존에 업무 일정 seq가 있는지 없는지 판단 -> 있으면 input type=hidden에 넣기 없으면 안 넣기
-						if(task.tsSeq !== null || task.tsSeq !== ""){ //업무 일정 seq가 있다면
-							$("#tsSeq").val(task.tsSeq);
-							console.log('값 넣어졌니?'+$("#tsSeq").val());
-						} else {
-							$("#tsSeq").val("");
-						}
-						
-						
-						//날짜 셋팅
-						var startDate = new Date(task.startAt);
-						var formatedStartDate = date_to_str(startDate);
-						$('#taskFormStartAt').val(formatedStartDate);
-						if(task.endAt == null){ //끝나는 날짜가 없는 경우 그냥 공백으로 만들기
-							$('#taskFormEndAt').val("");
-						} else {
-							var endDate = new Date(task.endAt);
-							var formatedEndDate = date_to_str(endDate);
-							$('#taskFormEndAt').val(formatedEndDate);
-						}
-						
-						//담당자 셋팅
-						$('#taskMemberEditSelect').val(task.mail); //pm의 경우 select에 value 값 셋팅하기
-						$('#taskFormName').text(task.name);
-						$('#taskFormMail').val(task.mail);
-						
-						//프로젝트 seq 셋팅
-						$('#taskFormPjtSeq').val(task.pjtSeq);
-						
-						//중요도 셋팅
-						$('#taskImportant').text(task.important); //중요도 표시해주기
-						setStar(authCode, task.important); //권한에 따라 별 플러그인 적용
-
-						
-						$('.progress-button').each(function(index,element){
-							if($(element).text() == task.progress){
-								$(element).attr("style","background-color:#34495e; color:white;");
-								$('#taskFormProgress').val($(element).text());
-							}
-						});
-							
-					},
-					error:function(request,status,error){
-						console.log("code : " + request.status +"\n" + "message : " 
-								+ request.responseText + "\n" + "error : " + error);
-					}
-				});
-				
-				getTaskDetailList(tskSeq);
-				getTaskCheckList(tskSeq);
-				$('#taskFormTskSeq').val(tskSeq);
-
-			});
-			
-			
+	
 			
 			$.ajax({
  	 			url:"ajax/project/getMyTask.do",
@@ -575,6 +490,99 @@
 
 			});
 
+			/*내 업무*/
+			$.ajax({
+ 	 			url:"ajax/project/getMyTask.do",
+ 				data: {'pjtSeq' : pjtSeq },
+ 				dataType: "json",
+ 				type:"post",
+ 				success:function(responseData){
+ 	 				console.log('내업무 타니??');
+ 	 				console.log(responseData)
+ 	 				$.each(responseData.overdueTaskList, function(key, obj) {
+ 	 	 				console.log('obj!!', obj.title);
+ 	 	 				console.log('seq?'+obj.tskSeq);
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-secondary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-secondary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#overdueTaskList").append(a);
+ 	 	 				});
+
+	 	 				
+ 	 				$.each(responseData.deadlineTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 					var section = $('<section class="panel panel-featured-left panel-featured-primary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-primary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#deadlineTaskList").append(a);
+ 	 	 				});
+ 	 				$.each(responseData.otherTaskList, function(key, obj) {
+ 	 	 				var a = $('<a style="text-decoration: none;cursor:pointer;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="'+obj.tskSeq+'">');
+ 	 	 				var section = $('<section class="panel panel-featured-left panel-featured-tertiary">');
+ 	 	 				var panelBody = $('<div class="panel-body">');
+ 	 	 				var bigDiv = $('<div class="widget-summary widget-summary-xs">');
+ 	 	 				var div1 = $('<div class="widget-summary-col widget-summary-col-icon">');
+ 	 	 				var iconDiv = $('<div class="summary-icon bg-tertiary">');
+ 	 	 				var icon = $('<i class="fa fa-check"></i>');
+ 	 	 				var div2 = $('<div class="widget-summary-col">');
+ 	 	 				var summaryDiv = $('<div class="summary">');
+ 	 	 				var title = $('<h4 class="title">'+obj.title+'</h4>');
+ 	 	 				//첫번째 div
+ 	 	 				iconDiv.append(icon);
+ 	 	 				div1.append(iconDiv);
+ 	 	 				bigDiv.append(div1);
+ 	 	 				//두번째 div
+ 	 	 				summaryDiv.append(title);
+ 	 	 				div2.append(summaryDiv);
+ 	 	 				bigDiv.append(div2);
+ 	 	 				panelBody.append(bigDiv);
+ 	 	 				section.append(panelBody);
+ 	 	 				a.append(section);
+ 	 	 				$("#otherTaskList").append(a);
+ 	 	 				});
+ 				},
+ 				error:function(){
+ 					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+ 				}
+
+			});
 			
 
 			
@@ -814,8 +822,9 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
- 	 				console.log(responseData);
  	 				$.each(responseData, function(index, element){
+
+ 	 	 				
  	 					if(element.important == 1){
  	 	 					important1.push(element);
  	 	 	 			} else if(element.important == 2){
@@ -827,6 +836,8 @@
  	 	 	 	 		} else {
  	 	 	 	 			important5.push(element);
  	 	 	 	 	 	}
+
+ 	 	 	 	 	 	
  	 	 			});
 
  	 				importance = [important5.length, important4.length, important3.length, important2.length, important1.length];
@@ -890,6 +901,9 @@
  	 	 	 				taskCompleted.push(element);
  	 	 	 	 		}
  	 				});
+
+ 					console.log('완료된 업무'+taskCompleted.length);
+	 				console.log('테스트된 업무'+memberTask.length);
 
 
  				},
@@ -972,7 +986,7 @@
  	 	 						},
  							elements: {
  								center: {
- 									text: (taskCompleted.length/memberTask.length)*100 + "%",
+ 									text: Math.floor((taskCompleted.length/memberTask.length)*100) + "%",
  				          color: '#FF6384', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
  				          sidePadding: 15 // Defualt is 20 (as a percentage)
@@ -1893,7 +1907,7 @@
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 지남</h5>
 							</div>
 							<div class="col-md-12" id="deadlineTaskList">
-								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">오늘까지</h5>
+								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">완료일 3일 전</h5>
 							</div>
 							<div class="col-md-12" id="otherTaskList">
 								<h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">기타</h5>
