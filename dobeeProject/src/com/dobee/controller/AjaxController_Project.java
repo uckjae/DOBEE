@@ -246,7 +246,8 @@ public class AjaxController_Project {
 	
 	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
-	public Task getTask(int tskSeq) {
+	public Task getTask(@RequestParam(value="tskSeq") int tskSeq) {
+		System.out.println("업무 번호 가져오니?"+tskSeq);
 		System.out.println("AjaxController_Project getTask() in");
 		Task task = new Task();
 		
@@ -257,6 +258,7 @@ public class AjaxController_Project {
 		} else {
 			task = projectService.getTask(tskSeq);
 		}
+		System.out.println("테스크 가져오니?"+task.toString());
 		return task;
 	}
 	

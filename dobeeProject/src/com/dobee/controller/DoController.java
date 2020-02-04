@@ -955,8 +955,9 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	
+    	System.out.println("addPMTask.do 업무 생성 어케 들어와?"+task.toString());
     	int result = projectService.addPMTask(task);
+    	System.out.println("업무 DB에 들어갔어?"+task.toString());
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
