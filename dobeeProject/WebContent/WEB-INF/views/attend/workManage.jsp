@@ -19,6 +19,13 @@
 			border-color:lightgray;
 			background-color:green;
 		}
+		
+		.btn-info.btn-sm {
+			width : 80%;
+			border : none;
+			border-radius: 5px;
+		}
+		 
 	</style>
 	
 <!-- Head Tag Script -->
@@ -181,24 +188,24 @@
 							<table class="table table-bordered table-striped mb-none" id="extTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								<thead>
 									<tr>
-										<th width="8%">신청 번호</th>
+										<th width="10%">신청 번호</th>
 										<th>기간</th>
 										<th width="17%">신청 일자</th>
-										<th width="20%">승인여부</th>
-										<th width="8%">수정/삭제</th>
+										<th width="10%">승인여부</th>
+										<th width="10%">수정/삭제</th>
 									</tr>
 								</thead>
 								<tbody>
 									
 									<c:forEach items="${extList}" var="el">
 										<tr>
-											<td class="tseq">		${el.aplSeq }</td>
+											<td class="tseq" style="text-align: center;">		${el.aplSeq }</td>
 											<td class="tterm">		${el.startAt } - ${el.endAt }</td>
-											<td class="tregdate">	${el.reqDate }</td>
+											<td class="tregdate" style="text-align: center;">	${el.reqDate }</td>
 											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${el.isAuth }" data-toggle="modal" data-target="#myModal"
 																		data-aplSeq="${el.aplSeq }" data-reason="${el.reason }" data-rejReason="${el.rejReason }">${el.isAuth }</button>
 											</td>
-											<td class="teditdelete">
+											<td class="teditdelete" style="text-align: center;">
 												<c:choose>
 													<c:when test="${el.isAuth == '미승인'}">
 														<button class="mb-xs mt-xs btn-sm btn-default" onclick="location.href='editExtApply.do?aplSeq=${el.aplSeq}'">수정/삭제</button>

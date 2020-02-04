@@ -540,7 +540,7 @@ ALTER TABLE `CHATUSERS`
 -- 구글드라이브
 CREATE TABLE `GOOGLEDRIVE` (
 	`GDSEQ`    INT          NOT NULL COMMENT '파일번호', -- 파일번호
-	`GDDATE`   DATE         NOT NULL DEFAULT CURDATE() COMMENT '작성일자', -- 작성일자
+	`GDDATE`   DATE         NOT NULL COMMENT '작성일자', -- 작성일자
 	`FILENAME` VARCHAR(512) NULL     COMMENT '파일이름', -- 파일이름
 	`GDURL`    VARCHAR(512) NOT NULL COMMENT '파일주소', -- 파일주소
 	`MAIL`     VARCHAR(60)  NOT NULL COMMENT '사원메일', -- 사원메일
