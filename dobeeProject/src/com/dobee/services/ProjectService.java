@@ -61,8 +61,14 @@ public class ProjectService {
     	completedTaskCount = projectdao.getCompletedTaskCount(pjtSeq);
     	System.out.println("전체 갯수?"+allTaskCount);
     	System.out.println("완료된 갯수?"+completedTaskCount);
+    	try {
+    		result = (completedTaskCount *100 /allTaskCount);
+    	}catch(Exception e) {
+    		System.out.println(e.getMessage());
+    	} finally {
+    		result = 0;
+    	}
     	result = (completedTaskCount *100 /allTaskCount);
-    	System.out.println("진행률 서비스 탄다~!~!"+result);
     	return result;
     }
     
