@@ -118,10 +118,11 @@ public class DoController {
     }
     
     //비밀번호 찾기(변경)
-    @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
-    public String findPassWordChange(HttpSession session){
+    @RequestMapping(value="findPassWordChange.do",method=RequestMethod.POST)
+    public String findPassWordChange(HttpServletRequest request,Model model){
     	System.out.println("여기탄다");
-    	String mail = (String) session.getAttribute("mail");
+    	String mail = request.getParameter("mail");
+    	model.addAttribute("mail", mail);
     	System.out.println("메일?"+mail);
         return "main/findPassWordChange";
     }
