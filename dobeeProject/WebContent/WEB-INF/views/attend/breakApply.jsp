@@ -133,10 +133,12 @@
 										<br>
 										결재자 
 										<br>
+										
 										<select name="approval" id="approvalList" style="width:100%;">
 											<option hidden=""> 결재자 선택 </option>
 											<!-- Ajax -->
 										</select>
+										
 										<br>
 										<br>
 										<br>
@@ -177,11 +179,7 @@
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
 	<!-- specific vendor page -->
-	<script src="assets/vendor/select2/select2.js"></script>
-	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
-	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
-	
+	<script src="assets/vendor/select2/select2.js"></script>	
 	
 	<script>
 		window.onload = function(){
@@ -208,24 +206,69 @@
 					)
 				}
 			});
+			
+
+			$('#approvalList').select2 ({
+				placeholder : '결재자 선택',
+				multiple : true,
+				ajax : {
+					url : "getApyCode.do",
+					dataType : "json",
+					type : "post",
+					processResults : function(data) {
+						var arr = []
+						var res = $.each(data, function(index, item) {
+							arr.push({
+								id : item.apyCode,
+								text : item.entry
+							});
+						})
+						return {
+							results : arr
+						}
+					}
+				}
+			});
 			*/
-				
+							
 			$.ajax({
 				url : "getApyCode.do",
 				dataType : "json",
-				success : function(data) {
-					var aArray = [];
-					aArray = data.apyCode;
-					for (var i=0; i<aArray.length-1; i++) {
-						var option = document.createElement("option")
-						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
-					}					
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
+				type : "post",
+				success : function(responseData) {
+					console.log(responseData);
+					var id = [];
+					var entry = [];
+					var object = new Object();
+					$.each(responseData, function(index, element) {
+						id.push(element.apyCode);
+						entry.push(element.entry);
+
+						var option = $('<option>');
+						$(option).val(element.apyCode);
+						$(option).val(element.entry);
+						$('#approvalList').append(option);
+					});
+
+					$('#approvalList').select2();
+
+                    $("#approvalList > option").each(function(){
+                       for (var i = 0; i < entry.length; i++){
+                          if($(this).val() == entry[i]){
+                            $(this).attr('selected','selected');
+                        }
+                       }
+                   });
+                 },
+                 error:function(request,status,error){
+                   console.log("code : " + request.status +"\n" + "message : " 
+
+                         + request.responseText + "\n" + "error : " + error);
+                },
+             });
 			
+
+			/*
 			$.ajax({
 				url : "getApprovalList.do",
 				dataType : "json",
@@ -241,6 +284,7 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+			*/
 			
 			$('#datetimepickerEnd').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' ,

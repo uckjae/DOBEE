@@ -84,28 +84,28 @@
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								<thead>
 									<tr>
-										<th width="8%">신청 번호</th>
+										<th width="10%">신청 번호</th>
 										<th width="15%">신청 ID</th>
-										<th width="15%">신청자명</th>
-										<th width="9%">신청 일자</th>
-										<th width="8%">부재 항목</th>
-										<th width="10%" style="min-width: 90px;">연차 사용 일수</th>
-										<th>기간</th>
+										<th width="10%">신청자명</th>
 										
-										<th width="8%">승인 여부</th>
+										<th width="10%">부재 항목</th>
+										<th width="10%">연차 사용</th>
+										<th>기간</th>
+										<th width="10%">신청 일자</th>
+										<th width="9%">승인 여부</th>
 									</tr>
 								</thead>
 								<tbody>
-									
 									<c:forEach items="${brkListMgr}" var="bl">
 										<tr>
-											<td class="bSeq">		${bl.aplSeq }</td>
+											<td class="bSeq" style="text-align: center;">		${bl.aplSeq }</td>
 											<td class="bMail">		${bl.drafter }</td>
-											<td class="bName">		${bl.name }</td>
-											<td class="bReqDate">	${bl.reqDate}</td>
-											<td class="bEntry">		${bl.entry }</td>
+											<td class="bName" style="text-align: center;">		${bl.name }</td>
+											
+											<td class="bEntry" style="text-align: center;">		${bl.entry }</td>
 											<td class="bUsed" style="text-align: center;">		${bl.useBreak }</td>
-											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>											
+											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
+											<td class="bReqDate" style="text-align: center;">	${bl.reqDate}</td>											
 											<td class="bIsAuth" style="text-align: center;">
 												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-mail="${bl.drafter}" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
 											</td>
@@ -168,7 +168,7 @@
 												<label class="col-md-3 control-label" for="userList"><i
 													class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
 												<div class="col-md-9">
-													<textarea id="modalRejReason" name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="반려 시 사유를 입력하세요."></textarea>
+													<textarea id="modalRejReason" name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 150px" placeholder="반려 시 사유를 입력하세요."></textarea>
 													<p>
 														<code>max-length</code> set to 3000 byte.
 													</p>
