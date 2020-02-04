@@ -160,8 +160,6 @@ public class ProjectService {
     	int result = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addPMTask(task);
-    	//프로젝트 추가 후 tskSeq 반환함
-    	
     	return result;
     }
     
