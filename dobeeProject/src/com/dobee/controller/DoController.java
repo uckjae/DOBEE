@@ -794,10 +794,12 @@ public class DoController {
     }
 
 
-    // 매니저_부재관리 - isAuth update GET     0114 게다죽            // 나중에 권한 코드로 수정 validation 입혀줘야 하고
+    // 매니저_부재관리 - isAuth update GET     0204 updated 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
-    public String absSign(Model model){                         
-        List<BreakManageList> results = applyService.breakListMgr();
+    public String absSign(Model model, HttpServletRequest req){
+    	User user = (User) req.getSession().getAttribute("user");
+    	int teamCode = user.getTeamCode();
+        List<BreakManageList> results = applyService.breakListMgr(teamCode);
         model.addAttribute("brkListMgr", results);
         
         return "attend/breakManagement_Mgr";
@@ -814,10 +816,12 @@ public class DoController {
     }
     
 
-    // 매니저_연장근무관리 리스트 - isAuth update GET           0115 게다죽
+    // 매니저_연장근무관리 리스트 - isAuth update GET           0204 updated 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.GET)
-    public String extSign(Model model){
-        List<BreakManageList> results = applyService.extListMgr();
+    public String extSign(Model model, HttpServletRequest req){
+    	User user = (User) req.getSession().getAttribute("user");
+    	int teamCode = user.getTeamCode();
+        List<BreakManageList> results = applyService.extListMgr(teamCode);
         model.addAttribute("extListMgr", results);
         
         return "attend/extendManagement_Mgr";

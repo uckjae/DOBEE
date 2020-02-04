@@ -347,14 +347,14 @@
     
     
     <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 COMPLETE -->
-    <select id="breakListMgr" resultType="com.dobee.vo.member.BreakManageList">
+    <select id="breakListMgr" parameterType="Integer" resultType="com.dobee.vo.member.BreakManageList">
     	SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON, A.DRAFTER, U.NAME
 			FROM APPLY A
 			    INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
 				INNER JOIN USER U
 					ON A.DRAFTER = U.MAIL
-		    WHERE A.APYCODE != 6
+		    WHERE A.APYCODE != 6 AND U.TEAMCODE = #{teamCode}
 		    ORDER BY A.APLSEQ ASC
     </select>
     
@@ -366,7 +366,7 @@
 	
 	
     <!-- 매니저_연장근무 관리 - 데이터 테이블 출력 (GET)		0115 COMPLETE -->
-    <select id="extListMgr" resultType="com.dobee.vo.member.BreakManageList">
+    <select id="extListMgr" parameterType="Integer" resultType="com.dobee.vo.member.BreakManageList">
     	SELECT A.APLSEQ, U.NAME, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.DRAFTER, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
@@ -375,7 +375,7 @@
 					ON A.APLSEQ = BL.APLSEQ
 				INNER JOIN USER U
 					ON A.DRAFTER = U.MAIL
-			WHERE A.APYCODE = 6
+			WHERE A.APYCODE = 6 AND U.TEAMCODE = #{teamCode}
 			ORDER BY A.APLSEQ ASC
     </select>
     

@@ -21,7 +21,6 @@
 					</li>
 					<li>
 						<a href="noticeList.do">
-						<span class="pull-right label label-primary">182</span> 
 						<i class="fa fa-clipboard" aria-hidden="true"></i><span>공지사항</span></a>
 					</li>
 					

@@ -231,10 +231,7 @@ public class AjaxControllerAdmin {
     public String modifyUser(User user, HttpServletRequest request) throws IOException {
     	System.out.println("수정 타니?");
     	System.out.println("수정정보 가져오니?"+user.toString());
-    	Enumeration<String> enu = request.getParameterNames();
-    	while(enu.hasMoreElements()) {
-    		System.out.println(enu.nextElement());
-    	}
+    	
     	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = user.getFile();
@@ -253,6 +250,7 @@ public class AjaxControllerAdmin {
     	String responseData = "";
 		int result = 0;
 		result = memberService.modifyUser(user);
+		System.out.println(result);
 		if(result > 0) {
 			responseData = "success";
 		}
