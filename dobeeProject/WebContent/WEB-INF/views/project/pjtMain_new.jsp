@@ -217,9 +217,6 @@
 		 							+ request.responseText + "\n" + "error : " + error);
 	 					},
 	 				});
-		 			
-	 			
-
  				},
  				error:function(request,status,error){
 					console.log("code : " + request.status +"\n" + "message : " 

@@ -59,14 +59,13 @@ public class ProjectService {
     	ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
     	allTaskCount = projectdao.getAllTaskCount(pjtSeq);
     	completedTaskCount = projectdao.getCompletedTaskCount(pjtSeq);
-    	System.out.println("전체 갯수?"+allTaskCount);
-    	System.out.println("완료된 갯수?"+completedTaskCount);
-    	result = (completedTaskCount *100 /allTaskCount);
-    	System.out.println("진행률 서비스 탄다~!~!"+result);
+    	if(allTaskCount == 0) {
+    		result = 0;
+    	} else {
+    		result = (completedTaskCount *100 /allTaskCount);
+    	}
     	return result;
-    }
-    
-
+    }    
 
     //프로젝트추가
     public int addProject(Project project){

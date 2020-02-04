@@ -107,10 +107,6 @@
 			</section>
 		</div>
 
-
-		<!-- 오른쪽 사이드바!! -->
-		<c:import url="/common/RightSide.jsp" />
-		<!-- 오른쪽 사이드바 끝!! -->
 	</section>
 		<!-- 모달창 (삭제시 뜨는 )-->
 		<div id="dialog" class="modal-block mfp-hide">

@@ -245,9 +245,6 @@
 				<!-- end: page -->
 			</section>
 		</div>
-		<!-- 오른쪽 사이드 시작 -->
-		<c:import url="/common/RightSide.jsp"/>
-		<!-- 오른쪽 사이드 끝 -->		
 	</section>
 
 	
