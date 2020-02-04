@@ -12,6 +12,7 @@
 		// 이메일 최종 유효성 결과값 전역 변수
 		var finalCheckEmail = false;
 		function vailEmail(sendData){
+			console.log("욱재야 이거 보이냐 11111 ");
 			jsonData = {
 				"mail":sendData
 					};
@@ -21,6 +22,7 @@
 				type:"POST",
 				data:jsonData,
 				success:function(data){
+					console.log("욱재야 이거 보이냐 222222(아작스 성공 ) ");
 						//데이타 받을 후 email 중복되었는지 글씨로 표시해줌
 						//보낸 데이터의 길이가 0 보다 크면 중복임
 						if(data.length > 0){

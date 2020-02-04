@@ -33,6 +33,7 @@ public class DebitService {
         		check = true;
         	}
 		} catch (Exception e) {
+			check = false;
 			System.out.println("서비스단 : 디비에 데이터 넣다가 오류났습니다 ");
 		}
     
