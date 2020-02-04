@@ -6,6 +6,8 @@
 <html class="fixed">
 <head>
 	<c:import url="/common/HeadTag.jsp"/>
+	<!-- Sweet Alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 	<section class="body">
@@ -137,110 +139,23 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="profileCompany">휴대폰 번호</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" id="phone" name="phone" value="${user.phone}"> 
+													<input type="text" class="form-control" id="phone" name="phone" value="${user.phone}"  maxlength="13"> 
 												</div>
 											</div>
 										</fieldset>
-										<div class="panel-footer">
-											<div class="row">
-												<div class="col-md-4 col-md-offset-4 text-center">
-													<button type="button" id="mypageBtn" class="btn btn-primary">수정</button>
-													<button type="reset" class="btn btn-default">취소</button>
-												</div>
-											</div>
-										</div>
+										
 									</form>
-								
-								
-								
-								
-								
+								</div>
+								<div class="panel-footer">
+									<div class="row">
+										<div class="col-md-4 col-md-offset-4 text-center">
+											<button type="button" id="mypageBtn" class="btn btn-primary" onclick="myPageEdit(this)">수정</button>
+											<button type="reset" class="btn btn-default">취소</button>
+										</div>
+									</div>
 								</div>
 							</section>
-							
-						<%-- <div class="tabs">
-							<ul class="nav nav-tabs tabs-primary">
-								<li class="active">
-									<a href="#overview" data-toggle="tab">Overview</a>
-								</li>
-								<li>
-									<a href="#edit" data-toggle="tab">Edit</a>
-								</li>
-							</ul>
-							<div class="tab-content">
-								
-								<!-- 정보 수정 -->
-								<div id="edit" class="tab-pane">
-									<form action="mypageModify.do" method="post" class="form-horizontal" name="mypageForm">
-										<h4 class="mb-xlg">정보 수정</h4>
-										<fieldset>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="name">이름</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="name" name="name" value="${user.name}" readonly>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileLastName">E-mail</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="mail" name="mail" value="${user.mail}" readonly>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileNewPassword">비밀번호</label>
-												<div class="col-md-8">
-													<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileNewPasswordRepeat">비밀번호 재입력</label>
-												<div class="col-md-8">
-													<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 재입력">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileCompany">입사일</label>
-												<div class="col-md-8"> <!-- ${user.regitDate} -->
-													<input type="text" class="form-control" id="regitDate" name="regitDate" value="<fmt:formatDate value='${user.regitDate}' pattern='yyyy-MM-dd'/>" >
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileCompany">직책</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="position" name="position" value="${user.position}" readonly>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileCompany">소속</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="teamName" name="teamName" value="${user.teamName}" readonly>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="profileCompany">휴대폰 번호</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" id="phone" name="phone" value="${user.phone}"> 
-												</div>
-											</div>
-										</fieldset>
-										<div class="panel-footer">
-											<div class="row">
-												<div class="col-md-4 col-md-offset-4 text-center">
-													<button type="button" id="mypageBtn" class="btn btn-primary">수정</button>
-													<button type="reset" class="btn btn-default">취소</button>
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div> --%>
-						
-						
-						
 					</div>
-
-
 				</div>
 				<!-- end: page -->
 			</section>
@@ -252,38 +167,133 @@
 	<!-- Specific Page Vendor -->
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
 <script>
-	$(function(){
-		/*마이페이지 수정*/
-		$("#mypageBtn").on('click', function(e){
-       			var mypageForm = $("form[name=mypageForm]").serialize() ;
-   	 			$.ajax({
-   	 	 			url:"ajax/mypage/modify.do",
-   	 				data: mypageForm,
-   	 				dataType: "text",
-   	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-   	 				type:"post",
-   	 				success:function(responsedata){
-       	 				console.log('ajax 통신 성공?');
-   	 					console.log(responsedata);
-   	 					if(responsedata == "success"){ //프로젝트 생성 완료
-   	 	 					console.log('수정 완료')
-   	 	 					swal({
-   	 						   title: "정보 수정완료",
-   	 						   text: "정보가 수정되었습니다.",
-   	 						   icon: "success" //"info,success,warning,error" 중 택1
-   	 						}).then((YES) => {
-   	 								location.reload(true); 
-   	 							})
-   	 					
-   	 	 					}
-   	 				},
-   	 				error:function(){
-   	 					
-   	 				}
-   	 			});
-    		});
+	let pw_pattern = /^[a-z0-9_]{6,20}$/;
+	let pwCheck;
+	let pwDoubleCheck;
+	//a~z,0~9까지 입력가능 8자~20자 이내로
+
+	//전화번호 유효성 검사
+	let numberReg = /^\d{3}-\d{4}-\d{4}$/;
+	let numberCheck;
+
+	function pwdCheck(number){
+		var check = pw_pattern.test(number);
+		if(check){
+        	console.log('비밀번호 형식 맞음')
+            pwCheck = true;
+        }else{
+        	console.log('비밀번호 형식 맞지 않음')
+            pwCheck = false;
+        }
+	}
+
+	function pwdDoubleCheck(number){
+		if($("#password").val() != number){
+			pwDoubleCheck = false;
+        }else{
+        	console.log('비밀번호 형식 맞음')
+            pwDoubleCheck = true;
+        }
+	}
+	
+	
+	function inputVailPhone(number){
+		if(number.length == 13) {
+			var check = numberReg.test(number);  //true or false
+			if(check){
+				console.log("휴대폰넘버 유효성 통과");
+				numberCheck = true;
+			}else{
+				console.log("휴대폰넘버 유효성 불통");
+				numberCheck = false;
+			}
+		} else {
+			numberCheck = false;
+		}
+	};
+	
+	/*마이페이지 수정*/
+	function myPageEdit() {
+		inputVailPhone($("#phone").val());
+		pwdCheck($("#password").val());
+		pwdDoubleCheck($("#confirmPassword").val());
 		
-		})
+		//전화번호 & 비번 유효성 검사 해야 됨!
+		console.log('휴대폰 번호 체크'+numberCheck);
+		console.log('비밀번호 체크'+pwCheck);
+		console.log('비번 다시 체크'+pwDoubleCheck);
+		
+		//전화번호 유효성 검사 && 비번 유효성 검사
+		if(numberCheck == true && pwCheck == true && pwDoubleCheck == true){
+			var mypageForm = $("form[name=mypageForm]").serialize();
+			$.ajax({
+	 			url:"ajax/mypage/modify.do",
+				data: mypageForm,
+				dataType: "text",
+				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+				type:"post",
+				success:function(responsedata){
+	 				console.log('ajax 통신 성공?');
+					console.log(responsedata);
+					if(responsedata == "success"){ //프로젝트 생성 완료
+	 					console.log('수정 완료')
+	 					swal({
+						   title: "정보 수정완료",
+						   text: "정보가 수정되었습니다.",
+						   icon: "success" //"info,success,warning,error" 중 택1
+						}).then((YES) => {
+								location.reload(true); 
+							})
+					
+	 					}
+				},
+				error:function(){
+					
+				}
+			});
+			
+		}
+
+		if(numberCheck == false) {
+			swal({
+				   title: "휴대폰 번호 형식 오류",
+				   text: "휴대폰 번호 형식에 맞지 않습니다. 다시 입력해주세요.",
+				   icon: "warning",//"info,success,warning,error" 중 택1
+				}).then((YES) => {
+					if (YES) {
+						$("#phone").focus();
+					     }
+			});
+			return;
+		}
+		
+		if(pwCheck == false) {
+			swal({
+				   title: "비밀번호 형식 오류",
+				   text: "비밀번호가 형식에 맞지 않습니다. 다시 입력해주세요.",
+				   icon: "warning",//"info,success,warning,error" 중 택1
+				}).then((YES) => {
+					if (YES) {
+						$("#password").focus();
+					     }
+			});
+			return;
+		}
+		
+		if(pwDoubleCheck == false) {
+			swal({
+				   title: "비밀번호 입력 오류",
+				   text: "비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+				   icon: "warning",//"info,success,warning,error" 중 택1
+				}).then((YES) => {
+					if (YES) {
+						$("#password").focus();
+					     }
+			});
+			return;
+		}
+
+	}
 </script>
 </body>
 </html>

@@ -10,10 +10,26 @@
 <script type="text/javascript">
 	//카드 번호 정규식 
 	var cardReg = new RegExp("^[1-9]{1}[0-9]{3}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
+	var vail = false; // 유효성 불통인데 등록 버튼을 눌렀을 때 유효성검사를 하기위한 변수
+	var entryCheck = false;
+	var cardNumCheck = false;
+	var emptyCheck = false; 
 
+	// 명의자이름 / 카드사 / 카드별칭  빈칸인지아닌지 검사
+	function threeEmptyCheck(){
+			let tempCorp = $('#corp').val();
+			let tempName = $('#name1').val();
+			let tempNickname = $('#nickName').val();
+			if(tempCorp == '' || tempName == '' || tempNickname == ''){
+				emptyCheck = false;
+			}else{
+				emptyCheck = true;
+			}
+		};
+	
 	//날짜 유효성 검사 함수
     function inputValidThru(period) {
-
+		
         // replace 함수를 사용하여 슬래시( / )을 공백으로 치환한다.
         var replaceCard = period.value.replace(/\//g, "");
 
@@ -37,6 +53,7 @@
             if(isFinite(inputMonth + inputYear) == false) {
                 alert("문자는 입력하실 수 없습니다.");
                 period.value = autoLeftPad((Number(nowMonth) + 1), 2) + "/" + nowYear;
+                vail = false;
                 return false;
             }
 
@@ -44,18 +61,29 @@
             if(inputMonth > 12) {
                 alert("12월보다 큰 월수는 입력하실 수 없습니다. ");
                 period.value = "12/" + inputYear;
+                vail = false;
                 return false;
             }
 
+            // 입력한 월이 00을 입력 할 수 없다
+            if(inputMonth == 0){
+				alert("월에 00은 입력 할 수 없습니다.");
+				period.value = "01/" + inputYear;
+				vail = false;
+				return false;
+               }
 
             // 입력한 유효기간을 현재날짜와 비교하여 사용 가능 여부를 판단한다.
             if((inputYear + inputMonth) <= (nowYear + nowMonth)) {
                 alert("유효기간이 만료된 카드는 사용하실 수 없습니다.");
                 period.value = inputMonth + "/" + autoLeftPad((Number(nowYear) + 1), 2);
+                vail = false;
                 return false;
+                
             }
 
             period.value = inputMonth + "/" + inputYear;
+            vail = true;
         };
     };
 
@@ -72,13 +100,15 @@
 	// 카드 번호 유효성 검사 
     function inputVailCardNum(cardNum){
     		//최소 19 글자는 적어야 함수가 작동함
+    		cardNumCheck = false;
     		if(cardNum.length == 19) {
-    			var cardNumCheck = cardReg.test(cardNum);  //true or false
+    			cardNumCheck = cardReg.test(cardNum);  //true or false
 				if(cardNumCheck){
-					console.log("카드넘버 유효성 통과");
+					cardNumCheck = true;
+					
 				}else{
-					console.log("카드넘버 유효성 불통");
 					alert("카드 번호를 1234-1234-1234-1234 형식으로 입력 해 주세요.");
+					cardNumCheck = false;
 				}
     		}
         };
@@ -102,6 +132,19 @@
 		};
 		return sendData;
 	};
+
+
+	// 카드 구분 유효성 검사 함수 
+	function checkEntry(){
+			let tempEntry = $('#entry').val();
+			
+			if(tempEntry == ''){
+				entryCheck = false;
+				}else{
+					entryCheck = true;
+					}
+
+		};
 	
 	// 법인 카드등록 아작스함수
    function addDebit(sendData = inputData()){
@@ -112,12 +155,35 @@
 			url:"AdminDebit.do",
 			type:'POST',
             data: sendData,
+            beforeSend : function(xhr, opts) {
+            	checkEntry();  // 카드 구분은 여기서 함수를실행해서 확인하고, 카드번호/유효기간은 keyUp 을 통해 사용자가 입력하는 즉시 확인
+            	threeEmptyCheck();  // 명의자이름 별치 은행 빈칸 검사하는 함수
+            	
+                if (!entryCheck) { 
+                	alert("카드 구분을 선택해주세요.");
+                    xhr.abort();
+                };
+                if (!vail){
+                	alert("유효기간은 정확히 입력해주세요.");
+					xhr.abort();
+                };
+                if (!cardNumCheck){
+                	alert("카드번호를 정확히 입력해주세요.");
+                	xhr.abort();
+                };
+                if (!emptyCheck){
+               		alert("명의자이름/별칭/카드사를 입력해주세요.");
+               		xhr.abort();
+               };
+                
+            },
 			success:function(data){
 					console.log("등록 아작스 성공");
 					console.log(data);
 					result = data;
 					if(result == 0){
 						console.log("아작스는 성공했으나 디비 등록에는 실패");
+						alert("데이터 베이스 등록에 실패하였습니다.");
 					}else{
 						console.log("등록 아작스 성공 && 디비 등록도 성공");
 						// 디비 등록 까지 다 성공했다면, 목록 보여주는 페이지로 이동
@@ -222,7 +288,7 @@
 		                                                        <div class="form-label-group">
 		                                                            <label for="teamCode">카드구분</label>
 		                                                           	<select id="entry" name="entry" class="form-control" placeholder="법인카드구분" >
-		                                                           		<option hidden>선택하세요</option>
+		                                                           		<option hidden value=''>선택하세요</option>
 		                                                           		<option>법인(공용)</option>
 																	    <option>법인(개인)</option>
 																	    <option>법인(체크)</option>

@@ -210,7 +210,6 @@ public class DoController {
     //관리자 법인카드 목록 뷰단이동 및 불러오기
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
     public ModelAndView adminListDebit() {
-    	System.out.println("카드 리스트 컨트롤단: 왜 갑자기 안되냐 ");
     	ModelAndView mav = new ModelAndView();
     	ArrayList debitList = debitService.listDebit();
     	mav.addObject("debitList", debitList);
@@ -246,6 +245,7 @@ public class DoController {
     		System.out.println("컨트롤단  : 법인카드 등록 성공");
     		result = 1;
     	}else {
+    		result = 0;
     		System.out.println("컨트롤단 : 법인카드 등록 실패");
     	}
     	//return "redirect:ListDebit.do";
