@@ -286,34 +286,11 @@
 			})
 
 	   
-	} 
-	/*
-	$('#userSelectEdit').select2({
-			   placeholder: "사원 선택",
-			   multiple: true,
-			   ajax: {
-			          url: "getUserList.do",
-			          dataType: 'json',
-			          type:"post",
-			          processResults: function (data) {
-			        	  	var arr = []
-				          	var res = $.each(data, function(index, item) {
-				          		arr.push({
-		                            id: item.mail,
-		                            text: item.name
-		                        });
-		        	        });
-	      	       			return {
-	      	       				results: arr
-	          	       		}
-			        	}
-			      },
-			 });
-	
-	*/
+	}
 
 	/* 프로젝트 수정 전송 */
 	function editPjtButton(data){
+		console.log('수정 버튼 타니?');
 		
 		var pjtSeq = $('#pjtEditPjtSeq').val();
 
@@ -671,7 +648,7 @@
 							<div class="col-md-4">
 							</div>
 							<div class="col-md-4 text-center">
-								<button onclick="editPjtButton(this)" class="btn btn-default" id="makePjtBtn" style="background-color: #34495e; color:white;" ><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
+								<button onclick="editPjtButton(this)" class="btn btn-default" style="background-color: #34495e; color:white;" ><i class="fa fa-send"></i>&nbsp;프로젝트 수정</button>
 							</div>
 							<div class="col-md-4">
 							</div>

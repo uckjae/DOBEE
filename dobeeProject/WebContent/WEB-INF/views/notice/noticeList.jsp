@@ -115,7 +115,7 @@
 		</tbody>
 	</table>
 	<!-- 관리자만 글쓰기 버튼 추가해주기 -->
-	<c:if test="${ user.authCode == '1'}">
+	<c:if test="${ user.authCode == '3' }">
 		<p class="article-comment margin-small">
 			<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
 		</p>
