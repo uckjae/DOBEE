@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dobee.services.ApplyService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.member.BreakManageList;
 
 @RestController
 @RequestMapping("ajax/apply/**")
@@ -16,6 +17,7 @@ public class AjaxController_Work {
 	@Autowired
 	ApplyService applyService;
 	
+	// 개인_부재일정신청 POST 0112          게다죽	COMPLETE
 	@RequestMapping(value="breakApply.do", method=RequestMethod.POST)
 	public String absApply(Apply apply, Authentication auth) {
 		// System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
@@ -32,8 +34,26 @@ public class AjaxController_Work {
 		return responseData;
 	}
 	
+	// 개인_부재일정신청 수정 POST
+	@RequestMapping(value="breakEditApply.do", method=RequestMethod.POST)
+	public String absEditApply(BreakManageList bml, Integer aplSeq, Authentication auth) {
+		// System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
+		String responseData = "";
+		int result = 0;
+		bml.setDrafter(auth.getName());
+		bml.setAplSeq(aplSeq);
+        result = applyService.postEditApply(bml);
+        if(result > 0) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
+        System.out.println("수정 데이터?"+responseData);
+		return responseData;
+	}
+	
 	/*
-	 // 개인_부재일정신청 POST 0112          게다죽
+
     @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
     public String absApplyPost(Apply apply, Authentication auth){
         apply.setDrafter(auth.getName());
@@ -43,6 +63,8 @@ public class AjaxController_Work {
         return "redirect: breakApply.do";
     }
 	 */
+	
+	// 개인_연장근무신청 POST           0112 게다죽
 	@RequestMapping(value="extendApply.do", method=RequestMethod.POST)
 	public String extendApply(Apply apply, Authentication auth) {
 		// System.out.println("값 가져와?"+apply.toString());
@@ -55,7 +77,25 @@ public class AjaxController_Work {
         } else {
         	responseData = "fail";
         }
-        System.out.println("연장 신청"+responseData);
+        System.out.println("연장 신청 : "+responseData);
+		return responseData;
+	}
+	
+	// 개인_연장근무신청 수정 POST           0112 게다죽
+	@RequestMapping(value="extEditApply.do", method=RequestMethod.POST)
+	public String extendEditApply(Apply apply, Integer aplSeq, Authentication auth) {
+		// System.out.println("값 가져와?"+apply.toString());
+		String responseData = "";
+		int result = 0;
+		apply.setAplSeq(aplSeq);
+		apply.setDrafter(auth.getName());
+        result = applyService.postEditExtApply(apply);
+        if(result > 0) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
+        System.out.println("연장 신청 수정 : "+responseData);
 		return responseData;
 	}
 	

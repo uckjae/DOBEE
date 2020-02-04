@@ -718,7 +718,7 @@ public class DoController {
         return "attend/breakApplyEdit";
     }
     
-    
+    /*
     // 개인_부재일정 수정 POST      0121 COMPLETE
     @RequestMapping(value="postEditApply.do", method = RequestMethod.POST)
     public String postEditApply (BreakManageList bml, Integer aplSeq, Authentication auth) {
@@ -728,6 +728,7 @@ public class DoController {
         
         return "redirect: editApply.do";
     }
+    */
     
     
     // 개인_부재일정 삭제 POST          0120    COMPLETE
@@ -782,7 +783,7 @@ public class DoController {
         return "attend/extApplyEdit";
     }
     
-    
+    /*
     // 개인_연장근무 신청 수정 Page POST      0121 게다죽        COMPLETE
     @RequestMapping(value="postEditExtApply.do", method = RequestMethod.POST)
     public String postEditExtList (Apply apply, Integer aplSeq, Authentication auth) {
@@ -792,6 +793,7 @@ public class DoController {
         
         return "redirect: workManage.do";
     }
+    */
     
     
     // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
