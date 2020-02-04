@@ -74,38 +74,6 @@
 					
 					
 					<section class="panel">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#popular1" data-toggle="tab"><i class="fa fa-star"></i> 연차 정보</a>
-										</li>
-										<li>
-											<a href="#recent1" data-toggle="tab">조회 옵션</a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div id="popular1" class="tab-pane active" style="height: 50px;">
-											
-											Lorem Ipsum is beautiful things, I god a stomachache in 3 AM.
-										</div>
-										<div id="recent1" class="tab-pane" style="height:50px;">
-											<select id="selectEntry">
-												<option value="">항목별</option>
-												<!-- Ajax -->
-											</select>
-										
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</section>
-					
-					
-					<section class="panel">
 						<header class="panel-heading">
 							<h2 class="panel-title">부재 신청 목록</h2>
 						</header>

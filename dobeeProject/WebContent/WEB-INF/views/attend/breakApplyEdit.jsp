@@ -242,7 +242,7 @@
 				var events = [];
 				events = data.AbsAll;
 
-				$.each(events, (index, element) => {						
+				$.each(events, (index, element) => {
 					if (element.isAuth ==='승인' && element.apyCode == 1 ) {
 						eventList.push({
 							title : "연차",
@@ -262,7 +262,7 @@
 							title : "반일 연차",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#f28c1f"
+							color : "#ebb134"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
 						eventList.push({
@@ -271,49 +271,49 @@
 							end : element.endAt,
 							color : "#f54242"
 						})					
-					} else if (element.isAuth == '출장' && element.apyCode == 3 ) {
+					} else if (element.isAuth == '승인' && element.apyCode == 3 ) {
 						eventList.push({
 							title : "출장",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#f28c1f"
+							color : "#00871d"
 						})
-					} else if (element.isAuth ==='출장' && element.apyCode == 3 ) {
+					} else if (element.isAuth ==='미승인' && element.apyCode == 3 ) {
 						eventList.push({
 							title : "출장 미승인",
 							start : element.startAt,
 							end : element.endAt,
 							color : "#f54242"
 						})
-					} else if (element.isAuth == '외근' && element.apyCode == 4 ) {
+					} else if (element.isAuth == '승인' && element.apyCode == 4 ) {
 						eventList.push({
 							title : "외근",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#f28c1f"
+							color : "#093e94"
 						})
-					} else if (element.isAuth ==='외근' && element.apyCode == 4 ) {
+					} else if (element.isAuth ==='미승인' && element.apyCode == 4 ) {
 						eventList.push({
 							title : "외근 미승인",
 							start : element.startAt,
 							end : element.endAt,
 							color : "#f54242"
 						})
-					} else if (element.isAuth == '경조 휴가' && element.apyCode == 5 ) {
+					} else if (element.isAuth == '승인' && element.apyCode == 5 ) {
 						eventList.push({
 							title : "경조 휴가",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#3b6b7d"
+							color : "#a15113"
 						})
-					} else if (element.isAuth ==='경조 휴가' && element.apyCode == 5 ) {
+					} else if (element.isAuth ==='미승인' && element.apyCode == 5 ) {
 						eventList.push({
 							title : "경조 휴가 미승인",
 							start : element.startAt,
 							end : element.endAt,
 							color : "#f54242"
 						})
-					}	
+					}
 				});
 			},
 			complete : function () {

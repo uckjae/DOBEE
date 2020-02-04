@@ -73,67 +73,6 @@
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
-					
-					<section class="panel">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#popular1" data-toggle="tab"><i class="fa fa-star"></i> 연차 정보</a>
-										</li>
-										<li>
-											<a href="#recent1" data-toggle="tab">조회 옵션</a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div id="popular1" class="tab-pane active" style="height: 50px;">
-											
-											<div class="col-md-3">
-												<h3>사용 가능 연차</h3>
-											</div>
-											<div class="col-md-2" >
-												<h3 id="remainVacation"> 불러오는 중... </h3>
-											</div>
-											<div class="col-md-1"></div>
-											<div class="col-md-3">
-												<h3>사용 연차</h3>
-											</div>
-											<div class="col-md-2" >
-												<h3 id="usedVacation">불러오는 중...</h3>
-											</div>
-											<div class="col-md-1"></div>
-										</div>
-										<div id="recent1" class="tab-pane" style="height:50px;">
-											<select name="year" id="selectYear">
-												<option value="">년도별</option>
-												<!-- Ajax -->
-											</select>
-											
-											<select name="month" id="selectMonth">
-												<option value="">월별</option>
-												<!-- Ajax -->
-											</select>
-											
-											<select name="category" id="selectEntry">
-												<option value="">항목별</option>
-												<!-- Ajax -->
-											</select>
-											
-											<select name="category" id="selectIsAuth">
-												<option value="">항목별</option>
-												<!-- Ajax -->
-											</select>
-										
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</section>
-					
-					
 					<section class="panel">
 						<header class="panel-heading">
 							<h3 class="panel-title">부재 신청 현황</h3>
@@ -177,6 +116,57 @@
 									
 								</tbody>
 							</table>
+						</div>
+					</section>
+					
+					
+					<section class="panel">
+						<div class="col-md-6 col-lg-12 col-xl-12">
+							<div class="row">
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary widget-summary-sm">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-life-ring"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">남은 연차</h4>
+														<div class="info">
+															<strong class="amount" id="remainVacation">불러오는 중...</strong>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary widget-summary-sm">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-life-ring"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">사용 연차</h4>
+														<div class="info">
+															<strong class="amount" id="usedVacation">불러오는 중...</strong>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+							</div>
 						</div>
 					</section>
 					
