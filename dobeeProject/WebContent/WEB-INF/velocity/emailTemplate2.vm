@@ -327,12 +327,13 @@ a[x-apple-data-detectors=true] {
 													<tr>
 														<td style="overflow-wrap: break-word; word-break: break-word; padding: 20px 20px 50px; font-family: arial, helvetica, sans-serif; align:left;">
 															<div align="center">
-																<a href="http://localhost:8090/dobeeProject/findPassWordChange.do" target="_blank"
+																<form action="${path}" method="post">
+																<input type="hidden" value="${mail}"/>
+																<button type="submit" target="_blank"
 																	style="display: inline-block; font-family: 'Sunflower', sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
-																	<span style="line-height: 150%;">
-																		<strong><span style="font-size: 20px; line-height: 20px;">클릭</span></strong>
-																	</span>
-																</a>
+																	클릭
+																</button>
+																</form>
 															</div>
 														</td>
 													</tr>

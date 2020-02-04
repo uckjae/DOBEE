@@ -412,7 +412,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="regitDate">고용일</label>
 												<div class="col-md-6">
-													<input class="form-control" id="regitDate" name="regitDate" type="date" form="addUserForm">
+													<input class="form-control" id="regitDate" name="regitDate" type="date" max="2100-12-31" form="addUserForm">
 												</div>
 											</div>
 											<div class="form-group">

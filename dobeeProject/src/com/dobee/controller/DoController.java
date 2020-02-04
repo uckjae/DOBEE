@@ -105,13 +105,22 @@ public class DoController {
     }
     
     //비밀번호 찾기(이메일 보내기)
-    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
     public String findPassWord2(){
-        return "main/findPassWord2";
+    	System.out.println("here!!");
+        return "main/findPassWord";
     }
+    
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
+    public String findPassWord3(){
+    	System.out.println("here!!");
+        return "redirect: login.do";
+    }
+    
     //비밀번호 찾기(변경)
     @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
     public String findPassWordChange(HttpSession session){
+    	System.out.println("여기탄다");
     	String mail = (String) session.getAttribute("mail");
     	System.out.println("메일?"+mail);
         return "main/findPassWordChange";

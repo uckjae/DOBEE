@@ -138,16 +138,18 @@ public class AjaxControllerAdmin {
 	  
 	  session.setAttribute("mail", mail);
 	  
-	  Enumeration<String> enu = req.getParameterNames();
-		while(enu.hasMoreElements()) {
-			System.out.println("while");
-			System.out.println(enu.nextElement());
-		}
+	  StringBuilder path = new StringBuilder();
+		path.append(req.getLocalAddr());
+		path.append(":");
+		path.append(req.getLocalPort());
+		path.append(req.getContextPath());
+		path.append("/findPasswordChange.do");
 	  
 	  try {		  
 		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 		  Map model = new HashMap();
-		  model.put("mail",mail); 
+		  model.put("mail",mail);
+		  model.put("path", path.toString());
 		  String mailBody =VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate2.vm","UTF-8",model);	  		  
 		  //이메일 내용은 emailTemplate2.vm이고 형식UTF-8
 		  messageHelper.setFrom("letsdobee@gmail.com");//보내는이메일
