@@ -74,6 +74,55 @@
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
 					<section class="panel">
+						<div class="row">
+							<div class="col-md-12 col-lg-6 col-xl-6">
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-sm">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-smile-o"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">남은 연차</h4>
+													<div class="info">
+														<strong class="amount" id="remainVacation">불러오는 중...</strong>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							
+							<div class="col-md-12 col-lg-6 col-xl-6">
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-sm">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-tasks"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title">사용 연차</h4>
+													<div class="info">
+														<strong class="amount" id="usedVacation">불러오는 중...</strong>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</section>
+					
+					
+					<section class="panel">
 						<header class="panel-heading">
 							<h3 class="panel-title">부재 신청 현황</h3>
 						</header>
@@ -120,56 +169,6 @@
 					</section>
 					
 					
-					<section class="panel">
-						<div class="col-md-6 col-lg-12 col-xl-12">
-							<div class="row">
-								<div class="col-md-12 col-lg-6 col-xl-6">
-									<section class="panel panel-featured-left panel-featured-primary">
-										<div class="panel-body">
-											<div class="widget-summary widget-summary-sm">
-												<div class="widget-summary-col widget-summary-col-icon">
-													<div class="summary-icon bg-primary">
-														<i class="fa fa-life-ring"></i>
-													</div>
-												</div>
-												<div class="widget-summary-col">
-													<div class="summary">
-														<h4 class="title">남은 연차</h4>
-														<div class="info">
-															<strong class="amount" id="remainVacation">불러오는 중...</strong>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-								
-								<div class="col-md-12 col-lg-6 col-xl-6">
-									<section class="panel panel-featured-left panel-featured-primary">
-										<div class="panel-body">
-											<div class="widget-summary widget-summary-sm">
-												<div class="widget-summary-col widget-summary-col-icon">
-													<div class="summary-icon bg-primary">
-														<i class="fa fa-life-ring"></i>
-													</div>
-												</div>
-												<div class="widget-summary-col">
-													<div class="summary">
-														<h4 class="title">사용 연차</h4>
-														<div class="info">
-															<strong class="amount" id="usedVacation">불러오는 중...</strong>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-						</div>
-					</section>
-					
 					
 					<!-- Modal -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -185,7 +184,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
 									</h4>
 								</div>
 								<!--Body-->
@@ -196,7 +195,8 @@
 											<label class="col-md-3 control-label"><i
 												class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
 											<div class="col-md-9">
-												<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+												<textarea id="modalReason"  name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
+												<!-- <input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly"> -->
 											</div>
 										</div>
 										<br>
@@ -204,7 +204,8 @@
 											<label class="col-md-3 control-label" for="userList"><i
 												class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
 											<div class="col-md-9">
-												<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" readonly="readonly">
+												<textarea id="modalRejReason"  name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
+												<!-- <input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" readonly="readonly"> -->
 											</div>
 										</div>
 										<br>
@@ -258,7 +259,7 @@
 						
 					aplSeq = $(this).data('aplseq');
 					reason = $(this).data('reason');
-					rejReason = $(this).data('rejReason');
+					rejReason = $(this).data('rejreason');
 	
 					$('#modalAplSeq').val(aplSeq);
 					$('#modalReason').val(reason);
@@ -270,29 +271,14 @@
 					url : "getVacationInBM.do",
 					dataType : "json",
 					success : function (data) {
-						$('#remainVacation').html(data.totalVacation[0].totalBreak - data.totalVacation[0].usedBreak)
-						$('#usedVacation').html(data.totalVacation[0].usedBreak)						
+						$('#remainVacation').html(data.totalVacation[0].totalBreak - data.totalVacation[0].usedBreak + ' 일')
+						$('#usedVacation').html(data.totalVacation[0].usedBreak + ' 일')						
 					},
 					error : function(error){
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
 	
-				// 년도 Option Ajax Loading
-				$.ajax({
-					url : "breakYearList.do",
-					dataType : "json",
-					success : function(data) {
-						var yArray = [];
-						yArray = data.breakYearList;
-						for (var i=0; i<yArray.length; i++) {
-							var option = document.createElement("option");
-							$(option).text(yArray[i]+'년');
-							$("#selectYear").append(option);
-						}
-					}				
-				});	
-
 
 				$('#brkTable').DataTable({
 					/*language option*/
@@ -316,8 +302,9 @@
 						"targets" : [ 1 ],
 					}]
 				});
+
 				
-				
+				/* 
 				// 월 Option Ajax Loading
 				$.ajax({
 					url : "breakYearMonthList.do",
@@ -360,8 +347,7 @@
 						}
 					}
 				});
-	
-				
+				 
 				// 년도 Option 변경시 List Ajax 처리
 				$('#selectYear').change(function() {
 					
@@ -497,6 +483,8 @@
 						}
 					});
 				});
+
+				*/
 	
 			}
 			

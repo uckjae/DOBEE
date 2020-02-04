@@ -502,7 +502,7 @@ html .panel-primary .panel-heading {
 }
 
 .panel-featured-primary {
-	border-color: #0088cc;
+	border-color: #34495e;
 }
 
 .panel-featured-primary .panel-title {
@@ -786,7 +786,7 @@ html.dark .radio-primary input[type="radio"]:checked + label:after,
 /* Slider */
 .slider-primary .ui-slider-range,
 .slider-primary .ui-slider-handle {
-	background: #34495e;
+	background: #0088cc;
 }
 
 .slider-gradient.slider-primary .ui-slider-range,

@@ -86,14 +86,14 @@
 						<div id="legendColor" style="align-items: center">
 							<div class="row">
 								<div class="col-md-12">
-									<div class="col-md-5"></div>
-									<div class="col-md-1">
+									<div class="col-md-4"></div>
+									<div class="col-md-2">
 										<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
 									</div>
-									<div class="col-md-1">
+									<div class="col-md-2">
 										<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
 									</div>
-									<div class="col-md-5"></div>
+									<div class="col-md-4"></div>
 								</div>
 							</div>
 						</div>
@@ -231,7 +231,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
 									</h4>
 								</div>
 								<!--Body-->
@@ -240,17 +240,19 @@
 										<div class="form-group">
 											<input type="hidden" id="modalAplSeq" name="aplSeq">
 											<label class="col-md-3 control-label"><i
-												class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
+												class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 사유</span></label>
 											<div class="col-md-9">
-												<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+												<textarea id="modalReason"  name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
+												<!-- <input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly"> -->
 											</div>
 										</div>
 										<br>
 										<div class="form-group">
 											<label class="col-md-3 control-label" for="userList"><i
-												class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
+												class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 반려 사유</span></label>
 											<div class="col-md-9">
-												<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" readonly="readonly">
+												<textarea id="modalRejReason"  name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
+												<!-- <input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" readonly="readonly"> -->
 											</div>
 										</div>
 										<br>
@@ -308,7 +310,7 @@
 					
 				aplSeq = $(this).data('aplseq');
 				reason = $(this).data('reason');
-				rejReason = $(this).data('rejReason');			
+				rejReason = $(this).data('rejreason');			
 
 				$('#modalAplSeq').val(aplSeq);
 				$('#modalReason').val(reason);
