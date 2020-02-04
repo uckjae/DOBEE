@@ -146,6 +146,7 @@
 	});
 
 	socket.on('printChatHistory', function(msg){
+
         var msgArray = msg.reverse();
         console.log(msgArray);
         $.each(msgArray, function(index,element){
@@ -169,6 +170,7 @@
     				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
     			}
         });
+        
     });
     
 

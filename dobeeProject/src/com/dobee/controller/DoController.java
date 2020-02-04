@@ -105,13 +105,22 @@ public class DoController {
     }
     
     //비밀번호 찾기(이메일 보내기)
-    @RequestMapping(value="findPassWord2.do",method={RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
     public String findPassWord2(){
-        return "main/findPassWord2";
+    	System.out.println("here!!");
+        return "main/findPassWord";
     }
+    
+    @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
+    public String findPassWord3(){
+    	System.out.println("here!!");
+        return "redirect: login.do";
+    }
+    
     //비밀번호 찾기(변경)
     @RequestMapping(value="findPassWordChange.do",method={RequestMethod.GET, RequestMethod.POST})
     public String findPassWordChange(HttpSession session){
+    	System.out.println("여기탄다");
     	String mail = (String) session.getAttribute("mail");
     	System.out.println("메일?"+mail);
         return "main/findPassWordChange";
@@ -955,8 +964,9 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	
+    	System.out.println("addPMTask.do 업무 생성 어케 들어와?"+task.toString());
     	int result = projectService.addPMTask(task);
+    	System.out.println("업무 DB에 들어갔어?"+task.toString());
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 

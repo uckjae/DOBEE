@@ -6,10 +6,6 @@
 <html class="fixed search-results">
 <head>
 	    <c:import url="/common/HeadTag.jsp"/>
-		
-		
-		
-		
 		<!-- Specific Page Vendor CSS -->
 		<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
@@ -195,13 +191,8 @@
 				getTaskDetailList(tskSeq);
 				getTaskCheckList(tskSeq);
 				$('#taskFormTskSeq').val(tskSeq);
-				$(this).off('shown.bs.modal');
+				
 			});
-
-			$('.taskDetail').on('hidden.bs.modal', function () {
-				  document.location.reload();
-				  
-			})
 
 
 			
@@ -227,10 +218,25 @@
             	$("#endTime").val($("#taskFormEndAt").val());
 
 				console.log($("#taskEditForm"));
-				$("#taskEditForm")[0].submit();
+
+				console.log('담당자 가져와?'+$("#taskMemberEditSelect").val());
+
+				//endAt 유효성 체크 요기요
+				if($("#taskFormEndAt").val() == "" || $("#taskFormEndAt").val() == null ){
+					swal({
+						   title: "마감일 입력 오류",
+						   text: "마감일을 설정해주세요.",
+						   icon: "warning",//"info,success,warning,error" 중 택1
+						}).then((YES) => {
+							if (YES) {
+								$("#taskFormEndAt").focus();
+							     }
+					});
+					return;
+				}
+				$("#taskEditForm").submit();
 
 			});
-			
 				
 
 			/* 01.26 업무 상세 추가 -- 알파카 */
@@ -2260,269 +2266,6 @@
 		
                 <!-- 상세보기 모달 -->
                 <div class="modal fade" id="taskDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		   		<div class="modal-dialog cascading-modal" role="document">
-						<div class="modal-content">
-						<!-- Modal Header -->
-							<div class="modal-header light-blue darken-3 white-text" style="text-align: center;padding-bottom: 0px;border-bottom-width: 0px;">
-								<button type="button" class="close" data-dismiss="modal" style="margin-top:-9px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-									<div style="margin-top: 20px;margin-bottom: 25px;">
-										<span><i class="fa fa-tasks"></i></span>&nbsp;&nbsp;<h4 class="modal-title" id="taskDetailTitle" style="display:inline"></h4>
-									</div>
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs nav-justified">
-										<li class="active">
-											<a href="#attribute" data-toggle="tab">속성</a>
-										</li>
-										<li>
-											<a href="#detail" data-toggle="tab">상세업무</a>
-										</li>
-										<li>
-											<a href="#checkList" data-toggle="tab">체크리스트</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<!-- 속성 Tab -->
-							<div class="tab-content" style="border-bottom-width: 0px;padding-top: 0px;">
-								<div class="tab-pane active" id="attribute">
-								<div class="panel-body" style="padding-top: 0px;">
-									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
-										<!-- 업무 pm만 수정 가능-->
-										<c:if test="${ user.authCode == '3'}">
-											<div class="form-group">
-													<label class="col-md-3 control-label">업무</label>
-													<div class="col-md-7">
-														<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
-													</div>
-											</div>
-										</c:if>
-										<!-- 날짜 -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">날짜</label>
-											<div class="col-md-7">
-												<div class="input-daterange input-group" data-plugin-datepicker>
-													<span class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-													</span>
-													<input type="hidden" id="tsSeq" name="tsSeq" class="form-control" form="taskEditForm">
-													<input type="text" id="taskFormStartAt" name="startAt" class="form-control" form="taskEditForm">
-													<input type="hidden" id="startTime" name="startTime" class="form-control" form="taskEditForm">
-													<span class="input-group-addon">to</span>
-													<input type="text" id="taskFormEndAt" name="endAt" class="form-control" form="taskEditForm">
-													<input type="hidden" id="endTime" name="endTime" class="form-control" form="taskEditForm">
-													<c:if test="${ user.authCode == '2'}">
-														<input type="hidden" id="taskFormTitle" name="title" class="form-control" form="taskEditForm">
-													</c:if>
-												</div>
-											</div>
-										</div>
-										<!-- 담당자 -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">담당자</label>
-											<c:choose>
-												<c:when test="${ user.authCode == '2'}">
-														<div class="col-md-7" style="margin-top: 8px;">
-															<i class="fa fa-user"></i>
-															<h5 id="taskFormName" name="name" form="taskEditForm" style="display:inline;"></h5>
-															<!-- <input type="text" id="taskFormName" name="name" class="input-noneborder" readonly="readonly" form="taskEditForm"/> -->
-															<input type="hidden" id="taskFormMail" name="mail" form="taskEditForm"/>
-														</div>
-												</c:when>
-												<c:otherwise>
-														<div class="col-md-7">
-															<select class="form-control" id="taskMemberEditSelect" name="mail" form="taskEditForm">
-																<c:forEach items="${pjtMember}" var="user" varStatus="status">
-																	<option value="${user.mail}">${user.name}</option>
-																</c:forEach>
-															</select>
-														</div>
-												</c:otherwise>
-											</c:choose>
-										</div>
-										<!-- 중요도 pm만 수정 가능! -->
-										<div class="form-group">
-											<label class="col-md-3 control-label">중요도&nbsp;<b id="taskImportant">1</b><b>/5</b></label>
-											<div class="col-md-6">
-												<div id="starBar">
-												</div>
-												<input type="hidden" id="taskFormPjtSeq" name="pjtSeq" value="" form="taskEditForm"/>
-												<input type="hidden" id="taskFormTskSeq" name="tskSeq" value="" form="taskEditForm"/>
-												<input type="hidden" id="taskEditImportant" name="important" form="taskEditForm"/>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-3 control-label">진행상황</label>
-											<input type="hidden" id="taskFormProgress" name="progress" value="" form="taskEditForm"> 
-											<div class="col-md-6 btn-group">
-												<button type="button" class="btn btn-default progress-button">예정</button>
-												<button type="button" class="btn btn-default progress-button">진행</button>
-												<button type="button" class="btn btn-default progress-button">테스트</button>
-												<button type="button" class="btn btn-default progress-button">완료</button>
-											</div>
-										</div>
-										<br>
-										<div class="form-group" style="text-align: center;">
-											<button type="button" id="taskEditBtn" class="btn btn-default" style="background-color: #34495e; color:white;" form="taskEditForm">수정</button>
-										</div>	
-									</form>
-									</div>
-								</div>
-								<!-- 속성 Tab 끝-->
-								
-								<!-- 상세업무 Tab-->
-								<div class="tab-pane" id="detail">
-									<div class="panel-body" style="padding-top: 0px;">
-                                         <ul class="widget-todo-list" id="taskDetailList">
-                                           <!--  <li style="padding-bottom:10px;">
-	                                            <div style="margin-left:10px;" >
-		                                            <span><i class="fa fa-square"></i></span>&nbsp;&nbsp;
-		                                            <label class="taskDetail-label" style="cursor:pointer"><span>업무상세</span></label>
-					 								<input type="hidden" name="tdSeq" value="">
-				 								</div>
-				 								
-				 								업무 상세 아이콘
-			 									<div class="todo-actions">
-			 										<input type="hidden" name="tdSeq" value="">
-							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskDetailEdit(this)">
-							 							<i class="fa  fa-pencil"></i>
-							 						</a>&nbsp;&nbsp;&nbsp;
-							 						<a style="cursor: pointer" onclick="taskDetailDelete(this)">
-							 							<i class="fa fa-times"></i>
-							 						</a>
-							 					</div>
-							 					
-				 								업무 상세 수정 창
-				 								<div class="taskDetail-Edit" style="display:none">
-					 								<form action="#" id="editTaskDetailForm" name="editTaskDetailForm" method="post" class="form-horizontal form-bordered">
-														<div class="form-group">
-															<div class="col-sm-12">
-																<div class="input-group mb-md">
-																	<input type="hidden" form="editTaskDetailForm" id="taskDetailTskSeq" name="tskSeq"/>
-																	<input type="text" id="tdContent" name="tdContent"  class="form-control" form="editTaskDetailForm">
-																	<div class="input-group-btn" style="padding:0;">
-																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editTaskDetailForm" onclick="taskDetailEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</form>
-							 					</div>
-			 								</li> -->
-                                          </ul>                                       	
-										<hr class="solid mt-sm mb-lg">
-											<form action="#" id="addTaskDetailForm" method="post" class="form-horizontal form-bordered">
-												<div class="form-group">
-													<div class="col-sm-12">
-														<div class="input-group mb-md">
-															<input type="hidden" form="addTaskDetailForm" id="addTaskDetailTskSeq" name="tskSeq"/>
-															<input type="text" id="addTdContent" name="tdContent"  class="form-control" form="addTaskDetailForm" placeholder="상세 업무를 추가해주세요">
-															<div class="input-group-btn" style="padding:0;">
-																<button type="button" class="btn btn-primary" tabindex="-1" id="addTaskDetailBtn" form="addTaskDetailForm"><span style="font-size:18px;">+</span></button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</form>
-									</div>
-								</div>
-								<!-- 상세업무 Tab 끝-->
-								
-								<!-- 체크리스트 Tab -->
-								<div class="tab-pane" id="checkList">
-									<div class="panel-body" style="padding-top: 0px;" id="taskCheckListDiv">
-										<ul class="widget-todo-list" id="taskCheckList">
-											<li>
-												<div class="checkbox-custom checkbox-default">
-								 					<input type="checkbox" id="todoListItem7" onclick="checkLine(this)">
-								 					<label for="todoListItem7" class="check-label">
-								 						<span>체크체크~!~!~!~!</span>
-								 					</label>
-					 							</div>
-					 							<!-- 수정 & 삭제 아이콘 -->
-							 					<div class="todo-actions">
-							 						<a style="cursor: pointer;margin-right: 13px;" onclick="taskCheckListEdit(this)">
-							 							<i class="fa  fa-pencil"></i>
-							 						</a>&nbsp;&nbsp;&nbsp;
-							 						<a style="cursor: pointer" onclick="taskCheckListDelete(this)">
-							 							<i class="fa fa-times"></i>
-							 						</a>
-							 					</div>
-							 					<!-- 수정창 -->
-							 					<div class="checkList-Edit" style="display:none">
-					 								<form action="ajax/project/editTaskCheckList.do" id="editCheckListForm" name="editCheckListForm" method="post" class="form-horizontal form-bordered">
-														<div class="form-group">
-															<div class="col-sm-12">
-																<div class="input-group mb-md">
-																	<input type="hidden" form="editCheckListForm" id="checkListTskSeq" name="tskSeq"/>
-																	<input type="hidden" form="editCheckListForm" id="checkListChkSeq" name="chkSeq"/>
-																	<input type="text" id="checkListContent" name="content"  class="form-control" form="editCheckListForm">
-																	<div class="input-group-btn" style="padding:0;">
-																		<button type="button" class="btn btn-primary" tabindex="-1" id="editTaskDetailBtn" form="editCheckListForm" onclick="taskCheckListEditSubmit(this)"><span style="font-size:18px;">Save</span></button>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</form>
-							 					</div>
-				 							</li>
-											 <!-- 템플릿 원본 
-											 <li>
-												<div class="checkbox-custom checkbox-default">
-								 					<input type="checkbox" id="todoListItem1" class="todo-check">
-								 					<label class="todo-label" for="todoListItem1"><span>체크체크</span></label>
-					 							</div>
-							 					<div class="todo-actions">
-							 						<a class="todo-remove" href="#">
-							 							<i class="fa fa-times"></i>
-							 						</a>
-							 					</div>
-				 							</li> -->
-										</ul>
-									<!-- 체크리스트 추가(일반 회원만 보임) -->
-									<c:if test="${ user.authCode == '2'}">
-										<form id="addTaskCheckListForm" method="get" class="form-horizontal form-bordered">
-											<hr class="solid mt-sm mb-lg">
-											<div class="form-group">
-												<div class="col-sm-12">
-													<div class="input-group mb-md">
-														<input type="text" class="form-control" form="addTaskCheckListForm" name="content" id="content">
-														<input type="hidden" form="addTaskCheckListForm" id="taskCheckListTskSeq" name="tskSeq">
-														<div class="input-group-btn" style="padding:0;">
-															<button type="button" class="btn btn-primary" id="addTaskCheckListBtn" tabindex="-1"><span style="font-size:18px;">+</span></button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</c:if>
-								</div>
-							</div>
-							
-							<!-- 체크리스트 Tab 끝-->
-							
-							<!-- Modal Content 끝 -->
-							
-							<!-- Modal Footer -->
-								<div class="modal-footer" style="border-top-width: 0px;">
-									<div class="row">
-										<div class="col-md-4">
-										</div>
-										<div class="col-md-4 text-center">
-											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-										</div>
-										<div class="col-md-4">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- Modal Footer 끝 -->
-						</div>
-					</div>
-				</div>
-				
-				
-				<!-- 내 업무 모달 -->
-				<div class="modal fade" id="myTaskDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 		   		<div class="modal-dialog cascading-modal" role="document">
 						<div class="modal-content">
 						<!-- Modal Header -->

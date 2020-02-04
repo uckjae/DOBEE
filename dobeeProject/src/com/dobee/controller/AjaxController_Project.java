@@ -147,44 +147,27 @@ public class AjaxController_Project {
 		int result = 0;
 		String responseData = "";
 
-		//들어온 메일 개수만큼 vo 객체 만들어주기
-		List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
 		
-		for (int i = 0; i < pjtMembers.size(); i ++) {
-			ProjectMember pjtMember = new ProjectMember();
-			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
-			pjtMember.setMail(pjtMembers.get(i));
-			pjtMemberList.add(pjtMember);
-		}
-		
-		System.out.println("새로 만들어진 개수?"+pjtMemberList.size());
-		//일단 원래 있던 projectmember랑 비교해서 있으면 insert 해주기
 		
 		List<User> oldPjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		List<ProjectMember> newPjtMember = new ArrayList<ProjectMember>();
+		//들어온 메일 개수만큼 vo 객체 만들어주기
+		for(int i=0; i<pjtMembers.size(); i++) {
+			ProjectMember pjtMember = new ProjectMember();
+			pjtMember.setMail(pjtMembers.get(i));
+			newPjtMember.add(pjtMember);
+		}
 		
-		System.out.println("원래 있던 개수?"+oldPjtMember.size());
-	
-		List<ProjectMember> max = null;
-		List<ProjectMember> min = null;
-		
-		/*
-		 * if(oldPjtMember.size()>pjtMemberList.size()) { max = oldPjtMember; min =
-		 * pjtMemberList; } else { max = pjtMemberList; min = oldPjtMember; }
-		 */
-		System.out.println("max값은?"+max);
-		
-		for(int i = 0; i < max.size(); i++) {
-			for(int j = 0; j < min.size(); j++) {
-				if(pjtMemberList.get(j).getMail() != oldPjtMember.get(j).getMail()) { //같지 않을 때만 insert
-					System.out.println("if문 타니???");
-					System.out.println("들어온 메일"+pjtMemberList.get(i).getMail());
-					System.out.println("원래 있던 메일1111"+oldPjtMember.get(i).getMail());
-					//result = projectService.addProjectMember(pjtMemberList);
+		for(int i=0; i<newPjtMember.size(); i++) {
+			for(int j=0; j<oldPjtMember.size(); j++) {
+				if(newPjtMember.get(i).getMail() != oldPjtMember.get(i).getMail()) { //같지 않을 때만 insert 해주기
+					result = projectService.addProjectMember(newPjtMember);
 				}
 			}
 		}
-		
-		System.out.println("서비스는?"+result);
+		System.out.println("새로 만들어진 개수?"+newPjtMember.size());		
+
+		System.out.println("result?"+result);
 		
 		if(result > 0 ) {
 			responseData = "success";
@@ -246,8 +229,7 @@ public class AjaxController_Project {
 	
 	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
-	public Task getTask(int tskSeq) {
-		System.out.println("AjaxController_Project getTask() in");
+	public Task getTask(@RequestParam(value="tskSeq") int tskSeq) {
 		Task task = new Task();
 		
 		boolean checkTsseq = scheduleService.getTsSeq(tskSeq); //업무 일정 번호가 있는지 없는지 체크
@@ -472,7 +454,7 @@ public class AjaxController_Project {
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
+		int result = 0;
 		//프로젝트 참여자 가져오기
 		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		
@@ -486,7 +468,11 @@ public class AjaxController_Project {
 			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
 			
 			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
-			int result = (completedTaskList.size()*100/taskList.size());		// 이거 try catch 걸어야 할것 같습니다. size() null 인경우 터짐
+			if(taskList.size() == 0) {
+				result = 0;
+			} else {
+				result = (completedTaskList.size()*100/taskList.size());
+			}
 			map.put(name, result);
 		}
 				
