@@ -182,10 +182,8 @@
 					console.log(data);
 					result = data;
 					if(result == 0){
-						console.log("아작스는 성공했으나 디비 등록에는 실패");
 						alert("데이터 베이스 등록에 실패하였습니다.");
 					}else{
-						console.log("등록 아작스 성공 && 디비 등록도 성공");
 						// 디비 등록 까지 다 성공했다면, 목록 보여주는 페이지로 이동
 						location.href="ListDebit.do";
 					};
@@ -196,7 +194,6 @@
 				},
 			error:function(){
 					//아작스 실패
-					console.log("법인카드 등록 실패");
 					alert("데이터 베이스 등록에 실패하여 등록되지 않습니다.");
 				},
 			});

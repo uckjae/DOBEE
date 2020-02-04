@@ -39,15 +39,12 @@
                             <input class="form-control" type="text" name="mail" placeholder="E-mail Address" required>
                             <input class="form-control" type="password" name="password" placeholder="Password" required>
                             <c:if test="${param.error != null}">
-							   <div>
-							     	로그인실패<br>
-							     	<c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-							      		이유 : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
-									</c:if>
+							   <div style="color: red;">
+							     	로그인실패<br/>
+							     	아이디와 비밀번호를 확인하세요
+							     	
 							   </div>
 							</c:if> 
-                            <input type="checkbox" id="chk1"><label for="chk1">메일 저장</label>
-                            <input type="checkbox" id="chk1"><label for="chk1">로그인 유지</label>
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                                 <a href="findId.do">메일 찾기 /</a>                           

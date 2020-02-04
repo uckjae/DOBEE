@@ -18,6 +18,7 @@
 							default-target-url="/main.do"
 							username-parameter="mail"
 							authentication-success-handler-ref="loginHandler"
+							authentication-failure-handler-ref=""
 							authentication-failure-url="/login.do?error"/>
 		
 		<security:intercept-url pattern="/login.do" access="permitAll"/>	
@@ -32,6 +33,7 @@
   		<security:intercept-url pattern="/payment*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/project*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/schedule/*" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
+  		<security:intercept-url pattern="/receipt*.do" access="hasAnyRole('ROLE_USER','ROLE_MANAGER')"/>
   		<security:intercept-url pattern="/admin*.do" access="hasRole('ROLE_ADMIN')"/>
   		
   		<security:logout 
