@@ -51,7 +51,7 @@ public class ProjectService {
         return pjtList;
     }
     
-    //특정 프로젝트의 진행률 구하기
+    //특정 프로젝트의 진행률 구하기 -> 0 예외 처리 필요
     public int getPjtProgressRate(int pjtSeq) {
     	int allTaskCount = 0;
     	int completedTaskCount = 0;

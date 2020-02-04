@@ -144,29 +144,39 @@ public class AjaxController_Project {
 	//프로젝트 수정 -> 참여자 수정
 	@RequestMapping(value="updatePjtMember.do", method=RequestMethod.POST)
 	public String updatePjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
-		int result1 = 0;
-		int result2 = 0;
+		int result = 0;
 		String responseData = "";
+
+		//들어온 메일 개수만큼 vo 객체 만들어주기
+		List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
 		
-		//일단 원래 있던 projectmember 테이블의 컬럼 삭제하기
-		result1 = projectService.deletePjtMember(Integer.parseInt(pjtSeq));
+		for (int i = 0; i < pjtMembers.size(); i ++) {
+			ProjectMember pjtMember = new ProjectMember();
+			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
+			pjtMember.setMail(pjtMembers.get(i));
+			pjtMemberList.add(pjtMember);
+		}
+		//일단 원래 있던 projectmember랑 비교해서 있으면 insert 해주기
 		
-		if(result1 > 0) {
-			//들어온 메일 개수만큼 vo 객체 만들어주기
-			List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
-			for (int i = 0; i < pjtMembers.size(); i ++) {
-				ProjectMember pjtMember = new ProjectMember();
-				pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
-				pjtMember.setMail(pjtMembers.get(i));
-				pjtMemberList.add(pjtMember);
-			}
-			result2 = projectService.addProjectMember(pjtMemberList);
+		List<User> oldPjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+	
+		int max = 0;
+		
+		if(oldPjtMember.size()>pjtMemberList.size()) {
+			max = oldPjtMember.size();
+		} else {
+			max = pjtMemberList.size();
 		}
 		
+		for(int i = 0; i < max; i++) {
+			if(pjtMemberList.get(i).getMail() != oldPjtMember.get(i).getMail()) { //같지 않을 때만 insert
+				result = projectService.addProjectMember(pjtMemberList);
+			}
+		}
 		
-		System.out.println("서비스는?"+result2);
+		System.out.println("서비스는?"+result);
 		
-		if(result2 > 0 ) {
+		if(result > 0 ) {
 			responseData = "success";
 			
 		} else {
