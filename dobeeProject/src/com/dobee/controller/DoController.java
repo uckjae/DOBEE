@@ -1086,9 +1086,10 @@ public class DoController {
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
     	
-    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-    	List<Project> pjtList = projectService.projectList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
+    	
     	
     	return "chat/chatMain3";
     }
@@ -1110,6 +1111,10 @@ public class DoController {
     	}
 
     	model.addAttribute("roomNameList", roomNameList);
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(mail); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	
     	
     	//사원 목록 가져오기
@@ -1144,6 +1149,11 @@ public class DoController {
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
+    	
+    	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(mail); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
+    	
     	
     	//해당 DM 채팅방으로 셋팅
     	model.addAttribute("dmName", dmName);

@@ -66,9 +66,8 @@ public class ProjectService {
     	}catch(Exception e) {
     		System.out.println(e.getMessage());
     	} finally {
-    		result = 0;
+    		result = (completedTaskCount *100 /allTaskCount);
     	}
-    	result = (completedTaskCount *100 /allTaskCount);
     	return result;
     }
     
