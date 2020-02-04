@@ -156,10 +156,7 @@
 		</section>
 
 
-			<!-- 오른쪽 사이드바!! -->
-		<c:import url="/common/RightSide.jsp"/>
-			
-			<!-- 오른쪽 사이드바 끝!! -->
+
 		</section>
 
 		<c:import url="/common/BottomTag.jsp"/>
