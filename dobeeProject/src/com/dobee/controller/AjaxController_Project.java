@@ -247,8 +247,6 @@ public class AjaxController_Project {
 	//특정 업무 가져오기
 	@RequestMapping("getTask.do")
 	public Task getTask(@RequestParam(value="tskSeq") int tskSeq) {
-		System.out.println("업무 번호 가져오니?"+tskSeq);
-		System.out.println("AjaxController_Project getTask() in");
 		Task task = new Task();
 		
 		boolean checkTsseq = scheduleService.getTsSeq(tskSeq); //업무 일정 번호가 있는지 없는지 체크
@@ -258,7 +256,6 @@ public class AjaxController_Project {
 		} else {
 			task = projectService.getTask(tskSeq);
 		}
-		System.out.println("테스크 가져오니?"+task.toString());
 		return task;
 	}
 	
@@ -474,7 +471,7 @@ public class AjaxController_Project {
 	@RequestMapping("getMembersTaskChart.do")
 	public Map<String, Integer> getMembersTaskChart(@RequestParam(value="pjtSeq") String pjtSeq, HttpServletRequest request){
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
+		int result = 0;
 		//프로젝트 참여자 가져오기
 		List<User> pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		
@@ -488,7 +485,11 @@ public class AjaxController_Project {
 			List<Task> completedTaskList = projectService.getCompletedTaskList(Integer.parseInt(pjtSeq), mail);
 			
 			//전체 할당된 업무 중 완료된 task의 퍼센트 계산하기
-			int result = (completedTaskList.size()*100/taskList.size());		// 이거 try catch 걸어야 할것 같습니다. size() null 인경우 터짐
+			if(taskList.size() == 0) {
+				result = 0;
+			} else {
+				result = (completedTaskList.size()*100/taskList.size());
+			}
 			map.put(name, result);
 		}
 				

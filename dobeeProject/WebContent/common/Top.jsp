@@ -19,7 +19,7 @@
 				<a href="#" data-toggle="dropdown">
 					<figure class="profile-picture">
 					<!-- 등록된 사원 사진 뿌려주기!!! -->
-						<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+						<img src="upload/${user.myPic}" alt="사원" class="img-circle" />
 					</figure>
 					<div class="profile-info">
 						<span class="name" id="name">${user.name}</span>
