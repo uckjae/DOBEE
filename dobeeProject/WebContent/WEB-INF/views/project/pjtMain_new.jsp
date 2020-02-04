@@ -178,15 +178,11 @@
 	 				var pjtProgress = project.pjtProgress;
 	 				$("#progressSelect > option[value='pjtProgress']").attr('selected','true');
 
-	 				/* //담당자!! -> userSelect 중에 벨류 값이 같으면 attr로 true 넣어주기
+	 				//담당자!! -> userSelect 중에 벨류 값이 같으면 attr로 true 넣어주기
 	 				$.each(user, function(index, element){
-		 				mails.push(element.name+"("+element.mail+")");
-		 				$("#userSelectEdit > option").each(function(){
-		 					if($(this).val() == element.mail){
-				 				$(this).attr('selected','selected');
-							}
-				 		});
-		 			}); */
+		 				mails.push(element.mail);
+		 			});
+		 			
 	 				$.ajax({
 	 	 	 			url:"getUserList.do",
 	 	 	 			dataType: 'json',
@@ -202,7 +198,6 @@
 			 	 				var option = $('<option>');
 			 	 					$(option).val(element.mail);
 			 	 					$(option).text(element.name+"("+element.mail+")");
-
 				 	 			$('#userSelectEdit').append(option);
 			 	 			});
 
