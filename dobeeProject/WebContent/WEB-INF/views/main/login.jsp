@@ -39,7 +39,7 @@
                             <input class="form-control" type="text" name="mail" placeholder="E-mail Address" required>
                             <input class="form-control" type="password" name="password" placeholder="Password" required>
                             <c:if test="${param.error != null}">
-							   <div style="color: red;">
+							   <div style="color: #906561;">
 							     	로그인실패<br/>
 							     	아이디와 비밀번호를 확인하세요
 							     	
