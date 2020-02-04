@@ -22,7 +22,10 @@
 		}
 		
 		.btn-info.btn-sm {
+			width : 80%;
 			background-color: #e0da28;
+			border : none;
+			border-radius: 5px;
 		} 
 	</style>
 	
@@ -102,9 +105,8 @@
 											<td class="bReqDate">	${bl.reqDate}</td>
 											<td class="bEntry">		${bl.entry }</td>
 											<td class="bUsed" style="text-align: center;">		${bl.useBreak }</td>
-											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>
-											
-											<td class="bIsAuth">
+											<td class="bTerm">		${bl.startAt } - ${bl.endAt }</td>											
+											<td class="bIsAuth" style="text-align: center;">
 												<button class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal" data-mail="${bl.drafter}" data-aplSeq="${bl.aplSeq}" data-reason="${bl.reason}" data-rejReason="${bl.rejReason}">${bl.isAuth }</button>			
 											</td>
 										</tr>
@@ -131,7 +133,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
 									</h4>
 								</div>
 								
@@ -145,13 +147,13 @@
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
 												<div class="col-md-9">
-													<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+													<textarea id="modalReason" name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
 												</div>
 											</div>
 											<br>
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
-													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;승인 여부</span></label>
+													class="fa fa-tasks fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;승인 여부</span></label>
 												<div class="col-md-9">
 													<select id="entrySelectorInModal" name="isAuth" style="width:100%">
 														<option value="미승인">항목 선택</option>
@@ -166,7 +168,10 @@
 												<label class="col-md-3 control-label" for="userList"><i
 													class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
 												<div class="col-md-9">
-													<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" placeholder="반려 시 사유를 입력하세요.">
+													<textarea id="modalRejReason" name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="반려 시 사유를 입력하세요."></textarea>
+													<p>
+														<code>max-length</code> set to 3000 byte.
+													</p>
 												</div>
 											</div>
 											<br>
