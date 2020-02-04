@@ -32,8 +32,14 @@
 							<li><a href="extendApply.do">연장 근무 신청</a></li>
 							<li><a href="breakManage.do">부재 일정 관리</a></li>
 							<li><a href="workManage.do">근무 내역 확인</a></li>
-							<li><a href="absManage.do">부재 관리 승인 페이지</a></li>
-							<li><a href="extManage.do">연장 근무 승인 페이지</a></li>
+							
+							<c:choose>
+								<c:when test="${user.authCode == 3 }">
+									<li><a href="absManage.do">부재 신청 관리</a></li>
+									<li><a href="extManage.do">연장 근무 신청 관리</a></li>
+								</c:when>
+							</c:choose>
+							
 						</ul>
 					</li>
 					<li class="nav-parent">
