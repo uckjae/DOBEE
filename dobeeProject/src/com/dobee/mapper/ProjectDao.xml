@@ -116,6 +116,7 @@
 	SELECT U.MAIL AS MAIL, U.NAME AS NAME FROM USER U
 	LEFT OUTER JOIN PROJECTMEMBER P
 	ON U.MAIL = P.MAIL WHERE PJTSEQ=#{pjtSeq}
+	ORDER BY BINARY(NAME)
 </select>
 
 <resultMap type="com.dobee.vo.project.Project" id="Project">
