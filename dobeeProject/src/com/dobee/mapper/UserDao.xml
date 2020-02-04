@@ -30,6 +30,7 @@
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
 		FROM USER
 		WHERE AUTHCODE!=1
+		ORDER BY BINARY(NAME)
 	</select>
 	
 	<!-- User 정보 가져오기 -->
