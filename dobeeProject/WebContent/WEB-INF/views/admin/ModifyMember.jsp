@@ -72,14 +72,14 @@
 
 			/*사원 정보 수정*/
 			$("#modifyBtn").click(function(){
-				var modifyUserForm = $("form[name=modifyUserForm]").serialize();
-				console.log('폼 데이터?'+modifyUserForm);
+				
 	 			$.ajax({
 	 	 			url:"ajax/admin/modifyUser.do",
-	 				data: modifyUserForm ,
+	 				data: new FormData($('#modifyUserForm')[0]),
 	 				dataType: "text",
-	 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
+	 				processData:false,
+	 				contentType:false,
 	 				success:function(responsedata){
     	 				console.log('ajax 통신 성공?');
 	 					console.log(responsedata);
