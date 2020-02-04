@@ -20,6 +20,12 @@
 			border-color:lightgray;
 			background-color:green;
 		}
+		
+		.btn-info.btn-sm {
+			width : 80%;
+			border : none;
+			border-radius: 5px;
+		}
 		 
 	</style>
 	
@@ -85,7 +91,7 @@
 										
 										<th width="8%">부재 항목</th>
 										<th>기간</th>
-										<td width="8%">사유</td>
+										<!-- <td width="8%">사유</td> -->
 										<th width="8%">승인 여부</th>
 									</tr>
 								</thead>
@@ -100,14 +106,21 @@
 											
 											<td class="bEntry">${el.entry }</td>
 											<td class="bTerm">${el.startAt } - ${el.endAt }</td>
-											<td class="bReason">
+											
+											<%--
+										 	<td class="bReason">
 												<button	class="btn btn-default btn-sm" data-toggle="modal"
 													data-target="#myModal" 
 													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}" data-mail="${el.drafter}">확인
 												</button>
-											</td>	
+											</td>
+											--%>
+												
 											<td class="bIsAuth" style="text-align: center;">
-												<button	disabled="disabled" class="btn btn-info btn-sm ${el.isAuth }"> ${el.isAuth} </button>
+												<button	class="btn btn-info btn-sm ${el.isAuth }" data-toggle="modal"
+													data-target="#myModal" 
+													data-aplSeq="${el.aplSeq}" data-reason="${el.reason}" data-rejReason="${el.rejReason}" data-mail="${el.drafter}"> ${el.isAuth}
+												</button>
 											</td>
 										</tr>
 									</c:forEach>
@@ -136,7 +149,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-comments-o fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
 									</h4>
 								</div>
 								
@@ -150,13 +163,15 @@
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 신청 사유</span></label>
 												<div class="col-md-9">
-													<input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly">
+													<textarea id="modalReason" name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" style="height: 200px" readonly="readonly"></textarea>
+												
+													<!-- <input type="text" id="modalReason" name="reason" class="form-control" style="height: 35px;" readonly="readonly"> -->
 												</div>
 											</div>
 											<br>
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
-													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;승인 여부</span></label>
+													class="fa fa-tasks fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;승인 여부</span></label>
 												<div class="col-md-9">
 													<select id="entrySelectorInModal" name="isAuth" style="width:100%">
 														<option value="미승인">항목 선택</option>
@@ -171,7 +186,11 @@
 												<label class="col-md-3 control-label" for="userList"><i
 													class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;연장 근무 반려 사유</span></label>
 												<div class="col-md-9">
-													<input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" placeholder="반려 시 사유를 입력하세요.">
+													<textarea id="modalRejReason" name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="반려 시 사유를 입력하세요."></textarea>
+													<p>
+														<code>max-length</code> set to 3000 byte.
+													</p>
+													<!-- <input type="text" id="modalRejReason" name="rejReason" class="form-control" style="height: 35px;" placeholder="반려 시 사유를 입력하세요."> -->
 												</div>
 											</div>
 											<br>

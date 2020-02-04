@@ -8,9 +8,6 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
-	
-<!-- 	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
- -->	
 	<!-- Sweet Alert -->
    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    	
