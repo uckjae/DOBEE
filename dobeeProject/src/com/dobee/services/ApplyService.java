@@ -113,9 +113,9 @@ public class ApplyService {
 
     
     // 매니저_부재관리 - 데이터 테이블 출력 (GET)		0115		추가 필요 &&&&&&&& 근데 이거 팀별로 조회하는거니까 조회 가능해야지?
-    public List<BreakManageList> breakListMgr() {
+    public List<BreakManageList> breakListMgr(Integer teamCode) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	List<BreakManageList> results = userDao.breakListMgr();
+    	List<BreakManageList> results = userDao.breakListMgr(teamCode);
     	
     	return results;
     }
@@ -133,9 +133,9 @@ public class ApplyService {
 
 
     // 매니저_연장근무관리 - 데이터 테이블 출력 (GET)		0115
-    public List<BreakManageList> extListMgr(){
+    public List<BreakManageList> extListMgr(Integer teamCode){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	List<BreakManageList> results = userDao.extListMgr();
+    	List<BreakManageList> results = userDao.extListMgr(teamCode);
     	
         return results;
     }

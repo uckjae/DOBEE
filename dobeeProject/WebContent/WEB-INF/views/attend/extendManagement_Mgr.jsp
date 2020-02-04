@@ -162,7 +162,7 @@
 														<option value="미승인">항목 선택</option>
 														<option value="승인">승인</option>
 														<option value="반려">반려</option>
-														<option value="미승인">보류</option>
+														<option value="미승인">미승인</option>
 													</select>
 												</div>
 											</div>
