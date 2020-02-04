@@ -4,9 +4,10 @@
 <!doctype html>
 <html class="fixed">
 <head>
-
 <c:import url="/common/HeadTag.jsp"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 		// email 유효성 검사 함수
 		// 이메일 최종 유효성 결과값 전역 변수
@@ -98,8 +99,18 @@
 						numberCheck = true;
 					}else{
 						console.log("휴대폰넘버 유효성 불통");
-						alert("전화번호를 '010-1234-1234' 형식으로 적어주세요.");
+						swal({
+							   title: "휴대폰 번호 형식 오류",
+							   text: "휴대폰 번호 형식에 맞지 않습니다. 다시 입력해주세요.",
+							   icon: "warning",//"info,success,warning,error" 중 택1
+							}).then((YES) => {
+								if (YES) {
+									$("#phone").focus();
+								     }
+						});
 						numberCheck = false;
+
+						
 					}
 	    		}
 			};
@@ -234,9 +245,17 @@
 				console.log("이름 유효성 통과");
 				}else{
 					console.log("이름 유효성 불통과");
-					alert("이름을 입력해주세요.");
+					swal({
+						   title: "이름 형식 오류",
+						   text: "이름을 입력해주세요.",
+						   icon: "warning",//"info,success,warning,error" 중 택1
+						}).then((YES) => {
+							if (YES) {
+								$("#formName").focus();
+							     }
+					});
 					return;
-					}
+				}
 		 	
 		
 			//셀렉트 태그들 유효성 검사
@@ -244,15 +263,45 @@
 					console.log("셀렉트 유호성 통과");
 				}else{
 					console.log("셀렉트 유효성에서 불통과");
-					alert("고용상태, 고용, 권한코드, 팀을 선택해주세요.");
+					swal({
+						   title: "공백 오류",
+						   text: "다시 입력해주세요.",
+						   icon: "warning",//"info,success,warning,error" 중 택1
+						}).then((YES) => {
+							if (YES) {
+								$("#formMail").focus();
+							     }
+					});
 					return;
 				}
+
+			if($("#formMail").val() == null || $("#formMail").val() == ""){
+				console.log('이메일 입력 안됨');
+				swal({
+					   title: "메일 형식 오류",
+					   text: "이메일을 입력해주세요.",
+					   icon: "warning",//"info,success,warning,error" 중 택1
+					}).then((YES) => {
+						if (YES) {
+							$("#formMail").focus();
+						     }
+				});
+				return;
+			}
 			//메일 유효성 검사
 			if(finalCheckEmail==true){
 					console.log("메일 유효성 통과");
 				}else{
 					console.log("메일 유효성 불통");
-					alert("메일을 다시 입력해주세요.");
+					swal({
+						   title: "메일 형식 형식 오류",
+						   text: "이메일이 형식에 맞지 않습니다. 다시 입력해주세요.",
+						   icon: "warning",//"info,success,warning,error" 중 택1
+						}).then((YES) => {
+							if (YES) {
+								$("#formMail").focus();
+							     }
+					});
 					return;
 				}
 			//전화번호 유효성 검사
@@ -260,7 +309,15 @@
 				console.log("전화번호 통과");
 			}else{
 				console.log("전화번호 불통 ");
-				alert("전화번호를 다시 입력해주세요.");
+				swal({
+					   title: "휴대폰 번호 형식 오류",
+					   text: "휴대폰 번호 형식에 맞지 않습니다. 다시 입력해주세요.",
+					   icon: "warning",//"info,success,warning,error" 중 택1
+					}).then((YES) => {
+						if (YES) {
+							$("#phone").focus();
+						     }
+				});
 				return;
 			}
 			// 이제 메일 보낸다 			
@@ -302,8 +359,8 @@
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
-									<a href="index.html">
-										<i class="fa fa-home"></i>
+									<a href="#">
+										<i class="fa fa-briefcase"></i>
 									</a>
 								</li>
 								<li><span>사원</span></li>
@@ -318,7 +375,6 @@
 							<div class="col-lg-12">
 								<section class="panel">
 									<header class="panel-heading">
-																
 										<h2 class="panel-title">사원 등록</h2>
 									</header>
 									<div class="panel-body">
@@ -372,7 +428,14 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="position">직책</label>
 												<div class="col-md-6">
-													<input class="form-control" id="position" name="position" type="text" form="addUserForm">
+													<select class="form-control mb-md" id="position" name="position" required="required" autofocus="autofocus" form="addUserForm">
+														<option hidden value=''>선택하세요</option>
+														<option value="사원">사원</option>
+                                                        <option value="주임">주임</option>
+                                                        <option value="대리">대리</option>
+                                                        <option value="팀장">팀장</option>
+                                                        <option value="사장">사장</option>
+													</select>													
 												</div>
 											</div>
 											<div class="form-group">
