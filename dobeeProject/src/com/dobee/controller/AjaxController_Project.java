@@ -156,21 +156,31 @@ public class AjaxController_Project {
 			pjtMember.setMail(pjtMembers.get(i));
 			pjtMemberList.add(pjtMember);
 		}
+		
+		System.out.println("새로 만들어진 개수?"+pjtMemberList.size());
 		//일단 원래 있던 projectmember랑 비교해서 있으면 insert 해주기
 		
 		List<User> oldPjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
+		
+		System.out.println("원래 있던 개수?"+oldPjtMember.size());
 	
-		int max = 0;
+		List<ProjectMember> max = null;
+		List<ProjectMember> min = null;
 		
-		if(oldPjtMember.size()>pjtMemberList.size()) {
-			max = oldPjtMember.size();
-		} else {
-			max = pjtMemberList.size();
-		}
+		/*
+		 * if(oldPjtMember.size()>pjtMemberList.size()) { max = oldPjtMember; min =
+		 * pjtMemberList; } else { max = pjtMemberList; min = oldPjtMember; }
+		 */
+		System.out.println("max값은?"+max);
 		
-		for(int i = 0; i < max; i++) {
-			if(pjtMemberList.get(i).getMail() != oldPjtMember.get(i).getMail()) { //같지 않을 때만 insert
-				result = projectService.addProjectMember(pjtMemberList);
+		for(int i = 0; i < max.size(); i++) {
+			for(int j = 0; j < min.size(); j++) {
+				if(pjtMemberList.get(j).getMail() != oldPjtMember.get(j).getMail()) { //같지 않을 때만 insert
+					System.out.println("if문 타니???");
+					System.out.println("들어온 메일"+pjtMemberList.get(i).getMail());
+					System.out.println("원래 있던 메일1111"+oldPjtMember.get(i).getMail());
+					//result = projectService.addProjectMember(pjtMemberList);
+				}
 			}
 		}
 		
