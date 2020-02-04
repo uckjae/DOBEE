@@ -48,7 +48,7 @@
 								<li><a
 									href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}'
 									class="menu-item" value=${userList.mail }><span><i
-											class='fa fa-user'></i></span>${userList.name }</a></li>
+											class='fa fa-user'></i></span>${userList.name } (${userList.mail })</a></li>
 							</c:forEach>
 						</ul>
 					</div>

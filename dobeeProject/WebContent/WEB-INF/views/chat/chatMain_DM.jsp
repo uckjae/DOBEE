@@ -361,9 +361,6 @@
 				</section>
 			</div>
 			
-			<!-- 오른쪽 사이드 시작 -->
-			<c:import url="/common/RightSide.jsp"/>
-			<!-- 오른쪽 사이드 끝 -->			
 			<!-- 채팅방 만드는 모달 -->
 			<c:import url="/WEB-INF/views/chat/newChatRoomModal.jsp"/>
 			<!-- 채팅방 만드는 모달 끝 -->

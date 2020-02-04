@@ -1090,8 +1090,7 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
-    	
-    	return "chat/chatMain3";
+    	return "chat/chatMain";
     }
     
     
@@ -1133,6 +1132,7 @@ public class DoController {
     public String chatDm(@RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
     	String mail = principal.getName();
     	User user = memberService.getUser(mail);
+    	
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
