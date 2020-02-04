@@ -22,8 +22,18 @@
 		}
 		
 		.btn-info.btn-sm {
-			background-color: #e0da28;
-		} 
+			width : 80%;
+			border : none;
+			border-radius: 5px;
+		}
+		
+		.btn-info.btn-sm.edit{
+			background-color : white;
+			color : black;
+			width : 80%;
+			border : black 2px;
+			border-radius: 5px;
+		}
 		
 	</style>
 	
@@ -130,32 +140,32 @@
 							<table class="table table-bordered table-striped mb-none" id="brkTable" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								<thead>
 									<tr>
-										<th width="13%">부재항목</th>
+										<th width="10%">부재항목</th>
 										<th>기간</th>
-										<th width="13%">연차 사용 일수</th>
-										<th width="17%">신청 일자</th>
-										<th width="20%">승인여부</th>
-										<th width="8%">수정/삭제</th>
+										<th width="15%">연차 사용 일수</th>
+										<th width="15%">신청 일자</th>
+										<th width="10%">승인여부</th>
+										<th width="11%">수정/삭제</th>
 									</tr>
 								</thead>
 								<tbody>
 									
 									<c:forEach items="${brkList}" var="bl">
 										<tr>
-											<td class="bcategory">	${bl.entry }</td>
+											<td class="bcategory" style="text-align: center;">	${bl.entry }</td>
 											<td class="tterm">		${bl.startAt } - ${bl.endAt }</td>
-											<td class="tused">		${bl.useBreak }</td>
-											<td class="tregdate">	${bl.reqDate }</td>
-											<td class="notauth"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
+											<td class="tused" style="text-align: center;">		${bl.useBreak }</td>
+											<td class="tregdate" style="text-align: center;">	${bl.reqDate }</td>
+											<td class="notauth" style="text-align: center;"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
 																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button>
 											</td>
-											<td class="teditdelete">
+											<td class="teditdelete" style="text-align: center;">
 												<c:choose>
 													<c:when test="${bl.isAuth == '미승인'}">
-														<button class="mb-xs mt-xs btn-sm btn-default" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
+														<button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
 													</c:when>
 													<c:otherwise>
-														&nbsp;-
+														-
 													</c:otherwise>
 												</c:choose>
 											</td>
