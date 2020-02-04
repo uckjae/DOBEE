@@ -115,7 +115,6 @@
 				$('#importantShow').text('0');	
 				var pjtSeq = $(this).data('pjtseq');					
 			});
-
 			
 
 			
@@ -232,7 +231,6 @@
 
 			});
 			
-				
 				
 
 			/* 01.26 업무 상세 추가 -- 알파카 */
