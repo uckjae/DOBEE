@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -964,9 +963,12 @@ public class DoController {
 
     //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
-    public String taskEdit(Task task, Schedule sc){
+    public String taskEdit(Task task, Schedule sc, HttpServletRequest req){
     	System.out.println("DoController taskEdit() in!!");
     	System.out.println("수정 타자!!!");
+    	
+    	task.setTitle(req.getParameter("title"));
+    	task.setProgress(req.getParameter("progress"));
     	System.out.println(task.toString());
     	int editTaskResult = 0;
     	int result1 = 0;
