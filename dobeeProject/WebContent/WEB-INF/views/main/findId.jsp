@@ -36,6 +36,8 @@
 <!-- Examples -->
 <script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body {
     background: #23394A;
@@ -51,16 +53,34 @@ $(function(){
 	 $('#findMail').trigger('reset');
 
 	 if(($.trim($('#name').val())=='')&&($.trim($('#phone').val())=='')){
-         alert("내용을 입력하지 않았습니다");
+         swal({
+				title: "아이디 찾기",
+				text: "내용을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true
+				//icon: "warning" //"info,success,warning,error" 중 택1
+					})
          return false;
          }
 	 else if($.trim($('#name').val())==''){
-         alert("이름을 입력하세요");
+         swal({
+				title: "아이디 찾기",
+				text: "이름을 입력하세요", 
+				icon: "warning", //"info,success,warning,error" 중 택1
+				showConfirmButton: true
+				//icon: "warning" //"info,success,warning,error" 중 택1
+					})
          $('#name').focus();
          return false;    
      }    
      else if($.trim($('#phone').val())==''){
-		alert("휴대폰번호를 입력하세요");
+		swal({
+			title: "아이디 찾기",
+			text: "후대폰번호를 입력하세요", 
+			icon: "warning", //"info,success,warning,error" 중 택1
+			showConfirmButton: true
+			//icon: "warning" //"info,success,warning,error" 중 택1
+				})
 		$('#phone').focus();
 		return false;
      }

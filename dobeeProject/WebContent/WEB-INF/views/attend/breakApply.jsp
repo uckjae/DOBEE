@@ -72,6 +72,7 @@
 								<li><span>부재 일정 신청</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -212,29 +213,12 @@
 					$("#approvalList").select2();
 					
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 
 
-			/*
-			$.ajax({
-				url : "getApprovalList.do",
-				dataType : "json",
-				success : function(data) {			
-					var dArray = [];
-					dArray = data.renewedList;
-					for (var i =0; i<dArray.length; i++) {
-						var option = document.createElement("option")
-						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
-					}
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-			*/
 			
 			
 			$('#datetimepickerEnd').datetimepicker({
@@ -365,8 +349,8 @@
 							})
 						}
 					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					error : function(request, status, error) {
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
 		    });

@@ -49,6 +49,7 @@ console.log("MAIN!!");
 							</a></li>
 						</ol>
 
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

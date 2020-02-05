@@ -367,6 +367,7 @@
 								<li><span>사원등록</span></li>
 							</ol>
 					
+						<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->

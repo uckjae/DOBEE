@@ -107,6 +107,24 @@ public class AlarmHandler extends TextWebSocketHandler {
 				  }
 				  msg = new TextMessage("["+applier+"]님이\n"+content+"신청 했습니다");
 			  }
+			  else if(cmd.equals("breakEditApply")) {
+				  String code = (String)jsonObject.get("content");
+				  String content ="";
+				  String applier = (String)jsonObject.get("applier");
+				  switch(code) {
+				  case "1": content = "연차";
+				  			break;
+				  case "2": content = "반일연차";
+				  			break;
+				  case "3": content = "출장";
+				  			break;
+				  case "4": content = "외근";
+				  			break;
+				  case "5": content = "경조휴가";
+				  			break;
+				  }
+				  msg = new TextMessage("["+applier+"]님이\n"+content+"신청을 수정 했습니다");
+			  }
 			  else if(cmd.equals("extendApply")) {
 				  String applier = (String)jsonObject.get("applier");
 				  msg = new TextMessage("["+applier+"]님이\n 연장근무를 신청 했습니다");

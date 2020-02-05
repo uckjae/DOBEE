@@ -32,6 +32,7 @@
 							<li><span>마이페이지</span></li>
 						</ol>
 				
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

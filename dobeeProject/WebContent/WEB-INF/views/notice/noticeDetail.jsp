@@ -166,6 +166,7 @@ function noticeDel () {
 							<li><span>공지사항</span></li>
 							<li><span>&nbsp;&nbsp;${notice.title}</span></li>
 						</ol>
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

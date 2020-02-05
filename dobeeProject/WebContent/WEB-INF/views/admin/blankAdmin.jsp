@@ -12,7 +12,7 @@
 		<section class="body">
 
 			<!-- start: header -->
-			<c:import url="/common/Top.jsp"/>
+		<c:import url="/common/TopAdmin.jsp"/>
 			<!-- end: header -->
 
 			<div class="inner-wrapper">
@@ -41,8 +41,6 @@
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
 					작업 여기부터 하삼!!
-					
-					
 					<!-- start: page -->
 					<!-- end: page -->
 				</section>

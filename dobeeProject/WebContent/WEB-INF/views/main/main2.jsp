@@ -34,6 +34,7 @@
 							<li><span>Dashboard</span></li>
 						</ol>
 						
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

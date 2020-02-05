@@ -936,6 +936,7 @@ public class DoController {
     //DM 채팅 메인
     @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
     public String chatDm(HttpServletRequest request, @RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
+    	System.out.println("파라미터 뭐니?"+dmName+"/"+dmMail);
     	User user = (User) request.getSession().getAttribute("user");    	
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
@@ -949,7 +950,6 @@ public class DoController {
 
     	model.addAttribute("roomNameList", roomNameList);
     	
-    	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
     	model.addAttribute("userList", userList);
@@ -958,10 +958,12 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
+    	//해당 DM 채팅방 상대방의 정보 가져오기
+    	User dmUser = memberService.getUser(dmMail);
+    	System.out.println("dm 상대방은?"+dmUser.toString());
+    	model.addAttribute("dmUser", dmUser);
     	
-    	//해당 DM 채팅방으로 셋팅
-    	model.addAttribute("dmName", dmName);
-    	model.addAttribute("dmMail", dmMail);
+    	//DM 채팅방으로 셋팅
     	model.addAttribute("chatType", "DM");
     	
     	return "chat/chatMain_DM";

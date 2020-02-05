@@ -62,6 +62,7 @@
 								<li><span>신청 / 수정</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -196,8 +197,8 @@
 						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
 					}					
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -212,8 +213,8 @@
 						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
 					}
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -251,8 +252,8 @@
 					$("#approvalList").select2();
 					
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 
@@ -374,8 +375,8 @@
 					}
 						
 					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					error : function(request, status, error) {
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
 		    });
@@ -488,7 +489,22 @@
 			    calendar.render();
 			}
 		});
-		
+
+		/* 알람 */
+		function send(data) {
+			let mail = $('#approvalList').val();
+			let content = $('#apycodelist').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+			jsonData.content = content;
+			jsonData.applier = '${sessionScope.user.name}';
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
 					
   	</script>
 		

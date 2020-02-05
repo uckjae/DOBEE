@@ -45,6 +45,7 @@
 							<li><span>법인카드 관리</span></li>
 						</ol>
 
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 				
