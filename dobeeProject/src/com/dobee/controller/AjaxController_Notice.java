@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dobee.services.NoticeService;
 
 @RestController
+@RequestMapping("ajax/notice/**")
 public class AjaxController_Notice {
 	
 	@Autowired
