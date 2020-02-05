@@ -887,9 +887,10 @@ public class DoController {
 
     	model.addAttribute("roomNameList", roomNameList);
     	
-    	//사원 목록 가져오기
-    	List<User> userList = memberService.getUserList();
-    	model.addAttribute("userList", userList);
+    	
+    	//DM 목록 가져오기
+    	List<User> dmUserList = chatService.getDmUserList(user.getMail()); //로그인한 회원 이외의 유저 목록 가져오기
+    	model.addAttribute("dmUserList", dmUserList);
     	
     	//기본 나에게 채팅으로 셋팅
     	model.addAttribute("chatType", "SELF");
@@ -922,9 +923,9 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
-    	//사원 목록 가져오기
-    	List<User> userList = memberService.getUserList();
-    	model.addAttribute("userList", userList);
+    	//DM 목록 가져오기
+    	List<User> dmUserList = chatService.getDmUserList(user.getMail()); //로그인한 회원 이외의 유저 목록 가져오기
+    	model.addAttribute("dmUserList", dmUserList);
     	
     	//해당 그룹 채팅방으로 셋팅
     	model.addAttribute("roomName", roomName);
@@ -936,6 +937,7 @@ public class DoController {
     //DM 채팅 메인
     @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
     public String chatDm(HttpServletRequest request, @RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
+    	System.out.println("파라미터 뭐니?"+dmName+"/"+dmMail);
     	User user = (User) request.getSession().getAttribute("user");    	
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
@@ -949,19 +951,20 @@ public class DoController {
 
     	model.addAttribute("roomNameList", roomNameList);
     	
-    	
-    	//사원 목록 가져오기
-    	List<User> userList = memberService.getUserList();
-    	model.addAttribute("userList", userList);
+    	//DM 목록 가져오기
+    	List<User> dmUserList = chatService.getDmUserList(user.getMail()); //로그인한 회원 이외의 유저 목록 가져오기
+    	model.addAttribute("dmUserList", dmUserList);
     	
     	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
+    	//해당 DM 채팅방 상대방의 정보 가져오기
+    	User dmUser = memberService.getUser(dmMail);
+    	System.out.println("dm 상대방은?"+dmUser.toString());
+    	model.addAttribute("dmUser", dmUser);
     	
-    	//해당 DM 채팅방으로 셋팅
-    	model.addAttribute("dmName", dmName);
-    	model.addAttribute("dmMail", dmMail);
+    	//DM 채팅방으로 셋팅
     	model.addAttribute("chatType", "DM");
     	
     	return "chat/chatMain_DM";

@@ -26,6 +26,8 @@ public class AjaxController_Reciept {
 	@Autowired
 	private DebitService debitService;
 	
+	
+	//영수증 파일 업로드 
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
 		System.out.println("컨트롤단/boardControlelr.java :  fileUploadAjax.do 요청들어왔다 ");

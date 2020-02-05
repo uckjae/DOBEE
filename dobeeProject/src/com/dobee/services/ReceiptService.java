@@ -23,7 +23,7 @@ public class ReceiptService {
 		
 		ArrayList<String> arrayList = new ArrayList<>();
 		String isSuccess = "false";
-		String uploadPath = "/Users/psh/DOBEE_New/dobeeProject/WebContent/upload/";
+		String uploadPath = "/home/ec2-user/upload_receipt/";
 		File dir = new File(uploadPath);
 
 		if (!dir.isDirectory()) {

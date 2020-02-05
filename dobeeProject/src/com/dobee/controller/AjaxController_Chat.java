@@ -67,4 +67,12 @@ public class AjaxController_Chat {
     	
     	return socketUrl;
     }
+    
+    //들어오는 메일로 USER 정보 가져오기 -> 사진
+    @RequestMapping(value = "getChatUserInfo.do", method = RequestMethod.POST)
+    public String getChatUserInfo(@RequestParam(value="mail") String mail) {
+    	
+    	
+    	return null;
+    }
 }

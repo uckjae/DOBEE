@@ -13,6 +13,19 @@
 <script type="text/javascript">
 		$(function(){
 			var mail = $("#formMail").val();
+			
+			$("#multiFile").change(function(){
+				var reader = new FileReader();
+
+			    reader.onload = function (e) {
+			        // get loaded data and render thumbnail.
+			        document.getElementById("viewPhoto").src = e.target.result;
+			    };
+
+			    // read the image file as a data URL.
+			    reader.readAsDataURL(this.files[0]);
+			});
+			
 			/* 권한 코드 select option 만들기*/
 			$.ajax({
 				url:"ajax/admin/authorityList.do",
@@ -54,21 +67,6 @@
 					
 				}	
 			});
-
-			/* 이미지 blob 가져오기 */
-			/* $.ajax({
-				url:"ajax/admin/getMyPic.do",
-				dataType:"json",
-				success: function(data){
-					console.log('ajax 타니?');
-					console.log('이미지?'+data);
-					
-				},
-				error:function(request,status,error){
-					console.log("code : " + request.status +"\n" + "message : " 
-							+ request.responseText + "\n" + "error : " + error);
-				}
-			}); */
 
 			/*사원 정보 수정*/
 			$("#modifyBtn").click(function(){
@@ -189,7 +187,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="upload/${userDetail.myPic}" onError="this.src='img/avatar.jpg'" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
-													<input type="file" id="file" name="file" class="form-control" accept="image/*" form="modifyUserForm">
+													<input type="file" id="multiFile" name="file" class="form-control" accept="image/*" form="modifyUserForm">
 												</div>
 											</div>
 											<div class="form-group">

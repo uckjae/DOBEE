@@ -127,17 +127,21 @@
         placeholder: '멤버 선택'
 		});
 
+
+	
+
 	var chatType = $("#chatType").val();
 	var userMail = $("#mail").text();
 	var fromName = $("#name").text();
 	var dmName = $("#dmName").text();
 	var dmMail = $("#dmMail").val();
-	console.log('지그 ㅁ유저 메일?'+userMail);
-	console.log('메일 가져와?'+dmMail);
-	console.log('이름 가져와?'+dmName);
+	var dmUserPic = $("#dmMyPic").val();
 	//채팅방 이름 : 발신자 - 수신자
 	//var chatRoomName = userMail + "-" + dmMail;
 	var chatUsersMail = [userMail, dmMail];
+
+	
+		
 	var socket = io.connect( 'http://192.168.6.2:5000/dm', {path: '/socket.io'});
 
 	socket.on('connect', function() {
@@ -148,12 +152,14 @@
 	socket.on('printChatHistory', function(msg){
 
         var msgArray = msg.reverse();
+        console.log('이전 대화 목록 가져오기');
         console.log(msgArray);
+        
         $.each(msgArray, function(index,element){
             console.log(element);
             if(fromName !== element.NAME) {
     			$("#msg_history").append('<div class="incoming_msg">'
-    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+    					+'<div class="incoming_msg_img"><img src="./upload/'+dmUserPic+'" alt="img"> </div>'
     					+'<div class="received_msg">'
     					+'<div class="received_withd_msg">'
     					+'<p>'+element.CHATCONTENT+'</p>'
@@ -197,10 +203,10 @@
 	});
 	
 	/*채팅 뿌려주기*/
-	socket.on('receive message to dm', function(chatContent,currentDate, fromName){
+	socket.on('receive message to dm', function(chatContent,currentDate, fromName, chatUsersMail){
 		if(fromName == dmName) { 
 			$("#msg_history").append('<div class="incoming_msg">'
-					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="img"> </div>'
+					+'<div class="incoming_msg_img"><img src="./upload/'+dmUserPic+'" alt="img"> </div>'
 					+'<div class="received_msg">'
 					+'<div class="received_withd_msg">'
 					+'<p>'+chatContent+'</p>'
@@ -335,7 +341,7 @@
 							<div class="inner-body mailbox-email" style="padding-left: 30px;padding-top: 30px;height:100%;">
 								<!-- START: .mailbox-header -->
 								<header class="mailbox-header">
-               							<b class="mailbox-title text-light m-none" style="font-size:25px;" id="dmName">${requestScope.dmName}</b>
+               							<b class="mailbox-title text-light m-none" style="font-size:25px;" id="dmName">${requestScope.dmUser.name}</b>
 								</header>
 								<hr class="separator" />
 								<!-- END: .mailbox-header -->
@@ -349,7 +355,8 @@
 											<form id="sendMessage">
 												<input type="text" class="write_msg" id="chatContent" name="chatContent" placeholder="메시지를 입력하세요" />
 												<input type="hidden" id="chatType" name="chatType" value="${requestScope.chatType}">
-												<input type="hidden" id="dmMail" name="dmMail" value="${requestScope.dmMail}">
+												<input type="hidden" id="dmMail" name="dmMail" value="${requestScope.dmUser.mail}">
+												<input type="hidden" id="dmMyPic" name="dmMyPic" value="${requestScope.dmUser.myPic}">
 												<button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 											</form>
 										</div>

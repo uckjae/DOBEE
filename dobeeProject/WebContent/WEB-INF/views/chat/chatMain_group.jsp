@@ -238,6 +238,7 @@
 
 		socket.on('printChatHistory', function(msg){
 			var msgArray = msg.reverse();
+			console.log('이전 대화 목록 가져오기');
 	        console.log(msgArray);
 	        $.each(msgArray, function(index,element){
 	         
@@ -259,6 +260,7 @@
 	    						+'</div>');
 	    				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
 	    			}
+    			
                 
 	        });
 	    });
@@ -343,7 +345,7 @@
 	 				success:function(responsedata){
 	 					console.log(responsedata);
 	 					if(responsedata == "success"){ //채팅방 생성 완료
-	 	 					console.log('채팅방 만듦')
+	 	 					console.log(selected);
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",
