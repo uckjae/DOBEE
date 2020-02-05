@@ -197,7 +197,7 @@ public class AjaxControllerAdmin {
 	    while(enu.hasMoreElements()) {
 	    	System.out.println(enu.nextElement());
 	    }
-	    String mail = (String) request.getAttribute("mail");
+	    String mail = request.getParameter("mail");
 	    System.out.println("메일"+mail);
 	    
 	    UserDao userDao =sqlSession.getMapper(UserDao.class);

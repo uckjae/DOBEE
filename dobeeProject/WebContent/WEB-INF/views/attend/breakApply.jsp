@@ -32,10 +32,14 @@
 <!-- sweet alert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
+<!-- select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
+
 <!-- specific page vendor css form script -->
-<link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
-<link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 
 </head>
@@ -72,7 +76,6 @@
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
 					
-					
 					<section class="panel">
 						<div class="row">
 							
@@ -103,11 +106,15 @@
 										<label class="control-label" for="textareaDefault">부재 항목</label>
 										<br>
 										<select name="apyCode" id="apycodelist" style="width: 100%;">
-											<option hidden=""> 항목 선택 </option>
-											<!-- Ajax -->
+											<option hidden>부재 항목 선택</option>
+											<option value="1">연차</option>
+											<option value="2">반일연차</option>
+											<option value="3">출장</option>
+											<option value="4">외근</option>
+											<option value="5">경조휴가</option>
+											<option value="6">연장근무</option>
 										</select>
 										<br>
-										
 										<div id="inputUseBreak">
 											<br>
 											<p class="output">연차 사용 일수 : <b>0/27</b></p>
@@ -126,17 +133,13 @@
 										<div class="form-group">
 											<label class="control-label" for="textareaDefault">사유</label>
 											<textarea name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="사유를 입력해주세요."></textarea>
-											<p>
-												<code>max-length</code> set to 3000 byte.
-											</p>
 										</div>
 										<br>
-										결재자 
+										결재자
 										<br>
 										
 										<select name="approval" id="approvalList" style="width:100%;">
-											<option hidden=""> 결재자 선택 </option>
-											<!-- Ajax -->
+										<option hidden>결재자 선택</option>
 										</select>
 										
 										<br>
@@ -147,39 +150,22 @@
 									</form>
 								</div>
 							</div>
-							
 						</div>
-						
 					</section>
-					
 					<div id='calendar'></div>
-					
-					
-					<!-- start: page -->
-					<!-- end: page -->
 				</section>
 			</div>
-
-					<!-- start: page -->
-					<!-- end: page -->
 		</section>
-
-
-		</section>
-
 		<c:import url="/common/BottomTag.jsp"/>
 		
 		
 <!-- SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT//SCRIPT// -->
 	
 	<!-- Date-Time Picker -->
-		<!-- Moment.js 2.24.0 min - cloudflare -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-		
+	<!-- Moment.js 2.24.0 min - cloudflare -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
-	<!-- specific vendor page -->
-	<script src="assets/vendor/select2/select2.js"></script>	
 	
 	<script>
 		window.onload = function(){
@@ -208,19 +194,48 @@
 			});
 			
 
+			
+			*/
+			
+			/*부재 항목 select2 적용*/
+			$('#apycodelist').select2({
+				 width: 'resolve',				
+				});
+
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = $('<option>');
+ 	 					$(option).val(dArray[i].mail);
+ 	 					$(option).text(dArray[i].name+"("+dArray[i].mail+")");
+	 	 				$('#approvalList').append(option);
+					}
+					$("#approvalList").select2();
+					
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+
+			
+/* 
 			$('#approvalList').select2 ({
 				placeholder : '결재자 선택',
-				multiple : true,
 				ajax : {
-					url : "getApyCode.do",
+					url : "getApprovalList.do",
 					dataType : "json",
 					type : "post",
 					processResults : function(data) {
 						var arr = []
 						var res = $.each(data, function(index, item) {
 							arr.push({
-								id : item.apyCode,
-								text : item.entry
+								id : item.mail,
+								text : item.name
 							});
 						})
 						return {
@@ -229,43 +244,10 @@
 					}
 				}
 			});
-			*/
-							
-			$.ajax({
-				url : "getApyCode.do",
-				dataType : "json",
-				type : "post",
-				success : function(responseData) {
-					console.log(responseData);
-					var id = [];
-					var entry = [];
-					var object = new Object();
-					$.each(responseData, function(index, element) {
-						id.push(element.apyCode);
-						entry.push(element.entry);
+			
+ */
 
-						var option = $('<option>');
-						$(option).val(element.apyCode);
-						$(option).val(element.entry);
-						$('#approvalList').append(option);
-					});
-
-					$('#approvalList').select2();
-
-                    $("#approvalList > option").each(function(){
-                       for (var i = 0; i < entry.length; i++){
-                          if($(this).val() == entry[i]){
-                            $(this).attr('selected','selected');
-                        }
-                       }
-                   });
-                 },
-                 error:function(request,status,error){
-                   console.log("code : " + request.status +"\n" + "message : " 
-
-                         + request.responseText + "\n" + "error : " + error);
-                },
-             });
+            
 			
 
 			/*

@@ -17,6 +17,7 @@ import com.dobee.services.ReceiptService;
 import com.dobee.vo.CostCode;
 
 @Controller
+@RequestMapping("ajax/receipt/**")
 public class AjaxController_Reciept {
 	
 	@Autowired

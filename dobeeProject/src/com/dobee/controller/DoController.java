@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
@@ -121,6 +121,11 @@ public class DoController {
     @RequestMapping(value="findPassWordChange.do",method=RequestMethod.POST)
     public String findPassWordChange(HttpServletRequest request,Model model){
     	System.out.println("여기탄다");
+    	Enumeration<String> enu = request.getParameterNames();
+    	while(enu.hasMoreElements()) {
+    		String key = enu.nextElement();
+    		System.out.println("key : " + key + " values : " + request.getParameter(key));
+    	}
     	String mail = request.getParameter("mail");
     	model.addAttribute("mail", mail);
     	System.out.println("메일?"+mail);
@@ -277,6 +282,9 @@ public class DoController {
     	String mail = principal.getName();
     	User user = memberService.getUserInfo(mail);
     	model.addAttribute("user", user);
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         return "myPage/myPage";
     }
     
@@ -742,9 +750,11 @@ public class DoController {
 
     // 연장근무 신청 GET          0110 게다죽
     @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
-    public String overTiemApply(){
-    	
-        
+    public String overTiemApply(Model model, HttpServletRequest request){
+    	User user = (User) request.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         return "attend/extendApply";
     }
     
@@ -754,32 +764,41 @@ public class DoController {
 
     // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
     @RequestMapping(value="breakManage.do", method=RequestMethod.GET)
-    public String absMg(Model model, Authentication auth){
+    public String absMg(Model model, HttpServletRequest request, Authentication auth){
+    	User user = (User) request.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         List<BreakManageList> results = applyService.absMg(auth.getName());
         model.addAttribute("brkList", results);
-        
         return "attend/breakManage";
     }
     
 
     // 개인_근무내역관리/확인 GET         0121 게다죽        ~ing....???                 &&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
     @RequestMapping(value="workManage.do", method=RequestMethod.GET)
-    public String getExtList(Model model, Authentication auth){
+    public String getExtList(Model model, HttpServletRequest request, Authentication auth){
+    	User user = (User) request.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         List<Apply> results = applyService.getExtList(auth.getName());
         model.addAttribute("extList", results);
-
         return "attend/workManage";
     }
     
     
     // 개인_연장근무 신청 수정 Page GET       0121 게다죽        COMPLETE
     @RequestMapping(value="editExtApply.do", method=RequestMethod.GET)
-    public String getEditExtList (Model model, Apply apply, Authentication auth, Integer aplSeq) {
+    public String getEditExtList (Model model, HttpServletRequest request, Apply apply, Authentication auth, Integer aplSeq) {
+    	User user = (User) request.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         apply.setAplSeq(aplSeq);
         apply.setDrafter(auth.getName());
         Apply results = applyService.getELforEdit(apply);
         model.addAttribute("ELforEdit", results);
-        
         return "attend/extApplyEdit";
     }
     
@@ -809,14 +828,16 @@ public class DoController {
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(Model model, HttpServletRequest req){
     	User user = (User) req.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	int teamCode = user.getTeamCode();
         List<BreakManageList> results = applyService.breakListMgr(teamCode);
         model.addAttribute("brkListMgr", results);
-        
         return "attend/breakManagement_Mgr";
     }
 
-
+    /*
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
@@ -825,12 +846,16 @@ public class DoController {
         
         return "redirect: absManage.do";
     }
+    */
     
 
     // 매니저_연장근무관리 리스트 - isAuth update GET           0204 updated 게다죽
     @RequestMapping(value="extManage.do", method=RequestMethod.GET)
     public String extSign(Model model, HttpServletRequest req){
     	User user = (User) req.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
     	int teamCode = user.getTeamCode();
         List<BreakManageList> results = applyService.extListMgr(teamCode);
         model.addAttribute("extListMgr", results);
@@ -862,8 +887,11 @@ public class DoController {
     
     //비용정산신청 뷰단 화면 이동
     @RequestMapping("receiptRegit.do")
-    public String receiptReg(){
-    	System.out.println("receiptRegit.do.do 요청했음");
+    public String receiptReg(Model model, HttpServletRequest request){
+    	User user = (User) request.getSession().getAttribute("user");
+    	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
         return "payment/receiptRegit";
     }
 
@@ -873,36 +901,14 @@ public class DoController {
     public String goGoogleApi(){
     	System.out.println("goGoogleApi 함수요청");
     	GoogleVisionService vision = new GoogleVisionService();
-    	
     	System.out.println(" vision 서비스단 통과");
-    	
-    	
-    	
         return null;
     }
-    
-    
-    
-    
-    
     
     //비용정산신청 vision 으로 부터 읽어온 text수정까지 하고 최종 확인
     public String receiptConfirm(){
         return null;
     }
-
-
-    //비용처리
-    public String paymentSignList(){
-        return null;
-    }
-
-
-    //비용처리승인
-    public String paymentSignApprov(){
-        return null;
-    }
-
 
     //프로젝트메인
     @RequestMapping("pjtMain.do")
@@ -940,16 +946,11 @@ public class DoController {
     	List<Task> taskList = projectService.taskList(seq);
     	List<User> pjtMember = projectService.getPjtMember(seq);
     	User user = (User) request.getSession().getAttribute("user"); //로그인한 사람!
-    	
-    	System.out.println("로그인한 사람 나와!"+user.toString());
-    	
-    	//List<Project>list = projectService.projectList(user.getMail()); //이 회원이 속한 포로젝트 중 현재 진행중인 프로젝트 가져오기
-    	
+    	    	    	
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
-
     	model.addAttribute("user",user);
     	
     	JSONArray jsonArray = new JSONArray();
@@ -978,7 +979,6 @@ public class DoController {
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task, Schedule sc, HttpServletRequest req){
     	System.out.println("DoController taskEdit() in!!");
-    	System.out.println("수정 타자!!!");
     	
     	task.setTitle(req.getParameter("title"));
     	task.setProgress(req.getParameter("progress"));
@@ -1012,84 +1012,15 @@ public class DoController {
     	return view;
     }
 
-
-    //업무상세정보입력
-    public String addTask(){
-        return null;
-    }
-
-
-    //상세업무조회
-    public String taskDetail(){
-        return null;
-    }
-
-
-    //상세업무 입력
-    public String addTaskDetail(){
-        return null;
-    }
-
-
-    //상세업무수정
-    public String modiTaskDetail(){
-        return null;
-    }
-
-
-    //상세업무 삭제
-    public String delTaskDetail(){
-        return null;
-    }
-
-
-    //체크리스트조회
-    public String checkList(){
-        return null;
-    }
-
-
-    //체크리스트 입력
-    public String addCheckList(){
-        return null;
-    }
-
-
-    //체크리스트 수정정
-    public String modiCheckList(){
-        return null;
-    }
-
-
-    //체크리스트삭제
-    public String delCheckList(){
-        return null;
-    }
-
-
-    //프로젝트 캘린더
-    public String projectCalendar(){
-        return null;
-    }
-
-
-    //프로젝트 분석
-    public String projectChart(){
-        return null;
-    }
-
-
     //채팅 메인
     @RequestMapping("chat.do")
-    public String chatMain(Model model, Principal principal) {
-    	
-    	String mail = principal.getName();
-    	User user = memberService.getUser(mail);
+    public String chatMain(HttpServletRequest request, Model model, Principal principal) {
+    	User user = (User) request.getSession().getAttribute("user");
     	//회원 정보 저장하기
     	model.addAttribute("user", user);
     	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<ChatRoom> groupChatRoomList = chatService.getGroupChatRoomList(user.getMail());
     	List<String> roomNameList = new ArrayList<String>();
     	
     	for(int i = 0; i < groupChatRoomList.size(); i++) {
@@ -1115,13 +1046,12 @@ public class DoController {
     
     //그룹 채팅 메인
     @RequestMapping(value = "chatGroup.do", method = RequestMethod.GET)
-    public String chatGroup(@RequestParam(value="roomName") String roomName, Model model, Principal principal) {
-    	String mail = principal.getName();
-    	User user = memberService.getUser(mail);
+    public String chatGroup(HttpServletRequest request, @RequestParam(value="roomName") String roomName, Model model, Principal principal) {
+    	User user = (User) request.getSession().getAttribute("user");
     	//회원 정보 저장하기
-    	model.addAttribute("user", user);    	
+    	model.addAttribute("user", user);
     	//이 회원이 속한 채팅방 목록 가져오기
-    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(user.getMail());
     	List<String> roomNameList = new ArrayList<String>();
     	
     	for(int i = 0; i < chatRoomList.size(); i++) {
@@ -1131,9 +1061,8 @@ public class DoController {
     	model.addAttribute("roomNameList", roomNameList);
     	
     	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
-    	List<Project> pjtList = projectService.getInProgressPjtList(mail); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-    	
     	
     	//사원 목록 가져오기
     	List<User> userList = memberService.getUserList();
@@ -1148,14 +1077,12 @@ public class DoController {
     
     //DM 채팅 메인
     @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
-    public String chatDm(@RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
-    	String mail = principal.getName();
-    	User user = memberService.getUser(mail);
-    	
+    public String chatDm(HttpServletRequest request, @RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
+    	User user = (User) request.getSession().getAttribute("user");    	
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
     	//이 회원이 속한 채팅방 목록 가져오기
-    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(mail);
+    	List<ChatRoom> chatRoomList = chatService.getGroupChatRoomList(user.getMail());
     	List<String> roomNameList = new ArrayList<String>();
     	
     	for(int i = 0; i < chatRoomList.size(); i++) {
@@ -1170,7 +1097,7 @@ public class DoController {
     	model.addAttribute("userList", userList);
     	
     	//로그인한 회원이 참여 중인 프로젝트 중 진행중인 목록 가져오기
-    	List<Project> pjtList = projectService.getInProgressPjtList(mail); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
     	
@@ -1181,11 +1108,6 @@ public class DoController {
     	
     	return "chat/chatMain_DM";
     }
-    
-  
-    
-  
-    
     
     //관리자_사원추가 페이지
    @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
@@ -1199,8 +1121,6 @@ public class DoController {
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user, HttpServletRequest request) throws IOException {
 	    
-	   
-	   
     	//파일 업로드 파일명
     	CommonsMultipartFile file = user.getFile();
     	String filename = file.getOriginalFilename(); //원본 파일명
@@ -1245,7 +1165,11 @@ public class DoController {
    
     //비용 차트 뷰단 가기
 	@RequestMapping(value="paymentChart.do", method=RequestMethod.GET)
-	public String paymentChart() {
+	public String paymentChart(HttpServletRequest request, Model model) {
+		User user = (User) request.getSession().getAttribute("user");
+		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
+    	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
+    	model.addAttribute("pjtList",pjtList);
 		return "payment/payChart";
 	}
     

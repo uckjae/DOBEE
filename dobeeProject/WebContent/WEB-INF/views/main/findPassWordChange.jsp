@@ -114,8 +114,8 @@ $(function(){
 		<div class="form-group mb-lg">
 		  <label>새 비밀번호</label>
 		  <div class="input-group input-group-icon">
-		  	<input type="hidden" id="mail" value="${requestScope.mail }"/>
-			<input name="password" type="text" class="form-control input-lg" id="password"/>
+		  	<input type="hidden" id="mail" name="mail" value="${requestScope.mail }"/>
+			<input name="password" type="password" class="form-control input-lg" id="password"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-lock"></i>
@@ -127,7 +127,7 @@ $(function(){
 		<div class="form-group mb-lg">								
 		  <label>비밀번호 확인</label>								
 		  <div class="input-group input-group-icon">
-			<input name="passwordOk" type="text" class="form-control input-lg" id="passwordOk"/>
+			<input name="passwordOk" type="password" class="form-control input-lg" id="passwordOk"/>
 			   <span class="input-group-addon">
 				<span class="icon icon-lg">
 				 <i class="fa fa-lock"></i>

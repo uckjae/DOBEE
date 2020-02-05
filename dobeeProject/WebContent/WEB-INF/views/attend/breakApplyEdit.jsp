@@ -137,9 +137,6 @@
 										<input type="reset" value="Reset" class="btn btn-default" style="width:auto;">  &nbsp;&nbsp;
 										<input type="button" value="삭제" class="btn btn-default" onclick="location.href='deleteApply.do?aplSeq=${editApplyList.aplSeq}'">
 									</form>
-								
-										
-								
 								</div>
 							</div>
 						</div>

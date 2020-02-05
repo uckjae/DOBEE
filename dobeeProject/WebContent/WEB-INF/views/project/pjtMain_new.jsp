@@ -5,8 +5,9 @@
 <html class="fixed search-results">
 <head>
 	<c:import url="/common/HeadTag.jsp"/>	
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 	<!-- Sweet Alert -->
    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -115,7 +116,6 @@
             	    	 								location.reload(true); 
             	    	 							     }
             	    	 							});
-
                 	    	 				}
         	    	 				},
         	    	 				error:function(request,status,error){
@@ -134,8 +134,6 @@
     			});
 		$('#newPjt').click('show.bs.modal',function(e){
 			$('#newPjtForm').trigger('reset');
-
-			
 		});
 
     		
@@ -323,7 +321,7 @@
      	 		 						   text: "프로젝트가 수정되었습니다.",
      	 		 						   icon: "success" //"info,success,warning,error" 중 택1
      	 		 						}).then((YES) => {
-     	 		 							location.href="pjtMain.do";
+     	 		 							location.reload(true);
      	 		 						});
              	    	 			}
      	    	 				},

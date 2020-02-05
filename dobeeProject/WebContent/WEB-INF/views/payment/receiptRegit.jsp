@@ -124,7 +124,7 @@ var costKey = 0;
                     
                     formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
                     $.ajax({
-                        url: 'fileUploadAjax.do',
+                        url: 'ajax/receipt/fileUploadAjax.do',
                         processData: false,
                         contentType: false,
                         data: formData,
@@ -145,7 +145,7 @@ var costKey = 0;
                         complete: function() {
                             console.log("구글 API 시작합니다");
                             $.ajax({
-                                    url: 'goGoogleAjax.do',
+                                    url: 'ajax/googleVision/goGoogleAjax.do',
                                     data: {
                                         "uploadPath": uploadPath,
                                         "saveFileName": saveFileName
@@ -340,7 +340,7 @@ var costKey = 0;
     <script>	
               
                     $.ajax({
-                        url: 'nowEmpEmail.do',
+                        url: 'ajax/receipt/nowEmpEmail.do',
                         type: 'POST',
                         success: function(result) {
                             $("#Input1").attr("value", result);
@@ -348,7 +348,7 @@ var costKey = 0;
                         complete: function() {
                             //법인 카드 목록 불러오기 아작스 실행
                             $.ajax({
-                                    url: 'cardListtoReceipt.do',
+                                    url: 'ajax/receipt/cardListtoReceipt.do',
                                     type: 'POST',
                                     success: function(result) {
                                         for (let i = 0; i < result.length; i++) {
@@ -361,7 +361,7 @@ var costKey = 0;
                                     complete: function() {
                                         // 비용항목 불러오기 아작스 실행
                                         $.ajax({
-                                            url: 'debitCodeList.do',
+                                            url: 'ajax/receipt/debitCodeList.do',
                                             type: 'POST',
                                             success: function(result) {
                                                 
