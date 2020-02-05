@@ -170,9 +170,6 @@
 													class="fa fa-times fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 반려 사유</span></label>
 												<div class="col-md-9">
 													<textarea id="modalRejReason" name="rejReason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 150px" placeholder="반려 시 사유를 입력하세요."></textarea>
-													<p>
-														<code>max-length</code> set to 3000 byte.
-													</p>
 												</div>
 											</div>
 											<br>
