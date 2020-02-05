@@ -84,7 +84,7 @@ function chageYYYYSelect(){
 				};
 		$.ajax({
 			type:'POST',
-			url: 'changeYYYYSelect.do',
+			url: 'ajax/paymentChart/changeYYYYSelect.do',
 			data: useDateData,
 			success:function(data){
 					completeData = data;
@@ -177,7 +177,7 @@ function chageYYYYSelect(){
 					console.log(useDateData);
 					$.ajax({
 						type:'POST',
-						url: 'giveMeMonth.do',	
+						url: 'ajax/paymentChart/giveMeMonth.do',	
 						data: useDateData,
 						success:function(data){
 							console.log("월 구해오기 아작스 성공");
@@ -224,7 +224,7 @@ function chageYYYYSelect(){
 		
 		$.ajax({
 			type:'POST',
-			url: 'changeYYYYAndMonth.do',
+			url: 'ajax/paymentChart/changeYYYYAndMonth.do',
 			data: useDateData,
 			success:function(data){
 					completeData = data;
@@ -306,7 +306,7 @@ function chageYYYYSelect(){
 				};
 				$.ajax({
 					type:'POST',
-					url: 'giveMeMonth.do',	
+					url: 'ajax/paymentChart/giveMeMonth.do',	
 					data: sendData,
 					success:function(data){
 						monthData = data;
@@ -460,7 +460,7 @@ function chageYYYYSelect(){
 		let usedate_month1 = [];
 		let completeData1;
 			$.ajax({
-				url:"comeHereYYYY.do",
+				url:"ajax/paymentChart/comeHereYYYY.do",
 				type:'POST',
 				success:function(data){
 					//여기에서는 for문이 느려서 소용이 없다 밑에 complete 에 데이타를 전달하기 위해 전역변수에다 받은데이터 넣고					
@@ -494,7 +494,7 @@ function chageYYYYSelect(){
 						let tempData =[];
 						// 기본값 연도에 해당하는 차트 데이터 불러오기 아작스 시작
 						$.ajax({
-							url:'changeYYYYSelect.do',
+							url:'ajax/paymentChart/changeYYYYSelect.do',
 							data:sendData,
 							type:'POST',
 							success:function(data){
@@ -567,7 +567,7 @@ function chageYYYYSelect(){
 								var realmonthData = [];
 								$.ajax({
 									type:'POST',
-									url: 'giveMeMonth.do',	
+									url: 'ajax/paymentChart/giveMeMonth.do',	
 									data: sendData,
 									success:function(data){
 										monthData = data;

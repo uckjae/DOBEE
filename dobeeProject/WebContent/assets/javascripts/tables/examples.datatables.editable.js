@@ -238,7 +238,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					
 					if(totalCheck){
 						$.ajax({
-				            url:'editAdminDebitList.do',
+				            url:'ajax/adminDebit/editAdminDebitList.do',
 				            data:sendData,
 				            type:'POST',
 				            success:function(data){
@@ -306,7 +306,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 									
 								//삭제 아작스 시작
 									$.ajax({ 
-										url : 'adminDelDebit.do', 
+										url : 'ajax/adminDebit/adminDelDebit.do', 
 										type : 'POST', 
 										data : tempCardNum,
 										success : function (data) {
@@ -319,6 +319,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 											}, 
 										error : function () {
 												console.log('삭제 아작스 실패!!!'); 
+												alret("해당 카드는 삭제 할 수 없습니다.");
 											} 
 										});
 								// 아작스 끝
