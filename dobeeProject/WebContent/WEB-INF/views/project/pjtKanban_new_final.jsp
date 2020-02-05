@@ -232,7 +232,6 @@
 					return;
 				}
 				$("#taskEditForm").submit();
-
 			});
 				
 
@@ -2044,7 +2043,6 @@
 							function createTimeList(arrayData){
 									 for(let i = 0 ; i < arrayData.length; i++){
 											let gdSeq = arrayData[i].gdSeq;
-											//let gdContent = arrayData[i].gdContent;
 											let gdUrl = arrayData[i].gdUrl;
 											let mail = arrayData[i].mail;
 											let pjtSeq = arrayData[i].pjtSeq;
@@ -2082,12 +2080,25 @@
 												console.log("아작스 검색  성공");
 												console.log(data);
 												timeList = data;
+												//검색 결과에 데이타가 없으면 보여주는 알림창
+												if(data.length == 0){
+														swal({
+															   title: "검색 결과 없음",
+															   text: "검색조건을 확인해보세요.",
+															   icon: "info" //"info,success,warning,error" 중 택1
+															}).then((YES) => {
+																$('#searchInput').focus();
+														});
+													}
+												
+											
 											},
 										complete:function(){
 												// 먼저 기존 뷰단 지우고
 												$('.tm-items').empty();
 												// 여기서 다시 뿌려준다  
 												createTimeList(timeList);
+											
 											},
 
 										error:function(){

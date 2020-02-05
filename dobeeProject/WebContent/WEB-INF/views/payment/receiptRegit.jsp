@@ -130,7 +130,16 @@ var costKey = 0;
                         data: formData,
                         type: 'POST',
                         success: function(result) {
-                            alert("업로드 완료 잠시후 구글 비전이 값을 찾아서 입력합니다.");
+                            // 영수증 파일 업로드 성공시 구글 비전 작동 
+                            // 업로드 확인 스윗얼럿창
+                        	swal({
+                        		   title: "업로드 완료",
+                        		   text: "잠시 뒤 구글 비전이 자동으로 입력합니다.",
+                        		   icon: "success" //"info,success,warning,error" 중 택1
+                        		}).then((YES) => {
+                        	});
+
+                            
                             uploadPath = result.uploadPath;
                             saveFileName = result.saveFileName;
                             console.log(saveFileName);
@@ -153,10 +162,8 @@ var costKey = 0;
                                     type: 'POST',
                                     dataType: 'json',
                                     success: function(data) {
-                                        console.log("구글 아작스 성공!");
                                         console.log(data);
                                         result = data;
-
                                         
                                     	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
@@ -169,46 +176,72 @@ var costKey = 0;
                                             	useDayKey = prop;
                                          		findCheck=true;
                                             }
+                                            // 매]를 찾지 못하면 다시 I구로 찾음
                                             if(findCheck==false){
 	                                            fday = result[prop].match("I구");
 	                                            if(fday != null){
 	                                            	useDayKey = prop;
 	                                            	findCheck=true;
 	                                            }
-                                            }
-                                         }
+	                                            //I구 를 찾지 못 하면 구매로 다시 찾음
+	                                            if(findCheck==false){
+	                                            	 fday = result[prop].match("구매");
+	                                            	 if(fday != null){
+														useDayKey = prop;
+														findCheck = true;
+		                                            	}
+		                                        } // 구매 찾기
+                                            }//I구 찾기
+                                         } // 포문 함수 종료
+
                                     },
                                     error: function() {
                                         console.log("구글 아작스 요청시 에러");
+                                        //구글 비전 요청시 에러 날 때 
+                                      	swal({
+                                   		   title: "GoogleVision : 입력 실패",
+                                   		   text: "다시 시도해 주세요.",
+                                   		   icon: "error" //"info,success,warning,error" 중 택1
+                                   			}).then((YES) => {
+                                   		});
                                     },
                                     complete:function (){
                                     	 // 구매와 일시불이 섞인 라인을 찾아서 그 라인의 key 값을 반환
                                        
-                                        
-										/* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
-										var maeFindIndex = result[useDayKey].indexOf("매");
-										var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
-                                       	
-										/*  일시불의 같은 라인에서 뒤에서 부터 '/' 을 찾아 절삭하는 과정 */
-										var slushIndex = result[costKey].lastIndexOf("/");
-										var exceptionStrCost = result[costKey].substr(slushIndex+1);
+                                       	setTimeout(function() {
+												// 구글 비전으로 받아온 데이터 처리 
+										  /* 구매의 '매' 이후의 문자열만 절삭하는 과정 */
+											var maeFindIndex = result[useDayKey].indexOf("매");
+											var exceptionOther = result[useDayKey].substr(maeFindIndex+2);
+	                                       	
+											/*  일시불의 같은 라인에서 뒤에서 부터 '/' 을 찾아 절삭하는 과정 */
+											var slushIndex = result[costKey].lastIndexOf("/");
+											var exceptionStrCost = result[costKey].substr(slushIndex+1);
 
-										
-                                       	/*날짜 처리과정 */
-                                        var temp = fn(exceptionOther);
-                                        var usedate = calculus(temp);
+											
+	                                       	/*날짜 처리과정 */
+	                                        var temp = fn(exceptionOther);
+	                                        var usedate = calculus(temp);
 
-                                        
-                                        /* 뽑아 낸 텍스트 input tag에 넣기 */ 
-                                        $("#Input2").attr("value", usedate);
-                                        $("#Input3").attr("value", result.key1);
-                                        var usecost = fn(exceptionStrCost);
-                                        $("#Input4").attr("value", usecost);
-                                        
+	                                        
+	                                        /* 뽑아 낸 텍스트 input tag에 넣기 */ 
+	                                        $("#Input2").attr("value", usedate);
+	                                        $("#Input3").attr("value", result.key1);
+	                                        var usecost = fn(exceptionStrCost);
+	                                        $("#Input4").attr("value", usecost);
+
+											// 구글 비전이 할 일을 다하면 보여주는 알림창
+	                                      	swal({
+	                                  		   title: "GoogleVision : 입력 완료",
+	                                  		   text: "다르게 입력된 값이 없는지 확인한 후 등록버튼을 눌러주세요.",
+	                                  		   icon: "success" //"info,success,warning,error" 중 택1
+	                                  			}).then((YES) => {
+	                                  		});   //처리과정 끝 
+										}, 1500);   // 딜레이 끝
                                     },
-                                }) // 2번째 아작스끝
-                        },
-                    });
+                                }) // 2번째 아작스 끝
+                        },  // 업로드 아작스의 컴플릿트 함수 끝
+                    }); //업로드 아작스 끝
                 }; //uploadFile() 함수 끝 
 </script>
 

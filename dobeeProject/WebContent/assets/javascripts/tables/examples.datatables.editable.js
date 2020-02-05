@@ -118,7 +118,12 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 								name = "날짜";
 							}
 							allemptyCheck = false;
-							alert(name + "칸을 입력해주세요.");
+							swal({
+								   title: "오류",
+								   text: name + "칸을 입력해주세요.",
+								   icon: "warning" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+							});
 						}
 					};
 					

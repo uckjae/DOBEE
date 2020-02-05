@@ -15,6 +15,8 @@
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables.min.css"/>
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables_themeroller.css"/> -->
 	
+	<!-- Sweet Alert -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
 
 </head>
