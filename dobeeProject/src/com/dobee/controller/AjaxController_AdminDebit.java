@@ -15,6 +15,7 @@ import com.dobee.services.AdminDebitService;
 import com.dobee.vo.Debit;
 
 @Controller
+@RequestMapping("ajax/adminDebit/**")
 public class AjaxController_AdminDebit {
 
 	@Autowired
@@ -34,16 +35,7 @@ public class AjaxController_AdminDebit {
 		String entry = (String)paramMap.get("entry");
 		String valDate = (String)paramMap.get("valDate");
 		
-		//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		Date valDate = null;
-//		try {
-//			valDate = transFormat.parse(tempDate);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//			System.out.println("String to Date Error");
-//		}
-		
-		//System.out.println("잘 바뀌었는지? " + valDate);
+
 		Debit debit = new Debit();
 		debit.setCardNum(cardNum);
 		debit.setCorp(corp);

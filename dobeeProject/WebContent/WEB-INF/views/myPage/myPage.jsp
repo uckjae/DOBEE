@@ -37,10 +37,8 @@
 				</header>
 
 				<!-- start: page -->
-
 				<div class="row">
 					<div class="col-md-4 col-lg-3">
-
 						<section class="panel">
 							<div class="panel-body">
 								<div class="thumb-info mb-md">
@@ -54,20 +52,22 @@
 
 								<div class="widget-toggle-expand mb-md">
 									<div class="widget-header">
-										<h6>Profile Completion</h6>
+										<h3>${user.name}</h3>
+										<h6>${user.mail}</h6>
+										
 									</div>
-									<div class="widget-content-expanded">
+									<!-- <div class="widget-content-expanded">
 										<ul class="simple-todo-list">
 											<li class="completed">Update Profile Picture</li>
 											<li class="completed">Change Personal Information</li>
 											<li>Update Social Media</li>
 											<li>Follow Someone</li>
 										</ul>
-									</div>
+									</div> -->
 								</div>
 								<hr class="dotted short">
-								<h6 class="text-muted">About</h6>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis vulputate quam. Interdum et malesuada</p>
+								<h6 class="text-muted">소속</h6>
+								<p>${user.teamName}</p>
 							</div>
 						</section>
 					</div>

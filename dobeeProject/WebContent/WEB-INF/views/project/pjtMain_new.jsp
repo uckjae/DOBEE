@@ -5,8 +5,9 @@
 <html class="fixed search-results">
 <head>
 	<c:import url="/common/HeadTag.jsp"/>	
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 	<!-- Sweet Alert -->
    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -115,7 +116,6 @@
             	    	 								location.reload(true); 
             	    	 							     }
             	    	 							});
-
                 	    	 				}
         	    	 				},
         	    	 				error:function(request,status,error){
@@ -134,8 +134,6 @@
     			});
 		$('#newPjt').click('show.bs.modal',function(e){
 			$('#newPjtForm').trigger('reset');
-
-			
 		});
 
     		
@@ -188,7 +186,6 @@
 		 	 				console.log(responseData);
 		 	 				var id = new Array();
 		 	 				var name = new Array();
-		 	 				var object = new Object();
 		 	 				$.each(responseData, function(index, element){
 			 	 				id.push(element.mail);
 			 	 				name.push(element.name+"("+element.mail+")");
@@ -199,11 +196,13 @@
 			 	 			});
 
 							$("#userSelectEdit").select2();
-							
+
+							//이미 속해있는 회원은 추가할  수 없게 막기
 			 	 			$("#userSelectEdit > option").each(function(){
 			 	 				for (var i = 0; i < mails.length; i++){
 				 	 				if($(this).val() == mails[i]){
-						 				$(this).attr('selected','selected');
+				 	 					$(this).prop('disabled','true'); 
+						 				//$(this).css('display','none');
 									}
 					 	 		}
 					 		});
@@ -220,9 +219,6 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 		 	});
-
-			  
-
 		});
 
 	
@@ -325,10 +321,9 @@
      	 		 						   text: "프로젝트가 수정되었습니다.",
      	 		 						   icon: "success" //"info,success,warning,error" 중 택1
      	 		 						}).then((YES) => {
-     	 		 							location.href="pjtMain.do";
+     	 		 							location.reload(true);
      	 		 						});
              	    	 			}
-         	    	 				
      	    	 				},
      	    	 				error:function(request,status,error){
      	    						console.log("code : " + request.status +"\n" + "message : " 
@@ -620,7 +615,7 @@
 							</div>
 							<!-- 담당자 -->
 							<div class="form-group">
-								<label class="col-md-3 control-label">담당자</label>
+								<label class="col-md-3 control-label">담당자 추가</label>
 									<div class="col-md-7">
 										<select  id="userSelectEdit" name="mail" multiple="multiple" style="width:100%;">
 										</select>

@@ -146,38 +146,26 @@ public class AjaxController_Project {
 	public String updatePjtMember(@RequestParam(value="pjtMembers[]") List<String> pjtMembers, @RequestParam(value="pjtSeq") String pjtSeq) {
 		int result = 0;
 		String responseData = "";
-
 		
-		
-		List<User> oldPjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
-		List<ProjectMember> newPjtMember = new ArrayList<ProjectMember>();
+		List<ProjectMember> pjtMemberList = new ArrayList<ProjectMember>();
 		//들어온 메일 개수만큼 vo 객체 만들어주기
 		for(int i=0; i<pjtMembers.size(); i++) {
 			ProjectMember pjtMember = new ProjectMember();
 			pjtMember.setMail(pjtMembers.get(i));
-			newPjtMember.add(pjtMember);
+			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
+			pjtMemberList.add(pjtMember);
 		}
-		
-		for(int i=0; i<newPjtMember.size(); i++) {
-			for(int j=0; j<oldPjtMember.size(); j++) {
-				if(newPjtMember.get(i).getMail() != oldPjtMember.get(i).getMail()) { //같지 않을 때만 insert 해주기
-					result = projectService.addProjectMember(newPjtMember);
-				}
-			}
-		}
-		System.out.println("새로 만들어진 개수?"+newPjtMember.size());		
+		System.out.println("새로 만들어진 개수?"+pjtMemberList.size());
+		result = projectService.addProjectMember(pjtMemberList);
 
 		System.out.println("result?"+result);
 		
 		if(result > 0 ) {
 			responseData = "success";
-			
 		} else {
 			responseData = "failure";
 		}
-		
 		return responseData;
-		
 	}
 	
 	

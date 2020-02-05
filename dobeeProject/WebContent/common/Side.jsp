@@ -23,7 +23,6 @@
 						<a href="noticeList.do">
 						<i class="fa fa-clipboard" aria-hidden="true"></i><span>공지사항</span></a>
 					</li>
-					
 					<li class="nav-parent">
 						<a><i class="fa fa-briefcase" aria-hidden="true"></i><span>근무</span></a>
 						<ul class="nav nav-children">
@@ -31,14 +30,12 @@
 							<li><a href="extendApply.do">연장 근무 신청</a></li>
 							<li><a href="breakManage.do">부재 일정 관리</a></li>
 							<li><a href="workManage.do">근무 내역 확인</a></li>
-							
 							<c:choose>
 								<c:when test="${user.authCode == 3 }">
 									<li><a href="absManage.do">부재 신청 관리</a></li>
 									<li><a href="extManage.do">연장 근무 신청 관리</a></li>
 								</c:when>
 							</c:choose>
-							
 						</ul>
 					</li>
 					<li class="nav-parent">

@@ -122,12 +122,11 @@ public class ApplyService {
     
     
     // 매니저_부재관리 - isAuth update (POST)		0115
-    public void absReqHandle(Apply apply) {
-    	System.out.println("이여기" + apply.toString());
+    public int absReqHandle(Apply apply) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	int results = userDao.absReqHandle(apply);
-    	
-    	// System.out.println("results 확인 : " + results);
+    	int result = userDao.absReqHandle(apply);
+    	System.out.println("results 확인 : " + result);
+    	return result;
     }
     
 

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.View;
 import com.dobee.dao.ProjectDao;
 import com.dobee.dao.ScheduleDao;
 import com.dobee.dao.UserDao;
+import com.dobee.services.ApplyService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Break;
@@ -33,6 +34,9 @@ public class AjaxController_DABC {
 	@Autowired
 	private SqlSession sqlsession;
 	
+	@Autowired
+    private ApplyService applyService;
+	
 	
 	// 개인_부재신청 부재항목 불러오기	COMPLETE
 	@RequestMapping("getApyCode.do")
@@ -40,7 +44,6 @@ public class AjaxController_DABC {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> results = userDao.getApyCode();
 		map.addAttribute("apyCode", results);
-		
 		return jsonview;
 	}
 	
@@ -225,6 +228,22 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+	
+	
+	// Ajax 매니저_부재관리_부재 수정 02.05 게다죽 (ajax로 변경)
+	@RequestMapping(value="absManage.do", method=RequestMethod.POST)
+    public View absReqHandle(Apply apply, Model map) {
+		String responseData = "";
+        System.out.println("이거 봐바 : " + apply.toString());
+        int result = applyService.absReqHandle(apply);
+        if(result > 0 ) {
+        	responseData = "success";
+        } else {
+        	responseData = "failure";
+        }
+        map.addAttribute("absManage", responseData);
+        return jsonview;
+    }
 	
 	
 	////////// 공지사항 일정 캘린더에 뿌리기 //////////

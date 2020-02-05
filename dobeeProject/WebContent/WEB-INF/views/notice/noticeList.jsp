@@ -13,7 +13,12 @@
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
+<style>
+.dataTables_filter .form-control input-sm 
+{
+width:47em
+}
+</style>
 </head>
 
 <body>

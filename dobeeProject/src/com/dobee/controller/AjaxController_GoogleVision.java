@@ -16,13 +16,14 @@ import com.dobee.services.GoogleVisionService;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 
 @Controller
+@RequestMapping("ajax/googleVision/**")
 public class AjaxController_GoogleVision {
 
-	
+	// 구글 비전을 사용하기 위해 쓰이는 서비스단
 	@Autowired
 	private GoogleVisionService googleVisionService;
 	
-	
+	// 구글 비전 요청시 해당 이미지의 경로를 받아 이미지에 접근
 	@RequestMapping(value="/goGoogleAjax.do", method=RequestMethod.POST)
 	public @ResponseBody JSONObject visionApi(HttpServletRequest req, @RequestParam String uploadPath,
 			@RequestParam String saveFileName) 
