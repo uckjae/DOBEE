@@ -71,4 +71,8 @@ public interface PaymentDao {
     //비용 월 셀렉트 받아오기
     public ArrayList<ItemsCostChart> giveMeMonth(String yyyy);
     
+    
+    //법인 카드 수정시, 중복카드번호 검사
+    public int checkEditDupleCardNum(String cardNum);
+    
 }

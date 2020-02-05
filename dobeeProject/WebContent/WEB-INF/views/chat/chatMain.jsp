@@ -190,7 +190,7 @@
 	$(function(){
 		$.ajax({
 			 
-	  		url:"getUserList.do",
+	  		url:"ajax/chat/getUserList.do",
 	  		dataType:"json",
 	  		type:"post",
 	  		success:function(data){
@@ -299,7 +299,7 @@
 	 	    			"chatUserList" : chatUserList
 	 	    			};
 	 			$.ajax({
-	 	 			url:"makeChatRoom.do",
+	 	 			url:"ajax/chat/makeChatRoom.do",
 	 				data: chatRoom ,
 	 				dataType: "text",
 	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",

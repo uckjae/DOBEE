@@ -51,4 +51,14 @@ public class AdminDebitService {
 		return result;
 	}
 	
+	
+	
+	//법인 카드 수정시 중복카드 검색
+	public int checkEditDupleCardNum(String cardNum) {
+		int result = 0 ;
+		PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
+		result = paymentDao.checkEditDupleCardNum(cardNum);
+		
+		return result;
+	}
 }

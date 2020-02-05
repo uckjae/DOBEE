@@ -117,7 +117,7 @@
 				<div class="panel-body">
 					<div class="modal-wrapper">
 						<div class="modal-text">
-							<p>정말로 데이타를 지우시겠습니까? 다시 복원 될 수 없습니다!!</p>
+							<p style="color:red">정말로 데이타를 지우시겠습니까? 해당 카드의 비용데이터가 모두 삭제됩니다!</p>
 						</div>
 					</div>
 				</div>
