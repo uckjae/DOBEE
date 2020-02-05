@@ -347,6 +347,21 @@
 	    	});
 		}
 
+/* 알람 */
+		
+		function send(data) {
+			let mail = $('#approvalList').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+			jsonData.applier = '${sessionScope.user.name}';
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
+
 	</script>
 		
 	</body>

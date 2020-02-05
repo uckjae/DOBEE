@@ -6,7 +6,8 @@
 <head>
 
 <c:import url="/common/HeadTag.jsp"/>
-
+<!-- Sweet Alert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 <script type="text/javascript">
 	//카드 번호 정규식 
 	var cardReg = new RegExp("^[1-9]{1}[0-9]{3}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
@@ -51,7 +52,14 @@
 
             // isFinite함수를 사용하여 문자가 선언되었는지 확인한다.
             if(isFinite(inputMonth + inputYear) == false) {
-                alert("문자는 입력하실 수 없습니다.");
+
+            	swal({
+            		   title:"오류",
+            		   text: "문자는 입력하실 수 없습니다.",
+            		   icon: "warning" //"info,success,warning,error" 중 택1
+            		}).then((YES) => {
+            	});
+                
                 period.value = autoLeftPad((Number(nowMonth) + 1), 2) + "/" + nowYear;
                 vail = false;
                 return false;
@@ -59,7 +67,12 @@
 
             // 입력한 월이 12월 보다 큰 경우
             if(inputMonth > 12) {
-                alert("12월보다 큰 월수는 입력하실 수 없습니다. ");
+            	swal({
+         		   title:"오류",
+         		   text: "12월보다 큰 월수는 입력하실 수 없습니다.",
+         		   icon: "warning" //"info,success,warning,error" 중 택1
+         		}).then((YES) => {
+         	});
                 period.value = "12/" + inputYear;
                 vail = false;
                 return false;
@@ -67,7 +80,12 @@
 
             // 입력한 월이 00을 입력 할 수 없다
             if(inputMonth == 0){
-				alert("월에 00은 입력 할 수 없습니다.");
+            	swal({
+          		   title:"오류",
+          		   text: "월에 00은 입력 할 수 없습니다.",
+          		   icon: "warning" //"info,success,warning,error" 중 택1
+          		}).then((YES) => {
+          	});
 				period.value = "01/" + inputYear;
 				vail = false;
 				return false;
@@ -75,7 +93,12 @@
 
             // 입력한 유효기간을 현재날짜와 비교하여 사용 가능 여부를 판단한다.
             if((inputYear + inputMonth) <= (nowYear + nowMonth)) {
-                alert("유효기간이 만료된 카드는 사용하실 수 없습니다.");
+            	swal({
+           		   title:"오류",
+           		   text: "유효기간이 만료된 카드는 사용하실 수 없습니다.",
+           		   icon: "warning" //"info,success,warning,error" 중 택1
+           		}).then((YES) => {
+           	});
                 period.value = inputMonth + "/" + autoLeftPad((Number(nowYear) + 1), 2);
                 vail = false;
                 return false;
@@ -107,7 +130,12 @@
 					cardNumCheck = true;
 					
 				}else{
-					alert("카드 번호를 1234-1234-1234-1234 형식으로 입력 해 주세요.");
+					swal({
+		           		   title:"오류",
+		           		   text: "카드 번호를 1234-1234-1234-1234 형식으로 입력 해 주세요.",
+		           		   icon: "warning" //"info,success,warning,error" 중 택1
+		           		}).then((YES) => {
+		           	});
 					cardNumCheck = false;
 				}
     		}
@@ -158,31 +186,55 @@
             beforeSend : function(xhr, opts) {
             	checkEntry();  // 카드 구분은 여기서 함수를실행해서 확인하고, 카드번호/유효기간은 keyUp 을 통해 사용자가 입력하는 즉시 확인
             	threeEmptyCheck();  // 명의자이름 별치 은행 빈칸 검사하는 함수
-            	
+            	//여기서 부터 빈칸 체크
                 if (!entryCheck) { 
-                	alert("카드 구분을 선택해주세요.");
+                	swal({
+                		   title: "오류",
+                		   text: "카드 구분을 선택해주세요.",
+                		   icon: "warning" //"info,success,warning,error" 중 택1
+                		}).then((YES) => {
+                	});
                     xhr.abort();
                 };
                 if (!vail){
-                	alert("유효기간은 정확히 입력해주세요.");
+                	swal({
+             		   title: "오류",
+             		   text: "유효기간은 정확히 입력해주세요.",
+             		   icon: "warning" //"info,success,warning,error" 중 택1
+             		}).then((YES) => {
+             	});
 					xhr.abort();
                 };
                 if (!cardNumCheck){
-                	alert("카드번호를 정확히 입력해주세요.");
+                	swal({
+              		   title: "오류",
+              		   text: "카드번호를 정확히 입력해주세요.",
+              		   icon: "warning" //"info,success,warning,error" 중 택1
+              		}).then((YES) => {
+              	});
                 	xhr.abort();
                 };
                 if (!emptyCheck){
-               		alert("명의자이름/별칭/카드사를 입력해주세요.");
+                	swal({
+               		   title: "오류",
+               		   text: "빈 칸이 없는지 확인해주세요.",
+               		   icon: "warning" //"info,success,warning,error" 중 택1
+               		}).then((YES) => {
+               	});
                		xhr.abort();
                };
-                
             },
 			success:function(data){
-					console.log("등록 아작스 성공");
 					console.log(data);
 					result = data;
 					if(result == 0){
-						alert("데이터 베이스 등록에 실패하였습니다.");
+						swal({
+							   title:"등록 실패",
+							   text: "다시 확인해주세요.(카드번호는 중복된 값을 넣을 수 없습니다.)",
+							   icon: "error" //"info,success,warning,error" 중 택1
+							}).then((YES) => {
+								$("#cardNum").focus();
+						});
 					}else{
 						// 디비 등록 까지 다 성공했다면, 목록 보여주는 페이지로 이동
 						location.href="ListDebit.do";
@@ -193,8 +245,7 @@
 					
 				},
 			error:function(){
-					//아작스 실패
-					alert("데이터 베이스 등록에 실패하여 등록되지 않습니다.");
+			
 				},
 			});
 	   };
