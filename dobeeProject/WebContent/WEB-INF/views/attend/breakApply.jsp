@@ -198,7 +198,7 @@
 				});
 
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do",
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -341,7 +341,9 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
+						
 						send("breakApply");
+						
 						if(responseData == "success"){
 							swal({
 								title: "부재 일정 신청",
@@ -373,7 +375,7 @@
 		var eventList = [];
 
 		$.ajax ({
-			url : "AbsAll.do",
+			url : "ajax/apply/AbsAll.do",
 			dataType : "json",
 			success : function(data) {
 				var events = [];

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.View;
 
 import com.dobee.dao.ProjectDao;
@@ -25,7 +26,8 @@ import com.dobee.vo.member.User;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.MainSchedule;
 
-@Controller
+@RestController
+@RequestMapping("ajax/apply/**")
 public class AjaxController_DABC {
 	
 	@Autowired
@@ -38,7 +40,7 @@ public class AjaxController_DABC {
     private ApplyService applyService;
 	
 	
-	// 개인_부재신청 부재항목 불러오기	COMPLETE
+	// 개인_부재신청 부재항목 불러오기	COMPLETE o			부재신청에서는 사용 안함
 	@RequestMapping("getApyCode.do")
 	public View brkApyCat (Model map){
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -48,7 +50,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// 개인_부재/연장신청 결재자 불러오기		COMPLETE
+	// 개인_부재/연장신청 결재자 불러오기		COMPLETE o
 	@RequestMapping("getApprovalList.do")
 	public View getRenewedList (Model map) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -59,7 +61,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기		0118	COMPLETE
+	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기		0118	COMPLETE o
 	@RequestMapping("AbsAll.do")
 	public View AbsAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -84,7 +86,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인_연장근무 신청 - 캘린더 Event 불러오기		0118	COMPLETE
+	// Ajax 개인_연장근무 신청 - 캘린더 Event 불러오기		0118	COMPLETE o
 	@RequestMapping("ExtAll.do")
 	public View ExtAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -96,6 +98,97 @@ public class AjaxController_DABC {
 	}
 	
 	
+	// 개인_근무내역 확인 차트 데이터 불러오기			0129 COMPLETE o
+	@RequestMapping("getChartData.do")
+	public View getChartData (Model map, Authentication auth, String ym) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		System.out.println("ym 뭐 들어옴? " + ym);
+		List<ChartData> results = userDao.getChartData(auth.getName(), ym);
+		map.addAttribute("CD", results);
+		
+		return jsonview;	
+	}
+	
+	
+	// 개인_남은/사용 연차 불러오기				COMPLETE o
+	@RequestMapping("getVacationInBM.do")
+	public View getVacationInBM (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Break> results = userDao.getVacationInBM(auth.getName());
+		map.addAttribute("totalVacation", results);
+		
+		return jsonview;
+	}
+	
+	
+	// 개인_근무내역 확인 년 월 불러오기			0129 COMPLETE o
+	@RequestMapping("overTimeYearMonthList.do")
+	public View overTimeYearMonthList (Model map, Authentication auth) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Integer> results = userDao.overTimeYearMonthList(auth.getName());
+		map.addAttribute("OTYMList", results);
+		
+		return jsonview;
+	}
+	
+	
+	// 개인_월 근무 시간 가져오기			COMPLETE o
+	@RequestMapping("getWorkHour.do")
+	public View getWorkHour (Model map, Authentication auth, String ym) {	
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Integer> results = userDao.getWorkHour(auth.getName(), ym);
+		map.addAttribute("workHour", results);
+		
+		return jsonview;
+	}
+
+	
+	////////// 메인 캘린더 캘린더에 뿌리기 //////////
+		
+	// 공지,업무,프로젝트 일정 캘린더 병합		0131	게다죽		COMPELTE o
+	@RequestMapping(value="ntpToCal.do", method=RequestMethod.GET)
+	public View prjectToCalendar (Model map, Authentication auth) {
+		ScheduleDao sDao = sqlsession.getMapper(ScheduleDao.class);
+		List<MainSchedule> result = sDao.ntpToCalendar(auth.getName());
+		map.addAttribute("NTPTC", result);
+		
+		return jsonview;
+	}
+	
+	
+
+	////////// 매니저 ///////////////////////////
+    
+	// Ajax 매니저_부재일정확인 - Option - 부재항목 loading		0115 o			팀별 확인 - 세션에서 팀 코드 출력해서 조회하는걸로
+	@RequestMapping("breakEntryListMgr.do")
+	public View breakEntryListMgr (Model map) {
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<ApplyCode> result = userDao.breakEntryListMgr();
+		map.addAttribute("breakEntryListMgr", result);
+		
+		return jsonview;
+	}
+	
+	
+	/*	
+	 어려워서 안함.
+	////////// 프로젝트 현황 차트 맹글기 ///////////////
+	
+	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING			pjtseq param 추가
+	@RequestMapping(value="projChartData.do", method=RequestMethod.GET)
+	public View projChartData (Model map) {
+		ProjectDao pDao = sqlsession.getMapper(ProjectDao.class);
+		List<Task> result = pDao.getProjChartData();
+		
+		map.addAttribute("PCD", result);
+		
+		return jsonview;
+	}
+
+
+
+
+
 	// Ajax 개인_부재일정확인 - Option - 년도 loading		0113	COMPLETE
 	@RequestMapping("breakYearList.do")
 	public View breakYearList (Model map, Authentication auth) {
@@ -183,106 +276,7 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 
-	
-	// 개인_근무내역 확인 년 월 불러오기			0129 COMPLETE
-	@RequestMapping("overTimeYearMonthList.do")
-	public View overTimeYearMonthList (Model map, Authentication auth) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Integer> results = userDao.overTimeYearMonthList(auth.getName());
-		map.addAttribute("OTYMList", results);
-		
-		return jsonview;
-	}
-	
-	
-	// 개인_근무내역 확인 차트 데이터 불러오기			0129 COMPLETE
-	@RequestMapping("getChartData.do")
-	public View getChartData (Model map, Authentication auth, String ym) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		System.out.println("ym 뭐 들어옴? " + ym);
-		List<ChartData> results = userDao.getChartData(auth.getName(), ym);
-		map.addAttribute("CD", results);
-		
-		return jsonview;	
-	}
-	
-	
-	// 개인_남은/사용 연차 불러오기				COMPLETE
-	@RequestMapping("getVacationInBM.do")
-	public View getVacationInBM (Model map, Authentication auth) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Break> results = userDao.getVacationInBM(auth.getName());
-		map.addAttribute("totalVacation", results);
-		
-		return jsonview;
-	}
-	
-	
-	// 개인_월 근무 시간 가져오기			COMPLETE
-	@RequestMapping("getWorkHour.do")
-	public View getWorkHour (Model map, Authentication auth, String ym) {	
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<Integer> results = userDao.getWorkHour(auth.getName(), ym);
-		map.addAttribute("workHour", results);
-		
-		return jsonview;
-	}
-
-	
-	////////// 매니저 ///////////////////////////
-    
-	// Ajax 매니저_부재일정확인 - Option - 부재항목 loading		0115			팀별 확인 세션에서 팀 코드 출력해서 조회하는걸로
-	@RequestMapping("breakEntryListMgr.do")
-	public View breakEntryListMgr (Model map) {
-		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<ApplyCode> result = userDao.breakEntryListMgr();
-		map.addAttribute("breakEntryListMgr", result);
-		
-		return jsonview;
-	}
-	
-	
-	// Ajax 매니저_부재관리_부재 수정 02.05 게다죽 (ajax로 변경)
-	@RequestMapping(value="absManage.do", method=RequestMethod.POST)
-    public View absReqHandle(Apply apply, Model map) {
-		String responseData = "";
-        System.out.println("이거 봐바 : " + apply.toString());
-        int result = applyService.absReqHandle(apply);
-        if(result > 0 ) {
-        	responseData = "success";
-        } else {
-        	responseData = "failure";
-        }
-        map.addAttribute("absManage", responseData);
-        return jsonview;
-    }
-	
-	
-	////////// 공지사항 일정 캘린더에 뿌리기 //////////
-		
-	// 공지,업무,프로젝트 일정 캘린더 병합		0131	게다죽		COMPELTE	
-	@RequestMapping(value="ntpToCal.do", method=RequestMethod.GET)
-	public View prjectToCalendar (Model map, Authentication auth) {
-		ScheduleDao sDao = sqlsession.getMapper(ScheduleDao.class);
-		List<MainSchedule> result = sDao.ntpToCalendar(auth.getName());
-		map.addAttribute("NTPTC", result);
-		
-		return jsonview;
-	}
-	
-	
-	////////// 프로젝트 현황 차트 맹글기 ///////////////
-	
-	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING			pjtseq param 추가
-	@RequestMapping(value="projChartData.do", method=RequestMethod.GET)
-	public View projChartData (Model map) {
-		ProjectDao pDao = sqlsession.getMapper(ProjectDao.class);
-		List<Task> result = pDao.getProjChartData();
-		
-		map.addAttribute("PCD", result);
-		
-		return jsonview;
-	}
+	*/
 	
 	
 }

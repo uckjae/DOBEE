@@ -154,7 +154,7 @@
 
 			/*결재자 select2 적용*/
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do",
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -260,7 +260,9 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
+
 						send("extEditApply");
+						
 						if(responseData == "success"){
 							swal({
 								title: "연장 근무 신청 수정",
@@ -292,7 +294,7 @@
 	        var eventList = [];
 		       
 	    	$.ajax ({
-	    		url : "ExtAll.do",
+	    		url : "ajax/apply/ExtAll.do",
 				dataType : "json",
 				success : function(data) {
 					var events = [];
