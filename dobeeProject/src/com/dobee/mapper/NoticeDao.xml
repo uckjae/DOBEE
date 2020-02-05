@@ -5,7 +5,7 @@
 <mapper namespace="com.dobee.dao.NoticeDao">
 
 <select id="noticeList" resultType="com.dobee.vo.notice.Notice">
-	SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE
+	SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT FROM NOTICE ORDER BY NOTSEQ DESC
 </select>
 
 <!-- 공지사항 글 insert >> insert 후 seq return 함 -->
@@ -65,7 +65,7 @@
 <select id="getRecentNotice" resultType="com.dobee.vo.notice.Notice">
 	SELECT NOTSEQ, TITLE, CONTENT, REGDATE, COUNT 
 	FROM NOTICE 
-	ORDER BY NOTSEQ DESC 
+	ORDER BY NOTSEQ DESC
 	LIMIT 5
 </select>
 </mapper>

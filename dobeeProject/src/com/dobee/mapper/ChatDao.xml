@@ -13,7 +13,7 @@
 	<!-- 채팅방 참여자 리스트 만들기 public int makeGroupChatUsers(String chatRoomName, List<String> chatUsers);-->
 	<insert id="makeGroupChatUsers" parameterType="hashMap">
 		INSERT INTO CHATUSERS(CHATSEQ, MAIL) 
-		VALUES( (SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{newChatRoomName}), (SELECT MAIL FROM USER WHERE MAIL=#{mail}));
+		VALUES( (SELECT CHATSEQ FROM CHATROOM WHERE CHATROOMNAME=#{newChatRoomName}), (SELECT MAIL FROM USER WHERE MAIL=#{mail}))
 	</insert>
 	
 	<!-- 채팅방 seq 가져오기 -->

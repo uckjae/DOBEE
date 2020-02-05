@@ -21,6 +21,7 @@ import com.dobee.vo.member.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @RestController
+@RequestMapping("ajax/chat/**")
 public class AjaxController_Chat {
 	
 	@Autowired

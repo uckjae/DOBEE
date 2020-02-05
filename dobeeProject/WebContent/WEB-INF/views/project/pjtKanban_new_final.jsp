@@ -180,7 +180,6 @@
 								$('#taskFormProgress').val($(element).text());
 							}
 						});
-							
 					},
 					error:function(request,status,error){
 						console.log("code : " + request.status +"\n" + "message : " 
