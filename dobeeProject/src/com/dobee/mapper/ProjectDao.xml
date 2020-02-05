@@ -320,7 +320,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!--  구글 드라이브 검색 -->
 <select id="gdSearch" parameterType="hashmap" resultType="com.dobee.vo.project.GoogleDrive">
-	select * from googledrive where ${option} = #{searchText} and pjtSeq = #{pjtSeq}
+	select * from googledrive where ${option} like CONCAT('%',#{searchText},'%') and pjtSeq = #{pjtSeq}
 </select>
 
 </mapper>
