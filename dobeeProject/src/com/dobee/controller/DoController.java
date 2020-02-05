@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
@@ -121,6 +121,11 @@ public class DoController {
     @RequestMapping(value="findPassWordChange.do",method=RequestMethod.POST)
     public String findPassWordChange(HttpServletRequest request,Model model){
     	System.out.println("여기탄다");
+    	Enumeration<String> enu = request.getParameterNames();
+    	while(enu.hasMoreElements()) {
+    		String key = enu.nextElement();
+    		System.out.println("key : " + key + " values : " + request.getParameter(key));
+    	}
     	String mail = request.getParameter("mail");
     	model.addAttribute("mail", mail);
     	System.out.println("메일?"+mail);
