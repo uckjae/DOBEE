@@ -40,7 +40,6 @@ public class AjaxController_DABC {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<ApplyCode> results = userDao.getApyCode();
 		map.addAttribute("apyCode", results);
-		
 		return jsonview;
 	}
 	
