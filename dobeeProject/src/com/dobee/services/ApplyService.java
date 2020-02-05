@@ -141,10 +141,11 @@ public class ApplyService {
     
     
     // 매니저_연장근무관리 - 승인/반려/미승인 (POST)		0115
-    public void extReqHandle(Apply apply){
+    public int extReqHandle(Apply apply){
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	int results = userDao.extReqHandle(apply);
+    	int result = userDao.extReqHandle(apply);
     	
+    	return result;
     	// System.out.println("results 확인 : " + results);
     }
 

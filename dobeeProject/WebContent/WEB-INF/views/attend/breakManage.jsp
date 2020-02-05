@@ -78,6 +78,7 @@
 								<li><span>부재 일정 관리</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -277,7 +278,7 @@
 
 				// 연차 정보 가져오기
 				$.ajax ({
-					url : "getVacationInBM.do",
+					url : "ajax/apply/getVacationInBM.do",
 					dataType : "json",
 					success : function (data) {
 						$('#remainVacation').html(data.totalVacation[0].totalBreak - data.totalVacation[0].usedBreak + ' 일')

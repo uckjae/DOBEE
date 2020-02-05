@@ -73,6 +73,7 @@
 								<li><span>근무 내역 관리</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -352,7 +353,7 @@
 			});
 
 			$.ajax({
-				url : "overTimeYearMonthList.do",
+				url : "ajax/apply/overTimeYearMonthList.do",
 				dataType : "json",
 				success : function(data) {
 					var myArray = [];
@@ -380,7 +381,7 @@
 			$('#inputYearMonth').append("<i class='fa fa-list-alt fa-2x' id='iIinputYearMonth'>&nbsp;&nbsp;"+yyyy+"년 "+month[mm]+"월</i>")
 
 			$.ajax({
-				url : 'getWorkHour.do?ym='+yyyy+"-"+month[mm],
+				url : 'ajax/apply/getWorkHour.do?ym='+yyyy+"-"+month[mm],
 				dataType : "json",
 				success : function(data) {
 					var whArray = [];
@@ -418,7 +419,7 @@
 			
 			$.ajax({
 				type : 'POST',
-				url : 'getChartData.do?ym='+yyyy+"-"+month[mm],
+				url : 'ajax/apply/getChartData.do?ym='+yyyy+"-"+month[mm],
 				dataType : "json",
 				success : function(data) {
 					dArray = data.CD;
@@ -656,7 +657,7 @@
 				
 				$.ajax({
 					type : 'POST',
-					url : 'getChartData.do?ym='+ym,
+					url : 'ajax/apply/getChartData.do?ym='+ym,
 					success : function(data) {
 						dArray = data.CD;
 						console.log("이거 확인 : ", dArray)
@@ -665,7 +666,7 @@
 
 						$.ajax({
 							type: 'POST',
-							url : 'getWorkHour.do?ym='+ym,
+							url : 'ajax/apply/getWorkHour.do?ym='+ym,
 							dataType : "json",
 							success : function(data) {
 								var whArray = [];

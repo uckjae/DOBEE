@@ -306,7 +306,6 @@ public class DoController {
         return "notice/noticeList";
     }
 
-
     //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
     @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
     public String noticeDetail(@RequestParam(value="notSeq") int notSeq, HttpServletRequest request, Model model){
@@ -603,7 +602,6 @@ public class DoController {
     	}
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq();
     }
-   
 
 
     // 개인_부재일정신청 GET 0110           게다죽
@@ -615,8 +613,6 @@ public class DoController {
     	model.addAttribute("pjtList",pjtList);
         return "attend/breakApply";
     }
-    
-   
     
     
     // 개인_부재일정 수정/삭제 GET                0120    COMPLETE
@@ -634,18 +630,6 @@ public class DoController {
         
         return "attend/breakApplyEdit";
     }
-    
-    /*
-    // 개인_부재일정 수정 POST      0121 COMPLETE
-    @RequestMapping(value="postEditApply.do", method = RequestMethod.POST)
-    public String postEditApply (BreakManageList bml, Integer aplSeq, Authentication auth) {
-        bml.setDrafter(auth.getName());
-        bml.setAplSeq(aplSeq);
-        int results = applyService.postEditApply(bml);
-        
-        return "redirect: editApply.do";
-    }
-    */
     
     
     // 개인_부재일정 삭제 POST          0120    COMPLETE
@@ -666,9 +650,6 @@ public class DoController {
     	model.addAttribute("pjtList",pjtList);
         return "attend/extendApply";
     }
-    
-    
-    
 
 
     // 개인_부재일정관리 GET            0112 게다죽        COMPLETE 0116
@@ -711,18 +692,6 @@ public class DoController {
         return "attend/extApplyEdit";
     }
     
-    /*
-    // 개인_연장근무 신청 수정 Page POST      0121 게다죽        COMPLETE
-    @RequestMapping(value="postEditExtApply.do", method = RequestMethod.POST)
-    public String postEditExtList (Apply apply, Integer aplSeq, Authentication auth) {
-        apply.setAplSeq(aplSeq);
-        apply.setDrafter(auth.getName());
-        int result = applyService.postEditExtApply(apply);
-        
-        return "redirect: workManage.do";
-    }
-    */
-    
     
     // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
     @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
@@ -732,7 +701,7 @@ public class DoController {
         return "redirect: workManage.do";
     }
 
-
+    
     // 매니저_부재관리 - isAuth update GET     0204 updated 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.GET)
     public String absSign(Model model, HttpServletRequest req){
@@ -745,17 +714,6 @@ public class DoController {
         model.addAttribute("brkListMgr", results);
         return "attend/breakManagement_Mgr";
     }
-
-    /*
-    // 매니저_부재관리 - isAuth update POST        0115 게다죽
-    @RequestMapping(value="absManage.do", method=RequestMethod.POST)
-    public String absReqHandle(Apply apply) {
-        System.out.println("이거 봐바 : " + apply.toString());
-        applyService.absReqHandle(apply);
-        
-        return "redirect: absManage.do";
-    }
-    */
     
 
     // 매니저_연장근무관리 리스트 - isAuth update GET           0204 updated 게다죽
@@ -770,15 +728,6 @@ public class DoController {
         model.addAttribute("extListMgr", results);
         
         return "attend/extendManagement_Mgr";
-    }
-    
-    
-    // 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽
-    @RequestMapping(value="extManage.do", method=RequestMethod.POST)
-    public String extReqHandle(Apply apply){
-        applyService.extReqHandle(apply);
-        
-        return "redirect: extManage.do";
     }
 
 

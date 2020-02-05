@@ -282,6 +282,7 @@
 								<li><span>법인카드 등록</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<div class="container-fluid">

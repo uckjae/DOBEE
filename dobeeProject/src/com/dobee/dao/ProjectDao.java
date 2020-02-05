@@ -160,8 +160,8 @@ public interface ProjectDao {
     //성호 구글드라이브 검색 
     public ArrayList<GoogleDrive> gdSearch(Map data);
     
-    
+    /*
 	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING
-    public List<Task> getProjChartData();
+    public List<Task> getProjChartData();						*/
 
 }

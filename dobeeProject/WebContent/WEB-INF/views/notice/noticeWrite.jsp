@@ -112,6 +112,7 @@
 								<li><span>공지사항</span></li>
 								<li><span>글쓰기</span></li>
 							</ol>
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
                     <section class="panel">

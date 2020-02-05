@@ -120,7 +120,7 @@
 								<li><span>채팅</span></li>
 								<li><span>나에게 메시지 보내기</span></li>
 							</ol>
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 
@@ -190,7 +190,7 @@
 	$(function(){
 		$.ajax({
 			 
-	  		url:"getUserList.do",
+	  		url:"ajax/chat/getUserList.do",
 	  		dataType:"json",
 	  		type:"post",
 	  		success:function(data){
@@ -299,7 +299,7 @@
 	 	    			"chatUserList" : chatUserList
 	 	    			};
 	 			$.ajax({
-	 	 			url:"makeChatRoom.do",
+	 	 			url:"ajax/chat/makeChatRoom.do",
 	 				data: chatRoom ,
 	 				dataType: "text",
 	 				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",

@@ -49,6 +49,7 @@ console.log("MAIN!!");
 							</a></li>
 						</ol>
 
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 
@@ -77,7 +78,7 @@ console.log("MAIN!!");
 							var eventList = [];
 
 							$.ajax ({
-								url : "ntpToCal.do",
+								url : "ajax/apply/ntpToCal.do",
 								dataType : "json",
 								success : function(data) {
 									var events = [];

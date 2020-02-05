@@ -87,4 +87,10 @@
 		select usedate from costlist where usedate like concat('%', #{yyyy},'%');
 	</select>
 	
+	
+	<!-- 법인카드 수정시, 카드번호 중복 검사 -->
+	<select id="checkEditDupleCardNum" parameterType="String" resultType="Integer">
+		select count(cardnum) from debit where cardnum = #{cardNum}
+	</select>
+	
 </mapper>

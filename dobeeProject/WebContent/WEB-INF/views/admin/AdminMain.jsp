@@ -39,6 +39,7 @@
 							<li><span>사원 관리</span></li>
 							<li><span>사원 목록</span></li>
 						</ol>
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 				<!-- start: page -->

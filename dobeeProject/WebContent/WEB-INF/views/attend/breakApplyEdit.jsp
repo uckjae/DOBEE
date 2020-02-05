@@ -62,6 +62,7 @@
 								<li><span>신청 / 수정</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -186,7 +187,7 @@
 			});
 
 			$.ajax({
-				url : "getApyCode.do",
+				url : "ajax/apply/getApyCode.do",
 				dataType : "json",
 				success : function(data) {
 					var aArray = [];
@@ -202,7 +203,7 @@
 			});
 			
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do",
 				dataType : "json",
 				success : function(data) {			
 					var dArray = [];
@@ -237,7 +238,7 @@
 
 		 	
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do",
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -337,18 +338,22 @@
 
 					return;
 				}
-		        
+
 		        var formData = $("#breakEditApplyForm").serialize();
 		        console.log('폼??'+formData);
 	        	$.ajax({
-					url : "ajax/apply/breakEditApply.do"+${editApplyList.aplSeq },
+					url : "ajax/apply/breakEditApply.do?aplSeq="+${editApplyList.aplSeq },
 					data : formData,
 					dataType : "text",
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						//send("breakEditApply");
+						console.log("여기는 타니?2 ");
+
+						send("breakEditApply");
+						
 						if(responseData == "success"){
+							console.log("여기는 타니?1 ");
 							swal({
 								title: "부재 일정 신청 수청",
 								text: "부재 일정 신청이 수정되었습니다.",
@@ -382,7 +387,7 @@
 		var eventList = [];
 
 		$.ajax ({
-			url : "AbsAll.do",
+			url : "ajax/apply/AbsAll.do",
 			dataType : "json",
 			success : function(data) {
 				var events = [];

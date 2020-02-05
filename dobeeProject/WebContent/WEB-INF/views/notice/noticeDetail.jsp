@@ -114,7 +114,8 @@ function noticeDel () {
 				var notSeq = $("#notSeq").val();
 				console.log('값 가져와?'+notSeq);
 				$.ajax({
-	 	 			url:"noticeDel.do?notSeq="+notSeq,
+	 	 			url:"ajax/notice/noticeDel.do",
+	 	 			data : {'notSeq' : notSeq },
 	 				dataType: "text",
 	 				contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
@@ -165,6 +166,7 @@ function noticeDel () {
 							<li><span>공지사항</span></li>
 							<li><span>&nbsp;&nbsp;${notice.title}</span></li>
 						</ol>
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

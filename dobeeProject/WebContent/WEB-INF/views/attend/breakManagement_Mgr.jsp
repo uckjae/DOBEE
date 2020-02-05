@@ -71,6 +71,7 @@
 								<li><span>부재 신청 관리</span></li>
 							</ol>
 					
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -141,8 +142,10 @@
 								<form action="#" method="POST">
 									<div class="container-fluid">
 										<div class="modal-body mb-0" style="margin-top: 30px;">
+										
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
 										<input type="hidden" id="modalMail" name="mail" disabled>
+										
 											<div class="form-group">
 												<label class="col-md-3 control-label"><i
 													class="fa fa-comment-o fa-2x"></i><span style="font-size: 15px">&nbsp;&nbsp;부재 신청 사유</span></label>
@@ -218,8 +221,9 @@
 				var wsocket;
 				connect();//알람을위한 웹소켓 connect
 				// 부재항목 Option Ajax Loading ********************
+				
 				$.ajax({
-					url : "breakEntryListMgr.do",
+					url : "ajax/apply/breakEntryListMgr.do",
 					dataType : "json",
 					success : function(data) {
 						var eArray = [];
@@ -239,11 +243,8 @@
 				$('.btn-sm').click('show.bs.modal', function(e) {
 						
 					aplSeq = $(this).data('aplseq');
-					console.log('시퀀스 : '+aplSeq);
 					reason = $(this).data('reason');
-					console.log('이유 ' +reason);
 					rejReason = $(this).data('rejreason');
-					console.log(rejReason);			
 					mail = $(this).data('mail');
 	
 					$('#modalAplSeq').val(aplSeq);
@@ -252,7 +253,8 @@
 					$('#modalMail').val(mail);
 	
 				});
-				
+
+				/*
 				// 부재항목 Option 변경시 List Ajax 처리
 				$('#selectEntry').change(function() {
 	
@@ -261,7 +263,7 @@
 						dataType : "json",
 						success : function (data) {
 							$('#tbody').empty();
-							/*
+							------
 							var beArray = [];
 							beArray = data.byEntry;
 							for (var i=0; i<beArray.length; i++) {	
@@ -281,13 +283,14 @@
 									'<button type="button" class="btn btn-default" data-dismiss="modal">OK</button> </div> </div> </div> </div>'		
 								);
 							}
-							*/
+							------
 						},
 						error : function(request, status, error) {
 							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					});
 				});
+				*/
 	
 			
 				$('#brkTable').DataTable({
@@ -330,37 +333,33 @@
 			/* /알람  */
 			
 			//모달 전송함수
-			function modalSubmit(data){
-
-				//ajax로 바꾸고 sweet alert 적용
-				var formData = $(data).closest('form').serialize();
-				$.ajax({
-	 	 			url:"absManage.do",
-	 				data: formData,
-	 				dataType: "json",
-	 				type:"post",
-	 				success:function(responsedata){
-		 				console.log(responsedata);
-		 				//to게다죽 -> 콘솔 찍히는 거 보고 알아서 하삼~!~!
-	 					/* if(responseData == "success"){
-	 						swal({
-		 						   title: "부재 신청 수정 완료",
-		 						   text: "부재 신청이 수정되었습니다.",
-		 						   icon: "success" //"info,success,warning,error" 중 택1
-		 						}).then((YES) => {
-		 							location.href="pjtMain.do";
-		 							send("breakMGR");
-		 					});
-	 					} */
-	 					
-	 				},
-	 				error:function(request,status,error){
-						console.log("code : " + request.status +"\n" + "message : " 
-								+ request.responseText + "\n" + "error : " + error);
-					}
-	 			});
-				
-			}
+		function modalSubmit(data){
+			var formData = $(data).closest('form').serialize();
+			
+			$.ajax({
+				type : "post",
+ 	 			url : "ajax/apply/absManage.do",
+ 	 			dataType : "text",
+ 				data : formData,
+ 				success : function(responseData){
+ 					if(responseData == "success"){
+ 						swal({
+	 						   title: "처리 완료",
+	 						   text: "부재 신청이 처리되었습니다.",
+	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						}).then((YES) => {
+	 							location.href="absManage.do";
+	 							send("breakMGR");
+	 					});
+ 					}
+ 				},
+ 				error : function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+ 			});
+			
+		}
 			
 		</script>
 		

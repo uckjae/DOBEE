@@ -114,6 +114,7 @@ var tempTeamCode = 0;
 							"teamName" : teamName
 						};
 
+						
 						// 유효성검증
 						if (onlyNumber.test(teamCode)) { // 이게 참이여만 통과
 							// 수정 아작스 실행
@@ -121,14 +122,29 @@ var tempTeamCode = 0;
 								url : 'ajax/admin/adminTeamCodeModify.do',
 								data : teamData,
 								type : 'POST',
+								beforeSend : function(xhr, opts) {
+									//팀 이름이 빈 칸이면 아작스 중지
+							        if (teamName == '') {
+							        	// 알림 알럿참
+							        	swal({
+							        		   title: "수정 실패",
+							        		   text: "팀 이름을 입력해주세요.",
+							        		   icon: "error" //"info,success,warning,error" 중 택1
+							        		}).then((YES) => {
+							        	});
+							        	//아작스중지
+							            xhr.abort();
+							        }
+							    },
 								success : function(data) {
-									console.log("성공");
+									console.log("수정 아작스 작동")
+									_self.rowSave($(ori).closest('tr'));
 								},
 								error : function() {
-									console.log("아작스 에러!");
+									console.log("수정 아작스 에러")
 								},
 								complete : function() {
-									_self.rowSave($(ori).closest('tr'));
+									
 								},
 							}); // 아작스 끝
 						} else { // 유효성 통과 못함
@@ -182,17 +198,19 @@ var tempTeamCode = 0;
 						type : 'POST',
 						success : function(data) {
 							console.log(data);
+							_self.rowSave($(ori).closest('tr'));
 						},
 						error : function() {
 							swal({
-								   title:"삭제 실패",
+								   title:"등록 실패",
 								   text: "중복된 팀코드를 입력 할 수 없습니다.",
 								   icon: "error" //"info,success,warning,error" 중 택1
 								}).then((YES) => {
 							});
+							
 						},
 						complete : function() {
-							_self.rowSave($(ori).closest('tr'));
+							
 						},
 					}); // 아작스 끝
 				} else { // 유효성 통과 못함
@@ -274,12 +292,12 @@ var tempTeamCode = 0;
 									success : function(data) {
 										console.log("아작스 성공");
 										if (data > 0) {
-//											swal({
-//												   title:"삭제 성공",
-//												   text: "삭제되었습니다.",
-//												   icon: "success" //"info,success,warning,error" 중 택1
-//												}).then((YES) => {
-//											});
+											swal({
+												   title:"삭제 성공",
+												   text: "삭제되었습니다.",
+												   icon: "success" //"info,success,warning,error" 중 택1
+												}).then((YES) => {
+											});
 										} else {
 											swal({
 												   title:"삭제 실패",

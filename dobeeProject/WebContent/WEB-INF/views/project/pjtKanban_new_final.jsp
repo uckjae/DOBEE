@@ -180,7 +180,17 @@
 								$('#taskFormProgress').val($(element).text());
 							}
 						});
-							
+
+						//수정 가능 버튼 셋팅 -> pm 또는 담당자가 아니면 버튼 안보이게 처리
+						var loginUserMail = $("#loginUserMail").val();
+						var authCode = $("#authCode").val();
+						
+						console.log('지금 로그인 한 사람은?'+loginUserMail);
+						console.log('권한 코드는?'+authCode);
+						if(loginUserMail !== task.mail && authCode == 2 ) {
+							$("#taskEditBtnDiv").css('display', 'none');
+						}
+						
 					},
 					error:function(request,status,error){
 						console.log("code : " + request.status +"\n" + "message : " 
@@ -205,7 +215,7 @@
 				$("#addPMTaskForm").submit();
 			});
 
-
+			//업무 수정하기
 			$("#taskEditBtn").click(function(){
 				var important = $('#taskImportant').text();
 				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
@@ -1618,6 +1628,7 @@
                         <li><span>프로젝트</span></li>
                     </ol>
 
+                    <i class="fa fa-chevron-left"></i>
                 </div>
             </header>
             <!-- start: page -->
@@ -1661,6 +1672,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
+                                            <input type="hidden" id="loginUserMail" value="${user.mail}">
                                         </div>
                                     </header>
                                     <div id="accordion">
@@ -2361,9 +2373,14 @@
 											</div>
 										</div>
 										<br>
-										<div class="form-group" style="text-align: center;">
+										
+										<!-- pm & 업무 담당자만 버튼 보이게 해야 됨 -->
+										<div class="form-group" style="text-align: center;" id="taskEditBtnDiv">
 											<button type="button" id="taskEditBtn" class="btn btn-default" style="background-color: #34495e; color:white;" form="taskEditForm">수정</button>
-										</div>	
+										</div>
+										
+										
+											
 									</form>
 									</div>
 								</div>

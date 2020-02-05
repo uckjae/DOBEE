@@ -12,6 +12,7 @@ import com.dobee.services.AttendService;
 
 
 @RestController
+@RequestMapping("ajax/attend/**")
 public class AjaxController_Attend {
 	
 	@Autowired
