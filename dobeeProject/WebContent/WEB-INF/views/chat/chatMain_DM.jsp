@@ -148,12 +148,17 @@
 	socket.on('printChatHistory', function(msg){
 
         var msgArray = msg.reverse();
+        console.log('이전 대화 목록 가져오기');
         console.log(msgArray);
+        
         $.each(msgArray, function(index,element){
+
+            
+            
             console.log(element);
             if(fromName !== element.NAME) {
     			$("#msg_history").append('<div class="incoming_msg">'
-    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+    					+'<div class="incoming_msg_img"><img src="./upload/'+element.MYPIC+'" alt="sunil"> </div>'
     					+'<div class="received_msg">'
     					+'<div class="received_withd_msg">'
     					+'<p>'+element.CHATCONTENT+'</p>'
@@ -169,6 +174,10 @@
     						+'</div>');
     				$("#msg_history").scrollTop($("#msg_history")[0].scrollHeight);
     			}
+
+
+
+			
         });
         
     });
