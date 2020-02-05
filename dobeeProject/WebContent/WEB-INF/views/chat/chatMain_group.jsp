@@ -344,7 +344,7 @@
 	 				success:function(responsedata){
 	 					console.log(responsedata);
 	 					if(responsedata == "success"){ //채팅방 생성 완료
-	 	 					console.log('채팅방 만듦')
+	 	 					console.log(selected);
 	 	 					swal({
 	 						   title: "채널 생성 완료",
 	 						   text: "채널이 만들어졌습니다.",

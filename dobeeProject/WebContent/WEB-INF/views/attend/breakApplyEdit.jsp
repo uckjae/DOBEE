@@ -196,8 +196,8 @@
 						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
 					}					
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -212,8 +212,8 @@
 						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
 					}
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -251,8 +251,8 @@
 					$("#approvalList").select2();
 					
 				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				error : function(request, status, error) {
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 
@@ -347,7 +347,7 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						send("breakEditApply");
+						//send("breakEditApply");
 						if(responseData == "success"){
 							swal({
 								title: "부재 일정 신청 수청",
@@ -370,8 +370,8 @@
 					}
 						
 					},
-					error : function(error) {
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					error : function(request, status, error) {
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
 		    });
