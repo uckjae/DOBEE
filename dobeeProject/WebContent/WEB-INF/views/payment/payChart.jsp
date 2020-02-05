@@ -503,6 +503,15 @@ function chageYYYYSelect(){
 							complete:function(){
 								//첫 기본 차트 화면 뿌리기 시작 
 								// 여기서 부터 차트 그리기
+								if(tempData.length == 0){
+									swal({
+										   title: "데이타가 없습니다.",
+										   text: "가장 최근 연도의 데이타가 없습니다. 다른 연도를 선택해보세요.",
+										   icon: "info" //"info,success,warning,error" 중 택1
+										}).then((YES) => {
+									});	
+								};
+								
 								var xData = [];	
 								for(let i = 0 ; i<tempData.length; i++){
 									xData.push(tempData[i].entry);
