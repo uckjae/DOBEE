@@ -36,6 +36,8 @@
 <!-- Examples -->
 <script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body {
     background: #23394A;
@@ -47,21 +49,45 @@ $(function(){
  $('#idModal2').click(function(e){
 	  
 	 if(($.trim($('#password').val())=='')&&($.trim($('#passwordOk').val())=='')){
-        alert("내용을 입력해주세요");
+        swal({
+			title: "비밀번호 재설정",
+			text: "내용을 입력하세요", 
+			icon: "warning", //"info,success,warning,error" 중 택1
+			showConfirmButton: true
+			//icon: "warning" //"info,success,warning,error" 중 택1
+				})
         return false;
         }
 	 else if($.trim($('#password').val())==''){
-        alert("비밀번호를 입력해주세요");
+        swal({
+			title: "비밀번호 재설정",
+			text: "비밀번호를 입력해주세요", 
+			icon: "warning", //"info,success,warning,error" 중 택1
+			showConfirmButton: true
+			//icon: "warning" //"info,success,warning,error" 중 택1
+				})
         $('#name').focus();
         return false;    
        }    
     else if($.trim($('#passwordOk').val())==''){
-		alert("비밀번호 확인을 입력해주세요");
+		swal({
+			title: "비밀번호 재설정",
+			text: "비밀번호 확인을 입력해주세요", 
+			icon: "warning", //"info,success,warning,error" 중 택1
+			showConfirmButton: true
+			//icon: "warning" //"info,success,warning,error" 중 택1
+				})
 		$('#phone').focus();
 		return false;
        }
     else if( ($('#password').val())!==($('#passwordOk').val())){
-        alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요");
+        swal({
+			title: "비밀번호 재설정",
+			text: "비밀번호가 일치하지 않습니다. 다시 확인해주세요", 
+			icon: "warning", //"info,success,warning,error" 중 택1
+			showConfirmButton: true
+			//icon: "warning" //"info,success,warning,error" 중 택1
+				})
         return false;
         }
     else if( ($('#password').val())==($('#passwordOk').val())){
@@ -78,6 +104,12 @@ $(function(){
                 var pwChange = data;
                 console.log("변경비밀번호:"+pwChange);
                 alert("비밀번호가 변경되었습니다.");
+                swal({
+        			title: "비밀번호 재설정",
+        			text: "비밀번호가 변경되었습니다", 
+        			icon: "success", //"info,success,warning,error" 중 택1
+        			showConfirmButton: true
+        				})
                 document.location.href="login.do";
                 },
             error:function(request,status,error){

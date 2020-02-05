@@ -36,7 +36,8 @@
 <script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body {
     background: #23394A;
@@ -99,7 +100,13 @@ body {
           console.log($('#mail').val());
 
           if($.trim($('#mail').val())==''){
-        		alert("메일을 입력해주세요");
+        		swal({
+    				title: "비밀번호 재설정",
+    				text: "메일을 입력하세요", 
+    				icon: "warning", //"info,success,warning,error" 중 택1
+    				showConfirmButton: true
+    				//icon: "warning" //"info,success,warning,error" 중 택1
+    					})
         		$('#mail').focus();
         		return false;
                }
@@ -114,7 +121,13 @@ body {
      			console.log("find 메일찾기:"+data);
                   var mail = data;
                   if(mail ===""){
-                     alert("찾은 이메일 값이 없습니다.");
+                     swal({
+         				title: "비밀번호 재설정",
+         				text: "이메일이 없습니다", 
+         				icon: "warning", //"info,success,warning,error" 중 택1
+         				showConfirmButton: true
+         				//icon: "warning" //"info,success,warning,error" 중 택1
+         					})
                      return false;
                      }
                   else{
