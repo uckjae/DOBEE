@@ -274,12 +274,12 @@ var tempTeamCode = 0;
 									success : function(data) {
 										console.log("아작스 성공");
 										if (data > 0) {
-//											swal({
-//												   title:"삭제 성공",
-//												   text: "삭제되었습니다.",
-//												   icon: "success" //"info,success,warning,error" 중 택1
-//												}).then((YES) => {
-//											});
+											swal({
+												   title:"삭제 성공",
+												   text: "삭제되었습니다.",
+												   icon: "success" //"info,success,warning,error" 중 택1
+												}).then((YES) => {
+											});
 										} else {
 											swal({
 												   title:"삭제 실패",
