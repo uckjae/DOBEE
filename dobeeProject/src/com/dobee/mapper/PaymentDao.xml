@@ -6,7 +6,7 @@
 
 	<!-- 법인 카드 등록 -->
 	<insert id="addDebit" parameterType="com.dobee.vo.Debit">
-		INSERT INTO debit(cardNum, corp, name, nickName,  entry,  valDate) 
+		INSERT INTO DEBIT(CARDNUM, CORP, NAME, NICKNAME,  ENTRY,  VALDATE) 
 		VALUES(#{cardNum}, #{corp}, #{name}, #{nickName},  #{entry} , #{valDate})
 	</insert>
  
@@ -25,14 +25,14 @@
  	
  	<!-- 비용 신청 등록  -->
  	<insert id="addCostApply" parameterType="com.dobee.vo.CostList">
- 		insert into costlist (regitReceiptDate, useDate, useAt, cost, detail, costCode, cardNum, mail) 
- 		values(#{regitReceiptDate}, #{useDate},#{useAt}, #{cost}, #{detail}, #{costCode}, #{cardNum}, #{mail})
+ 		INSERT INTO COSTLIST (REGITRECEIPTDATE,  USEDATE, USEAT, COST, DETAIL, COSTCODE, CARDNUM, MAIL) 
+ 		VALUES(#{regitReceiptDate}, #{useDate},#{useAt}, #{cost}, #{detail}, #{costCode}, #{cardNum}, #{mail})
  	</insert>
  	
 
 	<!--  비용 신청 리스트 보여주기 (=영수증 등록 목록 보여주기)-->
 	<select id="listReceipt" resultType="com.dobee.vo.CostList">
-		select * from CostList
+		SELECT * FROM COSTLIST
 	</select>
 	
 	

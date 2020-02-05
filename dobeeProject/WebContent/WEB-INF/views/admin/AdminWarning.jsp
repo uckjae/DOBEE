@@ -2,49 +2,66 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-	<style >
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR:300&display=swap&subset=korean');
+    <title>admin login</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/cover/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="css/cover/cover.css" rel="stylesheet">
+    <script src="assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+  <body>
 
-body{
-   font-family: 'Noto Serif KR', serif;
-}
-	
-	</style>
+    <div class="site-wrapper">
 
+      <div class="site-wrapper-inner">
 
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<div class="limiter" >
-	  
-		
-			<div class ="container">	
-              <img src="img/workplace.PNG" alt="AVATAR" style="width:20%; height: 200px; display: block; margin: 0px auto; ">
-			</div>
-			<br>
-			<hr style=" width: 25%; display: block; margin: 0px auto;">
-			<div class="wrap-login100 p-t-85 p-b-20" style="align-content: center; display: block; margin: 0px auto;">
-				<form class="login100-form validate-form" style=" height: 50%; text-align: center; ">
-				<h2 style="color:red"> Warning </h2>
-					<h5><c:out value="${user.name}"></c:out>님  현재 관리자 아이디로 로그인하였습니다</h5>
-					<hr style=" width: 25%; display: block; margin: 0px auto;">
-					<h6>여기서 수정된 모든 내용은 실제로 반영되며</h6>
-					<h6>삭제된 내용은 복구할 수 없습니다.</h6>
-					<hr style=" width: 10%; display: block; margin: 0px auto;">
-					
-					<h6> LOGIN ID : <c:out value="${user.mail}"></c:out> </h6>
-					<div class="container-login100-form-btn" style="height: 20%">
-						<a class="button btn-prev" href="adminMain.do">
-							관리자 페이지로 이동하기
-						</a>
-					</div>
-				</form>
-			</div>
-		
-	</div>
-</body>
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Waning</h1>
+            
+            <br>
+            <hr>
+            <p class="lead">안녕하세요!<c:out value="${user.mail}"></c:out>님 </p>
+            <p class="lead">현재 관리자 아이디로 로그인하였습니다</p>
+            <p class="lead">이곳에서 수정된 모든 내용은 실제로 반영되며 삭제된 내용은 복구할 수 없습니다.</p>
+            <p class="lead">접근을 위해서는 아래 버튼을 누르세요</p>
+            <br>
+            <p class="lead">
+              <a href="adminMain.do" class="btn btn-lg btn-default">이동하기</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Waning System <a href="http://getbootstrap.com">Page</a>, by <a href="https://twitter.com/mdo">@DoBee</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
 </html>
