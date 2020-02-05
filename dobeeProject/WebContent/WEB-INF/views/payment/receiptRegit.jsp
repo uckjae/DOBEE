@@ -150,6 +150,10 @@ var costKey = 0;
                             $("#imgtag").attr("src", urlPath);
                             console.log("이거 요청 주소 : " + urlPath);
                             console.log("이게 이미지 경로 : " + allPath);
+
+							alert("이거 요청 주소:" + urlPath);
+							alert("이거 이미지 경로: " + allPath);
+                            
                         },
                         complete: function() {
                             console.log("구글 API 시작합니다");
@@ -164,7 +168,7 @@ var costKey = 0;
                                     success: function(data) {
                                         console.log(data);
                                         result = data;
-                                        
+                                        alert(data);
                                     	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
                                             if(fcost != null){
@@ -195,12 +199,14 @@ var costKey = 0;
                                          } // 포문 함수 종료
 
                                     },
-                                    error: function() {
+                                    error: function(request,status,error) {
                                         console.log("구글 아작스 요청시 에러");
+                                        
+                                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                         //구글 비전 요청시 에러 날 때 
                                       	swal({
                                    		   title: "GoogleVision : 입력 실패",
-                                   		   text: "다시 시도해 주세요.",
+                                   		   text: "구글 비전 실패.",
                                    		   icon: "error" //"info,success,warning,error" 중 택1
                                    			}).then((YES) => {
                                    		});
@@ -383,12 +389,14 @@ var costKey = 0;
                                     url: 'ajax/receipt/cardListtoReceipt.do',
                                     type: 'POST',
                                     success: function(result) {
+                                        console.log("법인카드 리스드" + result);
                                         for (let i = 0; i < result.length; i++) {
                                             $("#Select1").append("<option>" + result[i].cardNum + "</option>");
                                         }
                                     },
-                                    error: function() {
+                                    error: function(request,status,error) {
                                         console.log("법인카드 목록 불러오기 아작스 에러남");
+                                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                     },
                                     complete: function() {
                                         // 비용항목 불러오기 아작스 실행
@@ -401,8 +409,9 @@ var costKey = 0;
                                                     $("#Select2").append("<option value="+result[i].costCode+ ">" + result[i].entry + "</option>");
                                                 }
                                             },
-                                            error: function() {
+                                            error: function(request,status,error) {
                                                 console.log("비용항목 아작스에서 에러남")
+                                                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                             },
                                         })
                                     },
