@@ -4,6 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.ChatDao">
 
+	<!-- DM 채팅 대상 리스트 가져오기 -->
+	<select id="getDmUserList" parameterType="com.dobee.vo.member.User" resultType="com.dobee.vo.member.User">
+		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
+		FROM USER
+		WHERE AUTHCODE!=1 AND MAIL!=#{mail}
+		ORDER BY BINARY(NAME)
+	</select>
+
 	<!-- 그룹 채팅방 만들기 -->
 	<insert id="makeGroupChatRoom" parameterType="String">
 		INSERT INTO CHATROOM(CHATROOMNAME, CHATCODE) 
