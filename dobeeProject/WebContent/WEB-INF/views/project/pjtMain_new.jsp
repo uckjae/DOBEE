@@ -322,7 +322,7 @@
      	 		 						   text: "프로젝트가 수정되었습니다.",
      	 		 						   icon: "success" //"info,success,warning,error" 중 택1
      	 		 						}).then((YES) => {
-     	 		 							location.href="pjtMain.do";
+     	 		 							location.reload(true);
      	 		 						});
              	    	 			}
      	    	 				},

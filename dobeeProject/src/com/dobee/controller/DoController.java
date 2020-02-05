@@ -829,11 +829,10 @@ public class DoController {
     	int teamCode = user.getTeamCode();
         List<BreakManageList> results = applyService.breakListMgr(teamCode);
         model.addAttribute("brkListMgr", results);
-        
         return "attend/breakManagement_Mgr";
     }
 
-
+    /*
     // 매니저_부재관리 - isAuth update POST        0115 게다죽
     @RequestMapping(value="absManage.do", method=RequestMethod.POST)
     public String absReqHandle(Apply apply) {
@@ -842,6 +841,7 @@ public class DoController {
         
         return "redirect: absManage.do";
     }
+    */
     
 
     // 매니저_연장근무관리 리스트 - isAuth update GET           0204 updated 게다죽
