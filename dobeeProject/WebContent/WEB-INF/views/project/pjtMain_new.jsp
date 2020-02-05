@@ -188,7 +188,6 @@
 		 	 				console.log(responseData);
 		 	 				var id = new Array();
 		 	 				var name = new Array();
-		 	 				var object = new Object();
 		 	 				$.each(responseData, function(index, element){
 			 	 				id.push(element.mail);
 			 	 				name.push(element.name+"("+element.mail+")");
@@ -199,11 +198,13 @@
 			 	 			});
 
 							$("#userSelectEdit").select2();
-							
+
+							//이미 속해있는 회원은 추가할  수 없게 막기
 			 	 			$("#userSelectEdit > option").each(function(){
 			 	 				for (var i = 0; i < mails.length; i++){
 				 	 				if($(this).val() == mails[i]){
-						 				$(this).attr('selected','selected');
+				 	 					$(this).prop('disabled','true'); 
+						 				//$(this).css('display','none');
 									}
 					 	 		}
 					 		});
@@ -220,9 +221,6 @@
 							+ request.responseText + "\n" + "error : " + error);
 				}
 		 	});
-
-			  
-
 		});
 
 	
@@ -328,7 +326,6 @@
      	 		 							location.href="pjtMain.do";
      	 		 						});
              	    	 			}
-         	    	 				
      	    	 				},
      	    	 				error:function(request,status,error){
      	    						console.log("code : " + request.status +"\n" + "message : " 
@@ -620,7 +617,7 @@
 							</div>
 							<!-- 담당자 -->
 							<div class="form-group">
-								<label class="col-md-3 control-label">담당자</label>
+								<label class="col-md-3 control-label">담당자 추가</label>
 									<div class="col-md-7">
 										<select  id="userSelectEdit" name="mail" multiple="multiple" style="width:100%;">
 										</select>

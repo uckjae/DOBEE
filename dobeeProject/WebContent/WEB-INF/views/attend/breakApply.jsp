@@ -298,8 +298,87 @@
 	            sideBySide : true
 	        });
 
+		 	let dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+
 	        /*부재 일정 신청 비동기 처리 --01.26 알파카 */
 	        $("#breakApplyBtn").on('click', function() {
+
+	        	// 시작/종료 일정 미입력 확인
+				if($('#datetimepickerStart').val() == "" || $('#datetimepickerEnd').val() == "" ) {
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "시작 / 종료 시간을 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 시작 / 종료 일정 정규표현식 일치 여부 확인
+				} else if (dateTimeRegex.test($('#datetimepickerStart').val() || dateTimeRegex.test($('#datetimepickerEnd').val()) ) == "") {
+					
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "날짜 형식에 맞지 않습니다.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 부재 항목 선택 확인
+				} else if ($('#apycodelist option:selected').val() == "") {
+					
+					swal({
+						title : "부재 항목",
+						text : "부재 항목을 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#apycodelist').focus()
+					})
+
+					return;
+				// 부재 사유 입력 확인
+				} else if ($('#breakReason').val() == "") {
+					swal({
+						title : "부재 사유",
+						text : "부재 사유를 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#breakReason').focus()
+					})
+
+					return;
+				// 결재자 선택 확인
+				} else if ($('#approvalList option:selected').val() == "") {
+					swal({
+						title : "결재자",
+						text : "결재자를 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#approvalList').focus()
+					})
+
+					return;
+				// 시작 / 종료 일자 선택 오류 확인
+				} else if($('#datetimepickerStart').val() > $('#datetimepickerEnd').val()) {
+					swal({
+						title : "날짜 선택 오류",
+						text : "종료 시간을 다시 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerEnd').focus()
+					})
+
+					return;
+				}
+		        
 		        var formData = $("#breakApplyForm").serialize();
 		        console.log('폼??'+formData);
 	        	$.ajax({
