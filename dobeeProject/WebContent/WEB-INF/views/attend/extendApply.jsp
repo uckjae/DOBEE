@@ -154,21 +154,6 @@
 	<script>
 		window.onload = function(){
 			connect();//웹소켓 연결
-			$.ajax({
-				url : "getApprovalList.do",
-				dataType : "json",
-				success : function(data) {			
-					var dArray = [];
-					dArray = data.renewedList;
-					for (var i =0; i<dArray.length; i++) {
-						var option = document.createElement("option")
-						$('#approval').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
-					}
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
 		 	
 			$('#datetimepickerEnd').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' ,
@@ -185,7 +170,7 @@
 		 	
 			/*결재자 select2 적용*/
 			$.ajax({
-				url : "getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do",
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -280,7 +265,9 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
+						
 						send("extendApply");
+						
 						if(responseData == "success"){
 							swal({
 								title: "연장 근무 신청",
@@ -311,7 +298,7 @@
 	        var eventList = [];
 	       
 	    	$.ajax ({
-	    		url : "ExtAll.do",
+	    		url : "ajax/apply/ExtAll.do",
 				dataType : "json",
 				success : function(data) {
 					var events = [];

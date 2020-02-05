@@ -122,7 +122,6 @@
 					</section>
 					
 					
-					
 					<!-- Modal -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true"
@@ -292,6 +291,35 @@
 		function modalSubmit(data){
 			send("extendMGR");
 			$(data).closest('form').submit();
+		}
+
+		//모달 전송함수
+		function modalSubmit(data){
+			var formData = $(data).closest('form').serialize();
+			
+			$.ajax({
+				type : "post",
+ 	 			url : "ajax/apply/extManage.do",
+ 	 			dataType : "text",
+ 				data : formData,
+ 				success : function(responseData){
+ 					if(responseData == "success"){
+ 						swal({
+	 						   title: "처리 완료",
+	 						   text: "연장 근무 신청이 처리되었습니다.",
+	 						   icon: "success" //"info,success,warning,error" 중 택1
+	 						}).then((YES) => {
+	 							location.href="extManage.do";
+	 							send("extendMGR");
+	 					});
+ 					}
+ 				},
+ 				error : function(request,status,error){
+					console.log("code : " + request.status +"\n" + "message : " 
+							+ request.responseText + "\n" + "error : " + error);
+				}
+ 			});
+			
 		}
 		
 	</script>
