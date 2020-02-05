@@ -9,21 +9,7 @@ var cardReg = new RegExp("^[1-9]{1}[0-9]{3}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
 var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 //var date_pattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/; 
 
-// 빈칸 유효성 검사 함수 (카드사/명의자이름/카드별칭)
-function emptyCheck(inputData){
-	if( inputData.value == '' || inputData.value == null ){
-	    alert( '값을 입력해주세요' );
-	    return false;
-	}
 
-	var blank_pattern = /^\s+|\s+$/g;
-	if( inputData.value.replace(blank_pattern, '' ) == "" ){
-	    alert('공백만 입력되었습니다');
-	    return false;
-	}
-};
-
-//아작스 끝 
 
 (function( $ ) {
 
@@ -106,31 +92,37 @@ function emptyCheck(inputData){
 					var valDate = $(tr).parents('tr').children('td:eq(6)').find('input').val();
 					
 					// 빈칸 유효성 검사
-					let allemptyCheck = false;
-					let datas = [cardNum, corp, nickName, entry, valDate];
-					let checks = [];
-					for(let i = 0 ; datas.length ; i++){
-						checks.put(emptyCheck(datas[i])); // 여기에 true or false 값들이 담김
-					};
+					let allemptyCheck = true;
+					let datas = [cardNum, corp, name, nickName, entry, valDate];
+					let size = datas.length;
 					
-					// checks의 값들이 모두 true여야 유효성 합격 하나라도 false 인게 있다면 해당 인덱스를 알아내서 어떤게 빈칸인지 출력 
-					let size = checks.length;
-					for(let i = 0 ; i < size; i++){
-						if(!checks.splice(i)){  //유효성 불통시 
-							let emptyName = datas.splice(i);
-							if(emptyName == 'cardNum'){let showName = "카드번호"};
-							if(emptyName == 'corp'){let showName = "카드사"};
-							if(emptyName == 'nickName'){let showName = "별칭"};
-							if(emptyName == 'entry'){let showName = "카드구분"};
-							if(emptyName == 'valDate'){let showName = "유효기간"};
-							alert(showName+"을(를) 입력해주세요.");
-							break;
-						}else{
-							allemptyCheck = true;
-							console.log("모든 입력칸채워졌음.");
+					for(let i = 0; i < size ; i++){
+						let name = "";
+						if(datas[i] == ''){
+							if(i == 0){
+								name = "카드번호";
+							}
+							if(i == 1){
+								name = "카드사";
+							}
+							if(i == 2){
+								name = "명의자";
+							}
+							if(i == 3){
+								name = "별칭";
+							}
+							if(i == 4){
+								name = "카드구분";
+							}
+							if(i == 5){
+								name = "날짜";
+							}
+							allemptyCheck = false;
+							alert(name + "칸을 입력해주세요.");
 						}
 					};
 					
+					console.log(allemptyCheck);
 					if(!allemptyCheck){
 						return;  // 유효성 불통이면 도중에 함수 종료
 					}
@@ -179,7 +171,7 @@ function emptyCheck(inputData){
 						}
 						
 						//카드번호 틀리면 나오는 모달창
-						if(!cardNumCheck){
+						if(!cardNumCheck || !valDateCheck || !entryCheck){
 							console.log("카드번호 재입력해주세요.");
 							$.magnificPopup.open({
 								items: {
