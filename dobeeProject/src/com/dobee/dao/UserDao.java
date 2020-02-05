@@ -77,6 +77,11 @@ public interface UserDao {
     public List<Break> getVacationInBM(String mail);
     
     
+    // Ajax 개인_월 근무시간 불러오기
+    /* 02.05 게다죽 */
+    public List<Integer> getWorkHour(String mail, String ym);
+    
+    
     // 개인_부재일정신청
     /* 01.12 게다죽 */
     public int absApply(Apply apply);
