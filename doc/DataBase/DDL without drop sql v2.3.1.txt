@@ -189,7 +189,7 @@ ALTER TABLE `ATTENDCODE`
 -- 비용처리목록
 CREATE TABLE `COSTLIST` (
 	`COSTSEQ`         INT           NOT NULL COMMENT '비용처리번호', -- 비용처리번호
-	`REGITRECIPTDATE` DATE          NOT NULL COMMENT '작성일', -- 작성일
+	`REGITRECEIPTDATE`DATE          NOT NULL COMMENT '작성일', -- 작성일
 	`USEDATE`         DATETIME      NULL     COMMENT '사용일', -- 사용일
 	`USEAT`           VARCHAR(60)   NOT NULL COMMENT '사용처', -- 사용처
 	`COST`            INT           NOT NULL COMMENT '사용금액', -- 사용금액

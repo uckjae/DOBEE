@@ -99,7 +99,32 @@ $(document).ready(function(){
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="receiptList" varStatus="status">
-					
+							<c:set var="code" value="${receiptList.costCode}" />
+							<c:if test="${code eq '1'}">
+							   <c:set var="codeName" value="회식비" />
+							</c:if>
+							<c:if test="${code eq '2'}">
+							   <c:set var="codeName" value="식비" />
+							</c:if>
+							<c:if test="${code eq '3'}">
+							   <c:set var="codeName" value="소모품" />
+							</c:if>
+							<c:if test="${code eq '4'}">
+							   <c:set var="codeName" value="워크샵" />
+							</c:if>
+							<c:if test="${code eq '5'}">
+							   <c:set var="codeName" value="교통비" />
+							</c:if>
+							<c:if test="${code eq '6'}">
+							   <c:set var="codeName" value="접대비" />
+							</c:if>
+							<c:if test="${code eq '7'}">
+							   <c:set var="codeName" value="통신비" />
+							</c:if>
+							<c:if test="${code eq '8'}">
+							   <c:set var="codeName" value="기타" />
+							</c:if>
+
 						<tr>
 							<td>${status.index+1}</td>
 							<td><fmt:formatDate value="${receiptList.regitReceiptDate}" pattern="yyyy-MM-dd" /></td>
@@ -107,7 +132,7 @@ $(document).ready(function(){
 							<td>${receiptList.useAt}</td>
 							<td><fmt:formatNumber value="${receiptList.cost}" pattern="#,###" /></td>
 							<td>${receiptList.detail}</td>
-							<td>${receiptList.costCode}</td>
+							<td>${codeName}</td>
 							<td>${receiptList.cardNum}</td>
 							<td>${receiptList.mail}</td>
 						</tr>
