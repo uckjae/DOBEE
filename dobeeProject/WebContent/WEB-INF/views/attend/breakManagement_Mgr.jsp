@@ -35,7 +35,8 @@
 <!-- Modal -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Table Style -->
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
@@ -138,7 +139,7 @@
 								</div>
 								
 								<!--Body-->	
-								<form action="absManage.do" method="POST">
+								<form action="#" method="POST">
 									<div class="container-fluid">
 										<div class="modal-body mb-0" style="margin-top: 30px;">
 										<input type="hidden" id="modalAplSeq" name="aplSeq">
@@ -334,8 +335,35 @@
 			
 			//모달 전송함수
 			function modalSubmit(data){
-				send("breakMGR");
-				$(data).closest('form').submit();
+
+				//ajax로 바꾸고 sweet alert 적용
+				var formData = $(data).closest('form').serialize();
+				$.ajax({
+	 	 			url:"absManage.do",
+	 				data: formData,
+	 				dataType: "json",
+	 				type:"post",
+	 				success:function(responsedata){
+		 				console.log(responsedata);
+		 				//to게다죽 -> 콘솔 찍히는 거 보고 알아서 하삼~!~!
+	 					/* if(responseData == "success"){
+	 						swal({
+		 						   title: "부재 신청 수정 완료",
+		 						   text: "부재 신청이 수정되었습니다.",
+		 						   icon: "success" //"info,success,warning,error" 중 택1
+		 						}).then((YES) => {
+		 							location.href="pjtMain.do";
+		 							send("breakMGR");
+		 					});
+	 					} */
+	 					
+	 				},
+	 				error:function(request,status,error){
+						console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+					}
+	 			});
+				
 			}
 			
 		</script>
