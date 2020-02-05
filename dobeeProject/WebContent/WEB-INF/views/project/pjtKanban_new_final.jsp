@@ -180,7 +180,17 @@
 								$('#taskFormProgress').val($(element).text());
 							}
 						});
-							
+
+						//수정 가능 버튼 셋팅 -> pm 또는 담당자가 아니면 버튼 안보이게 처리
+						var loginUserMail = $("#loginUserMail").val();
+						var authCode = $("#authCode").val();
+						
+						console.log('지금 로그인 한 사람은?'+loginUserMail);
+						console.log('권한 코드는?'+authCode);
+						if(loginUserMail !== task.mail && authCode == 2 ) {
+							$("#taskEditBtnDiv").css('display', 'none');
+						}
+						
 					},
 					error:function(request,status,error){
 						console.log("code : " + request.status +"\n" + "message : " 
@@ -195,9 +205,6 @@
 			});
 
 
-			
-			/* /모달띄우는 함수 */
-
 
 			/* 01.28 pm 업무 추가 >> 추가시에 중요도를 별도로 셋팅해서 백단으로 보내야 함-- 알파카*/
 			$("#addPMTaskBtn").click(function(){
@@ -208,7 +215,7 @@
 				$("#addPMTaskForm").submit();
 			});
 
-
+			//업무 수정하기
 			$("#taskEditBtn").click(function(){
 				var important = $('#taskImportant').text();
 				$("#taskEditImportant").val(important); //db에 저장할 값 넣어주기
@@ -235,7 +242,6 @@
 					return;
 				}
 				$("#taskEditForm").submit();
-
 			});
 				
 
@@ -591,10 +597,7 @@
 
 			
 			/*프로젝트 현황 차트!!*/
-			
 			/*업무 담당 차트! */
-			
-			
 			var pjtMember = new Array();
 			var taskCount = new Array(); //담당자별 업무 할당량
 			var pjtMemberTask = new Array();
@@ -676,16 +679,16 @@
  								datasets: [{
  									data: [pjtTaskScheduled.length, pjtTaskInProgress.length, pjtTaskTest.length,  pjtTaskCompleted.length ],
  									backgroundColor: [
- 									  "#FF6384",
- 									  "#36A2EB",
- 									  "#FFCE56",
+ 									  "#3e95cd",
+ 									  "#8e5ea2", 
+ 									  "#3cba9f",
  									  "#c45850"
  									],
  									hoverBackgroundColor: [
- 									  "#FF6384",
- 									  "#36A2EB",
- 									  "#FFCE56",
- 									  "#c45850"
+ 	 									"#3e95cd",
+ 	 									"#8e5ea2",
+ 	 									"#3cba9f",
+ 	 									"#c45850"
  									]
  								}]
  							},
@@ -734,29 +737,24 @@
  					        datasets: [{
  					            label: 'Percentage',
  					            data: pjtMemberTask,
- 					            backgroundColor: [
- 					                'rgba(255, 99, 132, 0.2)',
- 					                'rgba(54, 162, 235, 0.2)',
- 					                'rgba(255, 206, 86, 0.2)',
- 					                'rgba(75, 192, 192, 0.2)',
- 					                'rgba(153, 102, 255, 0.2)',
- 					                'rgba(255, 159, 64, 0.2)'
+ 					            backgroundColor: [ //["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
+ 					                'rgba(62, 149, 205, 0.6)',
+ 					                'rgba(142, 94, 162, 0.6)',
+ 					                'rgba(60, 186, 159, 0.6)',
+ 					                'rgba(232, 195, 185, 0.6)',
+ 					                'rgba(196, 88, 80, 0.6)',
+ 					                'rgba(255, 206, 86, 0.6)'
  					            ]
  					        }]
  					},
  					    options: {
  					    	responsive: false,
  					        scales: {
- 					            
  					            yAxes: [{
  					            ticks: {
  					                   min: 0,
  					                   max: 100,
  					                   callback: function(value){return value+ "%"}
- 					                },  
- 									   scaleLabel: {
- 					                   display: true,
- 					                   labelString: "Percentage"
  					                }
  					            }]
  					        }
@@ -774,8 +772,6 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
-
- 	 				console.log('데이터는?'+responseData);
  					for(key in responseData){
  						pjtMember.push(key);
  						taskCount.push(responseData[key]);
@@ -794,7 +790,7 @@
  					      datasets: [
  					        {
  					          label: "업무 할당 현황",
- 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
  					          data: taskCount
  					        }
  					      ]
@@ -817,7 +813,7 @@
 			var important4 = new Array();
 			var important5 = new Array();
 			var importance = new Array();
-			
+			var taskLength = 0;
 			
 			$.ajax({
  	 			url:"ajax/project/getMemberTaskChart.do",
@@ -826,9 +822,9 @@
  				contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
  				type:"post",
  				success:function(responseData){
+ 					taskLength = responseData.length;
+ 					console.log('길이는?'+taskLength);
  	 				$.each(responseData, function(index, element){
-
- 	 	 				
  	 					if(element.important == 1){
  	 	 					important1.push(element);
  	 	 	 			} else if(element.important == 2){
@@ -840,12 +836,9 @@
  	 	 	 	 		} else {
  	 	 	 	 			important5.push(element);
  	 	 	 	 	 	}
-
- 	 	 	 	 	 	
  	 	 			});
 
  	 				importance = [important5.length, important4.length, important3.length, important2.length, important1.length];
- 	 				console.log('중요도 array'+importance);
  				},
  				error:function(){
  					console.log("code : " + request.status +"\n" + "message : " 
@@ -869,7 +862,16 @@
  					      title: {
  					        display: true,
  					        text: '중요도별 나의 업무 비중'
- 					      }
+ 					      },
+ 					      scales: {
+					            xAxes: [{
+					            ticks: {
+					                   min: 0,
+					                   max: taskLength,
+					                   callback: function(value){return value+ "개"}
+					                }
+					            }]
+					        }
  					    }
  					});
  					 	 				
@@ -970,16 +972,16 @@
  								datasets: [{
  									data: [taskScheduled.length, taskInProgress.length,taskTest.length,  taskCompleted.length ],
  									backgroundColor: [
- 									  "#FF6384",
- 									  "#36A2EB",
- 									  "#FFCE56",
- 									  "#c45850"
- 									],
+ 	 									"#3e95cd",
+ 	 									"#8e5ea2", 
+ 	 									"#3cba9f",
+ 	 									"#c45850"
+ 	 								],
  									hoverBackgroundColor: [
- 									  "#FF6384",
- 									  "#36A2EB",
- 									  "#FFCE56",
- 									  "#c45850"
+ 										"#3e95cd",
+	 									"#8e5ea2", 
+	 									"#3cba9f",
+	 									"#c45850"
  									]
  								}]
  							},
@@ -1263,7 +1265,7 @@
 		}
 
 
-		/* 업무상세 비동기로 수정! 요기요 --01.29 알파카 */
+		/* 업무상세 비동기로 수정! --01.29 알파카 */
 		function taskDetailEditSubmit(data){
 			
 			var parents = $(data).parents('div.taskDetail-Edit');
@@ -1291,14 +1293,6 @@
 			});
 		}
 
-
-		/* 업무수정하는 함수 PM */
-		function taskEditSubmit(data){
-			console.log("taskEditSubmit() in!!");
-			console.log($(data).parent().parent());
-		}
-
-		
 		/* 체크리스트 추가하는 창 띄우고 내리는 함수 */
 		function makeCheckList(data){
 			console.log("makeCheckList() in!!");
@@ -1604,7 +1598,6 @@
 		color: white;
 	}
 	
-	
 	</style>
 	
 </head>
@@ -1679,6 +1672,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
+                                            <input type="hidden" id="loginUserMail" value="${user.mail}">
                                         </div>
                                     </header>
                                     <div id="accordion">
@@ -2060,7 +2054,6 @@
 							function createTimeList(arrayData){
 									 for(let i = 0 ; i < arrayData.length; i++){
 											let gdSeq = arrayData[i].gdSeq;
-											//let gdContent = arrayData[i].gdContent;
 											let gdUrl = arrayData[i].gdUrl;
 											let mail = arrayData[i].mail;
 											let pjtSeq = arrayData[i].pjtSeq;
@@ -2098,12 +2091,25 @@
 												console.log("아작스 검색  성공");
 												console.log(data);
 												timeList = data;
+												//검색 결과에 데이타가 없으면 보여주는 알림창
+												if(data.length == 0){
+														swal({
+															   title: "검색 결과 없음",
+															   text: "검색조건을 확인해보세요.",
+															   icon: "info" //"info,success,warning,error" 중 택1
+															}).then((YES) => {
+																$('#searchInput').focus();
+														});
+													}
+												
+											
 											},
 										complete:function(){
 												// 먼저 기존 뷰단 지우고
 												$('.tm-items').empty();
 												// 여기서 다시 뿌려준다  
 												createTimeList(timeList);
+											
 											},
 
 										error:function(){
@@ -2367,9 +2373,14 @@
 											</div>
 										</div>
 										<br>
-										<div class="form-group" style="text-align: center;">
+										
+										<!-- pm & 업무 담당자만 버튼 보이게 해야 됨 -->
+										<div class="form-group" style="text-align: center;" id="taskEditBtnDiv">
 											<button type="button" id="taskEditBtn" class="btn btn-default" style="background-color: #34495e; color:white;" form="taskEditForm">수정</button>
-										</div>	
+										</div>
+										
+										
+											
 									</form>
 									</div>
 								</div>

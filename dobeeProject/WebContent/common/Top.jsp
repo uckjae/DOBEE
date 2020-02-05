@@ -19,7 +19,7 @@
 				<a href="#" data-toggle="dropdown">
 					<figure class="profile-picture">
 					<!-- 등록된 사원 사진 뿌려주기!!! -->
-						<img src="upload/${user.myPic}" alt="사원" class="img-circle" />
+						<img src="upload/${user.myPic}" onError="this.src='img/avatar.jpg'" alt="사원" class="img-circle" />
 					</figure>
 					<div class="profile-info">
 						<span class="name" id="name">${user.name}</span>
@@ -131,7 +131,8 @@
 				if (result) {
 					var mail = $("#mail").text();
 					$.ajax({
-			 			url:"attend.do?mail="+mail,
+			 			url:"ajax/attend/attend.do",
+			 			data : {'mail' : mail},
 						dataType: "text",
 						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",
@@ -168,7 +169,8 @@
 					var attSeq = ${user.isWork}
 					console.log('seq??'+attSeq);
 					$.ajax({
-			 			url:"leave.do?attSeq="+attSeq,
+			 			url:"ajax/attend/leave.do",
+			 			data : {'attSeq' : attSeq},
 						dataType: "text",
 						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",

@@ -15,6 +15,8 @@
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables.min.css"/>
 	<link href="assets/vendor/jquery-datatables/media/css/jquery.dataTables_themeroller.css"/> -->
 	
+	<!-- Sweet Alert -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
 
 </head>
@@ -116,7 +118,7 @@
 				<div class="panel-body">
 					<div class="modal-wrapper">
 						<div class="modal-text">
-							<p>정말로 데이타를 지우시겠습니까? 다시 복원 될 수 없습니다!!</p>
+							<p style="color:red">정말로 데이타를 지우시겠습니까? 해당 카드의 비용데이터가 모두 삭제됩니다!</p>
 						</div>
 					</div>
 				</div>
@@ -168,7 +170,7 @@
 							<p>카드번호/카드구분/유효기간을 양식에 맞게 입력해주세요.</p>
 							<p>카드번호: 실제 카드번호만 입력가능합니다.</p>
 							<p>카드구분: 법인(공용)/법인(개인)/법인(체크) 중 하나만 입력가능합니다.</p>
-							<p>유효기간: "2020-02-02" 같은 형식으로 입력해주세요.</p>
+							<p>유효기간: "MM/YY" 같은 형식으로 입력해주세요.</p>
 						</div>
 					</div>
 				</div>

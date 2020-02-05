@@ -118,7 +118,12 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 								name = "날짜";
 							}
 							allemptyCheck = false;
-							alert(name + "칸을 입력해주세요.");
+							swal({
+								   title: "오류",
+								   text: name + "칸을 입력해주세요.",
+								   icon: "warning" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+							});
 						}
 					};
 					
@@ -234,13 +239,53 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 							"valDate" : valDate
 					};
 					
-					console.log(sendData);
 					
+					//카드 수정 전, 카드번호 중복된건지 확인
+					function cardDupleCheck(cardNum){
+						let checkCardNumber = {"cardNum": cardNum};
+						let result = true;
+						$.ajax({
+							url:'ajax/adminDebit/checkEditDupleCardNum.do',
+							data:checkCardNumber,
+							type:"POST",
+							success:function(data){
+								//data가 0 이상이면 값이 존재함
+								console.log("법인카드 수정 중");
+								console.log(data);
+								if(data > 0 ){
+									result = false;
+								}
+								return result;
+							},
+							error:function(){
+								console.log("아작스 에러");
+								
+							}
+						});
+					};
+					
+					//유효성 검사 totalCheck가 참이면 그때 수정 아작스 실행
 					if(totalCheck){
 						$.ajax({
-				            url:'editAdminDebitList.do',
+				            url:'ajax/adminDebit/editAdminDebitList.do',
 				            data:sendData,
 				            type:'POST',
+				            beforeSend : function(xhr, opts) {
+				            	// 아작스 실행 전 카드중복 검사
+				            	let result = cardDupleCheck(cardNum);
+				            	// result 가 참이면 if문 실행
+				                if (!result) {
+				                	//종복 카드번호는 안된다는 알림창
+				                	swal({
+				                		   title: "수정 실패",
+				                		   text: "중복된 카드 번호로 수정할 수 없습니다.",
+				                		   icon: "error" //"info,success,warning,error" 중 택1
+				                		}).then((YES) => {
+				                	});
+				                	//아작스 중지
+				                    xhr.abort();
+				                }
+				            },
 				            success:function(data){
 				            	console.log(data);
 				            },
@@ -306,7 +351,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 									
 								//삭제 아작스 시작
 									$.ajax({ 
-										url : 'adminDelDebit.do', 
+										url : 'ajax/adminDebit/adminDelDebit.do', 
 										type : 'POST', 
 										data : tempCardNum,
 										success : function (data) {
@@ -319,6 +364,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 											}, 
 										error : function () {
 												console.log('삭제 아작스 실패!!!'); 
+												alret("해당 카드는 삭제 할 수 없습니다.");
 											} 
 										});
 								// 아작스 끝

@@ -50,7 +50,6 @@ public class DebitController {
     	costList.setRegitReceiptDate(regitReceiptDate);
     	costList.setUseAt(useAt);
     	costList.setUseDate(useDate);
-    	System.out.println("이거 보이냐 " + costList.toString());
     	int result = debitService.applyDebit(costList);
     	
     	if(result != -1) {
@@ -66,19 +65,11 @@ public class DebitController {
     //비용신청 목록(= 영수증 등록 목록 보기) 가기
     @RequestMapping("receiptList.do")
     public String viewDebit(Model model) {
-    	System.out.println("영수증 목록보기 컨트롤단 시작");
     	ArrayList<CostList> list = new ArrayList<>();
     	list = debitService.listReceipt();
-    	System.out.println("영수증 목록보기 컨트롤단 서비스단 통과 후");
     	model.addAttribute("list", list);
-    	
     	
     	return "payment/receiptList";
     }
-	
-    
-    
-	
-	
 	
 }

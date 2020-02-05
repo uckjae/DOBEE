@@ -25,6 +25,10 @@
 <script src='assets/vendor/fullcalendar-ori/packages/timegrid/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/list/main.js'></script>
 
+<!-- select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
 
 </head>
 	<body>
@@ -92,9 +96,6 @@
 										<div class="form-group">
 											<label class="control-label" for="textareaDefault">사유</label>
 											<textarea name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="사유를 입력해주세요.">${ELforEdit.reason}</textarea>
-											<p>
-												<code>max-length</code> set to 3000 byte.
-											</p>
 										</div>
 										<br>
 										<label class="control-label" for="textareaDefault">결재자</label>
@@ -108,7 +109,7 @@
 										<br>
 										<input id="extEditApplyBtn" type="button" value="수정" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
 										<!-- <input type="submit" value="수정" class="btn btn-primary" > &nbsp;&nbsp; -->
-										<input type="reset" value="Reset" class="btn btn-default" > &nbsp;&nbsp;
+										<input type="reset" value="초기화" class="btn btn-default" > &nbsp;&nbsp;
 										<input type="button" value="삭제" class="btn btn-default" onclick="location.href='deleteExtApply.do?aplSeq=${ELforEdit.aplSeq}'">
 									</form>
 										
@@ -144,9 +145,7 @@
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
 	<!-- specific vendor page -->
-	<script src="assets/vendor/select2/select2.js"></script>
 	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-	<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
 	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
 	
@@ -154,21 +153,26 @@
 	<script>
 		window.onload = function(){
 
+			/*결재자 select2 적용*/
 			$.ajax({
 				url : "getApprovalList.do",
 				dataType : "json",
-				success : function(data) {			
+				success : function(data) {
 					var dArray = [];
 					dArray = data.renewedList;
 					for (var i =0; i<dArray.length; i++) {
-						var option = document.createElement("option")
-						$('#approvalList').append("<option value="+ dArray[i].mail +">"+ dArray[i].name + ' ('+dArray[i].mail+')' + "</option>")
+						var option = $('<option>');
+ 	 					$(option).val(dArray[i].mail);
+ 	 					$(option).text(dArray[i].name+"("+dArray[i].mail+")");
+	 	 				$('#approvalList').append(option);
 					}
+					$("#approvalList").select2();
 				},
 				error : function(error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+			
 			
 		 	$('#datetimepickerStart').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' 
@@ -257,7 +261,7 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						// send("extEditApply");
+						send("extEditApply");
 						if(responseData == "success"){
 							swal({
 								title: "연장 근무 신청 수정",
@@ -343,6 +347,21 @@
 	    		}
 	    	});
 		}
+
+/* 알람 */
+		
+		function send(data) {
+			let mail = $('#approvalList').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+			jsonData.applier = '${sessionScope.user.name}';
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
 
 	</script>
 		

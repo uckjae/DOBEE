@@ -1,8 +1,5 @@
 package com.dobee.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +12,11 @@ import com.dobee.services.AdminDebitService;
 import com.dobee.vo.Debit;
 
 @Controller
+@RequestMapping("ajax/adminDebit/**")
 public class AjaxController_AdminDebit {
 
 	@Autowired
 	AdminDebitService adminDebitService;
-	
 	
 	//관리자 법인카드 수정
 	@RequestMapping("editAdminDebitList.do")
@@ -34,16 +31,7 @@ public class AjaxController_AdminDebit {
 		String entry = (String)paramMap.get("entry");
 		String valDate = (String)paramMap.get("valDate");
 		
-		//SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		Date valDate = null;
-//		try {
-//			valDate = transFormat.parse(tempDate);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//			System.out.println("String to Date Error");
-//		}
-		
-		//System.out.println("잘 바뀌었는지? " + valDate);
+
 		Debit debit = new Debit();
 		debit.setCardNum(cardNum);
 		debit.setCorp(corp);
@@ -73,6 +61,22 @@ public class AjaxController_AdminDebit {
 		}else {
 			System.out.println("법인카드 삭제 실패");
 		}
+		return result;
+	}
+	
+	
+	//법인 카드 수정시, 카드 넘버 중복검사
+	@RequestMapping("checkEditDupleCardNum.do")
+	@ResponseBody
+	public int checkEditDupleCardNum(@RequestParam(value="cardNum") String cardNum) {
+		int result = 0;
+		result = adminDebitService.checkEditDupleCardNum(cardNum);
+		if(result > 0) {
+			System.out.println("법인카드 수정 : 중복된 카드번호 발견");
+		}else {
+			System.out.println("법인카드 수정 : 중복된 카드 없음");
+		}
+		
 		return result;
 	}
 	

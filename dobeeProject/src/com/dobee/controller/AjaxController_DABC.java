@@ -59,7 +59,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기		0118	COMPLETE
 	@RequestMapping("AbsAll.do")
 	public View AbsAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -71,7 +71,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기		0118	COMPLETE
 	@RequestMapping("Calender.do")
 	public View CalenderEvent (Model map) {
 		// System.out.println("이거 돌긴 도니? ");
@@ -84,7 +84,7 @@ public class AjaxController_DABC {
 	}
 	
 	
-	// Ajax 개인_연장근무 신청 - 캘린더 Event 불러오기	(싸그리)		0118	COMPLETE
+	// Ajax 개인_연장근무 신청 - 캘린더 Event 불러오기		0118	COMPLETE
 	@RequestMapping("ExtAll.do")
 	public View ExtAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -105,6 +105,7 @@ public class AjaxController_DABC {
 		
 		return jsonview;
 	}
+	
 	
 	// Ajax 개인_부재일정확인 - 년도별 List 출력		0113		~ing
 	@RequestMapping("getBreakListByYear.do")
@@ -216,6 +217,17 @@ public class AjaxController_DABC {
 		return jsonview;
 	}
 	
+	
+	// 개인_월 근무 시간 가져오기			COMPLETE
+	@RequestMapping("getWorkHour.do")
+	public View getWorkHour (Model map, Authentication auth, String ym) {	
+		UserDao userDao = sqlsession.getMapper(UserDao.class);
+		List<Integer> results = userDao.getWorkHour(auth.getName(), ym);
+		map.addAttribute("workHour", results);
+		
+		return jsonview;
+	}
+
 	
 	////////// 매니저 ///////////////////////////
     

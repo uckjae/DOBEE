@@ -181,11 +181,15 @@ var tempTeamCode = 0;
 						data : teamData,
 						type : 'POST',
 						success : function(data) {
-							console.log(" 팀 코드 아작스 성공");
 							console.log(data);
 						},
 						error : function() {
-							console.log("아작스 에러!");
+							swal({
+								   title:"삭제 실패",
+								   text: "중복된 팀코드를 입력 할 수 없습니다.",
+								   icon: "error" //"info,success,warning,error" 중 택1
+								}).then((YES) => {
+							});
 						},
 						complete : function() {
 							_self.rowSave($(ori).closest('tr'));
@@ -270,13 +274,23 @@ var tempTeamCode = 0;
 									success : function(data) {
 										console.log("아작스 성공");
 										if (data > 0) {
-											console.log("삭제 성공!");
+											swal({
+												   title:"삭제 성공",
+												   text: "삭제되었습니다.",
+												   icon: "success" //"info,success,warning,error" 중 택1
+												}).then((YES) => {
+											});
 										} else {
-											console.log("삭제 실패!");
+											swal({
+												   title:"삭제 실패",
+												   text: "해당 팀에 등록된 사원이 있으므로 삭제 할 수 없습니다.",
+												   icon: "error" //"info,success,warning,error" 중 택1
+												}).then((YES) => {
+											});
 										}
 									},
 									error : function() {
-										console.log('삭제 아작스 실패!!!');
+									
 									}
 								});
 								// 아작스 끝

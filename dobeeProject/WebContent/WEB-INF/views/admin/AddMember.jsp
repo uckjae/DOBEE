@@ -11,7 +11,7 @@
 <script type="text/javascript">
 		// email 유효성 검사 함수
 		// 이메일 최종 유효성 결과값 전역 변수
-		var finalCheckEmail = false;
+		var finalCheckEmail = true;
 		function vailEmail(sendData){
 			console.log("욱재야 이거 보이냐 11111 ");
 			jsonData = {

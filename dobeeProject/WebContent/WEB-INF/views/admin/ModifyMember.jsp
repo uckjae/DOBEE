@@ -187,7 +187,7 @@
 									<div class="panel-body">
 										<form class="form-horizontal form-bordered" id="modifyUserForm" name="modifyUserForm" enctype="multipart/form-data">
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
+												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="upload/${userDetail.myPic}" onError="this.src='img/avatar.jpg'" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
 													<input type="file" id="file" name="file" class="form-control" accept="image/*" form="modifyUserForm">
 												</div>
@@ -195,13 +195,13 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="name">사원이름</label>
 												<div class="col-md-6">
-													<input class="form-control" id="formName" name="name" form="modifyUserForm" type="text" value="${user.name}">
+													<input class="form-control" id="formName" name="name" form="modifyUserForm" type="text" value="${userDetail.name}">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="mail">사원&nbsp;E-mail</label>
 												<div class="col-md-6">
-													<input class="form-control" id="formMail" name="mail" type="email" form="modifyUserForm" value="${user.mail}">
+													<input class="form-control" id="formMail" name="mail" type="email" form="modifyUserForm" value="${userDetail.mail}">
 												</div>
 											</div>
 											<div class="form-group">
@@ -209,15 +209,15 @@
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus" form="modifyUserForm">
 														<option hidden>선택하세요</option>
-														<option value="재직" <c:if test="${user.emp == '재직'}">selected</c:if> >재직</option>
-														<option value="고용예정" <c:if test="${user.emp == '고용예정'}">selected</c:if> >고용예정</option>
+														<option value="재직" <c:if test="${userDetail.emp == '재직'}">selected</c:if> >재직</option>
+														<option value="고용예정" <c:if test="${userDetail.emp == '고용예정'}">selected</c:if> >고용예정</option>
 													</select>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="regitDate">고용일</label>
 												<div class="col-md-6">
-													<input class="form-control" id="regitDate" name="regitDate" type="date" form="modifyUserForm" value="<fmt:formatDate value='${user.regitDate}' pattern='yyyy-MM-dd'/>">
+													<input class="form-control" id="regitDate" name="regitDate" type="date" form="modifyUserForm" value="<fmt:formatDate value='${userDetail.regitDate}' pattern='yyyy-MM-dd'/>">
 												</div>
 											</div>
 											<div class="form-group">
@@ -225,15 +225,15 @@
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="serve" name="serve" required="required" autofocus="autofocus" form="modifyUserForm">
 														<option hidden>선택하세요</option>
-														<option value="정규직" <c:if test="${user.serve == '정규직'}">selected</c:if> >정규직</option>
-                                                        <option value="인턴" <c:if test="${user.serve == '인턴'}">selected</c:if> >인턴</option>
+														<option value="정규직" <c:if test="${userDetail.serve == '정규직'}">selected</c:if> >정규직</option>
+                                                        <option value="인턴" <c:if test="${userDetail.serve == '인턴'}">selected</c:if> >인턴</option>
 													</select>
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="position">직책</label>
 												<div class="col-md-6">
-													<input class="form-control" id="position" name="position" type="text" form="modifyUserForm" value="${user.position}">
+													<input class="form-control" id="position" name="position" type="text" form="modifyUserForm" value="${userDetail.position}">
 												</div>
 											</div>
 											<div class="form-group">
@@ -243,10 +243,10 @@
 														<option hidden>선택하세요</option>
 														<c:choose>
 															<c:when test="${not empty user.authCode && user.authCode == '2' }">
-																<option value="${user.authCode}" selected >사원</option>
+																<option value="${userDetail.authCode}" selected >사원</option>
 															</c:when>
 														<c:otherwise>
-																<option value="${user.authCode}" selected >팀장</option>
+																<option value="${userDetail.authCode}" selected >팀장</option>
 														</c:otherwise>
 														</c:choose>
 													</select>
@@ -257,8 +257,8 @@
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="teamCode" name="teamCode" required="required" autofocus="autofocus" form="modifyUserForm">
 														<option hidden>선택하세요</option>
-														<c:if test="${not empty user.teamCode}">
-															<option value="${user.teamCode}" selected >${user.teamName}</option>
+														<c:if test="${not empty userDetail.teamCode}">
+															<option value="${userDetail.teamCode}" selected >${userDetail.teamName}</option>
 														</c:if>
 													</select>
 												</div>
@@ -266,7 +266,7 @@
 											<div class="form-group">
                                                 <label class="col-md-3 control-label" for="phone">전화번호</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" id="phone" name="phone" class="form-control" form="modifyUserForm" value="${user.phone}">
+                                                    <input type="text" id="phone" name="phone" class="form-control" form="modifyUserForm" value="${userDetail.phone}">
                                                 </div>
                                             </div>
 											<div class="col-md-6 control-label">

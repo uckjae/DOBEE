@@ -116,7 +116,6 @@
             	    	 								location.reload(true); 
             	    	 							     }
             	    	 							});
-
                 	    	 				}
         	    	 				},
         	    	 				error:function(request,status,error){
