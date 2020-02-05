@@ -5,8 +5,9 @@
 <html class="fixed search-results">
 <head>
 	<c:import url="/common/HeadTag.jsp"/>	
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 	<!-- Sweet Alert -->
    	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -134,8 +135,6 @@
     			});
 		$('#newPjt').click('show.bs.modal',function(e){
 			$('#newPjtForm').trigger('reset');
-
-			
 		});
 
     		
