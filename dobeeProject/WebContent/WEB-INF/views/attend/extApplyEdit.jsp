@@ -260,7 +260,7 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						// send("extEditApply");
+						send("extEditApply");
 						if(responseData == "success"){
 							swal({
 								title: "연장 근무 신청 수정",
