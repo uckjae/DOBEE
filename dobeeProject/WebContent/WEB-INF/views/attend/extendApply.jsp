@@ -358,7 +358,7 @@
 		/* 알람 */
 		
 		function send(data) {
-			let mail = $('#approval').val();
+			let mail = $('#approvalList').val();
 			var jsonData = new Object();
 			jsonData.cmd = data;
 			jsonData.mail = mail;
