@@ -55,21 +55,6 @@
 				}	
 			});
 
-			/* 이미지 blob 가져오기 */
-			/* $.ajax({
-				url:"ajax/admin/getMyPic.do",
-				dataType:"json",
-				success: function(data){
-					console.log('ajax 타니?');
-					console.log('이미지?'+data);
-					
-				},
-				error:function(request,status,error){
-					console.log("code : " + request.status +"\n" + "message : " 
-							+ request.responseText + "\n" + "error : " + error);
-				}
-			}); */
-
 			/*사원 정보 수정*/
 			$("#modifyBtn").click(function(){
 				

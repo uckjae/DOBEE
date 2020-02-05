@@ -43,11 +43,11 @@
 					</div>
 					<div class="widget-content">
 						<ul class="list-unstyled mailbox-bullets">
-							<c:forEach var="userList" items="${requestScope.userList}">
+							<c:forEach var="dmUserList" items="${requestScope.dmUserList}">
 								<li><a
-									href='chatDm.do?dmName=${userList.name}&dmMail=${userList.mail}'
-									class="menu-item" value=${userList.mail }><span><i
-											class='fa fa-user'></i></span>${userList.name } (${userList.mail })</a></li>
+									href='chatDm.do?dmName=${dmUserList.name}&dmMail=${dmUserList.mail}'
+									class="menu-item" value=${dmUserList.mail }><span><i
+											class='fa fa-user'></i></span>${dmUserList.name } (${dmUserList.mail })</a></li>
 							</c:forEach>
 						</ul>
 					</div>

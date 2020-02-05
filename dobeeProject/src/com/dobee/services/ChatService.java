@@ -12,6 +12,7 @@ import com.dobee.dao.ChatDao;
 import com.dobee.dao.UserDao;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.chat.ChatUsers;
+import com.dobee.vo.member.User;
 
 @Service
 public class ChatService {
@@ -22,7 +23,14 @@ public class ChatService {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-
+	
+	//DM 채팅 목록 가져오기
+	public List<User> getDmUserList(String mail) {
+		List<User> dmUserList = null;
+		ChatDao chatdao = sqlSession.getMapper(ChatDao.class);
+		dmUserList = chatdao.getDmUserList(mail);
+		return dmUserList;
+	}
 
 	//그룹 채팅방 만들기
 	public int makeGroupChatRoom(String newChatRoomName){
