@@ -49,8 +49,7 @@ console.log("MAIN!!");
 							</a></li>
 						</ol>
 
-						<a class="sidebar-right-toggle" data-open="sidebar-right"><i
-							class="fa fa-chevron-left"></i></a>
+						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

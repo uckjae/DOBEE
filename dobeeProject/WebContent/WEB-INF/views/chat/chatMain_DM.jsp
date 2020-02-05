@@ -320,7 +320,7 @@
 								<li><span>채팅</span></li>
 								<li><span>1:1채팅</span></li>
 							</ol>
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 

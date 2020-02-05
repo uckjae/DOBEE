@@ -5,10 +5,9 @@
 	<div class="nano">
 		<div class="nano-content">
 			<div class="inner-menu-toggle-inside">
-				<a href="#" class="inner-menu-collapse"> <i
-					class="fa fa-chevron-up visible-xs-inline"></i><i
+				<i	class="fa fa-chevron-up visible-xs-inline"></i><i
 					class="fa fa-chevron-left hidden-xs-inline"></i> Hide Menu
-				</a>
+				
 			</div>
 			<div class="inner-menu-content">
 				<button type="button" id="channelModal" data-toggle="modal"
