@@ -306,7 +306,6 @@ public class DoController {
         return "notice/noticeList";
     }
 
-
     //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
     @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
     public String noticeDetail(@RequestParam(value="notSeq") int notSeq, HttpServletRequest request, Model model){

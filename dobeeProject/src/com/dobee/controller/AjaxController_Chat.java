@@ -21,6 +21,7 @@ import com.dobee.vo.member.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @RestController
+@RequestMapping("ajax/chat/**")
 public class AjaxController_Chat {
 	
 	@Autowired
@@ -35,7 +36,6 @@ public class AjaxController_Chat {
     	userList = memberService.getUserList();
     	return userList;
     }
-    
     
     //채팅방 만들기
     @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
@@ -67,33 +67,4 @@ public class AjaxController_Chat {
     	
     	return socketUrl;
     }
-    
-    //그룹 채팅방 접속
-//    @RequestMapping(value = "chatGroup.do", method = RequestMethod.POST)
-//    public String chatGroup(@RequestParam(value="chatRoomName") String chatRoomName) {
-//    	System.out.println("그룹 채팅방 타??");
-//    	System.out.println("이름 가져와??"+chatRoomName);
-//
-//    	//String socketUrl = "{chatType : 'DM', mail : mail, }";
-//    	String socketUrl = "group";
-//    	
-//    	return socketUrl;
-//    }
-    
-    //그룹 채팅방 만들기
-    /*
- 
-    
-    @RequestMapping(value="makeChatRoom.do", method=RequestMethod.POST)
-    public String makeChatRoom(ChatRoom chatroom) {
-    	System.out.println("이거 타니???");
-    	System.out.println("채팅방"+chatroom.toString());
-    	System.out.println("유저리스트"+chatusers.toString());
-    	Map<String, List<ChatUsers>> groupChatRoom = new HashMap<String, List<ChatUsers>>();
-    	groupChatRoom.put(chatroom.getChatRoomName(), chatusers);
-    	
-    	return null;
-    }
-    
-    */
 }

@@ -131,7 +131,8 @@
 				if (result) {
 					var mail = $("#mail").text();
 					$.ajax({
-			 			url:"attend.do?mail="+mail,
+			 			url:"ajax/attend/attend.do",
+			 			data : {'mail' : mail},
 						dataType: "text",
 						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",
@@ -168,7 +169,8 @@
 					var attSeq = ${user.isWork}
 					console.log('seq??'+attSeq);
 					$.ajax({
-			 			url:"leave.do?attSeq="+attSeq,
+			 			url:"ajax/attend/leave.do",
+			 			data : {'attSeq' : attSeq},
 						dataType: "text",
 						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",

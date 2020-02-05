@@ -260,7 +260,7 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						// send("extEditApply");
+						send("extEditApply");
 						if(responseData == "success"){
 							swal({
 								title: "연장 근무 신청 수정",
@@ -346,6 +346,21 @@
 	    		}
 	    	});
 		}
+
+/* 알람 */
+		
+		function send(data) {
+			let mail = $('#approvalList').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+			jsonData.applier = '${sessionScope.user.name}';
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
 
 	</script>
 		
