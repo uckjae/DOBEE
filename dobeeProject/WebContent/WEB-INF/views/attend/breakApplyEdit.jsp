@@ -347,7 +347,7 @@
 					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
 	 				type:"post",
 					success : function(responseData) {
-						// send("breakEditApply");
+						send("breakEditApply");
 						if(responseData == "success"){
 							swal({
 								title: "부재 일정 신청 수청",
@@ -484,7 +484,22 @@
 			    calendar.render();
 			}
 		});
-		
+
+		/* 알람 */
+		function send(data) {
+			let mail = $('#approvalList').val();
+			let content = $('#apycodelist').val();
+			var jsonData = new Object();
+			jsonData.cmd = data;
+			jsonData.mail = mail;
+			jsonData.content = content;
+			jsonData.applier = '${sessionScope.user.name}';
+
+			var parsedData = JSON.stringify(jsonData);
+			
+			wsocket.send(parsedData);
+		}
+		/* /알람  */
 					
   	</script>
 		
