@@ -123,7 +123,7 @@
 			<div class="panel-body">
 				<div class="modal-wrapper">
 					<div class="modal-text">
-						<p>정말로 데이타를 지우시겠습니까? 해당 팀에 참여된 모든 사원 데이터가 사라집니다!</p>
+						<p style="color:red">정말로 데이타를 지우시겠습니까? 해당 팀에 참여된 모든 사원 데이터가 사라집니다!</p>
 					</div>
 				</div>
 			</div>
