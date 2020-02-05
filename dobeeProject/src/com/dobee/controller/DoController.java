@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
@@ -121,6 +121,11 @@ public class DoController {
     @RequestMapping(value="findPassWordChange.do",method=RequestMethod.POST)
     public String findPassWordChange(HttpServletRequest request,Model model){
     	System.out.println("여기탄다");
+    	Enumeration<String> enu = request.getParameterNames();
+    	while(enu.hasMoreElements()) {
+    		String key = enu.nextElement();
+    		System.out.println("key : " + key + " values : " + request.getParameter(key));
+    	}
     	String mail = request.getParameter("mail");
     	model.addAttribute("mail", mail);
     	System.out.println("메일?"+mail);
@@ -598,98 +603,7 @@ public class DoController {
     	}
 		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq();
     }
-    /*
-    
-    //공지사항수정하기 처리
-    @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
-    public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	System.out.println("수정 타니?");
-    	//서비스 연결 >> 제목 & 내용 수정
-    	int noticeModify = noticeService.noticeModify(n);
-    	
-    	CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //원본 파일명
-    	System.out.println("파일이름?"+filename);
-    	
-    	//원래 있었는지 없었는지 확인 후 있으면 update, 없으면 insert
-    	String fileExists = request.getParameter("fileExists");
-    	String notScheduleExists = request.getParameter("notScheduleExists");
-    	String fileNameExists = request.getParameter("fileNameExists");
-    	
-    	System.out.println("스팬 테그 값 나와?"+fileNameExists);
-    	//공지사항 파일 업로드 하기
-    	if(!( filename == null || filename.trim().equals("") )) {
-    		String path = request.getServletContext().getRealPath("/upload");
-        	String fpath = path + "\\" + filename;
-        		
-        	//파일 쓰기 작업
-        	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
-        	fs.write(file.getBytes());
-        	fs.close();
-        		
-        	//DB에 파일 이름 저장
-        	nf.setOrgName(filename);
-        	UUID randomIdMulti = UUID.randomUUID();
-        	String saveName = filename+"_"+randomIdMulti;
-        	//System.out.println("저장될 파일 이름?"+saveName);
-        	nf.setSaveName(saveName);
-        
-        	//공지사항 글번호 주입
-        	nf.setNotSeq(n.getNotSeq());
-        	
-    		if(fileExists.equals("true")) { //원래 파일을 업로드했던 경우 -> update하기
-            	int result = noticeService.noticeFileModify(nf);
-            	if(result > 0) {
-            		System.out.println("공지사항 파일 update 완료");
-            	}
-        	} else { //새로 파일을 업로드 한 경우 -> insert 하기
-        		System.out.println("새로 파일 업로드 하니?");
-        		int result = noticeService.noticeFileWrite(nf);
-            	if(result > 0) {
-            		System.out.println("공지사항 파일 insert 완료");
-            	}
-        		
-        	}
-    	} else { //파일 업로드를 하지 않는 경우
-    		System.out.println("파일 업로드 안할거니?");
-    		
-    		
-    	}
-    	
-    	//공지사항 일정을 입력한 경우
-    	if(!(sc.getStartTime() == null && sc.getEndTime() == null)) {
-    		if(notScheduleExists.equals("true")) { //기존 일정이 있던 경우 -> update
-    			//스케쥴 update
-    			int result = scheduleService.scheduleModify(sc);
-    			//일정 내용 update
-    			if( result > 0 ) {
-    				System.out.println("스케쥴 update 완료");
-    				int result2 = noticeService.notScheduleModify(ns);
-    				
-    				if(result2 > 0) {
-        				System.out.println("공지사항 일정 update 완료");
-        			}
-    			}
-    			
-    		} else { //새로 일정을 추가한 경우 -> insert
-    			int result = scheduleService.addSchedule(sc); 
-        		if(result > 0) { //DB에 잘 저장됨
-        			System.out.println("스케쥴 insert 완료");
-        			int schSeq = result;
-        			ns.setSchSeq(schSeq);
-        			//공지사항 일정 등록
-        			ns.setNotSeq(n.getNotSeq()); //공지사항 글 번호 주입
-        			int result2 = noticeService.addNotSchedule(ns);
-        			
-        			if(result2 > 0) {
-        				System.out.println("공지사항 일정 insert 등록 완료");
-        			}
-        		}
-    		}
-    	}    
-		return "redirect:noticeDetail.do?notSeq="+n.getNotSeq(); // "redirect:noticeDetail.do?notSeq="+n.getNotSeq();들어주는 주소 ...
-    }
-    */
+   
 
 
     // 개인_부재일정신청 GET 0110           게다죽
@@ -1145,7 +1059,7 @@ public class DoController {
    public String modifyUser(@RequestParam(value="mail") String mail, Model model) {
 	   //서비스 통해서 유저 메일로 유저 정보 가져와서 뿌리기
 	   User user = memberService.getUserInfo(mail);
-	   model.addAttribute("user", user);
+	   model.addAttribute("userDetail", user);
 	   return "admin/ModifyMember";
    }
   

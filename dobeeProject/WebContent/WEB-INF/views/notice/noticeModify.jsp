@@ -101,7 +101,6 @@
 								<li><span>글수정</span></li>
 								<li><span>&nbsp;&nbsp;${notice.title}</span></li>
 							</ol>
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
                     <section class="panel">

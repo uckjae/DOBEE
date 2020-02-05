@@ -20,6 +20,7 @@
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
+
 <script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/bootstrap/main.js'></script>
@@ -71,7 +72,6 @@
 								<li><span>부재 일정 신청</span></li>
 							</ol>
 					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -106,7 +106,7 @@
 										<label class="control-label" for="textareaDefault">부재 항목</label>
 										<br>
 										<select name="apyCode" id="apycodelist" style="width: 100%;">
-											<option hidden>부재 항목 선택</option>
+											<option value="">부재 항목 선택</option>
 											<option value="1">연차</option>
 											<option value="2">반일연차</option>
 											<option value="3">출장</option>
@@ -137,16 +137,14 @@
 										<br>
 										결재자
 										<br>
-										
 										<select name="approval" id="approvalList" style="width:100%;">
-										<option hidden>결재자 선택</option>
+											<option hidden>결재자 선택</option>
 										</select>
-										
 										<br>
 										<br>
 										<br>
 										<input id="breakApplyBtn" type="button" value="확인" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
-										<input type="reset" value="Reset" class="btn btn-default" style="width:auto;">
+										<input type="reset" value="초기화" class="btn btn-default" style="width:auto;">
 									</form>
 								</div>
 							</div>
@@ -192,9 +190,6 @@
 					)
 				}
 			});
-			
-
-			
 			*/
 			
 			/*부재 항목 select2 적용*/
@@ -222,33 +217,6 @@
 				}
 			});
 
-			
-/* 
-			$('#approvalList').select2 ({
-				placeholder : '결재자 선택',
-				ajax : {
-					url : "getApprovalList.do",
-					dataType : "json",
-					type : "post",
-					processResults : function(data) {
-						var arr = []
-						var res = $.each(data, function(index, item) {
-							arr.push({
-								id : item.mail,
-								text : item.name
-							});
-						})
-						return {
-							results : arr
-						}
-					}
-				}
-			});
-			
- */
-
-            
-			
 
 			/*
 			$.ajax({
@@ -267,6 +235,7 @@
 				}
 			});
 			*/
+			
 			
 			$('#datetimepickerEnd').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' ,
@@ -360,8 +329,10 @@
 
 					return;
 				}
+
 		        
 		        var formData = $("#breakApplyForm").serialize();
+		        
 		        console.log('폼??'+formData);
 	        	$.ajax({
 					url : "ajax/apply/breakApply.do",
@@ -388,10 +359,9 @@
 							}).then((YES) => {
 								if(YES){
 	 								location.reload(true); 
-									} 
-						})
-					}
-						
+								} 
+							})
+						}
 					},
 					error : function(error) {
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

@@ -73,7 +73,6 @@
 								<li><span>근무 내역 관리</span></li>
 							</ol>
 					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -82,103 +81,108 @@
 					<section class="panel">
 						<header class="panel-heading">
 							<h3 class="panel-title">근무 현황 차트</h3>
+							
 						</header>
 						<div class="panel-body" style="min-height: 560px;">
+							<div id="selector" style="text-align : right">
+								<select id="yearMonthSelector">
+									<option hidden="">Year-Month</option>
+									<!-- Ajax -->
+								</select>
+							</div>
 							<div id="divAttChart" class="col-md-12">
 								<div id="inputYearMonth" style="padding: 20px;">
 									<!-- input Year Month with Icon -->
 								</div>
 								<canvas id="attChart" width="500px" height="230px"></canvas>
 							</div>
-						<div id="legendColor" style="align-items: center">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="col-md-4"></div>
-									<div class="col-md-2">
-										<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
-									</div>
-									<div class="col-md-2">
-										<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
-									</div>
-									<div class="col-md-4"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					</section>
-					
-					<section class="panel">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="tabs tabs-primary">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#popular1" data-toggle="tab"><i class="fa fa-suitcase"></i>근태 상황</a>
-										</li>
-										<li>
-											<a href="#recent1" data-toggle="tab"><i class="fa fa-search"></i>조회 옵션</a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div id="popular1" class="tab-pane active" style="height: 50px;">
-											<div class="col-md-2">
-												<h4>정상 근무 일 수</h4>
-											</div>
-											<div class="col-md-2" id="normal">
-												300
-											</div>
-											
-											<div class="col-md-2">
-												<h4>야근 일 수</h4>
-											</div>
-											<div class="col-md-2" id="extend">
-												200
-											</div>
-											
-											<div class="col-md-2">
-												<h4>결근 일 수</h4>
-											</div>
-											<div class="col-md-2" id="abs">
-												65
-											</div>
-											
+							<div id="legendColor" style="align-items: center">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-4"></div>
+										<div class="col-md-2">
+											<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
 										</div>
-										<div id="recent1" class="tab-pane" style="height:50px;">
-											<!-- 
-											<select id="yearSelector">
-												<option hidden="">==년도 별==</option>
-												Ajax
-											</select>
-											
-											<select id="monthSelector">
-												<option hidden="">==월    별==</option>
-												Ajax
-											</select>
-											 -->
-											<select id="yearMonthSelector">
-												<option hidden="">Year-Month</option>
-												<!-- Ajax -->
-											</select>
-											
+										<div class="col-md-2">
+											<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
 										</div>
+										<div class="col-md-4"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</section>
 					
-					<%-- 
 					<section class="panel">
-						<div class="panel-body" style="min-height: 560px;">
-							<div class="row">
-								<div class="col-md-12">
-									<h1>임시로 캘린더를 뿌립시다</h1>
-									<canvas id="myCal" width="500px" height="250px"></canvas>
-								</div>
+						<div class="row">
+							<div class="col-md-12 col-lg-4 col-xl-4">
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-sm">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-clock-o"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title" id="thTitle">총 근무 시간</h4>
+													<div class="info">
+														<strong class="amount" id="totalHour">불러오는 중...</strong>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							
+							<div class="col-md-12 col-lg-4 col-xl-4">
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-sm">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-sun-o"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title" id="twhTitle">총 정상 근무 시간</h4>
+													<div class="info">
+														<strong class="amount" id="totalWorkHour">불러오는 중...</strong>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							
+							<div class="col-md-12 col-lg-4 col-xl-4">
+								<section class="panel panel-featured-left panel-featured-primary">
+									<div class="panel-body">
+										<div class="widget-summary widget-summary-sm">
+											<div class="widget-summary-col widget-summary-col-icon">
+												<div class="summary-icon bg-primary">
+													<i class="fa fa-star-o"></i>
+												</div>
+											</div>
+											<div class="widget-summary-col">
+												<div class="summary">
+													<h4 class="title" id="tehTitle">총 연장 근무 시간</h4>
+													<div class="info">
+														<strong class="amount" id="totalExtHour">불러오는 중...</strong>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
 							</div>
 						</div>
 					</section>
-					 --%>
+
 					 
 					<section class="panel">
 						<header class="panel-heading">
@@ -353,7 +357,7 @@
 				success : function(data) {
 					var myArray = [];
 					myArray = data.OTYMList;
-					console.log('myArray : ' + myArray);
+					// console.log('myArray : ' + myArray);
 					for (var i = 0; i<myArray.length; i++) {
 						var option = document.createElement("option");
 						$('#yearMonthSelector').append("<option value="+myArray[i] + ">"+ myArray[i].substr(0,4)+"년 "+myArray[i].substr(6,2)+"월 </option>")
@@ -376,6 +380,43 @@
 			$('#inputYearMonth').append("<i class='fa fa-list-alt fa-2x' id='iIinputYearMonth'>&nbsp;&nbsp;"+yyyy+"년 "+month[mm]+"월</i>")
 
 			$.ajax({
+				url : 'getWorkHour.do?ym='+yyyy+"-"+month[mm],
+				dataType : "json",
+				success : function(data) {
+					var whArray = [];
+					whArray = data.workHour;
+
+					let wh = whArray[0];
+					let eh = whArray[1];
+					
+					var hour = 0;
+					var minute = 0;
+					var second = 0;
+
+				 	var splitTime1= wh.split(':');
+			        var splitTime2= eh.split(':');
+				
+				 	hour = parseInt(splitTime1[0])+parseInt(splitTime2[0]);
+			        minute = parseInt(splitTime1[1])+parseInt(splitTime2[1]);
+			        hour = Math.floor(hour + minute/60);
+			        minute = minute%60;
+			        second = parseInt(splitTime1[2])+parseInt(splitTime2[2]);
+			        minute = Math.floor(minute + second/60);
+			        second = second%60;
+
+				    let th = hour+':'+minute+':'+second;
+
+					$('#totalHour').html(th);
+					$('#totalWorkHour').html(wh);
+					$('#totalExtHour').html(eh);
+
+					$('#thTitle').html(whArray[2] + "월 총 근무 시간");
+					$('#twhTitle').html(whArray[2] + "월 총 정상 근무 시간");
+					$('#tehTitle').html(whArray[2] + "월 총 연장 근무 시간");			
+				}
+			});
+			
+			$.ajax({
 				type : 'POST',
 				url : 'getChartData.do?ym='+yyyy+"-"+month[mm],
 				dataType : "json",
@@ -383,6 +424,7 @@
 					dArray = data.CD;
 				},
 				complete : function() {
+					
 					// 해당 달의 일 수 가져오기 (여기서는 2월)
 					let daySize = new Date(yyyy,mm,0).getDate();
 
@@ -620,6 +662,45 @@
 						console.log("이거 확인 : ", dArray)
 					},
 					complete : function() {
+
+						$.ajax({
+							type: 'POST',
+							url : 'getWorkHour.do?ym='+ym,
+							dataType : "json",
+							success : function(data) {
+								var whArray = [];
+								whArray = data.workHour;
+
+								let wh = whArray[0];
+								let eh = whArray[1];
+								
+								var hour = 0;
+								var minute = 0;
+								var second = 0;
+
+							 	var splitTime1= wh.split(':');
+						        var splitTime2= eh.split(':');
+							
+							 	hour = parseInt(splitTime1[0])+parseInt(splitTime2[0]);
+						        minute = parseInt(splitTime1[1])+parseInt(splitTime2[1]);
+						        hour = Math.floor(hour + minute/60);
+						        minute = minute%60;
+						        second = parseInt(splitTime1[2])+parseInt(splitTime2[2]);
+						        minute = Math.floor(minute + second/60);
+						        second = second%60;
+
+							    let th = hour+':'+minute+':'+second;
+						        
+								$('#totalHour').html(th);
+								$('#totalWorkHour').html(wh);
+								$('#totalExtHour').html(eh);	
+
+								$('#thTitle').html(whArray[2] + "월 총 근무 시간");
+								$('#twhTitle').html(whArray[2] + "월 총 정상 근무 시간");
+								$('#tehTitle').html(whArray[2] + "월 총 연장 근무 시간");								
+							}
+						});
+							
 						
 						// 레이블 값, moment value 절대값, 상대값 배열 초기과
 						for (let i=1; i<=daySize; i++) {

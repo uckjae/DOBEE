@@ -31,12 +31,14 @@
 
 <!-- specific page vendor css form script -->
 <link rel="stylesheet" href="assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 <link rel="stylesheet" href="assets/vendor/dropzone/css/basic.css" />
 <link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
-<link rel="stylesheet" href="assets/vendor/codemirror/theme/monokai.css" />
+
+<!-- select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
 </head>
 	<body>
@@ -67,7 +69,6 @@
 								<li><span>연장 근무 신청</span></li>
 							</ol>
 					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -104,20 +105,17 @@
 										<div class="form-group">
 											<label class="control-label" for="textareaDefault">사유</label>
 											<textarea name="reason" class="form-control" rows="3" data-plugin-textarea-autosize="" data-plugin-maxlength maxlength="3000" style="height: 200px" placeholder="사유를 입력해주세요."></textarea>
-											<p>
-												<code>max-length</code> set to 3000 byte.
-											</p>
 										</div>
 										<br>
 										<br>
 										<label class="control-label" for="textareaDefault">결재자</label>
-										<select id="approval" name="approval" style="width:100%;">
+										<select id="approvalList" name="approval" style="width:100%;">
 											<option hidden = ""> 결재자 선택 </option>
 										</select>
 										<br>
 										<br>
 										<input id="extendApplyBtn" type="button" value="확인" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
-										<input type="reset" value="Reset" class="btn btn-default" style="width:auto;">
+										<input type="reset" value="초기화" class="btn btn-default" style="width:auto;">
 										
 									</form>
 								</div>
@@ -148,10 +146,8 @@
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
 	<!-- specific vendor page -->
-	<script src="assets/vendor/select2/select2.js"></script>
 	<script src="assets/vendor/jquery-maskedinput/jquery.maskedinput.js"></script>
 	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-	<script src="assets/vendor/codemirror/addon/selection/active-line.js"></script>
 	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
 	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
 		
@@ -185,6 +181,27 @@
 	            inline : true,
 	            sideBySide : true
 	        });
+
+		 	
+			/*결재자 select2 적용*/
+			$.ajax({
+				url : "getApprovalList.do",
+				dataType : "json",
+				success : function(data) {
+					var dArray = [];
+					dArray = data.renewedList;
+					for (var i =0; i<dArray.length; i++) {
+						var option = $('<option>');
+ 	 					$(option).val(dArray[i].mail);
+ 	 					$(option).text(dArray[i].name+"("+dArray[i].mail+")");
+	 	 				$('#approvalList').append(option);
+					}
+					$("#approvalList").select2();
+				},
+				error : function(error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
 
 		 	let dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
 

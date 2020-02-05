@@ -36,7 +36,6 @@
 								<li><span>Blank Page</span></li>
 							</ol>
 					
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
