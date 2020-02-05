@@ -78,7 +78,7 @@ console.log("MAIN!!");
 							var eventList = [];
 
 							$.ajax ({
-								url : "ntpToCal.do",
+								url : "ajax/apply/ntpToCal.do",
 								dataType : "json",
 								success : function(data) {
 									var events = [];

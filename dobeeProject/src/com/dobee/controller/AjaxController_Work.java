@@ -2,9 +2,11 @@ package com.dobee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.View;
 
 import com.dobee.services.ApplyService;
 import com.dobee.vo.Apply;
@@ -17,10 +19,10 @@ public class AjaxController_Work {
 	@Autowired
 	ApplyService applyService;
 	
+	
 	// 개인_부재일정신청 POST 0112          게다죽	COMPLETE
 	@RequestMapping(value="breakApply.do", method=RequestMethod.POST)
 	public String absApply(Apply apply, Authentication auth) {
-		// System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
 		String responseData = "";
 		int result = 0;
 		apply.setDrafter(auth.getName());
@@ -30,14 +32,14 @@ public class AjaxController_Work {
         } else {
         	responseData = "fail";
         }
-        System.out.println("데이터?"+responseData);
+        
 		return responseData;
 	}
+	
 	
 	// 개인_부재일정신청 수정 POST
 	@RequestMapping(value="breakEditApply.do", method=RequestMethod.POST)
 	public String absEditApply(BreakManageList bml, Integer aplSeq, Authentication auth) {
-		// System.out.println("값 가져와?"+apply.toString()+"/"+auth.toString());
 		String responseData = "";
 		int result = 0;
 		bml.setDrafter(auth.getName());
@@ -48,21 +50,26 @@ public class AjaxController_Work {
         } else {
         	responseData = "fail";
         }
-        System.out.println("수정 데이터?"+responseData);
+        
 		return responseData;
 	}
 	
-	/*
 
-    @RequestMapping(value="breakApply.do", method=RequestMethod.POST)
-    public String absApplyPost(Apply apply, Authentication auth){
-        apply.setDrafter(auth.getName());
-        String result = applyService.absApply(apply);
-        // System.out.println("봐봐  : " + result);
+	// 매니저_부재관리_부재 isAuth 		02.05 게다죽
+	@RequestMapping(value="absManage.do", method=RequestMethod.POST)
+    public String absReqHandle(Model map, Apply apply, Authentication auth) {
+		String responseData = "";
+        apply.setApproval(auth.getName());
+        int result = applyService.absReqHandle(apply);
+        if(result > 0 ) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
         
-        return "redirect: breakApply.do";
+        return responseData;
     }
-	 */
+	
 	
 	// 개인_연장근무신청 POST           0112 게다죽
 	@RequestMapping(value="extendApply.do", method=RequestMethod.POST)
@@ -77,9 +84,10 @@ public class AjaxController_Work {
         } else {
         	responseData = "fail";
         }
-        System.out.println("연장 신청 : "+responseData);
+        
 		return responseData;
 	}
+	
 	
 	// 개인_연장근무신청 수정 POST           0112 게다죽
 	@RequestMapping(value="extEditApply.do", method=RequestMethod.POST)
@@ -95,19 +103,25 @@ public class AjaxController_Work {
         } else {
         	responseData = "fail";
         }
-        System.out.println("연장 신청 수정 : "+responseData);
+        
 		return responseData;
 	}
 	
-	/*
-	 // 개인_연장근무신청 POST           0112 게다죽
-    @RequestMapping(value="extendApply.do", method = RequestMethod.POST)
-    public String extendApplyPost(Apply apply) {
-        String result = applyService.overtimeApply(apply);
-        // System.out.println("봐봐 이," + result);
-
-        return "redirect: extendApply.do";
-    }
-	 */
+	
+	// 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽
+	@RequestMapping(value="extManage.do", method=RequestMethod.POST)
+    public String extReqHandle(Model map, Apply apply, Authentication auth){
+		String responseData = "";
+		apply.setApproval(auth.getName());
+		int result = applyService.extReqHandle(apply);
+		if (result > 0 ) {
+			responseData = "success";
+		} else {
+			responseData = "fail";
+		}
+		
+		return responseData;
+	}
+	
 	
 }
