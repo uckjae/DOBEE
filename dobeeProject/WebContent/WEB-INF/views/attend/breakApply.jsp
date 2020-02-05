@@ -133,10 +133,12 @@
 										<br>
 										결재자 
 										<br>
+										
 										<select name="approval" id="approvalList" style="width:100%;">
 											<option hidden=""> 결재자 선택 </option>
 											<!-- Ajax -->
 										</select>
+										
 										<br>
 										<br>
 										<br>
@@ -177,11 +179,7 @@
 	<script src="plugins/datetime-picker/js/bootstrap-datetimepicker.min.js"></script>
 	
 	<!-- specific vendor page -->
-	<script src="assets/vendor/select2/select2.js"></script>
-	<script src="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-	<script src="assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
-	<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
-	
+	<script src="assets/vendor/select2/select2.js"></script>	
 	
 	<script>
 		window.onload = function(){
@@ -208,24 +206,69 @@
 					)
 				}
 			});
+			
+
+			$('#approvalList').select2 ({
+				placeholder : '결재자 선택',
+				multiple : true,
+				ajax : {
+					url : "getApyCode.do",
+					dataType : "json",
+					type : "post",
+					processResults : function(data) {
+						var arr = []
+						var res = $.each(data, function(index, item) {
+							arr.push({
+								id : item.apyCode,
+								text : item.entry
+							});
+						})
+						return {
+							results : arr
+						}
+					}
+				}
+			});
 			*/
-				
+							
 			$.ajax({
 				url : "getApyCode.do",
 				dataType : "json",
-				success : function(data) {
-					var aArray = [];
-					aArray = data.apyCode;
-					for (var i=0; i<aArray.length-1; i++) {
-						var option = document.createElement("option")
-						$('#apycodelist').append("<option value="+aArray[i].apyCode + ">"+ aArray[i].entry + "</option>")
-					}					
-				},
-				error : function(error) {
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
+				type : "post",
+				success : function(responseData) {
+					console.log(responseData);
+					var id = [];
+					var entry = [];
+					var object = new Object();
+					$.each(responseData, function(index, element) {
+						id.push(element.apyCode);
+						entry.push(element.entry);
+
+						var option = $('<option>');
+						$(option).val(element.apyCode);
+						$(option).val(element.entry);
+						$('#approvalList').append(option);
+					});
+
+					$('#approvalList').select2();
+
+                    $("#approvalList > option").each(function(){
+                       for (var i = 0; i < entry.length; i++){
+                          if($(this).val() == entry[i]){
+                            $(this).attr('selected','selected');
+                        }
+                       }
+                   });
+                 },
+                 error:function(request,status,error){
+                   console.log("code : " + request.status +"\n" + "message : " 
+
+                         + request.responseText + "\n" + "error : " + error);
+                },
+             });
 			
+
+			/*
 			$.ajax({
 				url : "getApprovalList.do",
 				dataType : "json",
@@ -241,6 +284,7 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+			*/
 			
 			$('#datetimepickerEnd').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' ,
@@ -254,8 +298,87 @@
 	            sideBySide : true
 	        });
 
+		 	let dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+
 	        /*부재 일정 신청 비동기 처리 --01.26 알파카 */
 	        $("#breakApplyBtn").on('click', function() {
+
+	        	// 시작/종료 일정 미입력 확인
+				if($('#datetimepickerStart').val() == "" || $('#datetimepickerEnd').val() == "" ) {
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "시작 / 종료 시간을 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 시작 / 종료 일정 정규표현식 일치 여부 확인
+				} else if (dateTimeRegex.test($('#datetimepickerStart').val() || dateTimeRegex.test($('#datetimepickerEnd').val()) ) == "") {
+					
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "날짜 형식에 맞지 않습니다.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 부재 항목 선택 확인
+				} else if ($('#apycodelist option:selected').val() == "") {
+					
+					swal({
+						title : "부재 항목",
+						text : "부재 항목을 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#apycodelist').focus()
+					})
+
+					return;
+				// 부재 사유 입력 확인
+				} else if ($('#breakReason').val() == "") {
+					swal({
+						title : "부재 사유",
+						text : "부재 사유를 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#breakReason').focus()
+					})
+
+					return;
+				// 결재자 선택 확인
+				} else if ($('#approvalList option:selected').val() == "") {
+					swal({
+						title : "결재자",
+						text : "결재자를 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#approvalList').focus()
+					})
+
+					return;
+				// 시작 / 종료 일자 선택 오류 확인
+				} else if($('#datetimepickerStart').val() > $('#datetimepickerEnd').val()) {
+					swal({
+						title : "날짜 선택 오류",
+						text : "종료 시간을 다시 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerEnd').focus()
+					})
+
+					return;
+				}
+		        
 		        var formData = $("#breakApplyForm").serialize();
 		        console.log('폼??'+formData);
 	        	$.ajax({

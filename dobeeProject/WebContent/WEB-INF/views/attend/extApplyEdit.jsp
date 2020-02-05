@@ -79,7 +79,8 @@
 							
 							<div class="col-md-5 panel-body">
 								<div class="col-md-12">
-									<form action="postEditExtApply.do?aplSeq=${ELforEdit.aplSeq }" method="post">
+									<form id="extEditApplyForm" href="#">
+									<%-- <form action="postEditExtApply.do?aplSeq=${ELforEdit.aplSeq }" method="post"> --%>
 										<br>
 										<br>
 										<label class="control-label" for="textareaDefault">시작 시간</label>
@@ -105,8 +106,8 @@
 										<br>
 										<br>
 										<br>
-										
-										<input type="submit" value="수정" class="btn btn-primary" > &nbsp;&nbsp;
+										<input id="extEditApplyBtn" type="button" value="수정" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
+										<!-- <input type="submit" value="수정" class="btn btn-primary" > &nbsp;&nbsp; -->
 										<input type="reset" value="Reset" class="btn btn-default" > &nbsp;&nbsp;
 										<input type="button" value="삭제" class="btn btn-default" onclick="location.href='deleteExtApply.do?aplSeq=${ELforEdit.aplSeq}'">
 									</form>
@@ -176,6 +177,114 @@
 	        $('#datetimepickerEnd').datetimepicker({
 	            format : 'YYYY-MM-DD HH:mm' 
 	        });
+
+
+			let dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+		 	
+	        /*연장근무 신청 수정 비동기 처리 --02.05 게다죽 */
+	        $("#extEditApplyBtn").on('click', function() {
+
+	        	// 시작/종료 일정 미입력 확인
+				if($('#datetimepickerStart').val() == "" || $('#datetimepickerEnd').val() == "" ) {
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "시작 / 종료 시간을 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 시작 / 종료 일정 정규표현식 일치 여부 확인
+				} else if (dateTimeRegex.test($('#datetimepickerStart').val() || dateTimeRegex.test($('#datetimepickerEnd').val()) ) == "") {
+					
+					swal({
+						title : "시작 / 종료 날짜",
+						text : "날짜 형식에 맞지 않습니다.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerStart').focus()
+					})
+
+					return;
+				// 시작 / 종료 일자 선택 오류 확인
+				} else if($('#datetimepickerStart').val() > $('#datetimepickerEnd').val()) {
+					swal({
+						title : "날짜 선택 오류",
+						text : "종료 시간을 다시 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#datetimepickerEnd').focus()
+					})
+
+					return;
+				// 연장 근무 사유 입력 확인
+				} else if ($('#extReason').val() == "") {
+					swal({
+						title : "연장 근무 사유",
+						text : "연장 근무 사유를 입력해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#extReason').focus()
+					})
+
+					return;
+				// 결재자 선택 확인
+				} else if ($('#approval option:selected').val() == "") {
+					swal({
+						title : "결재자",
+						text : "결재자를 선택해주세요.",
+						icon : "warning",
+						button : "true"
+					}).then((YES) => {
+						$('#approval').focus()
+					})
+
+					return;
+				}
+		        
+		        var formData = $("#extEditApplyForm").serialize();
+		        
+		        console.log('폼??'+formData);
+	        	$.ajax({
+					url : "ajax/apply/extEditApply.do?aplSeq="+${ELforEdit.aplSeq },
+					data : formData,
+					dataType : "text",
+					contentType :  "application/x-www-form-urlencoded; charset=UTF-8",
+	 				type:"post",
+					success : function(responseData) {
+						// send("extEditApply");
+						if(responseData == "success"){
+							swal({
+								title: "연장 근무 신청 수정",
+								text: "연장 근무 신청이 수정되었습니다.",
+								icon: "success", //"info,success,warning,error" 중 택1
+								button : {
+									confirm: {
+									    text: "확인",
+									    value: true,
+									    visible: true,
+									    className: "",
+									    closeModal: true
+									  }
+									}
+							}).then((YES) => {
+								if(YES){
+	 								location.reload(true); 
+									} 
+						})
+					}
+					},
+					error : function(error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+		    });
+	        
 
 	        var eventList = [];
 		       

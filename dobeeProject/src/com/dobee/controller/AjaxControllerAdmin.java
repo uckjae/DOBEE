@@ -91,11 +91,12 @@ public class AjaxControllerAdmin {
 		String name = req.getParameter("name");
 		String date = new SimpleDateFormat("yyyy년 MM월 dd일 E요일").format(new Date());
 		StringBuilder path = new StringBuilder();
+		path.append("http://");
 		path.append(req.getLocalAddr());
 		path.append(":");
 		path.append(req.getLocalPort());
 		path.append(req.getContextPath());
-		path.append("/password.do");
+		path.append("/findPassWordChange.do");
 		try {
 			
 			messageHelper = new MimeMessageHelper(message,true,"UTF-8");
@@ -139,11 +140,12 @@ public class AjaxControllerAdmin {
 	  session.setAttribute("mail", mail);
 	  
 	  StringBuilder path = new StringBuilder();
+	  	path.append("http://");
 		path.append(req.getLocalAddr());
 		path.append(":");
 		path.append(req.getLocalPort());
 		path.append(req.getContextPath());
-		path.append("/findPasswordChange.do");
+		path.append("/findPassWordChange.do");
 	  
 	  try {		  
 		  messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -188,10 +190,14 @@ public class AjaxControllerAdmin {
 	    }
 	//비밀번호 변경
 	@RequestMapping(value="passwordChange.do",method=RequestMethod.POST)
-	public String passwordChange(User user,HttpSession session) {
+	public String passwordChange(User user,HttpServletRequest request) {
 	    System.out.println("비밀번호 들어오나?: ");
 	    
-	    String mail = (String) session.getAttribute("mail");
+	    Enumeration<String> enu = request.getParameterNames();
+	    while(enu.hasMoreElements()) {
+	    	System.out.println(enu.nextElement());
+	    }
+	    String mail = (String) request.getAttribute("mail");
 	    System.out.println("메일"+mail);
 	    
 	    UserDao userDao =sqlSession.getMapper(UserDao.class);

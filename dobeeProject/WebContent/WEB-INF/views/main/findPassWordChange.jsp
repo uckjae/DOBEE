@@ -67,11 +67,11 @@ $(function(){
     else if( ($('#password').val())==($('#passwordOk').val())){
         var password = $('#password').val();
         console.log("password:"+password);
-         
+        var mail = $('#mail').val();
         $.ajax({
 
             url:'ajax/admin/passwordChange.do',
-            data:{"password":password},
+            data:{"mail": mail, "password":password},
             dataType:"text",
             type : "post",
             success:function(data){
@@ -114,7 +114,8 @@ $(function(){
 		<div class="form-group mb-lg">
 		  <label>새 비밀번호</label>
 		  <div class="input-group input-group-icon">
-			 <input name="password" type="text" class="form-control input-lg" id="password"/>
+		  	<input type="hidden" id="mail" value="${requestScope.mail }"/>
+			<input name="password" type="text" class="form-control input-lg" id="password"/>
 				<span class="input-group-addon">
 				 <span class="icon icon-lg">
 				  <i class="fa fa-lock"></i>
