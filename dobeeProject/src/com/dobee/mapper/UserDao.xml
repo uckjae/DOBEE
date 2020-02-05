@@ -44,7 +44,10 @@
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.User">
-		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE FROM USER U LEFT OUTER JOIN USERINFO I ON U.MAIL = I.MAIL
+		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE 
+		FROM USER U LEFT OUTER JOIN USERINFO I 
+		ON U.MAIL = I.MAIL
+		ORDER BY BINARY(U.NAME)
 	</select>
 	
 	<!-- User & UserInfo 정보 가져오기 마이페이지   01.22 알파카 -->
