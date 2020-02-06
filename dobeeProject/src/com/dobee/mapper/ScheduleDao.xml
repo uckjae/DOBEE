@@ -4,37 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dobee.dao.ScheduleDao">
 
+
 	<!-- 스케쥴 insert >> insert 후 seq return 함 -->
 	<insert id="addSchedule" parameterType="com.dobee.vo.schedule.Schedule" useGeneratedKeys="true" keyProperty="schSeq">
 		INSERT INTO SCHEDULE(STARTTIME, ENDTIME) VALUES( #{startTime}, #{endTime} )
 	</insert>
+	
 	
 	<!-- 프로젝트 일정 추가 public int addPjtSchedule(int pjtSeq, int schSeq); 02.01 알파카 -->
 	<insert id="addPjtSchedule">
 		INSERT INTO PROJSCHEDULE(PJTSEQ, SCHSEQ) VALUES((SELECT PJTSEQ FROM PROJECT WHERE PJTSEQ=#{param1}), (SELECT SCHSEQ FROM SCHEDULE WHERE SCHSEQ=#{param2}))
 	</insert>
 	
+	
 	<!-- 프로젝트 업무일정 테이블에서 업무 일정 번호 가져오기 ublic int getTsSeq(int tskSeq); -->
 	<select id="getTsSeq" resultType="Integer">
 		SELECT COUNT(TSSEQ) 
-		FROM TASKSCHEDULE 
-		WHERE TSKSEQ = #{tskSeq}
+			FROM TASKSCHEDULE 
+			WHERE TSKSEQ = #{tskSeq}
 	</select>
+	
 	
 	<!-- 프로젝트 일정 가져오기 02.02 알파카 -->
 	<select id="getPjtSchedule" resultType="com.dobee.vo.schedule.Schedule">
 		SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=(SELECT SCHSEQ FROM PROJSCHEDULE WHERE PJTSEQ=#{param1})
 	</select>
 	
+	
 	<!-- 프로젝트 업무 추가 -->
 	 <insert id="addTaskSchedule">
 	 	INSERT INTO TASKSCHEDULE(PJTSEQ, SCHSEQ, TSKSEQ) VALUES(#{param1},#{param2},#{param3} )
 	 </insert>
 	
+	
 	<!-- 스케쥴 가져오기 -->
 	<select id="getSchedule" resultType="com.dobee.vo.schedule.Schedule">
 		SELECT SCHSEQ, STARTTIME, ENDTIME FROM SCHEDULE WHERE SCHSEQ=#{schSeq}
 	</select>
+	
 	
 	<!-- 스케쥴 수정하기 -->
 	<update id="scheduleModify" parameterType="com.dobee.vo.schedule.Schedule">
@@ -42,8 +49,8 @@
 	</update>
 
 	
-	 <!-- 공지사항,업무,프로젝트 일정 캘린더 병합		0130	게다죽		COMPELTE -->
-	 <select id="ntpToCalendar" parameterType="String" resultType="com.dobee.vo.schedule.MainSchedule">
+	<!-- 공지사항,업무,프로젝트 일정 캘린더 병합		0130	게다죽		COMPELTE -->
+	<select id="ntpToCalendar" parameterType="String" resultType="com.dobee.vo.schedule.MainSchedule">
 	 	SELECT S.STARTTIME, S.ENDTIME, NS.NSCONTENT AS TITLE, 'NOTICE' AS ENTRY 
 			FROM NOTSCHEDULE NS
 		    JOIN SCHEDULE S ON NS.SCHSEQ = S.SCHSEQ
@@ -54,14 +61,14 @@
 			JOIN (
 				SELECT P.PJTSEQ, P.PJTNAME, PM.MAIL FROM PROJECT P
 					JOIN PROJECTMEMBER PM ON P.PJTSEQ = PM.PJTSEQ
-					WHERE PM.MAIL = #{mail}
+					WHERE PM.MAIL = #{mail} AND PJTPROGRESS = '진행'
 		    ) PM ON PM.PJTSEQ = PS.PJTSEQ
 		UNION
 		SELECT S.STARTTIME, S.ENDTIME, T.TITLE, 'TASK' AS ENTRY
 			FROM TASKSCHEDULE PS
 		    JOIN SCHEDULE S ON PS.SCHSEQ = S.SCHSEQ
 		    JOIN TASK T ON PS.TSKSEQ = T.TSKSEQ
-			WHERE T.MAIL = #{mail}
-	 </select>
+			WHERE T.MAIL = #{mail} WHERE T.PROGRESS = '진행'
+	</select>
 
 </mapper>

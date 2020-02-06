@@ -6,8 +6,8 @@
 
     <!--아이디 찾기 -->
 	<select id = "findId" parameterType = "String" resultType="String">
-     SELECT U.MAIL AS MAIL FROM USERINFO AS I JOIN USER AS U ON I.MAIL=U.MAIL 
-     WHERE NAME = #{param1} AND PHONE=#{param2}
+     	SELECT U.MAIL AS MAIL FROM USERINFO AS I JOIN USER AS U ON I.MAIL=U.MAIL 
+    		WHERE NAME = #{param1} AND PHONE=#{param2}
     </select>
     
     <!--비밀번호 찾기()  -->
@@ -28,65 +28,68 @@
 	<!-- 관리자 빼고 나머지 회원 가져오기 -->
 	<select id="getUserList" resultType="com.dobee.vo.member.User">
 		SELECT MAIL, NAME, MYPIC, AUTHCODE, TEAMCODE 
-		FROM USER
-		WHERE AUTHCODE!=1
+			FROM USER
+			WHERE AUTHCODE!=1
 		ORDER BY BINARY(NAME)
 	</select>
 	
 	<!-- User 정보 가져오기 -->
 	<select id="getUser" resultType="com.dobee.vo.member.User">
 		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, U.TEAMCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE
-		FROM USER U JOIN USERINFO I
-		ON U.MAIL=I.MAIL
-		WHERE U.MAIL=#{mail}
+			FROM USER U 
+				JOIN USERINFO I
+				ON U.MAIL=I.MAIL
+			WHERE U.MAIL=#{mail}
 	</select>
 	
 	
 	<!-- UserInfo 정보가져오기 -->
 	<select id="getUserInfoList" resultType="com.dobee.vo.member.User">
 		SELECT U.MAIL, U.NAME, U.MYPIC, U.AUTHCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE 
-		FROM USER U LEFT OUTER JOIN USERINFO I 
-		ON U.MAIL = I.MAIL
+			FROM USER U 
+				LEFT OUTER JOIN USERINFO I 
+				ON U.MAIL = I.MAIL
 		ORDER BY BINARY(U.NAME)
 	</select>
 	
 	<!-- User & UserInfo 정보 가져오기 마이페이지   01.22 알파카 -->
 	<select id="getUserInfo" resultType="com.dobee.vo.member.User">
 		SELECT U.MAIL, U.PASSWORD, U.NAME, U.MYPIC, U.AUTHCODE, U.TEAMCODE, I.REGITDATE, I.SERVE, I.EMP, I.POSITION, I.PHONE, T.TEAMNAME, A.AUTHCODE, A.AUTH
-		FROM USER U
-		JOIN USERINFO I 
-		ON U.MAIL = I.MAIL
-		JOIN TEAMLIST T
-		ON U.TEAMCODE = T.TEAMCODE
-		JOIN AUTHORITY A
-		ON U.AUTHCODE = A.AUTHCODE
-		WHERE U.MAIL = #{mail}
+			FROM USER U
+				JOIN USERINFO I 
+				ON U.MAIL = I.MAIL
+				JOIN TEAMLIST T
+				ON U.TEAMCODE = T.TEAMCODE
+				JOIN AUTHORITY A
+				ON U.AUTHCODE = A.AUTHCODE
+			WHERE U.MAIL = #{mail}
 	</select>
 	
 	<!-- 마이페이지 수정  01.22 알파카  public int mypageModify(User user);-->
 	<update id="mypageModify" parameterType="com.dobee.vo.member.User">
-		UPDATE USER U JOIN USERINFO I 
-		ON U.MAIL = I.MAIL
-		SET U.PASSWORD=#{password},
-			I.PHONE = #{phone}
+		UPDATE USER U 
+			JOIN USERINFO I 
+			ON U.MAIL = I.MAIL
+				SET U.PASSWORD=#{password},
+					I.PHONE = #{phone}
 		WHERE U.MAIL = #{mail}
 	</update>
 	
 	<!-- 관리자 사원 정보 수정 01.23 알파카 -->
     <update id="modifyUser" parameterType="com.dobee.vo.member.User">
 	    UPDATE USER U 
-		JOIN USERINFO I 
-		ON U.MAIL = I.MAIL
-		SET U.MAIL = #{mail},
-			U.NAME = #{name},
-			U.MYPIC = #{myPic},
-			U.AUTHCODE = #{authCode},
-			U.TEAMCODE = #{teamCode},
-			I.REGITDATE = #{regitDate},
-			I.SERVE = #{serve},
-			I.EMP = #{emp},
-			I.POSITION = #{position},
-			I.PHONE = #{phone}
+			JOIN USERINFO I 
+			ON U.MAIL = I.MAIL
+				SET U.MAIL = #{mail},
+					U.NAME = #{name},
+					U.MYPIC = #{myPic},
+					U.AUTHCODE = #{authCode},
+					U.TEAMCODE = #{teamCode},
+					I.REGITDATE = #{regitDate},
+					I.SERVE = #{serve},
+					I.EMP = #{emp},
+					I.POSITION = #{position},
+					I.PHONE = #{phone}
 		WHERE U.MAIL=#{mail}
     </update>
     
@@ -105,7 +108,7 @@
 	<!-- Ajax 출근 하기 public int onWork(String mail); -->
 	<insert id="onWork">
 		INSERT INTO ATTEND(ATTTIME, MAIL, ATTCODE) 
-		VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출/퇴근'))
+			VALUES (NOW(), (SELECT MAIL FROM USER WHERE MAIL=#{mail}), (SELECT ATTCODE FROM ATTENDCODE WHERE ATTDIV='출/퇴근'))
 	</insert>
 	
 	
@@ -117,9 +120,10 @@
 	<!-- 출근한 팀뤈 가져오기 02.03 알파카 -->
 	<select id="getOnWorkTeamMember" resultType="com.dobee.vo.member.User">
 		SELECT U.MAIL, U.NAME, U.MYPIC 
-		FROM USER U JOIN ATTEND A 
-		ON U.MAIL=A.MAIL 
-		WHERE U.TEAMCODE=#{teamCode} AND A.ATTCODE=1 AND OFFTIME IS NULL AND U.MAIL!=#{mail}
+			FROM USER U
+				JOIN ATTEND A 
+				ON U.MAIL=A.MAIL 
+			WHERE U.TEAMCODE=#{teamCode} AND A.ATTCODE=1 AND OFFTIME IS NULL AND U.MAIL!=#{mail}
 	</select>
 	
 	<!-- Ajax 신청코드 불러오기 -->
@@ -203,7 +207,7 @@
 	
 	<!-- 개인 부재 신청 수정하기 (GET)	 	0120		COMPLETE -->
 	<select id="getBMLforEdit" parameterType="com.dobee.vo.Apply" resultType="com.dobee.vo.member.BreakManageList">
-		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON
+		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.USEBREAK, A.ISAUTH, A.APPROVAL, A.REASON, A.REJREASON
 			FROM APPLY A
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
@@ -220,7 +224,7 @@
 				USEBREAK = #{useBreak},
 	        	APPROVAL = #{approval},
 	        	REASON = #{reason}
-		WHERE APLSEQ = #{aplSeq}
+			WHERE APLSEQ = #{aplSeq}
 	</update>
 
 	
@@ -230,19 +234,19 @@
 	</delete>
 	
 	
-	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기 (싸그리)			0119 COMPLETE -->
+	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기			0119 COMPLETE -->
 	<select id="AbsAll" parameterType="String" resultType="com.dobee.vo.Apply">
 		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d %H:%i') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d %H:%i') AS ENDAT, ISAUTH, APYCODE FROM APPLY WHERE APYCODE!=6 AND DRAFTER=#{param1}
 	</select>
 	
 	
-	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기 (싸그리)		0119 COMPLETE -->
+	<!-- Ajx 개인_부재일정 신청 - 캘린더 Event 불러오기		0119 COMPLETE -->
 	<select id="Calendar" resultType="com.dobee.vo.Apply">
 		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d %H:%i') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d %H:%i') AS ENDAT, ISAUTH, APYCODE FROM APPLY WHERE APYCODE!=6
 	</select>
 	
 	
-	<!-- Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기 (싸그리)			0119 COMPLETE -->
+	<!-- Ajx 개인_연장근무 신청 - 캘린더 Event 불러오기			0119 COMPLETE -->
 	<select id="ExtAll" parameterType="String" resultType="com.dobee.vo.Apply">
 		SELECT APLSEQ, DATE_FORMAT(STARTAT, '%Y-%m-%d %H:%i') AS STARTAT, DATE_FORMAT(ENDAT, '%Y-%m-%d %H:%i') AS ENDAT, ISAUTH FROM APPLY WHERE APYCODE=6 AND DRAFTER=#{param1}
 	</select>
@@ -256,21 +260,18 @@
 	
 	<!-- Ajax 월 근무시간 불러오기		0206 COMPLTE -->
 	<select id="getWorkHour" parameterType="String" resultType="String">
-		select SEC_TO_TIME(sum(timediff(at.offtime, at.atttime))) as Work, '정상' as entry
-			from attend at
-		    where at.mail = #{param1} and date_format(at.atttime, '%Y-%m') = #{param2}
-		union
-		select SEC_TO_TIME(sum(timediff(endat, startat))) as Work, '연장' as entry
-			from apply ap
-		    where ap.drafter = #{param1} and date_format(ap.startat, '%Y-%m') = #{param2} and isauth ='승인'
-		union
-		select distinct date_format(atttime, '%m') as Work, '월' as entry
-			from attend at
-		    where at.mail = #{param1} and date_format(at.atttime, '%Y-%m') = #{param2}
-	</select>
-	
-	
-	
+		SELECT SEC_TO_TIME(sum(timediff(AT.OFFTIME, AT.ATTTIME))) AS WORK, '정상' AS ENTRY
+			FROM ATTEND AT
+		    WHERE AT.MAIL = #{param1} AND date_format(AT.ATTTIME, '%Y-%m') = #{param2}
+		UNION
+		SELECT SEC_TO_TIME(sum(timediff(AP.ENDAT, AP.STARTAT))) AS WORK, '연장' AS ENTRY
+			FROM APPLY AP
+		    WHERE AP.drafter = #{param1} AND date_format(AP.STARTAT, '%Y-%m') = #{param2} and AP.ISAUTH ='승인'
+		UNION
+		SELECT DISTINCT date_format(AT.ATTTIME, '%m') AS WORK, '월' AS ENTRY
+			FROM attend AT
+		    WHERE AT.MAIL = #{param1} AND date_format(AT.ATTTIME, '%Y-%m') = #{param2}
+	</select>	
 	
 	
 	<!-- Ajax 개인부재일정확인 - Option - 년도 loading		0113 -->
@@ -278,7 +279,13 @@
 		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y') FROM APPLY WHERE APYCODE != 6 AND  DRAFTER= #{param1}
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - 년도별 List 출력		0113 -->
+	
+	
+	
+	
+	
+	
+	<!-- Ajax 개인부재일정확인 - 년도별 List 출력		0113 ???? -->
 	<select id="getBreakListByYear" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
@@ -289,14 +296,17 @@
 			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND DATE_FORMAT(A.STARTAT, '%Y') = 2020;
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - Option - 월 loading		0113 -->
+	
+	
+	<!-- Ajax 개인부재일정확인 - Option - 월 loading		0113 ???? -->
 	<select id="breakYearMonthList" parameterType="String" resultType="String">
 		SELECT DISTINCT DATE_FORMAT(STARTAT, '%Y-%m') AS STARTAT FROM APPLY WHERE APYCODE != 6 AND  DRAFTER=#{param1}
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - 년-월별 List 출력		0113 -->
+	
+	<!-- Ajax 개인부재일정확인 - 년-월별 List 출력		0113 ???? -->
 	<select id="getBreakListByYMonth" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
-		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
+		SELECT A.APLSEQ, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A	
 				INNER JOIN APPLYCODE AC
 					ON A.APYCODE = AC.APYCODE
@@ -314,7 +324,7 @@
 			WHERE A.APYCODE != 6 AND  A.DRAFTER=#{param1}
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113 -->
+	<!-- Ajax 개인부재일정확인 - 부재항목 별 List 출력		0113 ??? -->
 	<select id="getBreakListByEntry" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
@@ -325,12 +335,12 @@
 			WHERE  A.DRAFTER=#{param1} AND A.APYCODE = '2';
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - Option - 승인여부 loading		0113 -->
+	<!-- Ajax 개인부재일정확인 - Option - 승인여부 loading		0113 ??? -->
 	<select id="breakIsAuthList" parameterType="String" resultType="String">
 		SELECT DISTINCT ISAUTH FROM APPLY WHERE APYCODE != 6 AND  DRAFTER=#{param1}
 	</select>
 	
-	<!-- Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113 -->
+	<!-- Ajax 개인부재일정확인 - 승인여부 별  List 출력		0113 ??? -->
 	<select id="getBreakListByIsAuth" parameterType="String" resultType="com.dobee.vo.member.BreakManageList">
 		SELECT a.aplseq, AC.ENTRY, A.REQDATE, A.STARTAT, A.ENDAT, A.ISAUTH, A.APPROVAL, BL.USINGBREAK, A.REASON, A.REJREASON
 			FROM APPLY A
@@ -340,6 +350,18 @@
 					ON A.APLSEQ = BL.APLSEQ
 			WHERE  A.APYCODE != 6 AND A.DRAFTER=#{param1} AND A.ISAUTH = '미승인';
 	</select>
+
+	
+	<!-- Ajax 매니저_부재관리 - Option - 부재항목 loading		0114   ???? -->
+    <select id="breakEntryListMgr" resultType="com.dobee.vo.ApplyCode">
+    	SELECT DISTINCT AC.APYCODE, AC.ENTRY 
+			FROM APPLY A
+				INNER JOIN APPLYCODE AC
+	        		ON A.APYCODE = AC.APYCODE
+			WHERE A.APYCODE != 6
+    </select>
+    
+
 
 
 
@@ -353,21 +375,7 @@
 		    WHERE A.APYCODE != 6 AND A.DRAFTER = #{drafter}
 		    ORDER BY A.APLSEQ DESC
 	</select>
-	
-	
-	
-	
-	<!-- Ajax 매니저_부재관리 - Option - 부재항목 loading		0114 필요 없을듯? -->
-    <select id="breakEntryListMgr" resultType="com.dobee.vo.ApplyCode">
-    	SELECT DISTINCT AC.APYCODE, AC.ENTRY 
-			FROM APPLY A
-				INNER JOIN APPLYCODE AC
-	        		ON A.APYCODE = AC.APYCODE
-			WHERE A.APYCODE != 6
-    </select>
-    
-    
-    
+
     
     <!-- 매니저_부재관리 - 데이터 테이블 출력 (GET)		0114 COMPLETE -->
     <select id="breakListMgr" parameterType="Integer" resultType="com.dobee.vo.member.BreakManageList">
@@ -453,24 +461,24 @@
 	
 	<!-- 팀 코드 수정 -->
 	<update id="modifyTeamCode" parameterType="hashmap">
-		update teamlist set teamcode = #{teamCode}, teamname = #{teamName} where teamcode=#{tempTeamCode}
+		UPDATE TEAMLIST SET TEAMCODE = #{teamCode}, TEAMNAME = #{teamName} where TEAMCODE = #{tempTeamCode}
 	</update>
 	
 	
 	<!-- 팀 코드 삭제  -->
 	<delete id="delTeamCode" parameterType="int">
-		delete from teamlist where teamcode = #{teamCode}
+		DELETE FROM TEAMLIST WHERE TEAMCODE = #{teamCode}
 	</delete>
 	
 	
 	<!-- 팀 코드 등록 -->
 	<insert id="addTeamList" parameterType="com.dobee.vo.member.TeamList">
-		insert into teamlist (teamcode, teamname) values ( #{teamCode} , #{teamName} )
+		INSERT INTO TEAMLIST (TEAMCODE, TEAMNAME) VALUES ( #{teamCode} , #{teamName} )
 	</insert>
 	
 	<!-- 사원 등록 Email 중복 확인 -->
 	<select id="checkEmail" parameterType="String" resultType="com.dobee.vo.member.UserInfo">
-		select mail from user where mail = #{mail}
+		SELECT MAIL FROM USER WHERE MAIL = #{mail}
 	</select>
 	
 </mapper>
