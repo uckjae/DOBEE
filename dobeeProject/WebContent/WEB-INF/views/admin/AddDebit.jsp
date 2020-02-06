@@ -225,7 +225,6 @@
                };
             },
 			success:function(data){
-					console.log(data);
 					result = data;
 					if(result == 0){
 						swal({
