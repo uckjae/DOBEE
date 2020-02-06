@@ -41,7 +41,7 @@ console.log("MAIN!!");
 			<!-- start : main Content -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>메인</h2>
+					<h2></h2>
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
@@ -123,7 +123,7 @@ console.log("MAIN!!");
 									      startTime : '09:00',
 									      endTime : '18:00'
 									  },
-									  eventLimit : true,
+									  eventLimit : false,
 								      editable: false,
 								      events: eventList
 								    });
