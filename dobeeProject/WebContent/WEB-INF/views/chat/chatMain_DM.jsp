@@ -126,8 +126,6 @@
 	$('#userSelect').select2({
         placeholder: '멤버 선택'
 		});
-
-
 	
 
 	var chatType = $("#chatType").val();
@@ -149,7 +147,7 @@
 		socket.emit('getChatContent', chatUsersMail, chatType);
 	});
 
-	socket.on('printChatHistory', function(msg){
+	socket.on('printChatHistory', function(msg) {
 
         var msgArray = msg.reverse();
         console.log('이전 대화 목록 가져오기');
