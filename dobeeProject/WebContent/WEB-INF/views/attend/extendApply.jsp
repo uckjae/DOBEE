@@ -67,9 +67,8 @@
 								</li>
 								<li><span>근무</span></li>
 								<li><span>연장 근무 신청</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-					
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
