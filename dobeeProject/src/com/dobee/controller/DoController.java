@@ -977,7 +977,6 @@ public class DoController {
 	   return "admin/AddMember";
    }
     
-    
     //관리자_사원추가 서비스
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user, HttpServletRequest request) throws IOException {

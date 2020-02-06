@@ -69,14 +69,10 @@ width:47em
 								</li>
 								<li><span>공지사항</span></li>
 								<li><span>메인</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-					
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
-    
-    
-    <!-- 작업 여기부터~!~!~!~~! -->      
     
       <section class="panel">
 							<header class="panel-heading">

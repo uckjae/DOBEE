@@ -131,8 +131,8 @@
 								</li>
 								<li><span>채팅</span></li>
 								<li><span>그룹 채팅</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 
@@ -244,7 +244,7 @@
 	         
 	            if(userName !== element.NAME) {
 	    			$("#msg_history").append('<div class="incoming_msg">'
-	    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+	    					+'<div class="incoming_msg_img"><img src="./img/avatar.jpg" alt="user"> </div>'
 	    					+'<div class="received_msg">'
 	    					+'<div class="received_withd_msg">'
 	    					+'<p>'+element.CHATCONTENT+'</p>'

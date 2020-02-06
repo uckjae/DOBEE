@@ -66,9 +66,8 @@ $(document).ready(function(){
 								</li>
 								<li><span>비용</span></li>
 								<li><span>비용신청 목록</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-					
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->

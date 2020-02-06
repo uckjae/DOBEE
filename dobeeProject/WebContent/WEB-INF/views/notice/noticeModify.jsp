@@ -100,8 +100,8 @@
 								<li><span>공지사항</span></li>
 								<li><span>글수정</span></li>
 								<li><span>&nbsp;&nbsp;${notice.title}</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
                     <section class="panel">

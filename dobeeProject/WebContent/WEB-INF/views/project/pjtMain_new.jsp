@@ -179,7 +179,7 @@
 		 			});
 		 			
 	 				$.ajax({
-	 	 	 			url:"getUserList.do",
+	 	 	 			url:"ajax/project/getUserList.do",
 	 	 	 			dataType: 'json',
 				        type:"post",
 	 	 				success:function(responseData){
@@ -400,9 +400,8 @@
 							</li>
 							<li><span>프로젝트</span></li>
 							<li><span>메인</span></li>
+							<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 						</ol>
-				
-						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 
@@ -430,7 +429,7 @@
 									<section class="panel">
 										<header class="panel-heading bg-primary">
 												<div class="panel-heading-icon">
-													<i class="fa fa-globe"></i>
+													<i class="fa fa-tasks"></i>
 												</div>
 										</header>
 										<div class="panel-body text-center">
@@ -457,9 +456,9 @@
 							<div class="col-md-6 col-lg-6 col-xl-3">
 								<a id="newPjt" data-toggle="modal" href="#newPjtModal" style="text-decoration:none;color:#777">
 									<section class="panel">
-										<header class="panel-heading bg-secondary">
+										<header class="panel-heading bg-tertiary">
 											<div class="panel-heading-icon">
-												<i class="fa fa-globe"></i>
+												<i class="fa fa-tasks"></i>
 											</div>
 										</header>
 										<div class="panel-body text-center">
@@ -477,9 +476,9 @@
 								<div class="col-md-6 col-lg-6 col-xl-3">
 									<a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration:none;color:#777">
 										<section class="panel">
-											<header class="panel-heading bg-primary">
+											<header class="panel-heading bg-secondary">
 													<div class="panel-heading-icon">
-														<i class="fa fa-globe"></i>
+														<i class="fa fa-tasks"></i>
 													</div>
 											</header>
 											<div class="panel-body text-center">

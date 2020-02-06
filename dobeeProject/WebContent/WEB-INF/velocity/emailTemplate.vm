@@ -364,7 +364,7 @@ a[x-apple-data-detectors=true] {
 																<input type="hidden" name="mail" value="${mail}"/>
 																<button type="submit" target="_blank"
 																	style="display: inline-block; font-family: 'Sunflower', sans-serif; text-decoration: none; -webkit-text-size-adjust: none; text-align: center; color: #FFF; background-color: #34495e; border-radius: 50px; -webkit-border-radius: 20px; -moz-border-radius: 20px; width: auto; padding: 10px 40px; mso-border-alt: none;">
-																	클릭
+																	Click
 																</button>
 																</form>
 															</div>
