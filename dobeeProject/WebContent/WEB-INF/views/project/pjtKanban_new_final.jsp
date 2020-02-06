@@ -1661,7 +1661,7 @@
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">예정</h4>
@@ -1740,7 +1740,7 @@
                                     <header class="panel-heading bg-primary">
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">진행</h4>
@@ -1804,7 +1804,7 @@
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">테스트</h4>
@@ -1868,7 +1868,7 @@
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">완료</h4>
@@ -2332,16 +2332,16 @@
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 										<!-- 업무 pm만 수정 가능-->
 										<c:if test="${ user.authCode == '3'}">
-											<div class="form-group">
-													<label class="col-md-3 control-label">업무</label>
-													<div class="col-md-7">
-														<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
-													</div>
+										<div class="form-group">
+											<div><label class="col-md-3 control-label">업무</label></div>
+											<div class="col-md-7">
+												<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
 											</div>
+										</div>
 										</c:if>
 										<!-- 날짜 -->
 										<div class="form-group">
-											<label class="col-md-3 control-label">날짜</label>
+											<label class="col-md-3 control-label" >날짜</label>
 											<div class="col-md-7">
 												<div class="input-daterange input-group" data-plugin-datepicker>
 													<span class="input-group-addon">
@@ -2361,7 +2361,7 @@
 										</div>
 										<!-- 담당자 -->
 										<div class="form-group">
-											<label class="col-md-3 control-label">담당자</label>
+											<div><label class="col-md-3 control-label" style="text-align:left;">담당자</label></div>
 											<c:choose>
 												<c:when test="${ user.authCode == '2'}">
 														<div class="col-md-7" style="margin-top: 8px;">
