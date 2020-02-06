@@ -126,8 +126,6 @@
 	$('#userSelect').select2({
         placeholder: '멤버 선택'
 		});
-
-
 	
 
 	var chatType = $("#chatType").val();
@@ -149,7 +147,7 @@
 		socket.emit('getChatContent', chatUsersMail, chatType);
 	});
 
-	socket.on('printChatHistory', function(msg){
+	socket.on('printChatHistory', function(msg) {
 
         var msgArray = msg.reverse();
         console.log('이전 대화 목록 가져오기');
@@ -325,8 +323,8 @@
 								</li>
 								<li><span>채팅</span></li>
 								<li><span>1:1채팅</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 

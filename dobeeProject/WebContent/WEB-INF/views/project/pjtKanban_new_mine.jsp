@@ -1249,7 +1249,7 @@
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">예정</h4>

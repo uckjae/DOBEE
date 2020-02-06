@@ -40,7 +40,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body {
-    background: #23394A;
+    background: #2e383f;
     width: 100%;
 }
 </style>

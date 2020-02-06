@@ -365,9 +365,8 @@
 								</li>
 								<li><span>사원</span></li>
 								<li><span>사원등록</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-					
-						<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -382,7 +381,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
-													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" hidden="true">
+													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" style="display: none;">
 												</div>
 											</div>
 						

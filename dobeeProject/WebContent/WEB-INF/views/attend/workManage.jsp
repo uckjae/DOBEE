@@ -7,17 +7,17 @@
 	<style>
 		.btn-info.btn-sm.반려 {
 			border-color:lightgray;
-			background-color:red;
+			background-color:#4BDA64;
 		}
 		
 		.btn-info.btn-sm.미승인 {
 			border-color:lightgray;
-			background-color:gray;
+			background-color:#f54242;
 		}
 		
 		.btn-info.btn-sm.승인 {
 			border-color:lightgray;
-			background-color:green;
+			background-color:#ffc107;
 		}
 		
 		.btn-info.btn-sm {
@@ -71,9 +71,8 @@
 								</li>
 								<li><span>근무</span></li>
 								<li><span>근무 내역 관리</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-					
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
 					<!-- 작업 여기부터~!~!~!~~! -->
@@ -87,7 +86,7 @@
 						<div class="panel-body" style="min-height: 560px;">
 							<div id="selector" style="text-align : right">
 								<select id="yearMonthSelector">
-									<option hidden="">Year-Month</option>
+									<option hidden="">년-월 선택</option>
 									<!-- Ajax -->
 								</select>
 							</div>
@@ -102,10 +101,10 @@
 									<div class="col-md-12">
 										<div class="col-md-4"></div>
 										<div class="col-md-2">
-											<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
+											<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: #E8B10B; "><b>근  무</b></button>
 										</div>
 										<div class="col-md-2">
-											<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
+											<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: #07617D; "><b>연장 근무</b></button>
 										</div>
 										<div class="col-md-4"></div>
 									</div>
@@ -129,7 +128,7 @@
 												<div class="summary">
 													<h4 class="title" id="thTitle">총 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalHour">불러오는 중...</strong>
+														<strong class="amount" id="totalHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
@@ -151,7 +150,7 @@
 												<div class="summary">
 													<h4 class="title" id="twhTitle">총 정상 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalWorkHour">불러오는 중...</strong>
+														<strong class="amount" id="totalWorkHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
@@ -173,7 +172,7 @@
 												<div class="summary">
 													<h4 class="title" id="tehTitle">총 연장 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalExtHour">불러오는 중...</strong>
+														<strong class="amount" id="totalExtHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
@@ -498,8 +497,8 @@
 					        	stack : 'Stack 0',
 					            label: '출근',
 					            data: attInitAbs,
-					            backgroundColor: 'rgba(255, 255, 0, 0)',
-					            borderColor: 'rgba(255, 255, 0, 0.0 )',
+					            backgroundColor: '#f54242',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1,
 					            barTickness : 1,
 					        },
@@ -507,8 +506,8 @@
 					        	stack : 'Stack 0',
 					            label: '퇴근',
 					            data: attEndRel,
-					            backgroundColor: 'rgba(129, 242, 41, 1)',
-					            borderColor: 'rgba(129, 242, 41, 0.5)',
+					            backgroundColor: '#E8B10B',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1
 
 					        },
@@ -516,16 +515,16 @@
 					        	stack : 'Stack 0',
 					            label: '연장근무 시작',
 					            data: extInitRel,
-					            backgroundColor: 'rgba(255, 255, 0, 0)',
-					            borderColor: 'rgba(255, 255, 0, 0)',
+					            backgroundColor: '#07617D',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1,
 					        },
 					        {
 					        	stack : 'Stack 0',
 					            label: '연장근무 종료',
 					            data: extEndRel,
-					            backgroundColor: 'rgba(255, 39, 0, 1)',
-					            borderColor: 'rgba(255, 39, 0, 0.5)',
+					            backgroundColor: '#448092',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1
 					        }]
 					    },

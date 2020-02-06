@@ -41,15 +41,13 @@ console.log("MAIN!!");
 			<!-- start : main Content -->
 			<section role="main" class="content-body">
 				<header class="page-header">
-					<h2>메인</h2>
+					<h2></h2>
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
-							<li><a href="index.html"> <i class="fa fa-home"></i>
-							</a></li>
+							<li><a href="#"> <i class="fa fa-home"></i></a></li>
+							<li style="padding-right:30px;"><a href="#"> <i class="fa fa-chevron-left"></i></a></li>
 						</ol>
-
-						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 
@@ -90,7 +88,7 @@ console.log("MAIN!!");
 												title : element.title,
 												start : element.startTime,
 												end : element.endTime,
-												color : "#f54c4c"	
+												color : "#FF6C6C"	
 											})
 										} else if (element.entry == "TASK") {
 											eventList.push ({
@@ -104,7 +102,7 @@ console.log("MAIN!!");
 												title : element.title,
 												start : element.startTime,
 												end : element.endTime,
-												color : "#69a854"	
+												color : "#4bda64"	
 											})
 										}
 									});
@@ -125,7 +123,7 @@ console.log("MAIN!!");
 									      startTime : '09:00',
 									      endTime : '18:00'
 									  },
-									  eventLimit : true,
+									  eventLimit : false,
 								      editable: false,
 								      events: eventList
 								    });

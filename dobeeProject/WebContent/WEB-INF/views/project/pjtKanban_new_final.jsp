@@ -679,16 +679,16 @@
  								datasets: [{
  									data: [pjtTaskScheduled.length, pjtTaskInProgress.length, pjtTaskTest.length,  pjtTaskCompleted.length ],
  									backgroundColor: [
- 									  "#3e95cd",
- 									  "#8e5ea2", 
- 									  "#3cba9f",
- 									  "#c45850"
+ 									  "#e8b10b",
+ 									  "##8a8a89", 
+ 									  "#07617D",
+ 									  "#2E383F"
  									],
  									hoverBackgroundColor: [
- 	 									"#3e95cd",
- 	 									"#8e5ea2",
- 	 									"#3cba9f",
- 	 									"#c45850"
+ 	 									"#e8b10b",
+ 	 									"##8a8a89",
+ 	 									"#07617D",
+ 	 									"#2E383F"
  									]
  								}]
  							},
@@ -700,7 +700,7 @@
  							elements: {
  								center: {
  									text: Math.floor((pjtTaskCompleted.length/pjtTaskLength)*100) + "%",
- 				          color: '#FF6384', // Default is #000000
+ 				          color: '#3d73c2', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
  				          sidePadding: 15 // Defualt is 20 (as a percentage)
  								}
@@ -737,13 +737,13 @@
  					        datasets: [{
  					            label: 'Percentage',
  					            data: pjtMemberTask,
- 					            backgroundColor: [ //["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
- 					                'rgba(62, 149, 205, 0.6)',
- 					                'rgba(142, 94, 162, 0.6)',
- 					                'rgba(60, 186, 159, 0.6)',
- 					                'rgba(232, 195, 185, 0.6)',
- 					                'rgba(196, 88, 80, 0.6)',
- 					                'rgba(255, 206, 86, 0.6)'
+ 					            backgroundColor: [ //["#e8b10b", "##8a8a89","#3cba9f","#e8c3b9","#2E383F", "#ffce56"],
+ 					                '#FDCE0C',
+ 					                '#C4E7F2',
+ 					                '#0090d9',
+ 					                '#DD66A1',
+ 					                '#4BDA64',
+ 					                '#FDCDCD'
  					            ]
  					        }]
  					},
@@ -790,7 +790,7 @@
  					      datasets: [
  					        {
  					          label: "업무 할당 현황",
- 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
+ 					          backgroundColor: ["#e8b10b", "#C4E7F2","#3D73C2","#DD66A1","#4BDA64", "#FF3636"],
  					          data: taskCount
  					        }
  					      ]
@@ -852,7 +852,7 @@
  					      datasets: [
  					        {
  					          label: "업무 개수",
- 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          backgroundColor: ["#FF3636", "#FF8224","#0090d9","#2CB24F","#2E383F"],
  					          data: importance
  					        }
  					      ]
@@ -972,16 +972,16 @@
  								datasets: [{
  									data: [taskScheduled.length, taskInProgress.length,taskTest.length,  taskCompleted.length ],
  									backgroundColor: [
- 	 									"#3e95cd",
- 	 									"#8e5ea2", 
- 	 									"#3cba9f",
- 	 									"#c45850"
+ 	 									"#e8b10b",
+ 	 									"##8a8a89", 
+ 	 									"#07617D",
+ 	 									"#2E383F"
  	 								],
  									hoverBackgroundColor: [
- 										"#3e95cd",
-	 									"#8e5ea2", 
-	 									"#3cba9f",
-	 									"#c45850"
+ 										"#e8b10b",
+	 									"##8a8a89", 
+	 									"#07617D",
+	 									"#2E383F"
  									]
  								}]
  							},
@@ -993,7 +993,7 @@
  							elements: {
  								center: {
  									text: Math.floor((taskCompleted.length/memberTask.length)*100) + "%",
- 				          color: '#FF6384', // Default is #000000
+ 				          color: '#3d73c2', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
  				          sidePadding: 15 // Defualt is 20 (as a percentage)
  								}
@@ -1626,9 +1626,8 @@
                             </a>
                         </li>
                         <li><span>프로젝트</span></li>
+                        <li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
                     </ol>
-
-                    <i class="fa fa-chevron-left"></i>
                 </div>
             </header>
             <!-- start: page -->
@@ -1658,11 +1657,11 @@
                             <!-- 예정 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#8c8c75;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">예정</h4>
@@ -1704,16 +1703,29 @@
 	                                                    <c:if test="${task.progress eq '예정' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-			                                                       	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	<!--이름박스-->
+		                                                    	  <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal" 
+																	      data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>		
+																	</c:if>
+																	
+																   </div>
+																   <div>
+																   		담당자: ${task.mail}
+																   </div>
+																	<!-- 날짜박스 -->
+																   <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+			                                                       </div>
+			                                                       			
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1728,10 +1740,10 @@
                             <!-- 진행 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#E8B10B;">
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">진행</h4>
@@ -1761,16 +1773,22 @@
 	                                                    <c:if test="${task.progress eq '진행' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                   <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	 <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal" 
+																	      data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																 </div>
+																 <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+				                                                 </div> 
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1785,11 +1803,11 @@
                             <!-- 테스트 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#07617D;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">테스트</h4>
@@ -1817,16 +1835,24 @@
 	                                                    <c:if test="${task.progress eq '테스트' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                   <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	
+		                                                    	 <div>
+																	<span style="cursor:pointer;">
+																	    <a style="text-decoration: none;" class="taskDetail" data-toggle="modal"
+																	        data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	 <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																  </div>
+																  
+																  <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+																  </div>	
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1841,11 +1867,11 @@
                             <!-- 완료 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#2E383F;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
-                                                <img src="assets/images/!logged-user.jpg">
+                                                <img src="img/pj1.png">
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">완료</h4>
@@ -1874,16 +1900,24 @@
 	                                                    <c:if test="${task.progress eq '완료' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	
+		                                                    	   <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal"
+																	        data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																    </span>
+																    <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																   </div>
+																   
+																   <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+																   </div>
 																</div>
 															</li>
 	                                                     </c:if>
@@ -2301,16 +2335,16 @@
 									<form id="taskEditForm" action="taskEdit.do" class="form-horizontal mb-lg"><!--  method="post" -->
 										<!-- 업무 pm만 수정 가능-->
 										<c:if test="${ user.authCode == '3'}">
-											<div class="form-group">
-													<label class="col-md-3 control-label">업무</label>
-													<div class="col-md-7">
-														<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
-													</div>
+										<div class="form-group">
+											<div><label class="col-md-3 control-label">업무</label></div>
+											<div class="col-md-7">
+												<input type="text" id="taskDetailEditTitle" name="title" class="form-control" form="taskEditForm">
 											</div>
+										</div>
 										</c:if>
 										<!-- 날짜 -->
 										<div class="form-group">
-											<label class="col-md-3 control-label">날짜</label>
+											<label class="col-md-3 control-label" >날짜</label>
 											<div class="col-md-7">
 												<div class="input-daterange input-group" data-plugin-datepicker>
 													<span class="input-group-addon">
@@ -2330,7 +2364,7 @@
 										</div>
 										<!-- 담당자 -->
 										<div class="form-group">
-											<label class="col-md-3 control-label">담당자</label>
+											<div><label class="col-md-3 control-label" style="text-align:left;">담당자</label></div>
 											<c:choose>
 												<c:when test="${ user.authCode == '2'}">
 														<div class="col-md-7" style="margin-top: 8px;">

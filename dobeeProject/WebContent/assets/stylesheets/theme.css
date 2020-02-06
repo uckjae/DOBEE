@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	color: #777;
+	color: #000;
 	font-family: "Open Sans", Arial, sans-serif;
 	line-height: 22px;
 	margin: 0;
@@ -70,7 +70,7 @@ a:active {
 
 /* Layout Base - Page Header */
 .page-header {
-	background: #34495e;
+	background: #2E383F;
 	border-bottom: none;
 	border-left: 1px solid #3a3a3a;
 	box-shadow: 1px 3px 0 1px #cccccc;
@@ -81,7 +81,7 @@ a:active {
 
 /* Layout Base - Sidebar Left */
 .sidebar-left {
-	background: #34495e;
+	background: #2E383F;
 	box-shadow: -5px 0 0 #2f3139 inset;
 	color: #777777;
 	display: table-cell;
@@ -2343,13 +2343,13 @@ ul.nav-main > li.nav-active > i {
 }
 
 ul.nav-main > li.nav-expanded > a {
-	background: #3B5998;
+	background: #3272b1;
 }
 
 ul.nav-main li a {
 	font-size: 13px;
 	font-size: 1.3rem;
-	color: #abb4be;
+	color: #f2f2f2;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -2511,7 +2511,7 @@ ul.nav-main li .nav-children .nav-children .nav-children li a {
 
 .page-header .breadcrumbs a,
 .page-header .breadcrumbs span {
-	color: #c3c3c3;
+	color: #f2f2f2;
 	display: inline-block;
 	font-size: 14px;
 	font-size: 1.4rem;
@@ -3428,12 +3428,12 @@ html.dark .text-muted {
 }
 
 .bg-secondary {
-	background: #e36159;
+	background: #2e383f;
 	color: white;
 }
 
 .bg-tertiary {
-	background: #2baab1;
+	background: #07617D;
 	color: white;
 }
 
@@ -4494,7 +4494,7 @@ body .btn-gplus,
 body .btn-gplus:active,
 body .btn-gplus:hover,
 body .btn-gplus:focus {
-	color: #FFF;
+	color: #0a0a0a;
 	font-weight: 300;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -4502,33 +4502,33 @@ body .btn-gplus:focus {
 }
 
 body .btn-facebook, body .btn-facebook:focus {
-	background: #3B5998;
-	border: 1px solid #37538D;
+	background: #ffc107;
+	border: 1px solid #ffc107;
 }
 
 body .btn-facebook:hover {
-	background: #4162a7;
-	border-color: #3d5c9c;
+	background: #ffc107;
+	border-color: #ffc107;
 }
 
 body .btn-facebook:active {
-	background: #37538d;
-	border-color: #334d82;
+	background: #ffc107;
+	border-color: #ffc107;
 }
 
 body .btn-twitter, body .btn-twitter:focus {
-	background: #0088cc;
-	border: 1px solid #0088cc;
+	background: #FF6C6C;
+	border: 1px solid #FF6C6C;
 }
 
 body .btn-twitter:hover {
-	background: #63b3ef;
-	border-color: #55acee;
+	background: #FF6C6C;
+	border-color: #FF6C6C;
 }
 
 body .btn-twitter:active {
-	background: #47a5ed;
-	border-color: #399eec;
+	background: #FF6C6C;
+	border-color: #FF6C6C;
 }
 
 body .btn-gplus, body .btn-gplus:focus {
@@ -5322,7 +5322,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .sidebar-widget.widget-tasks ul li:nth-child(6n+1):before {
-	border-color: #d64b4b;
+	border-color: #ffc107;
 }
 
 .sidebar-widget.widget-tasks ul li:nth-child(6n+2):before {
@@ -5330,7 +5330,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .sidebar-widget.widget-tasks ul li:nth-child(6n+3):before {
-	border-color: #4dd79c;
+	border-color: #4bda64;
 }
 
 .sidebar-widget.widget-tasks ul li:nth-child(6n+4):before {
@@ -5502,14 +5502,14 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .panel-heading.bg-secondary {
-	background: #e36159;
+	background: #2e383f;
 	color: white;
 	border-bottom: 0 none;
 	border-right: 0 none;
 }
 
 .panel-heading.bg-tertiary {
-	background: #2baab1;
+	background: #8c8c75;
 	color: white;
 	border-bottom: 0 none;
 	border-right: 0 none;
@@ -5730,7 +5730,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .panel-featured-secondary {
-	border-color: #e36159;
+	border-color: #2e383f;
 }
 
 .panel-featured-secondary .panel-title {
@@ -5738,7 +5738,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .panel-featured-tertiary {
-	border-color: #2baab1;
+	border-color: #07617D;
 }
 
 .panel-featured-tertiary .panel-title {
@@ -8597,8 +8597,8 @@ html.dark .toggle > label {
 }
 
 .label-success {
-	background: #47a447;
-	color: white;
+	background: #1DDB16;
+	color: #252222;
 }
 
 .label-warning {
@@ -11300,7 +11300,7 @@ ul.simple-todo-list li {
 }
 
 ul.simple-todo-list li.completed {
-	color: #A7A7A7;
+	color: #0090d9;
 }
 
 ul.simple-todo-list li.completed:before {
@@ -15318,7 +15318,7 @@ html.dark .invoice table.table > tbody tr > td {
 .body-sign .panel-sign .panel-title-sign .title {
 	background-color: #cccccc;
 	border-radius: 5px 5px 0 0;
-	color: #FFF;
+	color: #000;
 	display: inline-block;
 	font-size: 12px;
 	font-size: 1.2rem;
@@ -15328,7 +15328,7 @@ html.dark .invoice table.table > tbody tr > td {
 	vertical-align: bottom;
 }
 .body-sign .panel-sign .panel-body {
-	background: #FFF;
+	background: #f6f6f6;
 	border-top: 5px solid #cccccc;
 	border-radius: 5px 0 5px 5px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
