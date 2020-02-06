@@ -125,7 +125,6 @@ public class ApplyService {
     public int absReqHandle(Apply apply) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	int result = userDao.absReqHandle(apply);
-    	System.out.println("results 확인 : " + result);
     	return result;
     }
     
@@ -146,7 +145,6 @@ public class ApplyService {
     	int result = userDao.extReqHandle(apply);
     	
     	return result;
-    	// System.out.println("results 확인 : " + results);
     }
 
 

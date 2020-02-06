@@ -1,6 +1,5 @@
 package com.dobee.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -106,7 +105,7 @@ public interface UserDao {
 
     // Ajax 부재 결재자 불러오기
     /* 01.10 게다죽 */
-    public ArrayList<User> getApprovalList();
+    public List<User> getApprovalList();
 
     
     // 개인_연장근무신청
@@ -277,6 +276,6 @@ public interface UserDao {
     
     
     //사원 등록 이메일 중복 확인 - 성호
-    public ArrayList<UserInfo> checkEmail(String mail);
+    public List<UserInfo> checkEmail(String mail);
     
 }

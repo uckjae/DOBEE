@@ -25,7 +25,6 @@ public class ExtrackCostService {
                 list.add(matcher.group());
                 count++;
             }
-            System.out.println(",가 포함된 숫자를 찾은 문자열 갯수(=list.length() 와 같음): " + count);
         }
 
         return list;

@@ -24,15 +24,11 @@ public class AjaxController_Mypage {
     public String mypageModify(User user){
     	String responseData = "";
     	int result = 0;
-    	System.out.println("그냥 비번"+user.getPassword());
     	String password = bCryptPasswordEncoder.encode(user.getPassword());
-    	System.out.println("암호화 한 비번"+password);
 	    user.setPassword(password);
     	result = memberService.mypageModify(user);
     	if(result > 0 ) { //수정 완료
-    		System.out.println("수정됨");
 			responseData = "success";
-			System.out.println("성공함");
 		}
         return responseData;
     }

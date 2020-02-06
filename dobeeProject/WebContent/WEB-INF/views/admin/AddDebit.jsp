@@ -180,7 +180,7 @@
 	  
        let result = 0;  // 컨트롤단으로 부터 디비등록 되었는지 확인 받는 자료 
 		$.ajax({
-			url:"AdminDebit.do",
+			url:"ajax/admin/AdminDebit.do",
 			type:'POST',
             data: sendData,
             beforeSend : function(xhr, opts) {
@@ -225,7 +225,6 @@
                };
             },
 			success:function(data){
-					console.log(data);
 					result = data;
 					if(result == 0){
 						swal({

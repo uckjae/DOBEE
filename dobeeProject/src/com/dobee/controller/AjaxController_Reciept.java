@@ -2,7 +2,7 @@ package com.dobee.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dobee.services.DebitService;
 import com.dobee.services.ReceiptService;
-import com.dobee.vo.CostCode;
 
 @Controller
 @RequestMapping("ajax/receipt/**")
@@ -30,19 +29,15 @@ public class AjaxController_Reciept {
 	//영수증 파일 업로드 
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
-		System.out.println("컨트롤단/boardControlelr.java :  fileUploadAjax.do 요청들어왔다 ");
-		ArrayList<String> arrayList = new ArrayList<>();
+		List<String> list = receiptService.fileUpload(mRequest);
 
 		ModelAndView mav = new ModelAndView();
-		arrayList = receiptService.fileUpload(mRequest);
 		try {
-			System.out.println("컨트롤단/boardControlelr.java :try 구문 시작");
-			if(arrayList.get(0).equals("true")) {
+			if(list.get(0).equals("true")) {
 				mav.addObject("result", "success");
-				mav.addObject("uploadPath", arrayList.get(1));
-				mav.addObject("saveFileName", arrayList.get(2));
+				mav.addObject("uploadPath", list.get(1));
+				mav.addObject("saveFileName", list.get(2));
 			} else {
-				System.out.println("try 구문 else 에 빠짐 ");
 				mav.addObject("result", "fail");
 				
 			}
@@ -50,7 +45,6 @@ public class AjaxController_Reciept {
 			
 		}catch (Exception e) {
 			System.out.println(e);
-			System.out.println("컨트롤단/boardControlelr.java :  try 문에서 예외발생");
 		}
 		
 		return mav;
@@ -67,8 +61,8 @@ public class AjaxController_Reciept {
     //영수증등록_현재 법인카드 목록 아작스로 불러다주기
     @RequestMapping(value="cardListtoReceipt.do", method=RequestMethod.POST)
     @ResponseBody
-    public ArrayList cardList() {
-    	ArrayList debitList = debitService.listDebit();
+    public List cardList() {
+    	List debitList = debitService.listDebit();
     	return debitList;
     }
     
@@ -76,8 +70,8 @@ public class AjaxController_Reciept {
     //영수증 등록_ 비용항목 선택 아작스로 불러다주기
     @RequestMapping("debitCodeList.do")
     @ResponseBody
-    public ArrayList costCodeList() {
-    	ArrayList listCodes = debitService.listCode();
+    public List costCodeList() {
+    	List listCodes = debitService.listCode();
     	return listCodes;
     }
 	

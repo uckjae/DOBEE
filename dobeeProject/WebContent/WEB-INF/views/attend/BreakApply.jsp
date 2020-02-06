@@ -316,7 +316,6 @@
 		        
 		        var formData = $("#breakApplyForm").serialize();
 		        
-		        console.log('폼??'+formData);
 	        	$.ajax({
 					url : "ajax/apply/breakApply.do",
 					data : formData,
