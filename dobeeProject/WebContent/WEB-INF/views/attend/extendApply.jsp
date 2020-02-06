@@ -317,7 +317,7 @@
 	    						title: "미승인", 
 	    						start: element.startAt, 
 	    						end: element.endAt,
-	    						color: "#c842f5"
+	    						color: "#f54242"
 	    					})		
 	    				} /*else if (element.isAuth === '반려') {
 	    					eventList.push({

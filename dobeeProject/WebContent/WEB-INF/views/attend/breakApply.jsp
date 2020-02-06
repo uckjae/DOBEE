@@ -370,7 +370,7 @@
 							title : "연차",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#f28c1f"
+							color : "#4BDA64"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 1 ) {
 						eventList.push({
@@ -384,7 +384,7 @@
 							title : "반일 연차",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#ebb134"
+							color : "#4BDA64"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 2 ) {
 						eventList.push({
@@ -398,7 +398,7 @@
 							title : "출장",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#00871d"
+							color : "#ffc107"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 3 ) {
 						eventList.push({
@@ -406,13 +406,14 @@
 							start : element.startAt,
 							end : element.endAt,
 							color : "#f54242"
+							
 						})
 					} else if (element.isAuth == '승인' && element.apyCode == 4 ) {
 						eventList.push({
 							title : "외근",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#093e94"
+							color : "#ffc107"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 4 ) {
 						eventList.push({
@@ -426,7 +427,7 @@
 							title : "경조 휴가",
 							start : element.startAt,
 							end : element.endAt,
-							color : "#a15113"
+							color : "#0088cc"
 						})
 					} else if (element.isAuth ==='미승인' && element.apyCode == 5 ) {
 						eventList.push({

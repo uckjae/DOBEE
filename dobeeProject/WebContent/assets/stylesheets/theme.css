@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	color: #777;
+	color: #000;
 	font-family: "Open Sans", Arial, sans-serif;
 	line-height: 22px;
 	margin: 0;
@@ -4494,7 +4494,7 @@ body .btn-gplus,
 body .btn-gplus:active,
 body .btn-gplus:hover,
 body .btn-gplus:focus {
-	color: #FFF;
+	color: #0a0a0a;
 	font-weight: 300;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -4502,33 +4502,33 @@ body .btn-gplus:focus {
 }
 
 body .btn-facebook, body .btn-facebook:focus {
-	background: #3B5998;
-	border: 1px solid #37538D;
+	background: #ffc107;
+	border: 1px solid #ffc107;
 }
 
 body .btn-facebook:hover {
-	background: #4162a7;
-	border-color: #3d5c9c;
+	background: #ffc107;
+	border-color: #ffc107;
 }
 
 body .btn-facebook:active {
-	background: #37538d;
-	border-color: #334d82;
+	background: #ffc107;
+	border-color: #ffc107;
 }
 
 body .btn-twitter, body .btn-twitter:focus {
-	background: #0088cc;
-	border: 1px solid #0088cc;
+	background: #FF6C6C;
+	border: 1px solid #FF6C6C;
 }
 
 body .btn-twitter:hover {
-	background: #63b3ef;
-	border-color: #55acee;
+	background: #FF6C6C;
+	border-color: #FF6C6C;
 }
 
 body .btn-twitter:active {
-	background: #47a5ed;
-	border-color: #399eec;
+	background: #FF6C6C;
+	border-color: #FF6C6C;
 }
 
 body .btn-gplus, body .btn-gplus:focus {
@@ -15318,7 +15318,7 @@ html.dark .invoice table.table > tbody tr > td {
 .body-sign .panel-sign .panel-title-sign .title {
 	background-color: #cccccc;
 	border-radius: 5px 5px 0 0;
-	color: #FFF;
+	color: #000;
 	display: inline-block;
 	font-size: 12px;
 	font-size: 1.2rem;
@@ -15328,7 +15328,7 @@ html.dark .invoice table.table > tbody tr > td {
 	vertical-align: bottom;
 }
 .body-sign .panel-sign .panel-body {
-	background: #FFF;
+	background: #f6f6f6;
 	border-top: 5px solid #cccccc;
 	border-radius: 5px 0 5px 5px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
