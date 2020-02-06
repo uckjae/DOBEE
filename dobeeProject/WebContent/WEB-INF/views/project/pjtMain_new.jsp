@@ -179,7 +179,7 @@
 		 			});
 		 			
 	 				$.ajax({
-	 	 	 			url:"getUserList.do",
+	 	 	 			url:"ajax/project/getUserList.do",
 	 	 	 			dataType: 'json',
 				        type:"post",
 	 	 				success:function(responseData){
