@@ -20,7 +20,7 @@ public class TimeLineService {
 	//성호 - 타임라인 불러오기 아작스 서비스 
 	public ArrayList<GoogleDrive> loadTimeline(int pjtSeq) {
 		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-		ArrayList<GoogleDrive> list = new ArrayList<>(); 
+		ArrayList<GoogleDrive> list = new ArrayList<GoogleDrive>(); 
 		list = projectdao.loadTimeline(pjtSeq);
 		
 		return list;

@@ -44,7 +44,7 @@ public class DebitService {
     //법인 카드 목록 불러오기
     public ArrayList<Debit> listDebit(){
     	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
-    	ArrayList<Debit> listDebit = new ArrayList<>();
+    	ArrayList<Debit> listDebit = new ArrayList<Debit>();
     	listDebit = paymentDao.listDebit();
     	return listDebit;
     }
@@ -75,7 +75,7 @@ public class DebitService {
     
     //비용 신청(=영수증 등록) 목록 보여주기 
     public ArrayList<CostList> listReceipt() {
-    	ArrayList<CostList> list = new ArrayList<>();
+    	ArrayList<CostList> list = new ArrayList<CostList>();
     	System.out.println("영수증 목록보기 서비스단 시작");
     	PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
     	list = paymentDao.listReceipt();

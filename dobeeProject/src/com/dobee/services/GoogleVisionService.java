@@ -40,7 +40,7 @@ public class GoogleVisionService {
 		JSONObject jsonObj = new JSONObject();
 		try {
 			String imageFilePath = path;
-			List<AnnotateImageRequest> requests = new ArrayList<>();
+			List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
 			
 			ByteString imgBytes = ByteString.readFrom(new FileInputStream(imageFilePath));
 		

@@ -24,7 +24,7 @@ public class AjaxController_GoogleDrive {
 	//프로젝트 마다 해당 구글 드라이브 아작스로 불러와서 데이터 넘겨주는 함수
 	@RequestMapping("loadTimeLine.do")
 	public ArrayList<GoogleDrive> getMemberTaskChart(@RequestParam(value="pjtSeq") int pjtSeq){
-		ArrayList<GoogleDrive> list = new ArrayList<>();
+		ArrayList<GoogleDrive> list = new ArrayList<GoogleDrive>();
 		list = timelineService.loadTimeline(pjtSeq);
 		
 		return list;
@@ -69,7 +69,7 @@ public class AjaxController_GoogleDrive {
 		data.put("option", option);
 		data.put("searchText", searchText);
 		data.put("pjtSeq", pjtSeq);
-		ArrayList<GoogleDrive> result = new ArrayList<>();
+		ArrayList<GoogleDrive> result = new ArrayList<GoogleDrive>();
 		System.out.println("검색 컨트롤러 안오나??");
 		System.out.println(data);
 		result = timelineService.gdSearch(data);

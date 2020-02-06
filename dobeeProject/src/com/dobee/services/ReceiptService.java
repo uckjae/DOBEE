@@ -21,7 +21,7 @@ public class ReceiptService {
 		//String apachRealTempPath = mRequest.getSession().getServletContext().getRealPath("/");
 		//String apachUploadPath = apachRealTempPath + "uplaod";
 		
-		ArrayList<String> arrayList = new ArrayList<>();
+		ArrayList<String> arrayList = new ArrayList<String>();
 		String isSuccess = "false";
 		String uploadPath = "/home/ec2-user/upload_receipt/";
 		File dir = new File(uploadPath);

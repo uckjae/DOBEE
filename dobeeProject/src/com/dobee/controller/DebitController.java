@@ -65,7 +65,7 @@ public class DebitController {
     //비용신청 목록(= 영수증 등록 목록 보기) 가기
     @RequestMapping("receiptList.do")
     public String viewDebit(Model model) {
-    	ArrayList<CostList> list = new ArrayList<>();
+    	ArrayList<CostList> list = new ArrayList<CostList>();
     	list = debitService.listReceipt();
     	model.addAttribute("list", list);
     	

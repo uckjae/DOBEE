@@ -186,7 +186,7 @@ public class MemberService {
     
     //사원 등록시 이메일 중복 확인 아작스
     public ArrayList<UserInfo>checkEmail(String mail) {
-    	ArrayList<UserInfo> list = new ArrayList<>();
+    	ArrayList<UserInfo> list = new ArrayList<UserInfo>();
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	list = userDao.checkEmail(mail);
     	

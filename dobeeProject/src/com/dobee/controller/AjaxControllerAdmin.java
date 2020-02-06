@@ -335,7 +335,7 @@ public class AjaxControllerAdmin {
     @RequestMapping("checkEmail.do")
     public ArrayList<UserInfo> checkEmail(@RequestParam(value="mail") String mail) {
     	System.out.println(" 이메일 중복 컨트롤로 오냐 : " + mail);
-    	ArrayList<UserInfo> list = new ArrayList<>();
+    	ArrayList<UserInfo> list = new ArrayList<UserInfo>();
     	list = memberService.checkEmail(mail);
     	
     	return list;

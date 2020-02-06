@@ -31,7 +31,7 @@ public class AjaxController_Reciept {
 	@RequestMapping(value="/fileUploadAjax.do", method=RequestMethod.POST)
 	public ModelAndView fileUploadAjax(MultipartHttpServletRequest mRequest) throws UnsupportedEncodingException {
 		System.out.println("컨트롤단/boardControlelr.java :  fileUploadAjax.do 요청들어왔다 ");
-		ArrayList<String> arrayList = new ArrayList<>();
+		ArrayList<String> arrayList = new ArrayList<String>();
 
 		ModelAndView mav = new ModelAndView();
 		arrayList = receiptService.fileUpload(mRequest);
