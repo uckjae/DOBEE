@@ -297,14 +297,14 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!--  특정 프로젝트의 구글 드라이브 목록 가져오기-->
 <select id="loadTimeline"  parameterType="Integer"  resultType="com.dobee.vo.project.GoogleDrive">
-	select * from googledrive where pjtseq = #{pjtSeq}
+	SELECT * FROM GOOGLEDRIVE WHERE PJTSEQ = #{pjtSeq}
 </select>
 
 
 <!--  특정 프로젝트 구글드라이브 업로드  -->
 <insert id="addGoogleTag" parameterType="com.dobee.vo.project.GoogleDrive">
-	insert into googledrive (gddate, gdurl, mail, pjtseq, filename) 
-	values (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName})
+	INSERT INTO GOOGLEDRIVE (GDDATE, GDURL, MAIL, PJTSEQ, FILENAME)
+	VALUES (#{gdDate}, #{gdUrl}, #{mail}, #{pjtSeq}, #{fileName}) 
 </insert>
 
 
@@ -320,7 +320,7 @@ WHERE p.pjtseq = #{pjtSeq}
 
 <!--  구글 드라이브 검색 -->
 <select id="gdSearch" parameterType="hashmap" resultType="com.dobee.vo.project.GoogleDrive">
-	select * from googledrive where ${option} like CONCAT('%',#{searchText},'%') and pjtSeq = #{pjtSeq}
+	SELECT * FROM GOOGLEDRIVE WHERE ${option} LIKE CONCAT('%', #{searchText}, '%') AND PJTSEQ = #{pjtSeq}
 </select>
 
 </mapper>
