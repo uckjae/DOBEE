@@ -142,13 +142,15 @@ var costKey = 0;
                             
                             uploadPath = result.uploadPath;
                             saveFileName = result.saveFileName;
+                            console.log("uploadPath : " + uploadPath);
+                            console.log("saveFileName : " + saveFileName);
                             console.log(saveFileName);
                             allPath = uploadPath + saveFileName;
                             var forder = '/upload/';
                             var urlPath = forder + saveFileName;
                             $("#uploadImg").html('<img id="imgtag" width="100%" alt="이미지가 보이진 않지만 올라간 상태입니다.">');
                             $("#imgtag").attr("src", urlPath);
-                            console.log("이거 요청 주소 : " + urlPath);
+                            console.log("이거 이미지 태그에서 src = 요청 주소 : " + urlPath);
                             console.log("이게 이미지 경로 : " + allPath);
 
 							alert("이거 요청 주소:" + urlPath);
@@ -202,7 +204,6 @@ var costKey = 0;
                                     error: function(request,status,error) {
                                         console.log("구글 아작스 요청시 에러");
                                         
-                                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                         //구글 비전 요청시 에러 날 때 
                                       	swal({
                                    		   title: "GoogleVision : 입력 실패",
@@ -298,8 +299,9 @@ var costKey = 0;
                             </div>
                             <!-- 파일 업로드  부분 -->
                             <form id="FILE_FORM" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-                                    <input type="file" id="FILE_TAG" name="FILE_TAG"  style="display:inline !important;" >
-                                    <a class="btn btn-primary" href="javascript:uploadFile();" style="width:auto; float:right">업로드</a>
+                            		<label for="FILE_TAG" class="btn btn-primary">선택하기
+                                    <input type="file" id="FILE_TAG" name="FILE_TAG" onchange="uploadFile()"  style="display:none !important;" >
+                                    </label>
                             </form>
                         </div>
 
@@ -372,6 +374,9 @@ var costKey = 0;
                        /*  $(this).siblings(".custom-file-label").addClass("selected").html(fileName); */
                     });
                 });
+
+			
+                
     </script>
             
             
@@ -396,7 +401,6 @@ var costKey = 0;
                                     },
                                     error: function(request,status,error) {
                                         console.log("법인카드 목록 불러오기 아작스 에러남");
-                                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                     },
                                     complete: function() {
                                         // 비용항목 불러오기 아작스 실행
@@ -411,17 +415,13 @@ var costKey = 0;
                                             },
                                             error: function(request,status,error) {
                                                 console.log("비용항목 아작스에서 에러남")
-                                                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                                             },
                                         })
                                     },
-                                    error:function(){
-											console.log("비용 항목 불러오기 아작스 에러");
-                                        }
+                                 
                                 }); // 비용 항목 불러오기 아작스 끝
                         }// 컴플릿트 끝
                     }); // 법인 카드 목록 불러오기 아작스끝
-                //}// 온로드 함수 끝
 </script>        
             
             

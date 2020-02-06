@@ -127,7 +127,6 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 						}
 					};
 					
-					console.log(allemptyCheck);
 					if(!allemptyCheck){
 						return;  // 유효성 불통이면 도중에 함수 종료
 					}
@@ -148,7 +147,6 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					
 					//카드 번호, 카드종류, 날짜 유효성 검사 후 모두 true 로 나와야 통과 
 					if(cardNumCheck && valDateCheck && entryCheck){
-						console.log("유효성 모두 통과");
 						totalCheck = true;
 					}else{
 						
@@ -239,63 +237,87 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 							"valDate" : valDate
 					};
 					
+				
 					
-					//카드 수정 전, 카드번호 중복된건지 확인
-					function cardDupleCheck(cardNum){
-						let checkCardNumber = {"cardNum": cardNum};
-						let result = true;
-						$.ajax({
-							url:'ajax/adminDebit/checkEditDupleCardNum.do',
-							data:checkCardNumber,
-							type:"POST",
-							success:function(data){
-								//data가 0 이상이면 값이 존재함
-								console.log("법인카드 수정 중");
-								console.log(data);
-								if(data > 0 ){
-									result = false;
-								}
-								return result;
-							},
-							error:function(){
-								console.log("아작스 에러");
-								
-							}
-						});
-					};
 					
-					//유효성 검사 totalCheck가 참이면 그때 수정 아작스 실행
-					if(totalCheck){
+					//프로미스 (중복 검사하는 아작스)
+					function getData(callback) {
+						  return new Promise(function (resolve, reject) {
+							  let checkUpdate = 0;  // 0이면 존재하지 않고  1이면 존재
+								let checkCardNumber = {"cardNum": cardNum};
+								$.ajax({
+									url:'ajax/adminDebit/checkEditDupleCardNum.do',
+									data:checkCardNumber,
+									type:"POST",
+									success:function(data){
+										if(data > 0 ){
+											checkUpdate = 1;
+										}
+									},
+									error:function(){
+										console.log("아작스 에러");
+									},
+									complete:function(){
+										resolve(checkUpdate);
+									},
+								});
+						  });
+						};
+					// 등록하는 아작스 함수
+					function updateDebit(check){
+						
 						$.ajax({
 				            url:'ajax/adminDebit/editAdminDebitList.do',
 				            data:sendData,
 				            type:'POST',
 				            beforeSend : function(xhr, opts) {
-				            	// 아작스 실행 전 카드중복 검사
-				            	let result = cardDupleCheck(cardNum);
-				            	// result 가 참이면 if문 실행
-				                if (!result) {
-				                	//종복 카드번호는 안된다는 알림창
-				                	swal({
-				                		   title: "수정 실패",
-				                		   text: "중복된 카드 번호로 수정할 수 없습니다.",
-				                		   icon: "error" //"info,success,warning,error" 중 택1
-				                		}).then((YES) => {
-				                	});
-				                	//아작스 중지
-				                    xhr.abort();
-				                }
+					                if (!check) {  // check가 false 면 중복
+					                	//종복 카드번호는 안된다는 알림창
+					                	swal({
+					                		   title: "수정 실패",
+					                		   text: "중복된 카드 번호로 수정할 수 없습니다.",
+					                		   icon: "error" //"info,success,warning,error" 중 택1
+					                		}).then((YES) => {
+					                	});
+					                	//아작스 중지
+					                	console.log("중복 발견 아작스 중지");
+					                    xhr.abort();
+					                }
 				            },
 				            success:function(data){
-				            	console.log(data);
+				            	console.log("중복 없음 아작스 실행");
+				            	_self.rowSave( $(ori).closest( 'tr' ) );
 				            },
 				            error:function(){
 				            	console.log("아작스 에러!");
 				            },
 				            complete:function(){
-				            	_self.rowSave( $(ori).closest( 'tr' ) );
+				            	
 				            },
 				        });	//아작스 끝 
+						
+					}; //함수 끝
+					
+					
+					
+					
+					//유효성 검사 totalCheck가 참이면 그때 수정 아작스 실행
+					if(totalCheck){
+						//이게 투루면 유효성 통과 
+						//이제 중복 검사 
+						//여기서 프로미스로 먼저 중복검사 아작스 실행 한 후 
+						//등록 아작스 실행해야 하므로
+						getData().then(function (tempCheck) {
+							console.log("여기는 프로미스");
+		            		console.log(tempCheck);
+		            		let check;
+		            		if(tempCheck == 1){  // 1이면 중복
+		            			check = false;
+		            		}else{
+		            			check = true;
+		            		}
+		            		updateDebit(check);
+						});
 					}else{
 						console.log("유효성 검사가 통과되지 않아 아작스를 실행하지 않습니다.");
 					}

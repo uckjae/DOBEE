@@ -40,11 +40,13 @@ public class AjaxController_AdminDebit {
 		debit.setNickName(nickName);
 		debit.setValDate(valDate);
 		
+		
 		result = adminDebitService.updateDebit(debit);
-		if(result > 0) {
-			System.out.println("업데이트 완료");
-		}else {
+		System.out.println("서비스단에서 뭐가 오나 보자 0이면 실패 1이면 성공:"  + result);
+		if(result == 0) {
 			System.out.println("업데이트 실패");
+		}else {
+			System.out.println("업데이트 성공");
 		}
 	}
 	
