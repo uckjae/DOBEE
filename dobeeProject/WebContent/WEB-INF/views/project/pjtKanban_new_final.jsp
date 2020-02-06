@@ -1715,6 +1715,9 @@
 																	</c:if>
 																	
 																   </div>
+																   <div>
+																   		담당자: ${task.mail}
+																   </div>
 																	<!-- 날짜박스 -->
 																   <div>
 			                                                       	<span style="cursor:pointer;">

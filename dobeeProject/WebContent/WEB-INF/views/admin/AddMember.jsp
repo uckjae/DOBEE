@@ -381,7 +381,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
-													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" hidden="true">
+													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" style="display: none;">
 												</div>
 											</div>
 						
