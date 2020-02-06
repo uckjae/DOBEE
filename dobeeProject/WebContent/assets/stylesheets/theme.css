@@ -11300,7 +11300,7 @@ ul.simple-todo-list li {
 }
 
 ul.simple-todo-list li.completed {
-	color: #A7A7A7;
+	color: #0090d9;
 }
 
 ul.simple-todo-list li.completed:before {
