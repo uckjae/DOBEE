@@ -54,6 +54,22 @@ public class AjaxController_Work {
 		return responseData;
 	}
 	
+	
+	// 개인_부재일정 삭제 POST          0120    COMPLETE
+    @RequestMapping(value="deleteApply.do")
+    public String postDeleteApply (Integer aplSeq) {
+    	String responseData = "";
+    	int result = 0;
+        result = applyService.deleteApply(aplSeq);
+        if(result > 0) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
+        
+        return responseData;
+    }
+	
 
 	// 매니저_부재관리_부재 isAuth 		02.05 게다죽
 	@RequestMapping(value="absManage.do", method=RequestMethod.POST)
@@ -103,6 +119,22 @@ public class AjaxController_Work {
         
 		return responseData;
 	}
+	
+	
+    // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
+    @RequestMapping(value="deleteExtApply.do")
+    public String postDeleteExtList (Integer aplSeq) {
+    	String responseData = "";
+    	int result = 0;
+        result = applyService.postDeleteExtList(aplSeq);
+        if(result > 0) {
+        	responseData = "success";
+        } else {
+        	responseData = "fail";
+        }
+        
+        return responseData;
+    }
 	
 	
 	// 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽

@@ -170,7 +170,7 @@
 		 	
 			/*결재자 select2 적용*/
 			$.ajax({
-				url : "ajax/apply/getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do?teamCode="+${sessionScope.user.teamCode},
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];

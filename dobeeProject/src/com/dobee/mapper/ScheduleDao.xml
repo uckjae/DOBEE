@@ -68,7 +68,7 @@
 			FROM TASKSCHEDULE PS
 		    JOIN SCHEDULE S ON PS.SCHSEQ = S.SCHSEQ
 		    JOIN TASK T ON PS.TSKSEQ = T.TSKSEQ
-			WHERE T.MAIL = #{mail} WHERE T.PROGRESS = '진행'
+			WHERE T.MAIL = #{mail} AND T.PROGRESS = '진행'
 	</select>
 
 </mapper>

@@ -109,7 +109,7 @@
 										<input id="extEditApplyBtn" type="button" value="수정" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
 										<!-- <input type="submit" value="수정" class="btn btn-primary" > &nbsp;&nbsp; -->
 										<input type="reset" value="초기화" class="btn btn-default" > &nbsp;&nbsp;
-										<input type="button" value="삭제" class="btn btn-default" onclick="location.href='deleteExtApply.do?aplSeq=${ELforEdit.aplSeq}'">
+										<input id="extDeleteApplyBtn" type="button" value="삭제" class="btn btn-default" >
 									</form>
 										
 								</div>
@@ -154,7 +154,7 @@
 
 			/*결재자 select2 적용*/
 			$.ajax({
-				url : "ajax/apply/getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do?teamCode="+${sessionScope.user.teamCode},
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -289,6 +289,44 @@
 					}
 				});
 		    });
+
+
+	        $("#extDeleteApplyBtn").on('click', function() {
+				$.ajax({
+					url : "ajax/apply/deleteExtApply.do?aplSeq="+${ELforEdit.aplSeq},
+					dataType : "text",
+	 				type:"post",
+					success : function(responseData) {
+
+						send("extDeleteApply");
+						
+						if(responseData == "success"){
+							swal({
+								title: "삭제 완료",
+								text: "연장 근무 신청이 삭제되었습니다.",
+								icon: "success", //"info,success,warning,error" 중 택1
+								button : {
+									confirm: {
+									    text: "확인",
+									    value: true,
+									    visible: true,
+									    className: "",
+									    closeModal: true
+									  }
+									}
+							}).then((YES) => {
+								if(YES){
+	 								history.back();
+									} 
+						})
+					}
+						
+					},
+					error : function(request, status, error) {
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});	
+			});
 	        
 
 	        var eventList = [];

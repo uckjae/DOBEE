@@ -55,9 +55,12 @@ public class ApplyService {
     
     
     // 개인 부재일정 삭제 POST 			0120 	COMPLETE
-    public void deleteApply (Integer aplSeq) {
+    public int deleteApply (Integer aplSeq) {
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	userDao.deleteApply(aplSeq);
+    	int result = userDao.deleteApply(aplSeq);
+    	
+    	return result;
+    	
     }
 
     

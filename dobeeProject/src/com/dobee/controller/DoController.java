@@ -512,7 +512,7 @@ public class DoController {
         return "attend/BreakApplyEdit";
     }
     
-    
+    /*
     // 개인_부재일정 삭제 POST          0120    COMPLETE
     @RequestMapping(value="deleteApply.do", method=RequestMethod.GET)
     public String postDeleteApply (Integer aplSeq) {
@@ -520,7 +520,7 @@ public class DoController {
         
         return "reidrect: attend/BreakManage";    
     }
-
+	*/
 
     // 연장근무 신청 GET          0110 게다죽
     @RequestMapping(value = "extendApply.do", method=RequestMethod.GET)
@@ -573,7 +573,7 @@ public class DoController {
         return "attend/ExtApplyEdit";
     }
     
-    
+    /*
     // 개인_연장근무 신청 삭제 POST       0121 게다죽        COMPLETE
     @RequestMapping(value="deleteExtApply.do", method=RequestMethod.GET)
     public String postDeleteExtList (Integer aplSeq) {
@@ -581,6 +581,7 @@ public class DoController {
         
         return "redirect: workManage.do";
     }
+    */
 
     
     // 매니저_부재관리 - isAuth update GET     0204 updated 게다죽

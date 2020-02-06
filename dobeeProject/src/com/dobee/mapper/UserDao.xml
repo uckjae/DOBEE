@@ -134,7 +134,7 @@
 		
 	<!-- Ajax 결재자 불러오귀 // AUTHCODE=3 팀장 -->
 	<select id="getApprovalList" resultType="com.dobee.vo.member.User">
-		SELECT MAIL, NAME FROM USER WHERE AUTHCODE=3
+		SELECT MAIL, NAME FROM USER WHERE AUTHCODE=3 AND TEAMCODE = #{teamCode}
 	</select>
 	
 	
