@@ -292,7 +292,7 @@ var costKey = 0;
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-6 imgshow">
-                            <div id="uploadImg">
+                            <div id="uploadImg" style="border: 1px solid #2e383f;">
                                 <img src="assets/images/receiptmain.jpg" width="100%">
                                 <!-- 이미지 없을 때 기본으로 보이는 이미지 -->
                             </div>

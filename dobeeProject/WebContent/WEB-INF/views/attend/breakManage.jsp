@@ -8,17 +8,17 @@
 	<style>
 		.btn-info.btn-sm.반려 {
 			border-color:lightgray;
-			background-color:red;
+			background-color:#4BDA64;
 		}
 		
 		.btn-info.btn-sm.미승인 {
 			border-color:lightgray;
-			background-color:gray;
+			background-color:#f54242;
 		}
 		
 		.btn-info.btn-sm.승인 {
 			border-color:lightgray;
-			background-color:green;
+			background-color:#ffc107;
 		}
 		
 		.btn-info.btn-sm {
@@ -112,7 +112,7 @@
 										<div class="widget-summary widget-summary-sm">
 											<div class="widget-summary-col widget-summary-col-icon">
 												<div class="summary-icon bg-primary">
-													<i class="fa fa-tasks"></i>
+													<i class="fa fa-meh-o"></i>
 												</div>
 											</div>
 											<div class="widget-summary-col">

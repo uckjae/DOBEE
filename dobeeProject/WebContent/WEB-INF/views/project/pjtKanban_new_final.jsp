@@ -700,7 +700,7 @@
  							elements: {
  								center: {
  									text: Math.floor((pjtTaskCompleted.length/pjtTaskLength)*100) + "%",
- 				          color: '#FF6384', // Default is #000000
+ 				          color: '#3d73c2', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
  				          sidePadding: 15 // Defualt is 20 (as a percentage)
  								}
@@ -993,7 +993,7 @@
  							elements: {
  								center: {
  									text: Math.floor((taskCompleted.length/memberTask.length)*100) + "%",
- 				          color: '#FF6384', // Default is #000000
+ 				          color: '#3d73c2', // Default is #000000
  				          fontStyle: 'Arial', // Default is Arial
  				          sidePadding: 15 // Defualt is 20 (as a percentage)
  								}

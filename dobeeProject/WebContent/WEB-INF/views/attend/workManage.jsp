@@ -7,17 +7,17 @@
 	<style>
 		.btn-info.btn-sm.반려 {
 			border-color:lightgray;
-			background-color:red;
+			background-color:#4BDA64;
 		}
 		
 		.btn-info.btn-sm.미승인 {
 			border-color:lightgray;
-			background-color:gray;
+			background-color:#f54242;
 		}
 		
 		.btn-info.btn-sm.승인 {
 			border-color:lightgray;
-			background-color:green;
+			background-color:#ffc107;
 		}
 		
 		.btn-info.btn-sm {
@@ -101,10 +101,10 @@
 									<div class="col-md-12">
 										<div class="col-md-4"></div>
 										<div class="col-md-2">
-											<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(129, 242, 41, 1); "><b>근  무</b></button>
+											<button id="attendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: #E8B10B; "><b>근  무</b></button>
 										</div>
 										<div class="col-md-2">
-											<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: rgba(255, 39, 0, 1); "><b>연장 근무</b></button>
+											<button id="extendColor" class="btn btn-info btn-sm" style="width:100%; border:none; background-color: #07617D; "><b>연장 근무</b></button>
 										</div>
 										<div class="col-md-4"></div>
 									</div>
@@ -497,8 +497,8 @@
 					        	stack : 'Stack 0',
 					            label: '출근',
 					            data: attInitAbs,
-					            backgroundColor: 'rgba(255, 255, 0, 0)',
-					            borderColor: 'rgba(255, 255, 0, 0.0 )',
+					            backgroundColor: '#f54242',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1,
 					            barTickness : 1,
 					        },
@@ -506,8 +506,8 @@
 					        	stack : 'Stack 0',
 					            label: '퇴근',
 					            data: attEndRel,
-					            backgroundColor: 'rgba(129, 242, 41, 1)',
-					            borderColor: 'rgba(129, 242, 41, 0.5)',
+					            backgroundColor: '#E8B10B',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1
 
 					        },
@@ -515,16 +515,16 @@
 					        	stack : 'Stack 0',
 					            label: '연장근무 시작',
 					            data: extInitRel,
-					            backgroundColor: 'rgba(255, 255, 0, 0)',
-					            borderColor: 'rgba(255, 255, 0, 0)',
+					            backgroundColor: '#07617D',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1,
 					        },
 					        {
 					        	stack : 'Stack 0',
 					            label: '연장근무 종료',
 					            data: extEndRel,
-					            backgroundColor: 'rgba(255, 39, 0, 1)',
-					            borderColor: 'rgba(255, 39, 0, 0.5)',
+					            backgroundColor: '#448092',
+					            borderColor: '##fdfdfd',
 					            borderWidth: 1
 					        }]
 					    },
