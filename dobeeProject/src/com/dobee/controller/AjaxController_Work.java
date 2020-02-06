@@ -57,9 +57,8 @@ public class AjaxController_Work {
 
 	// 매니저_부재관리_부재 isAuth 		02.05 게다죽
 	@RequestMapping(value="absManage.do", method=RequestMethod.POST)
-    public String absReqHandle(Model map, Apply apply, Authentication auth) {
+    public String absReqHandle(Model map, Apply apply) {
 		String responseData = "";
-        apply.setApproval(auth.getName());
         int result = applyService.absReqHandle(apply);
         if(result > 0 ) {
         	responseData = "success";
@@ -110,9 +109,8 @@ public class AjaxController_Work {
 	
 	// 매니저_연장근무관리 리스트 - isAuth update POST          0115 게다죽
 	@RequestMapping(value="extManage.do", method=RequestMethod.POST)
-    public String extReqHandle(Model map, Apply apply, Authentication auth){
+    public String extReqHandle(Model map, Apply apply){
 		String responseData = "";
-		apply.setApproval(auth.getName());
 		int result = applyService.extReqHandle(apply);
 		if (result > 0 ) {
 			responseData = "success";

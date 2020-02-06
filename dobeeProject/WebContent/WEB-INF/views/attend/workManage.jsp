@@ -86,7 +86,7 @@
 						<div class="panel-body" style="min-height: 560px;">
 							<div id="selector" style="text-align : right">
 								<select id="yearMonthSelector">
-									<option hidden="">Year-Month</option>
+									<option hidden="">년-월 선택</option>
 									<!-- Ajax -->
 								</select>
 							</div>
@@ -128,7 +128,7 @@
 												<div class="summary">
 													<h4 class="title" id="thTitle">총 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalHour">불러오는 중...</strong>
+														<strong class="amount" id="totalHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
@@ -150,7 +150,7 @@
 												<div class="summary">
 													<h4 class="title" id="twhTitle">총 정상 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalWorkHour">불러오는 중...</strong>
+														<strong class="amount" id="totalWorkHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
@@ -172,7 +172,7 @@
 												<div class="summary">
 													<h4 class="title" id="tehTitle">총 연장 근무 시간</h4>
 													<div class="info">
-														<strong class="amount" id="totalExtHour">불러오는 중...</strong>
+														<strong class="amount" id="totalExtHour">00:00:00</strong>
 													</div>
 												</div>
 											</div>
