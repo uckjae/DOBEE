@@ -104,8 +104,8 @@ width:47em
 		<c:forEach items="${list}" var="n" >
 			<tr>
 				<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
-				<td class="title"  style="text-align: center;">
-				  <a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
+				<td class="title"  style="text-align: left;">
+				  &nbsp;<a href="noticeDetail.do?notSeq=${n.notSeq}">${n.title}</a>
 				</td>
 				<td class="regdate" style="text-align: center;">
 				<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
