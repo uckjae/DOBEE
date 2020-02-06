@@ -88,7 +88,7 @@ console.log("MAIN!!");
 												title : element.title,
 												start : element.startTime,
 												end : element.endTime,
-												color : "#f54c4c"	
+												color : "#FF6C6C"	
 											})
 										} else if (element.entry == "TASK") {
 											eventList.push ({
@@ -102,7 +102,7 @@ console.log("MAIN!!");
 												title : element.title,
 												start : element.startTime,
 												end : element.endTime,
-												color : "#69a854"	
+												color : "#4bda64"	
 											})
 										}
 									});

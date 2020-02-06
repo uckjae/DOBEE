@@ -679,16 +679,16 @@
  								datasets: [{
  									data: [pjtTaskScheduled.length, pjtTaskInProgress.length, pjtTaskTest.length,  pjtTaskCompleted.length ],
  									backgroundColor: [
- 									  "#3e95cd",
- 									  "#8e5ea2", 
- 									  "#3cba9f",
- 									  "#c45850"
+ 									  "#e8b10b",
+ 									  "##8a8a89", 
+ 									  "#07617D",
+ 									  "#2E383F"
  									],
  									hoverBackgroundColor: [
- 	 									"#3e95cd",
- 	 									"#8e5ea2",
- 	 									"#3cba9f",
- 	 									"#c45850"
+ 	 									"#e8b10b",
+ 	 									"##8a8a89",
+ 	 									"#07617D",
+ 	 									"#2E383F"
  									]
  								}]
  							},
@@ -737,13 +737,13 @@
  					        datasets: [{
  					            label: 'Percentage',
  					            data: pjtMemberTask,
- 					            backgroundColor: [ //["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
- 					                'rgba(62, 149, 205, 0.6)',
- 					                'rgba(142, 94, 162, 0.6)',
- 					                'rgba(60, 186, 159, 0.6)',
- 					                'rgba(232, 195, 185, 0.6)',
- 					                'rgba(196, 88, 80, 0.6)',
- 					                'rgba(255, 206, 86, 0.6)'
+ 					            backgroundColor: [ //["#e8b10b", "##8a8a89","#3cba9f","#e8c3b9","#2E383F", "#ffce56"],
+ 					                '#FDCE0C',
+ 					                '#C4E7F2',
+ 					                '#0090d9',
+ 					                '#DD66A1',
+ 					                '#4BDA64',
+ 					                '#FDCDCD'
  					            ]
  					        }]
  					},
@@ -790,7 +790,7 @@
  					      datasets: [
  					        {
  					          label: "업무 할당 현황",
- 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#ffce56"],
+ 					          backgroundColor: ["#e8b10b", "#C4E7F2","#3D73C2","#DD66A1","#4BDA64", "#FF3636"],
  					          data: taskCount
  					        }
  					      ]
@@ -852,7 +852,7 @@
  					      datasets: [
  					        {
  					          label: "업무 개수",
- 					          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+ 					          backgroundColor: ["#FF3636", "#FF8224","#0090d9","#2CB24F","#2E383F"],
  					          data: importance
  					        }
  					      ]
@@ -972,16 +972,16 @@
  								datasets: [{
  									data: [taskScheduled.length, taskInProgress.length,taskTest.length,  taskCompleted.length ],
  									backgroundColor: [
- 	 									"#3e95cd",
- 	 									"#8e5ea2", 
- 	 									"#3cba9f",
- 	 									"#c45850"
+ 	 									"#e8b10b",
+ 	 									"##8a8a89", 
+ 	 									"#07617D",
+ 	 									"#2E383F"
  	 								],
  									hoverBackgroundColor: [
- 										"#3e95cd",
-	 									"#8e5ea2", 
-	 									"#3cba9f",
-	 									"#c45850"
+ 										"#e8b10b",
+	 									"##8a8a89", 
+	 									"#07617D",
+	 									"#2E383F"
  									]
  								}]
  							},
@@ -1657,7 +1657,7 @@
                             <!-- 예정 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#8c8c75;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
@@ -1737,7 +1737,7 @@
                             <!-- 진행 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#E8B10B;">
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
                                                 <img src="img/pj1.png">
@@ -1800,7 +1800,7 @@
                             <!-- 테스트 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#07617D;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
@@ -1864,7 +1864,7 @@
                             <!-- 완료 -->
                             <div class="col-md-3 col-xl-3">
                                 <section class="panel panel-group">
-                                    <header class="panel-heading bg-primary">
+                                    <header class="panel-heading bg-primary" style="background-color:#2E383F;">
 
                                         <div class="widget-profile-info">
                                             <div class="profile-picture">
