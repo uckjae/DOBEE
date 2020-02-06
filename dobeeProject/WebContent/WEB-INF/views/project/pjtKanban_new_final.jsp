@@ -1703,16 +1703,26 @@
 	                                                    <c:if test="${task.progress eq '예정' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-			                                                       	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	<!--이름박스-->
+		                                                    	  <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal" 
+																	      data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>		
+																	</c:if>
+																	
+																   </div>
+																	<!-- 날짜박스 -->
+																   <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+			                                                       </div>
+			                                                       			
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1760,16 +1770,22 @@
 	                                                    <c:if test="${task.progress eq '진행' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                   <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	 <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal" 
+																	      data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	<!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																 </div>
+																 <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+				                                                 </div> 
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1816,16 +1832,24 @@
 	                                                    <c:if test="${task.progress eq '테스트' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                   <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	
+		                                                    	 <div>
+																	<span style="cursor:pointer;">
+																	    <a style="text-decoration: none;" class="taskDetail" data-toggle="modal"
+																	        data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																	</span>
+																	 <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																  </div>
+																  
+																  <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+																  </div>	
 																</div>
 															</li>
 	                                                     </c:if>
@@ -1873,16 +1897,24 @@
 	                                                    <c:if test="${task.progress eq '완료' }">
 		                                                    <li class="completed">
 		                                                    	<div style="padding-top: 2px;">
-																	<span style="cursor:pointer;"><a style="text-decoration: none;" class="taskDetail" data-toggle="modal" data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a></span>
-			                                                       	<span class="label label-primary text-normal pull-right" style="margin-top: 4px">
-			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>
-			                                                        	~
-			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
-			                                                       	</span>
-				                                                    <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
+		                                                    	
+		                                                    	   <div>
+																	<span style="cursor:pointer;">
+																	   <a style="text-decoration: none;" class="taskDetail" data-toggle="modal"
+																	        data-target="#taskDetailModal" data-tskSeq="${task.tskSeq}">${task.title}</a>
+																    </span>
+																    <!-- 업무 삭제 버튼 (PM만 볼 수 있음) -->
 				                                                	<c:if test="${ user.authCode == '3'}">
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
-																	</c:if>	
+																	</c:if>
+																   </div>
+																   
+																   <div>
+			                                                       	<span style="cursor:pointer;">
+			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
+			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
+			                                                       	</span>
+																   </div>
 																</div>
 															</li>
 	                                                     </c:if>
