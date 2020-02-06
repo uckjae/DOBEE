@@ -28,17 +28,6 @@ public class MemberService {
     }
 
 
-    //아이디찾기
-
-    
-
-
-    //비밀번호재설정
-    public void resetPwd(User user){
-    	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	userDao.resetPwd(user);
-    }
-
     //출근한 팀원 목록 가져오기 02.02 알파카
     public List<User> getOnWorkTeamMember(User user){
     	List<User> onWorkTeamMemberList = null;

@@ -77,7 +77,6 @@ public class GoogleVisionService {
 			                        }
 			                        blockText = blockText + paraText;
 			                    }
-			                    System.out.println("여기를확인해보자 " + blockText);
 		                        String sNum = Integer.toString(number);
 		                        jsonObj.put("key"+sNum, blockText);
 		                        number++;

@@ -24,11 +24,14 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dobee.dao.UserDao;
+import com.dobee.services.DebitService;
 import com.dobee.services.MemberService;
+import com.dobee.vo.Debit;
 import com.dobee.vo.member.Authority;
 import com.dobee.vo.member.TeamList;
 import com.dobee.vo.member.User;
@@ -339,7 +342,40 @@ public class AjaxControllerAdmin {
     	list = memberService.checkEmail(mail);
     	
     	return list;
-    };
+    }
+    
+  //관리자 법인카드 디비에 등록
+    @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
+    public int adminAddDebitOK(@RequestParam(value="cardNum") String cardNum,
+    		@RequestParam(value="corp") String corp,
+    		@RequestParam(value="name") String name,
+    		@RequestParam(value="nickName") String nickName,
+    		@RequestParam(value="entry") String entry,
+    		@RequestParam(value="valDate") String valDate) {
+    	DebitService debitService = new DebitService();
+    	
+    	int result = 0;
+    	Debit list = new Debit();
+    	list.setCardNum(cardNum);
+    	list.setCorp(corp);
+    	list.setEntry(entry);
+    	list.setName(nickName);
+    	list.setNickName(nickName);
+    	list.setValDate(valDate);
+    	
+    	
+    	boolean check = debitService.addDebit(list);
+    	
+    	if(check) {//법인카드 등록 성공
+    		result = 1;
+    	}else {//법인카드 등록 실패
+    		result = 0;
+    	}
+    	
+    	return result;
+    }
+    
+    
 }
 
 

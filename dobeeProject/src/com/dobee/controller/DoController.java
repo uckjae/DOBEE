@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ import com.dobee.services.NoticeService;
 import com.dobee.services.ProjectService;
 import com.dobee.services.ScheduleService;
 import com.dobee.vo.Apply;
+import com.dobee.vo.CostList;
 import com.dobee.vo.Debit;
 import com.dobee.vo.chat.ChatRoom;
 import com.dobee.vo.member.BreakManageList;
@@ -57,7 +59,6 @@ import com.dobee.vo.schedule.Schedule;
 public class DoController {
 	
 	public DoController() {
-		System.out.println("일단 컨트롤 오나 보자");
 	}
 	
     @Autowired
@@ -88,80 +89,45 @@ public class DoController {
     //로그인
     @RequestMapping("login.do")
     public String login(){
-        return "main/login";
+        return "main/Login";
     }
     
     
     //권한없음 페이지
     @RequestMapping("noAuth.do")
     public String noAuth() {
-    	return "main/noAuthority";
+    	return "main/NoAuthority";
     }
   
     //아이디찾기
     @RequestMapping(value="findId.do",method=RequestMethod.GET)
     public String findId(){
-      return "main/findId";
+      return "main/FindId";
     }
     
     //비밀번호 찾기(이메일 보내기)
     @RequestMapping(value="findPassWord2.do",method=RequestMethod.GET)
     public String findPassWord2(){
-    	System.out.println("here!!");
-        return "main/findPassWord";
+        return "main/FindPassWord";
     }
     
     @RequestMapping(value="findPassWord2.do",method=RequestMethod.POST)
     public String findPassWord3(){
-    	System.out.println("here!!");
         return "redirect: login.do";
     }
     
     //비밀번호 찾기(변경)
     @RequestMapping(value="findPassWordChange.do",method=RequestMethod.POST)
     public String findPassWordChange(HttpServletRequest request,Model model){
-    	System.out.println("여기탄다");
-    	Enumeration<String> enu = request.getParameterNames();
-    	while(enu.hasMoreElements()) {
-    		String key = enu.nextElement();
-    		System.out.println("key : " + key + " values : " + request.getParameter(key));
-    	}
     	String mail = request.getParameter("mail");
     	model.addAttribute("mail", mail);
-    	System.out.println("메일?"+mail);
-        return "main/findPassWordChange";
-    }
-    
-
-    //비밀번호재설정
-    //public String resetPwd(){
-    //  return null;
-    //}
-    
-    @RequestMapping("password.do")
-    public String resetPwd(HttpServletRequest req, Model model){
-    	System.out.println("DoController resetPwd() in!!");
-    	System.out.println(req.getParameter("mail"));
-    	UserDao userDao = sqlsession.getMapper(UserDao.class);
-    	User user = userDao.getUser(req.getParameter("mail"));
-    	System.out.println(user.toString());
-    	model.addAttribute("user", user);
-        return "main/emailPwdReset";
-    }
-
-    @RequestMapping("resetPwdResult.do")
-    public String resetPwdResult(User user){
-        System.out.println("DoController resetPwdResult() in!!");
-        System.out.println(user.toString());
-        memberService.resetPwd(user);
-    	return "redirect: index.jsp";
+        return "main/FindPassWordChange";
     }
 
 
     //메인페이지(로그인후)
     @RequestMapping("main.do")
     public String main(Principal principal , HttpServletRequest request, Model model){
-    	System.out.println("컨트롤러 main.do");
     	User user = (User) request.getSession().getAttribute("user");
     	model.addAttribute("user", user);
     	
@@ -171,7 +137,6 @@ public class DoController {
     	
     	// 마감임박 업무 리스트 GET			0131 게다죽 	~ing
     	List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
-    	System.out.println("utList : "+ utList);
     	model.addAttribute("utList", utList);
     	
     	//공지사항 최신글 가져오기 02.03 알파카
@@ -190,10 +155,9 @@ public class DoController {
     		result = projectService.getPjtProgressRate(pjtList.get(i).getPjtSeq());
     		progressRate.put(pjtList.get(i).getPjtName(), result);
     	}
-    	System.out.println("맵은요?"+progressRate);
     	model.addAttribute("progressRate",progressRate);
     	
-        return "main/main";
+        return "main/Main";
     }
 
     //관리자 메인전 경고화면
@@ -232,48 +196,6 @@ public class DoController {
     	return mav;
     }
     
-    
-    //관리자 법인카드 디비에 등록
-    @ResponseBody
-    @RequestMapping(value="AdminDebit.do",method=RequestMethod.POST)
-    public int adminAddDebitOK(@RequestParam(value="cardNum") String cardNum,
-    		@RequestParam(value="corp") String corp,
-    		@RequestParam(value="name") String name,
-    		@RequestParam(value="nickName") String nickName,
-    		@RequestParam(value="entry") String entry,
-    		@RequestParam(value="valDate") String valDate) {
-    	System.out.println("일단 컨트롤러 타는지 확인 ");
-    	int result = 0;
-    	Debit list = new Debit();
-    	list.setCardNum(cardNum);
-    	list.setCorp(corp);
-    	list.setEntry(entry);
-    	list.setName(nickName);
-    	list.setNickName(nickName);
-    	list.setValDate(valDate);
-    	
-    	
-    	System.out.println("컨트롤단 : 받은 데이터 : " + list);
-    	boolean check = debitService.addDebit(list);
-    	
-    	if(check) {
-    		System.out.println("컨트롤단  : 법인카드 등록 성공");
-    		result = 1;
-    	}else {
-    		result = 0;
-    		System.out.println("컨트롤단 : 법인카드 등록 실패");
-    	}
-    	//return "redirect:ListDebit.do";
-    	return result;
-    }
-    
-    
-    //회사 일정등록
-    //@RequestMapping(value = "", method = RequestMethod.POST)
-    public String addSchedule(){
-        return null;
-    }
-
 
     //마이페이지
     @RequestMapping(value = "mypage.do", method = RequestMethod.GET)
@@ -285,7 +207,7 @@ public class DoController {
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-        return "myPage/myPage";
+        return "myPage/MyPage";
     }
     
     
@@ -293,19 +215,19 @@ public class DoController {
     @RequestMapping("noticeList.do")
     public String noticeList(Notice notice, HttpServletRequest request, Model model){
     	User user = (User) request.getSession().getAttribute("user");
-		List<Notice>list=null;
+		List<Notice> list = null;
 		NoticeDao noticedao=sqlsession.getMapper(NoticeDao.class);
-		list=noticedao.noticeList(notice);
-		System.out.println(list);
+		list = noticedao.noticeList(notice);
 		model.addAttribute("list",list);
 		
 		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
 		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     
-        return "notice/noticeList";
+        return "notice/NoticeList";
     }
 
+    
     //공지사항상세보기 value="noticeWrite.do",method=RequestMethod.POST
     @RequestMapping(value="noticeDetail.do", method=RequestMethod.GET)
     public String noticeDetail(@RequestParam(value="notSeq") int notSeq, HttpServletRequest request, Model model){
@@ -349,22 +271,15 @@ public class DoController {
         }
         
        
-        return "notice/noticeDetail";
+        return "notice/NoticeDetail";
     }
+    
     
     //공지사항 파일 다운로드 noticeDownload.do
     @RequestMapping(value="noticeDownload.do")
     public void noticeDownload(@RequestParam(value="p") String p, @RequestParam(value="f") String f, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		/*
-		 * //한글 처리 형식 지정 String sEncoding = new
-		 * String(filename.getBytes("euc-kr"),"8859_1");
-		 * response.setHeader("Content-Disposition","attachment;filename= " +
-		 * sEncoding);
-		 * //response.setHeader("Content-Disposition","attachment;filename= " + filename
-		 * +";");
-		 */
 		// 한글 파일명 처리 (Filtter 처리 확인) -> 경우 ...
 		// 한글 파일 깨짐 현상 해결하기
 		// String fname = new String(f.getBytes("ISO8859_1"),"UTF-8");
@@ -392,7 +307,6 @@ public class DoController {
 	}
     
 
-
     //공지사항글쓰기 view 페이지
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.GET)
     public String noticeWrite(HttpServletRequest request, Model model){
@@ -401,24 +315,19 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
-        return "notice/noticeWrite";
+        return "notice/NoticeWrite";
     }
+    
     
     //공지사항글쓰기 처리 
     @RequestMapping(value="noticeWrite.do",method=RequestMethod.POST)
     public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	
-    	System.out.println("파일 어떻게 들어와?"+nf);
-    	System.out.println("파파파파일"+nf.getFile());
-    	
     	//공지사항 글 DB 넣기
     	int notSeq = noticeService.noticeWrite(n); //서비스 리턴 값으로 notice의 seq를 가져옴
     	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = nf.getFile();
     	String filename = file.getOriginalFilename(); //원본 파일명
-    	System.out.println("파일 업로드 안하면 어케 됨?"+nf);
-    	System.out.println("파일 이름?"+filename);
     	//공지사항 파일을 업로드한 경우
     	if(!( filename == null || filename.trim().equals("") )) {
         	String path = request.getServletContext().getRealPath("/upload");
@@ -433,16 +342,12 @@ public class DoController {
         	nf.setOrgName(filename);
         	UUID randomIdMulti = UUID.randomUUID();
         	String saveName = filename+"_"+randomIdMulti;
-        	System.out.println("저장될 파일 이름?"+saveName);
         	nf.setSaveName(saveName);
         
         	//공지사항 글번호 주입
         	nf.setNotSeq(notSeq);
         	
         	int result = noticeService.noticeFileWrite(nf);
-        	if(result > 0) {
-        		System.out.println("공지사항 파일 업로드 완료");
-        	}
     	}
     	
     	//공지사항 일정을 입력한 경우
@@ -451,7 +356,6 @@ public class DoController {
     		int result = scheduleService.addSchedule(sc); 
     		
     		if(result > 0) { //DB에 잘 저장됨
-    			System.out.println("스케쥴 등록 완료");
     			int schSeq = result;
     			ns.setSchSeq(schSeq);
     			//공지사항 일정 등록
@@ -459,9 +363,6 @@ public class DoController {
     			ns.setNotSeq(notSeq); //공지사항 글 번호 주입
     			int result2 = noticeService.addNotSchedule(ns);
     			
-    			if(result2 > 0) {
-    				System.out.println("공지사항 일정 등록 완료");
-    			}
     			
     		}
     	}    	
@@ -508,28 +409,25 @@ public class DoController {
         	model.addAttribute("sc", null);
         }
         
-    	return "notice/noticeModify";
+    	return "notice/NoticeModify";
     }
+    
     
     //공지사항수정하기 처리
     @RequestMapping(value="noticeModify.do",method=RequestMethod.POST)
     public String noticeModify(@RequestParam(value="notSeq") String notSeq, Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request) throws IOException {
-    	System.out.println("수정 타니?");
-    	System.out.println("파일 가져와?"+nf);
     	//서비스 연결 >> 제목 & 내용 수정
     	
     	int noticeModify = noticeService.noticeModify(n);
     	
     	CommonsMultipartFile file = nf.getFile();
     	String filename = file.getOriginalFilename(); //원본 파일명
-    	System.out.println("파일이름?"+filename);
     	
     	//원래 있었는지 없었는지 확인 후 있으면 update, 없으면 insert
     	String fileExists = request.getParameter("fileExists");
     	String notScheduleExists = request.getParameter("notScheduleExists");
     	String fileNameExists = request.getParameter("fileNameExists");
     	
-    	System.out.println("스팬 테그 값 나와?"+fileNameExists);
     	//공지사항 파일 업로드 하기
     	if(!( filename == null || filename.trim().equals("") )) {
     		String path = request.getServletContext().getRealPath("/upload");
@@ -544,7 +442,6 @@ public class DoController {
         	nf.setOrgName(filename);
         	UUID randomIdMulti = UUID.randomUUID();
         	String saveName = filename+"_"+randomIdMulti;
-        	//System.out.println("저장될 파일 이름?"+saveName);
         	nf.setSaveName(saveName);
         
         	//공지사항 글번호 주입
@@ -552,19 +449,11 @@ public class DoController {
         	
     		if(fileExists.equals("true")) { //원래 파일을 업로드했던 경우 -> update하기
             	int result = noticeService.noticeFileModify(nf);
-            	if(result > 0) {
-            		System.out.println("공지사항 파일 update 완료");
-            	}
         	} else { //새로 파일을 업로드 한 경우 -> insert 하기
-        		System.out.println("새로 파일 업로드 하니?");
         		int result = noticeService.noticeFileWrite(nf);
-            	if(result > 0) {
-            		System.out.println("공지사항 파일 insert 완료");
-            	}
         		
         	}
     	} else { //파일 업로드를 하지 않는 경우
-    		System.out.println("파일 업로드 안할거니?");
     		
     		
     	}
@@ -576,27 +465,19 @@ public class DoController {
     			int result = scheduleService.scheduleModify(sc);
     			//일정 내용 update
     			if( result > 0 ) {
-    				System.out.println("스케쥴 update 완료");
     				int result2 = noticeService.notScheduleModify(ns);
     				
-    				if(result2 > 0) {
-        				System.out.println("공지사항 일정 update 완료");
-        			}
     			}
     			
     		} else { //새로 일정을 추가한 경우 -> insert
     			int result = scheduleService.addSchedule(sc); 
         		if(result > 0) { //DB에 잘 저장됨
-        			System.out.println("스케쥴 insert 완료");
         			int schSeq = result;
         			ns.setSchSeq(schSeq);
         			//공지사항 일정 등록
         			ns.setNotSeq(n.getNotSeq()); //공지사항 글 번호 주입
         			int result2 = noticeService.addNotSchedule(ns);
         			
-        			if(result2 > 0) {
-        				System.out.println("공지사항 일정 insert 등록 완료");
-        			}
         		}
     		}
     	}
@@ -611,7 +492,7 @@ public class DoController {
     	User user = (User) request.getSession().getAttribute("user");
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-        return "attend/breakApply";
+        return "attend/BreakApply";
     }
     
     
@@ -628,7 +509,7 @@ public class DoController {
         BreakManageList results = applyService.getBMLforEdit(apply);
         model.addAttribute("editApplyList", results);
         
-        return "attend/breakApplyEdit";
+        return "attend/BreakApplyEdit";
     }
     
     
@@ -637,7 +518,7 @@ public class DoController {
     public String postDeleteApply (Integer aplSeq) {
         applyService.deleteApply(aplSeq);
         
-        return "reidrect: attend/breakManage";    
+        return "reidrect: attend/BreakManage";    
     }
 
 
@@ -648,7 +529,7 @@ public class DoController {
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-        return "attend/extendApply";
+        return "attend/ExtendApply";
     }
 
 
@@ -661,11 +542,11 @@ public class DoController {
     	model.addAttribute("pjtList",pjtList);
         List<BreakManageList> results = applyService.absMg(auth.getName());
         model.addAttribute("brkList", results);
-        return "attend/breakManage";
+        return "attend/BreakManage";
     }
     
 
-    // 개인_근무내역관리/확인 GET         0121 게다죽        ~ing....???                 &&&&&&&&&&&&&&&& 차트 어째함? ㄹㅇ 모르겠
+    // 개인_근무내역관리/확인 GET         0121 게다죽
     @RequestMapping(value="workManage.do", method=RequestMethod.GET)
     public String getExtList(Model model, HttpServletRequest request, Authentication auth){
     	User user = (User) request.getSession().getAttribute("user");
@@ -674,7 +555,7 @@ public class DoController {
     	model.addAttribute("pjtList",pjtList);
         List<Apply> results = applyService.getExtList(auth.getName());
         model.addAttribute("extList", results);
-        return "attend/workManage";
+        return "attend/WorkManage";
     }
     
     
@@ -689,7 +570,7 @@ public class DoController {
         apply.setDrafter(auth.getName());
         Apply results = applyService.getELforEdit(apply);
         model.addAttribute("ELforEdit", results);
-        return "attend/extApplyEdit";
+        return "attend/ExtApplyEdit";
     }
     
     
@@ -712,7 +593,7 @@ public class DoController {
     	int teamCode = user.getTeamCode();
         List<BreakManageList> results = applyService.breakListMgr(teamCode);
         model.addAttribute("brkListMgr", results);
-        return "attend/breakManagement_Mgr";
+        return "attend/BreakManagement_Mgr";
     }
     
 
@@ -727,22 +608,10 @@ public class DoController {
         List<BreakManageList> results = applyService.extListMgr(teamCode);
         model.addAttribute("extListMgr", results);
         
-        return "attend/extendManagement_Mgr";
+        return "attend/ExtendManagement_Mgr";
     }
 
 
-    //카드관리 리스트
-    public String debitList(){
-        return null;
-    }
-
-
-    //카드관리 카드추가
-    public String addDebit(){
-        return null;
-    }
-
-    
     //비용정산신청 뷰단 화면 이동
     @RequestMapping("receiptRegit.do")
     public String receiptReg(Model model, HttpServletRequest request){
@@ -750,24 +619,10 @@ public class DoController {
     	//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-        return "payment/receiptRegit";
+        return "payment/ReceiptRegit";
     }
 
-
-    //비용정산신청 영수증사진으로  google Vision API 요청
-    @RequestMapping("goVision.do")
-    public String goGoogleApi(){
-    	System.out.println("goGoogleApi 함수요청");
-    	GoogleVisionService vision = new GoogleVisionService();
-    	System.out.println(" vision 서비스단 통과");
-        return null;
-    }
     
-    //비용정산신청 vision 으로 부터 읽어온 text수정까지 하고 최종 확인
-    public String receiptConfirm(){
-        return null;
-    }
-
     //프로젝트메인
     @RequestMapping("pjtMain.do")
     public String projectList(Model model, HttpServletRequest request){
@@ -790,7 +645,7 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
    
-        return "project/pjtMain_new";
+        return "project/PjtMain";
     }
 
 
@@ -798,7 +653,6 @@ public class DoController {
     @RequestMapping("pjtKanban.do")
     public String kanban(@RequestParam(value="pjtSeq") String pjtSeq, Model model, HttpServletRequest request){
     	
-    	System.out.println("Docontorller kanban()");
     	int seq = Integer.parseInt(pjtSeq);
     	Project project = projectService.getProject(seq);
     	List<Task> taskList = projectService.taskList(seq);
@@ -817,7 +671,7 @@ public class DoController {
     	model.addAttribute("taskList", jsonArray);
     	model.addAttribute("pjtMember", pjtMember);
     	
-        return "project/pjtKanban_new_final";
+        return "project/PjtKanban";
         
         
     }
@@ -826,9 +680,7 @@ public class DoController {
     //업무생성
     @RequestMapping("addPMTask.do")
     public String addPMTask(Task task){
-    	System.out.println("addPMTask.do 업무 생성 어케 들어와?"+task.toString());
     	int result = projectService.addPMTask(task);
-    	System.out.println("업무 DB에 들어갔어?"+task.toString());
     	return "redirect: pjtKanban.do?pjtSeq="+task.getPjtSeq();
     }
 
@@ -836,11 +688,9 @@ public class DoController {
     //업무수정 -- 01.28 알파카 수정
     @RequestMapping("taskEdit.do")
     public String taskEdit(Task task, Schedule sc, HttpServletRequest req){
-    	System.out.println("DoController taskEdit() in!!");
     	
     	task.setTitle(req.getParameter("title"));
     	task.setProgress(req.getParameter("progress"));
-    	System.out.println(task.toString());
     	int editTaskResult = 0;
     	int result1 = 0;
     	int result2 = 0;
@@ -870,6 +720,7 @@ public class DoController {
     	return view;
     }
 
+    
     //채팅 메인
     @RequestMapping("chat.do")
     public String chatMain(HttpServletRequest request, Model model, Principal principal) {
@@ -899,7 +750,7 @@ public class DoController {
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
     	
-    	return "chat/chatMain";
+    	return "chat/ChatMain";
     }
     
     
@@ -931,13 +782,12 @@ public class DoController {
     	model.addAttribute("roomName", roomName);
     	model.addAttribute("chatType", "GROUP");
     	
-    	return "chat/chatMain_group";
+    	return "chat/ChatMain_group";
     }
     
     //DM 채팅 메인
     @RequestMapping(value = "chatDm.do", method = RequestMethod.GET)
     public String chatDm(HttpServletRequest request, @RequestParam(value="dmName") String dmName, @RequestParam(value="dmMail") String dmMail, Model model, Principal principal) {
-    	System.out.println("파라미터 뭐니?"+dmName+"/"+dmMail);
     	User user = (User) request.getSession().getAttribute("user");    	
     	//회원 정보 저장하기
     	model.addAttribute("user", user);    	
@@ -961,22 +811,22 @@ public class DoController {
     	
     	//해당 DM 채팅방 상대방의 정보 가져오기
     	User dmUser = memberService.getUser(dmMail);
-    	System.out.println("dm 상대방은?"+dmUser.toString());
     	model.addAttribute("dmUser", dmUser);
     	
     	//DM 채팅방으로 셋팅
     	model.addAttribute("chatType", "DM");
     	
-    	return "chat/chatMain_DM";
+    	return "chat/ChatMain_DM";
     }
+    
     
     //관리자_사원추가 페이지
    @RequestMapping(value = "addUser.do", method = RequestMethod.GET )
    public String addUser() {
-	   System.out.println("Docontroller addUser() get in");
 	   return "admin/AddMember";
    }
     
+   
     //관리자_사원추가 서비스
    @RequestMapping(value = "addUser.do", method = RequestMethod.POST)
    public String addUser(User user, HttpServletRequest request) throws IOException {
@@ -997,9 +847,6 @@ public class DoController {
     	user.setMyPic(filename);
         	
         int result = memberService.addUser(user);
-        if(result > 0) {
-    		System.out.println("멤버 추가 완료");
-        }
    		
     	return "redirect: adminMain.do";
     }
@@ -1014,6 +861,7 @@ public class DoController {
 	   return "admin/ModifyMember";
    }
   
+   //팀관리 페이지 이동
    @RequestMapping(value="teamManagement.do", method= RequestMethod.GET)
    public String teamManagement(Model model) {
 	   UserDao userDao = sqlsession.getMapper(UserDao.class);
@@ -1030,8 +878,50 @@ public class DoController {
 		//로그인한 회원이 참여 중인 프로젝트 목록 가져오기
     	List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); //특정 회원이 속한 프로젝트 리스트 가져오기
     	model.addAttribute("pjtList",pjtList);
-		return "payment/payChart";
+		return "payment/PayChart";
 	}
+	
+	
+	//영수증 등록_ 디비에 최종적으로 영수증신청등록하기
+    @RequestMapping(value="addFinalReceipt.do", method=RequestMethod.POST)
+    public String addReceip(
+    		@RequestParam(value="useAt") String useAt, 
+    		@RequestParam(value="useDate") Date useDate,
+    		@RequestParam(value="cost") int cost,
+    		@RequestParam(value="regitReceiptDate") Date regitReceiptDate,
+    		@RequestParam(value="detail") String detail,
+    		@RequestParam(value="costCode") int costCode,
+    		@RequestParam(value="cardNum") String cardNum,
+    		@RequestParam(value="mail") String mail) {
+    
+    	CostList costList = new CostList();
+    	costList.setCardNum(cardNum);
+    	costList.setCost(cost);
+    	costList.setCostCode(costCode);
+    	costList.setDetail(detail);
+    	costList.setMail(mail);
+    	costList.setRegitReceiptDate(regitReceiptDate);
+    	costList.setUseAt(useAt);
+    	costList.setUseDate(useDate);
+    	int result = debitService.applyDebit(costList);
+    	
+    	if(result != -1) {
+    	}else {
+    		return null;
+    	}
+    	return "redirect:receiptList.do";
+    }
+    
+    
+    //비용신청 목록(= 영수증 등록 목록 보기) 가기
+    @RequestMapping("receiptList.do")
+    public String viewDebit(Model model) {
+    	ArrayList<CostList> list = new ArrayList<>();
+    	list = debitService.listReceipt();
+    	model.addAttribute("list", list);
+    	
+    	return "payment/ReceiptList";
+    }
     
     
 }
