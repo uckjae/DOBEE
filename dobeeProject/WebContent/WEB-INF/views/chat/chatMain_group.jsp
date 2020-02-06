@@ -244,7 +244,7 @@
 	         
 	            if(userName !== element.NAME) {
 	    			$("#msg_history").append('<div class="incoming_msg">'
-	    					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="sunil"> </div>'
+	    					+'<div class="incoming_msg_img"><img src="./img/avatar.jpg" alt="user"> </div>'
 	    					+'<div class="received_msg">'
 	    					+'<div class="received_withd_msg">'
 	    					+'<p>'+element.CHATCONTENT+'</p>'

@@ -18,7 +18,6 @@
 			<div id="userbox" class="userbox">
 				<a href="#" data-toggle="dropdown">
 					<figure class="profile-picture">
-					<!-- 등록된 사원 사진 뿌려주기!!! -->
 						<img src="upload/${user.myPic}" onError="this.src='img/avatar.jpg'" alt="사원" class="img-circle" />
 					</figure>
 					<div class="profile-info">
