@@ -45,11 +45,9 @@ console.log("MAIN!!");
 
 					<div class="right-wrapper pull-right">
 						<ol class="breadcrumbs">
-							<li><a href="index.html"> <i class="fa fa-home"></i>
-							</a></li>
+							<li><a href="#"> <i class="fa fa-home"></i></a></li>
+							<li style="padding-right:30px;"><a href="#"> <i class="fa fa-chevron-left"></i></a></li>
 						</ol>
-
-						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 

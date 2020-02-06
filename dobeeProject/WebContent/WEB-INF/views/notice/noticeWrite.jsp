@@ -111,8 +111,8 @@
 								</li>
 								<li><span>공지사항</span></li>
 								<li><span>글쓰기</span></li>
+								<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 							</ol>
-							<i class="fa fa-chevron-left"></i>
 						</div>
 					</header>
                     <section class="panel">

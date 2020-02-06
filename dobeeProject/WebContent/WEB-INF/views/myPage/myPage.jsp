@@ -30,9 +30,8 @@
 								</a>
 							</li>
 							<li><span>마이페이지</span></li>
-						</ol>
-				
-						<i class="fa fa-chevron-left"></i>
+							<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
+						</ol>				
 					</div>
 				</header>
 

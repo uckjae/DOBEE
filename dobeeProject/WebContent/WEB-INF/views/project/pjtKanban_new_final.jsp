@@ -1626,9 +1626,8 @@
                             </a>
                         </li>
                         <li><span>프로젝트</span></li>
+                        <li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
                     </ol>
-
-                    <i class="fa fa-chevron-left"></i>
                 </div>
             </header>
             <!-- start: page -->

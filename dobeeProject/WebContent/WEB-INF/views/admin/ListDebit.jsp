@@ -43,9 +43,8 @@
 							<li><a href="#"> <i class="fa fa-credit-card"></i></a></li>
 							<li><span>법인카드</span></li>
 							<li><span>법인카드 관리</span></li>
+							<li style="padding-right:30px;"><a href="#" style="cursor:default;"> <i class="fa fa-chevron-left"></i></a></li>
 						</ol>
-
-						<i class="fa fa-chevron-left"></i>
 					</div>
 				</header>
 				
