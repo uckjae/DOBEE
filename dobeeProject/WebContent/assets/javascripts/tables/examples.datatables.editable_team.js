@@ -137,11 +137,11 @@ var tempTeamCode = 0;
 							        }
 							    },
 								success : function(data) {
-									console.log("수정 아작스 작동")
 									_self.rowSave($(ori).closest('tr'));
 								},
-								error : function() {
-									console.log("수정 아작스 에러")
+								error:function(request,status,error){
+									console.log("code : " + request.status +"\n" + "message : " 
+											+ request.responseText + "\n" + "error : " + error);
 								},
 								complete : function() {
 									
@@ -197,7 +197,6 @@ var tempTeamCode = 0;
 						data : teamData,
 						type : 'POST',
 						success : function(data) {
-							console.log(data);
 							_self.rowSave($(ori).closest('tr'));
 						},
 						error : function() {
@@ -256,7 +255,6 @@ var tempTeamCode = 0;
 				var t = e.target;
 				var tr = t.closest('tr')
 				var teamCode = $(tr).children('td:eq(1)').text();
-				console.log(teamCode);
 
 				$.magnificPopup.open({
 					items : {
@@ -281,7 +279,6 @@ var tempTeamCode = 0;
 									"teamCode" : teamCode
 								};
 								// 팀 코드 확인
-								console.log(teamDelData);
 
 								// 삭제 아작스 시작
 								$.ajax({
@@ -290,7 +287,6 @@ var tempTeamCode = 0;
 									data : teamDelData,
 									dataType : "JSON",
 									success : function(data) {
-										console.log("아작스 성공");
 										if (data > 0) {
 											swal({
 												   title:"삭제 성공",
@@ -383,12 +379,10 @@ var tempTeamCode = 0;
 		rowEdit : function($row) {
 			var _self = this, data;
 			data = this.datatable.row($row.get(0)).data();
-			// 여기다 여기1!!!!!
-			//console.log(this.datatable.row($row.get(0)).data()[0]);
+
 			var lastNum = this.datatable.row()[0].length;
-			//console.log(this.datatable.row()[0][1]);
 			
-			//여기서 데이타테이블 
+			//데이타테이블 
 			$row
 					.children('td')
 					.each(

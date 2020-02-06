@@ -190,7 +190,7 @@ public class DoController {
     @RequestMapping(value="ListDebit.do",method=RequestMethod.GET)
     public ModelAndView adminListDebit() {
     	ModelAndView mav = new ModelAndView();
-    	ArrayList debitList = debitService.listDebit();
+    	List debitList = debitService.listDebit();
     	mav.addObject("debitList", debitList);
     	mav.setViewName("admin/ListDebit");
     	return mav;
@@ -916,8 +916,7 @@ public class DoController {
     //비용신청 목록(= 영수증 등록 목록 보기) 가기
     @RequestMapping("receiptList.do")
     public String viewDebit(Model model) {
-    	ArrayList<CostList> list = new ArrayList<>();
-    	list = debitService.listReceipt();
+    	List<CostList> list = debitService.listReceipt();
     	model.addAttribute("list", list);
     	
     	return "payment/ReceiptList";

@@ -126,7 +126,6 @@ public class AjaxController_Project {
 	//프로젝트 수정 --01.15 알파카
 	@RequestMapping(value="pjtUpdate.do", method=RequestMethod.POST)
 	public String updateProject(Project project,  Schedule sc) {
-		System.out.println("플젝 어케 나와?"+project.toString());
 		String responseData = "";
 		//프로젝트 수정
 		int result1 = projectService.updatePjt(project);
@@ -155,10 +154,8 @@ public class AjaxController_Project {
 			pjtMember.setPjtSeq(Integer.parseInt(pjtSeq));
 			pjtMemberList.add(pjtMember);
 		}
-		System.out.println("새로 만들어진 개수?"+pjtMemberList.size());
 		result = projectService.addProjectMember(pjtMemberList);
 
-		System.out.println("result?"+result);
 		
 		if(result > 0 ) {
 			responseData = "success";
@@ -174,7 +171,6 @@ public class AjaxController_Project {
 	//특정 프로젝트 가져오기
 	@RequestMapping(value="getPjt.do", method=RequestMethod.POST)
 	public Project getProject(@RequestParam(value="pjtSeq") String pjtSeq) {
-		System.out.println("이거 타????");
 		Project project = null;
 		project = projectService.getProject(Integer.parseInt(pjtSeq));
 		return project;
@@ -183,7 +179,6 @@ public class AjaxController_Project {
 	//특정 프로젝트 멤버가져오기
 	@RequestMapping(value="getPjtMember.do", method=RequestMethod.POST)
 	public List<User> getPjtMember(@RequestParam(value="pjtSeq") String pjtSeq) {
-		System.out.println("AjaxContorller_Project getPjtMember() in!!");
 		List<User> pjtMember = null;
 		pjtMember = projectService.getPjtMember(Integer.parseInt(pjtSeq));
 		return pjtMember;
@@ -192,9 +187,6 @@ public class AjaxController_Project {
 	//특정 프로젝트 & 멤버 가져오기 getPjtAndMember.do
 	@RequestMapping(value="getPjtAndUser.do", method=RequestMethod.POST)
 	public Map<String, Object> getPjtAndMember(@RequestParam(value="pjtSeq") String pjtSeq) {
-		
-		System.out.println("에이젝스 타니?");
-		System.out.println("PJTSEQ!!!"+pjtSeq);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -207,10 +199,8 @@ public class AjaxController_Project {
 		map.put("user", user);
 		
 		Schedule sc = scheduleService.getPjtSchedule(Integer.parseInt(pjtSeq));
-		System.out.println("스케쥴은 가져오니?"+sc.toString());
 		map.put("schedule", sc);
 		
-		System.out.println(map.toString());
 		
 		return map;
 	}
@@ -221,7 +211,6 @@ public class AjaxController_Project {
 		Task task = new Task();
 		
 		boolean checkTsseq = scheduleService.getTsSeq(tskSeq); //업무 일정 번호가 있는지 없는지 체크
-		System.out.println("업무 일정 번호 있니?"+checkTsseq);
 		if(checkTsseq) { //업무 일정 번호가 있다면
 			task = projectService.getTaskAndSchedule(tskSeq);
 		} else {
@@ -244,9 +233,7 @@ public class AjaxController_Project {
 	//특정업무의 TaskDetailList
 	@RequestMapping("getTaskDetailList.do")
 	public List<TaskDetail> getTaskDetailList(int tskSeq){
-		System.out.println("AjaxController_Project getTaskDetailList() in");
 		List<TaskDetail> taskDetailList = projectService.getTaskDetailList(tskSeq); 
-		System.out.println(taskDetailList);
 		return taskDetailList;
 	}
 	
@@ -254,7 +241,6 @@ public class AjaxController_Project {
 	//TaskDetail 추가 -- 01.26 알파카
 	@RequestMapping("addTaskDetail.do")
 	public Map<String, String> addTaskDetail(TaskDetail taskDetail, HttpServletRequest req) {
-		System.out.println("상세 업무 가져와?"+taskDetail.toString());
 		Map<String, String> map = new HashMap<String, String>();
 		int tdSeq = 0;
 		tdSeq = projectService.addTaskDetail(taskDetail);
@@ -264,26 +250,11 @@ public class AjaxController_Project {
 		}
 		return map;
 	}
-	/*
+
 	
-	//TaskDetail 추가
-	@RequestMapping("addTaskDetail.do")
-	public int addTaskDetail(TaskDetail taskDetail,HttpServletRequest req) {
-		System.out.println("AjaxController_Project addTaskDetail() in");
-		System.out.println(taskDetail.toString());
-		Enumeration enu = req.getParameterNames();
-		while(enu.hasMoreElements()) {
-			System.out.println("while!!");
-			System.out.println(enu.nextElement());
-		}
-		projectService.addTaskDetail(taskDetail);
-		return 0;
-	}
-	*/
 	//TaskDetailEdit
 	@RequestMapping("taskDetailEdit.do")
 	public String taskDetailEdit(TaskDetail taskDetail) {
-		System.out.println("AjaxController_Project taskDetailEdit() in!!");
 		String responseData = "";
 		int result = projectService.taskDetailEdit(taskDetail);
 		if(result>0) {
@@ -299,8 +270,6 @@ public class AjaxController_Project {
 	//업무상세 제거
 	@RequestMapping("taskDetailDelete.do")
 	public String taskDetailDelete(@RequestParam(value="tdSeq") String tdSeq, HttpServletRequest req) {
-		System.out.println("AjaxController_Project taskDetailDelete() in!!");
-		System.out.println("tdSeq 가져오니?"+tdSeq);
 		String responseData = "";
 		int result = projectService.taskDetailDelete(Integer.parseInt(tdSeq));
 		if(result > 0 ) {
@@ -318,8 +287,6 @@ public class AjaxController_Project {
 		int result = 0;
 		Map<String, String> map = new HashMap<String, String>();
 		
-		System.out.println("AjaxController_Project addTaskCheckList() in!!");
-		System.out.println("체크리스트 가져오니?"+checkList.toString());
 		result = projectService.addTaskCheckList(checkList);
 		if(result > 0 ) {
 			map.put("result", "success");
@@ -334,18 +301,14 @@ public class AjaxController_Project {
 	//특정업무의 체크리스트 가져오기
 	@RequestMapping("getTaskCheckList.do")
 	public List<CheckList> getTaskCheckList(int tskSeq){
-		System.out.println("AjaxController_Project getTaskCheckList() in!!");
 		List<CheckList> taskCheckList = projectService.getTaskCheckList(tskSeq);
-		System.out.println(taskCheckList);
 		return taskCheckList;
 	}
 	
 	//체크리스트 내용만 수정
 	@RequestMapping("taskCheckListEdit")
 	public String taskCheckListEdit(CheckList checkList) {
-		System.out.println("AjaxControll_Project taskCheckListEdit() in!!");
 		String responseData = "";
-		System.out.println("값이 오니?" + checkList.toString());
 		
 		int result = projectService.taskCheckListEditContent(checkList);
 		if(result > 0) {
@@ -379,8 +342,6 @@ public class AjaxController_Project {
 	//업무 체크리스트 제거
 	@RequestMapping("taskCheckListDelete.do")
 	public String taskDetailDelete(CheckList checkList) {
-		System.out.println("AjaxController_Project taskDetailDelete() in!!");
-		System.out.println("체크 리스트 번호 가져와?"+checkList.toString());
 		String responseData = "";
 		int result = projectService.taskCheckListDelete(checkList);
 		if(result > 0) {
@@ -399,32 +360,6 @@ public class AjaxController_Project {
     	return userList;
     }
 		
-	/*
-	//멤버 가져오기 -> 보류
-	@RequestMapping("getUserList.do")
-	public List<Map<String, String>> getUserList() { 
-		
-		
-		Map<String, String> map = new HashMap<String, String> ();
-		List<Map<String, String>> jsonList = new ArrayList<Map<String, String>>(); 
-		
-		List<User> users = memberService.getUserList();
-		//List<String> id = new ArrayList<String>();
-		//List<String> text = new ArrayList<String>();
-		for(int i = 0; i < users.size(); i++) {
-			System.out.println("메일??"+users.get(i).getMail());
-			map.put("id", users.get(i).getMail());
-			map.put("text", users.get(i).getName());
-			jsonList.add(map);
-		}
-		System.out.println("데이터!!!!"+map.toString());
-		
-		
-		System.out.println("jsonlist"+jsonList.toString());
-    	
-		return jsonList;
-	}
-	*/
 	
 	/*차트*/
 	
@@ -467,6 +402,7 @@ public class AjaxController_Project {
 		return map;
 		
 	}
+	
 	
 	//프로젝트 업무 할당 차트
 	@RequestMapping("getTaskAssignmentChart.do")
@@ -511,9 +447,6 @@ public class AjaxController_Project {
 		//나머지 리스트
 		List<Task> otherTaskList = projectService.getOtherTask(Integer.parseInt(pjtSeq), mail);
 		map.put("otherTaskList", otherTaskList);
-		
-		//JSONArray jsonArray = new JSONArray();
-    	//jsonArray.addAll(taskList);
 		
 		
 		return map;

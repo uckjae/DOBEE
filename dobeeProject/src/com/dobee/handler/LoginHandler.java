@@ -28,24 +28,14 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
 	@Autowired
     private SqlSession sqlsession;
 	
-
-	/*
-     * @method Name : onAuthenticationSuccess
-     * @Author : 권기엽
-     * @description
-     * 로그인을 성공하였으나, 회원상태가 임시 비밀번호 발급상태라면 비밀번호 변경창으로 유도.
-    */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
             throws IOException, ServletException {
-    	System.out.println("LoginHandler_onAuthenticationSuccess Done!!");
         UserDao userDao = sqlsession.getMapper(UserDao.class);
         String url = getReturnUrl(request,response);
                 
         Object obj = auth.getPrincipal();
-        System.out.println("loginHandler auth.getPrincipal" + obj.toString());
         String mail = auth.getName();
-        System.out.println("loginHandler auth.getName()" + mail);
         User user = userDao.getUser(mail);
         
         // 로그인 시 출 퇴근 여부확인 (null => 퇴근 완료 // attSeq not null => 출근 완료)		0126 게다죽
@@ -53,38 +43,27 @@ public class LoginHandler extends SavedRequestAwareAuthenticationSuccessHandler
 	        String isWork = userDao.isWork(auth.getName());
 	        user.setIsWork(isWork);
         }
-        System.out.println("user.toString() 확인 : " + user.toString());
         
         request.getSession().setAttribute("user", user);
-        System.out.println(user.toString());
         if(user.getAuthCode() == 1){// ADMIN
-        	System.out.println("1번째 if");
             response.sendRedirect("adminWarnig.do");
         	//response.sendRedirect(request.getSession().getServletContext().getContextPath()+"/admin/");
         }else if(user.getAuthCode() == 2 || user.getAuthCode() == 3){//USER, PM
-            System.out.println("2번째 if");
         	response.sendRedirect("main.do");
         }else {
-        	System.out.println("3번째 if");
         	response.sendRedirect(url);
         }
     }
  
+    
     public void forward(HttpServletRequest request, HttpServletResponse response, String url)
             throws ServletException, IOException {
-    	System.out.println("LoginHandler_forward Done!!");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(url);
         requestDispatcher.forward(request, response);
     }
     
-    /*
-     * @method Name : getReturnUrl
-     * @Author : 권기엽
-     * @description
-     * Security 를 타기 이전의 URL 을 기억하는 함수
-    */
+    
     private String getReturnUrl(HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("LoginHandler_getReturnUrl Done!!");
         RequestCache requestCache = new HttpSessionRequestCache();
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         if (savedRequest == null) {

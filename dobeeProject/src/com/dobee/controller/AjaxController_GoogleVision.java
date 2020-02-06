@@ -29,16 +29,12 @@ public class AjaxController_GoogleVision {
 			@RequestParam String saveFileName) 
 			throws Exception{
 		//@RequestBody을 이용하여 paramData 스트링값으로 파라미터값을 가져온다
-		System.out.println("컨트롤단/googleVision  :  goGoogle.do 요청들어왔다 ");
 		
 		String uPath = uploadPath;
 		String sFileName = saveFileName;
 		
-		System.out.println(" 컨트롤단 도착했고 파라미터값왔는지 확인하자 : uPath " +  uPath);
-		System.out.println(" 컨트롤단 도착했고 파라미터값왔는지 확인하자 : sFileName " +  sFileName);
 		
 		JSONObject result = googleVisionService.goGoogle(uPath+sFileName);
-		System.out.println("Google Vision Text 추출 한 값 : " + result);
 		
 		return result;
 	}

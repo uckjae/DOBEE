@@ -1,7 +1,6 @@
 package com.dobee.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,10 +17,9 @@ public class TimeLineService {
 	SqlSession sqlSession;
 	
 	//성호 - 타임라인 불러오기 아작스 서비스 
-	public ArrayList<GoogleDrive> loadTimeline(int pjtSeq) {
+	public List<GoogleDrive> loadTimeline(int pjtSeq) {
 		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-		ArrayList<GoogleDrive> list = new ArrayList<>(); 
-		list = projectdao.loadTimeline(pjtSeq);
+		List<GoogleDrive> list = projectdao.loadTimeline(pjtSeq);
 		
 		return list;
 	}
@@ -38,10 +36,9 @@ public class TimeLineService {
 	
 	
 	//타임라인 검색
-	public ArrayList<GoogleDrive> gdSearch(Map data){
-		ArrayList<GoogleDrive> list = new ArrayList<GoogleDrive>();
+	public List<GoogleDrive> gdSearch(Map data){
 		ProjectDao projectdao = sqlSession.getMapper(ProjectDao.class);
-		list = projectdao.gdSearch(data);
+		List<GoogleDrive> list = projectdao.gdSearch(data);
 		
 		return list;
 	}

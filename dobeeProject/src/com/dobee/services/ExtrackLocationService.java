@@ -39,7 +39,6 @@ public class ExtrackLocationService {
                 list.add(matcher.group());
                 count++;
             }
-            System.out.println("주소 형태의 찾은 문자열 갯수(=list.length() 와 같음): " + count);
         }
 
         return list;

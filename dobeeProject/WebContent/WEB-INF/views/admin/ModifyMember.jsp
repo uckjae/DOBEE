@@ -79,10 +79,7 @@
 	 				processData:false,
 	 				contentType:false,
 	 				success:function(responsedata){
-    	 				console.log('ajax 통신 성공?');
-	 					console.log(responsedata);
 	 					if(responsedata == "success"){ //프로젝트 생성 완료
-	 	 					console.log('수정 완료')
 	 	 					swal({
 	 						   title: "사원 정보 수정 완료",
 	 						   text: "사원 정보가 수정되었습니다.",
@@ -114,10 +111,7 @@
 			 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			 				type:"post",
 			 				success:function(responsedata){
-		    	 				console.log('ajax 통신 성공?');
-			 					console.log(responsedata);
 			 					if(responsedata == "success"){ //프로젝트 생성 완료
-			 	 					console.log('삭제 완료')
 			 	 					swal({
 			 						   title: "사원 정보 삭제 완료",
 			 						   text: "사원 삭제가 완료되었습니다.",

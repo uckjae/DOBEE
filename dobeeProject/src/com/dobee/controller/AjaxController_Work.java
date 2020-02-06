@@ -74,7 +74,6 @@ public class AjaxController_Work {
 	// 개인_연장근무신청 POST           0112 게다죽
 	@RequestMapping(value="extendApply.do", method=RequestMethod.POST)
 	public String extendApply(Apply apply, Authentication auth) {
-		// System.out.println("값 가져와?"+apply.toString());
 		String responseData = "";
 		int result = 0;
 		apply.setDrafter(auth.getName());
@@ -92,7 +91,6 @@ public class AjaxController_Work {
 	// 개인_연장근무신청 수정 POST           0112 게다죽
 	@RequestMapping(value="extEditApply.do", method=RequestMethod.POST)
 	public String extendEditApply(Apply apply, Integer aplSeq, Authentication auth) {
-		// System.out.println("값 가져와?"+apply.toString());
 		String responseData = "";
 		int result = 0;
 		apply.setAplSeq(aplSeq);

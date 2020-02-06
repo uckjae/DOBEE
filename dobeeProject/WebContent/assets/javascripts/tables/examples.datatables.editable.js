@@ -127,7 +127,6 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 						}
 					};
 					
-					console.log(allemptyCheck);
 					if(!allemptyCheck){
 						return;  // 유효성 불통이면 도중에 함수 종료
 					}
@@ -148,36 +147,27 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					
 					//카드 번호, 카드종류, 날짜 유효성 검사 후 모두 true 로 나와야 통과 
 					if(cardNumCheck && valDateCheck && entryCheck){
-						console.log("유효성 모두 통과");
 						totalCheck = true;
 					}else{
 						
 						if(!valDateCheck){
-							console.log("날짜 재입력해주세요");
-//							$.magnificPopup.open({
-//								items: {
-//									src: '#dialogEditDate',
-//									type: 'inline'
-//								},
-//								preloader: false,
-//								modal: true,
-//								callbacks: {
-//									change: function() {
-//										_self.dialog.$date.on( 'click', function( e ) {
-//											e.preventDefault();
-//											$.magnificPopup.close();
-//										});
-//									},
-//									close: function() {
-//										_self.dialog.$confirm.off( 'click' );
-//									}
-//								}
-//							});
+							swal({
+								title: "카드등록",
+								text: "날짜를 재입력해주세요", 
+								icon: "warning", //"info,success,warning,error" 중 택1
+								showConfirmButton: true
+								//icon: "warning" //"info,success,warning,error" 중 택1
+									})
 						}
 						
 						//카드번호 틀리면 나오는 모달창
 						if(!cardNumCheck || !valDateCheck || !entryCheck){
-							console.log("카드번호 재입력해주세요.");
+							swal({
+								title: "카드등록",
+								text: "날짜를 재입력해주세요", 
+								icon: "warning", //"info,success,warning,error" 중 택1
+								showConfirmButton: true
+							})
 							$.magnificPopup.open({
 								items: {
 									src: '#dialogEditCardNum',
@@ -204,27 +194,13 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 						
 						//카드 종류 틀리면 나오는 모달창
 						if(!entryCheck){
-							console.log("카드 종류를 재입력해주세요");
-//							$.magnificPopup.open({
-//								items: {
-//									src: '#dialogEditEntry',
-//									type: 'inline'
-//								},
-//								preloader: false,
-//								modal: true,
-//								callbacks: {
-//									change: function() {
-//										_self.dialog.$entry.on( 'click', function( e ) {
-//											e.preventDefault();
-//											$.magnificPopup.close();
-//										});
-//									},
-//									close: function() {
-//										_self.dialog.$confirm.off( 'click' );
-//									}
-//								}
-//							});
-							}
+							swal({
+								title: "카드등록",
+								text: "카드 종류를 재입력해주세요", 
+								icon: "warning", //"info,success,warning,error" 중 택1
+								showConfirmButton: true
+							})
+						}
 						
 				
 					} //else 문 끝
@@ -250,16 +226,14 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 							type:"POST",
 							success:function(data){
 								//data가 0 이상이면 값이 존재함
-								console.log("법인카드 수정 중");
-								console.log(data);
 								if(data > 0 ){
 									result = false;
 								}
 								return result;
 							},
-							error:function(){
-								console.log("아작스 에러");
-								
+							error:function(request,status,error){
+								console.log("code : " + request.status +"\n" + "message : " 
+										+ request.responseText + "\n" + "error : " + error);
 							}
 						});
 					};
@@ -287,17 +261,22 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 				                }
 				            },
 				            success:function(data){
-				            	console.log(data);
+
 				            },
-				            error:function(){
-				            	console.log("아작스 에러!");
-				            },
+				            error:function(request,status,error){
+								console.log("code : " + request.status +"\n" + "message : " 
+										+ request.responseText + "\n" + "error : " + error);
+							},
 				            complete:function(){
 				            	_self.rowSave( $(ori).closest( 'tr' ) );
 				            },
 				        });	//아작스 끝 
 					}else{
-						console.log("유효성 검사가 통과되지 않아 아작스를 실행하지 않습니다.");
+						swal({
+	                		   title: "수정 실패",
+	                		   text: "입력한 값을 확인해주세요",
+	                		   icon: "error" //"info,success,warning,error" 중 택1
+	                		})
 					}
 					
 				})  // 관리자 법인카드 수정 완료
@@ -321,7 +300,6 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					var t = e.target;
 					var tr = t.closest('tr')
 					var cardNum = $(tr).children('td:eq(1)').text();
-					console.log(cardNum);
 					
 					$.magnificPopup.open({
 						items: {
@@ -341,8 +319,6 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 									//모달창 닫기
 									$.magnificPopup.close();
 									
-									//카드번호확인
-									console.log(cardNum);
 									//json 형태로 가공 
 									var tempCardNum = {
 											"cardNum" : cardNum 
@@ -355,16 +331,26 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 										type : 'POST', 
 										data : tempCardNum,
 										success : function (data) {
-												console.log("아작스 성공");
 												if(data>0){
-													console.log("삭제 성공!"); 
+													swal({
+								                		   title: "카드 삭제",
+								                		   text: "카드를 삭제하였습니다",
+								                		   icon: "success" //"info,success,warning,error" 중 택1
+								                		});
 												}else{
-													console.log("삭제 실패!"); 
+													swal({
+								                		   title: "카드 삭제",
+								                		   text: "카드를 삭제에 실패하였습니다",
+								                		   icon: "error" //"info,success,warning,error" 중 택1
+								                		});
 												}
 											}, 
 										error : function () {
-												console.log('삭제 아작스 실패!!!'); 
-												alret("해당 카드는 삭제 할 수 없습니다.");
+												swal({
+							                		   title: "카드 삭제",
+							                		   text: "해당 카드는 삭제 할 수 없습니다",
+							                		   icon: "warning" //"info,success,warning,error" 중 택1
+							                		});
 											} 
 										});
 								// 아작스 끝

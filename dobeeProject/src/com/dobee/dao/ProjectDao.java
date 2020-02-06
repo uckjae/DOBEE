@@ -1,6 +1,5 @@
 package com.dobee.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -146,7 +145,7 @@ public interface ProjectDao {
     
     
     //특정 프로젝트의 구글 드라이브 리스트 가져오기
-    public ArrayList<GoogleDrive> loadTimeline(int pjtSeq);
+    public List<GoogleDrive> loadTimeline(int pjtSeq);
     
     
     //특정 프로젝트 구글 드라이브 업로드
@@ -158,10 +157,7 @@ public interface ProjectDao {
     
     
     //성호 구글드라이브 검색 
-    public ArrayList<GoogleDrive> gdSearch(Map data);
+    public List<GoogleDrive> gdSearch(Map data);
     
-    /*
-	// 프로젝트 현황 차트 생성 			0201	게다죽		~ING
-    public List<Task> getProjChartData();						*/
 
 }

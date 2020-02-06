@@ -23,19 +23,12 @@ public class AdminDebitService {
 	//관리자 법인카드 수정  
 	public int updateDebit(Debit debit) {
 		  int result = 0;
-		  System.out.println(debit.getCardNum());
-		  System.out.println(debit.getCorp());
-		  System.out.println(debit.getEntry());
-		  System.out.println(debit.getName());
-		  System.out.println(debit.getNickName());
-		  System.out.println(debit.getValDate());
 		  
 		  PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
 		  try {
 			  paymentDao.AdminEditDebit(debit);
 			  result=1;
 			} catch (Exception e) {
-				System.out.println("DB업데이트 하다가 BD 에서 오류 났네요");
 				result=0;
 			}
 		  return result;
