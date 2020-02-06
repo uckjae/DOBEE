@@ -3428,12 +3428,12 @@ html.dark .text-muted {
 }
 
 .bg-secondary {
-	background: #e36159;
+	background: #2e383f;
 	color: white;
 }
 
 .bg-tertiary {
-	background: #2baab1;
+	background: #07617D;
 	color: white;
 }
 
@@ -5730,7 +5730,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .panel-featured-secondary {
-	border-color: #e36159;
+	border-color: #2e383f;
 }
 
 .panel-featured-secondary .panel-title {
@@ -5738,7 +5738,7 @@ html.header-dark .userbox .dropdown-menu a {
 }
 
 .panel-featured-tertiary {
-	border-color: #2baab1;
+	border-color: #07617D;
 }
 
 .panel-featured-tertiary .panel-title {
