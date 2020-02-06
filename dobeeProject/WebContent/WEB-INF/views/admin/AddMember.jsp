@@ -432,7 +432,7 @@
                                             </div>
 											<div class="col-md-6 control-label">
 												<a class="btn btn-primary" onclick="myFormSubmit()">등록</a>
-												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
+												<button type="reset" class="btn btn-default" onClick="location.href='adminMain.do'">취소</button>
 											</div>
 										
 										</form>

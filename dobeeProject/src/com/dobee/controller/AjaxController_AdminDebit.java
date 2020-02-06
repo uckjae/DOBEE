@@ -42,9 +42,7 @@ public class AjaxController_AdminDebit {
 		
 		
 		result = adminDebitService.updateDebit(debit);
-		}else {
-			System.out.println("업데이트 성공");
-	}
+		}
 	
 	
 	//관리자 법인카드 삭제
