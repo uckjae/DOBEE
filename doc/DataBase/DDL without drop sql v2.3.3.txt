@@ -22,7 +22,7 @@ CREATE TABLE `NOTICE` (
 	`TITLE`   VARCHAR(255) NOT NULL COMMENT '글제목', -- 글제목
 	`CONTENT` MEDIUMTEXT   NOT NULL COMMENT '글내용', -- 글내용
 	`REGDATE` DATETIME     NOT NULL COMMENT '작성시간', -- 작성시간
-	`COUNT`   INT          NOT NULL COMMENT '조회수' -- 조회수
+	`COUNT`   INT          NOT NULL DEFAULT 0 COMMENT '조회수' -- 조회수
 )
 COMMENT '공지사항';
 
@@ -320,7 +320,7 @@ CREATE TABLE `APPLY` (
 	`REASON`    VARCHAR(1000) NOT NULL COMMENT '사유', -- 사유
 	`STARTAT`   DATETIME      NOT NULL COMMENT '시작일', -- 시작일
 	`ENDAT`     DATETIME      NOT NULL COMMENT '종료일', -- 종료일
-	`USEBREAK`  FLOAT         NOT NULL COMMENT '연차사용일수', -- 연차사용일수
+	`USEBREAK`  FLOAT         NOT NULL DEFAULT 0 COMMENT '연차사용일수', -- 연차사용일수
 	`ISAUTH`    VARCHAR(50)   NOT NULL COMMENT '승인여부', -- 승인여부
 	`REJREASON` VARCHAR(1000) NULL     COMMENT '반려사유', -- 반려사유
 	`DRAFTER`   VARCHAR(60)   NOT NULL COMMENT '신청자', -- 신청자
