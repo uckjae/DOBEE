@@ -178,7 +178,6 @@ function chageYYYYSelect(){
 							monthData = data;
 						},
 						complete:function(){
-							console.log(monthData);
 							//monthData[i].usedate 월만 뽑아내기
 							for(let i = 0 ; i<monthData.length; i++){
 								let temp = new Date(monthData[i].usedate).format("MM");
@@ -222,8 +221,6 @@ function chageYYYYSelect(){
 			data: useDateData,
 			success:function(data){
 					completeData = data;
-					console.log("여기는 연도 + 월 나오는 차트");
-					console.log(data);
 				},
 			complete:function(){
 				for(let i = 0 ; i < completeData.length; i++){
@@ -244,9 +241,6 @@ function chageYYYYSelect(){
 				}
 				
 
-				console.log("연도 + 월 같이나오는 아작스 : 차트 데이터");
-				console.log(xData1);
-				console.log(yData1);
 
 				//기존에 있던 차트 지우고 다시 새로 만들어서 뿌림
 			 	$('#myChart').remove();
@@ -306,7 +300,6 @@ function chageYYYYSelect(){
 						monthData = data;
 					},
 					complete:function(){
-						console.log(monthData);
 						//monthData[i].usedate 월만 뽑아내기
 						for(let i = 0 ; i<monthData.length; i++){
 							let temp = new Date(monthData[i].usedate).format("MM");
@@ -320,7 +313,6 @@ function chageYYYYSelect(){
 						
 						$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
 						var checkMonth = false;
-						console.log(checkMonth);
 						// 사용자가 월을 선택하고 다시 연도를 바꿀 때 그월에 대한 데이터가 없는 연도를 선택하게되면 '월별'으로 자동으로 셀렉트되게해야함 
 						for(let i = 0; i < finalMonth.length; i++){
 							if(finalMonth[i] == month){
@@ -509,7 +501,6 @@ function chageYYYYSelect(){
 								for(let i = 0 ; i<tempData.length; i++){
 									xData.push(tempData[i].entry);
 								}	
-								console.log("여기 확인해보세여 x " + xData);
 								var yData = [];		
 								for(let i = 0 ; i<tempData.length; i++){
 									yData.push(tempData[i].cost);
