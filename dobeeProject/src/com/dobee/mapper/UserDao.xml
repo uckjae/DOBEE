@@ -142,7 +142,7 @@
 	<select id="overTimeYearMonthList" parameterType="String" resultType="String">
 		SELECT DISTINCT DATE_FORMAT(ATTTIME, '%Y-%m') AS DT
 			FROM ATTEND AT
-				INNER JOIN APPLY AP
+				JOIN APPLY AP
 					ON AT.MAIL = AP.DRAFTER
 				WHERE AP.APYCODE = 6 AND AT.MAIL = #{param1}
 			ORDER BY DT DESC;
@@ -266,7 +266,7 @@
 		UNION
 		SELECT SEC_TO_TIME(sum(timediff(AP.ENDAT, AP.STARTAT))) AS WORK, '연장' AS ENTRY
 			FROM APPLY AP
-		    WHERE AP.drafter = #{param1} AND date_format(AP.STARTAT, '%Y-%m') = #{param2} and AP.ISAUTH ='승인'
+		    WHERE AP.drafter = #{param1} AND date_format(AP.STARTAT, '%Y-%m') = #{param2} and AP.ISAUTH ='승인' AND APYCODE = 6
 		UNION
 		SELECT DISTINCT date_format(AT.ATTTIME, '%m') AS WORK, '월' AS ENTRY
 			FROM attend AT

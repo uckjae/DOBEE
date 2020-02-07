@@ -82,9 +82,5 @@
    <tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<!-- /트랜잭션 -->
-	
-
-
-
 
 </beans>

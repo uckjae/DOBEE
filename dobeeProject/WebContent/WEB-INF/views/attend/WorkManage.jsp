@@ -358,10 +358,9 @@
 				success : function(data) {
 					var myArray = [];
 					myArray = data.OTYMList;
-					// console.log('myArray : ' + myArray);
 					for (var i = 0; i<myArray.length; i++) {
 						var option = document.createElement("option");
-						$('#yearMonthSelector').append("<option value="+myArray[i] + ">"+ myArray[i].substr(0,4)+"년 "+myArray[i].substr(6,2)+"월 </option>")
+						$('#yearMonthSelector').append("<option value="+myArray[i] + ">"+ myArray[i].substr(0,4)+"년 "+myArray[i].substr(5,2)+"월 </option>")
 					}
 				}			
 			});
@@ -387,8 +386,20 @@
 					var whArray = [];
 					whArray = data.workHour;
 
-					let wh = whArray[0];
-					let eh = whArray[1];
+					let wh = "";
+					let eh = "";
+					
+					if (whArray[0] == null){
+						wh = "00:00:00";
+					} else {
+						wh = whArray[0];
+					}
+						
+					if (whArray[1] == null){
+						eh = "00:00:00";
+					} else {
+						eh = whArray[1];
+					}
 					
 					var hour = 0;
 					var minute = 0;
@@ -498,8 +509,8 @@
 					        	stack : 'Stack 0',
 					            label: '출근',
 					            data: attInitAbs,
-					            backgroundColor: '#fdfdfd',
-					            borderColor: '#fdfdfd',
+					            backgroundColor: 'rgba(255, 255, 0, 0)',
+					            borderColor: 'rgba(255, 255, 0, 0)',
 					            borderWidth: 1,
 					            barTickness : 1,
 					        },
@@ -516,8 +527,8 @@
 					        	stack : 'Stack 0',
 					            label: '연장근무 시작',
 					            data: extInitRel,
-					            backgroundColor: '#fdfdfd',
-					            borderColor: '#fdfdfd',
+					            backgroundColor: 'rgba(255, 255, 0, 0)',
+					            borderColor: 'rgba(255, 255, 0, 0)',
 					            borderWidth: 1,
 					        },
 					        {
@@ -630,10 +641,10 @@
 
 
 			$('#yearMonthSelector').change(function() {
-				let ym = $(this).val();
+				let ym = $(this).val();		
 
 				let yyyy = ym.substr(0,4);
-				let mm = ym.substr(6,2);
+				let mm = ym.substr(5,2);
 				
 				$('#inputYearMonth').empty();
 				$('#inputYearMonth').append("<i class='fa fa-list-alt fa-2x' id='iIinputYearMonth'>&nbsp;&nbsp;"+yyyy+"년 "+mm+"월</i>")
@@ -660,7 +671,6 @@
 					url : 'ajax/apply/getChartData.do?ym='+ym,
 					success : function(data) {
 						dArray = data.CD;
-						console.log("이거 확인 : ", dArray)
 					},
 					complete : function() {
 
@@ -672,8 +682,21 @@
 								var whArray = [];
 								whArray = data.workHour;
 
-								let wh = whArray[0];
-								let eh = whArray[1];
+								let wh = "";
+								let eh = "";
+								
+								if (whArray[0] == null){
+									wh = "00:00:00";
+								} else {
+									wh = whArray[0];
+								}
+									
+								if (whArray[1] == null){
+									eh = "00:00:00";
+								} else {
+									eh = whArray[1];
+								}
+								
 								
 								var hour = 0;
 								var minute = 0;
