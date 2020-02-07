@@ -26,9 +26,9 @@ public class AdminDebitService {
 		  
 		  PaymentDao paymentDao = sqlSession.getMapper(PaymentDao.class);
 		  try {
-			  paymentDao.AdminEditDebit(debit);
-			  result=1;
+			  result = paymentDao.AdminEditDebit(debit);
 			} catch (Exception e) {
+				System.out.println(" 디비에서 넣다가 오류 났습니다. : " + result);
 				result=0;
 			}
 		  return result;
