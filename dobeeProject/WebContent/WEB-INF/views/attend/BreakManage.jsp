@@ -145,7 +145,7 @@
 										<th width="15%">연차 사용 일수</th>
 										<th width="15%">신청 일자</th>
 										<th width="10%">승인여부</th>
-										<th width="11%">수정/삭제</th>
+										<th width="11%">수정 및 삭제</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -159,10 +159,11 @@
 											<td class="notauth" style="text-align: center;"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
 																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button>
 											</td>
-											<td class="teditdelete" style="text-align: center;">
+											<td class="teditdelete" style="text-align: center;padding-top:15px;">
 												<c:choose>
 													<c:when test="${bl.isAuth == '미승인'}">
-														<button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
+														<%-- <button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button> --%>
+														<a href="editApply.do?aplSeq=${bl.aplSeq}"><i class="fa fa-pencil"></i></a>
 													</c:when>
 													<c:otherwise>
 														-

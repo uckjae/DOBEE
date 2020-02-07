@@ -67,7 +67,6 @@ body {
                
    <div class="panel-body">
      <form action="" method="post" id="findPWD" enctype="multipart/form-data">
-                  
       <div class="form-group mb-lg">
         <label>사용하시는 메일을 입력해주세요.</label>
         <div class="input-group input-group-icon">

@@ -86,8 +86,8 @@
 								<thead>
 									<tr>
 										<th width="10%">신청 번호</th>
-										<th width="15%">신청 ID</th>
-										<th width="10%">신청자명</th>
+										<th width="15%">사원 메일</th>
+										<th width="10%">사원 이름</th>
 										
 										<th width="10%">부재 항목</th>
 										<th width="10%">연차 사용</th>
@@ -134,7 +134,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;부재 신청 관리
 									</h4>
 								</div>
 								
