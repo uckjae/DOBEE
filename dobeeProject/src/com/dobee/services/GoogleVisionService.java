@@ -28,9 +28,7 @@ import com.google.protobuf.ByteString;
 @Service
 public class GoogleVisionService {
 
-	public GoogleVisionService() {
-		System.out.println("서비스단/GoogleVisionApi : 구글 비전 API  생성자 실행");
-	}	
+		
 	public JSONObject goGoogle(String path) {
 		
 		List<String> keyUseLocation = null;
@@ -93,7 +91,6 @@ public class GoogleVisionService {
 				System.out.println("서비스단/GoogleVisionApi : try 구문에러 : " + e);
 			}
 		return jsonObj;
-		
 	}
 		
 		
