@@ -112,12 +112,11 @@
 											<option value="3">출장</option>
 											<option value="4">외근</option>
 											<option value="5">경조휴가</option>
-											<option value="6">연장근무</option>
 										</select>
 										<br>
 										<div id="inputUseBreak">
 											<br>
-											<p class="output">연차 사용 일수 : <b id="days">0</b></p>
+											<p id="divDays" class="output">연차 사용 일수 : <b id="days">0</b></p>
 											<div class="col-md-12" id="showHide">
 												<section class="panel">
 													<div class="panel-body" style="padding:5px;">
@@ -182,17 +181,18 @@
 				
 				if (apycode == 1) {
 					$('.ui-slider-range').width(0);
+					$('#divDays').show();
 					$('#showHide').show();
 				} else if (apycode == 2) {
-					// document.getElementById('#useBreak').value = 0.5;
 					$('#listenSlider').val(0.5);
 					$('#days').html(0.5);
+					$('#divDays').show();
 					$('#showHide').hide();
 				} else {
-					// document.getElementById('#useBreak').value = 0;
 					$('#listenSlider').val(0);
 					$('#days').html(0);
 					$('#showHide').hide();
+					$('#divDays').hide();
 				}
 			});
 
