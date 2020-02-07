@@ -77,7 +77,7 @@ function chageYYYYSelect(){
 	let usedate = [];
 	let usedate_yyyy =[];
 	let usedate_month = [];
-	if (month == '연도만'){
+	if (month == '월별'){
 		// 년도만 가지고 오는 아작스 쿼리문
 		let useDateData = {
 				"usedate":yyyy
@@ -112,10 +112,6 @@ function chageYYYYSelect(){
 							yData
 						}
 
-					console.log("연도만 아작스 : 차트 데이터");
-					console.log(xData);
-					console.log(yData);
-					console.log(chartData);
 
 					//기존에 있던 차트 지우고 다시 새로 만들어서 뿌림
 				 	$('#myChart').remove();
@@ -173,8 +169,6 @@ function chageYYYYSelect(){
 					//여기서 부터 해당 연도에 따른 월 구해오기
 					let monthData = [];
 					let realmonthData = [];
-					console.log("여기는 연도만 : 월가져오기 아작스");
-					console.log(useDateData);
 					$.ajax({
 						type:'POST',
 						url: 'ajax/paymentChart/giveMeMonth.do',	
@@ -197,7 +191,7 @@ function chageYYYYSelect(){
 							// 이제 다시 이 월 배열을 월셀렉트 태그에 붙이기
 							
 							$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
-							$('#month').append("<option value=" + '연도만' +">" + '연도만'+ "</option>");
+							$('#month').append("<option value=" + '월별' +">" + '월별'+ "</option>");
 							for(let i = 0; i < finalMonth.length; i++){
 								$('#month').append("<option value=" + finalMonth[i] +">" + finalMonth[i] +'월'+ "</option>");
 							}
@@ -327,7 +321,7 @@ function chageYYYYSelect(){
 						$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
 						var checkMonth = false;
 						console.log(checkMonth);
-						// 사용자가 월을 선택하고 다시 연도를 바꿀 때 그월에 대한 데이터가 없는 연도를 선택하게되면 '연도만'으로 자동으로 셀렉트되게해야함 
+						// 사용자가 월을 선택하고 다시 연도를 바꿀 때 그월에 대한 데이터가 없는 연도를 선택하게되면 '월별'으로 자동으로 셀렉트되게해야함 
 						for(let i = 0; i < finalMonth.length; i++){
 							if(finalMonth[i] == month){
 								checkMonth = true;
@@ -335,7 +329,7 @@ function chageYYYYSelect(){
 						}
 						if(checkMonth){
 							//해당 월이 그 연도에 데이타가 있으면 그냥 붙여주고 
-							$('#month').append("<option value=" + '연도만' +">" + '연도만'+ "</option>");
+							$('#month').append("<option value=" + '월별' +">" + '월별'+ "</option>");
 							for(let i = 0; i < finalMonth.length; i++){
 								if(finalMonth[i] == month){
 										$('#month').append("<option selected value=" + finalMonth[i] +">" + finalMonth[i] +'월'+ "</option>");
@@ -345,8 +339,8 @@ function chageYYYYSelect(){
 							}
 						}else{
 							// 없다면, 셀렉티드 속성을 붙여서 달아줘야함
-							$('#month').append("<option selected value=" + '연도만' +">" + '연도만'+ "</option>");
-							chageYYYYSelect(); // 다시 이 함수 콜백 시킴 연도만 있는 건 위에 있으므로
+							$('#month').append("<option selected value=" + '월별' +">" + '월별'+ "</option>");
+							chageYYYYSelect(); // 다시 이 함수 콜백 시킴 월별만 있는 건 위에 있으므로
 						}	
 					},
 					error:function(){
@@ -498,7 +492,6 @@ function chageYYYYSelect(){
 							type:'POST',
 							success:function(data){
 									tempData = data;
-									console.log("여기는 기본연도만 나오는 아작스");
 								},
 							complete:function(){
 								//첫 기본 차트 화면 뿌리기 시작 
@@ -592,7 +585,7 @@ function chageYYYYSelect(){
 										// 이제 다시 이 월 배열을 월셀렉트 태그에 붙이기
 										
 										$('#month').empty(); //기존에 붙은 월들 삭제하고 다시 새로운 월들 붙이기
-										$('#month').append("<option value=" + '연도만' +">" + '연도만'+ "</option>");
+										$('#month').append("<option value=" + '월별' +">" + '월별'+ "</option>");
 										for(let i = 0; i < finalMonth.length; i++){
 											$('#month').append("<option value=" + finalMonth[i] +">" + finalMonth[i] +'월'+ "</option>");
 										}
