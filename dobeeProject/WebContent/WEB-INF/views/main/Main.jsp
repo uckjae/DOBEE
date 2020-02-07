@@ -207,7 +207,7 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th class="notSeq" style="width: 15%; text-align: center;">#</th>
+													<th class="notSeq" style="width: 11%; text-align: center;">#</th>
 													<th class="nsContent" style="text-align : center";">제목</th>
 													<th class="startTime" style="width: 20%; text-align: center;">작성일</th>
 													<th class="count" style="width: 15%; text-align: center;">조회수</th>
@@ -244,21 +244,21 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th>#</th>
-													<th>프로젝트</th>
-													<th>상태</th>
-													<th>진행도</th>
+													<th style="width: 11%; text-align: center;">#</th>
+													<th style="text-align: center;">프로젝트</th>
+													<th style="width: 13%; text-align: center;">상태</th>
+													<th style="width: 25%; text-align: center;">진행도</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach items="${requestScope.pjtList}" var="pjtList" varStatus="status">
 														<tr>
-															<td>${status.index + 1}</td>
-															<td><a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
-															<td><span class="label label-success">${pjtList.pjtProgress}</span></td>
+															<td style="text-align: center;">${status.index + 1}</td>
+															<td style="text-align: left;">&nbsp;<a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
+															<td style="text-align: center;"><span class="label label-success">${pjtList.pjtProgress}</span></td>
 															<c:forEach items="${requestScope.progressRate }" var="progressRate" varStatus="status">
 																<c:if test="${pjtList.pjtName == progressRate.key }">
-																	<td>
+																	<td style="text-align: center;">
 																		<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
 																			<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:${progressRate.value}%";">
 																				${progressRate.value}%
