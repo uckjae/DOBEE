@@ -2618,7 +2618,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 		
 		<!-- 구글 드라이브 -->
-		<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
+		
 		<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>
 		
 		
