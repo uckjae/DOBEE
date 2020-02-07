@@ -81,6 +81,8 @@
 	<!-- Sweet Alert -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
+	<!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <style type="text/css">
 	.ds {
 		width: 100%;
@@ -155,7 +157,7 @@ function noticeDel () {
 			<!-- end: sidebar -->
 
 			<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>공지사항</h2>
 					<div class="right-wrapper pull-right">

@@ -7,7 +7,8 @@
 
 
 <c:import url="/common/HeadTag.jsp" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <style>
 /* 이미지공간 강제 조정 */
 /* img {
@@ -272,7 +273,7 @@ var costKey = 0;
 			<!-- end: sidebar -->
 
 			<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>정산 신청</h2>
 

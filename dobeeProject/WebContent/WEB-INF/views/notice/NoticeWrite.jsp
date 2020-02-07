@@ -32,6 +32,8 @@
 	<!-- Head Libs -->
 	<script src="assets/vendor/modernizr/modernizr.js"></script>
 	
+	<!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 	
 	<!-- Vendor -->
 	<script src="assets/vendor/jquery/jquery.js"></script>
@@ -69,7 +71,7 @@
 
 	<!-- Examples -->
 	<script src="assets/javascripts/forms/examples.advanced.form.js" /></script>
-
+    
 	
 	
 	<!-- 파일 업로드 -->
@@ -101,7 +103,7 @@
 		<c:import url="/common/Side.jsp"/>
 		<!-- end: sidebar -->
 		<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>공지사항</h2>
 						<div class="right-wrapper pull-right">

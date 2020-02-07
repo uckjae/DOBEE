@@ -26,9 +26,14 @@
 
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		
+		<!--font  -->
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		
+		
 	
 	
 		<!-- Vendor -->
@@ -1614,9 +1619,9 @@
 
         <!-- end: sidebar -->
 
-        <section role="main" class="content-body">
-            <header class="page-header">
-                <h2>프로젝트</h2>
+        <section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
+            <header class="page-header" >
+                <h2 >프로젝트</h2>
 
                 <div class="right-wrapper pull-right">
                     <ol class="breadcrumbs">
@@ -1631,7 +1636,7 @@
                 </div>
             </header>
             <!-- start: page -->
-            <div class="search-content">
+            <div class="search-content" >
                 <div class="search-toolbar">
                     <ul class="list-unstyled nav nav-pills" id="">
                         <li class="active">

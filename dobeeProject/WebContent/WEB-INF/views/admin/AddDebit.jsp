@@ -8,6 +8,8 @@
 <c:import url="/common/HeadTag.jsp"/>
 <!-- Sweet Alert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <script type="text/javascript">
 	//카드 번호 정규식 
 	var cardReg = new RegExp("^[1-9]{1}[0-9]{3}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
@@ -266,7 +268,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>법인카드 등록</h2>
 					

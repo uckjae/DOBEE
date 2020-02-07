@@ -14,7 +14,8 @@
     <title>admin login</title>
     <!-- Bootstrap core CSS -->
     <link href="css/cover/bootstrap.min.css" rel="stylesheet">
-    
+    <!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
     <link href="css/cover/cover.css" rel="stylesheet">
     <script src="assets/js/ie-emulation-modes-warning.js"></script>
   </head>
@@ -32,12 +33,12 @@
             </div>
           </div>
 
-          <div class="inner cover">
+          <div class="inner cover" style="font-family: 'Nanum Gothic', sans-serif;">
             <h1 class="cover-heading">Warning</h1>
             
             <br>
             <hr>
-            <p class="lead">안녕하세요!<c:out value="${user.mail}"></c:out>님 </p>
+            <p class="lead">안녕하세요!  <c:out value="${user.mail}"></c:out>님 </p>
             <p class="lead">현재 관리자 아이디로 로그인하였습니다</p>
             <p class="lead">이곳에서 수정된 모든 내용은 실제로 반영되며 삭제된 내용은 복구할 수 없습니다.</p>
             <p class="lead">접근을 위해서는 아래 버튼을 누르세요</p>
@@ -49,7 +50,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Waning System <a href="http://getbootstrap.com">Page</a>, by <a href="https://twitter.com/mdo">@DoBee</a>.</p>
+              <p>Warning System <a href="http://getbootstrap.com">Page</a>, by <a href="https://twitter.com/mdo">@DoBee</a>.</p>
             </div>
           </div>
 
@@ -63,5 +64,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    
   </body>
 </html>

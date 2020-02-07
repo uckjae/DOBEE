@@ -41,7 +41,8 @@
 
 <!-- Moment.js -->
 <script src="https://npmcdn.com/moment@2.14.1"></script>
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 	
 </head>
@@ -58,7 +59,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>근무 내역 관리</h2>
 					

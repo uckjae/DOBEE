@@ -14,6 +14,8 @@
 <link href='assets/vendor/fullcalendar-ori/packages/timegrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/daygrid/main.css' rel='stylesheet' />
 <link href='assets/vendor/fullcalendar-ori/packages/list/main.css' rel='stylesheet' />
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 <script src='assets/vendor/fullcalendar-ori/packages/core/main.js'></script>
 <script src='assets/vendor/fullcalendar-ori/packages/interaction/main.js'></script>
@@ -51,7 +53,7 @@ console.log("MAIN!!");
 					</div>
 				</header>
 
-				<div class="row">
+				<div class="row" style="font-family: 'Nanum Gothic', sans-serif;">
 					<div class="col-md-8">
 						<section class="panel">
 							<header class="panel-heading">

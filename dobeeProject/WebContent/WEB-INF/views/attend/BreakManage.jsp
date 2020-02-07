@@ -47,7 +47,8 @@
 <!-- Table Style -->
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 </head>
 	<body>
@@ -63,7 +64,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>부재 일정 관리</h2>
 					

@@ -4517,18 +4517,18 @@ body .btn-facebook:active {
 }
 
 body .btn-twitter, body .btn-twitter:focus {
-	background: #FF6C6C;
-	border: 1px solid #FF6C6C;
+	background: #34495e;
+	border: 1px solid #34495e;
 }
 
 body .btn-twitter:hover {
-	background: #FF6C6C;
-	border-color: #FF6C6C;
+	background: #34495e;
+	border-color: #34495e;
 }
 
 body .btn-twitter:active {
-	background: #FF6C6C;
-	border-color: #FF6C6C;
+	background: #34495e;
+	border-color: #34495e;
 }
 
 body .btn-gplus, body .btn-gplus:focus {
