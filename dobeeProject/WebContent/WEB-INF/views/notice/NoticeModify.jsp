@@ -276,7 +276,7 @@
 			if($("#startTime").val()=="" || $("#endTime").val()=="" ){
 		        swal({
 				title: "공지사항 일정",
-				text: "일정을 달력에서 선택해주세요", 
+				text: "일정을 입력해주세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
 				button: true
 						}).then((YES) => {

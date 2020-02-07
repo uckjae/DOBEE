@@ -121,7 +121,8 @@ width:47em
 	<!-- 관리자만 글쓰기 버튼 추가해주기 -->
 	<c:if test="${ user.authCode == '3' }">
 		<p class="article-comment margin-small">
-			<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
+			
+			<a class="btn btn-primary mr-3" href="noticeWrite.do">글쓰기</a>
 		</p>
 	</c:if>
 	
