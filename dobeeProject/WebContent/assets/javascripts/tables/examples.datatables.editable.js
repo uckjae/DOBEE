@@ -235,6 +235,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 							error:function(request,status,error){
 								console.log("code : " + request.status +"\n" + "message : " 
 										+ request.responseText + "\n" + "error : " + error);
+							},
 									complete:function(){
 										resolve(checkUpdate);
 									},
