@@ -30,8 +30,10 @@
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>도비에 오신 걸 환영합니다.</h3>
-                        <p>Dobby is free</p>
+                        <img src="img/beemain2.png" height="150" width="340"/>
+                        <br><br>
+                        
+                        
                         <div class="page-links">
                             <a href="login2.html" class="active">Login</a>
                         </div>

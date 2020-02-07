@@ -193,17 +193,15 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					
 						
 						//카드 종류 틀리면 나오는 모달창
-						if(!entryCheck){
-							swal({
-								title: "카드등록",
-								text: "카드 종류를 재입력해주세요", 
-								icon: "warning", //"info,success,warning,error" 중 택1
-								showConfirmButton: true
-							})
-						}
-						
-				
-					} //else 문 끝
+					if(!entryCheck){
+						swal({
+							title: "카드등록",
+							text: "카드 종류를 재입력해주세요", 
+							icon: "warning", //"info,success,warning,error" 중 택1
+							showConfirmButton: true
+						})
+					}
+				} //else 문 끝
 					
 					
 					var sendData = {
@@ -219,29 +217,30 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 					
 					
 					//프로미스 (중복 검사하는 아작스)
-					function getData(callback) {
+					function getCheckDupleCardNum(callback) {
 						  return new Promise(function (resolve, reject) {
 							  let checkUpdate = 0;  // 0이면 존재하지 않고  1이면 존재
 								let checkCardNumber = {"cardNum": cardNum};
-								$.ajax({
-									url:'ajax/adminDebit/checkEditDupleCardNum.do',
-									data:checkCardNumber,
-									type:"POST",
-									success:function(data){
-										if(data > 0 ){
-											checkUpdate = 1;
-										}
-									},
+						$.ajax({
+							url:'ajax/adminDebit/checkEditDupleCardNum.do',
+							data:checkCardNumber,
+							type:"POST",
+							success:function(data){
+								if(data > 1 ){
+									checkUpdate = 1;
+								}
+							},
 							error:function(request,status,error){
 								console.log("code : " + request.status +"\n" + "message : " 
 										+ request.responseText + "\n" + "error : " + error);
-							},
-									complete:function(){
-										resolve(checkUpdate);
+								
 									},
-								});
-						  });
-						};
+							complete:function(){
+								resolve(checkUpdate);
+							},
+						});
+				  });
+				};
 					// 등록하는 아작스 함수
 					function updateDebit(check){
 						
@@ -287,7 +286,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 						//이제 중복 검사 
 						//여기서 프로미스로 먼저 중복검사 아작스 실행 한 후 
 						//등록 아작스 실행해야 하므로
-						getData().then(function (tempCheck) {
+						getCheckDupleCardNum().then(function (tempCheck) {
 							console.log("여기는 프로미스");
 		            		console.log(tempCheck);
 		            		let check;
@@ -296,6 +295,7 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 		            		}else{
 		            			check = true;
 		            		}
+		            		// 업데이트 수정 아작스 실행
 		            		updateDebit(check);
 						});
 					}else{
@@ -468,7 +468,12 @@ var date_pattern = /^(0[1-9]|1[012])\/([2-9][0-9])$/;
 				if ( $this.hasClass('actions') ) {
 					_self.rowSetActionsEditing( $row );
 				} else {
-					$this.html( '<input type="text" class="form-control input-block" value="' + data[i] + '"/>' );
+					if(i == 1){
+						$this.html( '<input type="text" readonly class="form-control input-block" value="' + data[i] + '" />' );
+					}else{
+						$this.html( '<input type="text" class="form-control input-block" value="' + data[i] + '"/>' );
+					}
+					
 				}
 			});
 		},

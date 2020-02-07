@@ -104,12 +104,11 @@
 											<option value="3">출장</option>
 											<option value="4">외근</option>
 											<option value="5">경조휴가</option>
-											<option value="6">연장근무</option>
 										</select>
 										<br>
 										<div id="inputUseBreak">
 											<br>
-											<p class="output">연차 사용 일수 : <b>${editApplyList.useBreak }/27</b></p>
+											<p id="divDays" class="output">연차 사용 일수 : <b>${editApplyList.useBreak }</b></p>
 											<div class="col-md-12">
 												<section class="panel">
 													<div class="panel-body" style="padding:5px;">
@@ -136,9 +135,8 @@
 										<br>
 										<br>
 										<input id="breakEditApplyBtn" type="button" value="수정" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp;
-										<!-- <input type="submit" value="수정" class="btn btn-primary" style="width:auto;"> &nbsp;&nbsp; -->
 										<input type="reset" value="초기화" class="btn btn-default" style="width:auto;">  &nbsp;&nbsp;
-										<input type="button" value="삭제" class="btn btn-default" onclick="location.href='deleteApply.do?aplSeq=${editApplyList.aplSeq}'">
+										<input id="breakDeleteApplyBtn" type="button" value="삭제" class="btn btn-default" >
 									</form>
 								</div>
 							</div>
@@ -182,7 +180,27 @@
 		window.onload = function(){
 
 			$('#listenSlider').change(function() {
-				$('.output b').text( this.value +'/'+ 27);
+				$('.output b').text( this.value);
+			});
+
+			$('#apycodelist').change(function() {
+				let apycode = this.value;
+				
+				if (apycode == 1) {
+					$('.ui-slider-range').width(0);
+					$('#divDays').show();
+					$('#showHide').show();
+				} else if (apycode == 2) {
+					$('#listenSlider').val(0.5);
+					$('#days').html(0.5);
+					$('#divDays').show();
+					$('#showHide').hide();
+				} else {
+					$('#listenSlider').val(0);
+					$('#days').html(0);
+					$('#showHide').hide();
+					$('#divDays').hide();
+				}
 			});
 
 			$.ajax({
@@ -237,7 +255,7 @@
 
 		 	
 			$.ajax({
-				url : "ajax/apply/getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do?teamCode="+${sessionScope.user.teamCode},
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -376,8 +394,50 @@
 					}
 				});
 		    });
+
+	        $("#breakDeleteApplyBtn").on('click', function() {
+				$.ajax({
+					url : "ajax/apply/deleteApply.do?aplSeq="+${editApplyList.aplSeq},
+					dataType : "text",
+	 				type:"post",
+					success : function(responseData) {
+
+						send("breakDeleteApply");
+						
+						if(responseData == "success"){
+							swal({
+								title: "삭제 완료",
+								text: "부재 일정 신청이 삭제되었습니다.",
+								icon: "success", //"info,success,warning,error" 중 택1
+								button : {
+									confirm: {
+									    text: "확인",
+									    value: true,
+									    visible: true,
+									    className: "",
+									    closeModal: true
+									  }
+									}
+							}).then((YES) => {
+								if(YES){
+	 								history.back();
+									} 
+						})
+					}
+						
+					},
+					error : function(request, status, error) {
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});	
+			});
 		    
 		}
+
+
+	 	
+        
+	
 
 		
 		var eventList = [];

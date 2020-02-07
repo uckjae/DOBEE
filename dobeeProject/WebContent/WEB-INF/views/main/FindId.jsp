@@ -120,7 +120,7 @@ $(function(){
 			
 			
    <a class="logo pull-left">
-	 <img src="img/beemain2.png" height="45"/>
+	 <img src="img/beemain2.png" height="55"/>
    </a>
 
 

@@ -112,13 +112,12 @@
 											<option value="3">출장</option>
 											<option value="4">외근</option>
 											<option value="5">경조휴가</option>
-											<option value="6">연장근무</option>
 										</select>
 										<br>
 										<div id="inputUseBreak">
 											<br>
-											<p class="output">연차 사용 일수 : <b>0/27</b></p>
-											<div class="col-md-12">
+											<p id="divDays" class="output">연차 사용 일수 : <b id="days">0</b></p>
+											<div class="col-md-12" id="showHide">
 												<section class="panel">
 													<div class="panel-body" style="padding:5px;">
 														<div class="mt-lg mb-lg slider-primary" id="divSlider" data-plugin-slider data-plugin-options='{ "value": 0, "range": "min", "max": 27 }' data-plugin-slider-output="#listenSlider">
@@ -167,38 +166,45 @@
 	
 	<script>
 		window.onload = function(){
-			connect();//웹소켓 연결
+
+			// 웹 소켓 연결
+			connect();
+
+			
 			$('#listenSlider').change(function() {
-				$('.output b').text( this.value +'/'+ 27);
+				$('.output b').text( this.value);
 			});
 
-			/*
+			
 			$('#apycodelist').change(function() {
 				let apycode = this.value;
 				
-				$('#inputUseBreak').empty();
-				
 				if (apycode == 1) {
-					$('#inputUseBreak').append(
-							"<br> <p class='output'>연차 사용 일수 : <b>0/27</b></p>	<div class='col-md-12'>	<section class='panel'>	<div class='panel-body' style='padding:5px;'>" +
-							"<div class='mt-lg mb-lg slider-primary' id='divSlider' data-plugin-slider data-plugin-options='{ 'value': 0, 'range': 'min', 'max': 27 }' data-plugin-slider-output='#listenSlider'>"+
-							"<input name='useBreak id='listenSlider' type='hidden' value='0' ' />	</div>	</div>	</section>	</div> <br>"
-					)
+					$('.ui-slider-range').width(0);
+					$('#divDays').show();
+					$('#showHide').show();
 				} else if (apycode == 2) {
-					$('#inputUseBreak').append(
-							"<br> <p class='output'>연차 사용 일수 : <b>0.5</b></p> <input type='hidden' name='useBreak' value='0.5' />"
-					)
+					$('#listenSlider').val(0.5);
+					$('#days').html(0.5);
+					$('#divDays').show();
+					$('#showHide').hide();
+				} else {
+					$('#listenSlider').val(0);
+					$('#days').html(0);
+					$('#showHide').hide();
+					$('#divDays').hide();
 				}
 			});
-			*/
+
 			
 			/*부재 항목 select2 적용*/
 			$('#apycodelist').select2({
 				 width: 'resolve',				
 				});
+			
 
 			$.ajax({
-				url : "ajax/apply/getApprovalList.do",
+				url : "ajax/apply/getApprovalList.do?teamCode="+${sessionScope.user.teamCode},
 				dataType : "json",
 				success : function(data) {
 					var dArray = [];
@@ -216,8 +222,6 @@
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
-
-
 			
 			
 			$('#datetimepickerEnd').datetimepicker({

@@ -12622,6 +12622,9 @@ html.dark .table .actions-hover a {
 	margin-right: 10px;
 	width: 75px;
 }
+#datatable-default_filter label {
+	text-align : right;
+}
 
 @media only screen and (max-width: 991px) {
 	.dataTables_wrapper .dataTables_length {

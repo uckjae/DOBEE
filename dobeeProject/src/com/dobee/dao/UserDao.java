@@ -95,7 +95,7 @@ public interface UserDao {
     
     
     // 개인_부재일정 삭제	0120 POST			COMPLETE
-    public void deleteApply(Integer aplSeq);
+    public int deleteApply(Integer aplSeq);
     
     
     // Ajax 부재 항목 불러오기
@@ -105,7 +105,7 @@ public interface UserDao {
 
     // Ajax 부재 결재자 불러오기
     /* 01.10 게다죽 */
-    public List<User> getApprovalList();
+    public List<User> getApprovalList(Integer teamCode);
 
     
     // 개인_연장근무신청

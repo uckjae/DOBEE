@@ -207,21 +207,21 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th class="notSeq" style="width: 20%; text-align: center;">#</th>
-													<th class="nsContent" style="width: 30%; text-align: center;">제목</th>
-													<th class="startTime" style="width: 25%; text-align: center;">작성일</th>
-													<th class="count" style="width: 25%; text-align: center;">조회수</th>
+													<th class="notSeq" style="width: 11%; text-align: center;">#</th>
+													<th class="nsContent" style="text-align : center";">제목</th>
+													<th class="startTime" style="width: 20%; text-align: center;">작성일</th>
+													<th class="count" style="width: 15%; text-align: center;">조회수</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach items="${requestScope.recentNoticeList}" var="n">
 													<tr>
 														<td class="notSeq" style="text-align: center;">${n.notSeq}</td>
-														<td class="nsContent" style="text-align: center;">
-														<a href="noticeDetail.do?notSeq=${n.notSeq}" style="text-decoration: none;">${n.title}</a>
+														<td class="nsContent" style="text-align: left;">
+															<a href="noticeDetail.do?notSeq=${n.notSeq}" style="text-decoration: none;">&nbsp;${n.title}</a>
 														</td>
 														<td class="startTime" style="text-align: center;">
-														  <fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+															<fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd"/>
 														</td>
 														<td class="count" style="text-align: center;">${n.count}</td>
 													</tr>
@@ -244,21 +244,21 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th>#</th>
-													<th>프로젝트</th>
-													<th>상태</th>
-													<th>진행도</th>
+													<th style="width: 11%; text-align: center;">#</th>
+													<th style="text-align: center;">프로젝트</th>
+													<th style="width: 13%; text-align: center;">상태</th>
+													<th style="width: 25%; text-align: center;">진행도</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach items="${requestScope.pjtList}" var="pjtList" varStatus="status">
 														<tr>
-															<td>${status.index + 1}</td>
-															<td><a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
-															<td><span class="label label-success">${pjtList.pjtProgress}</span></td>
+															<td style="text-align: center;">${status.index + 1}</td>
+															<td style="text-align: left;">&nbsp;<a href="pjtKanban.do?pjtSeq=${pjtList.pjtSeq}" style="text-decoration: none;">${pjtList.pjtName}</a></td>
+															<td style="text-align: center;"><span class="label label-success">${pjtList.pjtProgress}</span></td>
 															<c:forEach items="${requestScope.progressRate }" var="progressRate" varStatus="status">
 																<c:if test="${pjtList.pjtName == progressRate.key }">
-																	<td>
+																	<td style="text-align: center;">
 																		<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
 																			<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:${progressRate.value}%";">
 																				${progressRate.value}%
@@ -291,73 +291,14 @@ console.log("MAIN!!");
 	<c:import url="/common/BottomTag.jsp"></c:import>
 	
 	<script>
-	/* var isWork = ${sessionScope.user.isWork }
-			var eventList = [];
-	
-			$.ajax ({
-				url : "ntpToCal.do",
-				dataType : "json",
-				success : function(data) {
-					var events = [];
-					events = data.NTPTC;
-	
-					$.each(events, (index, element) => {
-						if(element.entry == "NOTICE") {
-							eventList.push ({
-								title : element.title,
-								start : element.startTime,
-								end : element.endTime,
-								color : "#f54c4c"	
-							})
-						} else if (element.entry == "TASK") {
-							eventList.push ({
-								title : element.title,
-								start : element.startTime,
-								end : element.endTime,
-								color : "#ffc107"	
-							})
-						} else if (element.entry == "PROJECT") {
-							eventList.push ({
-								title : element.title,
-								start : element.startTime,
-								end : element.endTime,
-								color : "#69a854"	
-							})
-						}
-					});
-				},
-				complete : function () {
-					var calendarEl = document.getElementById('calendar');
-	
-				    var calendar = new FullCalendar.Calendar(calendarEl, {
-				      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-				      header: {
-				    	left : 'prev,today,next',
-						center : 'title',
-						right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
-				      },
-				      timeFormat : 'h:mm',
-				      navLinks: true, // can click day/week names to navigate views
-				      businessHours: {
-					      startTime : '09:00',
-					      endTime : '18:00'
-					  },
-					  eventLimit : true,
-				      editable: false,
-				      events: eventList
-				    });
-				    calendar.render();
-				}
-			});		
-		}
-		
-/* 
+	/* 
 		var isWork = ${sessionScope.user.isWork }
 		if (isWork != null) {
 			window.onbeforeunload = function() {
 			    return "페이지 넘어갈때마다 팝업창이 뜨는거는 정말 거지같은데???";
 			}
-	} */
+		}
+	*/
 	</script>
 	
 </body>

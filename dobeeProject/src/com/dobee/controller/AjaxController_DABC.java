@@ -47,9 +47,9 @@ public class AjaxController_DABC {
 	
 	// 개인_부재/연장신청 결재자 불러오기		COMPLETE o
 	@RequestMapping("getApprovalList.do")
-	public View getRenewedList (Model map) {
+	public View getRenewedList (Model map, Integer teamCode) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		List<User> results = userDao.getApprovalList();
+		List<User> results = userDao.getApprovalList(teamCode);
 		map.addAttribute("renewedList", results);
 		
 		return jsonview;
