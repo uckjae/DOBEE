@@ -263,7 +263,7 @@
 											<div class="col-md-6 control-label">
 												<button type="button" class="btn btn-primary" id="modifyBtn">수정</button>
 												<button type="button" class="btn btn-primary" id="deleteBtn">삭제</button>
-												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
+												<button type="reset" class="btn btn-default" onClick="location.href='adminMain.do'">취소</button>
 											</div>
 										</form>
 									</div>
