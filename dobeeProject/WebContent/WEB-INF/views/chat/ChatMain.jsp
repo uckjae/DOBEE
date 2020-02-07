@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+	<!--font  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <style>
 	html, body {
 		width: 100%; height: 100%;
@@ -101,7 +103,7 @@
 			<c:import url="/common/Top.jsp"/>
 			<!-- end: header -->
 
-			<div class="inner-wrapper">
+			<div class="inner-wrapper" style="font-family: 'Nanum Gothic', sans-serif;">
 				<!-- start: sidebar -->
 				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
