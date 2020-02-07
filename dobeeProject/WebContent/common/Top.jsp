@@ -6,7 +6,7 @@
 <header class="header">
 		<div class="logo-container">
 			<a href="main.do" class="logo">
-				<img src="./img/beemain2.png" height="44" alt="로고" />
+				<img src="./img/beemain2.png" height="44" width="120" alt="로고" />
 			</a>
 			<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 				<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
