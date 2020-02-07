@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 	<link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+	<!--font  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 <style>
 	html, body {
@@ -311,7 +313,7 @@
 				<c:import url="/common/Side.jsp"/>
 				<!-- end: sidebar -->
 
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>채팅</h2>
 						<div class="right-wrapper pull-right">

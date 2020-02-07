@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!--font  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <menu id="content-menu" class="inner-menu" role="menu">
 	<div class="nano">
-		<div class="nano-content">
+		<div class="nano-content" style="font-family: 'Nanum Gothic', sans-serif;">
 			<div class="inner-menu-toggle-inside">
 				<i	class="fa fa-chevron-up visible-xs-inline"></i><i
 					class="fa fa-chevron-left hidden-xs-inline"></i> Hide Menu

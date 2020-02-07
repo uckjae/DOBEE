@@ -41,7 +41,8 @@
 
 <!-- Moment.js -->
 <script src="https://npmcdn.com/moment@2.14.1"></script>
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 	
 </head>
@@ -58,7 +59,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>근무 내역 관리</h2>
 					
@@ -497,8 +498,8 @@
 					        	stack : 'Stack 0',
 					            label: '출근',
 					            data: attInitAbs,
-					            backgroundColor: '#f54242',
-					            borderColor: '##fdfdfd',
+					            backgroundColor: '#fdfdfd',
+					            borderColor: '#fdfdfd',
 					            borderWidth: 1,
 					            barTickness : 1,
 					        },
@@ -507,7 +508,7 @@
 					            label: '퇴근',
 					            data: attEndRel,
 					            backgroundColor: '#E8B10B',
-					            borderColor: '##fdfdfd',
+					            borderColor: '#fdfdfd',
 					            borderWidth: 1
 
 					        },
@@ -515,16 +516,16 @@
 					        	stack : 'Stack 0',
 					            label: '연장근무 시작',
 					            data: extInitRel,
-					            backgroundColor: '#07617D',
-					            borderColor: '##fdfdfd',
+					            backgroundColor: '#fdfdfd',
+					            borderColor: '#fdfdfd',
 					            borderWidth: 1,
 					        },
 					        {
 					        	stack : 'Stack 0',
 					            label: '연장근무 종료',
 					            data: extEndRel,
-					            backgroundColor: '#448092',
-					            borderColor: '##fdfdfd',
+					            backgroundColor: '#07617d',
+					            borderColor: '#fdfdfd',
 					            borderWidth: 1
 					        }]
 					    },
@@ -771,8 +772,8 @@
 						        	stack : 'Stack 0',
 						            label: '퇴근',
 						            data: attEndRel,
-						            backgroundColor: 'rgba(129, 242, 41, 1)',
-						            borderColor: 'rgba(129, 242, 41, 0.5)',
+						            backgroundColor: 'rgba(232, 177, 11, 1)',
+						            borderColor: 'rgba(232, 177, 11, 0.5)',
 						            borderWidth: 1
 					
 						        },
@@ -788,8 +789,8 @@
 						        	stack : 'Stack 0',
 						            label: '연장근무 종료',
 						            data: extEndRel,
-						            backgroundColor: 'rgba(255, 39, 0, 1)',
-						            borderColor: 'rgba(255, 39, 0, 0.5)',
+						            backgroundColor: 'rgba(7, 97, 125, 1)',
+						            borderColor: 'rgba(7, 97,125, 0.5)',
 						            borderWidth: 1
 						        }]
 						    },

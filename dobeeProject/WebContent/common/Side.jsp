@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <aside id="sidebar-left" class="sidebar-left">
 	<div class="sidebar-header">
 		<!-- <div class="sidebar-title">Navigation</div> -->
@@ -13,7 +14,7 @@
 		</div>
 	</div>
 	<div class="nano">
-		<div class="nano-content">
+		<div class="nano-content" style="font-family: 'Nanum Gothic', sans-serif;">
 			<nav id="menu" class="nav-main" role="navigation">
 				<ul class="nav nav-main">
 					<li class="nav-active">

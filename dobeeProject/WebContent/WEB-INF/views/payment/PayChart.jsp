@@ -4,7 +4,8 @@
 <!doctype html>
 <html class="fixed">
 <head>
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <c:import url="/common/HeadTag.jsp"/>
 
@@ -364,7 +365,7 @@ function chageYYYYSelect(){
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>비용 차트</h2>
 					

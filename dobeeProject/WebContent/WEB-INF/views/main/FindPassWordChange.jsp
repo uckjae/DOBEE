@@ -17,7 +17,9 @@
 <link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 <link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
-<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />	
+<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">	
 <!-- Specific Page Vendor -->
 <script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
 <script src="assets/vendor/select2/select2.js"></script>
@@ -127,11 +129,11 @@ $(function(){
 </head>
 <body>
 <!-- start:page -->
-<section class="body-sign">
+<section class="body-sign" style="font-family: 'Nanum Gothic', sans-serif;">
  <div class="center-sign">
 					
    <a class="logo pull-left">
-	 <img src="img/beemain2.png" height="45"/>
+	 <img src="img/beemain2.png" height="55"/>
    </a>
 
    <div class="panel panel-sign">

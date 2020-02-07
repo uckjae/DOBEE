@@ -6,6 +6,9 @@
 <head>
 	<c:import url="/common/HeadTag.jsp"/>	
 	<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+			
+    <!--font  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
@@ -387,7 +390,7 @@
 
 			<!-- end: sidebar -->
 
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>프로젝트</h2>
 				

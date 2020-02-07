@@ -7,7 +7,8 @@
 
 
 <c:import url="/common/HeadTag.jsp" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <style>
 /* 이미지공간 강제 조정 */
 /* img {
@@ -272,7 +273,7 @@ var costKey = 0;
 			<!-- end: sidebar -->
 
 			<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>정산 신청</h2>
 
@@ -299,7 +300,7 @@ var costKey = 0;
                             </div>
                             <!-- 파일 업로드  부분 -->
                             <form id="FILE_FORM" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-                            		<label for="FILE_TAG" class="btn btn-primary">선택하기
+                            		<label for="FILE_TAG" class="btn btn-primary">영수증 등록
                                     <input type="file" id="FILE_TAG" name="FILE_TAG" onchange="uploadFile()"  style="display:none !important;" >
                                     </label>
                             </form>
@@ -311,7 +312,7 @@ var costKey = 0;
                             <!--  여기에는 사용자가 텍스트 수정해야할 부분은 수정하게 해줘야함 -->
                             <form id="costlistInfo" action="addFinalReceipt.do" method="POST">
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1">신청자 이메일</label>
+                                    <label for="exampleFormControlInput1">사원 메일</label>
                                     <input type="text" class="form-control" id="Input1" name='mail' readonly="readonly">
                                 </div>
                                 <div class="form-group">
@@ -319,12 +320,12 @@ var costKey = 0;
 				    				<input type="date" class="form-control" id="Input0" name='regitReceiptDate' readonly="readonly">
 				  				</div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">법인카드 선택</label>
+                                    <label for="exampleFormControlSelect1">법인카드</label>
                                     <select class="form-control" name='cardNum' id="Select1">
 				    				</select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect2">비용항목 선택</label>
+                                    <label for="exampleFormControlSelect2">비용 항목</label>
                                     <select class="form-control" name='costCode' id="Select2">
 				    				</select>
                                 </div>
@@ -337,16 +338,16 @@ var costKey = 0;
                                     <input type="text" class="form-control" id="Input3" name='useAt' placeholder="ex)E-MART, 마루가메 제면 (정확한 상호명 입력)">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1">사용금액</label>
+                                    <label for="exampleFormControlInput1">사용 금액</label>
                                     <input type="text" class="form-control" id="Input4" name='cost' placeholder="ex)2000 (숫자만 입력)">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1">상세내용</label>
+                                    <label for="exampleFormControlInput1">상세 내용</label>
                                     <input type="text" class="form-control" id="Input5" name='detail' placeholder="ex) 이마트에서 필요한 간식이랑 사무용품들 구매하였습니다.">
                                 </div>
                       <!--           <button type="button" onclick="showInput()"> 자 콘솔창을 보자 </button> -->
                       			<br>
-                                <button type='submit' class="btn btn-primary" style="width:auto; float:right;">수정완료 및 등록</button>
+                                <button type='submit' class="btn btn-primary" style="width:auto; float:right;">신청</button>
                             </form>
                         </div>
                     </div>
