@@ -1670,9 +1670,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">예정</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">예정된 업무리스트 </h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    	<h2></h2>
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
@@ -1752,9 +1752,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">진행</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">진행중 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    <h2></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -1816,9 +1816,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">테스트</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">테스트 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    	<h2></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -1880,9 +1880,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">완료</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">완료된 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                  	 진행도
+                                                  	 <h2></h2>
                                                 </div>
                                             </div>
                                         </div>
