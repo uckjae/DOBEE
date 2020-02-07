@@ -69,7 +69,7 @@ body {
      <form action="" method="post" id="findPWD" enctype="multipart/form-data">
                   
       <div class="form-group mb-lg">
-        <label>메일을 작성하세요</label>
+        <label>사용하시는 메일을 입력해주세요.</label>
         <div class="input-group input-group-icon">
           <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
             <span class="input-group-addon">
@@ -81,11 +81,11 @@ body {
       </div>       
       <hr>
       <div class="mb-xs text-center">
-        <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">메일 전송</a>
+        <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">비밀번호 재설정</a>
       </div>
       </form>
 
-      <p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아이디 찾기</a>
+      <p class="text-center">메일을 잊으셧나요?<a style="text-decoration: none;" href="findId.do">&nbsp;&nbsp;&nbsp;메일 찾기</a>
 
      </div>          
    </div>            
@@ -125,7 +125,7 @@ body {
                   if(mail ===""){
                      swal({
          				title: "비밀번호 재설정",
-         				text: "이메일이 없습니다", 
+         				text: "입력하신 정보에 해당하는 메일을 찾을 수 없습니다", 
          				icon: "warning", //"info,success,warning,error" 중 택1
          				showConfirmButton: true
          				//icon: "warning" //"info,success,warning,error" 중 택1

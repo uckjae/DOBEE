@@ -51,13 +51,10 @@
 							</c:if> 
                             <div class="form-button" >
                                 <button id="submit" type="submit" class="ibtn">Login</button>
-                                <a href="findId.do">메일 찾기 /</a>                           
-                                <a href="findPassWord2.do">비밀번호 찾기</a>
+                                <a style="text-decoration: none;" href="findId.do">메일 찾기 /</a>                           
+                                <a style="text-decoration: none;" href="findPassWord2.do">비밀번호 찾기</a>
                             </div>
                         </form>
-                       <!--  <div class="other-links">
-                            <span>Or login with</span><a href="#">Facebook</a><a href="#">Google</a><a href="#">Linkedin</a>
-                        </div> -->
                     </div>
                 </div>
             </div>

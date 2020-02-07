@@ -209,7 +209,7 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th class="notSeq" style="width: 11%; text-align: center;">#</th>
+													<th class="notSeq" style="width: 11%; text-align: center;">글번호</th>
 													<th class="nsContent" style="text-align : center";">제목</th>
 													<th class="startTime" style="width: 20%; text-align: center;">작성일</th>
 													<th class="count" style="width: 15%; text-align: center;">조회수</th>
@@ -248,7 +248,7 @@ console.log("MAIN!!");
 												<tr>
 													<th style="width: 11%; text-align: center;">#</th>
 													<th style="text-align: center;">프로젝트</th>
-													<th style="width: 13%; text-align: center;">상태</th>
+													<th style="width: 13%; text-align: center;">진행 상황</th>
 													<th style="width: 25%; text-align: center;">진행도</th>
 												</tr>
 											</thead>

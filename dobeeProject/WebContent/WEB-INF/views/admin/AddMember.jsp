@@ -426,7 +426,7 @@
 												</div>
 											</div>
 											<div class="form-group">
-                                                <label class="col-md-3 control-label" for="phone">전화번호</label>
+                                                <label class="col-md-3 control-label" for="phone">휴대폰 번호</label>
                                                 <div class="col-md-6">
                                                		<input type="text" id="phone" name="phone" class="form-control" form="addUserForm" onKeyup="inputVailPhone($(this).val());" placeholder="010-5233-3208"  maxlength="13"/>
                                                     <!-- <input type="text" id="phone" name="phone" class="form-control" form="addUserForm"> -->
