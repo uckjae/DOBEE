@@ -504,14 +504,7 @@ public class DoController {
 	}
 
     
-	// 개인_부재일정 삭제 POST 0120 COMPLETE
-	@RequestMapping(value = "deleteApply.do", method = RequestMethod.GET)
-	public String postDeleteApply(Integer aplSeq) {
-		applyService.deleteApply(aplSeq);
-
-		return "reidrect: attend/BreakManage";
-	}
-	*/
+	
 	// 연장근무 신청 GET 0110 게다죽
 	@RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
 	public String overTiemApply(Model model, HttpServletRequest request) {
