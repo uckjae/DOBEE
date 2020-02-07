@@ -33,7 +33,7 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Waning</h1>
+            <h1 class="cover-heading">Warning</h1>
             
             <br>
             <hr>
