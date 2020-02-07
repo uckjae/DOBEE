@@ -48,17 +48,6 @@
         <security:access-denied-handler error-page="/login.do"/>
 	</security:http>
 	
-	<!-- <bean id="bycryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
-	
-	<!-- <security:authentication-manager>
-    	<security:authentication-provider>
-	      	<security:user-service>
-	      		<security:user name="manager@dobee.com" password="1004" authorities="ROLE_USER"/>
-	       		<security:user name="admin@dobee.com" password="1004" authorities="ROLE_ADMIN,ROLE_USER"/>
-	      	</security:user-service>
-	      	<security:password-encoder ref="bycryptPasswordEncoder"/>
-    	</security:authentication-provider>
- 	</security:authentication-manager> -->
 	
 	<security:authentication-manager>
         <security:authentication-provider>
@@ -77,28 +66,6 @@
 	
 	<!-- 로그인 처리 핸들러 빈 -->
 	 <bean id="loginHandler" class="com.dobee.handler.LoginHandler"/>
-	 <!-- <bean id="loginFailureHandler" class="com.dobee.handler.LoginHandler"/> -->
    
-    <!--<security:http>
-        <security:csrf disabled="true"/>
-        <security:form-login default-target-url="/index.htm"
-                             login-page="/joinus/login.htm"
-                             authentication-failure-url="/joinus/login.htm?error"/>
-        <security:logout logout-success-url="/index.htm"/>
-        <security:intercept-url pattern="" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="" access="hasRole('ROLE_ADMIN')"/>
-    </security:http>
-    <security:authentication-manager>
-        <security:authentication-provider>
-            &lt;!&ndash;<security:jdbc-user-service data-source-ref="driverManagerDataSource"
-                                        users-by-username-query="SELECT USERID, pwd AS PASSWORD, 1 enabled FROM member where userid=?"
-
-                                        authorities-by-username-query="select m.USERID , r.ROLE_NAME
-           								                                from member m join roll r
-          								                                on m.userid = r.userid
-           								                                where m.userid=?"/>&ndash;&gt;
-            <security:password-encoder ref="bCryptPasswordEncoder"/>
-        </security:authentication-provider>
-    </security:authentication-manager>-->
 
 </beans>
