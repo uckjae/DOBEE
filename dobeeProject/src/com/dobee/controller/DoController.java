@@ -174,6 +174,7 @@ public class DoController {
     	UserDao userDao = sqlsession.getMapper(UserDao.class);
     	List<User> userInfoList = userDao.getUserInfoList();
     	model.addAttribute("user", user);
+    	System.out.println("유저유저"+user.toString());
     	model.addAttribute("userList", userInfoList);
     	return "admin/AdminMain";
     }

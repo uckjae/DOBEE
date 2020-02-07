@@ -57,7 +57,7 @@
 							<th>사원 E-mail</th>
 							<th>사원 이름</th>
 							<th>권한 코드</th>
-							<th>팀 코드</th>
+							<th>팀</th>
 							<th>입사일</th>
 							<th>재직 상태</th>
 							<th>고용 형태</th>
@@ -72,7 +72,7 @@
 							<td><a href="modifyUser.do?mail=${user.mail}">${user.mail}</a></td>
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
-							<td>${user.teamCode}</td>
+							<td>${user.teamName}</td>
 							<td><fmt:formatDate value="${user.regitDate}" pattern="yyyy-MM-dd"/></td>
 							<td>${user.serve}</td>
 							<td>${user.emp}</td>
