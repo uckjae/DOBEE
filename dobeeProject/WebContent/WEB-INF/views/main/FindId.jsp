@@ -17,7 +17,9 @@
 <link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 <link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
-<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />	
+<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">	
 <!-- Specific Page Vendor -->
 <script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
 <script src="assets/vendor/select2/select2.js"></script>
@@ -54,7 +56,7 @@ $(function(){
 
 	 if(($.trim($('#name').val())=='')&&($.trim($('#phone').val())=='')){
          swal({
-				title: "아이디 찾기",
+				title: "메일 찾기",
 				text: "내용을 입력하세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
 				showConfirmButton: true
@@ -64,7 +66,7 @@ $(function(){
          }
 	 else if($.trim($('#name').val())==''){
          swal({
-				title: "아이디 찾기",
+				title: "메일 찾기",
 				text: "이름을 입력하세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
 				showConfirmButton: true
@@ -75,7 +77,7 @@ $(function(){
      }    
      else if($.trim($('#phone').val())==''){
 		swal({
-			title: "아이디 찾기",
+			title: "메일 찾기",
 			text: "후대폰번호를 입력하세요", 
 			icon: "warning", //"info,success,warning,error" 중 택1
 			showConfirmButton: true
@@ -99,7 +101,7 @@ $(function(){
              var mail = data;
        
              if(mail === ""){
-            	 $('#findMail').val("찾은 이메일 값이 없습니다.");       	 
+            	 $('#findMail').val("입력하신 정보에 해당하는 메일을 찾을 수 없습니다");       	 
              }else{
                $('#findMail').val(mail);
              }
@@ -115,7 +117,7 @@ $(function(){
 </head>
 <body>
 <!-- start:page -->
-<section class="body-sign">
+<section class="body-sign" style="font-family: 'Nanum Gothic', sans-serif;">
  <div class="center-sign">
 			
 			
@@ -148,7 +150,7 @@ $(function(){
 		<div class="form-group mb-lg">								
 		  <label>휴대폰번호</label>								
 		  <div class="input-group input-group-icon">
-			<input name="phone" type="text" class="form-control input-lg" id="phone"/>
+			<input name="phone" type="text" class="form-control input-lg" id="phone" placeholder="010-5233-3208"  maxlength="13"/>
 			   <span class="input-group-addon">
 				<span class="icon icon-lg">
 				 <i class="fa fa-phone"></i>
@@ -162,18 +164,13 @@ $(function(){
 
 		<div class="mb-xs text-center">
 		  <a class="btn btn-facebook mb-md ml-xs mr-xs" data-toggle="modal" data-target="#modalBootstrap"
-		     href="#modalBootstrap" id="idModal2">아이디 찾기</a>
+		     href="#modalBootstrap" id="idModal2">메일 찾기</a>
 		  <a class="btn btn-twitter mb-md ml-xs mr-xs" href="login.do">로그인 </a>
 		</div>
 		</form>
-
-		<p class="text-center">비밀번호를 잊으셧나요?<a href="findPassWord2.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
-
+		<p class="text-center">비밀번호를 잊으셧나요?<a style="text-decoration: none;" href="findPassWord2.do">&nbsp;&nbsp;&nbsp;비밀번호 찾기</a>
 	  </div>
-	  	  
 	</div>
-
-				
  </div>
  
 <!-- Modal -->
@@ -188,18 +185,14 @@ $(function(){
 	</button>
 	<h4 class="modal-title" id="myModalLabel">찾은 메일</h4>
    </div>
-   
    <div class="modal-body">
 	<h4><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"
 	     style="border:none; width:100%; height:100%;"/></h4>
    </div>
-   
    <div class="modal-footer">
 	<button type="button" data-dismiss="modal"class="btn btn-primary">
 	 <span aria-hidden="true"></span>확인</button>
-	
    </div>
-   
   </div>
  </div>
 </div>

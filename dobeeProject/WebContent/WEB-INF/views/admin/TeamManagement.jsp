@@ -8,7 +8,8 @@
 
 
 <c:import url="/common/HeadTag.jsp" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <script src="assets/vendor/jquery/jquery.js"></script>
 <link
 	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
@@ -35,7 +36,7 @@
 			<!-- end: sidebar -->
 
 			<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>팀 관리</h2>
 

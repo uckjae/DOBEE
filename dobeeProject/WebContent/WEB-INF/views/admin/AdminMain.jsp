@@ -12,6 +12,8 @@
 	<!-- Specific Page Vendor CSS -->
 	<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 	<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+	<!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<section class="body">
@@ -25,7 +27,7 @@
 			<c:import url="/common/SideAdmin.jsp"/>
 		<!-- end: sidebar -->
 		<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>사원 목록</h2>
 				
@@ -55,7 +57,7 @@
 							<th>사원 E-mail</th>
 							<th>사원 이름</th>
 							<th>권한 코드</th>
-							<th>팀 코드</th>
+							<th>팀</th>
 							<th>입사일</th>
 							<th>재직 상태</th>
 							<th>고용 형태</th>
@@ -70,7 +72,7 @@
 							<td><a href="modifyUser.do?mail=${user.mail}">${user.mail}</a></td>
 							<td>${user.name}</td>
 							<td>${user.authCode}</td>
-							<td>${user.teamCode}</td>
+							<td>${user.teamName}</td>
 							<td><fmt:formatDate value="${user.regitDate}" pattern="yyyy-MM-dd"/></td>
 							<td>${user.serve}</td>
 							<td>${user.emp}</td>

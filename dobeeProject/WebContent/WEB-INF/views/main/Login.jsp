@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-theme2.css">
+    <!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="form-body">
@@ -28,7 +30,7 @@
                 </div>
             </div>
             <div class="form-holder">
-                <div class="form-content">
+                <div class="form-content" style="font-family: 'Nanum Gothic', sans-serif;">
                     <div class="form-items">
                         <img src="img/beemain2.png" height="150" width="340"/>
                         <br><br>
@@ -47,15 +49,12 @@
 							     	
 							   </div>
 							</c:if> 
-                            <div class="form-button">
+                            <div class="form-button" >
                                 <button id="submit" type="submit" class="ibtn">Login</button>
-                                <a href="findId.do">메일 찾기 /</a>                           
-                                <a href="findPassWord2.do">비밀번호 찾기</a>
+                                <a style="text-decoration: none;" href="findId.do">메일 찾기 /</a>                           
+                                <a style="text-decoration: none;" href="findPassWord2.do">비밀번호 찾기</a>
                             </div>
                         </form>
-                       <!--  <div class="other-links">
-                            <span>Or login with</span><a href="#">Facebook</a><a href="#">Google</a><a href="#">Linkedin</a>
-                        </div> -->
                     </div>
                 </div>
             </div>

@@ -16,7 +16,9 @@
 <link rel="stylesheet" href="assets/vendor/dropzone/css/dropzone.css" />
 <link rel="stylesheet" href="assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css" />
 <link rel="stylesheet" href="assets/vendor/summernote/summernote.css" />
-<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />   
+<link rel="stylesheet" href="assets/vendor/summernote/summernote-bs3.css" />
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">  
 <!-- Specific Page Vendor -->
 <script src="assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
 <script src="assets/vendor/select2/select2.js"></script>
@@ -50,7 +52,7 @@ body {
 <body>
 
 <!-- start: page -->
-<section class="body-sign">
+<section class="body-sign" style="font-family: 'Nanum Gothic', sans-serif;">
  <div class="center-sign">
                   
    <a class="logo pull-left">
@@ -65,9 +67,8 @@ body {
                
    <div class="panel-body">
      <form action="" method="post" id="findPWD" enctype="multipart/form-data">
-                  
       <div class="form-group mb-lg">
-        <label>메일을 작성하세요</label>
+        <label>사용하시는 메일을 입력해주세요.</label>
         <div class="input-group input-group-icon">
           <input class="form-control input-lg" id="mail" name="mail" type="email" form="findPWD"/>
             <span class="input-group-addon">
@@ -79,11 +80,11 @@ body {
       </div>       
       <hr>
       <div class="mb-xs text-center">
-        <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">메일 전송</a>
+        <a class="btn btn-facebook mb-md ml-xs mr-xs" onclick="myFormSubmit()">비밀번호 재설정</a>
       </div>
       </form>
 
-      <p class="text-center">아이디를 잊으셧나요?<a href="findId.do">&nbsp;&nbsp;&nbsp;아이디 찾기</a>
+      <p class="text-center">메일을 잊으셧나요?<a style="text-decoration: none;" href="findId.do">&nbsp;&nbsp;&nbsp;메일 찾기</a>
 
      </div>          
    </div>            
@@ -123,7 +124,7 @@ body {
                   if(mail ===""){
                      swal({
          				title: "비밀번호 재설정",
-         				text: "이메일이 없습니다", 
+         				text: "입력하신 정보에 해당하는 메일을 찾을 수 없습니다", 
          				icon: "warning", //"info,success,warning,error" 중 택1
          				showConfirmButton: true
          				//icon: "warning" //"info,success,warning,error" 중 택1

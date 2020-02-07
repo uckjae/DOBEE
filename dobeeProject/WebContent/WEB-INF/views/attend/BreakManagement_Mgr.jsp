@@ -40,7 +40,8 @@
 <!-- Table Style -->
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 </head>
 	<body>
@@ -56,7 +57,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>부재 신청 관리</h2>
 					
@@ -85,8 +86,8 @@
 								<thead>
 									<tr>
 										<th width="10%">신청 번호</th>
-										<th width="15%">신청 ID</th>
-										<th width="10%">신청자명</th>
+										<th width="15%">사원 메일</th>
+										<th width="10%">사원 이름</th>
 										
 										<th width="10%">부재 항목</th>
 										<th width="10%">연차 사용</th>
@@ -133,7 +134,7 @@
 										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										<i class="fa fa-check fa-2x"></i>&nbsp;Reason
+										<i class="fa fa-check fa-2x"></i>&nbsp;부재 신청 관리
 									</h4>
 								</div>
 								

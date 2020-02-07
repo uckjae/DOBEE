@@ -8,6 +8,8 @@
 	<c:import url="/common/HeadTag.jsp"/>
 	<!-- Sweet Alert -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!--font  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<section class="body">
@@ -19,7 +21,7 @@
 			<!-- start: sidebar -->
 			<c:import url="/common/Side.jsp"/>
 			<!-- end: sidebar -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>마이페이지</h2>
 					<div class="right-wrapper pull-right">

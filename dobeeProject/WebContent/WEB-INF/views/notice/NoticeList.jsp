@@ -11,8 +11,11 @@
 <!-- Specific Page Vendor CSS -->
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <style>
 .dataTables_filter .form-control input-sm 
 {
@@ -58,7 +61,7 @@ width:47em
 		<!-- end: sidebar -->
 				
 		<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>공지사항</h2>
 					
@@ -118,7 +121,8 @@ width:47em
 	<!-- 관리자만 글쓰기 버튼 추가해주기 -->
 	<c:if test="${ user.authCode == '3' }">
 		<p class="article-comment margin-small">
-			<a class="btn-write button" href="noticeWrite.do">글쓰기</a>
+			
+			<a class="btn btn-primary mr-3" href="noticeWrite.do">글쓰기</a>
 		</p>
 	</c:if>
 	

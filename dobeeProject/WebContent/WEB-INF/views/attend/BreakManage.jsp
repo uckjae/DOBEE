@@ -47,7 +47,8 @@
 <!-- Table Style -->
 <link rel="stylesheet" href="assets/vendor/select2/select2.css" />
 <link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
-
+<!--폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 </head>
 	<body>
@@ -63,7 +64,7 @@
 				<!-- end: sidebar -->
 				
 			<!-- start : main Content -->
-				<section role="main" class="content-body">
+				<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 					<header class="page-header">
 						<h2>부재 일정 관리</h2>
 					
@@ -144,7 +145,7 @@
 										<th width="15%">연차 사용 일수</th>
 										<th width="15%">신청 일자</th>
 										<th width="10%">승인여부</th>
-										<th width="11%">수정/삭제</th>
+										<th width="11%">수정 및 삭제</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -158,10 +159,11 @@
 											<td class="notauth" style="text-align: center;"><button type="button" class="btn btn-info btn-sm ${bl.isAuth }" data-toggle="modal" data-target="#myModal"
 																		data-aplSeq="${bl.aplSeq }" data-reason="${bl.reason }" data-rejReason="${bl.rejReason }">${bl.isAuth }</button>
 											</td>
-											<td class="teditdelete" style="text-align: center;">
+											<td class="teditdelete" style="text-align: center;padding-top:15px;">
 												<c:choose>
 													<c:when test="${bl.isAuth == '미승인'}">
-														<button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button>
+														<%-- <button class="btn btn-info btn-sm edit" onclick="location.href='editApply.do?aplSeq=${bl.aplSeq}'">수정 / 삭제</button> --%>
+														<a href="editApply.do?aplSeq=${bl.aplSeq}"><i class="fa fa-pencil"></i></a>
 													</c:when>
 													<c:otherwise>
 														-

@@ -26,9 +26,14 @@
 
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		
+		<!--font  -->
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
 
 		<!-- Head Libs -->
 		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		
+		
 	
 	
 		<!-- Vendor -->
@@ -1614,9 +1619,9 @@
 
         <!-- end: sidebar -->
 
-        <section role="main" class="content-body">
-            <header class="page-header">
-                <h2>프로젝트</h2>
+        <section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
+            <header class="page-header" >
+                <h2 >프로젝트</h2>
 
                 <div class="right-wrapper pull-right">
                     <ol class="breadcrumbs">
@@ -1631,7 +1636,7 @@
                 </div>
             </header>
             <!-- start: page -->
-            <div class="search-content">
+            <div class="search-content" >
                 <div class="search-toolbar">
                     <ul class="list-unstyled nav nav-pills" id="">
                         <li class="active">
@@ -1665,9 +1670,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">예정</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">예정된 업무리스트 </h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    	<h2></h2>
                                                 </div>
                                             </div>
                                             <input type="hidden" id="authCode" value="${user.authCode}">
@@ -1747,9 +1752,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">진행</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">진행중 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    <h2></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -1811,9 +1816,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">테스트</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">테스트 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                    	진행도
+                                                    	<h2></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -1875,9 +1880,9 @@
                                             </div>
                                             <div class="profile-info">
                                                 <h4 class="name text-semibold">완료</h4>
-                                                <h5 class="role">total number : </h5>
+                                                <h5 class="role">완료된 업무리스트</h5>
                                                 <div class="profile-footer">
-                                                  	 진행도
+                                                  	 <h2></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -2613,7 +2618,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 		
 		<!-- 구글 드라이브 -->
-		<script src="https://www.google.com/jsapi?key=AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ"></script>
+		
 		<script src="https://apis.google.com/js/client.js?onload=SetPicker"></script>
 		
 		

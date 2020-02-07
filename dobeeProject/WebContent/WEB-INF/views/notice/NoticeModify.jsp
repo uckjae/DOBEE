@@ -29,6 +29,9 @@
 	<!-- Theme Custom CSS -->
 	<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
 
+    <!--폰트  -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap" rel="stylesheet">
+     
 	<!-- Head Libs -->
 	<script src="assets/vendor/modernizr/modernizr.js"></script>
 	
@@ -89,7 +92,7 @@
 		<c:import url="/common/Side.jsp"/>
 		<!-- end: sidebar -->
 		<!-- start : main Content -->
-			<section role="main" class="content-body">
+			<section role="main" class="content-body" style="font-family: 'Nanum Gothic', sans-serif;">
 				<header class="page-header">
 					<h2>공지사항</h2>
 						<div class="right-wrapper pull-right">
@@ -273,7 +276,7 @@
 			if($("#startTime").val()=="" || $("#endTime").val()=="" ){
 		        swal({
 				title: "공지사항 일정",
-				text: "일정을 달력에서 선택해주세요", 
+				text: "일정을 입력해주세요", 
 				icon: "warning", //"info,success,warning,error" 중 택1
 				button: true
 						}).then((YES) => {
