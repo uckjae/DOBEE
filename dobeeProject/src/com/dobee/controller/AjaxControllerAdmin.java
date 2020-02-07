@@ -237,12 +237,7 @@ public class AjaxControllerAdmin {
         }
         
         
-		/*
-		 * String fpath = path + "\\" + filename;
-		 * 
-		 * //파일 쓰기 작업 FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일
-		 * 생성함 fs.write(file.getBytes()); fs.close();
-		 */
+		
         //DB에 파일 이름 저장
     	user.setMyPic(saveFileName);
     	
