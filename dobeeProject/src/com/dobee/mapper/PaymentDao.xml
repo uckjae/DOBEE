@@ -38,8 +38,8 @@
 	
 	<!--  관리자 법인카드 수정 -->
 	<update id="AdminEditDebit" parameterType="com.dobee.vo.Debit">
-		update debit set cardnum=#{cardNum}, corp=#{corp}, name=#{name}, nickname=#{nickName}, entry=#{entry}, valdate=#{valDate}
-		where cardnum=#{cardNum}
+		UPDATE DEBIT SET CARDNUM=#{cardNum}, CORP=#{corp}, NAME=#{name}, NICKNAME=#{nickName}, ENTRY=#{entry}, VALDATE=#{valDate}
+		WHERE CARDNUM=#{cardNum}
 	</update>
 	
 	
@@ -59,31 +59,31 @@
 	
 	<!-- 비용 연도만 가져오기 -->
 	<select id="paymentYYYY" resultType="com.dobee.vo.ItemsCostChart">
-		SELECT USEDATE FROM COSTLIST;
+		SELECT USEDATE FROM COSTLIST
 	</select>
 	
 	
 	<!--  비용차트 연도에 대한 데이터 보내주기 -->
 	<select id="chartByYYYY" parameterType="String"  resultType="com.dobee.vo.ItemsCostChart">
 	  	SELECT SUM(COST) AS COST, COSTCODE.ENTRY
-	  	FORM COSTLIST JOIN COSTCODE ON COSTLIST.COSTCODE = COSTCODE.COSTCODE 
-	  	WHERE USEDATE LIST CONCAT('%', #{useDate}, '%') 
-	  	GROUP BY COSTCODE.ENTRY;
+	  	FROM COSTLIST JOIN COSTCODE ON COSTLIST.COSTCODE = COSTCODE.COSTCODE 
+	  	WHERE USEDATE LIKE CONCAT('%', #{useDate}, '%') 
+	  	GROUP BY COSTCODE.ENTRY
 	</select>
 	
 	
 	<!--  비용 차트 연도랑 월 데이터 같이 받아서 보내주기 -->
 	<select id="chartByYYYYAndMonth" parameterType="String" resultType="com.dobee.vo.ItemsCostChart">
-		 SELECT SUM(COST) AS COST, COSTCODE,ENTRY
+		 SELECT SUM(COST) AS COST, COSTCODE.ENTRY
 		 FROM COSTLIST JOIN COSTCODE ON COSTLIST.COSTCODE = COSTCODE.COSTCODE 
 		 WHERE USEDATE LIKE CONCAT('%', #{useDate}, '%') 
-		 GROUP BY COSTCODE.ENTRY; 
+		 GROUP BY COSTCODE.ENTRY
 	</select>
 	
 	
 	<!-- 월 데이터만 있는 거 받아서 뿌려주기 월만 -->
 	<select id="giveMeMonth" parameterType="String" resultType="com.dobee.vo.ItemsCostChart">
-		SELECT USEDATE FORM COSTLIST WHERE USEDATE LIKE CONCAT('%', #{yyyy}, '%');
+		SELECT USEDATE FROM COSTLIST WHERE USEDATE LIKE CONCAT('%', #{yyyy}, '%')
 	</select>
 	
 	

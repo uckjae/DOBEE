@@ -24,7 +24,6 @@ public class AlarmHandler extends TextWebSocketHandler {
 	private void log(String msg) {
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = simple.format(new Date());
-		System.out.println(date + " : " + msg);
 	}
 	
 	//연결
@@ -48,9 +47,7 @@ public class AlarmHandler extends TextWebSocketHandler {
 	//데이터 전송
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-		  System.out.println("AlarmHandler in!!");
 		  
-		  System.out.println(message.getPayload());
 		  String data = message.getPayload();
 		  
 		  JSONParser parser = new JSONParser();
@@ -61,18 +58,11 @@ public class AlarmHandler extends TextWebSocketHandler {
 		  String cmd = (String) jsonObject.get("cmd");
 		  
 		  if(cmd.equals("addPjt")) {
-			  System.out.println("알람핸들러 addPjt");
-			  System.out.println(jsonObject.get("mail").toString());
-			  System.out.println(jsonObject.get("mail").getClass());
 			  JSONArray mails = (JSONArray) jsonObject.get("mail");
 			  String title = (String) jsonObject.get("content");
-			  System.out.println(mails.size());
 			  for(int i=0; i<mails.size(); i++) {
 				  String mail = (String) mails.get(i);
-				  System.out.println(mail);
-				  System.out.println(i);
 				  if(users.containsKey(mail)){
-					  System.out.println(mails.get(i));
 					  msg = new TextMessage("["+title+"]\n 프로젝트가 생성되었습니다");
 					  users.get(mail).sendMessage(msg);
 				  }
@@ -81,7 +71,6 @@ public class AlarmHandler extends TextWebSocketHandler {
 		  }
 		  
 		  String mail = (String) jsonObject.get("mail");
-		  System.out.println(mail);
 		  
 		  if(users.containsKey(mail)) {
 			  if(cmd.equals("addTask")) {

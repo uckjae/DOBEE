@@ -1,29 +1,24 @@
 package com.dobee.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.View;
 
-import com.dobee.dao.ProjectDao;
 import com.dobee.dao.ScheduleDao;
 import com.dobee.dao.UserDao;
 import com.dobee.services.ApplyService;
 import com.dobee.vo.Apply;
 import com.dobee.vo.ApplyCode;
 import com.dobee.vo.member.Break;
-import com.dobee.vo.member.BreakManageList;
 import com.dobee.vo.member.ChartData;
 import com.dobee.vo.member.User;
-import com.dobee.vo.project.Task;
 import com.dobee.vo.schedule.MainSchedule;
 
 @RestController
@@ -52,9 +47,9 @@ public class AjaxController_DABC {
 	
 	// 개인_부재/연장신청 결재자 불러오기		COMPLETE o
 	@RequestMapping("getApprovalList.do")
-	public View getRenewedList (Model map) {
+	public View getRenewedList (Model map, Integer teamCode) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		ArrayList<User> results = userDao.getApprovalList();
+		List<User> results = userDao.getApprovalList(teamCode);
 		map.addAttribute("renewedList", results);
 		
 		return jsonview;
@@ -66,7 +61,6 @@ public class AjaxController_DABC {
 	public View AbsAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.AbsAll(auth.getName());
-		System.out.println("AbsAll : "+ results);
 		map.addAttribute("AbsAll", results);
 		
 		return jsonview;
@@ -76,10 +70,8 @@ public class AjaxController_DABC {
 	// Ajax 개인_부재일정 신청 - 캘린더 Event 불러오기		0118	COMPLETE
 	@RequestMapping("Calender.do")
 	public View CalenderEvent (Model map) {
-		// System.out.println("이거 돌긴 도니? ");
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.Calendar();
-		// System.out.println("Calendar : "+ results);
 		map.addAttribute("Calendar", results);
 		
 		return jsonview;
@@ -91,7 +83,6 @@ public class AjaxController_DABC {
 	public View ExtAll (Model map, Authentication auth) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
 		List<Apply> results = userDao.ExtAll(auth.getName());
-		System.out.println("ExtAll : "+ results);
 		map.addAttribute("ExtAll", results);
 		
 		return jsonview;
@@ -102,7 +93,6 @@ public class AjaxController_DABC {
 	@RequestMapping("getChartData.do")
 	public View getChartData (Model map, Authentication auth, String ym) {
 		UserDao userDao = sqlsession.getMapper(UserDao.class);
-		System.out.println("ym 뭐 들어옴? " + ym);
 		List<ChartData> results = userDao.getChartData(auth.getName(), ym);
 		map.addAttribute("CD", results);
 		

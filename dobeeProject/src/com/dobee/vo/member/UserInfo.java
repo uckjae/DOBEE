@@ -22,15 +22,6 @@ public class UserInfo {
 		return this.regitDate;
 	}
     
-	/*
-	 * public void setRegDate(String regDate) { System.out.println("setter탄다!!!");
-	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); Date date = new
-	 * Date(); try { date = sdf.parse(regDate); } catch (ParseException e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); } this.regDate = date; }
-	 * 
-	 * 
-	 */ 
-	 
 	 
 
 }

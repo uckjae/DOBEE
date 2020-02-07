@@ -40,13 +40,9 @@ public class AjaxController_AdminDebit {
 		debit.setNickName(nickName);
 		debit.setValDate(valDate);
 		
+		
 		result = adminDebitService.updateDebit(debit);
-		if(result > 0) {
-			System.out.println("업데이트 완료");
-		}else {
-			System.out.println("업데이트 실패");
 		}
-	}
 	
 	
 	//관리자 법인카드 삭제
@@ -56,11 +52,6 @@ public class AjaxController_AdminDebit {
 		
 		int result = 0 ; 
 		result = adminDebitService.deleteDebit(cardNum);
-		if(result > 0 ) {
-			System.out.println("법인카드 삭제 완료되었습니다.");
-		}else {
-			System.out.println("법인카드 삭제 실패");
-		}
 		return result;
 	}
 	
@@ -71,11 +62,6 @@ public class AjaxController_AdminDebit {
 	public int checkEditDupleCardNum(@RequestParam(value="cardNum") String cardNum) {
 		int result = 0;
 		result = adminDebitService.checkEditDupleCardNum(cardNum);
-		if(result > 0) {
-			System.out.println("법인카드 수정 : 중복된 카드번호 발견");
-		}else {
-			System.out.println("법인카드 수정 : 중복된 카드 없음");
-		}
 		
 		return result;
 	}

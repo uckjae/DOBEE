@@ -60,7 +60,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="assets/vendor/pnotify/pnotify.custom.js"></script>
 <script>
-		console.log("top onload");
 		connect();
 	
 	/* 알람 */
@@ -73,7 +72,6 @@
 		
 
 	function connect(){
-		console.log("웹소켓 커넥트!!!!!");
 		var contextPath = getContextPath();
 		wsocket = new WebSocket("ws:"+contextPath+"/alram.do");
 		wsocket.onmessage = onMessage;
@@ -86,7 +84,6 @@
 	}
 
 	function onError(){
-		console.log("웹소켓 에ㅓㄹ");
 	}
 	
 	
@@ -164,9 +161,7 @@
 			   buttons : ["Cancle", true]
 			}).then((result) => {
 				if (result) {
-					console.log('이거 타??');
 					var attSeq = ${user.isWork}
-					console.log('seq??'+attSeq);
 					$.ajax({
 			 			url:"ajax/attend/leave.do",
 			 			data : {'attSeq' : attSeq},
@@ -174,8 +169,6 @@
 						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
 						type:"post",
 						success:function(responsedata){
-							console.log('ajax 됨??');
-							console.log(responsedata);
 							if(responsedata == "success"){
 								swal({
 								   title: "퇴근",

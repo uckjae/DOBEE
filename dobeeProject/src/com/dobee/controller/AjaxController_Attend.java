@@ -27,7 +27,6 @@ public class AjaxController_Attend {
 		
 		if(result > 0 ) {
 			String attSeq = attendService.isWork(auth.getName());
-			System.out.println(attSeq + ", AjaxCont_Attend -출근 처리");
 			responseData = "success";
 		}
 		

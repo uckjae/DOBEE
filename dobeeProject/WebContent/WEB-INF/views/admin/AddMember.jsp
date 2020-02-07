@@ -13,7 +13,6 @@
 		// 이메일 최종 유효성 결과값 전역 변수
 		var finalCheckEmail = true;
 		function vailEmail(sendData){
-			console.log("욱재야 이거 보이냐 11111 ");
 			jsonData = {
 				"mail":sendData
 					};
@@ -23,7 +22,6 @@
 				type:"POST",
 				data:jsonData,
 				success:function(data){
-					console.log("욱재야 이거 보이냐 222222(아작스 성공 ) ");
 						//데이타 받을 후 email 중복되었는지 글씨로 표시해줌
 						//보낸 데이터의 길이가 0 보다 크면 중복임
 						if(data.length > 0){
@@ -31,12 +29,10 @@
 								$('#emailVail').append("해당 이메일은 이미 사원으로 등록되어있습니다.");
 								 // 이메일 최종 유효성 결과값 전역 변수
 								finalCheckEmail = false; 
-								console.log(data.length);
 							}else{  // 여기로 오면 일단 중복은 아님
 								let result = false;
 								let email = $("#formMail").val();
 								result = inputVailEmail(email); // 이 함수가 유효성 검사하는 함수
-								console.log("else문 " + data.length);
 								if(result){// 유효성 검사도 통과하면 등록가능 표시
 									$('#emailVail').empty();
 									$('#emailVail').append("해당 이메일은 등록 가능합니다.");
@@ -54,7 +50,6 @@
 					},
 
 				error:function(){
-						console.log("이메일 중복 확인 아작스 실패");
 
 					}
 			});
@@ -95,10 +90,8 @@
 				if(number.length == 13) {
 	    			var check = numberReg.test(number);  //true or false
 					if(check){
-						console.log("휴대폰넘버 유효성 통과");
 						numberCheck = true;
 					}else{
-						console.log("휴대폰넘버 유효성 불통");
 						swal({
 							   title: "휴대폰 번호 형식 오류",
 							   text: "휴대폰 번호 형식에 맞지 않습니다. 다시 입력해주세요.",
@@ -118,10 +111,8 @@
 			function inputVailEmail(email){
 		    			var check = emailReg.test(email);  //true or false
 						if(check){
-							console.log("메일 유효성 통과");
 							emailCheck = true;
 						}else{
-							console.log("메일 유효성 불통");
 							emailCheck = false;
 						}
 						return emailCheck;
@@ -134,7 +125,6 @@
 				url:"ajax/admin/authorityList.do",
 				dataType: "JSON",
 				success: function(data){
-					console.log("권한코드불러오는 ajax");
 					$.each(data, function(i, elt) {
 						if(elt.authCode !=1){
 							var option = $("<option>");
@@ -156,8 +146,6 @@
 				url:"ajax/admin/teamList.do",
 				dataType:"JSON",
 				success: function(data){
-					console.log("teamList Ajax");
-					console.log(data);
 					$.each(data, function(i, elt) {
 						var option = $('<option>');
 						$(option).val(elt.teamCode);
@@ -171,18 +159,12 @@
 			/* 날짜 기본설정 */
 			getDate();
 
-			$('#regitDate').change(function(){
-				console.log($('#regitDate').val());
-			});
 			
 		});
 		let count = 0 ;
 		function sendMail (callback){
 			
 				return new Promise(function(resolve,reject){
-					console.log("sendMail()");
-					console.log($('#formMail').val());
-					console.log($('#formName').val());
 					$.ajax({
 						url:"ajax/admin/sendEmail.do",
 						data: {'mail':$('#formMail').val(),
@@ -191,8 +173,6 @@
 						dataType: "text",
 						method: "POST",
 						success: function(response){
-							console.log("메일 발송 완료");
-							console.log(count++);
 							resolve(response)
 						},
 					beforeSend: function () {
@@ -227,10 +207,10 @@
 			       },
 
 
-						error: function(jqXHR, textStatus, errorThrown){
-							console.log(textStatus);
-							console.log(errorThrown);
-						}
+			       error:function(request,status,error){
+						console.log("code : " + request.status +"\n" + "message : " 
+								+ request.responseText + "\n" + "error : " + error);
+					}
 					});
 				}); // 아작스 구문 종료
 		};
@@ -242,9 +222,7 @@
 
 			//이름 검사
 			if(nameCheck == true){
-				console.log("이름 유효성 통과");
 				}else{
-					console.log("이름 유효성 불통과");
 					swal({
 						   title: "이름 형식 오류",
 						   text: "이름을 입력해주세요.",
@@ -260,9 +238,7 @@
 		
 			//셀렉트 태그들 유효성 검사
 			if(fourCheck == true){
-					console.log("셀렉트 유호성 통과");
 				}else{
-					console.log("셀렉트 유효성에서 불통과");
 					swal({
 						   title: "공백 오류",
 						   text: "다시 입력해주세요.",
@@ -276,7 +252,6 @@
 				}
 
 			if($("#formMail").val() == null || $("#formMail").val() == ""){
-				console.log('이메일 입력 안됨');
 				swal({
 					   title: "메일 형식 오류",
 					   text: "이메일을 입력해주세요.",
@@ -290,9 +265,7 @@
 			}
 			//메일 유효성 검사
 			if(finalCheckEmail==true){
-					console.log("메일 유효성 통과");
 				}else{
-					console.log("메일 유효성 불통");
 					swal({
 						   title: "메일 형식 형식 오류",
 						   text: "이메일이 형식에 맞지 않습니다. 다시 입력해주세요.",
@@ -306,9 +279,7 @@
 				}
 			//전화번호 유효성 검사
 			if(numberCheck == true){
-				console.log("전화번호 통과");
 			}else{
-				console.log("전화번호 불통 ");
 				swal({
 					   title: "휴대폰 번호 형식 오류",
 					   text: "휴대폰 번호 형식에 맞지 않습니다. 다시 입력해주세요.",
@@ -322,7 +293,6 @@
 			}
 			// 이제 메일 보낸다 			
 			sendMail().then(function(){
-				console.log("submit()");
 				document.getElementById('addUserForm').submit();
 				//$('#addUserForm').submit();
 			});
@@ -381,7 +351,7 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="img/avatar.jpg" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
-													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" hidden="true">
+													<input type="file" id="multiFile" name="file"  form="addUserForm" class="form-control" accept="image/*" style="display: none;">
 												</div>
 											</div>
 						
@@ -462,7 +432,7 @@
                                             </div>
 											<div class="col-md-6 control-label">
 												<a class="btn btn-primary" onclick="myFormSubmit()">등록</a>
-												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
+												<button type="reset" class="btn btn-default" onClick="location.href='adminMain.do'">취소</button>
 											</div>
 										
 										</form>

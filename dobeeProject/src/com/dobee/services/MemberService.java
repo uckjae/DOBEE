@@ -1,6 +1,5 @@
 package com.dobee.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,17 +26,6 @@ public class MemberService {
         return null;
     }
 
-
-    //아이디찾기
-
-    
-
-
-    //비밀번호재설정
-    public void resetPwd(User user){
-    	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	userDao.resetPwd(user);
-    }
 
     //출근한 팀원 목록 가져오기 02.02 알파카
     public List<User> getOnWorkTeamMember(User user){
@@ -85,7 +73,6 @@ public class MemberService {
     public User getUserInfo(String mail) {
     	UserDao userdao = sqlSession.getMapper(UserDao.class);
     	User user = userdao.getUserInfo(mail);
-    	System.out.println("유저 가져옴?"+user.toString());
     	return user;
     }
     
@@ -93,17 +80,12 @@ public class MemberService {
     @Transactional
     public int addUser(User user) {
     	int result = 0;
-    	System.out.println("MemberService addUser() in!!");
     	try {
     		UserDao userDao = sqlSession.getMapper(UserDao.class);
     		userDao.addUser(user);
     		userDao.addUserInfo(user);
     	}catch(Exception e) {
-    		System.out.println("Transaction 예외발생 : " +e.getMessage());
     		throw e;
-    	}
-    	if(result > 0) {
-    		System.out.println("멤버 추가 서비스 addUser 완료");
     	}
     	return result;
     }
@@ -119,7 +101,6 @@ public class MemberService {
     
     //팀 리스트 불러오기
     public List<TeamList> teamList() {
-    	System.out.println("MemberService teamList()");
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	List<TeamList> teamList = userDao.teamList();
     	
@@ -128,11 +109,8 @@ public class MemberService {
     
     //팀 불러오기
     public TeamList getTeam(String teamCode) {
-    	System.out.println("MemberService getTeam()");
-    	System.out.println(teamCode);
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
     	TeamList team = userDao.getTeam(teamCode);
-    	System.out.println(team.toString());
     	return team;
     }
     
@@ -185,10 +163,10 @@ public class MemberService {
     
     
     //사원 등록시 이메일 중복 확인 아작스
-    public ArrayList<UserInfo>checkEmail(String mail) {
-    	ArrayList<UserInfo> list = new ArrayList<>();
+    public List<UserInfo>checkEmail(String mail) {
+    	
     	UserDao userDao = sqlSession.getMapper(UserDao.class);
-    	list = userDao.checkEmail(mail);
+    	List<UserInfo> list = userDao.checkEmail(mail);
     	
     	return list;
     };

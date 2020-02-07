@@ -79,10 +79,7 @@
 	 				processData:false,
 	 				contentType:false,
 	 				success:function(responsedata){
-    	 				console.log('ajax 통신 성공?');
-	 					console.log(responsedata);
 	 					if(responsedata == "success"){ //프로젝트 생성 완료
-	 	 					console.log('수정 완료')
 	 	 					swal({
 	 						   title: "사원 정보 수정 완료",
 	 						   text: "사원 정보가 수정되었습니다.",
@@ -114,10 +111,7 @@
 			 				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			 				type:"post",
 			 				success:function(responsedata){
-		    	 				console.log('ajax 통신 성공?');
-			 					console.log(responsedata);
 			 					if(responsedata == "success"){ //프로젝트 생성 완료
-			 	 					console.log('삭제 완료')
 			 	 					swal({
 			 						   title: "사원 정보 삭제 완료",
 			 						   text: "사원 삭제가 완료되었습니다.",
@@ -186,11 +180,11 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="multiFile"><img id="viewPhoto" name="viewPhoto" src="upload/${userDetail.myPic}" onError="this.src='img/avatar.jpg'" alt="프로필사진"  style="width:13em; height:100%;"></label>
 												<div class="col-md-6">
-													<input type="file" id="multiFile" name="file" class="form-control" accept="image/*" form="modifyUserForm">
+													<input type="file" id="multiFile" name="file" class="form-control" accept="image/*" form="modifyUserForm" style="display: none;">
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="name">사원이름</label>
+												<label class="col-md-3 control-label" for="name">사원 이름</label>
 												<div class="col-md-6">
 													<input class="form-control" id="formName" name="name" form="modifyUserForm" type="text" value="${userDetail.name}">
 												</div>
@@ -202,28 +196,28 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="emp">고용상태</label>
-												<div class="col-md-6">
-													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus" form="modifyUserForm">
-														<option hidden>선택하세요</option>
-														<option value="재직" <c:if test="${userDetail.emp == '재직'}">selected</c:if> >재직</option>
-														<option value="고용예정" <c:if test="${userDetail.emp == '고용예정'}">selected</c:if> >고용예정</option>
-													</select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-md-3 control-label" for="regitDate">고용일</label>
+												<label class="col-md-3 control-label" for="regitDate">입사일</label>
 												<div class="col-md-6">
 													<input class="form-control" id="regitDate" name="regitDate" type="date" form="modifyUserForm" value="<fmt:formatDate value='${userDetail.regitDate}' pattern='yyyy-MM-dd'/>">
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-md-3 control-label" for="serve">고용</label>
+												<label class="col-md-3 control-label" for="serve">재직 상태</label>
 												<div class="col-md-6">
 													<select class="form-control mb-md" id="serve" name="serve" required="required" autofocus="autofocus" form="modifyUserForm">
 														<option hidden>선택하세요</option>
-														<option value="정규직" <c:if test="${userDetail.serve == '정규직'}">selected</c:if> >정규직</option>
-                                                        <option value="인턴" <c:if test="${userDetail.serve == '인턴'}">selected</c:if> >인턴</option>
+														<option value="재직" <c:if test="${userDetail.serve == '재직'}">selected</c:if> >재직</option>
+                                                        <option value="예정" <c:if test="${userDetail.serve == '예정'}">selected</c:if> >예정</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="emp">고용 형태</label>
+												<div class="col-md-6">
+													<select class="form-control mb-md" id="emp" name="emp" required="required" autofocus="autofocus" form="modifyUserForm">
+														<option hidden>선택하세요</option>
+														<option value="정규직" <c:if test="${userDetail.emp == '정규직'}">selected</c:if> >정규직</option>
+														<option value="인턴" <c:if test="${userDetail.emp == '인턴'}">selected</c:if> >인턴</option>
 													</select>
 												</div>
 											</div>
@@ -269,7 +263,7 @@
 											<div class="col-md-6 control-label">
 												<button type="button" class="btn btn-primary" id="modifyBtn">수정</button>
 												<button type="button" class="btn btn-primary" id="deleteBtn">삭제</button>
-												<button type="reset" class="btn btn-default" onClick="location.href='MemberList.do'">취소</button>
+												<button type="reset" class="btn btn-default" onClick="location.href='adminMain.do'">취소</button>
 											</div>
 										</form>
 									</div>

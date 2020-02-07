@@ -28,9 +28,7 @@ import com.google.protobuf.ByteString;
 @Service
 public class GoogleVisionService {
 
-	public GoogleVisionService() {
-		System.out.println("서비스단/GoogleVisionApi : 구글 비전 API  생성자 실행");
-	}	
+		
 	public JSONObject goGoogle(String path) {
 		
 		List<String> keyUseLocation = null;
@@ -40,7 +38,7 @@ public class GoogleVisionService {
 		JSONObject jsonObj = new JSONObject();
 		try {
 			String imageFilePath = path;
-			List<AnnotateImageRequest> requests = new ArrayList<>();
+			List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
 			
 			ByteString imgBytes = ByteString.readFrom(new FileInputStream(imageFilePath));
 		
@@ -77,7 +75,6 @@ public class GoogleVisionService {
 			                        }
 			                        blockText = blockText + paraText;
 			                    }
-			                    System.out.println("여기를확인해보자 " + blockText);
 		                        String sNum = Integer.toString(number);
 		                        jsonObj.put("key"+sNum, blockText);
 		                        number++;
@@ -94,7 +91,6 @@ public class GoogleVisionService {
 				System.out.println("서비스단/GoogleVisionApi : try 구문에러 : " + e);
 			}
 		return jsonObj;
-		
 	}
 		
 		

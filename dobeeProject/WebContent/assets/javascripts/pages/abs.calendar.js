@@ -36,7 +36,6 @@
 			
 			$.each(events, (index, element) => {
 				
-				// console.log(element);
 				
 				if (element.isAuth ==='승인' && element.apyCode == 1 ) {
 					eventList.push({

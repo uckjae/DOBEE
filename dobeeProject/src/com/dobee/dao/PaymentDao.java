@@ -1,8 +1,6 @@
 package com.dobee.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.dobee.vo.Apply;
 import com.dobee.vo.CostCode;
@@ -17,7 +15,7 @@ public interface PaymentDao {
 	
 	
     //카드목록조회
-    public ArrayList<Debit> listDebit();
+    public List<Debit> listDebit();
     
 
     //비용현황
@@ -33,7 +31,7 @@ public interface PaymentDao {
 
     
     //비용코드 불러다주기 
-    public ArrayList<CostCode> debitCode();
+    public List<CostCode> debitCode();
     
     
     //비용신청 등록하기
@@ -41,7 +39,7 @@ public interface PaymentDao {
  
 
     //비용신청 리스트(=영수증 등록) 불러오기 
-    public ArrayList<CostList> listReceipt();
+    public List<CostList> listReceipt();
     
     
     //관리자 법인카드 수정하기
@@ -53,23 +51,23 @@ public interface PaymentDao {
     
     
     //비용데이터 불러오기  항목 차트
-    public ArrayList<ItemsCostChart> paymentChart();
+    public List<ItemsCostChart> paymentChart();
     
     
     //비용 연도만 가져오기 
-    public ArrayList<ItemsCostChart> paymentYYYY();
+    public List<ItemsCostChart> paymentYYYY();
     
     
     //비용 차트 연도에 해당되는 것만 가져오기
-    public ArrayList<ItemsCostChart> chartByYYYY(String usedate);
+    public List<ItemsCostChart> chartByYYYY(String usedate);
     
     
     //비용 차트 연도와 월에 해당하는 것만 가져오기
-    public ArrayList<ItemsCostChart> chartByYYYYAndMonth(String useDate);
+    public List<ItemsCostChart> chartByYYYYAndMonth(String useDate);
     
     
     //비용 월 셀렉트 받아오기
-    public ArrayList<ItemsCostChart> giveMeMonth(String yyyy);
+    public List<ItemsCostChart> giveMeMonth(String yyyy);
     
     
     //법인 카드 수정시, 중복카드번호 검사

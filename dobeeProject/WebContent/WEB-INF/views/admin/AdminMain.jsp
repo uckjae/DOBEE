@@ -52,15 +52,15 @@
 						<thead>
 							<tr>
 							<th>번호</th>
-							<th>사원메일</th>
-							<th>사원이름</th>
-							<th>권한코드</th>
-							<th>팀코드</th>
+							<th>사원 E-mail</th>
+							<th>사원 이름</th>
+							<th>권한 코드</th>
+							<th>팀 코드</th>
 							<th>입사일</th>
-							<th>재직상태</th>
-							<th>고용형태</th>
+							<th>재직 상태</th>
+							<th>고용 형태</th>
 							<th>직책</th>
-							<th>휴대폰번호</th>
+							<th>휴대폰 번호</th>
 							</tr>
 						</thead>
 						<tbody>

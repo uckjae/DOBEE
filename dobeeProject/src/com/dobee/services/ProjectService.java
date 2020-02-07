@@ -1,5 +1,12 @@
 package com.dobee.services;
 
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dobee.dao.ProjectDao;
 import com.dobee.vo.member.User;
 import com.dobee.vo.project.CheckList;
@@ -8,15 +15,6 @@ import com.dobee.vo.project.ProjectMember;
 import com.dobee.vo.project.Task;
 import com.dobee.vo.project.TaskDetail;
 import com.dobee.vo.project.UpcomingTask;
-import com.dobee.vo.schedule.ProjectSchedule;
-
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ProjectService {
@@ -201,10 +199,8 @@ public class ProjectService {
 
     //업무삭제
     public int pmTaskDelete(int tskSeq){
-    	System.out.println("ProjectService pmTaskDelete() in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	int result = projectDao.pmTaskDelete(tskSeq);
-    	System.out.println(result);
     	return result;
     }
 
@@ -223,8 +219,6 @@ public class ProjectService {
     	int tdSeq = 0;
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	result = projectDao.addTaskDetail(taskDetail);
-    	System.out.println("상세 업무 저장 완료");
-    	System.out.println("저장된 tdSeq는?"+taskDetail.getTdSeq());
     	if(result > 0) {
         	tdSeq = taskDetail.getTdSeq();
     	} else {
@@ -244,7 +238,6 @@ public class ProjectService {
 
     //상세업무삭제 -- 01.28 알파카 수정
     public int taskDetailDelete(int tdSeq){
-    	System.out.println("ProjectService taskDetailDelete in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	int result = projectDao.taskDetailDelete(tdSeq);
     	return result;
@@ -267,7 +260,6 @@ public class ProjectService {
 
     //체크리스트 조회
     public List<CheckList> getTaskCheckList(int tskSeq){
-        System.out.println("ProjectService getTaskCheckList() in");
         ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
         List<CheckList> taskCheckList = projectDao.getTaskCheckList(tskSeq);
     	return taskCheckList;
@@ -275,7 +267,6 @@ public class ProjectService {
     
     //체크리스트 내용 수정
     public int taskCheckListEditContent(CheckList checkList) {
-    	System.out.println("ProjectService taskCheckListEdit() in");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	int result = projectDao.taskCheckListEditContent(checkList);
     	return result;
@@ -292,7 +283,6 @@ public class ProjectService {
     
     //체크리스트 삭제
     public int taskCheckListDelete(CheckList checkList) {
-    	System.out.println("ProjectService taskCheckListDelete() in!!");
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
     	int result = projectDao.taskCheckListDelete(checkList);
     	return result;
@@ -314,34 +304,30 @@ public class ProjectService {
     
     //특정 프로젝트의 개인 업무 가져오기
     public List<Task> getMemberTask(int pjtSeq, String mail){
-    	List<Task> taskList = new ArrayList<Task>();
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	taskList = projectDao.getMemberTask(pjtSeq, mail);
+    	List<Task> taskList = projectDao.getMemberTask(pjtSeq, mail);
     	return taskList;
     }
     
     //특정 프로젝트의 개인의 완료일이 지난 업무 가져오기
     public List<Task> getOverdueTask(int pjtSeq, String mail){
-    	List<Task> taskOverdueList = new ArrayList<Task>();
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	taskOverdueList = projectDao.getOverdueTask(pjtSeq, mail);
+    	List<Task> taskOverdueList = projectDao.getOverdueTask(pjtSeq, mail);
     	return taskOverdueList;
     }
     
     //특정 프로젝트의 개인의 오늘까지 남은 업무 가져오기
     public List<Task> getDeadlineTask(int pjtSeq, String mail){
-    	List<Task> deadlineTaskList = new ArrayList<Task>();
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	deadlineTaskList = projectDao.getDeadlineTask(pjtSeq, mail);
+    	List<Task> deadlineTaskList = projectDao.getDeadlineTask(pjtSeq, mail);
     	return deadlineTaskList;
     }
     
     //특정 프로젝트의 개인의 남은 업무 가져오기
     
     public List<Task> getOtherTask(int pjtSeq, String mail){
-    	List<Task> otherTaskList = new ArrayList<Task>();
     	ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-    	otherTaskList = projectDao.getOtherTask(pjtSeq, mail);
+    	List<Task> otherTaskList = projectDao.getOtherTask(pjtSeq, mail);
     	return otherTaskList;
     }
 
@@ -351,9 +337,8 @@ public class ProjectService {
 	
 	 //특정 프로젝트의 개인의 완료된 업무 가져오기 
 	 public List<Task> getCompletedTaskList(int pjtSeq, String mail){ 
-		 List<Task> taskList = new ArrayList<Task>(); 
 		 ProjectDao projectDao = sqlSession.getMapper(ProjectDao.class);
-		 taskList = projectDao.getCompletedTaskList(pjtSeq, mail);
+		 List<Task> taskList = projectDao.getCompletedTaskList(pjtSeq, mail);
 		 return taskList;
 
 	 }

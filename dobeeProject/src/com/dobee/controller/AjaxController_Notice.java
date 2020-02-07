@@ -22,7 +22,6 @@ public class AjaxController_Notice {
     	result = noticeService.delNotice(Integer.parseInt(notSeq));
     	if(result > 0) {
     		responseData = "success";
-    		System.out.println("성공함");
     	}
 		return responseData;
 	}
