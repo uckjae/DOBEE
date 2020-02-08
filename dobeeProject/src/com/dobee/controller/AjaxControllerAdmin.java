@@ -298,19 +298,27 @@ public class AjaxControllerAdmin {
     		@RequestParam(value="nickName") String nickName,
     		@RequestParam(value="entry") String entry,
     		@RequestParam(value="valDate") String valDate) {
+    	
+    	System.out.println("컨트롤 타는지 봅시다.");
+    	
     	DebitService debitService = new DebitService();
     	
+    	System.out.println("서비스 다 탔는지 봅시다.");
     	int result = 0;
     	Debit list = new Debit();
     	list.setCardNum(cardNum);
     	list.setCorp(corp);
     	list.setEntry(entry);
-    	list.setName(nickName);
+    	list.setName(name);
     	list.setNickName(nickName);
     	list.setValDate(valDate);
     	
+    	System.out.println("값을 확인 해 봅시다."+ list.toString());
     	
     	boolean check = debitService.addDebit(list);
+    	
+    	
+    	
     	
     	if(check) {//법인카드 등록 성공
     		result = 1;

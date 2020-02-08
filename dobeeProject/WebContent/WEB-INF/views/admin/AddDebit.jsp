@@ -178,7 +178,7 @@
 	
 	// 법인 카드등록 아작스함수
    function addDebit(sendData = inputData()){
-	   var sendData = inputData();
+	   // var sendData = inputData();
 	  
        let result = 0;  // 컨트롤단으로 부터 디비등록 되었는지 확인 받는 자료 
 		$.ajax({
@@ -187,7 +187,7 @@
             data: sendData,
             beforeSend : function(xhr, opts) {
             	checkEntry();  // 카드 구분은 여기서 함수를실행해서 확인하고, 카드번호/유효기간은 keyUp 을 통해 사용자가 입력하는 즉시 확인
-            	threeEmptyCheck();  // 명의자이름 별치 은행 빈칸 검사하는 함수
+            	threeEmptyCheck();  // 명의자이름 별칭 은행 빈칸 검사하는 함수
             	//여기서 부터 빈칸 체크
                 if (!entryCheck) { 
                 	swal({
@@ -246,7 +246,7 @@
 					
 				},
 			error:function(){
-			
+				console.log("아작스 에러 ");
 				},
 			});
 	   };
