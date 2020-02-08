@@ -154,8 +154,6 @@ var costKey = 0;
                             console.log("이거 이미지 태그에서 src = 요청 주소 : " + urlPath);
                             console.log("이게 이미지 경로 : " + allPath);
 
-							alert("이거 요청 주소:" + urlPath);
-							alert("이거 이미지 경로: " + allPath);
                             
                         },
                         complete: function() {
@@ -171,7 +169,6 @@ var costKey = 0;
                                     success: function(data) {
                                         console.log(data);
                                         result = data;
-                                        alert(data);
                                     	for (var prop in result){
                                             var fcost = result[prop].match("일시불");
                                             if(fcost != null){

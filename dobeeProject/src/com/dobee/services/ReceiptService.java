@@ -19,7 +19,8 @@ public class ReceiptService {
 		
 		List<String> arrayList = new ArrayList<String>();
 		String isSuccess = "false";
-		String uploadPath = "/Users/psh/DOBEE_New/dobeeProject/WebContent/upload/";
+		String uploadPath = "C:\\SmartWeb\\DOBEE3\\dobeeProject\\WebContent\\upload\\";  //이건 윈도우 전용 경로
+		//String uploadPath = "/Users/psh/DOBEE_New/dobeeProject/WebContent/upload/"; 이건 맥전용 경로
 		File dir = new File(uploadPath);
 
 		if (!dir.isDirectory()) {
