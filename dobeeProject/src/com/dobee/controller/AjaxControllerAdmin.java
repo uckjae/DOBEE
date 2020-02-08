@@ -216,6 +216,12 @@ public class AjaxControllerAdmin {
     	
         String path = request.getServletContext().getRealPath("/upload");
         String fpath = path + "\\" + filename;
+        /*
+        // AWS upload 경로
+        String path = request.getServletContext().getRealPath("/");
+        String savePath = path + "upload/";
+        String fpath = savePath + filename;
+        */
         
         // 파일 쓰기 작업
      	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함

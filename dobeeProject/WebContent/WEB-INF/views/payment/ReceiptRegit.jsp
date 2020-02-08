@@ -148,6 +148,7 @@ var costKey = 0;
                             console.log(saveFileName);
                             allPath = uploadPath + saveFileName;
                             var forder = '/upload/';
+                            // var forder = '/dobeeProject/upload/';	AWS ec2 upload 경로
                             var urlPath = forder + saveFileName;
                             $("#uploadImg").html('<img id="imgtag" width="100%" alt="이미지가 보이진 않지만 올라간 상태입니다.">');
                             $("#imgtag").attr("src", urlPath);

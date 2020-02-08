@@ -201,6 +201,9 @@
     
 <!-- socket 연결 -->
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
+<!-- AWS ec2 Node socket 연결 -->
+<!-- <script src="http://15.164.234.59:5000/socket.io/socket.io.js"></script> -->
+
 <script>
 	$(function(){
 		/* 유저 목록 뿌려주기*/
@@ -230,6 +233,8 @@
 		var name = $("#name").text();
 		var userName = $("#name").text();
 		var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
+		<!-- AWS ec2 Node socket 연결 -->
+		// var socket = io.connect( 'http://15.164.234.59:5000/group', {path: '/socket.io'});
 
 		
 		socket.on('connect', function() {
