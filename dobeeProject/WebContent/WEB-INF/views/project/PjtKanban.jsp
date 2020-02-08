@@ -1789,6 +1789,9 @@
 																	</c:if>
 																 </div>
 																 <div>
+																   		담당자: ${task.mail}
+																 </div>
+																 <div>
 			                                                       	<span style="cursor:pointer;">
 			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
 			                                                        	<fmt:formatDate value="${task.endAt}" pattern="yy-MM-dd"/>
@@ -1851,7 +1854,9 @@
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 																	</c:if>
 																  </div>
-																  
+																  <div>
+																   		담당자: ${task.mail}
+																  </div>
 																  <div>
 			                                                       	<span style="cursor:pointer;">
 			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
@@ -1916,7 +1921,9 @@
 																		 &nbsp;&nbsp;&nbsp;<a onclick="PMTaskDelete(${task.tskSeq})"><i class="fa fa-trash-o"></i></a>
 																	</c:if>
 																   </div>
-																   
+																   <div>
+																   		담당자: ${task.mail}
+																   </div>
 																   <div>
 			                                                       	<span style="cursor:pointer;">
 			                                                        	<fmt:formatDate value="${task.startAt}" pattern="yy-MM-dd"/>~
