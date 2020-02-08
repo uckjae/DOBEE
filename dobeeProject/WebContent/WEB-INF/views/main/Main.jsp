@@ -104,7 +104,7 @@ console.log("MAIN!!");
 												title : element.title,
 												start : element.startTime,
 												end : element.endTime,
-												color : "#4bda64"	
+												color : "#79fc90"	
 											})
 										}
 									});
