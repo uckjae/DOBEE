@@ -181,7 +181,7 @@ console.log("MAIN!!");
 											<li>
 												<figure class="image rounded">
 <!-- 													<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
- -->													<img src="img/${teamMember.myPic}" alt="사원 사진" class="img-circle">
+ -->													<img src="upload/${teamMember.myPic}" width="50" alt="사원 사진" class="img-circle">
 												</figure>
 												<span class="title">${teamMember.name}</span>
 												<span class="message truncate">${teamMember.mail}</span>
