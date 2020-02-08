@@ -801,6 +801,7 @@ public class DoController {
 	}
 
 	// 관리자_사원추가 서비스
+	/*
 	@RequestMapping(value = "addUser.do", method = RequestMethod.POST)
 	public String addUser(User user, HttpServletRequest request) throws IOException {
 
@@ -823,6 +824,7 @@ public class DoController {
 
 		return "redirect: adminMain.do";
 	}
+	*/
 
 	// 관리자_사원 정보 수정 view
 	@RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)

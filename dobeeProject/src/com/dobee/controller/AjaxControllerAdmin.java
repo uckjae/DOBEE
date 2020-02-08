@@ -115,6 +115,8 @@ public class AjaxControllerAdmin {
 		
 	}
 	
+	
+	
 	//비밀번호 찾기 메일 발송
 	  @RequestMapping(value="findEmail.do",method=RequestMethod.POST)
 	  public void findMail(HttpServletRequest req, HttpSession session){
@@ -208,38 +210,20 @@ public class AjaxControllerAdmin {
     @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)
     public String modifyUser(User user, HttpServletRequest request) throws IOException {
     	
-    	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = user.getFile();
-    	String filename = file.getOriginalFilename(); //원본 파일명
+    	String filename = file.getOriginalFilename(); // 원본 파일명
     	
         String path = request.getServletContext().getRealPath("/upload");
-        File dir = new File(path);
+        String fpath = path + "\\" + filename;
         
-        if(!dir.isDirectory()) {
-        	dir.mkdirs();
-        }
+        // 파일 쓰기 작업
+     	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+     	fs.write(file.getBytes());
+     	fs.close();
         
-        String saveFileName = filename;
-        
-        if(saveFileName != null && !saveFileName.equals("")) {
-        	if(new File(path + saveFileName).exists()) {
-        		saveFileName = saveFileName + "_" + System.currentTimeMillis();
-        	}
-        	
-        	try {
-        		file.transferTo(new File(path + saveFileName));
-        	}catch(IllegalStateException e) {
-        		e.printStackTrace();
-        	}catch(IOException e) {
-        		e.printStackTrace();
-        	}
-        }
-        
-        
-		
-        //DB에 파일 이름 저장
-    	user.setMyPic(saveFileName);
+     	// DB에 파일 이름 저장
+     	user.setMyPic(filename);     	
     	
     	String responseData = "";
 		int result = 0;
@@ -303,7 +287,6 @@ public class AjaxControllerAdmin {
     @RequestMapping("checkEmail.do")
     public List<UserInfo> checkEmail(@RequestParam(value="mail") String mail) {
     	List<UserInfo> list = memberService.checkEmail(mail);
-    	
     	return list;
     }
     
