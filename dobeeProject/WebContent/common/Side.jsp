@@ -33,8 +33,9 @@
 							<li><a href="workManage.do">근무 내역 확인</a></li>
 							<c:choose>
 								<c:when test="${user.authCode == 3 }">
-									<li><a href="absManage.do">부재 신청 관리</a></li>
-									<li><a href="extManage.do">연장 근무 신청 관리</a></li>
+									<hr style="margin : 2px 0 2px 0;">
+									<li><a href="absManage.do">팀 부재 신청 관리</a></li>
+									<li><a href="extManage.do">팀 연장 근무 신청 관리</a></li>
 								</c:when>
 							</c:choose>
 						</ul>
