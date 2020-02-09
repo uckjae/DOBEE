@@ -326,5 +326,3 @@ public class AjaxControllerAdmin {
     
     
 }
-
-

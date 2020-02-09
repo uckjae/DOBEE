@@ -388,6 +388,11 @@
 
 					let wh = "";
 					let eh = "";
+					let th = "";
+					
+					var hour = 0;
+					var minute = 0;
+					var second = 0;
 					
 					if (whArray[0] == null){
 						wh = "00:00:00";
@@ -400,10 +405,6 @@
 					} else {
 						eh = whArray[1];
 					}
-					
-					var hour = 0;
-					var minute = 0;
-					var second = 0;
 
 				 	var splitTime1= wh.split(':');
 			        var splitTime2= eh.split(':');
@@ -416,15 +417,26 @@
 			        minute = Math.floor(minute + second/60);
 			        second = second%60;
 
-				    let th = hour+':'+minute+':'+second;
+					if (whArray[0] == null && whArray[1] == null) {
+						th = "00:00:00"
+					} else {
+						th = hour+':'+minute+':'+second;
+					}
 
 					$('#totalHour').html(th);
 					$('#totalWorkHour').html(wh);
 					$('#totalExtHour').html(eh);
 
-					$('#thTitle').html(whArray[2] + "월 총 근무 시간");
-					$('#twhTitle').html(whArray[2] + "월 총 정상 근무 시간");
-					$('#tehTitle').html(whArray[2] + "월 총 연장 근무 시간");			
+					if (whArray[2] == null) {
+						$('#thTitle').html(month[mm] + "월 총 근무 시간");
+						$('#twhTitle').html(month[mm] + "월 총 정상 근무 시간");
+						$('#tehTitle').html(month[mm] + "월 총 연장 근무 시간");			
+					} else {
+						$('#thTitle').html(whArray[2] + "월 총 근무 시간");
+						$('#twhTitle').html(whArray[2] + "월 총 정상 근무 시간");
+						$('#tehTitle').html(whArray[2] + "월 총 연장 근무 시간");			
+					}
+					
 				}
 			});
 			

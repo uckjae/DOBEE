@@ -295,8 +295,15 @@
 			}
 			// 이제 메일 보낸다 			
 			sendMail().then(function(){
-				document.getElementById('addUserForm').submit();
-				//$('#addUserForm').submit();
+				swal({
+					title: "사원 등록",
+					text: "사원등록이 완료되었습니다", 
+					icon: "success",
+					button: "true"
+				}).then((YES)=>{
+					document.getElementById('addUserForm').submit();
+				})
+				
 			});
 		};
 
