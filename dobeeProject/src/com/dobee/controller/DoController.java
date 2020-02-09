@@ -311,37 +311,38 @@ public class DoController {
 	}
 
 	// 공지사항글쓰기 처리
-	@RequestMapping(value = "noticeWrite.do", method = RequestMethod.POST)
-	public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request)
-			throws IOException {
-		// 공지사항 글 DB 넣기
-		int notSeq = noticeService.noticeWrite(n); // 서비스 리턴 값으로 notice의 seq를 가져옴
+		@RequestMapping(value = "noticeWrite.do", method = RequestMethod.POST)
+		public String noticeWrite(Notice n, NoticeFile nf, Schedule sc, NotSchedule ns, HttpServletRequest request)
+				throws IOException {
+			// 공지사항 글 DB 넣기
+			int notSeq = noticeService.noticeWrite(n); // 서비스 리턴 값으로 notice의 seq를 가져옴
 
-		CommonsMultipartFile file = nf.getFile();
-    	String filename = file.getOriginalFilename(); //원본 파일명
-    	
-        String path = request.getServletContext().getRealPath("/upload");
-        File dir = new File(path);
-        
-        if(!dir.isDirectory()) {
-        	dir.mkdirs();
-        }
-        
-        String saveFileName = filename;
-        
-        if(saveFileName != null && !saveFileName.equals("")) {
-        	if(new File(path + saveFileName).exists()) {
-        		saveFileName = saveFileName + "_" + System.currentTimeMillis();
-        	}
-        	
-        	try {
-        		file.transferTo(new File(path + saveFileName));
-        	}catch(IllegalStateException e) {
-        		e.printStackTrace();
-        	}catch(IOException e) {
-        		e.printStackTrace();
-        	}
-        }
+			CommonsMultipartFile file = nf.getFile();
+	    	String filename = file.getOriginalFilename(); //원본 파일명
+	    	
+	        String path = request.getServletContext().getRealPath("/upload");
+	        File dir = new File(path);
+	        
+	        if(!dir.isDirectory()) {
+	        	dir.mkdirs();
+	        }
+	        
+	        String saveFileName = filename;
+	        
+	        if(saveFileName != null && !saveFileName.equals("")) {
+	        	if(new File(path + saveFileName).exists()) {
+	        		saveFileName = saveFileName + "_" + System.currentTimeMillis();
+	        	}
+	        	
+	        	try {
+	        		file.transferTo(new File(path + saveFileName));
+	        	}catch(IllegalStateException e) {
+	        		e.printStackTrace();
+	        	}catch(IOException e) {
+	        		e.printStackTrace();
+	        	}
+	        }
+				
 			
 		
 		
