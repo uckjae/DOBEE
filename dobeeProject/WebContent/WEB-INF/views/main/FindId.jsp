@@ -101,16 +101,16 @@ $(function(){
              var mail = data;
        
              if(mail === ""){
-            	 $('#findMail').val("입력하신 정보에 해당하는 메일을 찾을 수 없습니다");       	 
+            	 $('#findMail').val("입력하신 정보에 해당하는 메일을 찾을 수 없습니다.");       	 
              }else{
-               $('#findMail').val(mail);
+               $('#findMail').val("회원님의 정보와 일치하는 메일은 "+mail+" 입니다.");
              }
          },
          error : function(request,status,error){
 				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);
          }
      });
- });   
+ });
  });	
 </script>
 
@@ -178,19 +178,19 @@ $(function(){
  <div class="modal-dialog">
   <div class="modal-content">
   
-   <div class="modal-header">
+   <div class="modal-header" style="text-align:center">
 	<button type="button" class="close" data-dismiss="modal">
 	 <span aria-hidden="true">&times;</span>
 	 <span class="sr-only">Close</span>
 	</button>
-	<h4 class="modal-title" id="myModalLabel">찾은 메일</h4>
+	<h4 class="modal-title" id="myModalLabel">메일 찾기</h4>
    </div>
    <div class="modal-body">
 	<h4><input id="findMail" type="text" name="mail" class="input-line" value="" readonly="readonly"
-	     style="border:none; width:100%; height:100%;"/></h4>
+	     style="border:none; width:100%; height:100%;text-align:center"/></h4>
    </div>
-   <div class="modal-footer">
-	<button type="button" data-dismiss="modal"class="btn btn-primary">
+   <div class="modal-footer" style="text-align:center">
+	 <button type="button" data-dismiss="modal"class="btn btn-primary">
 	 <span aria-hidden="true"></span>확인</button>
    </div>
   </div>
