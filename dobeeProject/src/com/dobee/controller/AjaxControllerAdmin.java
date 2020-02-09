@@ -49,6 +49,8 @@ public class AjaxControllerAdmin {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	private DebitService debitService;
 	
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
@@ -297,28 +299,21 @@ public class AjaxControllerAdmin {
     		@RequestParam(value="name") String name,
     		@RequestParam(value="nickName") String nickName,
     		@RequestParam(value="entry") String entry,
-    		@RequestParam(value="valDate") String valDate) {
+    		@RequestParam(value="valDate") String valDate) {   
     	
-    	System.out.println("컨트롤 타는지 봅시다.");
     	
-    	DebitService debitService = new DebitService();
-    	
-    	System.out.println("서비스 다 탔는지 봅시다.");
     	int result = 0;
-    	Debit list = new Debit();
-    	list.setCardNum(cardNum);
-    	list.setCorp(corp);
-    	list.setEntry(entry);
-    	list.setName(name);
-    	list.setNickName(nickName);
-    	list.setValDate(valDate);
+    	Debit debit = new Debit();
+    	debit.setCardNum(cardNum);
+    	debit.setCorp(corp);
+    	debit.setEntry(entry);
+    	debit.setName(name);
+    	debit.setNickName(nickName);
+    	debit.setValDate(valDate);
     	
-    	System.out.println("값을 확인 해 봅시다."+ list.toString());
+    	System.out.println("값을 확인 해 봅시다."+ debit.toString());
     	
-    	boolean check = debitService.addDebit(list);
-    	
-    	
-    	
+    	boolean check = debitService.addDebit(debit);
     	
     	if(check) {//법인카드 등록 성공
     		result = 1;

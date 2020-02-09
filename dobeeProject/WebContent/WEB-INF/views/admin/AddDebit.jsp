@@ -231,7 +231,7 @@
 					if(result == 0){
 						swal({
 							   title:"등록 실패",
-							   text: "데이터 베이스 등록에 실패하였습니다.",
+							   text: "이미 등록된 카드번호 입니다.",
 							   icon: "error" //"info,success,warning,error" 중 택1
 							}).then((YES) => {
 								$("#cardNum").focus();
