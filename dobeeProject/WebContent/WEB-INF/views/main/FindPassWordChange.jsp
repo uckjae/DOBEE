@@ -105,14 +105,15 @@ $(function(){
             success:function(data){
                 var pwChange = data;
                 console.log("변경비밀번호:"+pwChange);
-                alert("비밀번호가 변경되었습니다.");
                 swal({
         			title: "비밀번호 재설정",
         			text: "비밀번호가 변경되었습니다", 
         			icon: "success", //"info,success,warning,error" 중 택1
-        			showConfirmButton: true
-        				})
-                document.location.href="login.do";
+        			button: "true"
+        				}).then((YES) => {
+        					document.location.href="login.do";
+        				});
+                
                 },
             error:function(request,status,error){
 				console.log("code" +request.status+"\n"+"message : "+request.response+"\n"+"error : "+error);

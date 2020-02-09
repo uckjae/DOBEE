@@ -169,9 +169,15 @@ body {
    function myFormSubmit(){
 	  
       findMail().then(function(){
-         console.log("submit()");       
-         document.getElementById('findPWD').submit();
-         $('#findPWD').submit();
+    	  swal({
+  			title: "비밀번호 재설정",
+  			text: "메일 발송이 완료되었습니다", 
+  			icon: "success", //"info,success,warning,error" 중 택1
+  			button: "true"
+  				}).then((YES) => {
+  					document.getElementById('findPWD').submit();
+  				});       
+         
 
       });
       
