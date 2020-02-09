@@ -49,6 +49,8 @@ public class AjaxControllerAdmin {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	private DebitService debitService;
 	
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
@@ -206,36 +208,32 @@ public class AjaxControllerAdmin {
 		return team;
 	}   
     
-    //사원 정보 수정 --02.10gm
+    //사원 정보 수정 --01.23 알파카
     @RequestMapping(value="modifyUser.do", method=RequestMethod.POST)
-    public void modifyUser(User user, HttpServletRequest request) throws IOException {
+    public String modifyUser(User user, HttpServletRequest request) throws IOException {
     	
     	//파일 업로드 파일명
     	CommonsMultipartFile file = user.getFile();
     	String filename = file.getOriginalFilename(); // 원본 파일명
     	
-    	  String path = request.getServletContext().getRealPath("/upload");
-          File dir = new File(path);
-     
-          if(!dir.isDirectory()) {
-          	dir.mkdirs();
-          }
-          
-          String saveFileName = filename;
-          
-          if(saveFileName != null && !saveFileName.equals("")) {
-          	if(new File(path + saveFileName).exists()) {
-          		saveFileName = saveFileName + "_" + System.currentTimeMillis();
-          	}
-          	
-          	try {
-          		file.transferTo(new File(path + saveFileName));
-          	}catch(IllegalStateException e) {
-          		e.printStackTrace();
-          	}catch(IOException e) {
-          		e.printStackTrace();
-          	}
-          }
+        String path = request.getServletContext().getRealPath("/upload");
+        String fpath = path + "\\" + filename;
+        
+        // 파일 쓰기 작업
+     	FileOutputStream fs = new FileOutputStream(fpath); // 없으면 거기다가 파일 생성함
+     	fs.write(file.getBytes());
+     	fs.close();
+        
+     	// DB에 파일 이름 저장
+     	user.setMyPic(filename);     	
+    	
+    	String responseData = "";
+		int result = 0;
+		result = memberService.modifyUser(user);
+		if(result > 0) {
+			responseData = "success";
+		}
+    	return responseData;
     	
     	
     }
@@ -301,28 +299,21 @@ public class AjaxControllerAdmin {
     		@RequestParam(value="name") String name,
     		@RequestParam(value="nickName") String nickName,
     		@RequestParam(value="entry") String entry,
-    		@RequestParam(value="valDate") String valDate) {
+    		@RequestParam(value="valDate") String valDate) {   
     	
-    	System.out.println("컨트롤 타는지 봅시다.");
     	
-    	DebitService debitService = new DebitService();
-    	
-    	System.out.println("서비스 다 탔는지 봅시다.");
     	int result = 0;
-    	Debit list = new Debit();
-    	list.setCardNum(cardNum);
-    	list.setCorp(corp);
-    	list.setEntry(entry);
-    	list.setName(name);
-    	list.setNickName(nickName);
-    	list.setValDate(valDate);
+    	Debit debit = new Debit();
+    	debit.setCardNum(cardNum);
+    	debit.setCorp(corp);
+    	debit.setEntry(entry);
+    	debit.setName(name);
+    	debit.setNickName(nickName);
+    	debit.setValDate(valDate);
     	
-    	System.out.println("값을 확인 해 봅시다."+ list.toString());
+    	System.out.println("값을 확인 해 봅시다."+ debit.toString());
     	
-    	boolean check = debitService.addDebit(list);
-    	
-    	
-    	
+    	boolean check = debitService.addDebit(debit);
     	
     	if(check) {//법인카드 등록 성공
     		result = 1;
@@ -335,5 +326,3 @@ public class AjaxControllerAdmin {
     
     
 }
-
-
