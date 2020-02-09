@@ -329,10 +329,18 @@
 				</configuration>
 			</plugin>
 
-			<!-- AWS 연동 <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>tomcat-maven-plugin</artifactId> 
-				<version>1.1</version> <configuration> <url>http://15.164.234.59:8080/manager/text</url> 
-				<path>/dobeeProject</path> <username>username</username> <password>password</password> 
-				</configuration> </plugin> -->
+			<!-- AWS 연동
+			<plugin> 
+				<groupId>org.codehaus.mojo</groupId> 
+				<artifactId>tomcat-maven-plugin</artifactId> 
+				<version>1.1</version> <configuration> 
+				<url>http://15.164.234.59:8080/manager/text</url> 
+				<path>/dobeeProject</path> 
+				<username>username</username> 
+				<password>password</password> 
+				</configuration>
+			</plugin>
+			 -->
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

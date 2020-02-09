@@ -58,8 +58,7 @@ console.log("MAIN!!");
 						<section class="panel">
 							<header class="panel-heading">
 								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a> <a href="#"
-										class="fa fa-times"></a>
+									<a href="#" class="fa fa-caret-down"></a> 
 								</div>
 								<h2 class="panel-title"><i class="fa fa-calendar"></i>&nbsp;나의 일정</h2>
 							</header>
@@ -140,7 +139,6 @@ console.log("MAIN!!");
 							<header class="panel-heading">
 								<div class="panel-actions">
 									<a href="#" class="fa fa-caret-down"></a>
-									<a href="#" class="fa fa-times"></a>
 								</div>
 								<h2 class="panel-title">
 									<span class="va-middle"><i class="fa fa-check"></i>&nbsp;마감이 임박한 업무</span>
@@ -149,16 +147,25 @@ console.log("MAIN!!");
 									
 							<div class="panel-body">
 								<ul class="widget-todo-list">	
-									<c:forEach items="${utList}" var="utl">
-										<li>
-											<div class="checkbox-custom checkbox-default">
-												<label class="todo-label">
-													<span>${utl.title }</span>
-													<p class="text-xs text-muted mb-none">${utl.pjtName }</p>
-												</label>
-											</div>
-										</li>
-									</c:forEach>
+									<c:choose>
+										<c:when test ="${utList == '[]' }" >
+											<li>
+												<p style="text-align :center;" class="text-xs text-muted">마감이 임박한 업무가 없습니다.</p>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${utList}" var="utl">
+												<li>
+													<div class="checkbox-custom checkbox-default">
+														<label class="todo-label">
+															<span>${utl.title }</span>
+																<p class="text-xs text-muted mb-none">${utl.pjtName }</p>
+														</label>
+													</div>
+												</li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</ul>
 							</div>
 							<div class="panel-footer" style="height:55px;">
@@ -168,7 +175,6 @@ console.log("MAIN!!");
 								<header class="panel-heading">
 									<div class="panel-actions">
 										<a href="#" class="fa fa-caret-down"></a>
-										<a href="#" class="fa fa-times"></a>
 									</div>
 									<h2 class="panel-title">
 										<span class="va-middle"><i class="fa fa-group"></i>&nbsp;출근한 팀원</span>
@@ -177,16 +183,24 @@ console.log("MAIN!!");
 								<div class="panel-body">
 									<div class="content">
 										<ul class="simple-user-list">
-										<c:forEach items="${requestScope.onWorkTeamMemberList}" var="teamMember">
-											<li>
-												<figure class="image rounded">
-<!-- 													<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle">
- -->													<img src="img/${teamMember.myPic}" alt="사원 사진" class="img-circle">
-												</figure>
-												<span class="title">${teamMember.name}</span>
-												<span class="message truncate">${teamMember.mail}</span>
-											</li>
-										</c:forEach>
+											<c:choose>
+												<c:when test="${requestScope.onWorkTeamMemberList == '[]' }">
+													<span style="text-align: center" class="text-xs text-muted">출근한 팀원이 없습니다.</span>
+												</c:when>
+												<c:otherwise>
+													<c:forEach items="${requestScope.onWorkTeamMemberList}" var="teamMember">
+														<li>
+															<figure class="image rounded">
+																	<!-- <img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle"> -->
+																	<img src="upload/${teamMember.myPic}" width="50" alt="사원 사진" class="img-circle">
+															</figure>
+															<span class="title">${teamMember.name}</span>
+															<span class="message truncate">${teamMember.mail}</span>
+														</li>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										
 										</ul>
 									</div>
 								</div>
@@ -199,8 +213,7 @@ console.log("MAIN!!");
 							<section class="panel">
 								<header class="panel-heading">
 									<div class="panel-actions">
-										<a href="#" class="fa fa-caret-down"></a> <a href="#"
-											class="fa fa-times"></a>
+										<a href="#" class="fa fa-caret-down"></a> 
 									</div>
 									<h2 class="panel-title">공지사항</h2>
 								</header>
@@ -210,7 +223,7 @@ console.log("MAIN!!");
 											<thead>
 												<tr>
 													<th class="notSeq" style="width: 11%; text-align: center;">글번호</th>
-													<th class="nsContent" style="text-align : center";">제목</th>
+													<th class="nsContent" style="text-align : center;">제목</th>
 													<th class="startTime" style="width: 20%; text-align: center;">작성일</th>
 													<th class="count" style="width: 15%; text-align: center;">조회수</th>
 												</tr>
@@ -246,7 +259,7 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th style="width: 11%; text-align: center;">#</th>
+													<th style="width: 11%; text-align: center;">#123</th>
 													<th style="text-align: center;">프로젝트</th>
 													<th style="width: 13%; text-align: center;">진행 상황</th>
 													<th style="width: 25%; text-align: center;">진행도</th>

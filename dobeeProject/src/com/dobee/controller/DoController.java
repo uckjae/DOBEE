@@ -132,7 +132,7 @@ public class DoController {
 		List<User> onWorkTeamMemberList = memberService.getOnWorkTeamMember(user);
 		model.addAttribute("onWorkTeamMemberList", onWorkTeamMemberList);
 
-		// 마감임박 업무 리스트 GET 0131 게다죽 ~ing
+		// 마감임박 업무 리스트 GET 0131 COMPLETE
 		List<UpcomingTask> utList = projectService.getUpcomingTask(principal.getName());
 		model.addAttribute("utList", utList);
 
@@ -476,13 +476,13 @@ public class DoController {
 		return "redirect:noticeDetail.do?notSeq=" + n.getNotSeq();
 	}
 
-	// 개인_부재일정신청 GET 0110 게다죽
+	// 개인_부재일정신청 GET 0110
 	@RequestMapping(value = "breakApply.do", method = RequestMethod.GET)
-	public String absApply(HttpServletRequest request, Model model) {
+	public String absApply(HttpServletRequest request, Model model, Authentication auth) {
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		User user = (User) request.getSession().getAttribute("user");
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		return "attend/BreakApply";
 	}
 
@@ -491,8 +491,7 @@ public class DoController {
 	public String getEditApply(HttpServletRequest request, Model model, Apply apply, Authentication auth,
 			Integer aplSeq) {
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		User user = (User) request.getSession().getAttribute("user");
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
 
 		apply.setAplSeq(aplSeq);
@@ -503,69 +502,59 @@ public class DoController {
 		return "attend/BreakApplyEdit";
 	}
 
-    
-	
-
-	// 연장근무 신청 GET 0110 게다죽
+	// 연장근무 신청 GET 0110
 	@RequestMapping(value = "extendApply.do", method = RequestMethod.GET)
-	public String overTiemApply(Model model, HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
+	public String overTiemApply(Model model, HttpServletRequest request, Authentication auth) {
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		return "attend/ExtendApply";
 	}
 
-	// 개인_부재일정관리 GET 0112 게다죽 COMPLETE 0116
+	// 개인_부재일정관리 GET 0112 COMPLETE 0116
 	@RequestMapping(value = "breakManage.do", method = RequestMethod.GET)
 	public String absMg(Model model, HttpServletRequest request, Authentication auth) {
-		User user = (User) request.getSession().getAttribute("user");
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		List<BreakManageList> results = applyService.absMg(auth.getName());
 		model.addAttribute("brkList", results);
+		
 		return "attend/BreakManage";
 	}
 
-	// 개인_근무내역관리/확인 GET 0121 게다죽
+	// 개인_근무내역관리/확인 GET 0121
 	@RequestMapping(value = "workManage.do", method = RequestMethod.GET)
 	public String getExtList(Model model, HttpServletRequest request, Authentication auth) {
-		User user = (User) request.getSession().getAttribute("user");
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		List<Apply> results = applyService.getExtList(auth.getName());
 		model.addAttribute("extList", results);
+		
 		return "attend/WorkManage";
 	}
 
-	// 개인_연장근무 신청 수정 Page GET 0121 게다죽 COMPLETE
+	// 개인_연장근무 신청 수정 Page GET 0121 COMPLETE
 	@RequestMapping(value = "editExtApply.do", method = RequestMethod.GET)
 	public String getEditExtList(Model model, HttpServletRequest request, Apply apply, Authentication auth,
 			Integer aplSeq) {
-		User user = (User) request.getSession().getAttribute("user");
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		apply.setAplSeq(aplSeq);
 		apply.setDrafter(auth.getName());
 		Apply results = applyService.getELforEdit(apply);
 		model.addAttribute("ELforEdit", results);
+		
 		return "attend/ExtApplyEdit";
 	}
 
-    /*
-	// 개인_연장근무 신청 삭제 POST 0121 게다죽 COMPLETE
-	@RequestMapping(value = "deleteExtApply.do", method = RequestMethod.GET)
-	public String postDeleteExtList(Integer aplSeq) {
-		int result = applyService.postDeleteExtList(aplSeq);
-
-		return "redirect: workManage.do";
-	}
-    */
-
-	// 매니저_부재관리 - isAuth update GET 0204 updated 게다죽
+	// 매니저_부재관리 - isAuth update GET 0204 updated
 	@RequestMapping(value = "absManage.do", method = RequestMethod.GET)
 	public String absSign(Model model, HttpServletRequest req) {
 		User user = (User) req.getSession().getAttribute("user");
@@ -575,10 +564,11 @@ public class DoController {
 		int teamCode = user.getTeamCode();
 		List<BreakManageList> results = applyService.breakListMgr(teamCode);
 		model.addAttribute("brkListMgr", results);
+		
 		return "attend/BreakManagement_Mgr";
 	}
 
-	// 매니저_연장근무관리 리스트 - isAuth update GET 0204 updated 게다죽
+	// 매니저_연장근무관리 리스트 - isAuth update GET 0204 updated
 	@RequestMapping(value = "extManage.do", method = RequestMethod.GET)
 	public String extSign(Model model, HttpServletRequest req) {
 		User user = (User) req.getSession().getAttribute("user");
@@ -594,11 +584,11 @@ public class DoController {
 
 	// 비용정산신청 뷰단 화면 이동
 	@RequestMapping("receiptRegit.do")
-	public String receiptReg(Model model, HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
+	public String receiptReg(Model model, HttpServletRequest request, Authentication auth) {
 		// 로그인한 회원이 참여 중인 프로젝트 목록 가져오기
-		List<Project> pjtList = projectService.getInProgressPjtList(user.getMail()); // 특정 회원이 속한 프로젝트 리스트 가져오기
+		List<Project> pjtList = projectService.getInProgressPjtList(auth.getName());
 		model.addAttribute("pjtList", pjtList);
+		
 		return "payment/ReceiptRegit";
 	}
 
@@ -801,7 +791,7 @@ public class DoController {
 	}
 
 	// 관리자_사원추가 서비스
-	/*
+	
 	@RequestMapping(value = "addUser.do", method = RequestMethod.POST)
 	public String addUser(User user, HttpServletRequest request) throws IOException {
 
@@ -824,7 +814,7 @@ public class DoController {
 
 		return "redirect: adminMain.do";
 	}
-	*/
+	
 
 	// 관리자_사원 정보 수정 view
 	@RequestMapping(value = "modifyUser.do", method = RequestMethod.GET)

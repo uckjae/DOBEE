@@ -188,6 +188,9 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- socket 연결 -->
 <script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
+<!-- AWS ec2 Node socket 연결 -->
+<!-- <script src="http://15.164.234.59:5000/socket.io/socket.io.js"></script> -->
+
 <script>
 	$(function(){
 		$.ajax({
@@ -216,7 +219,9 @@
 		var chatType = $("#chatType").val();
 		var userMail = $("#mail").text();
 		var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
-
+		<!-- AWS ec2 Node socket 연결 -->
+		// var socket = io.connect( 'http://15.164.234.59:5000/self', {path: '/socket.io'});
+		
 		socket.on('connect', function() {
 			//db에 있던 이전 대화 내용 가져오기
 			socket.emit('getChatContent', userMail, chatType);
