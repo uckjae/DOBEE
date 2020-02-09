@@ -298,9 +298,12 @@
 				swal({
 					title: "사원 등록",
 					text: "사원등록이 완료되었습니다", 
-					icon: "success"
+					icon: "success",
+					button: "true"
+				}).then((YES)=>{
+					document.getElementById('addUserForm').submit();
 				})
-				document.getElementById('addUserForm').submit();
+				
 			});
 		};
 
