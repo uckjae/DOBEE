@@ -204,7 +204,7 @@
             var UploadView = new google.picker.DocsUploadView().setIncludeFolders(true);
 
             //User can upload file in specific folder
-            //var UploadView = new google.picker.DocsUploadView().setParent('PUT YOUR FOLDER ID')
+            //var UploadView = new google.picker.DocsUploadView().setParent('당신의 폴더 ID')
 
             this.picker = new google.picker.PickerBuilder().
                 addView(DisplayView).

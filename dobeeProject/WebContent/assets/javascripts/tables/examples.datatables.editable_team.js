@@ -295,16 +295,16 @@ var tempTeamCode = 0;
 												}).then((YES) => {
 											});
 										} else {
-											swal({
-												   title:"삭제 실패",
-												   text: "해당 팀에 등록된 사원이 있으므로 삭제 할 수 없습니다.",
-												   icon: "error" //"info,success,warning,error" 중 택1
-												}).then((YES) => {
-											});
+											
 										}
 									},
 									error : function() {
-									
+										swal({
+											   title:"삭제 실패",
+											   text: "해당 팀에 등록된 사원이 있으므로 삭제 할 수 없습니다.",
+											   icon: "error" //"info,success,warning,error" 중 택1
+											}).then((YES) => {
+										});
 									}
 								});
 								// 아작스 끝
