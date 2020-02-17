@@ -29,13 +29,21 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 # 프로젝트 주요 기술 및 구현 페이지  
 ### Google VISION API를 이용한 비용 처리
 DOBEE는 회계팀이 따로 없는 소규모 회사를 대상으로 하는 프로그램으로, 영수증 사진 인식을 통해 쉽게 비용을 처리할 수 있습니다.
-![ex_screenshot](./dobeeProject/WebContent/img/vision.PNG)
+![ex_screenshot](./dobeeProject/WebContent/img/vision.png)  
 
 ### Google Drive API를 이용한 프로젝트 관리
+Google Drive와 프로젝트를 연동하여 사용할 수 있도록 구현하였습니다.
+![ex_screenshot](./dobeeProject/WebContent/img/drive.png)  
 
-### MySQL Event Scheduler를 이용한 근태 관리
 
-### WebSocket을 이용한 알림
+### MySQL Event Scheduler를 이용한 근태 관리 
+휴가나 연장근무 등의 신청이 오랜 시간이 지난 후에도 미승인으로 유지될 경우 사용자에게 불편함을 줄 수 있습니다. 이를 해결하기 위해 Event Scheduler를 활용해 미승인 건은 일정 기간이 지난 후 자동으로 반려 처리 될 수 있도록 했습니다.
+![ex_screenshot](./dobeeProject/WebContent/img/eventscheduler.png)  
+
+
+### Node.js를 이용한 채팅 서비스
+
+### WebSocket을 이용한 알림 
 
 ### Java mail sender & Velocity를 이용한 회원가입
 
