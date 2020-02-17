@@ -28,25 +28,36 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 
 # 프로젝트 주요 기술 및 구현 페이지  
 ### Google VISION API를 이용한 비용 처리
-DOBEE는 회계팀이 따로 없는 소규모 회사를 대상으로 하는 프로그램으로, 영수증 사진 인식을 통해 쉽게 비용을 처리할 수 있습니다.
+DOBEE는 회계팀이 따로 없는 소규모 회사를 대상으로 하는 프로그램으로, 영수증 사진 인식을 통해 쉽게 비용을 처리할 수 있습니다.  
 ![ex_screenshot](./dobeeProject/WebContent/img/vision.png)  
 
 ### Google Drive API를 이용한 프로젝트 관리
-Google Drive와 프로젝트를 연동하여 사용할 수 있도록 구현하였습니다.
+Google Drive와 프로젝트를 연동하여 사용할 수 있도록 구현하였습니다.  
 ![ex_screenshot](./dobeeProject/WebContent/img/drive.png)  
 
 
 ### MySQL Event Scheduler를 이용한 근태 관리 
-휴가나 연장근무 등의 신청이 오랜 시간이 지난 후에도 미승인으로 유지될 경우 사용자에게 불편함을 줄 수 있습니다. 이를 해결하기 위해 Event Scheduler를 활용해 미승인 건은 일정 기간이 지난 후 자동으로 반려 처리 될 수 있도록 했습니다.
+휴가나 연장근무 등의 신청이 오랜 시간이 지난 후에도 미승인으로 유지될 경우 사용자에게 불편함을 줄 수 있습니다. 이를 해결하기 위해 Event Scheduler를 활용해 미승인 건은 일정 기간이 지난 후 자동으로 반려 처리 될 수 있도록 했습니다.  
 ![ex_screenshot](./dobeeProject/WebContent/img/eventscheduler.png)  
+
+### MySQL Trigger를 이용한 부재 일정 관리 
+MySQL Trigger를 이용해 사용자가 연차 신청시 자동으로 연차가 계산되도록 구현하였습니다.
+![ex_screenshot](./dobeeProject/WebContent/img/trigger.png) 
 
 
 ### Node.js를 이용한 채팅 서비스
+이벤트 기반의 비동기 프로그래밍이라는 Node.js의 장점을 기반으로 채팅 서비스를 구현하였습니다.  
+![ex_screenshot](./dobeeProject/WebContent/img/node.png)  
 
-### WebSocket을 이용한 알림 
+### Spring WebSocket을 이용한 알림 서비스
+Spring WebSocket을 이용해 새 프로젝트 생성, 새 업무 추가, 채팅 메시지 수신시 알림이 전송되는 서비스를 구현하여 사용자의 편의성을 높였습니다.  
+![ex_screenshot](./dobeeProject/WebContent/img/alarm.png)  
 
 ### Java mail sender & Velocity를 이용한 회원가입
+Java mail sender와 Velocity Template을 이용해 관리자가 사원 등록시 해당 사원의 메일로 비밀번호 재설정 메일이 전송될 수 있도록 하였습니다.
 
+### Chart API를 이용한 데이터 시각화
+![ex_screenshot](./dobeeProject/WebContent/img/chart.png)  
 
 ## 팀원 소개
 * 김광민 : https://github.com/kkm8314
