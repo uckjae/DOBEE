@@ -21,6 +21,10 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 ![ex_screenshot](./dobeeProject/WebContent/img/projectArchitecture.png)
 
 프로젝트 전반적인 구성
+프로젝트는 Spring framework 와 Node.js 로 구성되어 있습니다. Spring Security를 통해 사용자 인증 처리를 진행합니다. mybatis를 통해 자바 객체를 맵핑해 db와 연결했습니다. 
+데이터 베이스는 RDBMS 데이터 베이스인 mysql을 사용했습니다.
+채팅 서비스의 경우 back end 부분을 Node.js로 구현했습니다. Node.js의 경우 Express를 기반으로 socket.io 모듈을 사용했습니다.
+
 
 ## 프로젝트 주요 기술
 기술소개
@@ -39,6 +43,6 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 * 최경열 : https://github.com/dnjsvltm201311681
 
 ## 팀원별 수행 업무
-각자 맡은 거 넣기
-
+![ex_screenshot](./dobeeProject/WebContent/img/sungho.png)
+![ex_screenshot](./dobeeProject/WebContent/img/hyelee.png)
 
