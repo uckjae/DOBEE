@@ -43,6 +43,6 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 * 최경열 : https://github.com/dnjsvltm201311681
 
 ## 팀원별 수행 업무
-![ex_screenshot](./dobeeProject/WebContent/img/sungho.png)
-![ex_screenshot](./dobeeProject/WebContent/img/hyelee.png)
+![ex_screenshot](./dobeeProject/WebContent/img/sungho.PNG)
+![ex_screenshot](./dobeeProject/WebContent/img/hyelee.PNG)
 
