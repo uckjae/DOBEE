@@ -34,6 +34,7 @@ DOBEE를 사용한다면 하나의 프로그램으로 두가지 기능을 함께
 # 프로젝트 주요 기술 및 구현 페이지  
 ### Java mail sender & Velocity를 이용한 회원가입
 Java mail sender와 Velocity Template을 이용해 관리자가 사원 등록시 해당 사원의 메일로 비밀번호 재설정 메일이 전송될 수 있도록 하였습니다.
+![ex_screenshot](./dobeeProject/WebContent/img/mailing.png)  
 
 <br>
 
