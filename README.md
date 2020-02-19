@@ -96,6 +96,7 @@ Spring WebSocket을 이용해 새 프로젝트 생성, 새 업무 추가, 채팅
 * 최경열 : https://github.com/dnjsvltm201311681
 
 ## 팀원별 수행 업무
+![ex_screenshot](./dobeeProject/WebContent/img/jeonggyun.PNG)
 ![ex_screenshot](./dobeeProject/WebContent/img/sungho.PNG)
 ![ex_screenshot](./dobeeProject/WebContent/img/hyelee.PNG)
 
