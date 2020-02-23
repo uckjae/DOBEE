@@ -1,0 +1,143 @@
+-- 기본 형식 데이타들 추가 쿼리문
+INSERT INTO AUTHORITY (AUTHCODE, AUTH) VALUES(1, 'ROLE_ADMIN');
+INSERT INTO AUTHORITY (AUTHCODE, AUTH) VALUES(2, 'ROLE_USER');
+INSERT INTO AUTHORITY (AUTHCODE, AUTH) VALUES(3, 'ROLE_MANAGER');
+
+INSERT INTO ATTENDCODE (ATTCODE, ATTDIV) VALUES(1, '출/퇴근');
+INSERT INTO ATTENDCODE (ATTCODE, ATTDIV) VALUES(2, '부재');
+
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(1, '연차');
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(2, '반일연차');
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(3, '출장');
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(4, '외근');
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(5, '경조휴가');
+INSERT INTO APPLYCODE (APYCODE, ENTRY) VALUES(6, '연장근무');
+ 
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(1, '회식비');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(2, '식비');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(3, '소모품');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(4, '워크샵');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(5, '교통비');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(6, '접대비');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(7, '통신비');
+INSERT INTO COSTCODE (COSTCODE, ENTRY) VALUES(8, '기타');
+
+INSERT INTO CHATCODE (CHATCODE, CHATTYPE) VALUES(1, 'SELF');
+INSERT INTO CHATCODE (CHATCODE, CHATTYPE) VALUES(2, 'DM');
+INSERT INTO CHATCODE (CHATCODE, CHATTYPE) VALUES(3, 'GROUP');
+
+
+
+
+
+
+-- $2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri 1004 비밀번호
+-- 유저 / 팀리스트 / 유저 인포 데이터 스크립트
+
+use dobee_new;
+
+
+insert into teamlist (teamcode, teamname) values(1, "관리팀");
+insert into teamlist (teamcode, teamname) values(2, "개발1팀");
+insert into teamlist (teamcode, teamname) values(3, "개발2팀");
+insert into teamlist (teamcode, teamname) values(4, "기획팀");
+
+
+
+-- 유저와 유저인포 데이터
+-- 관리자
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("admin@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"관리자", null, 1, 1); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("admin@gmail.com", "2020-01-01" , "정규직", "재직" , "관리자", "010-5233-3208"); 
+
+
+
+-- 팀장 3명
+insert into user(mail, password, name, mypic, authcode, teamcode) values("dnjsvltm327@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"최경열", null, 3, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("dnjsvltm327@gmail.com", "2020-01-01" , "정규직", "재직" , "개발1팀장", "010-5233-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("taetae@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"이혜리", null, 3, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("taetae@gmail.com", "2020-01-01" , "정규직", "재직" , "개발2팀장", "010-1232-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("ukjae@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"이욱재", null, 3, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("ukjae@gmail.com", "2020-01-01" , "정규직", "재직" , "기획팀장", "010-5233-1232"); 
+
+
+
+
+-- 사원
+-- 개발1팀 사원 5명
+insert into user(mail, password, name, mypic, authcode, teamcode) values("a157@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"아철수", null, 2, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("a157@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-5223-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("b157@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"비철수", null, 2, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("b157@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-5111-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("c157@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"씨철수", null, 2, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("c157@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-1111-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("d157@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"디철수", null, 2, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("d157@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-2222-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("e157@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"이철수", null, 2, 2); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("e157@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-7777-1234"); 
+
+
+
+-- 개발2팀 사월 5명
+insert into user(mail, password, name, mypic, authcode, teamcode) values("devel1@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"아디벨", null, 2, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("devel1@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-5234-4234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("devel2@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"비디벨", null, 2, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("devel2@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-5154-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("devel3@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"씨디벨", null, 2, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("devel3@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-9883-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("devel4@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"디디벨", null, 2, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("devel4@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-2090-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("devel5@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"이디벨", null, 2, 3); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("devel5@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-1020-1234"); 
+
+
+-- 기획팀 사원 5명
+insert into user(mail, password, name, mypic, authcode, teamcode) values("plan1@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"아플랜", null, 2, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("plan1@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-0908-4234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("plan2@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"비플랜", null, 2, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("plan2@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-0354-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("plan3@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"씨플랜", null, 2, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("plan3@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-1893-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("plan4@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"디플랜", null, 2, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("plan4@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-0943-1234"); 
+
+insert into user(mail, password, name, mypic, authcode, teamcode) values("plan5@gmail.com", "$2a$10$PhTCtD6ZYS7kujWmMvlC.uu7IgJ7eOWA9SyjQXCemCMyTwGBKIQri", 
+"이플랜", null, 2, 4); 
+insert into userinfo(mail, regitdate, serve, emp, position, phone) values("plan5@gmail.com", "2020-01-01" , "정규직", "재직" , "사원", "010-1938-1234"); 
+
+
+
+
+
+
