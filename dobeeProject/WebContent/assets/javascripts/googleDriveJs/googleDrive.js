@@ -109,8 +109,8 @@
     function SetPicker() {
         var picker = new FilePicker(
             {
-                apiKey: 'AIzaSyB8YEvmQ3oj0tPg7_RyUeXMhsc5KmfJJTQ',
-                clientId: '742532035296-mbiasnqpksnq35hcahvceqi6clc70le8.apps.googleusercontent.com',
+                apiKey: '',
+                clientId: '',
                 buttonEl: document.getElementById("goGoogleDrive"),
                 onClick: function (file) {
                     PopupCenter('https://drive.google.com/file/d/' + file.id + '/view', "", 1000, 500);
