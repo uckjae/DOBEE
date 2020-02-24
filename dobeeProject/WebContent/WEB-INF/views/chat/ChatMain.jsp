@@ -187,7 +187,7 @@
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
+<script src="http://localhost:5000/socket.io/socket.io.js"></script>
 <!-- AWS ec2 Node socket 연결 -->
 <!-- <script src="http://15.164.234.59:5000/socket.io/socket.io.js"></script> -->
 
@@ -218,7 +218,7 @@
 		
 		var chatType = $("#chatType").val();
 		var userMail = $("#mail").text();
-		var socket = io.connect( 'http://192.168.6.2:5000/self', {path: '/socket.io'});
+		var socket = io.connect( 'http://localhost:5000/self', {path: '/socket.io'});
 		<!-- AWS ec2 Node socket 연결 -->
 		// var socket = io.connect( 'http://15.164.234.59:5000/self', {path: '/socket.io'});
 		

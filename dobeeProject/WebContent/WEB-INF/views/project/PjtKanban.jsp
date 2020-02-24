@@ -83,26 +83,21 @@
 			  });
 
 			$('.progress-button').click(function(){
-				console.log('이거 찍히니?');
 				$('.progress-button').attr("style","background-color:white; color:black;");
 				$(this).attr("style","background-color:#34495e; color:white;");
-				console.log('값은?'+$(this).text());
 				$('#taskFormProgress').val($(this).text());
-				console.log($('#taskFormProgress').val());
 			});
 			
 			
 			/* 중요도 슬라이드 변경시 값표시 */
 			$('#addPMTaskFormBar').change(function(){
 				var value = $(this).val();
-				console.log(value);
 				$('#addPMTaskImportant').text(value);
 			});
 
 			
 			$('#taskFormBar').change(function(){
 				var value = $(this).val();
-				console.log(value);
 				$('#taskImportant').text(value);
 			});
 
@@ -121,9 +116,7 @@
 			
 			/* 업무상세 모달띄우는 함수 모모달*/
 			$('.taskDetail').click('show.bs.modal', function(e) {
-				console.log("taskDetail class가 눌렸어");
 				var tskSeq = $(this).data('tskseq');
-				console.log('가져오니?'+tskSeq);
 				$('#taskForm').trigger('reset');
 				$('#taskDetailForm').trigger('reset');
 				$('#checkListForm').trigger('reset');
@@ -136,8 +129,6 @@
 					data: {"tskSeq":tskSeq},
 					dataType: "JSON",
 					success: function(data){
-						console.log('getTask ajax 성공?');
-						console.log(data);
 						var task = data;
 						$('#taskDetailEditTitle').val(task.title);
 						$('#taskDetailTitle').text(task.title);
@@ -148,7 +139,6 @@
 						//기존에 업무 일정 seq가 있는지 없는지 판단 -> 있으면 input type=hidden에 넣기 없으면 안 넣기
 						if(task.tsSeq !== null || task.tsSeq !== ""){ //업무 일정 seq가 있다면
 							$("#tsSeq").val(task.tsSeq);
-							console.log('값 넣어졌니?'+$("#tsSeq").val());
 						} else {
 							$("#tsSeq").val("");
 						}
@@ -190,8 +180,6 @@
 						var loginUserMail = $("#loginUserMail").val();
 						var authCode = $("#authCode").val();
 						
-						console.log('지금 로그인 한 사람은?'+loginUserMail);
-						console.log('권한 코드는?'+authCode);
 						if(loginUserMail !== task.mail && authCode == 2 ) {
 							$("#taskEditBtnDiv").css('display', 'none');
 						}
@@ -213,7 +201,6 @@
 
 			/* 01.28 pm 업무 추가 >> 추가시에 중요도를 별도로 셋팅해서 백단으로 보내야 함-- 알파카*/
 			$("#addPMTaskBtn").click(function(){
-				console.log("버튼클릭");
 				var important = $('#addPMTaskImportant').text();
 				$("#addPMTaskStarImportant").val(important);
 				send("addTask");
@@ -229,9 +216,6 @@
 				$("#startTime").val($("#taskFormStartAt").val());
             	$("#endTime").val($("#taskFormEndAt").val());
 
-				console.log($("#taskEditForm"));
-
-				console.log('담당자 가져와?'+$("#taskMemberEditSelect").val());
 
 				//endAt 유효성 체크 요기요
 				if($("#taskFormEndAt").val() == "" || $("#taskFormEndAt").val() == null ){
@@ -410,8 +394,6 @@
 	 			});
 			});
 			var pjtSeq = ${requestScope.project.pjtSeq};
-			console.log('플젝 번호?'+pjtSeq);
-
 			
 	
 			
@@ -828,7 +810,6 @@
  				type:"post",
  				success:function(responseData){
  					taskLength = responseData.length;
- 					console.log('길이는?'+taskLength);
  	 				$.each(responseData, function(index, element){
  	 					if(element.important == 1){
  	 	 					important1.push(element);
@@ -1335,7 +1316,6 @@
 				data: formData,
 				dataType: "JSON",
 				success:function(data){
-					console.log("여기야");
 					console.log(data);
 					makeCheckList($('#addTaskCheckListButton'));
 					getTaskCheckList(tskSeq);
@@ -2376,7 +2356,7 @@
 										</div>
 										<!-- 담당자 -->
 										<div class="form-group">
-											<div><label class="col-md-3 control-label" style="text-align:left;">담당자</label></div>
+											<div><label class="col-md-3 control-label">담당자</label></div>
 											<c:choose>
 												<c:when test="${ user.authCode == '2'}">
 														<div class="col-md-7" style="margin-top: 8px;">

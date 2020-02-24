@@ -200,7 +200,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 <!-- socket 연결 -->
-<script src="http://192.168.6.2:5000/socket.io/socket.io.js"></script>
+<script src="http://localhost:5000/socket.io/socket.io.js"></script>
 <!-- AWS ec2 Node socket 연결 -->
 <!-- <script src="http://15.164.234.59:5000/socket.io/socket.io.js"></script> -->
 
@@ -232,7 +232,7 @@
 		var userMail = $("#mail").text();
 		var name = $("#name").text();
 		var userName = $("#name").text();
-		var socket = io.connect( 'http://192.168.6.2:5000/group', {path: '/socket.io'});
+		var socket = io.connect( 'http://localhost:5000/group', {path: '/socket.io'});
 		<!-- AWS ec2 Node socket 연결 -->
 		// var socket = io.connect( 'http://15.164.234.59:5000/group', {path: '/socket.io'});
 
@@ -297,7 +297,7 @@
 	socket.on('receive message to group', function(chatContent, currentDate, userName){
 		if(userName !== name) {
 			$("#msg_history").append('<div class="incoming_msg">'
-					+'<div class="incoming_msg_img"><img src="./img/alpaca.jpg" alt="img"> </div>'
+					+'<div class="incoming_msg_img"><img src="./img/avatar.jpg" alt="img"> </div>'
 					+'<div class="received_msg">'
 					+'<div class="received_withd_msg">'
 					+'<p>'+chatContent+'</p>'

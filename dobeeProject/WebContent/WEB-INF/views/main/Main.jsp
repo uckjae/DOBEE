@@ -259,7 +259,7 @@ console.log("MAIN!!");
 										<table class="table table-striped mb-none">
 											<thead>
 												<tr>
-													<th style="width: 11%; text-align: center;">#123</th>
+													<th style="width: 11%; text-align: center;">#</th>
 													<th style="text-align: center;">프로젝트</th>
 													<th style="width: 13%; text-align: center;">진행 상황</th>
 													<th style="width: 25%; text-align: center;">진행도</th>
